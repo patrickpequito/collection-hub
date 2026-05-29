@@ -11,13 +11,15 @@ A web app for Destiny 2 collectors. Built with Next.js (App Router), TypeScript,
 
 Copy `.env.example` to `.env.local` and set:
 
-| Variable | Description |
-|----------|-------------|
-| `BUNGIE_API_KEY` | API key from the Bungie portal |
-| `BUNGIE_CLIENT_ID` | OAuth client ID |
-| `BUNGIE_CLIENT_SECRET` | OAuth client secret |
-| `BUNGIE_REDIRECT_URI` | Must match the portal (see below) |
-| `SESSION_SECRET` | Random string (`openssl rand -base64 32`) |
+
+| Variable               | Description                               |
+| ---------------------- | ----------------------------------------- |
+| `BUNGIE_API_KEY`       | API key from the Bungie portal            |
+| `BUNGIE_CLIENT_ID`     | OAuth client ID                           |
+| `BUNGIE_CLIENT_SECRET` | OAuth client secret                       |
+| `BUNGIE_REDIRECT_URI`  | Must match the portal (see below)         |
+| `SESSION_SECRET`       | Random string (`openssl rand -base64 32`) |
+
 
 **Bungie portal (local dev):**
 
@@ -33,20 +35,22 @@ npm install
 npm run dev
 ```
 
-Open **https://127.0.0.1:3000** (accept the browser security warning for the self-signed certificate).
+Open **[https://127.0.0.1:3000](https://127.0.0.1:3000)** (accept the browser security warning for the self-signed certificate).
 
 The dev server runs HTTPS on `127.0.0.1:3000` by default.
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start dev server with HTTPS |
-| `npm run setup:https` | Generate local TLS certificates |
-| `npm run generate:armor-sets` | Refresh armor set data from the Bungie manifest |
-| `npm run generate:exotics` | Refresh exotic item data from the Bungie manifest |
-| `npm run build` | Production build |
-| `npm run start` | Run production server |
+
+| Command                       | Description                                       |
+| ----------------------------- | ------------------------------------------------- |
+| `npm run dev`                 | Start dev server with HTTPS                       |
+| `npm run setup:https`         | Generate local TLS certificates                   |
+| `npm run generate:armor-sets` | Refresh armor set data from the Bungie manifest   |
+| `npm run generate:exotics`    | Refresh exotic item data from the Bungie manifest |
+| `npm run build`               | Production build                                  |
+| `npm run start`               | Run production server                             |
+
 
 ## Armor sets catalog
 
