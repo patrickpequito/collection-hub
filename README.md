@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Collection HUB
 
-## Getting Started
+A web app for Destiny 2 collectors. Built with Next.js (App Router), TypeScript, and Tailwind CSS. Bungie.net OAuth is used for sign-in.
 
-First, run the development server:
+## Prerequisites
+
+- Node.js 20+
+- A [Bungie.net application](https://www.bungie.net/en/Application) with OAuth enabled
+
+## Environment
+
+Copy `.env.example` to `.env.local` and set:
+
+| Variable | Description |
+|----------|-------------|
+| `BUNGIE_API_KEY` | API key from the Bungie portal |
+| `BUNGIE_CLIENT_ID` | OAuth client ID |
+| `BUNGIE_CLIENT_SECRET` | OAuth client secret |
+| `BUNGIE_REDIRECT_URI` | Must match the portal (see below) |
+| `SESSION_SECRET` | Random string (`openssl rand -base64 32`) |
+
+**Bungie portal (local dev):**
+
+- Redirect URL: `https://127.0.0.1:3000/api/auth/callback`
+- Origin header: `https://127.0.0.1:3000`
+
+Use `127.0.0.1`, not `localhost`, so it matches the local HTTPS certificate.
+
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open **https://127.0.0.1:3000** (accept the browser security warning for the self-signed certificate).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The dev server runs HTTPS on `127.0.0.1:3000` by default.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts
 
-## Learn More
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server with HTTPS |
+| `npm run setup:https` | Generate local TLS certificates |
+| `npm run generate:armor-sets` | Refresh armor set data from the Bungie manifest |
+| `npm run generate:exotics` | Refresh exotic item data from the Bungie manifest |
+| `npm run build` | Production build |
+| `npm run start` | Run production server |
 
-To learn more about Next.js, take a look at the following resources:
+## Armor sets catalog
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Open `/sets` or `/exotics` after starting the dev server. Sets are grouped into tabs (Destinations, Raids, Dungeons, Expansions, Seasons) using Bungie collectible source strings.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Regenerate data when Bungie ships a new season:
 
-## Deploy on Vercel
+```bash
+npm run generate:armor-sets
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploying
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See **[DEPLOY.md](./DEPLOY.md)** for step-by-step instructions (GitHub + Vercel + Bungie production URLs).
+
+## Contributing
+
+UI copy and code comments are in **English** to keep the project accessible for international contributors.

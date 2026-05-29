@@ -1,0 +1,2261 @@
+{
+  "generatedAt": "2026-05-29T13:09:46.266Z",
+  "items": [
+    {
+      "itemHash": "3849355625",
+      "name": "Abeyant Leap",
+      "iconPath": "/common/destiny2_content/icons/8ca0dc9ac4166580356aa2d1f243e009.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "3649264718",
+      "name": "ACD/0 Feedback Fence",
+      "iconPath": "/common/destiny2_content/icons/d1bef80d66094bfc54384417aac74b04.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "347366834",
+      "name": "Ace of Spades",
+      "iconPath": "/common/destiny2_content/icons/cdfbfd3f098329a367294f191070f8c4.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3768376419",
+      "name": "Actium War Rig",
+      "iconPath": "/common/destiny2_content/icons/1c53f341a42cddc22f06ae5948a8b39a.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "796577360",
+      "name": "Aeon Safe",
+      "iconPath": "/common/destiny2_content/icons/7963b44801745431cdd7638c5445fe49.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "859709617",
+      "name": "Aeon Soul",
+      "iconPath": "/common/destiny2_content/icons/3fffe9417297d68ad3384c0b601bda88.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "2615220262",
+      "name": "Aeon Swift",
+      "iconPath": "/common/destiny2_content/icons/693bbd8d8099d9284cf507c7a58d869b.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "1833195496",
+      "name": "Ager's Scepter",
+      "iconPath": "/common/destiny2_content/icons/252db75c7ea885016f17895e2a154503.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "2350354266",
+      "name": "Alethonym",
+      "iconPath": "/common/destiny2_content/icons/09da11cd4fc285affeb6922f09b431ee.jpg",
+      "source": "Source: Season Pass Reward",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "1407595207",
+      "name": "An Insurmountable Skullfort",
+      "iconPath": "/common/destiny2_content/icons/182c1628fffa9de89fd27abcf04f2882.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "2376481550",
+      "name": "Anarchy",
+      "iconPath": "/common/destiny2_content/icons/f24e3336a1142847d6bf47b56b492eea.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "81398002",
+      "name": "Antaeus Wards",
+      "iconPath": "/common/destiny2_content/icons/82733ba5cc5dfdd0ef3ce1c7ba13e242.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "132452792",
+      "name": "Apotheosis Veil",
+      "iconPath": "/common/destiny2_content/icons/dab1f11f9397222c9cd83925f744bf86.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "2130065553",
+      "name": "Arbalest",
+      "iconPath": "/common/destiny2_content/icons/c95ea75fe09d9f090a88d5322923d07a.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "523456396",
+      "name": "Arbor Warden",
+      "iconPath": "/common/destiny2_content/icons/387f53c382d5e3ef7156e2149f79a57b.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "2999866952",
+      "name": "Armamentarium",
+      "iconPath": "/common/destiny2_content/icons/f1fd65d0fc4a21dcf29c4a18f347a62d.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "1203306857",
+      "name": "Ashen Wake",
+      "iconPath": "/common/destiny2_content/icons/9d29d23f2920b16378127d9603370722.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "3400283633",
+      "name": "Assassin's Cowl",
+      "iconPath": "/common/destiny2_content/icons/51cdf5976d29b61a6800ad5f4d8b10d8.jpg",
+      "source": "Source: Shadowkeep Campaign",
+      "category": "hunter",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "4035625646",
+      "name": "Astrocyte Verse",
+      "iconPath": "/common/destiny2_content/icons/68752f9a7420c7ba14728d9ab2592163.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "89619507",
+      "name": "Athrys's Embrace",
+      "iconPath": "/common/destiny2_content/icons/ce855265f8180943a74fafa631bdf0cc.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "2816212794",
+      "name": "Bad Juju",
+      "iconPath": "/common/destiny2_content/icons/a7cc8a658f8196f13cdde9d72ca9945d.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "2340803152",
+      "name": "Balance of Power",
+      "iconPath": "/common/destiny2_content/icons/4c9ab280a38a769fb4b3c504dadcfa78.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "2109877638",
+      "name": "Ballidorse Wrathweavers",
+      "iconPath": "/common/destiny2_content/icons/0b6052a09f8d04089eda67529392d770.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "1481594633",
+      "name": "Barrow-Dyad",
+      "iconPath": "/common/destiny2_content/icons/938bc6eb5c5c772e2f3d066380179d36.jpg",
+      "source": "Source: Episode: Heresy Activities",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "2415517654",
+      "name": "Bastion",
+      "iconPath": "/common/destiny2_content/icons/805009e0c67a2dcf4f4f7bffb2dba493.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3766045777",
+      "name": "Black Talon",
+      "iconPath": "/common/destiny2_content/icons/b40fd2d06867196af70a4bce290f15fc.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "1849901681",
+      "name": "Blastwave Striders",
+      "iconPath": "/common/destiny2_content/icons/2867edb179061ac96f92d4eed1ceffdb.jpg",
+      "source": "Source: Solo Expert and Master Lost Sectors",
+      "category": "titan",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "863908533",
+      "name": "Blight Ranger",
+      "iconPath": "/common/destiny2_content/icons/209d99f147c6d1a88812cebc4c0f2f92.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "597039524",
+      "name": "Boots of the Assembler",
+      "iconPath": "/common/destiny2_content/icons/4f54f0e8ad3cf58ff4525347c31c652b.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "3141979347",
+      "name": "Borealis",
+      "iconPath": "/common/destiny2_content/icons/5d7ff61746d3ce613b3bb3d4667e6d2a.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "768145972",
+      "name": "Briarbinds",
+      "iconPath": "/common/destiny2_content/icons/40c71ab1a41498619b8e76def4be6dc3.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "3886719505",
+      "name": "Buried Bloodline",
+      "iconPath": "/common/destiny2_content/icons/fcae8edcd35227d35fca0a108d831840.jpg",
+      "source": "Source: \"Warlord's Ruin\" Dungeon",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "2851385306",
+      "name": "Cadmus Ridge Lancecap",
+      "iconPath": "/common/destiny2_content/icons/ed6d637a92b13503599f791d2ecba14a.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "327385975",
+      "name": "Caliban's Hand",
+      "iconPath": "/common/destiny2_content/icons/b963098bb34446a4119fccf6e3cdbfe8.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "3960926756",
+      "name": "Celestial Nighthawk",
+      "iconPath": "/common/destiny2_content/icons/a7c3ee955c5e8b1c20122206d1bf60ff.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "3589022772",
+      "name": "Cenotaph Mask",
+      "iconPath": "/common/destiny2_content/icons/791e1f8a406356533b82a7adba087812.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "1912669214",
+      "name": "Centrifuse",
+      "iconPath": "/common/destiny2_content/icons/8c1a4a500934d67ecdb02455820c9b67.jpg",
+      "source": "Source: Season Pass Reward",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "1541131350",
+      "name": "Cerberus+1",
+      "iconPath": "/common/destiny2_content/icons/161a3f06196563345afeacb46e9df88d.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3698448090",
+      "name": "Choir of One",
+      "iconPath": "/common/destiny2_content/icons/80cc90861aa83c63de2273457a6c9345.jpg",
+      "source": "Source: Exotic Mission Encore",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "3545094011",
+      "name": "Chromatic Fire",
+      "iconPath": "/common/destiny2_content/icons/68e87c34c22f4e7350a1750bf2d3bc68.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "2551549824",
+      "name": "Citan's Ramparts",
+      "iconPath": "/common/destiny2_content/icons/2e01a8839e2cb3f8c9f53bd01001d838.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "171695625",
+      "name": "Claws of Ahamkara",
+      "iconPath": "/common/destiny2_content/icons/76cac5fbab0144f75832a21c50abb96f.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "2603483885",
+      "name": "Cloudstrike",
+      "iconPath": "/common/destiny2_content/icons/ce45921edb8e35a249f2c6f5b3abaab5.jpg",
+      "source": "Source: Higher Difficulty Empire Hunts",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "1345867571",
+      "name": "Coldheart",
+      "iconPath": "/common/destiny2_content/icons/2a2a95b819312fc6fef728911cfd6fa2.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "3505113722",
+      "name": "Collective Obligation",
+      "iconPath": "/common/destiny2_content/icons/238ab90ba2f858ebb8a5a1797a13fdd4.jpg",
+      "source": "Source: \"Vow of the Disciple\" Raid",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "3371017761",
+      "name": "Conditional Finality",
+      "iconPath": "/common/destiny2_content/icons/c9b4d65adcdfcadde871e5961ce912fb.jpg",
+      "source": "Source: \"Root of Nightmares\" Raid",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3261527845",
+      "name": "Contraverse Hold",
+      "iconPath": "/common/destiny2_content/icons/b667fa414b7d70ed4fe8b34296c76cbb.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "3768376418",
+      "name": "Crest of Alpha Lupi",
+      "iconPath": "/common/destiny2_content/icons/9ddd5eb2eee64925a01abdc4cd9830ad.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "3437746471",
+      "name": "Crimson",
+      "iconPath": "/common/destiny2_content/icons/5a7cb122bf2e8968a68cee59ef93b23d.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "925466718",
+      "name": "Crown of Tempests",
+      "iconPath": "/common/destiny2_content/icons/1e807547133b3d2e1ea680858cf09176.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "603721696",
+      "name": "Cryosthesia 77K",
+      "iconPath": "/common/destiny2_content/icons/285bb2a7a6f016c151624b12a4681cca.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "4057875770",
+      "name": "Cuirass of the Falling Star",
+      "iconPath": "/common/destiny2_content/icons/23e3d07bead2936a80612419f3ee9f94.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "1008364980",
+      "name": "Cyrtarachne's Facade",
+      "iconPath": "/common/destiny2_content/icons/cc4f9b05185e4430b6c0ca42cc7a5c1d.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "3141979346",
+      "name": "D.A.R.C.I.",
+      "iconPath": "/common/destiny2_content/icons/eec16138c9fe69ff0b5d6c213e5cabb6.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "3767088557",
+      "name": "Dawn Chorus",
+      "iconPath": "/common/destiny2_content/icons/a8f5dbd6ec9c4dc9ea73700525d558c7.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "2188764214",
+      "name": "Dead Man's Tale",
+      "iconPath": "/common/destiny2_content/icons/cfc2c246cfd404d749fffbfe3ae3dfec.jpg",
+      "source": "Source: \"Presage\" Exotic Quest",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3654674561",
+      "name": "Dead Man's Tale",
+      "iconPath": "/common/destiny2_content/icons/cfc2c246cfd404d749fffbfe3ae3dfec.jpg",
+      "source": "Source: \"Presage\" Exotic Quest",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "46125926",
+      "name": "Dead Messenger",
+      "iconPath": "/common/destiny2_content/icons/0824b34bb37e0bb7c32b91adf6dcb79e.jpg",
+      "source": "Source: \"Vox Obscura\" Exotic Quest",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "2812324401",
+      "name": "Dead Messenger",
+      "iconPath": "/common/destiny2_content/icons/0824b34bb37e0bb7c32b91adf6dcb79e.jpg",
+      "source": "Source: \"Vox Obscura\" Exotic Quest",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "2232171099",
+      "name": "Deathbringer",
+      "iconPath": "/common/destiny2_content/icons/5cb4c8ec3cabaaa6a29ac7513ee30ca0.jpg",
+      "source": "Source: An Exotic quest or challenge.",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "1479082657",
+      "name": "Deimosuffusion",
+      "iconPath": "/common/destiny2_content/icons/8d4cf66f37462c79069095736a4d7bb0.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "374573733",
+      "name": "Delicate Tomb",
+      "iconPath": "/common/destiny2_content/icons/8a626d617f8e503df45142835bb5b659.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "449318888",
+      "name": "Deterministic Chaos",
+      "iconPath": "/common/destiny2_content/icons/d657cc9dae47ecaec19038f18f335c18.jpg",
+      "source": "Source: \"What Remains\" Exotic Quest",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "3824106094",
+      "name": "Devil's Ruin",
+      "iconPath": "/common/destiny2_content/icons/92cdbf57fe2a29cad14d18e33689463b.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "4103414242",
+      "name": "Divinity",
+      "iconPath": "/common/destiny2_content/icons/c6aa03536fd68b5fca5ad6b83ea0cf1e.jpg",
+      "source": "Source: An Exotic quest or challenge.",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "2002759682",
+      "name": "Doom Fang Pauldron",
+      "iconPath": "/common/destiny2_content/icons/5978e308b12744fbe33c11d3296f51e9.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "17096506",
+      "name": "Dragon's Breath",
+      "iconPath": "/common/destiny2_content/icons/49197babe16ed546cec94b26b44f3447.jpg",
+      "source": "Source: Season Pass Reward",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "3460576091",
+      "name": "Duality",
+      "iconPath": "/common/destiny2_content/icons/084c8f65d56ce5d74718d49b17874315.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "1437375562",
+      "name": "Dunemarchers",
+      "iconPath": "/common/destiny2_content/icons/926af59fac979ff38b102813ed1e661f.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "2535142413",
+      "name": "Edge of Action",
+      "iconPath": "/common/destiny2_content/icons/add494c1e1fbdb062b7f6dc4c179c35b.jpg",
+      "source": "Source: \"The Evidence Board\" Exotic Quest",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "542203595",
+      "name": "Edge of Concurrence",
+      "iconPath": "/common/destiny2_content/icons/6301bf4e6d9d9728aaf5f9bea06c6a1a.jpg",
+      "source": "Source: \"The Evidence Board\" Exotic Quest",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "14194600",
+      "name": "Edge of Intent",
+      "iconPath": "/common/destiny2_content/icons/beec2a35b2cffd3fac488e0fb8cf25a5.jpg",
+      "source": "Source: \"The Evidence Board\" Exotic Quest",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "1681583613",
+      "name": "Ergo Sum",
+      "iconPath": "/common/destiny2_content/icons/39a94c98eba4b9e007a76bbc067752f7.jpg",
+      "source": "Source: Exploring the Pale Heart",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "3524313097",
+      "name": "Eriana's Vow",
+      "iconPath": "/common/destiny2_content/icons/588133859fa98c801d8a9d66ea6aae2f.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "3692827145",
+      "name": "Eternal Warrior",
+      "iconPath": "/common/destiny2_content/icons/83255143cc395d2d15fef32bf435e229.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "3481695565",
+      "name": "Eunoia",
+      "iconPath": "/common/destiny2_content/icons/2964b23eaa7ace60ac320c51dc500198.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "3284383335",
+      "name": "Euphony",
+      "iconPath": "/common/destiny2_content/icons/fe16110003f0cc75145eed012458a667.jpg",
+      "source": "Source: \"Salvation's Edge\" Raid",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3821409356",
+      "name": "Ex Diris",
+      "iconPath": "/common/destiny2_content/icons/8bf07148479f8894c483db879ed46c4a.jpg",
+      "source": "Source: Season Pass Reward",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "925466717",
+      "name": "Eye of Another World",
+      "iconPath": "/common/destiny2_content/icons/f2099f4fcd39c3ed4f87ec55e05a68ea.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "2399110176",
+      "name": "Eyes of Tomorrow",
+      "iconPath": "/common/destiny2_content/icons/9caeff89015f02ad52e6fefe95398b01.jpg",
+      "source": "Source: \"Deep Stone Crypt\" Raid",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "3781549120",
+      "name": "Fallen Sunstar",
+      "iconPath": "/common/destiny2_content/icons/54d230429642573df3c8030ba90fec0e.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "728668916",
+      "name": "Felwinter's Helm",
+      "iconPath": "/common/destiny2_content/icons/885fcf7b139b369cb47f4548f1fb658f.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "3549153978",
+      "name": "Fighting Lion",
+      "iconPath": "/common/destiny2_content/icons/836a2f75cfa67de87a8a73f3c61f7f78.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "3121540812",
+      "name": "Final Warning",
+      "iconPath": "/common/destiny2_content/icons/e8030d75835eaf1c9014f2d63338d518.jpg",
+      "source": "Source: \"The Final Strand\" Exotic Quest",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "331231237",
+      "name": "Finality's Auger",
+      "iconPath": "/common/destiny2_content/icons/22f0588bf5ce837fc5f4f89e86693c1f.jpg",
+      "source": "Source: Sundered Doctrine",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "671504994",
+      "name": "Foetracer",
+      "iconPath": "/common/destiny2_content/icons/5f9662bd35f3a32bedde179474ee8d07.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "2179048386",
+      "name": "Forerunner",
+      "iconPath": "/common/destiny2_content/icons/50d67833eda8bb60a81803de7d901457.jpg",
+      "source": "Source: \"Magnum Opus\" Quest",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "4010324161",
+      "name": "Fortune's Favor",
+      "iconPath": "/common/destiny2_content/icons/aef3f0c6823ea0564d94ff81b40552f0.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "1737050140",
+      "name": "Fr0st-EE5",
+      "iconPath": "/common/destiny2_content/icons/c71407afa4e5c092494589f82149c693.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "2132672800",
+      "name": "Gemini Jester",
+      "iconPath": "/common/destiny2_content/icons/9b9cf3c53c26c364532bfda3dd372827.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "3608857511",
+      "name": "Geomag Stabilizers",
+      "iconPath": "/common/destiny2_content/icons/395d6f306e29ddf0afdd5b1ffaaf1e5f.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "4177778015",
+      "name": "Getaway Artist",
+      "iconPath": "/common/destiny2_content/icons/a2350076ae19cf474a88a0c2a440c93f.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "1446374842",
+      "name": "Gifted Conviction",
+      "iconPath": "/common/destiny2_content/icons/4365fd49261fb81d069d0db10acb9fd4.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "1363886209",
+      "name": "Gjallarhorn",
+      "iconPath": "/common/destiny2_content/icons/b62083eed6a4708e581fc9a061bcc8e9.jpg",
+      "source": "Source: \"And Out Fly the Wolves\" Quest",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "1763584999",
+      "name": "Grand Overture",
+      "iconPath": "/common/destiny2_content/icons/bc76e54c9cd266c09d8e08036ebcfd42.jpg",
+      "source": "Source: Season Pass Reward",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "407148246",
+      "name": "Graviton Forfeit",
+      "iconPath": "/common/destiny2_content/icons/8571524c477cee2fc3e2dedbaf7aa8bb.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "3628991658",
+      "name": "Graviton Lance",
+      "iconPath": "/common/destiny2_content/icons/ce9043979a6e35bf4d3952f5cf251a49.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "648595258",
+      "name": "Graviton Spike",
+      "iconPath": "/common/destiny2_content/icons/ac56ad66eb1ebb8a371f9d3d3c768c5a.jpg",
+      "source": "Source: Exploring Kepler",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "1168370783",
+      "name": "Gwisin Vest",
+      "iconPath": "/common/destiny2_content/icons/ae4ee7545ea763ea935f6386d8743361.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "2447096246",
+      "name": "Gyrfalcon's Hauberk",
+      "iconPath": "/common/destiny2_content/icons/e6e10342a97eb3f6b974399ef7214e75.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "2094927311",
+      "name": "Hallowfire Heart",
+      "iconPath": "/common/destiny2_content/icons/8aacd27b76e68afe6287a3984adeb601.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "4124984448",
+      "name": "Hard Light",
+      "iconPath": "/common/destiny2_content/icons/94e6e474b4488d5a198b5dcbad534c3e.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "3856705927",
+      "name": "Hawkmoon",
+      "iconPath": "/common/destiny2_content/icons/cef1290d58a2d94d1437e1e569fa7996.jpg",
+      "source": "Source: Acquired from Xûr",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3050442980",
+      "name": "Hazardous Propulsion",
+      "iconPath": "/common/destiny2_content/icons/54ff2f91d443bac8714037a2d37c77d7.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "502173648",
+      "name": "Heart of Inmost Light",
+      "iconPath": "/common/destiny2_content/icons/34f23604746fc260a2153e93ccfaec7f.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "3664831848",
+      "name": "Heartshadow",
+      "iconPath": "/common/destiny2_content/icons/94c6933727fa885fb2002a8c7aee5e42.jpg",
+      "source": "Source: Dungeon \"Duality\"",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "2084878005",
+      "name": "Heir Apparent",
+      "iconPath": "/common/destiny2_content/icons/273379dd44efda777c53b3902a3a1eee.jpg",
+      "source": "Source: Guardian Games",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "1685137410",
+      "name": "Heirloom",
+      "iconPath": "/common/destiny2_content/icons/95e57b924511a206cee9fb6b8bab8ce2.jpg",
+      "source": "Source: Equilibrium",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "943320520",
+      "name": "Helm of Saint-14",
+      "iconPath": "/common/destiny2_content/icons/00da519dfd936447edd44bd0e472d229.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "4174431791",
+      "name": "Hierarchy of Needs",
+      "iconPath": "/common/destiny2_content/icons/8c32410000243e6024130f755b23fbe6.jpg",
+      "source": "Source: \"Spire of the Watcher\" Dungeon",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "4165710258",
+      "name": "Hoarfrost-Z",
+      "iconPath": "/common/destiny2_content/icons/e1c35c4941cc7848e2b5de7bacd17232.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "1111334348",
+      "name": "Ice Breaker",
+      "iconPath": "/common/destiny2_content/icons/5f3f44c8ec720f4ece9a8903ae29df60.jpg",
+      "source": "Source: Vesper's Host",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "1734674241",
+      "name": "Icefall Mantle",
+      "iconPath": "/common/destiny2_content/icons/8c6e9159014b670c7e316aee4b1df3a8.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "3211806999",
+      "name": "Izanagi's Burden",
+      "iconPath": "/common/destiny2_content/icons/8763caf9bfb147a41f3e34ec7eaf876b.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "417164956",
+      "name": "Jötunn",
+      "iconPath": "/common/destiny2_content/icons/ec202c839348294926428ecb5a7423eb.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "900910759",
+      "name": "Karnstein Armlets",
+      "iconPath": "/common/destiny2_content/icons/b2affa797cc34567cfe6bad463c2749c.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "858758105",
+      "name": "Khepri's Horn",
+      "iconPath": "/common/destiny2_content/icons/c7da6c00a574bbadaec01099a3134626.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "4002939008",
+      "name": "Khepri's Sting",
+      "iconPath": "/common/destiny2_content/icons/93792e77d9b88ccf77788bdd9b25b16c.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "4129629253",
+      "name": "Khvostov 7G-0X",
+      "iconPath": "/common/destiny2_content/icons/23aac6d8454ee1bcd2234e303bd2d6bf.jpg",
+      "source": "Source: Exploring the Pale Heart",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3960926757",
+      "name": "Knucklehead Radar",
+      "iconPath": "/common/destiny2_content/icons/a62c52b937c81cea80d6e67689748606.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "3588934839",
+      "name": "Le Monarque",
+      "iconPath": "/common/destiny2_content/icons/5f858cb4661c605d18e3dc0b62cc4aaa.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "3580904580",
+      "name": "Legend of Acrius",
+      "iconPath": "/common/destiny2_content/icons/6de5f786f39bf827de8490e97b672ddb.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "2591746970",
+      "name": "Leviathan's Breath",
+      "iconPath": "/common/destiny2_content/icons/fd892bb713040300ad944590892b0e50.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "2749457084",
+      "name": "Liar's Handshake",
+      "iconPath": "/common/destiny2_content/icons/39a2f16e2f092e37f21eb5f61f107594.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "53126581",
+      "name": "Lion Rampant",
+      "iconPath": "/common/destiny2_content/icons/f649b50eed6a4e4c329ae1667ba6d32b.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "3725585710",
+      "name": "Lodestar",
+      "iconPath": "/common/destiny2_content/icons/63d7990202fd58a56f8ecf3a128db03a.jpg",
+      "source": "Source: Season Pass Reward",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "3413860063",
+      "name": "Lord of Wolves",
+      "iconPath": "/common/destiny2_content/icons/6bd65ae8981e4cac3c00825abedd3fbb.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "4258262391",
+      "name": "Loreley Splendor Helm",
+      "iconPath": "/common/destiny2_content/icons/aeda17ea7c8071b1156258b09f4219f3.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "3761898871",
+      "name": "Lorentz Driver",
+      "iconPath": "/common/destiny2_content/icons/4d6d145ff3a33a0a30407cc60d7e9e3b.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "2405271939",
+      "name": "Lucky Pants",
+      "iconPath": "/common/destiny2_content/icons/fa501bf3740c6b0cdc91f2cafd0547a3.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "1803778317",
+      "name": "Lucky Raspberry",
+      "iconPath": "/common/destiny2_content/icons/8ccf49029d3c36bbdf3fb697163dcc53.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "3512014804",
+      "name": "Lumina",
+      "iconPath": "/common/destiny2_content/icons/65735eb5048ba941145e35224014e479.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "418363297",
+      "name": "Lunafaction Boots",
+      "iconPath": "/common/destiny2_content/icons/9d1fc1679008fedbf57cb732aebe05bf.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "204878059",
+      "name": "Malfeasance",
+      "iconPath": "/common/destiny2_content/icons/5564a17ddf52e36f56e7256ad9946a17.jpg",
+      "source": "Source: An Exotic quest or challenge.",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "2732820041",
+      "name": "Mantle of Battle Harmony",
+      "iconPath": "/common/destiny2_content/icons/b214efe3aed7f3dabf965b62b9dfaf7a.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "508515818",
+      "name": "Mask of Bakris",
+      "iconPath": "/common/destiny2_content/icons/d2fdd193c4536cbc9cdaa82e24b7125a.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "2915174768",
+      "name": "Mask of Fealty",
+      "iconPath": "/common/destiny2_content/icons/75cd0f60c0c568b2a9071e05a76a6f2f.jpg",
+      "source": "Source: Solo Expert and Master Lost Sectors",
+      "category": "hunter",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "4060352315",
+      "name": "Mask of the Quiet One",
+      "iconPath": "/common/destiny2_content/icons/7d8b21fd6a59e987a428548e66dca1b3.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "1003391927",
+      "name": "Mataiodoxía",
+      "iconPath": "/common/destiny2_content/icons/86e7918a1c286c31ded3093069ddb7b5.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "2574019120",
+      "name": "Mechaneer's Tricksleeves",
+      "iconPath": "/common/destiny2_content/icons/cec0919e3c95d134d82f701f2f6b87dd.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "2867399974",
+      "name": "Melas Panoplia",
+      "iconPath": "/common/destiny2_content/icons/99948048db0193791f6656def94f0605.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "4190156464",
+      "name": "Merciless",
+      "iconPath": "/common/destiny2_content/icons/f3714197408d2c8935a2ce7be69a210c.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "4207066264",
+      "name": "Microcosm",
+      "iconPath": "/common/destiny2_content/icons/8fc373a11adc417aab9a3ef4bab3bbe3.jpg",
+      "source": "Source: Exploring the Pale Heart",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "1331482397",
+      "name": "MIDA Multi-Tool",
+      "iconPath": "/common/destiny2_content/icons/eb279fe06dcd9199fccda5120e244a63.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3182840395",
+      "name": "Mk. 44 Stand Asides",
+      "iconPath": "/common/destiny2_content/icons/0cc53513e37b4f0b5442dff88c3d9a45.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "2647299044",
+      "name": "Moirai",
+      "iconPath": "/common/destiny2_content/icons/eb2274e11a096c4c050f1be451e63391.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "4068264807",
+      "name": "Monte Carlo",
+      "iconPath": "/common/destiny2_content/icons/d123aaf47eed3de479aac4492577f7e9.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3688534631",
+      "name": "Mothkeeper's Wraps",
+      "iconPath": "/common/destiny2_content/icons/e53f09086747c03e79325763327af977.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "1034055198",
+      "name": "Necrochasm",
+      "iconPath": "/common/destiny2_content/icons/52e8bb636771f4731da3f73f06fcad04.jpg",
+      "source": "Source: \"Crota's End\" Raid",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "124786972",
+      "name": "Necrotic Grip",
+      "iconPath": "/common/destiny2_content/icons/0617e95b84c4c0b7ec6511abaf4214d6.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "2581676735",
+      "name": "New Land Beyond",
+      "iconPath": "/common/destiny2_content/icons/ab5a4d92675023c3f565d4e8fa3db3a1.jpg",
+      "source": "Source: Earned as a pre-order bonus.",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "1736135946",
+      "name": "New Malpais",
+      "iconPath": "/common/destiny2_content/icons/238e6c3afdc31870d15231656f2d6bcb.jpg",
+      "source": "Source: Rewards Pass",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "925466716",
+      "name": "Nezarec's Sin",
+      "iconPath": "/common/destiny2_content/icons/5f4c4d8bdfc4099ce76f13998d977796.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "730200061",
+      "name": "No Backup Plans",
+      "iconPath": "/common/destiny2_content/icons/a5e7aadf7e00089690951e52c35afcbb.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "1594120904",
+      "name": "No Time to Explain",
+      "iconPath": "/common/destiny2_content/icons/8a79a43912129240ee9f70e8e6bcfd6d.jpg",
+      "source": "Source: Deluxe Edition Bonus",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3982932616",
+      "name": "Nothing Manacles",
+      "iconPath": "/common/destiny2_content/icons/8c81d44ddde6e10ea83f65929c482dcb.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "3883286571",
+      "name": "Oathkeeper",
+      "iconPath": "/common/destiny2_content/icons/5a3826001ee01b3a28ac26a4ec34eeb5.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "4255001288",
+      "name": "Omnioculus",
+      "iconPath": "/common/destiny2_content/icons/9b5e31b72b4c2b7061a7857eba7f8863.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "2069224589",
+      "name": "One Thousand Voices",
+      "iconPath": "/common/destiny2_content/icons/51c53df606cca474dce3cadbf7d5ce28.jpg",
+      "source": "Source: Last Wish raid.",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "1249787553",
+      "name": "One-Eyed Mask",
+      "iconPath": "/common/destiny2_content/icons/dd639fc06ad17e69915bf47295426ac0.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "3642110725",
+      "name": "Ophidia Spathe",
+      "iconPath": "/common/destiny2_content/icons/dac0f107efc0dc9c887ffef83fc1bf62.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "507400048",
+      "name": "Ophidian Aspect",
+      "iconPath": "/common/destiny2_content/icons/a3e9b60f50480547349cf245f30b28f5.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "2405271938",
+      "name": "Orpheus Rig",
+      "iconPath": "/common/destiny2_content/icons/4abdc33a8ff869fc7bdcbdc83fbaba01.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "2555349547",
+      "name": "Osmiomancy Gloves",
+      "iconPath": "/common/destiny2_content/icons/50c84155502586d5b852ce853131ee48.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "46524085",
+      "name": "Osteo Striga",
+      "iconPath": "/common/destiny2_content/icons/2752ee2761149f004df20e78749c1bab.jpg",
+      "source": "Source: \"Vox Obscura\" Exotic Quest",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "400096939",
+      "name": "Outbreak Perfected",
+      "iconPath": "/common/destiny2_content/icons/a1b6a5f3e52878610397249986300b23.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3824673936",
+      "name": "Outbreak Perfected",
+      "iconPath": "/common/destiny2_content/icons/a1b6a5f3e52878610397249986300b23.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "2812324400",
+      "name": "Parasite",
+      "iconPath": "/common/destiny2_content/icons/0a71a14d8614d619a40649f09b28b466.jpg",
+      "source": "Source: \"Of Queens and Worms\" Exotic Quest",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "53126580",
+      "name": "Peacekeepers",
+      "iconPath": "/common/destiny2_content/icons/98491ae0d08dc78211ff10f34e42c923.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "3450721096",
+      "name": "Peregrine Greaves",
+      "iconPath": "/common/destiny2_content/icons/49750e0306908fb302124ba9cab65606.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "2439379860",
+      "name": "Phoenix Cradle",
+      "iconPath": "/common/destiny2_content/icons/b0a005478e56ca375d005c7fdac75384.jpg",
+      "source": "Source: Shadowkeep Campaign",
+      "category": "titan",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "3545094010",
+      "name": "Phoenix Protocol",
+      "iconPath": "/common/destiny2_content/icons/5ab8760ee8ef440f317ae4a95d047d07.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "308767728",
+      "name": "Point-Contact Cannon Brace",
+      "iconPath": "/common/destiny2_content/icons/1a871899e9657793c57c3916ee69d19f.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "3413074534",
+      "name": "Polaris Lance",
+      "iconPath": "/common/destiny2_content/icons/a22adf5ee0096e1cb9a6e212ee591b70.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "3049715579",
+      "name": "Praxic Blade",
+      "iconPath": "/common/destiny2_content/icons/d63292c9248c5e3ae823605307140199.jpg",
+      "source": "Source: Renegades",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "4184605701",
+      "name": "Praxic Vestment",
+      "iconPath": "/common/destiny2_content/icons/38c12eb0a1d063b55a5578d7d47bc275.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "1978467312",
+      "name": "Precious Scars",
+      "iconPath": "/common/destiny2_content/icons/1a410b9325f5e155cd76286416c0269a.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "19024058",
+      "name": "Prometheus Lens",
+      "iconPath": "/common/destiny2_content/icons/76817c6b9ad482a19a180819fbe85def.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "3864952146",
+      "name": "Promethium Spur",
+      "iconPath": "/common/destiny2_content/icons/1a1beec59bf0bfb0475956d19adbb9da.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "864224653",
+      "name": "Pyrogale Gauntlets",
+      "iconPath": "/common/destiny2_content/icons/aed35bae5c7983884ca5a4809e78def2.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "4293613902",
+      "name": "Quicksilver Storm",
+      "iconPath": "/common/destiny2_content/icons/06ec3d22c69944f6755bf75f07cd83bd.jpg",
+      "source": "Source: Pre-order Bonus",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "1709794165",
+      "name": "Radiant Dance Machines",
+      "iconPath": "/common/destiny2_content/icons/2fedf8f208ae4c7f41ef37597d4a671b.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "368733543",
+      "name": "Raiden Flux",
+      "iconPath": "/common/destiny2_content/icons/af16bd8628430cc43cfcb161074a1706.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "2767482390",
+      "name": "Raiju's Harness",
+      "iconPath": "/common/destiny2_content/icons/fdc99d915e90a5992549ebe33c85d2c9.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "511709874",
+      "name": "Rain of Fire",
+      "iconPath": "/common/destiny2_content/icons/716fa9d4ffc8190e1553e9afa5ff808d.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "2362471601",
+      "name": "Rat King",
+      "iconPath": "/common/destiny2_content/icons/b86c24934b3ec9954218ecfa0992aeb2.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "427899681",
+      "name": "Red Death Reformed",
+      "iconPath": "/common/destiny2_content/icons/262f0ef4547ca75c86d8eb5599b3eb60.jpg",
+      "source": "Source: Season Pass Reward",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "2809120022",
+      "name": "Relativism",
+      "iconPath": "/common/destiny2_content/icons/58ae63b773059e5bd7a4d43298f73a50.jpg",
+      "source": "Source: Exploring the Pale Heart",
+      "category": "hunter",
+      "armorSlot": "classItem"
+    },
+    {
+      "itemHash": "3793245444",
+      "name": "Renewal Grasps",
+      "iconPath": "/common/destiny2_content/icons/4943351eeea32eacd98c50e33c840416.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "1473821207",
+      "name": "Revision Zero",
+      "iconPath": "/common/destiny2_content/icons/040a104defcc7011b570886e3ec3c73f.jpg",
+      "source": "Source: \"Operation Seraph's Shield\" Mission",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "888791258",
+      "name": "Rime-coat Raiment",
+      "iconPath": "/common/destiny2_content/icons/16001620c3ec683e805fe68017167b69.jpg",
+      "source": "Source: Solo Expert and Master Lost Sectors",
+      "category": "warlock",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "3089417789",
+      "name": "Riskrunner",
+      "iconPath": "/common/destiny2_content/icons/0b7fa10956ee9f16899ce1838c3c0e31.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "1363238943",
+      "name": "Ruinous Effigy",
+      "iconPath": "/common/destiny2_content/icons/8787b1c97fe674d51a0450ba546ddb4b.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "370712896",
+      "name": "Salvation's Grip",
+      "iconPath": "/common/destiny2_content/icons/f7a37e909fe6f923501f2175dc3784b6.jpg",
+      "source": "Source: \"The Stasis Prototype\" Quest",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "2966741808",
+      "name": "Sanguine Alchemy",
+      "iconPath": "/common/destiny2_content/icons/e55c1cbf65fabab485bbc34272f59b11.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "3987871714",
+      "name": "Sealed Ahamkara Grasps",
+      "iconPath": "/common/destiny2_content/icons/159870075afe5423cbf1d8d46e920ccc.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "4029987901",
+      "name": "Secant Filaments",
+      "iconPath": "/common/destiny2_content/icons/bc6ee62eb2ace0a0a44347a3824e95dd.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "4268030601",
+      "name": "Second Chance",
+      "iconPath": "/common/destiny2_content/icons/5c2dbf43518ab15f556b39bbaac0122b.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "4284533075",
+      "name": "Service of Luzaku",
+      "iconPath": "/common/destiny2_content/icons/e7d4497fbdd8339eaf9da4b9151c9559.jpg",
+      "source": "Source: Rewards Pass",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "1429817243",
+      "name": "Severance Enclosure",
+      "iconPath": "/common/destiny2_content/icons/f2b177993acfba4c42ff771ad6801c90.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "3883286570",
+      "name": "Shards of Galanor",
+      "iconPath": "/common/destiny2_content/icons/e266ef647863fafb1541890bcfa4a6c7.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "1611241895",
+      "name": "Shinobu's Vow",
+      "iconPath": "/common/destiny2_content/icons/8ea4e6ce75fcf446b699029aab9d6060.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "3050017626",
+      "name": "Skull of Dire Ahamkara",
+      "iconPath": "/common/destiny2_content/icons/19137504db8dcd63bb852f5324bbbbb3.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "4255268456",
+      "name": "Skyburner's Oath",
+      "iconPath": "/common/destiny2_content/icons/fc7d4da29a642c1117897e6a4b8db543.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "1047932517",
+      "name": "Slayer's Fang",
+      "iconPath": "/common/destiny2_content/icons/45ba5d9ee8e425e1f9d50cb561fe4982.jpg",
+      "source": "Source: Revenant Fortress",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "4036115577",
+      "name": "Sleeper Simulant",
+      "iconPath": "/common/destiny2_content/icons/af232d6f94c12a4cf1080e659264294f.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "2273643087",
+      "name": "Solipsism",
+      "iconPath": "/common/destiny2_content/icons/7b57cd041db1987c3f566b96535daf9f.jpg",
+      "source": "Source: Exploring the Pale Heart",
+      "category": "warlock",
+      "armorSlot": "classItem"
+    },
+    {
+      "itemHash": "3617849232",
+      "name": "Speaker's Sight",
+      "iconPath": "/common/destiny2_content/icons/95a96d8b0ec34340d47d5e74ba45e794.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "1793346751",
+      "name": "Speedloader Slacks",
+      "iconPath": "/common/destiny2_content/icons/cb2d44c8d1459ea43b0ea82976cf66e0.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "2405271937",
+      "name": "St0mp-EE5",
+      "iconPath": "/common/destiny2_content/icons/24e61da37158d8c105650edb74ae2bac.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "1006498763",
+      "name": "Star-Eater Scales",
+      "iconPath": "/common/destiny2_content/icons/5b7f647435bbe18d2c83d3691758184c.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "599049453",
+      "name": "Starfire Protocol",
+      "iconPath": "/common/destiny2_content/icons/e101d5271789720c8930459168603398.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "2905188646",
+      "name": "Still Hunt",
+      "iconPath": "/common/destiny2_content/icons/b995885ef6216361e63a093896f75735.jpg",
+      "source": "Source: Wild Card Exotic Quest",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "266021826",
+      "name": "Stoicism",
+      "iconPath": "/common/destiny2_content/icons/9db95c112130c018f823f394668cfb5a.jpg",
+      "source": "Source: Exploring the Pale Heart",
+      "category": "titan",
+      "armorSlot": "classItem"
+    },
+    {
+      "itemHash": "1747063685",
+      "name": "Stormdancer's Brace",
+      "iconPath": "/common/destiny2_content/icons/859cc21b703ec447b19b3ebeb553e63f.jpg",
+      "source": "Source: Shadowkeep Campaign",
+      "category": "warlock",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "512777670",
+      "name": "Stronghold",
+      "iconPath": "/common/destiny2_content/icons/94ea4f627e75d7f1d71304057c569c4f.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "2907129556",
+      "name": "Sturm",
+      "iconPath": "/common/destiny2_content/icons/bb7af8675b1aed2eb4f4eb14aaec9946.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "950745251",
+      "name": "Sunbracers",
+      "iconPath": "/common/destiny2_content/icons/220fda89a88058f84725ff1df39a9f5e.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "2907129557",
+      "name": "Sunshot",
+      "iconPath": "/common/destiny2_content/icons/f45a7d8e52bf0d88bbd43d4354878313.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "2856683562",
+      "name": "SUROS Regime",
+      "iconPath": "/common/destiny2_content/icons/42120a6f2e1f43dd7f67bedffc42d0d2.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "2100136540",
+      "name": "Swarmers",
+      "iconPath": "/common/destiny2_content/icons/6913d8a2546e53f6bbcba482e487477b.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "warlock",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "1345867570",
+      "name": "Sweet Business",
+      "iconPath": "/common/destiny2_content/icons/c674b162b08bb96e7f549ceb45060b6d.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "4017959782",
+      "name": "Symmetry",
+      "iconPath": "/common/destiny2_content/icons/55f9629f4674c351e3a2efd9ab9ca6e9.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "2002759681",
+      "name": "Synthoceps",
+      "iconPath": "/common/destiny2_content/icons/9f51bbad83aeb142eb56d9faf7440662.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "3110698812",
+      "name": "Tarrabah",
+      "iconPath": "/common/destiny2_content/icons/88ea7e35e14f29c4cda6588cb258333b.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "2208405142",
+      "name": "Telesto",
+      "iconPath": "/common/destiny2_content/icons/44cffedea1b6bc9800da018f2bd431dd.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "3561203890",
+      "name": "Tessellation",
+      "iconPath": "/common/destiny2_content/icons/1c2e9282803d516be01561423a0ea282.jpg",
+      "source": "Source: Pre-order Bonus",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "2177224557",
+      "name": "The Bombardiers",
+      "iconPath": "/common/destiny2_content/icons/be46f8bd0b86a84be7f77941a3e055fb.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "3413860062",
+      "name": "The Chaperone",
+      "iconPath": "/common/destiny2_content/icons/1d387ba81462f8f5abb63b4492b10dbe.jpg",
+      "source": "Source: An Exotic quest or challenge.",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3899270607",
+      "name": "The Colony",
+      "iconPath": "/common/destiny2_content/icons/3ae064e4a93ea26a394ff35171193eed.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "368733541",
+      "name": "The Dragon's Shadow",
+      "iconPath": "/common/destiny2_content/icons/560933bda212e02475df32cb7faefd5e.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "1665952087",
+      "name": "The Fourth Horseman",
+      "iconPath": "/common/destiny2_content/icons/74e1434dd585c5c305f4d331d05895c6.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "2286143274",
+      "name": "The Huckleberry",
+      "iconPath": "/common/destiny2_content/icons/1d3447f547dbfb395720aad4c0921018.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3844694310",
+      "name": "The Jade Rabbit",
+      "iconPath": "/common/destiny2_content/icons/f513e68c68d76392cffd52d94cc1410a.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3487253372",
+      "name": "The Lament",
+      "iconPath": "/common/destiny2_content/icons/f6844ca3eb572c546e97a340c24531d5.jpg",
+      "source": "Source: \"Lost Lament\" Exotic Quest",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "1364093401",
+      "name": "The Last Word",
+      "iconPath": "/common/destiny2_content/icons/a10719f1f2180e473ea9a0957e3b9fe4.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "219145368",
+      "name": "The Manticore",
+      "iconPath": "/common/destiny2_content/icons/b52c06c2497831876503dbbe795b1e59.jpg",
+      "source": "Source: Season Pass Reward",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "1441805468",
+      "name": "The Navigator",
+      "iconPath": "/common/destiny2_content/icons/4984c634a7d2eca3baafc000a121263d.jpg",
+      "source": "Source: \"Ghosts of the Deep\" Dungeon",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "4119704973",
+      "name": "The Path of Burning Steps",
+      "iconPath": "/common/destiny2_content/icons/7864518a9a8ab7c352d7a7e4c81e2e52.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "3549153979",
+      "name": "The Prospector",
+      "iconPath": "/common/destiny2_content/icons/09e0e23b932b8b713549ce8d8f4c5f4d.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "2044500762",
+      "name": "The Queenbreaker",
+      "iconPath": "/common/destiny2_content/icons/cc919daae4f005e9da7f2065fe8e29c4.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "1168370782",
+      "name": "The Sixth Coyote",
+      "iconPath": "/common/destiny2_content/icons/fe62cafbd9124a2ee12d35dbe6fdde3a.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "994038265",
+      "name": "The Stag",
+      "iconPath": "/common/destiny2_content/icons/0a1199008a6bf59ab699612b7035d79f.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "1508896098",
+      "name": "The Wardcliff Coil",
+      "iconPath": "/common/destiny2_content/icons/06d12929d1866159aca5cdb60282f908.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "2973900274",
+      "name": "Third Iteration",
+      "iconPath": "/common/destiny2_content/icons/8d3b7dcc3635e3526efa32cb119b3adf.jpg",
+      "source": "Source: Rewards Pass",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "3973202132",
+      "name": "Thorn",
+      "iconPath": "/common/destiny2_content/icons/d9fdb6774ff70cccd4161c13885d1258.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3325463374",
+      "name": "Thunderlord",
+      "iconPath": "/common/destiny2_content/icons/4a08027f7b5752f84d183ecc61682c3e.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "3260753130",
+      "name": "Ticuu's Divination",
+      "iconPath": "/common/destiny2_content/icons/39ef1673136f2f463879a83a44f11b0d.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "776191470",
+      "name": "Tommy's Matchbook",
+      "iconPath": "/common/destiny2_content/icons/251630147cd942ade9414781e96237ec.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "1802135586",
+      "name": "Touch of Malice",
+      "iconPath": "/common/destiny2_content/icons/106a8a40a6e55b5ec5088a26d1ed979d.jpg",
+      "source": "Source: \"King's Fall\" Raid",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "3580904581",
+      "name": "Tractor Cannon",
+      "iconPath": "/common/destiny2_content/icons/6afd31f787ff68d32e1f574686494606.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "3337759189",
+      "name": "Transversive Steps",
+      "iconPath": "/common/destiny2_content/icons/5c188812dc0dca96e015d2876e900637.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "legs"
+    },
+    {
+      "itemHash": "1853180924",
+      "name": "Traveler's Chosen",
+      "iconPath": "/common/destiny2_content/icons/6f0f3ab28d86316feb7fe27c5855ab4c.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "1234150730",
+      "name": "Trespasser",
+      "iconPath": "/common/destiny2_content/icons/7c997d607157b4f4c9bc5cbd273198e8.jpg",
+      "source": "Source: Season Pass Reward",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "814876685",
+      "name": "Trinity Ghoul",
+      "iconPath": "/common/destiny2_content/icons/ab33a7c7024299b28d8c6410d63e5bb5.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "1304266146",
+      "name": "Triton Vice",
+      "iconPath": "/common/destiny2_content/icons/8f4613a7a4d1d0cac4cddb50f81d965b.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "hunter",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "1201830623",
+      "name": "Truth",
+      "iconPath": "/common/destiny2_content/icons/b5021df721b66b6ab71e73b23e7b5392.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "2694576561",
+      "name": "Two-Tailed Fox",
+      "iconPath": "/common/destiny2_content/icons/c065e1c0d03d9648fcad7762031eede9.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "2046130360",
+      "name": "Ursa Furiosa",
+      "iconPath": "/common/destiny2_content/icons/a68810bdea4b8c45696315b1e07a9e7e.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "3659414143",
+      "name": "Verglas Curve",
+      "iconPath": "/common/destiny2_content/icons/48e2499dca00610a3349aed19256651a.jpg",
+      "source": "Source: Season Pass Reward",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "2553961985",
+      "name": "Verity's Brow",
+      "iconPath": "/common/destiny2_content/icons/e3a0690cafbf8109a34231f70476c8a0.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "3139221735",
+      "name": "Vesper of Radius",
+      "iconPath": "/common/destiny2_content/icons/f8e0d42b08a0a02f172f76d331326a8f.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "4289226715",
+      "name": "Vex Mythoclast",
+      "iconPath": "/common/destiny2_content/icons/111a10b59029fc6a9ca5e821267e6f6c.jpg",
+      "source": "Source: \"Vault of Glass\" Raid",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "3118061005",
+      "name": "Vexcalibur",
+      "iconPath": "/common/destiny2_content/icons/735baec8c23ff1416ae6a8c72c729432.jpg",
+      "source": "Source: //node.ovrd.AVALON// Exotic Quest",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "3628991659",
+      "name": "Vigilance Wing",
+      "iconPath": "/common/destiny2_content/icons/f33eed8e9c72f0e326d60691ec6e0f81.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "1852863732",
+      "name": "Wavesplitter",
+      "iconPath": "/common/destiny2_content/icons/ba5b1654cbc06d0ce057f5d99b315b7e.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "weapons",
+      "weaponSlot": "special"
+    },
+    {
+      "itemHash": "1202007252",
+      "name": "Whirling Ovation",
+      "iconPath": "/common/destiny2_content/icons/b91ed8db52e1a3c52e0f9bd69b290b9f.jpg",
+      "source": "Source: \"The Desert Perpetual\" Raid",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "1891561814",
+      "name": "Whisper of the Worm",
+      "iconPath": "/common/destiny2_content/icons/e47c31826843f6fd0aa863eac6fd093e.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "1983149589",
+      "name": "Whisper of the Worm",
+      "iconPath": "/common/destiny2_content/icons/e47c31826843f6fd0aa863eac6fd093e.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "940371471",
+      "name": "Wicked Implement",
+      "iconPath": "/common/destiny2_content/icons/0b506106c2cc195aaad59280be3b1fcc.jpg",
+      "source": "Source: Season of the Deep",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "1179169099",
+      "name": "Wings of Sacred Dawn",
+      "iconPath": "/common/destiny2_content/icons/97eadd6736bd5146bc28ff6d14bb2d8e.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "chest"
+    },
+    {
+      "itemHash": "900910756",
+      "name": "Winter's Guile",
+      "iconPath": "/common/destiny2_content/icons/0c586f183b821e16dd9b696c8e871d2b.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "warlock",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "3118061004",
+      "name": "Winterbite",
+      "iconPath": "/common/destiny2_content/icons/fdc14f2b28c77f9627f0629fdb540b76.jpg",
+      "source": "Source: Strider Exotic Quest",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "814876684",
+      "name": "Wish-Ender",
+      "iconPath": "/common/destiny2_content/icons/8e5d7a68305a0d1e53ccade9398c7e8b.jpg",
+      "source": "Source: An Exotic quest or challenge.",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "2910326942",
+      "name": "Wish-Keeper",
+      "iconPath": "/common/destiny2_content/icons/6b47d872840188bc913d6307fa537c3c.jpg",
+      "source": "Source: \"Starcrossed\" Mission",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "4157369212",
+      "name": "Wishful Ignorance",
+      "iconPath": "/common/destiny2_content/icons/e276ddbfe120ed49c38f24a5390143e1.jpg",
+      "source": "Exotic Armor Focusing",
+      "category": "titan",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "2357297366",
+      "name": "Witherhoard",
+      "iconPath": "/common/destiny2_content/icons/3e4fc5bcc1dea42508124e11572367d2.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "primary"
+    },
+    {
+      "itemHash": "1864563948",
+      "name": "Worldline Zero",
+      "iconPath": "/common/destiny2_content/icons/b1f0b22d4c7ffa680f84381b5a4a2e02.jpg",
+      "source": "Source: Exotic Archive at the Tower",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "1203306856",
+      "name": "Wormgod Caress",
+      "iconPath": "/common/destiny2_content/icons/3baea5888219c87acd58d177ae70f2c2.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "titan",
+      "armorSlot": "gauntlets"
+    },
+    {
+      "itemHash": "3721047650",
+      "name": "Wormhusk Crown",
+      "iconPath": "/common/destiny2_content/icons/791e1be2a37d4deff98d660f2d90c158.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "helmet"
+    },
+    {
+      "itemHash": "1395261499",
+      "name": "Xenophage",
+      "iconPath": "/common/destiny2_content/icons/de34570a93281dc201690cfd146e6d24.jpg",
+      "source": "Source: An Exotic quest or challenge.",
+      "category": "weapons",
+      "weaponSlot": "heavy"
+    },
+    {
+      "itemHash": "405059572",
+      "name": "Young Ahamkara's Spine",
+      "iconPath": "/common/destiny2_content/icons/e8ebba4e0fbbaf71de4bd188f072fe67.jpg",
+      "source": "Source: Exotic engrams; extremely rare world drops.",
+      "category": "hunter",
+      "armorSlot": "gauntlets"
+    }
+  ]
+}

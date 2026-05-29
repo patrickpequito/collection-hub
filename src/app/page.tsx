@@ -1,65 +1,110 @@
-import Image from "next/image";
+import Link from "next/link";
+import { HubBanner } from "@/components/hub-banner";
+import { BungieLoginButton } from "@/components/bungie-login-button";
+import { isBungieOAuthConfigured } from "@/lib/env";
+import { getSession } from "@/lib/session";
 
-export default function Home() {
+type HomeProps = {
+  searchParams: Promise<{
+    error?: string;
+    login?: string;
+    logout?: string;
+  }>;
+};
+
+export default async function Home({ searchParams }: HomeProps) {
+  const session = await getSession();
+  const params = await searchParams;
+  const oauthConfigured = isBungieOAuthConfigured();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-dvh bg-zinc-950 text-zinc-100">
+      <div className="mx-auto flex min-h-dvh max-w-5xl flex-col px-6 py-10 sm:py-14">
+        <header className="mb-10 flex flex-wrap items-start justify-between gap-6">
+          <div>
+            <p className="text-xs font-medium tracking-[0.25em] text-zinc-400">
+              COLLECTION HUB
+            </p>
+            <h1 className="mt-2 text-3xl font-semibold sm:text-4xl">
+              Destiny 2 Collection
+            </h1>
+            <p className="mt-2 max-w-lg text-sm text-zinc-400">
+              Track exotic gear and legendary armor sets. Sign in with Bungie to
+              highlight what you already own.
+            </p>
+          </div>
+
+          <div className="w-full min-w-[260px] max-w-sm rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4 sm:w-auto">
+            {params.error ? (
+              <div className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 p-2.5 text-xs text-red-200">
+                Sign-in error: {decodeURIComponent(params.error)}
+              </div>
+            ) : null}
+
+            {params.login === "success" ? (
+              <div className="mb-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-2.5 text-xs text-emerald-200">
+                Signed in successfully.
+              </div>
+            ) : null}
+
+            {params.logout === "success" ? (
+              <div className="mb-3 rounded-lg border border-zinc-700 bg-zinc-950/40 p-2.5 text-xs text-zinc-300">
+                You have signed out.
+              </div>
+            ) : null}
+
+            {session ? (
+              <div className="space-y-3">
+                <div>
+                  <p className="text-xs uppercase tracking-wide text-zinc-500">
+                    Signed in as
+                  </p>
+                  <p className="mt-0.5 font-semibold">{session.displayName}</p>
+                </div>
+                <form action="/api/auth/logout" method="post">
+                  <button
+                    type="submit"
+                    className="w-full rounded-xl border border-zinc-700 px-3 py-2 text-sm font-medium text-zinc-200 transition hover:bg-zinc-800"
+                  >
+                    Sign out
+                  </button>
+                </form>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                <BungieLoginButton configured={oauthConfigured} />
+                {!oauthConfigured ? (
+                  <p className="text-xs text-zinc-500">
+                    Configure OAuth in <code className="text-zinc-300">.env.local</code>{" "}
+                    to enable sign-in.
+                  </p>
+                ) : null}
+              </div>
+            )}
+          </div>
+        </header>
+
+        <div className="flex flex-1 flex-col justify-center gap-5 sm:gap-6">
+          <HubBanner
+            href="/exotics"
+            title="Exotics"
+            description="Weapons and armor. Browse by slot and class."
+            imageFile="exotics.webp"
+            accentClass="from-amber-950/90 via-zinc-900 to-zinc-950"
+          />
+          <HubBanner
+            href="/sets"
+            title="Armor sets"
+            description="Legendary sets from raids, dungeons, seasons, and more."
+            imageFile="armor-sets.webp"
+            accentClass="from-indigo-950/90 via-zinc-900 to-zinc-950"
+          />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        <footer className="mt-10 text-center text-xs text-zinc-600">
+          Catalogs work without signing in. Bungie login highlights owned items.
+        </footer>
+      </div>
+    </main>
   );
 }

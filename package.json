@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "generate:armor-sets": "node scripts/generate-armor-sets.mjs",
+    "generate:exotics": "node scripts/generate-exotics.mjs",
+    "setup:https": "mkdir -p certificates && test -f certificates/localhost.pem || openssl req -x509 -newkey rsa:2048 -keyout certificates/localhost-key.pem -out certificates/localhost.pem -days 365 -nodes -subj '/CN=127.0.0.1'",
+    "dev": "npm run setup:https && next dev --experimental-https --experimental-https-key ./certificates/localhost-key.pem --experimental-https-cert ./certificates/localhost.pem -H 127.0.0.1 -p 3000",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
