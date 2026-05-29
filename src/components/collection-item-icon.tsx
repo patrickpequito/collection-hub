@@ -15,8 +15,8 @@ type CollectionItemIconProps = {
 };
 
 const OWNED_BORDER_STYLES = {
-  gold: "border-amber-400/55 shadow-[0_0_4px_rgba(251,191,36,0.12)]",
-  green: "border-emerald-400/55 shadow-[0_0_4px_rgba(52,211,153,0.12)]",
+  gold: "border-2 border-amber-400/55 shadow-[0_0_4px_rgba(251,191,36,0.12)]",
+  green: "border-2 border-emerald-400/55 shadow-[0_0_4px_rgba(52,211,153,0.12)]",
 } as const;
 
 export function CollectionItemIcon({
