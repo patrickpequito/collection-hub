@@ -86,18 +86,22 @@ export default async function Home({ searchParams }: HomeProps) {
 
         <div className="flex flex-1 flex-col justify-center gap-5 sm:gap-6">
           <HubBanner
+            href="/rad-loot"
+            title="RAD Loot"
+            description="Raid and dungeon loot organized by activity."
+            imageFile="rad-loot.webp"
+          />
+          <HubBanner
             href="/exotics"
             title="Exotics"
             description="Weapons and armor. Browse by slot and class."
             imageFile="exotics.webp"
-            accentClass="from-amber-950/90 via-zinc-900 to-zinc-950"
           />
           <HubBanner
             href="/sets"
             title="Armor sets"
             description="Legendary sets from raids, dungeons, seasons, and more."
             imageFile="armor-sets.webp"
-            accentClass="from-indigo-950/90 via-zinc-900 to-zinc-950"
           />
         </div>
 

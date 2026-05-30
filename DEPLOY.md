@@ -8,9 +8,58 @@ This guide walks through publishing the app with [Vercel](https://vercel.com) (f
    - `public/data/armor-sets.json`
    - `public/data/exotics.json`
 2. **Never commit** `.env.local` (secrets stay out of Git).
-3. **Bungie allows one Redirect URL per application.** For local dev + production, either:
-   - Create **two Bungie apps** (recommended: one for dev, one for prod), or
-   - Change the Redirect URL in the portal when switching environments.
+3. **Bungie allows one Redirect URL per application.** Use **two Bungie apps**:
+   - **Production** → Vercel URL (env vars in Vercel)
+   - **Development** → `https://127.0.0.1:3000` (credentials in `.env.local` only)
+
+See [Local OAuth (dev app)](#local-oauth-dev-app) below.
+
+---
+
+## Local OAuth (dev app)
+
+If login works on Vercel but not on your Mac, your Bungie app probably points at production only.
+
+### 1 — Create a second Bungie application
+
+1. Go to [bungie.net/en/Application](https://www.bungie.net/en/Application)
+2. **Create New App** (e.g. name: `Collection HUB Dev`)
+3. Set:
+   - **OAuth Client Type:** Confidential
+   - **Redirect URL:** `https://127.0.0.1:3000/api/auth/callback`
+   - **Origin header:** `https://127.0.0.1:3000`
+4. Save and copy **API Key**, **Client ID**, and **Client Secret** for this **dev** app.
+
+### 2 — Update `.env.local` (local only)
+
+Open `.env.local` on your Mac. Use the **dev** app credentials:
+
+```bash
+BUNGIE_API_KEY=dev_api_key
+BUNGIE_CLIENT_ID=dev_client_id
+BUNGIE_CLIENT_SECRET=dev_client_secret
+BUNGIE_REDIRECT_URI=https://127.0.0.1:3000/api/auth/callback
+SESSION_SECRET=any_local_secret
+```
+
+Do **not** change Vercel env vars — those stay on the **production** app.
+
+### 3 — Restart and test locally
+
+```bash
+cd ~/Projects/d2-collector
+npm run dev
+```
+
+Open **https://127.0.0.1:3000** (not localhost), sign in, then check `/exotics` and `/sets`.
+
+### Summary
+
+| | Production (Vercel) | Development (your Mac) |
+|--|---------------------|-------------------------|
+| Bungie app | App 1 (live site) | App 2 (dev) |
+| Redirect URL | `https://yoursite.vercel.app/api/auth/callback` | `https://127.0.0.1:3000/api/auth/callback` |
+| Secrets stored in | Vercel dashboard | `.env.local` only |
 
 ---
 

@@ -6,7 +6,6 @@ type HubBannerProps = {
   description: string;
   /** Place image at public/images/banners/{imageFile} */
   imageFile: string;
-  accentClass: string;
 };
 
 export function HubBanner({
@@ -14,7 +13,6 @@ export function HubBanner({
   title,
   description,
   imageFile,
-  accentClass,
 }: HubBannerProps) {
   const imageUrl = `/images/banners/${imageFile}`;
 
@@ -24,11 +22,9 @@ export function HubBanner({
       className="group relative block overflow-hidden rounded-2xl border border-zinc-800 shadow-xl shadow-black/30 transition hover:border-zinc-600"
     >
       <div
-        className={`absolute inset-0 bg-gradient-to-br ${accentClass} bg-cover bg-center transition duration-500 group-hover:scale-[1.02]`}
+        className="absolute inset-0 bg-zinc-900 bg-cover bg-center transition duration-500 group-hover:scale-[1.02]"
         style={{ backgroundImage: `url(${imageUrl})` }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/25" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
 
       <div className="relative flex min-h-[200px] flex-col justify-end p-6 sm:min-h-[240px] sm:p-8 md:min-h-[280px]">
         <p className="text-xs font-medium uppercase tracking-[0.2em] text-zinc-400">

@@ -54,8 +54,8 @@ export default async function ExoticsPage() {
           <p className="mb-4 text-xs text-zinc-500">
             Signed in as {session.displayName}.
             {inventoryError
-              ? ` Inventory unavailable: ${inventoryError}`
-              : ` Tracking ${ownedItemHashes.length} items in your profile.`}
+              ? ` Collection unavailable: ${inventoryError}`
+              : ` Tracking ${ownedItemHashes.length} acquired items.`}
           </p>
         ) : (
           <p className="mb-4 text-xs text-amber-200/80">

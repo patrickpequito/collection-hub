@@ -51,7 +51,7 @@ export function ExoticsCatalog({
     <div className="space-y-6">
       {showOwnership ? (
         <p className="text-xs text-zinc-500">
-          Green border = in your inventory. Dimmed icons = not collected yet.
+          Green border = acquired. Dimmed icons = not collected yet.
           Hover an item for its source.
         </p>
       ) : null}

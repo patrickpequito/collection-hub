@@ -37,7 +37,7 @@ export function ArmorSetCatalog({
     <div className="space-y-6">
       {showOwnership ? (
         <p className="text-xs text-zinc-500">
-          Gold border = in your inventory. Dimmed icons = not collected yet.
+          Gold border = acquired. Dimmed icons = not collected yet.
           Hover a piece for its source.
         </p>
       ) : null}

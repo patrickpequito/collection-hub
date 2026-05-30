@@ -1,4 +1,5 @@
 import { getBungieApiKey } from "@/lib/env";
+import { expandAcquiredItemHashes } from "@/lib/item-acquisition-index";
 import type { BungieUserSession } from "@/lib/bungie";
 
 const BUNGIE_ORIGIN = "https://www.bungie.net";
@@ -33,6 +34,11 @@ type ProfileInventoryResponse = {
   };
   characterEquipment?: {
     data?: Record<string, { items?: InventoryItem[] }>;
+  };
+  profileCollectibles?: {
+    data?: {
+      collectibles?: Record<string, { state: number }>;
+    };
   };
 };
 
@@ -86,7 +92,7 @@ function pickDestinyMembership(
   return memberships[0];
 }
 
-function collectItemHashes(profile: ProfileInventoryResponse): Set<string> {
+function collectInventoryHashes(profile: ProfileInventoryResponse): Set<string> {
   const hashes = new Set<string>();
 
   for (const item of profile.profileInventory?.data?.items ?? []) {
@@ -110,6 +116,7 @@ function collectItemHashes(profile: ProfileInventoryResponse): Set<string> {
   return hashes;
 }
 
+/** Items currently held on characters or in the vault. */
 export async function fetchOwnedItemHashes(
   session: BungieUserSession,
 ): Promise<Set<string>> {
@@ -127,11 +134,15 @@ export async function fetchOwnedItemHashes(
     return new Set();
   }
 
-  const components = [102, 201, 202].join(",");
+  const components = [102, 201, 202, 800].join(",");
   const profile = await bungieGet<ProfileInventoryResponse>(
     `/Platform/Destiny2/${membership.membershipType}/Profile/${membership.membershipId}/?components=${components}`,
     session.accessToken,
   );
 
-  return collectItemHashes(profile);
+  const inventoryHashes = collectInventoryHashes(profile);
+  const collectibles =
+    profile.profileCollectibles?.data?.collectibles ?? {};
+
+  return expandAcquiredItemHashes({ inventoryHashes, collectibles });
 }
