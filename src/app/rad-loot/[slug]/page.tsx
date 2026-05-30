@@ -43,7 +43,7 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
         imageFile={activity.headerImageFile}
       />
 
-      <div className="mx-auto max-w-4xl space-y-6 px-6 py-8">
+      <div className="mx-auto max-w-4xl space-y-6 px-4 py-8 sm:px-6">
         <Link
           href="/rad-loot"
           className="inline-block text-sm text-zinc-400 underline-offset-2 hover:text-zinc-200 hover:underline"

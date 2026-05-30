@@ -23,7 +23,7 @@ export default async function SetsPage() {
 
   return (
     <main className="min-h-dvh bg-zinc-950 text-zinc-100">
-      <div className="mx-auto max-w-4xl px-6 py-10">
+      <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
         <header className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="text-xs font-medium tracking-[0.25em] text-zinc-400">

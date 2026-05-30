@@ -19,18 +19,18 @@ export function ArmorSetCard({
   showOwnership = false,
 }: ArmorSetCardProps) {
   return (
-    <article className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
+    <article className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
       <header className="mb-3 border-b border-zinc-800 pb-3">
         <h2 className="text-lg font-semibold text-zinc-100">{set.name}</h2>
       </header>
 
       <div className="space-y-3">
         {GUARDIAN_CLASSES.map((guardianClass) => (
-          <div key={guardianClass} className="flex items-center gap-3">
-            <span className="w-16 shrink-0 text-xs font-medium text-zinc-400">
+          <div key={guardianClass} className="flex items-center gap-2 sm:gap-3">
+            <span className="w-10 shrink-0 text-[10px] font-medium text-zinc-400 sm:w-16 sm:text-xs">
               {CLASS_LABELS[guardianClass]}
             </span>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-nowrap gap-1 sm:gap-2">
               {ARMOR_SLOTS.map((slot) => {
                 const piece = set.classes[guardianClass]?.[slot];
                 const owned = piece

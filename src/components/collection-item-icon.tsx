@@ -48,7 +48,7 @@ export function CollectionItemIcon({
         alt={name}
         width={48}
         height={48}
-        className={`h-12 w-12 rounded-md border bg-zinc-900 object-cover transition duration-200 ease-out hover:scale-110 hover:brightness-110 ${ownedStyles} ${unownedStyles}`}
+        className={`h-10 w-10 rounded-md border bg-zinc-900 object-cover transition duration-200 ease-out hover:scale-110 hover:brightness-110 sm:h-12 sm:w-12 ${ownedStyles} ${unownedStyles}`}
         unoptimized
       />
 
