@@ -28,25 +28,20 @@ export function ActivityArmorSection({
             <p className="text-xs text-zinc-500">
               {CLASS_LABELS[row.guardianClass]} — {row.setName}
             </p>
-            <div className="flex items-center gap-2 sm:gap-3">
-              <span className="w-10 shrink-0 text-[10px] font-medium text-zinc-400 sm:w-16 sm:text-xs">
-                {CLASS_LABELS[row.guardianClass]}
-              </span>
-              <div className="flex flex-nowrap gap-1 sm:gap-2">
-                {ARMOR_SLOTS.map((slot) => {
-                  const piece = row.pieces[slot];
-                  return (
-                    <ArmorPieceIcon
-                      key={`${row.guardianClass}-${slot}`}
-                      piece={piece}
-                      slotLabel={SLOT_LABELS[slot]}
-                      sourceLabel={piece.source}
-                      owned={ownedItemHashes.has(piece.itemHash)}
-                      showOwnership={showOwnership}
-                    />
-                  );
-                })}
-              </div>
+            <div className="flex flex-nowrap gap-1.5">
+              {ARMOR_SLOTS.map((slot) => {
+                const piece = row.pieces[slot];
+                return (
+                  <ArmorPieceIcon
+                    key={`${row.guardianClass}-${slot}`}
+                    piece={piece}
+                    slotLabel={SLOT_LABELS[slot]}
+                    sourceLabel={piece.source}
+                    owned={ownedItemHashes.has(piece.itemHash)}
+                    showOwnership={showOwnership}
+                  />
+                );
+              })}
             </div>
           </div>
         ))}

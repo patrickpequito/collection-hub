@@ -12,7 +12,14 @@ type CollectionItemIconProps = {
   showOwnership?: boolean;
   /** Border color when owned. Exotics use green; armor sets use gold. */
   ownedBorder?: "gold" | "green";
+  /** Display size in pixels. Default 48. Armor sets use 50. */
+  size?: 48 | 50;
 };
+
+const SIZE_CLASSES = {
+  48: "h-12 w-12",
+  50: "h-[50px] w-[50px]",
+} as const;
 
 const OWNED_BORDER_STYLES = {
   gold: "border-2 border-[rgb(255,188,0)] shadow-[0_0_6px_rgba(255,188,0,0.8)]",
@@ -26,6 +33,7 @@ export function CollectionItemIcon({
   owned = false,
   showOwnership = false,
   ownedBorder = "gold",
+  size = 48,
 }: CollectionItemIconProps) {
   const [hovered, setHovered] = useState(false);
 
@@ -46,9 +54,9 @@ export function CollectionItemIcon({
       <Image
         src={bungieIconUrl(iconPath)}
         alt={name}
-        width={48}
-        height={48}
-        className={`h-10 w-10 rounded-md border bg-zinc-900 object-cover transition duration-200 ease-out hover:scale-110 hover:brightness-110 sm:h-12 sm:w-12 ${ownedStyles} ${unownedStyles}`}
+        width={size}
+        height={size}
+        className={`${SIZE_CLASSES[size]} rounded-md border bg-zinc-900 object-cover transition duration-200 ease-out hover:scale-110 hover:brightness-110 ${ownedStyles} ${unownedStyles}`}
         unoptimized
       />
 

@@ -1,6 +1,5 @@
 import {
   ARMOR_SLOTS,
-  CLASS_LABELS,
   GUARDIAN_CLASSES,
   SLOT_LABELS,
 } from "@/lib/armor-sets/constants";
@@ -26,29 +25,24 @@ export function ArmorSetCard({
 
       <div className="space-y-3">
         {GUARDIAN_CLASSES.map((guardianClass) => (
-          <div key={guardianClass} className="flex items-center gap-2 sm:gap-3">
-            <span className="w-10 shrink-0 text-[10px] font-medium text-zinc-400 sm:w-16 sm:text-xs">
-              {CLASS_LABELS[guardianClass]}
-            </span>
-            <div className="flex flex-nowrap gap-1 sm:gap-2">
-              {ARMOR_SLOTS.map((slot) => {
-                const piece = set.classes[guardianClass]?.[slot];
-                const owned = piece
-                  ? ownedItemHashes?.has(piece.itemHash) ?? false
-                  : false;
+          <div key={guardianClass} className="flex flex-nowrap gap-1.5">
+            {ARMOR_SLOTS.map((slot) => {
+              const piece = set.classes[guardianClass]?.[slot];
+              const owned = piece
+                ? ownedItemHashes?.has(piece.itemHash) ?? false
+                : false;
 
-                return (
-                  <ArmorPieceIcon
-                    key={`${guardianClass}-${slot}`}
-                    piece={piece}
-                    slotLabel={SLOT_LABELS[slot]}
-                    sourceLabel={set.source}
-                    owned={owned}
-                    showOwnership={showOwnership}
-                  />
-                );
-              })}
-            </div>
+              return (
+                <ArmorPieceIcon
+                  key={`${guardianClass}-${slot}`}
+                  piece={piece}
+                  slotLabel={SLOT_LABELS[slot]}
+                  sourceLabel={set.source}
+                  owned={owned}
+                  showOwnership={showOwnership}
+                />
+              );
+            })}
           </div>
         ))}
       </div>
