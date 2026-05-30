@@ -19,7 +19,7 @@ export function ArmorPieceIcon({
   if (!piece?.iconPath) {
     return (
       <div
-        className="flex h-[50px] w-[50px] items-center justify-center rounded-md border border-dashed border-zinc-700 bg-zinc-900/60 text-[10px] text-zinc-500"
+        className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-dashed border-zinc-700 bg-zinc-900/60 text-[10px] text-zinc-500"
         title={`Missing ${slotLabel}`}
       >
         —
@@ -34,7 +34,7 @@ export function ArmorPieceIcon({
       source={sourceLabel}
       owned={owned}
       showOwnership={showOwnership}
-      size={50}
+      size={60}
     />
   );
 }

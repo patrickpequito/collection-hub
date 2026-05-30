@@ -12,13 +12,13 @@ type CollectionItemIconProps = {
   showOwnership?: boolean;
   /** Border color when owned. Exotics use green; armor sets use gold. */
   ownedBorder?: "gold" | "green";
-  /** Display size in pixels. Default 48. Armor sets use 50. */
-  size?: 48 | 50;
+  /** Display size in pixels. Default 48. Armor sets use 60. */
+  size?: 48 | 60;
 };
 
 const SIZE_CLASSES = {
   48: "h-12 w-12",
-  50: "h-[50px] w-[50px]",
+  60: "h-[60px] w-[60px]",
 } as const;
 
 const OWNED_BORDER_STYLES = {
