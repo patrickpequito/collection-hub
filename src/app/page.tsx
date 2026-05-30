@@ -24,8 +24,8 @@ export default async function Home({ searchParams }: HomeProps) {
       <div className="mx-auto flex min-h-[calc(100dvh-3rem)] max-w-5xl flex-col px-6 py-10 sm:py-14">
         <header className="mb-10 flex flex-wrap items-start justify-between gap-6">
           <div>
-            <h1 className="text-3xl font-semibold sm:text-4xl">
-              Destiny 2 Collection
+            <h1 className="text-2xl font-semibold sm:text-3xl md:text-4xl">
+              Destiny 2 Collection Hub
             </h1>
             <p className="mt-2 max-w-lg text-sm text-zinc-400">
               Track exotic gear and legendary armor sets. Sign in with Bungie to

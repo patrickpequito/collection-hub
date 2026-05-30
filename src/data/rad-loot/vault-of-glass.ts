@@ -83,7 +83,7 @@ export const vaultOfGlassLoot: ActivityLootPage = {
         classItem: item(
           "3012927512",
           "Light of the Great Prism",
-          "/common/destiny2_content/icons/46846499b0905ddee6c6cad00bcec75.jpg",
+          "/common/destiny2_content/icons/46846499b0905ddee6c6cad00bcec75f.jpg",
           VOG_SOURCE,
         ),
       },

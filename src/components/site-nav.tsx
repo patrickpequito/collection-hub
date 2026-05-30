@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -27,8 +28,16 @@ export function SiteNav() {
       <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link
           href="/"
-          className="text-xs font-medium tracking-[0.2em] text-zinc-400 transition hover:text-zinc-200"
+          className="flex items-center gap-1.5 text-xs font-medium tracking-[0.2em] text-zinc-400 transition hover:text-zinc-200"
         >
+          <Image
+            src="/icon.png"
+            alt=""
+            width={12}
+            height={12}
+            className="h-[1em] w-[1em] shrink-0 opacity-60"
+            unoptimized
+          />
           COLLECTION HUB
         </Link>
 
