@@ -4,32 +4,38 @@ import {
   fetchCurrentBungieUser,
   tokenResponseToSession,
 } from "@/lib/bungie";
+import { appendQueryParam } from "@/lib/auth-return-to";
 import { getAppOrigin, getBungieOAuthConfig } from "@/lib/env";
-import { consumeOAuthState, setSession } from "@/lib/session";
+import {
+  consumeOAuthReturnTo,
+  consumeOAuthState,
+  setSession,
+} from "@/lib/session";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const base = getAppOrigin();
+  const returnTo = await consumeOAuthReturnTo();
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
   const bungieError = url.searchParams.get("error");
 
   if (bungieError) {
     return NextResponse.redirect(
-      new URL(`/?error=${encodeURIComponent(bungieError)}`, base),
+      new URL(appendQueryParam(returnTo, "error", bungieError), base),
     );
   }
 
   if (!code) {
     return NextResponse.redirect(
-      new URL("/?error=missing_code", base),
+      new URL(appendQueryParam(returnTo, "error", "missing_code"), base),
     );
   }
 
   const stateOk = await consumeOAuthState(state);
   if (!stateOk) {
     return NextResponse.redirect(
-      new URL("/?error=invalid_state", base),
+      new URL(appendQueryParam(returnTo, "error", "invalid_state"), base),
     );
   }
 
@@ -47,12 +53,14 @@ export async function GET(request: Request) {
 
     await setSession(session);
 
-    return NextResponse.redirect(new URL("/?login=success", base));
+    return NextResponse.redirect(
+      new URL(appendQueryParam(returnTo, "login", "success"), base),
+    );
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Failed to complete sign-in";
     return NextResponse.redirect(
-      new URL(`/?error=${encodeURIComponent(message)}`, base),
+      new URL(appendQueryParam(returnTo, "error", message), base),
     );
   }
 }

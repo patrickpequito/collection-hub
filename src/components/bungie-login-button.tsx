@@ -1,3 +1,7 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 type BungieLoginButtonProps = {
   configured: boolean;
   variant?: "default" | "compact";
@@ -7,6 +11,9 @@ export function BungieLoginButton({
   configured,
   variant = "default",
 }: BungieLoginButtonProps) {
+  const pathname = usePathname();
+  const loginHref = `/api/auth/bungie?returnTo=${encodeURIComponent(pathname)}`;
+
   if (!configured) {
     if (variant === "compact") {
       return (
@@ -32,7 +39,7 @@ export function BungieLoginButton({
 
   return (
     <a
-      href="/api/auth/bungie"
+      href={loginHref}
       className={variant === "compact" ? compactClass : defaultClass}
     >
       Sign in with Bungie
