@@ -26,15 +26,14 @@ export function HubBanner({
         style={{ backgroundImage: `url(${imageUrl})` }}
       />
 
-      <div className="relative flex min-h-[200px] flex-col justify-end p-6 sm:min-h-[240px] sm:p-8 md:min-h-[280px]">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-zinc-400">
-          Browse
-        </p>
-        <h2 className="mt-1 text-2xl font-semibold text-white sm:text-3xl">
+      <div className="relative flex min-h-[140px] flex-col justify-end p-4 sm:min-h-[240px] sm:p-8 md:min-h-[280px]">
+        <h2 className="text-xl font-semibold text-white sm:text-2xl md:text-3xl">
           {title}
         </h2>
-        <p className="mt-2 max-w-md text-sm text-zinc-300">{description}</p>
-        <span className="mt-4 inline-flex w-fit items-center text-sm font-medium text-amber-300 transition group-hover:text-amber-200">
+        <p className="mt-1 max-w-md text-xs text-zinc-300 sm:mt-2 sm:text-sm">
+          {description}
+        </p>
+        <span className="mt-2 inline-flex w-fit items-center text-xs font-medium text-amber-300 transition group-hover:text-amber-200 sm:mt-4 sm:text-sm">
           Open catalog →
         </span>
       </div>
