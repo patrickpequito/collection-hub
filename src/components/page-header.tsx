@@ -1,12 +1,10 @@
-type ActivityPageHeaderProps = {
+type PageHeaderProps = {
   title: string;
-  /** File in public/images/rad-loot/headers/ */
-  imageFile: string;
+  /** Path under public/, e.g. /images/banners/exotics.webp */
+  imageUrl: string;
 };
 
-export function ActivityPageHeader({ title, imageFile }: ActivityPageHeaderProps) {
-  const imageUrl = `/images/rad-loot/headers/${imageFile}`;
-
+export function PageHeader({ title, imageUrl }: PageHeaderProps) {
   return (
     <header className="relative h-[200px] w-full overflow-hidden border-b border-zinc-800">
       <div

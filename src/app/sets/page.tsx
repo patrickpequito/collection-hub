@@ -1,12 +1,15 @@
-import Link from "next/link";
 import { ArmorSetCatalog } from "@/components/armor-set-catalog";
+import { SectionPageLayout } from "@/components/section-page-layout";
 import { fetchOwnedItemHashes } from "@/lib/destiny-inventory";
+import { isBungieOAuthConfigured } from "@/lib/env";
 import { loadArmorSetCatalog } from "@/lib/armor-sets/load";
+import { PAGE_HEADERS } from "@/lib/page-headers";
 import { getSession } from "@/lib/session";
 
 export default async function SetsPage() {
   const session = await getSession();
   const catalog = await loadArmorSetCatalog();
+  const oauthConfigured = isBungieOAuthConfigured();
 
   let ownedItemHashes: string[] = [];
   let inventoryError: string | null = null;
@@ -22,54 +25,34 @@ export default async function SetsPage() {
   }
 
   return (
-    <main className="min-h-dvh bg-zinc-950 text-zinc-100">
-      <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
-        <header className="mb-8 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <p className="text-xs font-medium tracking-[0.25em] text-zinc-400">
-              COLLECTION HUB
-            </p>
-            <h1 className="mt-1 text-2xl font-semibold">Armor sets</h1>
-            <p className="mt-1 text-sm text-zinc-400">
-              Legendary armor sets by activity type ({catalog.sets.length}{" "}
-              sets).
-            </p>
-          </div>
-          <div className="flex gap-4 text-sm">
-            <Link
-              href="/exotics"
-              className="text-zinc-400 underline-offset-2 hover:text-zinc-200 hover:underline"
-            >
-              Exotics
-            </Link>
-            <Link
-              href="/"
-              className="text-zinc-400 underline-offset-2 hover:text-zinc-200 hover:underline"
-            >
-              ← Home
-            </Link>
-          </div>
-        </header>
+    <SectionPageLayout
+      title="Armor sets"
+      imageUrl={PAGE_HEADERS.armorSets}
+      session={session}
+      oauthConfigured={oauthConfigured}
+    >
+      <p className="text-sm text-zinc-400">
+        Legendary armor sets by activity type ({catalog.sets.length} sets).
+      </p>
 
-        {session ? (
-          <p className="mb-4 text-xs text-zinc-500">
-            Signed in as {session.displayName}.
-            {inventoryError
-              ? ` Collection unavailable: ${inventoryError}`
-              : ` Tracking ${ownedItemHashes.length} acquired items.`}
-          </p>
-        ) : (
-          <p className="mb-4 text-xs text-amber-200/80">
-            Sign in from the home page to highlight pieces you already own.
-          </p>
-        )}
+      {session ? (
+        <p className="text-xs text-zinc-500">
+          Signed in as {session.displayName}.
+          {inventoryError
+            ? ` Collection unavailable: ${inventoryError}`
+            : ` Tracking ${ownedItemHashes.length} acquired items.`}
+        </p>
+      ) : (
+        <p className="text-xs text-amber-200/80">
+          Sign in to highlight pieces you already own.
+        </p>
+      )}
 
-        <ArmorSetCatalog
-          sets={catalog.sets}
-          ownedItemHashes={ownedItemHashes}
-          showOwnership={Boolean(session && !inventoryError)}
-        />
-      </div>
-    </main>
+      <ArmorSetCatalog
+        sets={catalog.sets}
+        ownedItemHashes={ownedItemHashes}
+        showOwnership={Boolean(session && !inventoryError)}
+      />
+    </SectionPageLayout>
   );
 }

@@ -18,7 +18,7 @@ export function LootItemGrid({
   exoticItemHashes,
 }: LootItemGridProps) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-1.5">
       {items.map((item) => (
         <CollectionItemIcon
           key={item.itemHash}

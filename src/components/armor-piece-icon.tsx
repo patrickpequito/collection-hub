@@ -34,7 +34,6 @@ export function ArmorPieceIcon({
       source={sourceLabel}
       owned={owned}
       showOwnership={showOwnership}
-      size={60}
     />
   );
 }

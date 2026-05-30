@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { HubBanner } from "@/components/hub-banner";
+import { SiteNav } from "@/components/site-nav";
 import { BungieLoginButton } from "@/components/bungie-login-button";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { getSession } from "@/lib/session";
@@ -19,13 +19,12 @@ export default async function Home({ searchParams }: HomeProps) {
 
   return (
     <main className="min-h-dvh bg-zinc-950 text-zinc-100">
-      <div className="mx-auto flex min-h-dvh max-w-5xl flex-col px-6 py-10 sm:py-14">
+      <SiteNav />
+
+      <div className="mx-auto flex min-h-[calc(100dvh-3rem)] max-w-5xl flex-col px-6 py-10 sm:py-14">
         <header className="mb-10 flex flex-wrap items-start justify-between gap-6">
           <div>
-            <p className="text-xs font-medium tracking-[0.25em] text-zinc-400">
-              COLLECTION HUB
-            </p>
-            <h1 className="mt-2 text-3xl font-semibold sm:text-4xl">
+            <h1 className="text-3xl font-semibold sm:text-4xl">
               Destiny 2 Collection
             </h1>
             <p className="mt-2 max-w-lg text-sm text-zinc-400">
@@ -75,8 +74,9 @@ export default async function Home({ searchParams }: HomeProps) {
                 <BungieLoginButton configured={oauthConfigured} />
                 {!oauthConfigured ? (
                   <p className="text-xs text-zinc-500">
-                    Configure OAuth in <code className="text-zinc-300">.env.local</code>{" "}
-                    to enable sign-in.
+                    Configure OAuth in{" "}
+                    <code className="text-zinc-300">.env.local</code> to enable
+                    sign-in.
                   </p>
                 ) : null}
               </div>

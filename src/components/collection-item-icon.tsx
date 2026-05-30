@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useState } from "react";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 
+const ICON_SIZE = 60;
+
 type CollectionItemIconProps = {
   name: string;
   iconPath: string;
@@ -12,14 +14,7 @@ type CollectionItemIconProps = {
   showOwnership?: boolean;
   /** Border color when owned. Exotics use green; armor sets use gold. */
   ownedBorder?: "gold" | "green";
-  /** Display size in pixels. Default 48. Armor sets use 60. */
-  size?: 48 | 60;
 };
-
-const SIZE_CLASSES = {
-  48: "h-12 w-12",
-  60: "h-[60px] w-[60px]",
-} as const;
 
 const OWNED_BORDER_STYLES = {
   gold: "border-2 border-[rgb(255,188,0)] shadow-[0_0_6px_rgba(255,188,0,0.8)]",
@@ -33,7 +28,6 @@ export function CollectionItemIcon({
   owned = false,
   showOwnership = false,
   ownedBorder = "gold",
-  size = 48,
 }: CollectionItemIconProps) {
   const [hovered, setHovered] = useState(false);
 
@@ -54,9 +48,9 @@ export function CollectionItemIcon({
       <Image
         src={bungieIconUrl(iconPath)}
         alt={name}
-        width={size}
-        height={size}
-        className={`${SIZE_CLASSES[size]} rounded-md border bg-zinc-900 object-cover transition duration-200 ease-out hover:scale-110 hover:brightness-110 ${ownedStyles} ${unownedStyles}`}
+        width={ICON_SIZE}
+        height={ICON_SIZE}
+        className={`h-[60px] w-[60px] rounded-md border bg-zinc-900 object-cover transition duration-200 ease-out hover:scale-110 hover:brightness-110 ${ownedStyles} ${unownedStyles}`}
         unoptimized
       />
 
