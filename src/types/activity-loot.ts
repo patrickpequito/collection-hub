@@ -24,6 +24,8 @@ export type ActivityLootPage = {
   armorSets: ActivityArmorRow[];
   weapons: LootItem[];
   timelostWeapons: LootItem[];
+  /** Defaults to "Timelost Weapons" when omitted. */
+  timelostWeaponsTitle?: string;
   other: LootItem[];
 };
 

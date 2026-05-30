@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { ActivityArmorSection } from "@/components/activity-armor-section";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import { LootSection } from "@/components/loot-section";
-import { getActivityLootPage } from "@/data/rad-loot/vault-of-glass";
+import { getActivityLootPage } from "@/data/rad-loot/activity-pages";
 import { fetchOwnedItemHashes } from "@/lib/destiny-inventory";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { activityHeaderUrl } from "@/lib/page-headers";
@@ -12,7 +12,10 @@ type ActivityPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-const VOG_EXOTIC_HASHES = new Set(["4289226715", "2907216422"]);
+const ACTIVITY_EXOTIC_HASHES: Record<string, Set<string>> = {
+  "vault-of-glass": new Set(["4289226715", "2907216422"]),
+  "crotas-end": new Set(["1034055198", "1934481780", "2091889892"]),
+};
 
 export default async function ActivityLootPage({ params }: ActivityPageProps) {
   const { slug } = await params;
@@ -37,6 +40,7 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
   }
 
   const showOwnership = Boolean(session && !inventoryError);
+  const exoticItemHashes = ACTIVITY_EXOTIC_HASHES[slug] ?? new Set<string>();
 
   return (
     <SectionPageLayout
@@ -46,16 +50,15 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
       oauthConfigured={oauthConfigured}
       backLink={{ href: "/rad-loot", label: "← RAD Loot" }}
     >
-      {session ? (
+      {inventoryError ? (
         <p className="text-xs text-zinc-500">
-          Signed in as {session.displayName}.
-          {inventoryError ? ` Collection unavailable: ${inventoryError}` : null}
+          Collection unavailable: {inventoryError}
         </p>
-      ) : (
+      ) : !session ? (
         <p className="text-xs text-amber-200/80">
           Sign in to highlight items you own.
         </p>
-      )}
+      ) : null}
 
       {showOwnership ? (
         <p className="text-xs text-zinc-500">
@@ -75,11 +78,11 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
         items={activity.weapons}
         ownedItemHashes={ownedItemHashes}
         showOwnership={showOwnership}
-        exoticItemHashes={VOG_EXOTIC_HASHES}
+        exoticItemHashes={exoticItemHashes}
       />
 
       <LootSection
-        title="Timelost Weapons"
+        title={activity.timelostWeaponsTitle ?? "Timelost Weapons"}
         items={activity.timelostWeapons}
         ownedItemHashes={ownedItemHashes}
         showOwnership={showOwnership}
@@ -90,7 +93,7 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
         items={activity.other}
         ownedItemHashes={ownedItemHashes}
         showOwnership={showOwnership}
-        exoticItemHashes={VOG_EXOTIC_HASHES}
+        exoticItemHashes={exoticItemHashes}
       />
     </SectionPageLayout>
   );

@@ -5,7 +5,12 @@ export type CollectibleItem = {
   source: string;
 };
 
-export type ExoticCategory = "weapons" | "hunter" | "titan" | "warlock";
+export type ExoticCategory =
+  | "weapons"
+  | "catalysts"
+  | "hunter"
+  | "titan"
+  | "warlock";
 
 export type WeaponSlot = "primary" | "special" | "heavy";
 

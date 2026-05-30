@@ -32,10 +32,16 @@ function relateHash(hash: string, expanded: Set<string>) {
 export function expandAcquiredItemHashes(input: {
   inventoryHashes: Iterable<string>;
   collectibles: Record<string, { state: number }>;
+  /** Unlocked plugs (e.g. catalysts) from profile/character plug sets and item sockets. */
+  plugHashes?: Iterable<string>;
 }): Set<string> {
   const expanded = new Set<string>();
 
   for (const hash of input.inventoryHashes) {
+    relateHash(hash, expanded);
+  }
+
+  for (const hash of input.plugHashes ?? []) {
     relateHash(hash, expanded);
   }
 

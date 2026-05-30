@@ -8,13 +8,13 @@
 | **Size** | **2400 × 640 px** (same as other home banners) |
 | **Ratio** | 15 : 4 |
 
-## Activity page header (e.g. Vault of Glass)
+## Activity page header (e.g. Vault of Glass, Crota's End)
 
 Full-width strip, **200 px tall** on screen. The image uses `background-size: cover`, so it crops to fill width on any device.
 
 | | |
 |---|---|
-| **Path** | `public/images/rad-loot/headers/vault-of-glass-header.webp` |
+| **Path** | `public/images/rad-loot/headers/{slug}-header.webp` (e.g. `vault-of-glass-header.webp`, `crotas-end-header.webp`) |
 | **Recommended size** | **2400 × 400 px** (6 : 1) |
 | **Minimum** | **1200 × 200 px** |
 
@@ -26,14 +26,15 @@ Full-width strip, **200 px tall** on screen. The image uses `background-size: co
 
 ## Small activity banners
 
-Banners are **140 px** tall on screen. The page layout stays narrow (two columns, ~470 px wide each on desktop).
+Banners are **140 px** tall on screen. The page uses two columns on desktop (~470 px wide each).
 
-Design your image at **1400 px** wide — that is the artboard size, not the CSS width on screen. A 1400 px-wide file avoids the heavy cropping you get with ultra-wide images (e.g. 2400 px).
+Design your image at a proportion close to what is visible on screen (~**3.4 : 1**), not ultra-wide art that will crop heavily with `object-cover`.
 
 | | |
 |---|---|
 | **Path** | `public/images/rad-loot/activities/{filename}` |
-| **Recommended size** | **1400 × 350 px** (4 : 1) |
+| **Recommended size** | **480 × 140 px** (matches desktop column width) |
+| **Alternative** | **960 × 280 px** for Retina, or **1400 × 350 px** (4 : 1) with key art on the left |
 | **Format** | WebP or JPG, sRGB |
 
-Images use `object-cover` anchored to the **left**. Keep title and key art on the left; the right edge may crop slightly on desktop columns (~3.4 : 1 visible).
+Images use `object-cover` anchored to the **left**. Keep title and key art on the left; the right edge may crop slightly on wider viewports.

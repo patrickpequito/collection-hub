@@ -239,12 +239,6 @@ export const vaultOfGlassLoot: ActivityLootPage = {
       'Source: Eververse — complete the "Vault of Glass" raid to unlock.',
     ),
     item(
-      "2510169795",
-      "Exotemporal",
-      "/common/destiny2_content/icons/3c251b702026fee24488eac5cbd3a2e2.jpg",
-      VOG_SOURCE,
-    ),
-    item(
       "2510169794",
       "Infinite Reflections",
       "/common/destiny2_content/icons/0a59f5a322e2e6e36d03aa6eafaf60c3.jpg",
@@ -252,11 +246,3 @@ export const vaultOfGlassLoot: ActivityLootPage = {
     ),
   ],
 };
-
-const ACTIVITY_PAGES: Record<string, ActivityLootPage> = {
-  "vault-of-glass": vaultOfGlassLoot,
-};
-
-export function getActivityLootPage(slug: string): ActivityLootPage | null {
-  return ACTIVITY_PAGES[slug] ?? null;
-}

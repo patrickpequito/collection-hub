@@ -7,24 +7,31 @@ import {
   countExoticsByCategory,
   EXOTIC_TABS,
   filterExoticsByCategory,
+  groupCatalystsByWeaponSlot,
   groupExoticsByArmorSlot,
   groupExoticsByWeaponSlot,
   WEAPON_SECTIONS,
 } from "@/lib/exotics/constants";
+import type { CatalystItem } from "@/types/catalyst-item";
 import type { ExoticCategory, ExoticItem } from "@/types/exotic-item";
 
 type ExoticsCatalogProps = {
   items: ExoticItem[];
+  catalysts: CatalystItem[];
   ownedItemHashes?: string[];
   showOwnership?: boolean;
 };
 
 export function ExoticsCatalog({
   items,
+  catalysts,
   ownedItemHashes = [],
   showOwnership = false,
 }: ExoticsCatalogProps) {
-  const counts = useMemo(() => countExoticsByCategory(items), [items]);
+  const counts = useMemo(
+    () => countExoticsByCategory(items, catalysts.length),
+    [items, catalysts.length],
+  );
   const [activeTab, setActiveTab] = useState<ExoticCategory>("weapons");
 
   const ownedSet = useMemo(
@@ -45,6 +52,11 @@ export function ExoticsCatalog({
   const armorGroups = useMemo(
     () => groupExoticsByArmorSlot(tabItems),
     [tabItems],
+  );
+
+  const catalystGroups = useMemo(
+    () => groupCatalystsByWeaponSlot(catalysts),
+    [catalysts],
   );
 
   return (
@@ -74,7 +86,7 @@ export function ExoticsCatalog({
         ))}
       </nav>
 
-      {activeTab === "weapons" ? (
+      {activeTab === "weapons" || activeTab === "catalysts" ? (
         <div className="space-y-6">
           {WEAPON_SECTIONS.map((section) => (
             <section key={section.id}>
@@ -82,7 +94,11 @@ export function ExoticsCatalog({
                 {section.label}
               </h2>
               <ExoticItemGrid
-                items={weaponGroups[section.id]}
+                items={
+                  activeTab === "weapons"
+                    ? weaponGroups[section.id]
+                    : catalystGroups[section.id]
+                }
                 ownedItemHashes={ownedSet}
                 showOwnership={showOwnership}
               />

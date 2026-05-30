@@ -1,3 +1,4 @@
+import { collectOwnedCatalystHashes } from "@/lib/catalyst-ownership";
 import { getBungieApiKey } from "@/lib/env";
 import { expandAcquiredItemHashes } from "@/lib/item-acquisition-index";
 import type { BungieUserSession } from "@/lib/bungie";
@@ -23,6 +24,30 @@ type MembershipsResponse = {
 
 type InventoryItem = {
   itemHash: number;
+  itemInstanceId?: string;
+};
+
+type ItemInstanceComponent = {
+  isMasterwork?: boolean;
+};
+
+type DestinyItemPlug = {
+  plugItemHash?: number;
+  canInsert?: boolean;
+  enabled?: boolean;
+};
+
+type DestinyPlugSetsComponent = {
+  plugs?: Record<string, DestinyItemPlug[]>;
+};
+
+type DestinyItemSocketState = {
+  plug?: DestinyItemPlug;
+  isEquipped?: boolean;
+};
+
+type DestinyItemSocketsComponent = {
+  sockets?: DestinyItemSocketState[];
 };
 
 type ProfileInventoryResponse = {
@@ -39,6 +64,29 @@ type ProfileInventoryResponse = {
     data?: {
       collectibles?: Record<string, { state: number }>;
     };
+  };
+  profilePlugSets?: {
+    data?: DestinyPlugSetsComponent;
+  };
+  characterPlugSets?: {
+    data?: Record<string, DestinyPlugSetsComponent>;
+  };
+  itemComponents?: {
+    instances?: {
+      data?: Record<string, ItemInstanceComponent>;
+    };
+    sockets?: {
+      data?: Record<string, DestinyItemSocketsComponent>;
+    };
+  };
+  characters?: {
+    data?: Record<string, unknown>;
+  };
+  profileRecords?: {
+    data?: { records?: Record<string, { state: number }> };
+  };
+  characterRecords?: {
+    data?: Record<string, { records?: Record<string, { state: number }> }>;
   };
 };
 
@@ -92,24 +140,88 @@ function pickDestinyMembership(
   return memberships[0];
 }
 
-function collectInventoryHashes(profile: ProfileInventoryResponse): Set<string> {
-  const hashes = new Set<string>();
+function collectInventoryItems(
+  profile: ProfileInventoryResponse,
+): InventoryItem[] {
+  const items: InventoryItem[] = [];
 
   for (const item of profile.profileInventory?.data?.items ?? []) {
-    hashes.add(String(item.itemHash));
+    items.push(item);
   }
 
   for (const bucket of Object.values(
     profile.characterInventories?.data ?? {},
   )) {
     for (const item of bucket.items ?? []) {
-      hashes.add(String(item.itemHash));
+      items.push(item);
     }
   }
 
   for (const bucket of Object.values(profile.characterEquipment?.data ?? {})) {
     for (const item of bucket.items ?? []) {
+      items.push(item);
+    }
+  }
+
+  return items;
+}
+
+function collectInventoryHashes(profile: ProfileInventoryResponse): Set<string> {
+  const hashes = new Set<string>();
+  for (const item of collectInventoryItems(profile)) {
+    hashes.add(String(item.itemHash));
+  }
+  return hashes;
+}
+
+function collectMasterworkWeaponHashes(
+  profile: ProfileInventoryResponse,
+): Set<string> {
+  const instances = profile.itemComponents?.instances?.data ?? {};
+  const hashes = new Set<string>();
+
+  for (const item of collectInventoryItems(profile)) {
+    if (!item.itemInstanceId) continue;
+    const instance = instances[item.itemInstanceId];
+    if (instance?.isMasterwork) {
       hashes.add(String(item.itemHash));
+    }
+  }
+
+  return hashes;
+}
+
+function collectUnlockedPlugHashes(
+  profile: ProfileInventoryResponse,
+): Set<string> {
+  const hashes = new Set<string>();
+
+  const considerPlug = (plug: DestinyItemPlug | undefined) => {
+    if (!plug?.plugItemHash) return;
+    if (plug.canInsert || plug.enabled) {
+      hashes.add(String(plug.plugItemHash));
+    }
+  };
+
+  for (const plugs of Object.values(profile.profilePlugSets?.data?.plugs ?? {})) {
+    for (const plug of plugs) considerPlug(plug);
+  }
+
+  for (const charId of Object.keys(profile.characters?.data ?? {})) {
+    const charPlugSets = profile.characterPlugSets?.data?.[charId];
+    for (const plugs of Object.values(charPlugSets?.plugs ?? {})) {
+      for (const plug of plugs) considerPlug(plug);
+    }
+  }
+
+  for (const itemSockets of Object.values(
+    profile.itemComponents?.sockets?.data ?? {},
+  )) {
+    for (const socket of itemSockets.sockets ?? []) {
+      considerPlug(socket.plug);
+      if (socket.isEquipped && socket.plug?.plugItemHash) {
+        hashes.add(String(socket.plug.plugItemHash));
+      }
     }
   }
 
@@ -134,7 +246,7 @@ export async function fetchOwnedItemHashes(
     return new Set();
   }
 
-  const components = [102, 201, 202, 800].join(",");
+  const components = [102, 200, 201, 205, 300, 305, 800, 900].join(",");
   const profile = await bungieGet<ProfileInventoryResponse>(
     `/Platform/Destiny2/${membership.membershipType}/Profile/${membership.membershipId}/?components=${components}`,
     session.accessToken,
@@ -143,6 +255,21 @@ export async function fetchOwnedItemHashes(
   const inventoryHashes = collectInventoryHashes(profile);
   const collectibles =
     profile.profileCollectibles?.data?.collectibles ?? {};
+  const plugHashes = collectUnlockedPlugHashes(profile);
+  const catalystHashes = collectOwnedCatalystHashes({
+    profileRecords: profile.profileRecords?.data?.records,
+    characterRecordsByCharacter: profile.characterRecords?.data,
+    unlockedPlugHashes: plugHashes,
+    masterworkWeaponHashes: collectMasterworkWeaponHashes(profile),
+  });
 
-  return expandAcquiredItemHashes({ inventoryHashes, collectibles });
+  for (const hash of catalystHashes) {
+    inventoryHashes.add(hash);
+  }
+
+  return expandAcquiredItemHashes({
+    inventoryHashes,
+    collectibles,
+    plugHashes,
+  });
 }

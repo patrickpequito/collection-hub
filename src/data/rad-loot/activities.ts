@@ -2,7 +2,12 @@ import type { ActivityEntry } from "@/types/activity-loot";
 
 export const RAIDS: ActivityEntry[] = [
   { slug: "vault-of-glass", title: "Vault of Glass", available: true, imageFile: "vault-of-glass.webp" },
-  { slug: "crotas-end", title: "Crota's End", available: false },
+  {
+    slug: "crotas-end",
+    title: "Crota's End",
+    available: true,
+    imageFile: "crotas-end.webp",
+  },
   { slug: "kings-fall", title: "King's Fall", available: false },
   { slug: "leviathan", title: "Leviathan", available: false },
   { slug: "last-wish", title: "Last Wish", available: false },

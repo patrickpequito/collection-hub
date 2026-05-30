@@ -1,10 +1,22 @@
 "use client";
 
 import { CollectionItemIcon } from "@/components/collection-item-icon";
-import type { ExoticItem } from "@/types/exotic-item";
+import type { CollectibleItem } from "@/types/exotic-item";
+
+type OwnableItem = CollectibleItem & {
+  alternateItemHashes?: string[];
+};
+
+function isItemOwned(item: OwnableItem, ownedItemHashes: Set<string>): boolean {
+  if (ownedItemHashes.has(item.itemHash)) return true;
+  for (const hash of item.alternateItemHashes ?? []) {
+    if (ownedItemHashes.has(hash)) return true;
+  }
+  return false;
+}
 
 type ExoticItemGridProps = {
-  items: ExoticItem[];
+  items: OwnableItem[];
   ownedItemHashes: Set<string>;
   showOwnership: boolean;
 };
@@ -26,7 +38,7 @@ export function ExoticItemGrid({
           name={item.name}
           iconPath={item.iconPath}
           source={item.source}
-          owned={ownedItemHashes.has(item.itemHash)}
+          owned={isItemOwned(item, ownedItemHashes)}
           showOwnership={showOwnership}
           ownedBorder="green"
         />
