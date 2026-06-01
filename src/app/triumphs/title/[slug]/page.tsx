@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { TitleDetailPanel } from "@/components/title-detail-panel";
-import { TriumphRecordList } from "@/components/triumph-record-list";
+import { TriumphsListSection } from "@/components/triumphs-list-section";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import { fetchRecordInstances } from "@/lib/destiny-records";
 import { isBungieOAuthConfigured } from "@/lib/env";
@@ -65,10 +65,6 @@ export default async function TitlePage({ params }: TitlePageProps) {
         <p className="text-xs text-amber-200/80">
           Progress unavailable: {recordsError}
         </p>
-      ) : !session ? (
-        <p className="text-xs text-amber-200/80">
-          Sign in to see title progress.
-        </p>
       ) : null}
 
       <div className="grid gap-8 lg:grid-cols-3">
@@ -86,12 +82,13 @@ export default async function TitlePage({ params }: TitlePageProps) {
         </div>
 
         <div className="lg:col-span-2">
-          <TriumphRecordList
+          <TriumphsListSection
             records={title.records}
-            recordInstances={recordInstances}
+            recordInstances={Object.fromEntries(recordInstances)}
             showProgress={showProgress}
-            strictCompletion
-            variant="title"
+            signInMessage={
+              !session ? "Sign in to see title progress." : undefined
+            }
           />
         </div>
       </div>

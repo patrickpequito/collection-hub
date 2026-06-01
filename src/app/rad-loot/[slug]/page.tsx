@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
+import { TriumphsListSection } from "@/components/triumphs-list-section";
 import { ActivityArmorSection } from "@/components/activity-armor-section";
 import { LootSection } from "@/components/loot-section";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import { TitleDetailPanel } from "@/components/title-detail-panel";
-import { TriumphRecordList } from "@/components/triumph-record-list";
 import { getActivityLootPage } from "@/data/rad-loot/activity-pages";
 import { fetchOwnedItemHashes } from "@/lib/destiny-inventory";
 import { fetchRecordInstances } from "@/lib/destiny-records";
@@ -145,19 +145,14 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
         </div>
 
         {title ? (
-          <div className="space-y-6 lg:col-span-2">
-            {!session ? (
-              <p className="text-xs text-amber-200/80">
-                Sign in to see title progress.
-              </p>
-            ) : null}
-
-            <TriumphRecordList
+          <div className="lg:col-span-2">
+            <TriumphsListSection
               records={title.records}
-              recordInstances={recordInstances}
+              recordInstances={Object.fromEntries(recordInstances)}
               showProgress={showTitleProgress}
-              strictCompletion
-              variant="title"
+              signInMessage={
+                !session ? "Sign in to see title progress." : undefined
+              }
             />
           </div>
         ) : null}

@@ -1,3 +1,5 @@
+"use client";
+
 import { TriumphRecordRow } from "@/components/triumph-record-row";
 import type { RecordInstance, TriumphRecord } from "@/types/triumph";
 

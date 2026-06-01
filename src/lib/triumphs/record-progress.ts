@@ -219,6 +219,24 @@ export type DisplayObjective = {
   complete: boolean;
 };
 
+export function isTriumphRecordDisplayComplete(
+  record: TriumphRecord,
+  instance: RecordInstance | undefined,
+  options?: { strictCompletion?: boolean; showProgress?: boolean },
+): boolean {
+  if (!options?.showProgress) return false;
+
+  const strictCompletion = options.strictCompletion ?? false;
+  const complete = strictCompletion
+    ? isTitleTriumphComplete(instance)
+    : isRecordInstanceComplete(record, instance);
+  const objectives = getDisplayObjectives(record, instance, { strictCompletion });
+
+  return (
+    complete || (objectives.length > 0 && objectives.every((objective) => objective.complete))
+  );
+}
+
 export function getDisplayObjectives(
   record: TriumphRecord,
   instance: RecordInstance | undefined,
