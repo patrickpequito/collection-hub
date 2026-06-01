@@ -21,6 +21,8 @@ const MAX_WIDTH_CLASSES = {
   "5xl": "max-w-5xl",
 } as const;
 
+const HOME_BACK_LINK = { href: "/", label: "← Home" } as const;
+
 export function SectionPageLayout({
   title,
   imageUrl,
@@ -28,7 +30,7 @@ export function SectionPageLayout({
   oauthConfigured,
   children,
   maxWidth = "4xl",
-  backLink,
+  backLink = HOME_BACK_LINK,
 }: SectionPageLayoutProps) {
   return (
     <main className="min-h-dvh bg-zinc-950 text-zinc-100">

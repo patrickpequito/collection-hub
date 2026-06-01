@@ -2,6 +2,7 @@
 export const PAGE_HEADERS = {
   radLoot: "/images/banners/rad-loot.webp",
   exotics: "/images/banners/exotics.webp",
+  triumphs: "/images/banners/triumphs.webp",
   armorSets: "/images/banners/armor-sets.webp",
 } as const;
 

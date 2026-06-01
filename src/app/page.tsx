@@ -98,6 +98,12 @@ export default async function Home({ searchParams }: HomeProps) {
             imageFile="exotics.webp"
           />
           <HubBanner
+            href="/triumphs"
+            title="Triumphs"
+            description="Track triumph groups and title progress."
+            imageFile="triumphs.webp"
+          />
+          <HubBanner
             href="/sets"
             title="Armor sets"
             description="Legendary sets from raids, dungeons, seasons, and more."
