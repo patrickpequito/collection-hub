@@ -18,6 +18,8 @@ export type TriumphRecord = {
   iconPath: string;
   score: number;
   forTitleGilding: boolean;
+  /** Interval triumphs — stepped thresholds on one cumulative counter. */
+  progressStyle?: "default" | "interval";
   objectives: TriumphObjective[];
   rewards: TriumphReward[];
 };

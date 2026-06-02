@@ -217,7 +217,88 @@ export type DisplayObjective = {
   progress: number;
   completionValue: number;
   complete: boolean;
+  intervalThresholds?: number[];
 };
+
+export type IntervalSegmentState = "empty" | "partial" | "complete";
+
+export type IntervalSegment = {
+  state: IntervalSegmentState;
+  partialRatio: number;
+};
+
+export function getIntervalSegments(
+  progress: number,
+  thresholds: number[],
+): IntervalSegment[] {
+  return thresholds.map((threshold, index) => {
+    const previousThreshold = index === 0 ? 0 : thresholds[index - 1];
+
+    if (progress >= threshold) {
+      return { state: "complete", partialRatio: 1 };
+    }
+
+    if (progress > previousThreshold) {
+      return {
+        state: "partial",
+        partialRatio: (progress - previousThreshold) / (threshold - previousThreshold),
+      };
+    }
+
+    return { state: "empty", partialRatio: 0 };
+  });
+}
+
+function getIntervalProgress(
+  record: TriumphRecord,
+  progressByHash: Map<string, RecordObjectiveProgress>,
+  recordComplete: boolean,
+) {
+  const objectives = record.objectives
+    .slice()
+    .sort((a, b) => a.completionValue - b.completionValue);
+  const thresholds = objectives.map((objective) => objective.completionValue);
+  const total = thresholds[thresholds.length - 1] ?? 1;
+
+  let progress = 0;
+  for (let index = 0; index < objectives.length; index += 1) {
+    const manifestObjective = objectives[index];
+    const live = progressByHash.get(manifestObjective.objectiveHash);
+    if (!live) continue;
+
+    const previousThreshold = index === 0 ? 0 : thresholds[index - 1];
+    const threshold = manifestObjective.completionValue;
+
+    if (live.complete) {
+      progress = Math.max(progress, threshold);
+      continue;
+    }
+
+    const liveProgress = live.progress ?? 0;
+    if (liveProgress <= 0) continue;
+
+    // Bungie usually reports cumulative progress on the active interval objective.
+    if (liveProgress > previousThreshold) {
+      progress = Math.max(progress, Math.min(liveProgress, threshold));
+      continue;
+    }
+
+    // Fallback: segment-local progress within the current interval.
+    progress = Math.max(
+      progress,
+      Math.min(previousThreshold + liveProgress, threshold),
+    );
+  }
+
+  const complete = recordComplete || progress >= total;
+
+  return {
+    progress: complete ? total : Math.min(progress, total),
+    total,
+    thresholds,
+    complete,
+  };
+}
 
 export function isTriumphRecordDisplayComplete(
   record: TriumphRecord,
@@ -255,6 +336,23 @@ export function getDisplayObjectives(
   const recordComplete = strict
     ? isTitleTriumphComplete(instance)
     : isRecordInstanceComplete(record, instance);
+
+  if (record.progressStyle === "interval") {
+    const interval = getIntervalProgress(record, progressByHash, recordComplete);
+    const label =
+      record.objectives.find((objective) => objective.progressDescription)
+        ?.progressDescription || record.name;
+
+    return [
+      {
+        label,
+        progress: interval.progress,
+        completionValue: interval.total,
+        complete: interval.complete,
+        intervalThresholds: interval.thresholds,
+      },
+    ];
+  }
 
   return record.objectives.map((manifestObjective) => {
     const live = progressByHash.get(manifestObjective.objectiveHash);

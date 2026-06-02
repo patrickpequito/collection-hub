@@ -1,8 +1,10 @@
 import Image from "next/image";
-import { TrimmedRewardIcon } from "@/components/trimmed-reward-icon";
+import { TriumphRewardIcon } from "@/components/triumph-reward-icon";
 import { bungieIconUrl } from "@/lib/bungie-icon";
+import { isIncreasedDropRateReward } from "@/lib/triumph-reward-icon";
 import {
   getDisplayObjectives,
+  getIntervalSegments,
   isRecordInstanceComplete,
   isTitleTriumphComplete,
   type DisplayObjective,
@@ -52,6 +54,61 @@ function CompletionBox({
   );
 }
 
+function IntervalObjectiveProgressRow({
+  objective,
+  variant,
+  isTitleVariant,
+  fallbackLabel,
+}: {
+  objective: DisplayObjective;
+  variant: "group" | "title";
+  isTitleVariant: boolean;
+  fallbackLabel?: string;
+}) {
+  const thresholds = objective.intervalThresholds ?? [];
+  const segments = getIntervalSegments(objective.progress, thresholds);
+  const displayProgress = Math.min(objective.progress, objective.completionValue);
+
+  return (
+    <div className="flex items-center gap-2">
+      <CompletionBox complete={objective.complete} variant={variant} />
+
+      <div
+        className={`relative min-h-6 min-w-0 flex-1 overflow-hidden bg-zinc-800 ${
+          isTitleVariant ? "" : "rounded-sm"
+        }`}
+      >
+        <div className="absolute inset-0 flex gap-[3px] bg-zinc-950 p-[2px]">
+          {segments.map((segment, index) => (
+            <div
+              key={`${objective.label}-${index}`}
+              className="relative min-w-0 flex-1 overflow-hidden bg-zinc-800"
+            >
+              {segment.state === "complete" ? (
+                <div className="absolute inset-0 bg-[#c2a342]/60" />
+              ) : null}
+              {segment.state === "partial" ? (
+                <div
+                  className="absolute inset-y-0 left-0 bg-[#5e5233]/80"
+                  style={{ width: `${segment.partialRatio * 100}%` }}
+                />
+              ) : null}
+            </div>
+          ))}
+        </div>
+        <div className="relative flex min-h-6 items-center justify-between gap-2 px-2">
+          <span className="truncate text-[11px] text-zinc-200">
+            {objective.label || fallbackLabel}
+          </span>
+          <span className="shrink-0 tabular-nums text-[11px] text-zinc-300">
+            {displayProgress}/{objective.completionValue}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ObjectiveProgressRow({
   objective,
   variant,
@@ -84,7 +141,7 @@ function ObjectiveProgressRow({
       >
         <div
           className={`absolute inset-y-0 left-0 ${
-            objective.complete ? "bg-[#c9a227]/35" : "bg-zinc-600/70"
+            objective.complete ? "bg-[#c2a342]/60" : "bg-[#5e5233]/80"
           }`}
           style={{
             width: objective.complete ? "100%" : `${objectivePercent}%`,
@@ -158,15 +215,25 @@ export function TriumphRecordRow({
           {showProgress && (objectives.length > 0 || !record.objectives.length) ? (
             <div className="mt-2.5 space-y-2">
               {objectives.length > 0 ? (
-                objectives.map((objective, index) => (
-                  <ObjectiveProgressRow
-                    key={`${record.recordHash}-${index}`}
-                    objective={objective}
-                    variant={variant}
-                    isTitleVariant={isTitleVariant}
-                    fallbackLabel={record.name}
-                  />
-                ))
+                objectives.map((objective, index) =>
+                  objective.intervalThresholds?.length ? (
+                    <IntervalObjectiveProgressRow
+                      key={`${record.recordHash}-${index}`}
+                      objective={objective}
+                      variant={variant}
+                      isTitleVariant={isTitleVariant}
+                      fallbackLabel={record.name}
+                    />
+                  ) : (
+                    <ObjectiveProgressRow
+                      key={`${record.recordHash}-${index}`}
+                      objective={objective}
+                      variant={variant}
+                      isTitleVariant={isTitleVariant}
+                      fallbackLabel={record.name}
+                    />
+                  ),
+                )
               ) : (
                 <ObjectiveProgressRow
                   objective={{
@@ -187,61 +254,62 @@ export function TriumphRecordRow({
             <div className={isTitleVariant ? "mt-3 space-y-2" : "mt-2 space-y-1.5"}>
               {record.rewards.map((reward) => {
                 const rewardIcon = bungieIconUrl(reward.iconPath);
-                const rewardContent = (
-                  <div className="flex items-center gap-2">
-                    <div className="relative h-8 w-8 shrink-0 overflow-hidden">
-                      {rewardIcon ? (
-                        <Image
-                          src={rewardIcon}
-                          alt=""
-                          fill
-                          className="object-contain"
-                          sizes="32px"
-                          unoptimized
-                        />
-                      ) : null}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="truncate text-xs font-medium text-zinc-200">
-                        {reward.name}
+                const dropRateReward = isIncreasedDropRateReward(reward.iconPath);
+                const rewardText = (
+                  <div className="min-w-0">
+                    <p className="truncate text-xs font-medium text-zinc-200">
+                      {reward.name}
+                    </p>
+                    {reward.itemType ? (
+                      <p className="truncate text-[11px] text-zinc-500/80">
+                        {reward.itemType}
                       </p>
-                      {reward.itemType ? (
-                        <p className="truncate text-[11px] text-zinc-500/80">
-                          {reward.itemType}
-                        </p>
-                      ) : null}
-                    </div>
+                    ) : null}
                   </div>
                 );
 
                 if (isTitleVariant) {
+                  if (dropRateReward) {
+                    return (
+                      <div
+                        key={reward.itemHash}
+                        className="flex items-center gap-2.5 py-1"
+                      >
+                        {rewardIcon ? (
+                          <TriumphRewardIcon src={rewardIcon} size="title" />
+                        ) : null}
+                        {rewardText}
+                      </div>
+                    );
+                  }
+
                   return (
                     <div
                       key={reward.itemHash}
                       className="flex border border-zinc-800 bg-zinc-950/50"
                     >
-                      <div className="flex w-14 shrink-0 items-center overflow-x-hidden border-r border-zinc-800">
+                      <div className="flex shrink-0 items-center justify-center border-r border-zinc-800">
                         {rewardIcon ? (
-                          <TrimmedRewardIcon src={rewardIcon} alt="" />
+                          <TriumphRewardIcon src={rewardIcon} size="title" />
                         ) : null}
                       </div>
                       <div className="flex min-w-0 flex-1 items-center p-2">
-                        <div className="min-w-0">
-                          <p className="truncate text-xs font-medium text-zinc-200">
-                            {reward.name}
-                          </p>
-                          {reward.itemType ? (
-                            <p className="truncate text-[11px] text-zinc-500/80">
-                              {reward.itemType}
-                            </p>
-                          ) : null}
-                        </div>
+                        {rewardText}
                       </div>
                     </div>
                   );
                 }
 
-                return <div key={reward.itemHash}>{rewardContent}</div>;
+                return (
+                  <div key={reward.itemHash}>
+                    <div className="flex items-center gap-2">
+                      {rewardIcon ? (
+                        <TriumphRewardIcon src={rewardIcon} size="group" />
+                      ) : null}
+                      {rewardText}
+                    </div>
+                  </div>
+                );
               })}
             </div>
           ) : null}

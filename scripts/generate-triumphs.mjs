@@ -51,25 +51,42 @@ async function fetchJson(path) {
   return res.json();
 }
 
+function buildObjectiveDef(objectives, objectiveHash) {
+  const objective = objectives[objectiveHash];
+  if (!objective) return null;
+
+  return {
+    objectiveHash: String(objectiveHash),
+    progressDescription:
+      objective.progressDescription ??
+      objective.displayProperties?.description ??
+      objective.displayProperties?.name ??
+      "",
+    completionValue: objective.completionValue ?? 1,
+  };
+}
+
 function buildRecord(records, objectives, items, recordHash) {
   const def = records[recordHash];
   if (!def?.displayProperties?.name) return null;
 
-  const objectiveDefs = (def.objectiveHashes ?? [])
-    .map((objectiveHash) => {
-      const objective = objectives[objectiveHash];
-      if (!objective) return null;
-      return {
-        objectiveHash: String(objectiveHash),
-        progressDescription:
-          objective.progressDescription ??
-          objective.displayProperties?.description ??
-          objective.displayProperties?.name ??
-          "",
-        completionValue: objective.completionValue ?? 1,
-      };
-    })
+  let objectiveDefs = (def.objectiveHashes ?? [])
+    .map((objectiveHash) => buildObjectiveDef(objectives, objectiveHash))
     .filter(Boolean);
+  let progressStyle = "default";
+
+  if (
+    !objectiveDefs.length &&
+    def.intervalInfo?.intervalObjectives?.length
+  ) {
+    objectiveDefs = def.intervalInfo.intervalObjectives
+      .map((entry) =>
+        buildObjectiveDef(objectives, entry.intervalObjectiveHash),
+      )
+      .filter(Boolean)
+      .sort((a, b) => a.completionValue - b.completionValue);
+    progressStyle = "interval";
+  }
 
   const rewards = (def.rewardItems ?? [])
     .map((reward) => {
@@ -91,6 +108,7 @@ function buildRecord(records, objectives, items, recordHash) {
     iconPath: def.displayProperties.icon ?? "",
     score: def.completionInfo?.ScoreValue ?? def.completionInfo?.Score ?? 0,
     forTitleGilding: Boolean(def.forTitleGilding),
+    progressStyle,
     objectives: objectiveDefs,
     rewards,
   };

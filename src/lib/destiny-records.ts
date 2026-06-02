@@ -28,14 +28,18 @@ type MembershipsResponse = {
   primaryMembershipId?: string | null;
 };
 
+type ApiObjectiveProgress = {
+  objectiveHash: number;
+  progress?: number;
+  completionValue?: number;
+  complete?: boolean;
+};
+
 type ApiRecordInstance = {
   state: number;
-  objectives?: Array<{
-    objectiveHash: number;
-    progress?: number;
-    completionValue?: number;
-    complete?: boolean;
-  }>;
+  objectives?: ApiObjectiveProgress[];
+  /** Stepped triumphs (e.g. 3/10/20) — progress lives here, not in objectives. */
+  intervalObjectives?: ApiObjectiveProgress[];
 };
 
 type ProfileRecordsResponse = {
@@ -98,7 +102,7 @@ function pickDestinyMembership(
 }
 
 function normalizeObjectives(
-  objectives: ApiRecordInstance["objectives"],
+  objectives: ApiObjectiveProgress[] | undefined,
 ): RecordObjectiveProgress[] {
   return (objectives ?? []).map((objective) => ({
     objectiveHash: String(objective.objectiveHash),
@@ -106,6 +110,15 @@ function normalizeObjectives(
     completionValue: objective.completionValue ?? 1,
     complete: Boolean(objective.complete),
   }));
+}
+
+function apiRecordObjectives(
+  record: ApiRecordInstance,
+): RecordObjectiveProgress[] {
+  return normalizeObjectives([
+    ...(record.objectives ?? []),
+    ...(record.intervalObjectives ?? []),
+  ]);
 }
 
 function mergeRecordInstances(
@@ -117,7 +130,7 @@ function mergeRecordInstances(
     if (!existing) {
       target.set(recordHash, {
         state: record.state,
-        objectives: normalizeObjectives(record.objectives),
+        objectives: apiRecordObjectives(record),
       });
       continue;
     }
@@ -126,7 +139,7 @@ function mergeRecordInstances(
       state: mergeRecordState(existing.state, record.state),
       objectives: mergeObjectiveProgress(
         existing.objectives,
-        normalizeObjectives(record.objectives),
+        apiRecordObjectives(record),
       ),
     });
   }
@@ -151,7 +164,7 @@ export async function fetchRecordInstances(
   }
 
   const profile = await bungieGet<ProfileRecordsResponse>(
-    `/Platform/Destiny2/${membership.membershipType}/Profile/${membership.membershipId}/?components=900,902`,
+    `/Platform/Destiny2/${membership.membershipType}/Profile/${membership.membershipId}/?components=900`,
     session.accessToken,
   );
 
