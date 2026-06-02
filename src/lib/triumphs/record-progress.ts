@@ -261,33 +261,21 @@ function getIntervalProgress(
   const total = thresholds[thresholds.length - 1] ?? 1;
 
   let progress = 0;
-  for (let index = 0; index < objectives.length; index += 1) {
-    const manifestObjective = objectives[index];
+  for (const manifestObjective of objectives) {
     const live = progressByHash.get(manifestObjective.objectiveHash);
     if (!live) continue;
 
-    const previousThreshold = index === 0 ? 0 : thresholds[index - 1];
     const threshold = manifestObjective.completionValue;
 
     if (live.complete) {
-      progress = Math.max(progress, threshold);
+      progress = threshold;
       continue;
     }
 
     const liveProgress = live.progress ?? 0;
-    if (liveProgress <= 0) continue;
-
-    // Bungie usually reports cumulative progress on the active interval objective.
-    if (liveProgress > previousThreshold) {
+    if (liveProgress > 0) {
       progress = Math.max(progress, Math.min(liveProgress, threshold));
-      continue;
     }
-
-    // Fallback: segment-local progress within the current interval.
-    progress = Math.max(
-      progress,
-      Math.min(previousThreshold + liveProgress, threshold),
-    );
   }
 
   const complete = recordComplete || progress >= total;

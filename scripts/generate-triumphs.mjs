@@ -66,6 +66,42 @@ function buildObjectiveDef(objectives, objectiveHash) {
   };
 }
 
+function buildRewardDef(items, reward) {
+  const item = items[reward.itemHash];
+  if (!item?.displayProperties?.name) return null;
+
+  return {
+    itemHash: String(reward.itemHash),
+    name: item.displayProperties.name,
+    itemType: item.itemTypeDisplayName ?? "",
+    iconPath: item.displayProperties.icon ?? "",
+  };
+}
+
+function collectRecordRewards(def, items) {
+  const rewards = [];
+  const seen = new Set();
+
+  const addReward = (reward) => {
+    const built = buildRewardDef(items, reward);
+    if (!built || seen.has(built.itemHash)) return;
+    seen.add(built.itemHash);
+    rewards.push(built);
+  };
+
+  for (const reward of def.rewardItems ?? []) {
+    addReward(reward);
+  }
+
+  for (const interval of def.intervalInfo?.intervalRewards ?? []) {
+    for (const reward of interval.intervalRewardItems ?? []) {
+      addReward(reward);
+    }
+  }
+
+  return rewards;
+}
+
 function buildRecord(records, objectives, items, recordHash) {
   const def = records[recordHash];
   if (!def?.displayProperties?.name) return null;
@@ -88,18 +124,7 @@ function buildRecord(records, objectives, items, recordHash) {
     progressStyle = "interval";
   }
 
-  const rewards = (def.rewardItems ?? [])
-    .map((reward) => {
-      const item = items[reward.itemHash];
-      if (!item?.displayProperties?.name) return null;
-      return {
-        itemHash: String(reward.itemHash),
-        name: item.displayProperties.name,
-        itemType: item.itemTypeDisplayName ?? "",
-        iconPath: item.displayProperties.icon ?? "",
-      };
-    })
-    .filter(Boolean);
+  const rewards = collectRecordRewards(def, items);
 
   return {
     recordHash: String(recordHash),

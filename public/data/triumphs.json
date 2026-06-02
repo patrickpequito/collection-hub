@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-02T06:25:56.532Z",
+  "generatedAt": "2026-06-02T07:25:56.186Z",
   "groups": [
     {
       "slug": "lifetime",
@@ -389,7 +389,14 @@
               "completionValue": 7
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "3467984096",
+              "name": "Exotic Cipher",
+              "itemType": "Currency",
+              "iconPath": "/common/destiny2_content/icons/9970631fe1052642c268132dfc30e16b.jpg"
+            }
+          ]
         },
         {
           "recordHash": "4279903136",
@@ -7705,7 +7712,14 @@
               "completionValue": 6
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "2350141119",
+              "name": "Increases the chance for an extra weapon trait on Adept weapons drops",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/ceb26dbc0191c695ccc712c81385a9ee.png"
+            }
+          ]
         },
         {
           "recordHash": "3123571268",
@@ -7757,7 +7771,14 @@
               "completionValue": 8
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "2460229326",
+              "name": "The Rubicon",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/589c8c1a5e1880bed11c9ea1cc7ac7e5.png"
+            }
+          ]
         },
         {
           "recordHash": "2270690863",
@@ -8326,7 +8347,14 @@
               "completionValue": 11
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "4031236762",
+              "name": "The First Knife",
+              "itemType": "Ship",
+              "iconPath": "/common/destiny2_content/icons/03f4c8d6216212134fb599700e9f25ba.jpg"
+            }
+          ]
         },
         {
           "recordHash": "617556595",
@@ -8628,7 +8656,14 @@
               "completionValue": 4
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "1123926187",
+              "name": "Last Days",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/47fdcd364673fcd21bcc2c19f231abf8.png"
+            }
+          ]
         },
         {
           "recordHash": "1194314957",
@@ -8660,7 +8695,14 @@
               "completionValue": 4
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "1123926187",
+              "name": "Last Days",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/47fdcd364673fcd21bcc2c19f231abf8.png"
+            }
+          ]
         },
         {
           "recordHash": "1194314956",
@@ -8692,7 +8734,14 @@
               "completionValue": 4
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "1123926187",
+              "name": "Last Days",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/47fdcd364673fcd21bcc2c19f231abf8.png"
+            }
+          ]
         },
         {
           "recordHash": "983747524",
@@ -9032,7 +9081,14 @@
               "completionValue": 50
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "908153536",
+              "name": "Terminal Circuit",
+              "itemType": "Emblem",
+              "iconPath": "/common/destiny2_content/icons/896a9c96213276734c3fe67c7058f9f6.jpg"
+            }
+          ]
         },
         {
           "recordHash": "492580427",
@@ -9096,7 +9152,14 @@
               "completionValue": 250
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "2153742334",
+              "name": "Warp and Weft",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/47659cd6f39619f678dedb3a626c409c.png"
+            }
+          ]
         },
         {
           "recordHash": "865824608",
@@ -9128,7 +9191,14 @@
               "completionValue": 250
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "2153742334",
+              "name": "Warp and Weft",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/47659cd6f39619f678dedb3a626c409c.png"
+            }
+          ]
         },
         {
           "recordHash": "145839363",
@@ -9664,7 +9734,14 @@
               "completionValue": 10
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "594467414",
+              "name": "Inspiral",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/12b788b318336be608cb0d11de311ad0.png"
+            }
+          ]
         },
         {
           "recordHash": "2084487708",
@@ -9937,7 +10014,14 @@
               "completionValue": 6
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "1634279292",
+              "name": "Increases Root of Nightmares Adept extra weapon trait chance.",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/ceb26dbc0191c695ccc712c81385a9ee.png"
+            }
+          ]
         },
         {
           "recordHash": "209536962",
@@ -10717,7 +10801,14 @@
               "completionValue": 600
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "2153742334",
+              "name": "Warp and Weft",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/47659cd6f39619f678dedb3a626c409c.png"
+            }
+          ]
         },
         {
           "recordHash": "2424963170",
@@ -10749,7 +10840,14 @@
               "completionValue": 250
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "2153742334",
+              "name": "Warp and Weft",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/47659cd6f39619f678dedb3a626c409c.png"
+            }
+          ]
         },
         {
           "recordHash": "1168092968",
@@ -10928,7 +11026,14 @@
               "completionValue": 4
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "2342198699",
+              "name": "Martian Missives",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/a5bb06c1aabca25e9e2e2c1be6b3675f.png"
+            }
+          ]
         },
         {
           "recordHash": "2016548460",
@@ -10980,7 +11085,14 @@
               "completionValue": 8
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "2342198699",
+              "name": "Martian Missives",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/a5bb06c1aabca25e9e2e2c1be6b3675f.png"
+            }
+          ]
         },
         {
           "recordHash": "2016548461",
@@ -11007,7 +11119,14 @@
               "completionValue": 3
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "2342198699",
+              "name": "Martian Missives",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/a5bb06c1aabca25e9e2e2c1be6b3675f.png"
+            }
+          ]
         },
         {
           "recordHash": "1891852050",
@@ -12132,7 +12251,14 @@
               "completionValue": 10
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "522693977",
+              "name": "Imperious Sun Shell",
+              "itemType": "Ghost Shell",
+              "iconPath": "/common/destiny2_content/icons/0710f3351ce8861a845348fc5886d476.jpg"
+            }
+          ]
         },
         {
           "recordHash": "417313118",
@@ -12174,7 +12300,14 @@
               "completionValue": 6
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "2726346086",
+              "name": "Increases Vow of the Disciple Adept extra weapon trait chance.",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/ceb26dbc0191c695ccc712c81385a9ee.png"
+            }
+          ]
         },
         {
           "recordHash": "1473812699",
@@ -13047,7 +13180,14 @@
               "completionValue": 10
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "2732866526",
+              "name": "Lucent Tales",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/9fe7a88347899171c845ef2374d51a23.png"
+            }
+          ]
         },
         {
           "recordHash": "1621288792",
@@ -13106,7 +13246,14 @@
               "completionValue": 3
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "3376572651",
+              "name": "The Once-Shipstealer",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/000dacc6771a2b084e08738f1c4b56ec.png"
+            }
+          ]
         },
         {
           "recordHash": "1209487295",
@@ -13143,7 +13290,14 @@
               "completionValue": 8
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "3376572651",
+              "name": "The Once-Shipstealer",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/000dacc6771a2b084e08738f1c4b56ec.png"
+            }
+          ]
         },
         {
           "recordHash": "1209487294",
@@ -13180,7 +13334,26 @@
               "completionValue": 13
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "3376572651",
+              "name": "The Once-Shipstealer",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/000dacc6771a2b084e08738f1c4b56ec.png"
+            },
+            {
+              "itemHash": "3410850054",
+              "name": "The Dark Future",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/ca0211d03791f481024b50ce3f667747.png"
+            },
+            {
+              "itemHash": "3911587623",
+              "name": "Eramis's Armor Fragment",
+              "itemType": "Consumable",
+              "iconPath": "/common/destiny2_content/icons/b0bd7b341c84435dafeff23c2840aa92.jpg"
+            }
+          ]
         },
         {
           "recordHash": "1961610045",
@@ -13421,7 +13594,14 @@
               "completionValue": 250
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "1948818058",
+              "name": "Gilded Smoke",
+              "itemType": "Shader",
+              "iconPath": "/common/destiny2_content/icons/78f1e9a43fc8a192da587b95eb41778c.jpg"
+            }
+          ]
         },
         {
           "recordHash": "1055226128",
@@ -13453,7 +13633,14 @@
               "completionValue": 100
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "1230660642",
+              "name": "Europan Eclipse",
+              "itemType": "Emblem",
+              "iconPath": "/common/destiny2_content/icons/bbcbb4381ef3f330c8cd48f86f13f621.jpg"
+            }
+          ]
         },
         {
           "recordHash": "1363459558",
@@ -14296,7 +14483,14 @@
               "completionValue": 1000
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "1230660643",
+              "name": "Salvation's Downfall",
+              "itemType": "Emblem",
+              "iconPath": "/common/destiny2_content/icons/4f0ba599ec4cb2071b824cbe0b5a3190.jpg"
+            }
+          ]
         },
         {
           "recordHash": "1705558242",
@@ -14360,7 +14554,14 @@
               "completionValue": 50
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "754348256",
+              "name": "Fallen Brig Hologram",
+              "itemType": "Consumable",
+              "iconPath": "/common/destiny2_content/icons/351af3b52a13d16f74b7007006e46dc9.jpg"
+            }
+          ]
         },
         {
           "recordHash": "3134290898",
@@ -14827,7 +15028,20 @@
               "completionValue": 8
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "3410850054",
+              "name": "The Dark Future",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/ca0211d03791f481024b50ce3f667747.png"
+            },
+            {
+              "itemHash": "754348258",
+              "name": "Miniature Crux",
+              "itemType": "Consumable",
+              "iconPath": "/common/destiny2_content/icons/b2958223e06db30ffe273ca907fe4f66.jpg"
+            }
+          ]
         },
         {
           "recordHash": "3081711524",
@@ -14942,7 +15156,26 @@
               "completionValue": 9
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "2089583446",
+              "name": "Your Friend, Micah Abram",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/b21651257905839fa593c248fb485174.png"
+            },
+            {
+              "itemHash": "754348263",
+              "name": "Penguin Figurine",
+              "itemType": "Consumable",
+              "iconPath": "/common/destiny2_content/icons/92625531efb31f5d2073300f28267a67.jpg"
+            },
+            {
+              "itemHash": "3089508706",
+              "name": "Shattered Sky",
+              "itemType": "Shader",
+              "iconPath": "/common/destiny2_content/icons/0628fe956c5c6299b1edb4ca9ceb40e4.jpg"
+            }
+          ]
         },
         {
           "recordHash": "3759075039",
@@ -14999,7 +15232,20 @@
               "completionValue": 9
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "4160345164",
+              "name": "Regarding Stasis",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/2e497600f2d3b7675885204bbc28658d.png"
+            },
+            {
+              "itemHash": "754348260",
+              "name": "Stasis Shard",
+              "itemType": "Consumable",
+              "iconPath": "/common/destiny2_content/icons/e09314a1f5264902c2d4ec2a2f98846e.jpg"
+            }
+          ]
         },
         {
           "recordHash": "3932088927",
@@ -15056,7 +15302,26 @@
               "completionValue": 9
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "1678130703",
+              "name": "Legacy's Lament",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/dd0d1f9ec809e9fd61371ddfdab4fcac.png"
+            },
+            {
+              "itemHash": "754348261",
+              "name": "Exo Figurine",
+              "itemType": "Consumable",
+              "iconPath": "/common/destiny2_content/icons/910bed0dd40268934405c3d7db1fe63d.jpg"
+            },
+            {
+              "itemHash": "3089508707",
+              "name": "Bright Warning",
+              "itemType": "Shader",
+              "iconPath": "/common/destiny2_content/icons/9e9a8b160860b274971e20061ecffa58.jpg"
+            }
+          ]
         },
         {
           "recordHash": "1121652081",
@@ -17097,7 +17362,14 @@
               "completionValue": 6
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "3352019292",
+              "name": "Secret Victories",
+              "itemType": "Emblem",
+              "iconPath": "/common/destiny2_content/icons/527eb9dde6b8df7f900a24cb712b4894.jpg"
+            }
+          ]
         },
         {
           "recordHash": "3136361071",
@@ -23708,7 +23980,26 @@
               "completionValue": 5
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "217401501",
+              "name": "+1 Feat Slot",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/3e9b4aea265110d17887c03e1bc0b01a.png"
+            },
+            {
+              "itemHash": "2016954284",
+              "name": "Increases initial chance for Heirloom to drop.",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/6c4935a0247406e7b412ed5acd47b01d.png"
+            },
+            {
+              "itemHash": "2043430167",
+              "name": "Static Data Shell",
+              "itemType": "Ghost Shell",
+              "iconPath": "/common/destiny2_content/icons/fc0887a4251772254e27c710036b7c56.jpg"
+            }
+          ]
         },
         {
           "recordHash": "2870934347",
@@ -24721,7 +25012,14 @@
               "completionValue": 6
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "247613402",
+              "name": "Increases chance for Vault of Glass Adept weapon trait.",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/ceb26dbc0191c695ccc712c81385a9ee.png"
+            }
+          ]
         },
         {
           "recordHash": "3047702042",
@@ -25470,7 +25768,14 @@
               "completionValue": 6
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "1606586600",
+              "name": "Increases King's Fall Adept extra weapon trait chance.",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/ceb26dbc0191c695ccc712c81385a9ee.png"
+            }
+          ]
         },
         {
           "recordHash": "2045739672",
@@ -26146,7 +26451,14 @@
               "completionValue": 6
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "736147501",
+              "name": "Increases chance for Crota's End Adept weapon trait.",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/ceb26dbc0191c695ccc712c81385a9ee.png"
+            }
+          ]
         },
         {
           "recordHash": "3097740180",
@@ -28139,7 +28451,26 @@
               "completionValue": 5
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "217401501",
+              "name": "+1 Feat Slot",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/3e9b4aea265110d17887c03e1bc0b01a.png"
+            },
+            {
+              "itemHash": "2016954284",
+              "name": "Increases initial chance for Heirloom to drop.",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/6c4935a0247406e7b412ed5acd47b01d.png"
+            },
+            {
+              "itemHash": "2043430167",
+              "name": "Static Data Shell",
+              "itemType": "Ghost Shell",
+              "iconPath": "/common/destiny2_content/icons/fc0887a4251772254e27c710036b7c56.jpg"
+            }
+          ]
         },
         {
           "recordHash": "2870934347",
@@ -28956,7 +29287,26 @@
               "completionValue": 5
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "2886758619",
+              "name": "+1 Feat Slot",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/3e9b4aea265110d17887c03e1bc0b01a.png"
+            },
+            {
+              "itemHash": "3329390250",
+              "name": "Increases initial chance for Whirling Ovation to drop.",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/6c4935a0247406e7b412ed5acd47b01d.png"
+            },
+            {
+              "itemHash": "4071479148",
+              "name": "Soloist Shell",
+              "itemType": "Ghost Shell",
+              "iconPath": "/common/destiny2_content/icons/3f9f99b49c111fdd28389aef3929c333.jpg"
+            }
+          ]
         },
         {
           "recordHash": "2037346146",
@@ -29305,7 +29655,14 @@
               "completionValue": 8
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "309085833",
+              "name": "The Immanent",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/d873b8b2d66f326a0b3a37356a6c617b.png"
+            }
+          ]
         },
         {
           "recordHash": "2372577075",
@@ -30940,7 +31297,14 @@
               "completionValue": 11
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "4031236762",
+              "name": "The First Knife",
+              "itemType": "Ship",
+              "iconPath": "/common/destiny2_content/icons/03f4c8d6216212134fb599700e9f25ba.jpg"
+            }
+          ]
         },
         {
           "recordHash": "3225424862",
@@ -32046,7 +32410,14 @@
               "completionValue": 8
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "2460229326",
+              "name": "The Rubicon",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/589c8c1a5e1880bed11c9ea1cc7ac7e5.png"
+            }
+          ]
         }
       ]
     },
@@ -33076,7 +33447,14 @@
               "completionValue": 50
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "908153536",
+              "name": "Terminal Circuit",
+              "itemType": "Emblem",
+              "iconPath": "/common/destiny2_content/icons/896a9c96213276734c3fe67c7058f9f6.jpg"
+            }
+          ]
         },
         {
           "recordHash": "293470650",
@@ -33511,7 +33889,14 @@
               "completionValue": 10
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "594467414",
+              "name": "Inspiral",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/12b788b318336be608cb0d11de311ad0.png"
+            }
+          ]
         },
         {
           "recordHash": "2084487708",
@@ -36603,7 +36988,14 @@
               "completionValue": 10
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "2732866526",
+              "name": "Lucent Tales",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/9fe7a88347899171c845ef2374d51a23.png"
+            }
+          ]
         },
         {
           "recordHash": "2848107062",
@@ -37244,7 +37636,14 @@
               "completionValue": 10
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "522693977",
+              "name": "Imperious Sun Shell",
+              "itemType": "Ghost Shell",
+              "iconPath": "/common/destiny2_content/icons/0710f3351ce8861a845348fc5886d476.jpg"
+            }
+          ]
         }
       ]
     },
@@ -37356,7 +37755,14 @@
               "completionValue": 20
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "3658937452",
+              "name": "Anniversary Pose",
+              "itemType": "Emote",
+              "iconPath": "/common/destiny2_content/icons/2121df2392a1f95855778b9ea4013a41.jpg"
+            }
+          ]
         },
         {
           "recordHash": "1564865293",
@@ -37378,7 +37784,14 @@
               "completionValue": 3
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "4198761575",
+              "name": "Ultra Plasmic",
+              "itemType": "Shader",
+              "iconPath": "/common/destiny2_content/icons/d8ee5b4301b833e4a0ac07228368a667.jpg"
+            }
+          ]
         },
         {
           "recordHash": "89246831",
@@ -39285,7 +39698,14 @@
               "completionValue": 50
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "754348256",
+              "name": "Fallen Brig Hologram",
+              "itemType": "Consumable",
+              "iconPath": "/common/destiny2_content/icons/351af3b52a13d16f74b7007006e46dc9.jpg"
+            }
+          ]
         },
         {
           "recordHash": "798400497",
@@ -39371,7 +39791,20 @@
               "completionValue": 8
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "3410850054",
+              "name": "The Dark Future",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/ca0211d03791f481024b50ce3f667747.png"
+            },
+            {
+              "itemHash": "754348258",
+              "name": "Miniature Crux",
+              "itemType": "Consumable",
+              "iconPath": "/common/destiny2_content/icons/b2958223e06db30ffe273ca907fe4f66.jpg"
+            }
+          ]
         },
         {
           "recordHash": "3725180136",
@@ -39428,7 +39861,26 @@
               "completionValue": 9
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "2089583446",
+              "name": "Your Friend, Micah Abram",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/b21651257905839fa593c248fb485174.png"
+            },
+            {
+              "itemHash": "754348263",
+              "name": "Penguin Figurine",
+              "itemType": "Consumable",
+              "iconPath": "/common/destiny2_content/icons/92625531efb31f5d2073300f28267a67.jpg"
+            },
+            {
+              "itemHash": "3089508706",
+              "name": "Shattered Sky",
+              "itemType": "Shader",
+              "iconPath": "/common/destiny2_content/icons/0628fe956c5c6299b1edb4ca9ceb40e4.jpg"
+            }
+          ]
         },
         {
           "recordHash": "3759075039",
@@ -39485,7 +39937,20 @@
               "completionValue": 9
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "4160345164",
+              "name": "Regarding Stasis",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/2e497600f2d3b7675885204bbc28658d.png"
+            },
+            {
+              "itemHash": "754348260",
+              "name": "Stasis Shard",
+              "itemType": "Consumable",
+              "iconPath": "/common/destiny2_content/icons/e09314a1f5264902c2d4ec2a2f98846e.jpg"
+            }
+          ]
         },
         {
           "recordHash": "3932088927",
@@ -39542,7 +40007,26 @@
               "completionValue": 9
             }
           ],
-          "rewards": []
+          "rewards": [
+            {
+              "itemHash": "1678130703",
+              "name": "Legacy's Lament",
+              "itemType": "",
+              "iconPath": "/common/destiny2_content/icons/dd0d1f9ec809e9fd61371ddfdab4fcac.png"
+            },
+            {
+              "itemHash": "754348261",
+              "name": "Exo Figurine",
+              "itemType": "Consumable",
+              "iconPath": "/common/destiny2_content/icons/910bed0dd40268934405c3d7db1fe63d.jpg"
+            },
+            {
+              "itemHash": "3089508707",
+              "name": "Bright Warning",
+              "itemType": "Shader",
+              "iconPath": "/common/destiny2_content/icons/9e9a8b160860b274971e20061ecffa58.jpg"
+            }
+          ]
         },
         {
           "recordHash": "1121652081",
