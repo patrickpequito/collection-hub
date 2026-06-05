@@ -42,13 +42,25 @@ type ApiRecordInstance = {
   intervalObjectives?: ApiObjectiveProgress[];
 };
 
+type ProfileRecordsData = {
+  score?: number;
+  activeScore?: number;
+  lifetimeScore?: number;
+  records?: Record<string, ApiRecordInstance>;
+};
+
 type ProfileRecordsResponse = {
   profileRecords?: {
-    data?: { records?: Record<string, ApiRecordInstance> };
+    data?: ProfileRecordsData;
   };
   characterRecords?: {
     data?: Record<string, { records?: Record<string, ApiRecordInstance> }>;
   };
+};
+
+export type TriumphScores = {
+  activeScore: number;
+  lifetimeScore: number;
 };
 
 function bungieHeaders(accessToken: string) {
@@ -75,6 +87,18 @@ async function bungieGet<T>(path: string, accessToken: string): Promise<T> {
   }
 
   return data.Response;
+}
+
+export async function resolveDestinyMembership(session: BungieUserSession) {
+  const memberships = await bungieGet<MembershipsResponse>(
+    "/Platform/User/GetMembershipsForCurrentUser/",
+    session.accessToken,
+  );
+
+  return pickDestinyMembership(
+    memberships.destinyMemberships ?? [],
+    memberships.primaryMembershipId,
+  );
 }
 
 function pickDestinyMembership(
@@ -145,20 +169,35 @@ function mergeRecordInstances(
   }
 }
 
+function readTriumphScores(data: ProfileRecordsData | undefined): TriumphScores | null {
+  if (!data) return null;
+
+  return {
+    activeScore: data.activeScore ?? data.score ?? 0,
+    lifetimeScore: data.lifetimeScore ?? 0,
+  };
+}
+
+/** Active and lifetime triumph score from the Bungie profile. */
+export async function fetchTriumphScores(
+  session: BungieUserSession,
+): Promise<TriumphScores | null> {
+  const membership = await resolveDestinyMembership(session);
+  if (!membership) return null;
+
+  const profile = await bungieGet<ProfileRecordsResponse>(
+    `/Platform/Destiny2/${membership.membershipType}/Profile/${membership.membershipId}/?components=900`,
+    session.accessToken,
+  );
+
+  return readTriumphScores(profile.profileRecords?.data);
+}
+
 /** Profile + character record progress for triumphs and titles. */
 export async function fetchRecordInstances(
   session: BungieUserSession,
 ): Promise<Map<string, RecordInstance>> {
-  const memberships = await bungieGet<MembershipsResponse>(
-    "/Platform/User/GetMembershipsForCurrentUser/",
-    session.accessToken,
-  );
-
-  const membership = pickDestinyMembership(
-    memberships.destinyMemberships ?? [],
-    memberships.primaryMembershipId,
-  );
-
+  const membership = await resolveDestinyMembership(session);
   if (!membership) {
     return new Map();
   }

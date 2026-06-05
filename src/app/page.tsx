@@ -1,6 +1,8 @@
+import { HomeAuthSection } from "@/components/home-auth-section";
+import { HomeTriumphScores } from "@/components/home-triumph-scores";
 import { HubBanner } from "@/components/hub-banner";
 import { SiteNav } from "@/components/site-nav";
-import { BungieLoginButton } from "@/components/bungie-login-button";
+import { fetchTriumphScores } from "@/lib/destiny-records";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { getSession } from "@/lib/session";
 
@@ -17,13 +19,25 @@ export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
   const oauthConfigured = isBungieOAuthConfigured();
 
+  let triumphScores = null;
+  let scoresError: string | null = null;
+
+  if (session) {
+    try {
+      triumphScores = await fetchTriumphScores(session);
+    } catch (error) {
+      scoresError =
+        error instanceof Error ? error.message : "Failed to load triumph scores";
+    }
+  }
+
   return (
     <main className="min-h-dvh bg-zinc-950 text-zinc-100">
       <SiteNav />
 
       <div className="mx-auto flex min-h-[calc(100dvh-3rem)] max-w-5xl flex-col px-6 py-10 sm:py-14">
         <header className="mb-10 flex flex-wrap items-start justify-between gap-6">
-          <div>
+          <div className="min-w-0 flex-1">
             <h1 className="text-2xl font-semibold sm:text-3xl md:text-4xl">
               Destiny 2 Collection Hub
             </h1>
@@ -31,57 +45,21 @@ export default async function Home({ searchParams }: HomeProps) {
               Track exotic gear and legendary armor sets. Sign in with Bungie to
               highlight what you already own.
             </p>
+
+            <HomeAuthSection
+              session={session}
+              oauthConfigured={oauthConfigured}
+              error={params.error}
+              loginSuccess={params.login === "success"}
+              logoutSuccess={params.logout === "success"}
+            />
           </div>
 
-          <div className="w-full min-w-[260px] max-w-sm rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4 sm:w-auto">
-            {params.error ? (
-              <div className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 p-2.5 text-xs text-red-200">
-                Sign-in error: {decodeURIComponent(params.error)}
-              </div>
-            ) : null}
-
-            {params.login === "success" ? (
-              <div className="mb-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-2.5 text-xs text-emerald-200">
-                Signed in successfully.
-              </div>
-            ) : null}
-
-            {params.logout === "success" ? (
-              <div className="mb-3 rounded-lg border border-zinc-700 bg-zinc-950/40 p-2.5 text-xs text-zinc-300">
-                You have signed out.
-              </div>
-            ) : null}
-
-            {session ? (
-              <div className="space-y-3">
-                <div>
-                  <p className="text-xs uppercase tracking-wide text-zinc-500">
-                    Signed in as
-                  </p>
-                  <p className="mt-0.5 font-semibold">{session.displayName}</p>
-                </div>
-                <form action="/api/auth/logout" method="post">
-                  <button
-                    type="submit"
-                    className="w-full rounded-xl border border-zinc-700 px-3 py-2 text-sm font-medium text-zinc-200 transition hover:bg-zinc-800"
-                  >
-                    Sign out
-                  </button>
-                </form>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                <BungieLoginButton configured={oauthConfigured} />
-                {!oauthConfigured ? (
-                  <p className="text-xs text-zinc-500">
-                    Configure OAuth in{" "}
-                    <code className="text-zinc-300">.env.local</code> to enable
-                    sign-in.
-                  </p>
-                ) : null}
-              </div>
-            )}
-          </div>
+          <HomeTriumphScores
+            scores={triumphScores}
+            signedIn={Boolean(session)}
+            error={scoresError}
+          />
         </header>
 
         <div className="flex flex-1 flex-col justify-center gap-5 sm:gap-6">

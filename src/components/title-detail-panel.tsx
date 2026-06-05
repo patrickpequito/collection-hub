@@ -5,6 +5,7 @@ import {
   TITLE_BORDER_CLASSES,
   TITLE_FILL_CLASSES,
 } from "@/lib/triumphs/title-styles";
+import type { RaidCompletions } from "@/lib/destiny-activity-stats";
 import type { TitleCompletionTier, TriumphProgress } from "@/types/triumph";
 
 type TitleDetailPanelProps = {
@@ -19,6 +20,12 @@ type TitleDetailPanelProps = {
   titleTier: TitleCompletionTier;
   /** Raid activity pages — gold progress and gold completion styling only. */
   appearance?: "default" | "raid";
+  /** Clears logged on raid activity pages. Omit on non-raid pages. */
+  raidCompletions?: RaidCompletions | null;
+  /** When false, only a single completions row is shown (e.g. Last Wish). */
+  showMasterCompletions?: boolean;
+  /** Overrides the single-tier completions label (default: "Raid Completions"). */
+  completionsLabel?: string;
 };
 
 function getDisplayTitleTier(
@@ -41,6 +48,9 @@ export function TitleDetailPanel({
   hasGilding,
   titleTier,
   appearance = "default",
+  raidCompletions,
+  showMasterCompletions = true,
+  completionsLabel = "Raid Completions",
 }: TitleDetailPanelProps) {
   const iconUrl = bungieIconUrl(iconPath);
   const basePercent = progressPercent(baseProgress);
@@ -97,6 +107,37 @@ export function TitleDetailPanel({
           />
         </div>
       </div>
+
+      {appearance === "raid" && raidCompletions !== undefined ? (
+        <div className="mt-4 w-full border border-[#c9a227]/30 bg-zinc-900/40 px-3 py-2.5">
+          <div className="flex items-center justify-between gap-4 text-xs uppercase tracking-wide text-zinc-500">
+            <span>
+              {showMasterCompletions ? "Normal Completions" : completionsLabel}
+            </span>
+            <span className="shrink-0 tabular-nums text-sm font-semibold normal-case text-zinc-100">
+              {raidCompletions === null
+                ? "—"
+                : raidCompletions.normal.toLocaleString()}
+            </span>
+          </div>
+          {showMasterCompletions ? (
+            <>
+              <div
+                className="mx-2 my-2 border-t border-zinc-700/50"
+                aria-hidden
+              />
+              <div className="flex items-center justify-between gap-4 text-xs uppercase tracking-wide text-zinc-500">
+                <span>Master Completions</span>
+                <span className="shrink-0 tabular-nums text-sm font-semibold normal-case text-zinc-100">
+                  {raidCompletions === null
+                    ? "—"
+                    : raidCompletions.master.toLocaleString()}
+                </span>
+              </div>
+            </>
+          ) : null}
+        </div>
+      ) : null}
 
       {showGildingProgress ? (
         <div className="mt-4 w-full">

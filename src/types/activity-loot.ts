@@ -17,6 +17,13 @@ export type ActivityArmorRow = {
   };
 };
 
+export type ActivityTriumphPanel = {
+  name: string;
+  description: string;
+  iconPath: string;
+  recordHashes: string[];
+};
+
 export type ActivityLootPage = {
   slug: string;
   title: string;
@@ -27,6 +34,10 @@ export type ActivityLootPage = {
   /** Defaults to "Timelost Weapons" when omitted. */
   timelostWeaponsTitle?: string;
   other: LootItem[];
+  /** Dungeon (or other) pages without a title seal in triumphs.json. */
+  triumphPanel?: ActivityTriumphPanel;
+  /** Label for the single-tier completions row (e.g. "Dungeon Completions"). */
+  completionsLabel?: string;
 };
 
 export type ActivityEntry = {
