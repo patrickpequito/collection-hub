@@ -1,7 +1,12 @@
 "use client";
 
 import { TriumphRecordRow } from "@/components/triumph-record-row";
-import type { RecordInstance, TriumphRecord } from "@/types/triumph";
+import type {
+  RecordInstance,
+  TriumphRecord,
+  TriumphStringVariables,
+} from "@/types/triumph";
+import { EMPTY_TRIUMPH_STRING_VARIABLES } from "@/types/triumph";
 
 type TriumphRecordListProps = {
   records: TriumphRecord[];
@@ -9,6 +14,7 @@ type TriumphRecordListProps = {
   showProgress: boolean;
   strictCompletion?: boolean;
   variant?: "group" | "title";
+  stringVariables?: TriumphStringVariables;
 };
 
 export function TriumphRecordList({
@@ -17,6 +23,7 @@ export function TriumphRecordList({
   showProgress,
   strictCompletion = false,
   variant = "group",
+  stringVariables = EMPTY_TRIUMPH_STRING_VARIABLES,
 }: TriumphRecordListProps) {
   if (variant === "title") {
     return (
@@ -29,6 +36,7 @@ export function TriumphRecordList({
             showProgress={showProgress}
             strictCompletion={strictCompletion}
             variant="title"
+            stringVariables={stringVariables}
           />
         ))}
       </div>
@@ -45,6 +53,7 @@ export function TriumphRecordList({
           showProgress={showProgress}
           strictCompletion={strictCompletion}
           variant="group"
+          stringVariables={stringVariables}
         />
       ))}
     </div>

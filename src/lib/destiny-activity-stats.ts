@@ -77,6 +77,38 @@ export const RAID_COMPLETION_ACTIVITY_HASHES = {
     normal: [2032534090],
     master: [],
   },
+  "grasp-of-avarice": {
+    normal: [4078656646],
+    master: [1112917203, 3774021532],
+  },
+  duality: {
+    normal: [2823159265],
+    master: [1668217731, 3012587626],
+  },
+  "spire-of-the-watcher": {
+    normal: [1262462921],
+    master: [1801496203, 2296818662],
+  },
+  "ghosts-of-the-deep": {
+    normal: [313828469],
+    master: [2716998124],
+  },
+  "warlords-ruin": {
+    normal: [2004855007],
+    master: [2534833093],
+  },
+  "vespers-host": {
+    normal: [300092127, 1915770060, 3492566689],
+    master: [4293676253],
+  },
+  "sundered-doctrine": {
+    normal: [247869137, 3834447244],
+    master: [3521648250],
+  },
+  equilibrium: {
+    normal: [2727361621],
+    master: [],
+  },
 } as const;
 
 export type RaidCompletionSlug = keyof typeof RAID_COMPLETION_ACTIVITY_HASHES;

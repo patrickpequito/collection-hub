@@ -75,3 +75,14 @@ export type RecordInstance = {
   state: number;
   objectives: RecordObjectiveProgress[];
 };
+
+/** Bungie profile StringVariables — resolves {var:hash} in objective text. */
+export type TriumphStringVariables = {
+  profile: Record<string, number>;
+  byCharacter: Record<string, Record<string, number>>;
+};
+
+export const EMPTY_TRIUMPH_STRING_VARIABLES: TriumphStringVariables = {
+  profile: {},
+  byCharacter: {},
+};

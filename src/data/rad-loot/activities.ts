@@ -77,14 +77,54 @@ export const DUNGEONS: ActivityEntry[] = [
     available: true,
     imageFile: "prophecy.webp",
   },
-  { slug: "grasp-of-avarice", title: "Grasp of Avarice", available: false },
-  { slug: "duality", title: "Duality", available: false },
-  { slug: "spire-of-the-watcher", title: "Spire of the Watcher", available: false },
-  { slug: "ghosts-of-the-deep", title: "Ghosts of the Deep", available: false },
-  { slug: "warlords-ruin", title: "Warlord's Ruin", available: false },
-  { slug: "vespers-host", title: "Vesper's Host", available: false },
-  { slug: "sundered-doctrine", title: "Sundered Doctrine", available: false },
-  { slug: "equilibrium", title: "Equilibrium", available: false },
+  {
+    slug: "grasp-of-avarice",
+    title: "Grasp of Avarice",
+    available: true,
+    imageFile: "grasp-of-avarice.webp",
+  },
+  {
+    slug: "duality",
+    title: "Duality",
+    available: true,
+    imageFile: "duality.webp",
+  },
+  {
+    slug: "spire-of-the-watcher",
+    title: "Spire of the Watcher",
+    available: true,
+    imageFile: "spire-of-the-watcher.webp",
+  },
+  {
+    slug: "ghosts-of-the-deep",
+    title: "Ghosts of the Deep",
+    available: true,
+    imageFile: "ghosts-of-the-deep.webp",
+  },
+  {
+    slug: "warlords-ruin",
+    title: "Warlord's Ruin",
+    available: true,
+    imageFile: "warlords-ruin.webp",
+  },
+  {
+    slug: "vespers-host",
+    title: "Vesper's Host",
+    available: true,
+    imageFile: "vespers-host.webp",
+  },
+  {
+    slug: "sundered-doctrine",
+    title: "Sundered Doctrine",
+    available: true,
+    imageFile: "sundered-doctrine.webp",
+  },
+  {
+    slug: "equilibrium",
+    title: "Equilibrium",
+    available: true,
+    imageFile: "equilibrium.webp",
+  },
 ];
 
 export function getActivityHref(entry: ActivityEntry): string | null {

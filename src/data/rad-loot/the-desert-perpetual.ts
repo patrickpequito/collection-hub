@@ -66,9 +66,7 @@ export const theDesertPerpetualLoot: ActivityLootPage = {
   other: [
     item("2565108501", "After the Unknown", "/common/destiny2_content/icons/ae0d447f4faac76276a30fb2a089310a.jpg", 'Source: "The Desert Perpetual" Raid'),
     item("3220576444", "Envoy\'s Togs", "/common/destiny2_content/icons/13ca1b56bfccfd6bf53528c8d2856f7a.jpg", 'Source: "The Desert Perpetual" Raid'),
-    item("2565108500", "Fractured Timeline", "/common/destiny2_content/icons/9cccd74e169015e9d7dbbb1a3c7979f3.jpg", 'Source: "The Desert Perpetual" Raid'),
     item("3220576445", "Mediant Flourish", "/common/destiny2_content/icons/7b15975590f35f035c3238da5f3e33a7.jpg", 'Source: "The Desert Perpetual" Raid'),
     item("4178714190", "Third Unknown", "/common/destiny2_content/icons/1ea55ee3b7a2a984f98c80356e3ada03.jpg", 'Source: "The Desert Perpetual" Raid'),
-    item("4178714191", "Timeline\'s Blade", "/common/destiny2_content/icons/bab2444ad2d3e306aea33fadb75eff9d.jpg", 'Source: "The Desert Perpetual" Raid'),
   ],
 };

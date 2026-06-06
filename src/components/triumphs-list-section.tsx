@@ -3,7 +3,12 @@
 import { useMemo, useState } from "react";
 import { TriumphRecordList } from "@/components/triumph-record-list";
 import { isTriumphRecordDisplayComplete } from "@/lib/triumphs/record-progress";
-import type { RecordInstance, TriumphRecord } from "@/types/triumph";
+import type {
+  RecordInstance,
+  TriumphRecord,
+  TriumphStringVariables,
+} from "@/types/triumph";
+import { EMPTY_TRIUMPH_STRING_VARIABLES } from "@/types/triumph";
 
 const TOGGLE_BUTTON_CLASS =
   "shrink-0 rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-1.5 text-xs font-medium text-zinc-500 transition hover:border-zinc-700 hover:bg-zinc-900 hover:text-zinc-300";
@@ -13,6 +18,7 @@ type TriumphsListSectionProps = {
   recordInstances: Record<string, RecordInstance>;
   showProgress: boolean;
   signInMessage?: string;
+  stringVariables?: TriumphStringVariables;
 };
 
 export function TriumphsListSection({
@@ -20,6 +26,7 @@ export function TriumphsListSection({
   recordInstances,
   showProgress,
   signInMessage,
+  stringVariables = EMPTY_TRIUMPH_STRING_VARIABLES,
 }: TriumphsListSectionProps) {
   const [hideCompleted, setHideCompleted] = useState(false);
   const instances = useMemo(
@@ -73,6 +80,7 @@ export function TriumphsListSection({
         showProgress={showProgress}
         strictCompletion
         variant="title"
+        stringVariables={stringVariables}
       />
     </div>
   );

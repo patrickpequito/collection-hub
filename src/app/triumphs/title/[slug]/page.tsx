@@ -17,7 +17,8 @@ import {
 } from "@/lib/triumphs/load";
 import { resolveTriumphIcon } from "@/lib/triumphs/icons";
 
-import type { RecordInstance } from "@/types/triumph";
+import type { RecordInstance, TriumphStringVariables } from "@/types/triumph";
+import { EMPTY_TRIUMPH_STRING_VARIABLES } from "@/types/triumph";
 
 type TitlePageProps = {
   params: Promise<{ slug: string }>;
@@ -33,11 +34,14 @@ export default async function TitlePage({ params }: TitlePageProps) {
   const oauthConfigured = isBungieOAuthConfigured();
 
   let recordInstances = new Map<string, RecordInstance>();
+  let stringVariables: TriumphStringVariables = EMPTY_TRIUMPH_STRING_VARIABLES;
   let recordsError: string | null = null;
 
   if (session) {
     try {
-      recordInstances = await fetchRecordInstances(session);
+      const profileData = await fetchRecordInstances(session);
+      recordInstances = profileData.instances;
+      stringVariables = profileData.stringVariables;
     } catch (error) {
       recordsError =
         error instanceof Error ? error.message : "Failed to load triumph progress";
@@ -86,6 +90,7 @@ export default async function TitlePage({ params }: TitlePageProps) {
             records={title.records}
             recordInstances={Object.fromEntries(recordInstances)}
             showProgress={showProgress}
+            stringVariables={stringVariables}
             signInMessage={
               !session ? "Sign in to see title progress." : undefined
             }

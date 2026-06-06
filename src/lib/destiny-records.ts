@@ -4,9 +4,11 @@ import {
   mergeObjectiveProgress,
   mergeRecordState,
 } from "@/lib/triumphs/record-progress";
-import type {
-  RecordInstance,
-  RecordObjectiveProgress,
+import {
+  EMPTY_TRIUMPH_STRING_VARIABLES,
+  type RecordInstance,
+  type RecordObjectiveProgress,
+  type TriumphStringVariables,
 } from "@/types/triumph";
 
 const BUNGIE_ORIGIN = "https://www.bungie.net";
@@ -56,6 +58,17 @@ type ProfileRecordsResponse = {
   characterRecords?: {
     data?: Record<string, { records?: Record<string, ApiRecordInstance> }>;
   };
+  profileStringVariables?: {
+    data?: { integerValuesByHash?: Record<string, number> };
+  };
+  characterStringVariables?: {
+    data?: Record<string, { integerValuesByHash?: Record<string, number> }>;
+  };
+};
+
+export type TriumphProfileData = {
+  instances: Map<string, RecordInstance>;
+  stringVariables: TriumphStringVariables;
 };
 
 export type TriumphScores = {
@@ -193,17 +206,46 @@ export async function fetchTriumphScores(
   return readTriumphScores(profile.profileRecords?.data);
 }
 
+function readStringVariables(
+  profile: ProfileRecordsResponse,
+): TriumphStringVariables {
+  const stringVariables: TriumphStringVariables = {
+    profile: {},
+    byCharacter: {},
+  };
+
+  for (const [hash, value] of Object.entries(
+    profile.profileStringVariables?.data?.integerValuesByHash ?? {},
+  )) {
+    stringVariables.profile[hash] = value;
+  }
+
+  for (const [characterId, data] of Object.entries(
+    profile.characterStringVariables?.data ?? {},
+  )) {
+    stringVariables.byCharacter[characterId] = {};
+    for (const [hash, value] of Object.entries(data.integerValuesByHash ?? {})) {
+      stringVariables.byCharacter[characterId][hash] = value;
+    }
+  }
+
+  return stringVariables;
+}
+
 /** Profile + character record progress for triumphs and titles. */
 export async function fetchRecordInstances(
   session: BungieUserSession,
-): Promise<Map<string, RecordInstance>> {
+): Promise<TriumphProfileData> {
   const membership = await resolveDestinyMembership(session);
   if (!membership) {
-    return new Map();
+    return {
+      instances: new Map(),
+      stringVariables: EMPTY_TRIUMPH_STRING_VARIABLES,
+    };
   }
 
   const profile = await bungieGet<ProfileRecordsResponse>(
-    `/Platform/Destiny2/${membership.membershipType}/Profile/${membership.membershipId}/?components=900`,
+    `/Platform/Destiny2/${membership.membershipType}/Profile/${membership.membershipId}/?components=900,1200`,
     session.accessToken,
   );
 
@@ -214,17 +256,32 @@ export async function fetchRecordInstances(
     mergeRecordInstances(instances, charRecords.records);
   }
 
-  return instances;
+  return {
+    instances,
+    stringVariables: readStringVariables(profile),
+  };
 }
 
 /** @deprecated Use fetchRecordInstances — state-only map for legacy callers. */
 export async function fetchRecordStates(
   session: BungieUserSession,
 ): Promise<Map<string, number>> {
-  const instances = await fetchRecordInstances(session);
+  const { instances } = await fetchRecordInstances(session);
   return new Map(
     [...instances.entries()].map(([hash, instance]) => [hash, instance.state]),
   );
+}
+
+export function serializeTriumphProfileData(
+  data: TriumphProfileData,
+): {
+  recordInstances: Record<string, RecordInstance>;
+  stringVariables: TriumphStringVariables;
+} {
+  return {
+    recordInstances: Object.fromEntries(data.instances),
+    stringVariables: data.stringVariables,
+  };
 }
 
 export function serializeRecordInstances(

@@ -2,7 +2,7 @@ import { TriumphsIndex } from "@/components/triumphs-index";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import {
   fetchRecordInstances,
-  serializeRecordInstances,
+  serializeTriumphProfileData,
 } from "@/lib/destiny-records";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { PAGE_HEADERS } from "@/lib/page-headers";
@@ -19,9 +19,10 @@ export default async function TriumphsPage() {
 
   if (session) {
     try {
-      recordInstances = serializeRecordInstances(
+      const profileData = serializeTriumphProfileData(
         await fetchRecordInstances(session),
       );
+      recordInstances = profileData.recordInstances;
     } catch (error) {
       recordsError =
         error instanceof Error ? error.message : "Failed to load triumph progress";

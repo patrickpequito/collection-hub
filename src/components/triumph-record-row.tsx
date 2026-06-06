@@ -9,7 +9,12 @@ import {
   isTitleTriumphComplete,
   type DisplayObjective,
 } from "@/lib/triumphs/record-progress";
-import type { RecordInstance, TriumphRecord } from "@/types/triumph";
+import type {
+  RecordInstance,
+  TriumphRecord,
+  TriumphStringVariables,
+} from "@/types/triumph";
+import { EMPTY_TRIUMPH_STRING_VARIABLES } from "@/types/triumph";
 
 type TriumphRecordRowProps = {
   record: TriumphRecord;
@@ -18,6 +23,7 @@ type TriumphRecordRowProps = {
   /** Title pages — only Bungie record state counts as complete. */
   strictCompletion?: boolean;
   variant?: "group" | "title";
+  stringVariables?: TriumphStringVariables;
 };
 
 function CompletionBox({
@@ -168,6 +174,7 @@ export function TriumphRecordRow({
   showProgress,
   strictCompletion = false,
   variant = "group",
+  stringVariables = EMPTY_TRIUMPH_STRING_VARIABLES,
 }: TriumphRecordRowProps) {
   const complete =
     showProgress &&
@@ -176,10 +183,14 @@ export function TriumphRecordRow({
       : isRecordInstanceComplete(record, instance));
   const iconUrl = bungieIconUrl(record.iconPath);
   const objectives = showProgress
-    ? getDisplayObjectives(record, instance, { strictCompletion })
+    ? getDisplayObjectives(record, instance, {
+        strictCompletion,
+        stringVariables,
+      })
     : [];
-  const displayComplete =
-    complete || (objectives.length > 0 && objectives.every((o) => o.complete));
+  const displayComplete = strictCompletion
+    ? complete
+    : complete || (objectives.length > 0 && objectives.every((o) => o.complete));
   const isTitleVariant = variant === "title";
 
   const content = (

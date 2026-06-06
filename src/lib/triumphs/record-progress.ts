@@ -4,26 +4,60 @@ import type {
   TitleEntry,
   TriumphProgress,
   TriumphRecord,
+  TriumphStringVariables,
   TitleCompletionTier,
 } from "@/types/triumph";
 
+const STRING_VAR_PLACEHOLDER = /\{var:(\d+)\}/g;
+
+export function resolveStringVariable(
+  hash: string,
+  stringVariables?: TriumphStringVariables,
+): number | undefined {
+  if (!stringVariables) return undefined;
+
+  const profileValue = stringVariables.profile[hash];
+  if (profileValue !== undefined) return profileValue;
+
+  for (const charVars of Object.values(stringVariables.byCharacter)) {
+    const value = charVars[hash];
+    if (value !== undefined) return value;
+  }
+
+  return undefined;
+}
+
+/** Replaces Bungie {var:hash} placeholders in objective progress text. */
+export function formatProgressDescription(
+  text: string,
+  options?: {
+    stringVariables?: TriumphStringVariables;
+    progressByHash?: Map<string, RecordObjectiveProgress>;
+    fallbackValue?: number;
+    /** Interval triumphs: match the progress bar, not unrelated account string vars. */
+    preferFallbackValue?: boolean;
+  },
+): string {
+  if (!text.includes("{var:")) return text;
+
+  return text.replace(STRING_VAR_PLACEHOLDER, (_, hash) => {
+    const fromProgress = options?.progressByHash?.get(hash)?.progress;
+    const fromStringVar = resolveStringVariable(hash, options?.stringVariables);
+    const fromFallback = options?.fallbackValue;
+
+    const value = options?.preferFallbackValue
+      ? (fromProgress ?? fromFallback ?? fromStringVar)
+      : (fromStringVar ?? fromProgress ?? fromFallback);
+
+    return value !== undefined ? String(value) : "0";
+  });
+}
+
 /** DestinyRecordState flags from Bungie manifest. */
 const RECORD_REDEEMED = 1;
-const OBJECTIVE_NOT_COMPLETED = 2;
-const OBSCURED = 4;
-const RECORD_BLOCKED = 8;
 
 export function isRecordRedeemed(state: number | undefined): boolean {
   return Boolean(state && (state & RECORD_REDEEMED));
-}
-
-export function isRecordComplete(state: number | undefined): boolean {
-  if (!state) return false;
-  if (state & RECORD_REDEEMED) return true;
-  if (state & RECORD_BLOCKED) return false;
-  if (state === OBSCURED) return false;
-  if (state & OBJECTIVE_NOT_COMPLETED) return false;
-  return true;
 }
 
 function isObjectiveComplete(
@@ -42,7 +76,7 @@ function isObjectiveComplete(
 export function isTitleTriumphComplete(
   instance: RecordInstance | undefined,
 ): boolean {
-  return isRecordComplete(instance?.state);
+  return isRecordRedeemed(instance?.state);
 }
 
 /** Triumph groups may infer completion from objective progress when state lags. */
@@ -50,7 +84,7 @@ export function isRecordInstanceComplete(
   record: TriumphRecord,
   instance: RecordInstance | undefined,
 ): boolean {
-  if (isRecordComplete(instance?.state)) return true;
+  if (isRecordRedeemed(instance?.state)) return true;
 
   if (!record.objectives.length) {
     return false;
@@ -309,7 +343,10 @@ export function isTriumphRecordDisplayComplete(
 export function getDisplayObjectives(
   record: TriumphRecord,
   instance: RecordInstance | undefined,
-  options?: { strictCompletion?: boolean },
+  options?: {
+    strictCompletion?: boolean;
+    stringVariables?: TriumphStringVariables;
+  },
 ): DisplayObjective[] {
   if (!record.objectives.length) return [];
 
@@ -327,9 +364,15 @@ export function getDisplayObjectives(
 
   if (record.progressStyle === "interval") {
     const interval = getIntervalProgress(record, progressByHash, recordComplete);
-    const label =
+    const rawLabel =
       record.objectives.find((objective) => objective.progressDescription)
         ?.progressDescription || record.name;
+    const label = formatProgressDescription(rawLabel, {
+      stringVariables: options?.stringVariables,
+      progressByHash,
+      fallbackValue: interval.progress,
+      preferFallbackValue: true,
+    });
 
     return [
       {
@@ -357,8 +400,14 @@ export function getDisplayObjectives(
         ? objectiveComplete
         : recordComplete || objectiveComplete;
 
+    const rawLabel = manifestObjective.progressDescription || record.name;
+
     return {
-      label: manifestObjective.progressDescription || record.name,
+      label: formatProgressDescription(rawLabel, {
+        stringVariables: options?.stringVariables,
+        progressByHash,
+        fallbackValue: progress,
+      }),
       progress: complete ? completionValue : progress,
       completionValue,
       complete,
@@ -407,8 +456,5 @@ export function mergeRecordState(a: number, b: number): number {
   if (isRecordRedeemed(a) || isRecordRedeemed(b)) {
     return isRecordRedeemed(a) ? a : b;
   }
-  if (isRecordComplete(a) || isRecordComplete(b)) {
-    return isRecordComplete(a) ? a : b;
-  }
-  return a || b;
+  return a | b;
 }

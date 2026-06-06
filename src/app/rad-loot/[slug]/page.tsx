@@ -6,6 +6,10 @@ import { SectionPageLayout } from "@/components/section-page-layout";
 import { TitleDetailPanel } from "@/components/title-detail-panel";
 import { getActivityLootPage } from "@/data/rad-loot/activity-pages";
 import {
+  filterExpiredActivityLoot,
+  filterExpiredTriumphRecords,
+} from "@/lib/activity-expired-content";
+import {
   fetchRaidCompletions,
   isRaidCompletionSlug,
   raidHasMasterTier,
@@ -28,7 +32,8 @@ import {
 } from "@/lib/triumphs/load";
 import { resolveTriumphIcon } from "@/lib/triumphs/icons";
 
-import type { RecordInstance } from "@/types/triumph";
+import type { RecordInstance, TriumphStringVariables } from "@/types/triumph";
+import { EMPTY_TRIUMPH_STRING_VARIABLES } from "@/types/triumph";
 
 type ActivityPageProps = {
   params: Promise<{ slug: string }>;
@@ -47,33 +52,45 @@ const ACTIVITY_EXOTIC_HASHES: Record<string, Set<string>> = {
   prophecy: new Set(["732682038", "2232750624"]),
   "pit-of-heresy": new Set(["1395261499"]),
   "the-shattered-throne": new Set(["814876684"]),
+  duality: new Set(["3664831848"]),
+  "spire-of-the-watcher": new Set(["4174431791"]),
+  "ghosts-of-the-deep": new Set(["1441805468", "2274944459"]),
+  "warlords-ruin": new Set(["3886719505", "4141762315"]),
+  "vespers-host": new Set(["1111334348", "3031600404"]),
+  "sundered-doctrine": new Set(["331231237", "2993751041"]),
+  equilibrium: new Set(["1685137410", "2043430167", "4104431769"]),
 };
 
 export default async function ActivityLootPage({ params }: ActivityPageProps) {
   const { slug } = await params;
-  const activity = getActivityLootPage(slug);
+  const rawActivity = getActivityLootPage(slug);
 
-  if (!activity) {
+  if (!rawActivity) {
     notFound();
   }
 
+  const activity = filterExpiredActivityLoot(rawActivity);
   const session = await getSession();
   const oauthConfigured = isBungieOAuthConfigured();
   const catalog = await loadTriumphCatalog();
   const title = getTitleEntry(catalog, slug);
-  const triumphRecords = title
-    ? title.records
-    : activity.triumphPanel
-      ? resolveActivityTriumphRecords(
-          catalog,
-          activity.triumphPanel.recordHashes,
-        )
-      : [];
+  const triumphRecords = filterExpiredTriumphRecords(
+    slug,
+    title
+      ? title.records
+      : activity.triumphPanel
+        ? resolveActivityTriumphRecords(
+            catalog,
+            activity.triumphPanel.recordHashes,
+          )
+        : [],
+  );
   const hasTriumphSection = triumphRecords.length > 0;
 
   let ownedItemHashes = new Set<string>();
   let inventoryError: string | null = null;
   let recordInstances = new Map<string, RecordInstance>();
+  let stringVariables: TriumphStringVariables = EMPTY_TRIUMPH_STRING_VARIABLES;
   let recordsError: string | null = null;
   let raidCompletions: RaidCompletions | null | undefined = isRaidCompletionSlug(
     slug,
@@ -92,7 +109,9 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
 
     if (hasTriumphSection) {
       try {
-        recordInstances = await fetchRecordInstances(session);
+        const profileData = await fetchRecordInstances(session);
+        recordInstances = profileData.instances;
+        stringVariables = profileData.stringVariables;
       } catch (error) {
         recordsError =
           error instanceof Error ? error.message : "Failed to load triumph progress";
@@ -115,7 +134,7 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
   const showTriumphProgress = Boolean(hasTriumphSection && session && !recordsError);
   const exoticItemHashes = ACTIVITY_EXOTIC_HASHES[slug] ?? new Set<string>();
   const titleProgress = title
-    ? countTitleProgress(title, recordInstances)
+    ? countTitleProgress({ ...title, records: triumphRecords }, recordInstances)
     : hasTriumphSection
       ? (() => {
           const progress = countTriumphProgress(triumphRecords, recordInstances);
@@ -124,7 +143,10 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
       : null;
   const titleTier =
     title && showTriumphProgress
-      ? getTitleCompletionTier(title, recordInstances)
+      ? getTitleCompletionTier(
+          { ...title, records: triumphRecords },
+          recordInstances,
+        )
       : "none";
   const panelName = title?.name ?? activity.triumphPanel?.name ?? "";
   const panelDescription =
@@ -229,6 +251,7 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
               records={triumphRecords}
               recordInstances={Object.fromEntries(recordInstances)}
               showProgress={showTriumphProgress}
+              stringVariables={stringVariables}
               signInMessage={
                 !session ? "Sign in to see triumph progress." : undefined
               }
