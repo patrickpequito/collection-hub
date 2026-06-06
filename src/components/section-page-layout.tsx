@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import { AuthBar } from "@/components/auth-bar";
+import { AuthCallbackFlash } from "@/components/auth-callback-flash";
 import { PageHeader } from "@/components/page-header";
 import { SiteNav } from "@/components/site-nav";
 import type { BungieUserSession } from "@/lib/bungie";
@@ -35,6 +37,9 @@ export function SectionPageLayout({
   return (
     <main className="min-h-dvh overflow-x-hidden bg-zinc-950 text-zinc-100">
       <SiteNav />
+      <Suspense fallback={null}>
+        <AuthCallbackFlash />
+      </Suspense>
       <PageHeader title={title} imageUrl={imageUrl} />
       <AuthBar
         session={session}

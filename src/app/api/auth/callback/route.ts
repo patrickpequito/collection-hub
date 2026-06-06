@@ -6,37 +6,61 @@ import {
 } from "@/lib/bungie";
 import { appendQueryParam } from "@/lib/auth-return-to";
 import { getAppOrigin, getBungieOAuthConfig } from "@/lib/env";
+import { parseSignedOAuthState } from "@/lib/oauth-state";
 import {
   consumeOAuthReturnTo,
   consumeOAuthState,
+  getSession,
   setSession,
 } from "@/lib/session";
+
+async function resolveOAuthCallback(
+  state: string | null,
+): Promise<{ stateOk: boolean; returnTo: string }> {
+  const parsed = parseSignedOAuthState(state);
+  if (parsed.valid) {
+    return { stateOk: true, returnTo: parsed.returnTo };
+  }
+
+  const cookieStateOk = await consumeOAuthState(state);
+  const cookieReturnTo = await consumeOAuthReturnTo();
+  return { stateOk: cookieStateOk, returnTo: cookieReturnTo };
+}
+
+function redirectAfterLogin(
+  base: string,
+  returnTo: string,
+  param: "login" | "error",
+  value: string,
+) {
+  return NextResponse.redirect(
+    new URL(appendQueryParam(returnTo, param, value), base),
+  );
+}
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const base = getAppOrigin();
-  const returnTo = await consumeOAuthReturnTo();
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
   const bungieError = url.searchParams.get("error");
+  const { stateOk, returnTo } = await resolveOAuthCallback(state);
 
   if (bungieError) {
-    return NextResponse.redirect(
-      new URL(appendQueryParam(returnTo, "error", bungieError), base),
-    );
+    return redirectAfterLogin(base, returnTo, "error", bungieError);
   }
 
   if (!code) {
-    return NextResponse.redirect(
-      new URL(appendQueryParam(returnTo, "error", "missing_code"), base),
-    );
+    return redirectAfterLogin(base, returnTo, "error", "missing_code");
   }
 
-  const stateOk = await consumeOAuthState(state);
   if (!stateOk) {
-    return NextResponse.redirect(
-      new URL(appendQueryParam(returnTo, "error", "invalid_state"), base),
-    );
+    const session = await getSession();
+    if (session) {
+      return redirectAfterLogin(base, returnTo, "login", "success");
+    }
+
+    return redirectAfterLogin(base, returnTo, "error", "invalid_state");
   }
 
   try {
@@ -53,14 +77,15 @@ export async function GET(request: Request) {
 
     await setSession(session);
 
-    return NextResponse.redirect(
-      new URL(appendQueryParam(returnTo, "login", "success"), base),
-    );
+    return redirectAfterLogin(base, returnTo, "login", "success");
   } catch (error) {
+    const session = await getSession();
+    if (session) {
+      return redirectAfterLogin(base, returnTo, "login", "success");
+    }
+
     const message =
       error instanceof Error ? error.message : "Failed to complete sign-in";
-    return NextResponse.redirect(
-      new URL(appendQueryParam(returnTo, "error", message), base),
-    );
+    return redirectAfterLogin(base, returnTo, "error", message);
   }
 }
