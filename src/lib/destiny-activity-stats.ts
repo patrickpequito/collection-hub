@@ -159,15 +159,9 @@ function readActivityCompletions(
   return total;
 }
 
-/** Raid completions by difficulty across all characters for a supported activity page. */
-export async function fetchRaidCompletions(
-  session: BungieUserSession,
-  slug: RaidCompletionSlug,
-): Promise<RaidCompletions> {
+async function fetchAggregateStatsByCharacter(session: BungieUserSession) {
   const membership = await resolveDestinyMembership(session);
-  if (!membership) {
-    return { normal: 0, master: 0 };
-  }
+  if (!membership) return null;
 
   const profile = await bungieGet<ProfileCharactersResponse>(
     `/Platform/Destiny2/${membership.membershipType}/Profile/${membership.membershipId}/?components=200`,
@@ -175,11 +169,8 @@ export async function fetchRaidCompletions(
   );
 
   const characterIds = Object.keys(profile.characters?.data ?? {});
-  if (!characterIds.length) {
-    return { normal: 0, master: 0 };
-  }
+  if (!characterIds.length) return null;
 
-  const difficultyHashes = RAID_COMPLETION_ACTIVITY_HASHES[slug];
   const statsByCharacter = await Promise.all(
     characterIds.map((characterId) =>
       bungieGet<AggregateActivityStatsResponse>(
@@ -189,6 +180,14 @@ export async function fetchRaidCompletions(
     ),
   );
 
+  return statsByCharacter;
+}
+
+function sumCompletionsForSlug(
+  statsByCharacter: AggregateActivityStatsResponse[],
+  slug: RaidCompletionSlug,
+): RaidCompletions {
+  const difficultyHashes = RAID_COMPLETION_ACTIVITY_HASHES[slug];
   return statsByCharacter.reduce<RaidCompletions>(
     (totals, stats) => ({
       normal:
@@ -200,6 +199,35 @@ export async function fetchRaidCompletions(
     }),
     { normal: 0, master: 0 },
   );
+}
+
+/** All tracked activity completions in one Bungie round-trip per character. */
+export async function fetchAllActivityCompletions(
+  session: BungieUserSession,
+): Promise<Partial<Record<RaidCompletionSlug, RaidCompletions>>> {
+  const statsByCharacter = await fetchAggregateStatsByCharacter(session);
+  if (!statsByCharacter) return {};
+
+  const result: Partial<Record<RaidCompletionSlug, RaidCompletions>> = {};
+  for (const slug of Object.keys(
+    RAID_COMPLETION_ACTIVITY_HASHES,
+  ) as RaidCompletionSlug[]) {
+    result[slug] = sumCompletionsForSlug(statsByCharacter, slug);
+  }
+  return result;
+}
+
+/** Raid completions by difficulty across all characters for a supported activity page. */
+export async function fetchRaidCompletions(
+  session: BungieUserSession,
+  slug: RaidCompletionSlug,
+): Promise<RaidCompletions> {
+  const statsByCharacter = await fetchAggregateStatsByCharacter(session);
+  if (!statsByCharacter) {
+    return { normal: 0, master: 0 };
+  }
+
+  return sumCompletionsForSlug(statsByCharacter, slug);
 }
 
 export function isRaidCompletionSlug(slug: string): slug is RaidCompletionSlug {

@@ -35,22 +35,24 @@ export function SectionPageLayout({
   backLink = HOME_BACK_LINK,
 }: SectionPageLayoutProps) {
   return (
-    <main className="min-h-dvh overflow-x-hidden bg-zinc-950 text-zinc-100">
+    <>
       <SiteNav />
       <Suspense fallback={null}>
         <AuthCallbackFlash />
       </Suspense>
-      <PageHeader title={title} imageUrl={imageUrl} />
-      <AuthBar
-        session={session}
-        oauthConfigured={oauthConfigured}
-        backLink={backLink}
-      />
-      <div
-        className={`mx-auto min-w-0 ${MAX_WIDTH_CLASSES[maxWidth]} space-y-6 px-4 py-8 sm:px-6`}
-      >
-        {children}
-      </div>
-    </main>
+      <main className="min-h-dvh bg-zinc-950 text-zinc-100">
+        <PageHeader title={title} imageUrl={imageUrl} />
+        <AuthBar
+          session={session}
+          oauthConfigured={oauthConfigured}
+          backLink={backLink}
+        />
+        <div
+          className={`mx-auto min-w-0 ${MAX_WIDTH_CLASSES[maxWidth]} space-y-6 px-4 py-8 sm:px-6`}
+        >
+          {children}
+        </div>
+      </main>
+    </>
   );
 }
