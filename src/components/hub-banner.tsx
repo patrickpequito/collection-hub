@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { InteractiveBannerLink } from "@/components/interactive-banner-link";
 
 type HubBannerProps = {
   href: string;
@@ -17,7 +17,7 @@ export function HubBanner({
   const imageUrl = `/images/banners/${imageFile}`;
 
   return (
-    <Link
+    <InteractiveBannerLink
       href={href}
       className="group relative block overflow-hidden rounded-2xl border border-zinc-800 shadow-xl shadow-black/30 transition hover:border-zinc-600"
     >
@@ -37,6 +37,6 @@ export function HubBanner({
           Open catalog →
         </span>
       </div>
-    </Link>
+    </InteractiveBannerLink>
   );
 }

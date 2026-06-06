@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
+import { InteractiveBannerLink } from "@/components/interactive-banner-link";
 import type { ActivityEntry } from "@/types/activity-loot";
 import { getActivityHref } from "@/data/rad-loot/activities";
 import { bungieIconUrl } from "@/lib/bungie-icon";
@@ -87,11 +87,11 @@ export function ActivityBannerSmall({
   }
 
   return (
-    <Link
+    <InteractiveBannerLink
       href={href}
-      className="group block overflow-hidden rounded-xl border border-zinc-800 transition hover:border-zinc-600"
+      className="group relative block overflow-hidden rounded-xl border border-zinc-800 transition hover:border-zinc-600"
     >
       {content}
-    </Link>
+    </InteractiveBannerLink>
   );
 }
