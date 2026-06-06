@@ -38,3 +38,13 @@ Design your image at a proportion close to what is visible on screen (~**3.4 : 1
 | **Format** | WebP or JPG, sRGB |
 
 Images use `object-cover` anchored to the **left**. Keep title and key art on the left; the right edge may crop slightly on wider viewports.
+
+## Armor set previews (activity pages)
+
+One image per activity (all three classes), below the piece icons in the **Armor sets** panel.
+
+| | |
+|---|---|
+| **Path** | `public/images/rad-loot/armor-sets/{slug}.webp` |
+| **Recommended width** | **1200 px** (height as needed) |
+| **Details** | See `armor-sets/README.md` for the full filename list |

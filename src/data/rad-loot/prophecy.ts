@@ -15,6 +15,7 @@ export const prophecyLoot: ActivityLootPage = {
   slug: "prophecy",
   title: "Prophecy",
   headerImageFile: "prophecy-header.webp",
+  armorSetPreviewFiles: ["prophecy.webp", "prophecy2.webp"],
   completionsLabel: "Dungeon Completions",
   triumphPanel: {
     name: "Prophecy",

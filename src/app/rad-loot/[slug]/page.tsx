@@ -39,7 +39,14 @@ const ACTIVITY_EXOTIC_HASHES: Record<string, Set<string>> = {
   "crotas-end": new Set(["1034055198", "1934481780", "2091889892"]),
   "kings-fall": new Set(["1802135586", "528682407", "3889064943"]),
   "last-wish": new Set(["2069224589"]),
+  "deep-stone-crypt": new Set(["2399110176"]),
+  "vow-of-the-disciple": new Set(["3505113722"]),
+  "root-of-nightmares": new Set(["3371017761"]),
+  "salvations-edge": new Set(["3284383335"]),
+  "the-desert-perpetual": new Set(["1202007252"]),
   prophecy: new Set(["732682038", "2232750624"]),
+  "pit-of-heresy": new Set(["1395261499"]),
+  "the-shattered-throne": new Set(["814876684"]),
 };
 
 export default async function ActivityLootPage({ params }: ActivityPageProps) {
@@ -182,7 +189,10 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
           ) : null}
 
           <ActivityArmorSection
+            activitySlug={slug}
+            activityTitle={activity.title}
             rows={activity.armorSets}
+            previewFiles={activity.armorSetPreviewFiles}
             ownedItemHashes={ownedItemHashes}
             showOwnership={showOwnership}
           />

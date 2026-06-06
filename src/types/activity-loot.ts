@@ -29,6 +29,8 @@ export type ActivityLootPage = {
   title: string;
   headerImageFile: string;
   armorSets: ActivityArmorRow[];
+  /** Optional extra armor preview images (e.g. Prophecy: prophecy.webp + prophecy2.webp). */
+  armorSetPreviewFiles?: string[];
   weapons: LootItem[];
   timelostWeapons: LootItem[];
   /** Defaults to "Timelost Weapons" when omitted. */

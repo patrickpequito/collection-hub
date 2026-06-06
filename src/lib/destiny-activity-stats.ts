@@ -41,8 +41,40 @@ export const RAID_COMPLETION_ACTIVITY_HASHES = {
     normal: [2122313384, 1661734046],
     master: [],
   },
+  "garden-of-salvation": {
+    normal: [1042180643, 2497200493, 2659723068, 3458480158, 3845997235],
+    master: [],
+  },
+  "deep-stone-crypt": {
+    normal: [910380154],
+    master: [3976949817],
+  },
+  "vow-of-the-disciple": {
+    normal: [1441982566, 2906950631, 4156879541],
+    master: [3889634515, 4217492330],
+  },
+  "root-of-nightmares": {
+    normal: [2381413764],
+    master: [2918919505],
+  },
+  "salvations-edge": {
+    normal: [940375169, 1541433876, 2192826039],
+    master: [4129614942],
+  },
+  "the-desert-perpetual": {
+    normal: [1044919065, 3817322389],
+    master: [],
+  },
   prophecy: {
     normal: [1077850348, 4148187374, 3637651331, 1788465402],
+    master: [],
+  },
+  "pit-of-heresy": {
+    normal: [1375089621, 2582501063],
+    master: [785700673, 2559374374, 2559374375],
+  },
+  "the-shattered-throne": {
+    normal: [2032534090],
     master: [],
   },
 } as const;

@@ -20,17 +20,57 @@ export const RAIDS: ActivityEntry[] = [
     available: true,
     imageFile: "last-wish.webp",
   },
-  { slug: "garden-of-salvation", title: "Garden of Salvation", available: false },
-  { slug: "deep-stone-crypt", title: "Deep Stone Crypt", available: false },
-  { slug: "vow-of-the-disciple", title: "Vow of the Disciple", available: false },
-  { slug: "root-of-nightmares", title: "Root of Nightmares", available: false },
-  { slug: "salvations-edge", title: "Salvation's Edge", available: false },
-  { slug: "the-desert-perpetual", title: "The Desert Perpetual", available: false },
+  {
+    slug: "garden-of-salvation",
+    title: "Garden of Salvation",
+    available: true,
+    imageFile: "garden-of-salvation.webp",
+  },
+  {
+    slug: "deep-stone-crypt",
+    title: "Deep Stone Crypt",
+    available: true,
+    imageFile: "deep-stone-crypt.webp",
+  },
+  {
+    slug: "vow-of-the-disciple",
+    title: "Vow of the Disciple",
+    available: true,
+    imageFile: "vow-of-the-disciple.webp",
+  },
+  {
+    slug: "root-of-nightmares",
+    title: "Root of Nightmares",
+    available: true,
+    imageFile: "root-of-nightmares.webp",
+  },
+  {
+    slug: "salvations-edge",
+    title: "Salvation's Edge",
+    available: true,
+    imageFile: "salvations-edge.webp",
+  },
+  {
+    slug: "the-desert-perpetual",
+    title: "The Desert Perpetual",
+    available: true,
+    imageFile: "the-desert-perpetual.webp",
+  },
 ];
 
 export const DUNGEONS: ActivityEntry[] = [
-  { slug: "the-shattered-throne", title: "The Shattered Throne", available: false },
-  { slug: "pit-of-heresy", title: "Pit of Heresy", available: false },
+  {
+    slug: "the-shattered-throne",
+    title: "The Shattered Throne",
+    available: true,
+    imageFile: "the-shattered-throne.webp",
+  },
+  {
+    slug: "pit-of-heresy",
+    title: "Pit of Heresy",
+    available: true,
+    imageFile: "pit-of-heresy.webp",
+  },
   {
     slug: "prophecy",
     title: "Prophecy",
