@@ -167,8 +167,8 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
         </p>
       ) : null}
 
-      <div className="grid gap-8 lg:grid-cols-3">
-        <div className="space-y-6 lg:col-span-1">
+      <div className="grid min-w-0 gap-8 lg:grid-cols-3">
+        <div className="min-w-0 space-y-6 lg:col-span-1">
           {hasTriumphSection && titleProgress ? (
             <TitleDetailPanel
               name={panelName}
@@ -224,7 +224,7 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
         </div>
 
         {hasTriumphSection ? (
-          <div className="lg:col-span-2">
+          <div className="min-w-0 lg:col-span-2">
             <TriumphsListSection
               records={triumphRecords}
               recordInstances={Object.fromEntries(recordInstances)}

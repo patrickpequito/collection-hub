@@ -37,19 +37,19 @@ export function ActivityArmorSetPreview({
 
   return (
     <>
-      <div className="overflow-hidden rounded-lg border border-zinc-800 bg-zinc-950/50">
+      <div className="min-w-0 max-w-full overflow-hidden rounded-lg border border-zinc-800 bg-zinc-950/50">
         {showImage ? (
           <button
             type="button"
             onClick={() => setExpanded(true)}
-            className="block w-full cursor-zoom-in transition hover:opacity-90"
+            className="block min-w-0 w-full max-w-full cursor-zoom-in transition hover:opacity-90"
             aria-label={`Expand ${label} preview`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={imageUrl}
               alt={label}
-              className="block h-auto w-full"
+              className="block h-auto max-w-full w-full"
               onError={() => setImageError(true)}
             />
           </button>

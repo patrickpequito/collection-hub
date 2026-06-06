@@ -34,7 +34,7 @@ export function ActivityArmorSection({
   );
 
   return (
-    <section className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
+    <section className="min-w-0 max-w-full overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
       <h2 className="mb-4 border-b border-zinc-800 pb-3 text-lg font-semibold text-zinc-100">
         Armor sets
       </h2>
@@ -66,7 +66,7 @@ export function ActivityArmorSection({
         ))}
       </div>
       <div className="my-4 border-b border-zinc-800" aria-hidden />
-      <div className="space-y-4">
+      <div className="min-w-0 max-w-full space-y-4">
         {resolvedPreviewFiles.map((imageFile) => (
           <ActivityArmorSetPreview
             key={imageFile}
