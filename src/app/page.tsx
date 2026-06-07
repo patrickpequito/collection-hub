@@ -62,7 +62,7 @@ export default async function Home({ searchParams }: HomeProps) {
           />
         </header>
 
-        <div className="flex flex-1 flex-col justify-center gap-5 sm:gap-6">
+        <div className="flex flex-1 flex-col justify-center gap-3 sm:gap-6">
           <HubBanner
             title="Monument of Triumph"
             description="Seasonal and event triumphs in one place."
