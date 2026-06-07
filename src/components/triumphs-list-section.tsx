@@ -19,6 +19,8 @@ type TriumphsListSectionProps = {
   showProgress: boolean;
   signInMessage?: string;
   stringVariables?: TriumphStringVariables;
+  /** Overrides the default "Triumphs" heading (e.g. "Renegades // Activities"). */
+  heading?: string;
 };
 
 export function TriumphsListSection({
@@ -27,6 +29,7 @@ export function TriumphsListSection({
   showProgress,
   signInMessage,
   stringVariables = EMPTY_TRIUMPH_STRING_VARIABLES,
+  heading = "Triumphs",
 }: TriumphsListSectionProps) {
   const [hideCompleted, setHideCompleted] = useState(false);
   const instances = useMemo(
@@ -51,7 +54,7 @@ export function TriumphsListSection({
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">
-          Triumphs
+          {heading}
         </h2>
 
         {showProgress ? (

@@ -157,6 +157,59 @@ function collectRecordHashesFromNode(nodeHash, presentationNodes, seen = new Set
   return hashes;
 }
 
+function buildSectionTree(
+  nodeHash,
+  presentationNodes,
+  records,
+  objectives,
+  items,
+  seen = new Set(),
+) {
+  const node = presentationNodes[nodeHash];
+  if (!node?.displayProperties?.name || seen.has(nodeHash)) return null;
+  seen.add(nodeHash);
+
+  const childNodes = node.children?.presentationNodes ?? [];
+  const directRecords = (node.children?.records ?? [])
+    .map((entry) => buildRecord(records, objectives, items, entry.recordHash))
+    .filter(Boolean);
+
+  if (childNodes.length > 0) {
+    const children = childNodes
+      .map((child) =>
+        buildSectionTree(
+          String(child.presentationNodeHash),
+          presentationNodes,
+          records,
+          objectives,
+          items,
+          seen,
+        ),
+      )
+      .filter(Boolean);
+
+    if (!children.length && !directRecords.length) return null;
+
+    return {
+      presentationNodeHash: nodeHash,
+      name: node.displayProperties.name,
+      iconPath: node.displayProperties.icon ?? "",
+      children,
+      records: directRecords,
+    };
+  }
+
+  if (!directRecords.length) return null;
+
+  return {
+    presentationNodeHash: nodeHash,
+    name: node.displayProperties.name,
+    iconPath: node.displayProperties.icon ?? "",
+    children: [],
+    records: directRecords,
+  };
+}
+
 function collectCategoryGroups(
   rootHash,
   presentationNodes,
@@ -181,11 +234,24 @@ function collectCategoryGroups(
       .filter(Boolean);
     if (!recordItems.length) continue;
 
+    const sections = (node.children?.presentationNodes ?? [])
+      .map((child) =>
+        buildSectionTree(
+          String(child.presentationNodeHash),
+          presentationNodes,
+          records,
+          objectives,
+          items,
+        ),
+      )
+      .filter(Boolean);
+
     groups.push({
       slug: slugify(node.displayProperties.name),
       presentationNodeHash: nodeHash,
       name: node.displayProperties.name,
       iconPath: node.displayProperties.icon ?? "",
+      sections,
       records: recordItems,
     });
   }

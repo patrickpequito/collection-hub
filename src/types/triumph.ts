@@ -24,11 +24,21 @@ export type TriumphRecord = {
   rewards: TriumphReward[];
 };
 
+export type TriumphSection = {
+  presentationNodeHash: string;
+  name: string;
+  iconPath: string;
+  children: TriumphSection[];
+  records: TriumphRecord[];
+};
+
 export type TriumphGroup = {
   slug: string;
   presentationNodeHash: string;
   name: string;
   iconPath: string;
+  /** Nested presentation-node tree (e.g. Activities → Abilities). */
+  sections: TriumphSection[];
   records: TriumphRecord[];
 };
 

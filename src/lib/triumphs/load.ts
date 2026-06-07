@@ -1,23 +1,68 @@
-import { readFile } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import type {
   TriumphCatalog,
   TriumphGroup,
   TriumphRecord,
+  TriumphSection,
   TitleEntry,
 } from "@/types/triumph";
 
 export { resolveTriumphIcon } from "@/lib/triumphs/icons";
 
-let catalogCache: TriumphCatalog | null = null;
+let catalogCache: { catalog: TriumphCatalog; mtimeMs: number } | null = null;
+
+function normalizeTriumphSection(section: TriumphSection): TriumphSection {
+  return {
+    ...section,
+    children: (section.children ?? []).map(normalizeTriumphSection),
+    records: section.records ?? [],
+  };
+}
+
+function normalizeTriumphGroup(group: TriumphGroup): TriumphGroup {
+  const sections = (group.sections ?? []).map(normalizeTriumphSection);
+  if (sections.length > 0) {
+    return { ...group, sections };
+  }
+
+  if (!group.records.length) {
+    return { ...group, sections: [] };
+  }
+
+  return {
+    ...group,
+    sections: [
+      {
+        presentationNodeHash: `${group.presentationNodeHash}-all`,
+        name: "All",
+        iconPath: group.iconPath,
+        children: [],
+        records: group.records,
+      },
+    ],
+  };
+}
+
+function normalizeTriumphCatalog(catalog: TriumphCatalog): TriumphCatalog {
+  return {
+    ...catalog,
+    groups: catalog.groups.map(normalizeTriumphGroup),
+  };
+}
 
 export async function loadTriumphCatalog(): Promise<TriumphCatalog> {
-  if (catalogCache) return catalogCache;
-
   const filePath = path.join(process.cwd(), "public/data/triumphs.json");
+  const fileStat = await stat(filePath);
+
+  if (catalogCache && catalogCache.mtimeMs === fileStat.mtimeMs) {
+    return catalogCache.catalog;
+  }
+
   const raw = await readFile(filePath, "utf8");
-  catalogCache = JSON.parse(raw) as TriumphCatalog;
-  return catalogCache;
+  const catalog = normalizeTriumphCatalog(JSON.parse(raw) as TriumphCatalog);
+  catalogCache = { catalog, mtimeMs: fileStat.mtimeMs };
+  return catalog;
 }
 
 export function getTriumphGroup(
