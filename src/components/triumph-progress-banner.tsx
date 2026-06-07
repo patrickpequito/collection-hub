@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { InteractiveBannerLink } from "@/components/interactive-banner-link";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 import { progressPercent } from "@/lib/triumphs/record-progress";
 import {
@@ -33,7 +33,7 @@ export function TriumphProgressBanner({
     titleTier !== "none" ? TITLE_BORDER_CLASSES[titleTier] : "border-zinc-800";
 
   return (
-    <Link
+    <InteractiveBannerLink
       href={href}
       className={`group relative block h-14 overflow-hidden rounded-xl border bg-zinc-900 transition-[transform,border-color] duration-200 ease-out hover:z-10 hover:scale-[1.02] motion-reduce:transition-none motion-reduce:hover:scale-100 ${borderClass} ${TITLE_HOVER_BORDER_CLASSES[titleTier]}`}
     >
@@ -74,6 +74,6 @@ export function TriumphProgressBanner({
           {progress.total}
         </span>
       </div>
-    </Link>
+    </InteractiveBannerLink>
   );
 }

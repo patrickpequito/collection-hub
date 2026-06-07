@@ -10,6 +10,15 @@ import { bungieIconUrl } from "@/lib/bungie-icon";
 /** Banner height — change here to tweak all activity banners. */
 const BANNER_HEIGHT_CLASS = "h-[140px]";
 
+const BANNER_ICON_SIZE_PX = 30;
+const LEVIATHAN_BANNER_ICON_SIZE_PX = 38;
+
+const LEVIATHAN_FAMILY_SLUGS = new Set([
+  "leviathan",
+  "eater-of-worlds",
+  "spire-of-stars",
+]);
+
 type ActivityBannerSmallProps = {
   entry: ActivityEntry;
   iconPath?: string | null;
@@ -32,6 +41,10 @@ export function ActivityBannerSmall({
   const [imageError, setImageError] = useState(false);
   const showImage = imageUrl && !imageError;
   const sealIconUrl = iconPath ? bungieIconUrl(iconPath) : "";
+  const isLeviathanFamily = LEVIATHAN_FAMILY_SLUGS.has(entry.slug);
+  const iconSizePx = isLeviathanFamily
+    ? LEVIATHAN_BANNER_ICON_SIZE_PX
+    : BANNER_ICON_SIZE_PX;
   const iconOpacity =
     titleEarned === false ? "opacity-50" : "opacity-100";
   const showCompletions = totalCompletions !== null;
@@ -48,19 +61,26 @@ export function ActivityBannerSmall({
         />
       ) : null}
       {sealIconUrl ? (
-        <div className="absolute right-0 top-0 z-10 flex items-center gap-2.5 p-3">
+        <div className="absolute right-0 top-0 z-10 flex items-center p-3">
           <Image
             src={sealIconUrl}
             alt=""
-            width={30}
-            height={30}
-            className={`h-[30px] w-[30px] object-contain drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)] ${iconOpacity}`}
+            width={iconSizePx}
+            height={iconSizePx}
+            className={`object-contain drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)] ${iconOpacity} ${
+              showCompletions
+                ? isLeviathanFamily
+                  ? "mr-1"
+                  : "mr-2.5"
+                : ""
+            }`}
+            style={{ width: iconSizePx, height: iconSizePx }}
             unoptimized
           />
           {showCompletions ? (
             <>
               <span className="h-8 w-px shrink-0 bg-zinc-400/70" aria-hidden />
-              <span className="text-lg font-bold text-white tabular-nums drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+              <span className="ml-2.5 text-lg font-bold text-white tabular-nums drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
                 {totalCompletions}
               </span>
             </>
@@ -78,6 +98,15 @@ export function ActivityBannerSmall({
     </div>
   );
 
+  const bannerClass =
+    "group relative block overflow-hidden rounded-xl border border-zinc-800 transition hover:border-zinc-600";
+
+  if (!href && entry.placeholder) {
+    return (
+      <InteractiveBannerLink className={bannerClass}>{content}</InteractiveBannerLink>
+    );
+  }
+
   if (!href) {
     return (
       <div className="group overflow-hidden rounded-xl border border-zinc-800/80 opacity-60">
@@ -87,10 +116,7 @@ export function ActivityBannerSmall({
   }
 
   return (
-    <InteractiveBannerLink
-      href={href}
-      className="group relative block overflow-hidden rounded-xl border border-zinc-800 transition hover:border-zinc-600"
-    >
+    <InteractiveBannerLink href={href} className={bannerClass}>
       {content}
     </InteractiveBannerLink>
   );

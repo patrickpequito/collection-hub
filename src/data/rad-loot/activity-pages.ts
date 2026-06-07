@@ -1,17 +1,22 @@
 import type { ActivityLootPage } from "@/types/activity-loot";
 import { crotasEndLoot } from "@/data/rad-loot/crotas-end";
+import { crownOfSorrowLoot } from "@/data/rad-loot/crown-of-sorrow";
 import { deepStoneCryptLoot } from "@/data/rad-loot/deep-stone-crypt";
 import { dualityLoot } from "@/data/rad-loot/duality";
+import { eaterOfWorldsLoot } from "@/data/rad-loot/eater-of-worlds";
 import { equilibriumLoot } from "@/data/rad-loot/equilibrium";
 import { gardenOfSalvationLoot } from "@/data/rad-loot/garden-of-salvation";
 import { ghostsOfTheDeepLoot } from "@/data/rad-loot/ghosts-of-the-deep";
 import { graspOfAvariceLoot } from "@/data/rad-loot/grasp-of-avarice";
 import { kingsFallLoot } from "@/data/rad-loot/kings-fall";
 import { lastWishLoot } from "@/data/rad-loot/last-wish";
+import { leviathanLoot } from "@/data/rad-loot/leviathan";
 import { pitOfHeresyLoot } from "@/data/rad-loot/pit-of-heresy";
 import { prophecyLoot } from "@/data/rad-loot/prophecy";
 import { rootOfNightmaresLoot } from "@/data/rad-loot/root-of-nightmares";
 import { salvationsEdgeLoot } from "@/data/rad-loot/salvations-edge";
+import { scourgeOfThePastLoot } from "@/data/rad-loot/scourge-of-the-past";
+import { spireOfStarsLoot } from "@/data/rad-loot/spire-of-stars";
 import { spireOfTheWatcherLoot } from "@/data/rad-loot/spire-of-the-watcher";
 import { sunderedDoctrineLoot } from "@/data/rad-loot/sundered-doctrine";
 import { theDesertPerpetualLoot } from "@/data/rad-loot/the-desert-perpetual";
@@ -43,6 +48,11 @@ const ACTIVITY_PAGES: Record<string, ActivityLootPage> = {
   "vespers-host": vespersHostLoot,
   "sundered-doctrine": sunderedDoctrineLoot,
   equilibrium: equilibriumLoot,
+  leviathan: leviathanLoot,
+  "eater-of-worlds": eaterOfWorldsLoot,
+  "spire-of-stars": spireOfStarsLoot,
+  "scourge-of-the-past": scourgeOfThePastLoot,
+  "crown-of-sorrow": crownOfSorrowLoot,
 };
 
 export function getActivityLootPage(slug: string): ActivityLootPage | null {

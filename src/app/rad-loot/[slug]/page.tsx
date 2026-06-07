@@ -49,6 +49,10 @@ const ACTIVITY_EXOTIC_HASHES: Record<string, Set<string>> = {
   "root-of-nightmares": new Set(["3371017761"]),
   "salvations-edge": new Set(["3284383335"]),
   "the-desert-perpetual": new Set(["1202007252"]),
+  leviathan: new Set(["3580904580"]),
+  "spire-of-stars": new Set(["530754878"]),
+  "scourge-of-the-past": new Set(["2376481550", "3317837688"]),
+  "crown-of-sorrow": new Set(["3110698812"]),
   prophecy: new Set(["732682038", "2232750624"]),
   "pit-of-heresy": new Set(["1395261499"]),
   "the-shattered-throne": new Set(["814876684"]),
@@ -79,10 +83,13 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
     title
       ? title.records
       : activity.triumphPanel
-        ? resolveActivityTriumphRecords(
-            catalog,
-            activity.triumphPanel.recordHashes,
-          )
+        ? [
+            ...resolveActivityTriumphRecords(
+              catalog,
+              activity.triumphPanel.recordHashes,
+            ),
+            ...(activity.triumphPanel.records ?? []),
+          ]
         : [],
   );
   const hasTriumphSection = triumphRecords.length > 0;

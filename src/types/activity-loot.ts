@@ -1,3 +1,5 @@
+import type { TriumphRecord } from "@/types/triumph";
+
 export type LootItem = {
   itemHash: string;
   name: string;
@@ -22,6 +24,8 @@ export type ActivityTriumphPanel = {
   description: string;
   iconPath: string;
   recordHashes: string[];
+  /** Vaulted activities whose records are not in triumphs.json. */
+  records?: TriumphRecord[];
 };
 
 export type ActivityLootPage = {
@@ -47,6 +51,8 @@ export type ActivityEntry = {
   title: string;
   /** When false, banner shows "Coming soon" and is not linked. */
   available: boolean;
+  /** Full banner UI without a detail page link yet. */
+  placeholder?: boolean;
   /** Optional: public/images/rad-loot/activities/{imageFile} */
   imageFile?: string;
 };

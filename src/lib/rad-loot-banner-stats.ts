@@ -54,12 +54,13 @@ export async function loadActivityBannerStats(
   for (const entry of entries) {
     const meta = getActivityBannerMeta(catalog, entry.slug);
     const title = getTitleEntry(catalog, entry.slug);
-    const current = stats[entry.slug];
+    const completionRecordHash =
+      title?.completionRecordHash ?? meta?.completionRecordHash ?? null;
 
     let titleEarned: boolean | null = null;
-    if (title?.completionRecordHash) {
+    if (completionRecordHash) {
       titleEarned = isRecordRedeemed(
-        recordInstances.get(title.completionRecordHash)?.state,
+        recordInstances.get(completionRecordHash)?.state,
       );
     }
 

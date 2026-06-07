@@ -109,6 +109,32 @@ export const RAID_COMPLETION_ACTIVITY_HASHES = {
     normal: [2727361621],
     master: [],
   },
+  leviathan: {
+    normal: [
+      89727599, 287649202, 1699948563, 1875726950, 3916343513, 4039317196,
+      2693136600, 2693136601, 2693136602, 2693136603, 2693136604, 2693136605,
+    ],
+    master: [
+      417231112, 508802457, 757116822, 771164842, 1685065161, 1800508819,
+      2449714930, 3446541099, 3857338478, 3879860661, 3912437239, 4206123728,
+    ],
+  },
+  "scourge-of-the-past": {
+    normal: [548750096, 2812525063],
+    master: [],
+  },
+  "crown-of-sorrow": {
+    normal: [960175301, 3333172150],
+    master: [],
+  },
+  "eater-of-worlds": {
+    normal: [2164432138, 3089205900],
+    master: [809170886],
+  },
+  "spire-of-stars": {
+    normal: [119944200, 3004605630],
+    master: [3213556450],
+  },
 } as const;
 
 export type RaidCompletionSlug = keyof typeof RAID_COMPLETION_ACTIVITY_HASHES;

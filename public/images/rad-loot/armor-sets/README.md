@@ -25,7 +25,7 @@ Use the same slug as the activity page. **One file per raid or dungeon.**
 
 ### Raids
 
-`vault-of-glass.webp`, `crotas-end.webp`, `kings-fall.webp`, `last-wish.webp`, `garden-of-salvation.webp`, `deep-stone-crypt.webp`, `vow-of-the-disciple.webp`, `root-of-nightmares.webp`, `salvations-edge.webp`, `the-desert-perpetual.webp`
+`vault-of-glass.webp`, `crotas-end.webp`, `kings-fall.webp`, `last-wish.webp`, `garden-of-salvation.webp`, `deep-stone-crypt.webp`, `vow-of-the-disciple.webp`, `root-of-nightmares.webp`, `salvations-edge.webp`, `the-desert-perpetual.webp`, `leviathan.webp` (Ace-Defiant / Rull / Fulminator), `leviathan-prestige.webp` (Emperor's Agent / Champion / Minister)
 
 ### Dungeons
 

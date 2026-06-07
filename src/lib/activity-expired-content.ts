@@ -2,6 +2,18 @@ import type { ActivityLootPage } from "@/types/activity-loot";
 import type { TriumphRecord } from "@/types/triumph";
 
 /**
+ * Moments of Triumph 2020 raid triumphs — same objective as legacy raid triumphs but
+ * separate records tied to the seasonal event, not the permanent Leviathan tree.
+ */
+const MOMENTS_OF_TRIUMPH_2020_RAID_RECORD_HASHES = new Set([
+  "2266286943", // Leviathan Raid
+  "1627755918", // Eater of Worlds Raid
+  "3996781284", // Spire of Stars Raid
+  "1419480252", // Crown of Sorrow Raid
+  "1455741693", // Scourge of the Past Raid
+]);
+
+/**
  * Time-limited triumphs and their exclusive rewards that can no longer be earned.
  * Activity pages filter these out so the loot list matches what is still obtainable.
  */
@@ -42,8 +54,11 @@ export function filterExpiredTriumphRecords(
   records: TriumphRecord[],
 ): TriumphRecord[] {
   const expired = expiredRecordHashes(slug);
-  if (!expired.size) return records;
-  return records.filter((record) => !expired.has(record.recordHash));
+  return records.filter(
+    (record) =>
+      !MOMENTS_OF_TRIUMPH_2020_RAID_RECORD_HASHES.has(record.recordHash) &&
+      !expired.has(record.recordHash),
+  );
 }
 
 function filterLootItems<T extends { itemHash: string }>(

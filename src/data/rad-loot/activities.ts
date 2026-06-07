@@ -58,6 +58,42 @@ export const RAIDS: ActivityEntry[] = [
   },
 ];
 
+export const RAID_LAIRS: ActivityEntry[] = [
+  {
+    slug: "eater-of-worlds",
+    title: "Eater of Worlds",
+    available: true,
+    imageFile: "eater-of-worlds.webp",
+  },
+  {
+    slug: "spire-of-stars",
+    title: "Spire of Stars",
+    available: true,
+    imageFile: "spire-of-stars.webp",
+  },
+];
+
+export const LEGACY_RAIDS: ActivityEntry[] = [
+  {
+    slug: "leviathan",
+    title: "Leviathan",
+    available: true,
+    imageFile: "leviathan.webp",
+  },
+  {
+    slug: "scourge-of-the-past",
+    title: "Scourge of the Past",
+    available: true,
+    imageFile: "scourge-of-the-past.webp",
+  },
+  {
+    slug: "crown-of-sorrow",
+    title: "Crown of Sorrow",
+    available: true,
+    imageFile: "crown-of-sorrow.webp",
+  },
+];
+
 export const DUNGEONS: ActivityEntry[] = [
   {
     slug: "the-shattered-throne",
@@ -128,6 +164,6 @@ export const DUNGEONS: ActivityEntry[] = [
 ];
 
 export function getActivityHref(entry: ActivityEntry): string | null {
-  if (!entry.available) return null;
+  if (!entry.available || entry.placeholder) return null;
   return `/rad-loot/${entry.slug}`;
 }

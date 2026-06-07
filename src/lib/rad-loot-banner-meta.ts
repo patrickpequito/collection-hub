@@ -1,3 +1,4 @@
+import { LEGACY_RAID_BANNER_META } from "@/data/rad-loot/legacy-raid-banner-meta";
 import { getActivityLootPage } from "@/data/rad-loot/activity-pages";
 import { getTitleEntry, resolveTriumphIcon } from "@/lib/triumphs/load";
 import type { TriumphCatalog } from "@/types/triumph";
@@ -11,6 +12,9 @@ export function getActivityBannerMeta(
   catalog: TriumphCatalog,
   slug: string,
 ): ActivityBannerMeta | null {
+  const legacy = LEGACY_RAID_BANNER_META[slug];
+  if (legacy) return legacy;
+
   const title = getTitleEntry(catalog, slug);
   if (title) {
     const iconPath = resolveTriumphIcon(title.iconPath, title.records);
