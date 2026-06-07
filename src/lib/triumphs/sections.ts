@@ -61,16 +61,19 @@ export function countSectionProgress(
   section: TriumphSection,
   recordInstances: Map<string, RecordInstance>,
 ): TriumphProgress {
-  if (section.children.length === 0) {
-    return countTriumphProgress(section.records, recordInstances);
+  const children = section.children ?? [];
+  const records = section.records ?? [];
+
+  if (children.length === 0) {
+    return countTriumphProgress(records, recordInstances);
   }
 
-  return section.children.reduce<TriumphProgress>(
+  const childProgress = children.reduce<TriumphProgress>(
     (total, child) => {
-      const childProgress = countSectionProgress(child, recordInstances);
+      const progress = countSectionProgress(child, recordInstances);
       return {
-        completed: total.completed + childProgress.completed,
-        total: total.total + childProgress.total,
+        completed: total.completed + progress.completed,
+        total: total.total + progress.total,
       };
     },
     { completed: 0, total: 0 },
