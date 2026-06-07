@@ -6,6 +6,7 @@ Drop your artwork here. The homepage loads these files automatically.
 
 | Banner | File path | Size |
 |--------|-----------|------|
+| Monument of Triumph | `public/images/banners/monument-of-triumph.webp` | 2400 × 640 px |
 | RAD Loot | `public/images/banners/rad-loot.webp` | 2400 × 640 px |
 | Exotics | `public/images/banners/exotics.webp` | 2400 × 640 px |
 | Triumphs | `public/images/banners/triumphs.webp` | 2400 × 640 px |

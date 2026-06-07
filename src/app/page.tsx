@@ -36,7 +36,7 @@ export default async function Home({ searchParams }: HomeProps) {
       <SiteNav />
 
       <div className="mx-auto flex min-h-[calc(100dvh-3rem)] max-w-5xl flex-col px-6 py-10 sm:py-14">
-        <header className="mb-10 flex flex-wrap items-start justify-between gap-6">
+        <header className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0 flex-1">
             <h1 className="text-2xl font-semibold sm:text-3xl md:text-4xl">
               Destiny 2 Collection Hub
@@ -64,16 +64,16 @@ export default async function Home({ searchParams }: HomeProps) {
 
         <div className="flex flex-1 flex-col justify-center gap-5 sm:gap-6">
           <HubBanner
+            title="Monument of Triumph"
+            description="Seasonal and event triumphs in one place."
+            imageFile="monument-of-triumph.webp"
+            comingSoon
+          />
+          <HubBanner
             href="/rad-loot"
             title="RAD Loot"
             description="Raid and dungeon loot organized by activity."
             imageFile="rad-loot.webp"
-          />
-          <HubBanner
-            href="/exotics"
-            title="Exotics"
-            description="Weapons and armor. Browse by slot and class."
-            imageFile="exotics.webp"
           />
           <HubBanner
             href="/triumphs"
@@ -86,6 +86,12 @@ export default async function Home({ searchParams }: HomeProps) {
             title="Armor sets"
             description="Legendary sets from raids, dungeons, seasons, and more."
             imageFile="armor-sets.webp"
+          />
+          <HubBanner
+            href="/exotics"
+            title="Exotics"
+            description="Weapons and armor. Browse by slot and class."
+            imageFile="exotics.webp"
           />
         </div>
 

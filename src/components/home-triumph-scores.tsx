@@ -20,7 +20,7 @@ export function HomeTriumphScores({
   const lifetimeScore = signedIn && scores ? scores.lifetimeScore : null;
 
   return (
-    <div className="w-full min-w-[220px] max-w-xs rounded-xl border border-zinc-800 bg-zinc-900/40 p-4 sm:w-auto">
+    <div className="w-full rounded-xl border border-zinc-800 bg-zinc-900/40 p-4 sm:w-auto sm:min-w-[220px] sm:max-w-xs">
       <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
         Triumph Score
       </p>
