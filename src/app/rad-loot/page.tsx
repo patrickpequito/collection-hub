@@ -60,12 +60,17 @@ export default async function RadLootPage() {
       </p>
 
       <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2 md:grid-rows-[auto_auto]">
-        <section className="order-1 w-full min-w-0 md:col-start-1 md:row-start-1">
+        <section className="order-1 w-full min-w-0 md:order-none md:col-start-1 md:row-start-1">
           <ActivitySectionHeader>Raids</ActivitySectionHeader>
           <ActivityBannerList entries={RAIDS} bannerStats={bannerStats} />
         </section>
 
-        <section className="order-2 w-full min-w-0 md:col-start-1 md:row-start-2">
+        <section className="order-2 w-full min-w-0 md:order-none md:col-start-2 md:row-start-1">
+          <ActivitySectionHeader>Dungeons</ActivitySectionHeader>
+          <ActivityBannerList entries={DUNGEONS} bannerStats={bannerStats} />
+        </section>
+
+        <section className="order-3 w-full min-w-0 md:order-none md:col-start-1 md:row-start-2">
           <ActivitySectionHeader>Legacy Raids</ActivitySectionHeader>
           <ActivityBannerList
             entries={LEGACY_RAIDS}
@@ -73,12 +78,7 @@ export default async function RadLootPage() {
           />
         </section>
 
-        <section className="order-3 w-full min-w-0 md:col-start-2 md:row-start-1">
-          <ActivitySectionHeader>Dungeons</ActivitySectionHeader>
-          <ActivityBannerList entries={DUNGEONS} bannerStats={bannerStats} />
-        </section>
-
-        <section className="order-4 w-full min-w-0 md:col-start-2 md:row-start-2">
+        <section className="order-4 w-full min-w-0 md:order-none md:col-start-2 md:row-start-2">
           <ActivitySectionHeader>Raid Lairs</ActivitySectionHeader>
           <ActivityBannerList entries={RAID_LAIRS} bannerStats={bannerStats} />
         </section>
