@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import { PressableButton } from "@/components/pressable-button";
 import { TriumphsListSection } from "@/components/triumphs-list-section";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 import {
@@ -66,13 +67,13 @@ function SectionIconTab({
   const isComplete = isSectionComplete(sectionProgress, showProgress);
 
   return (
-    <button
+    <PressableButton
       type="button"
       onClick={() => onSelect(section.presentationNodeHash)}
       title={section.name}
       aria-label={section.name}
       aria-pressed={selected}
-      className={`relative flex h-16 w-full min-w-0 items-center justify-center border transition ${
+      className={`flex h-16 w-full min-w-0 items-center justify-center border ${
         isComplete
           ? `${COMPLETE_SECTION_BORDER} ${
               selected
@@ -98,7 +99,7 @@ function SectionIconTab({
           {section.name}
         </span>
       )}
-    </button>
+    </PressableButton>
   );
 }
 
@@ -123,11 +124,11 @@ function LeafSectionNav({
         const isComplete = isSectionComplete(sectionProgress, showProgress);
 
         return (
-          <button
+          <PressableButton
             key={section.presentationNodeHash}
             type="button"
             onClick={() => onSelect(section.presentationNodeHash)}
-            className={`flex w-full items-center justify-between gap-3 border px-3 py-2 text-left transition ${
+            className={`flex w-full items-center justify-between gap-3 border px-3 py-2 text-left ${
               isComplete
                 ? `${COMPLETE_SUBGROUP_BORDER} ${
                     isSelected
@@ -145,7 +146,7 @@ function LeafSectionNav({
                 ? `${sectionProgress.completed} / ${sectionProgress.total}`
                 : sectionProgress.total}
             </span>
-          </button>
+          </PressableButton>
         );
       })}
     </nav>

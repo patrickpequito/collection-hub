@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { AuthBar } from "@/components/auth-bar";
 import { AuthCallbackFlash } from "@/components/auth-callback-flash";
 import { PageHeader } from "@/components/page-header";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 import type { BungieUserSession } from "@/lib/bungie";
 
@@ -51,6 +52,7 @@ export function SectionPageLayout({
           className={`mx-auto min-w-0 ${MAX_WIDTH_CLASSES[maxWidth]} space-y-6 px-4 py-8 sm:px-6`}
         >
           {children}
+          <SiteFooter />
         </div>
       </main>
     </>

@@ -1,6 +1,7 @@
 import { HomeAuthSection } from "@/components/home-auth-section";
 import { HomeTriumphScores } from "@/components/home-triumph-scores";
 import { HubBanner } from "@/components/hub-banner";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 import { fetchTriumphScores } from "@/lib/destiny-records";
 import { isBungieOAuthConfigured } from "@/lib/env";
@@ -95,9 +96,9 @@ export default async function Home({ searchParams }: HomeProps) {
           />
         </div>
 
-        <footer className="mt-10 text-center text-xs text-zinc-600">
+        <SiteFooter>
           Catalogs work without signing in. Bungie login highlights owned items.
-        </footer>
+        </SiteFooter>
       </div>
     </main>
   );
