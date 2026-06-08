@@ -1,4 +1,5 @@
 import { collectOwnedCatalystHashes } from "@/lib/catalyst-ownership";
+import { resolveDestinyMembership } from "@/lib/destiny-membership";
 import { getBungieApiKey } from "@/lib/env";
 import { expandAcquiredItemHashes } from "@/lib/item-acquisition-index";
 import type { BungieUserSession } from "@/lib/bungie";
@@ -9,17 +10,6 @@ type BungieResponse<T> = {
   Response: T;
   ErrorCode: number;
   Message: string;
-};
-
-type DestinyMembership = {
-  membershipId: string;
-  membershipType: number;
-  crossSaveOverride?: number;
-};
-
-type MembershipsResponse = {
-  destinyMemberships: DestinyMembership[];
-  primaryMembershipId?: string | null;
 };
 
 type InventoryItem = {
@@ -116,30 +106,6 @@ async function bungieGet<T>(path: string, accessToken: string): Promise<T> {
   return data.Response;
 }
 
-function pickDestinyMembership(
-  memberships: DestinyMembership[],
-  primaryMembershipId?: string | null,
-): DestinyMembership | null {
-  if (!memberships.length) return null;
-
-  if (primaryMembershipId) {
-    const primary = memberships.find(
-      (m) => m.membershipId === primaryMembershipId,
-    );
-    if (primary) return primary;
-  }
-
-  const crossSave = memberships.find((m) => m.crossSaveOverride !== undefined);
-  if (crossSave?.crossSaveOverride) {
-    const active = memberships.find(
-      (m) => m.membershipId === String(crossSave.crossSaveOverride),
-    );
-    if (active) return active;
-  }
-
-  return memberships[0];
-}
-
 function collectInventoryItems(
   profile: ProfileInventoryResponse,
 ): InventoryItem[] {
@@ -232,15 +198,7 @@ function collectUnlockedPlugHashes(
 export async function fetchOwnedItemHashes(
   session: BungieUserSession,
 ): Promise<Set<string>> {
-  const memberships = await bungieGet<MembershipsResponse>(
-    "/Platform/User/GetMembershipsForCurrentUser/",
-    session.accessToken,
-  );
-
-  const membership = pickDestinyMembership(
-    memberships.destinyMemberships ?? [],
-    memberships.primaryMembershipId,
-  );
+  const membership = await resolveDestinyMembership(session);
 
   if (!membership) {
     return new Set();

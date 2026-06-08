@@ -1,4 +1,5 @@
 import type { BungieUserSession } from "@/lib/bungie";
+import { resolveDestinyMembership } from "@/lib/destiny-membership";
 import { getBungieApiKey } from "@/lib/env";
 import {
   mergeObjectiveProgress,
@@ -17,17 +18,6 @@ type BungieResponse<T> = {
   Response: T;
   ErrorCode: number;
   Message: string;
-};
-
-type DestinyMembership = {
-  membershipId: string;
-  membershipType: number;
-  crossSaveOverride?: number;
-};
-
-type MembershipsResponse = {
-  destinyMemberships: DestinyMembership[];
-  primaryMembershipId?: string | null;
 };
 
 type ApiObjectiveProgress = {
@@ -102,41 +92,7 @@ async function bungieGet<T>(path: string, accessToken: string): Promise<T> {
   return data.Response;
 }
 
-export async function resolveDestinyMembership(session: BungieUserSession) {
-  const memberships = await bungieGet<MembershipsResponse>(
-    "/Platform/User/GetMembershipsForCurrentUser/",
-    session.accessToken,
-  );
-
-  return pickDestinyMembership(
-    memberships.destinyMemberships ?? [],
-    memberships.primaryMembershipId,
-  );
-}
-
-function pickDestinyMembership(
-  memberships: DestinyMembership[],
-  primaryMembershipId?: string | null,
-): DestinyMembership | null {
-  if (!memberships.length) return null;
-
-  if (primaryMembershipId) {
-    const primary = memberships.find(
-      (m) => m.membershipId === primaryMembershipId,
-    );
-    if (primary) return primary;
-  }
-
-  const crossSave = memberships.find((m) => m.crossSaveOverride !== undefined);
-  if (crossSave?.crossSaveOverride) {
-    const active = memberships.find(
-      (m) => m.membershipId === String(crossSave.crossSaveOverride),
-    );
-    if (active) return active;
-  }
-
-  return memberships[0];
-}
+export { resolveDestinyMembership } from "@/lib/destiny-membership";
 
 function normalizeObjectives(
   objectives: ApiObjectiveProgress[] | undefined,

@@ -66,7 +66,7 @@ export default async function Home({ searchParams }: HomeProps) {
         <div className="flex flex-1 flex-col justify-center gap-3 sm:gap-6">
           <HubBanner
             title="Monument of Triumph"
-            description="Seasonal and event triumphs in one place."
+            description="The final triumphs and loot to chase in one place."
             imageFile="monument-of-triumph.webp"
             comingSoon
           />
@@ -93,6 +93,12 @@ export default async function Home({ searchParams }: HomeProps) {
             title="Exotics"
             description="Weapons and armor. Browse by slot and class."
             imageFile="exotics.webp"
+          />
+          <HubBanner
+            title="Eververse Rotations"
+            description="Weekly Eververse offerings in one place."
+            imageFile="eververse-rotation.webp"
+            comingSoon
           />
         </div>
 

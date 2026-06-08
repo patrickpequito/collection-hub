@@ -1,4 +1,4 @@
-export const CURRENT_VERSION = "0.5.0";
+export const CURRENT_VERSION = "0.5.1";
 
 export type UpdateFeatureSection = {
   title: string;
@@ -29,6 +29,30 @@ export const UPDATE_ROADMAP: string[] = [
  * Newest release first. Add a new entry at the top when shipping an update.
  */
 export const UPDATE_RELEASES: UpdateRelease[] = [
+  {
+    version: "0.5.1",
+    publishedAt: "2026-06-08",
+    summary:
+      "Home page placeholders and a sign-in fix for Bungie accounts linked to more than one platform.",
+    sections: [
+      {
+        title: "Home",
+        description: "New coming-soon banner and copy update.",
+        items: [
+          "Eververse Rotations added as a coming-soon banner after Exotics.",
+          "Monument of Triumph description updated to: “The final triumphs and loot to chase in one place.”",
+        ],
+      },
+      {
+        title: "Sign-in",
+        description: "Bungie accounts with multiple linked platforms.",
+        items: [
+          "Fixed an issue where sign-in could target the wrong platform (for example Xbox with Destiny 1 only) instead of the account that actually has Destiny 2.",
+          "Collection progress, triumphs, and activity stats now resolve the correct Destiny 2 profile when your Bungie account has several memberships.",
+        ],
+      },
+    ],
+  },
   {
     version: "0.5.0",
     publishedAt: "2026-05-29",

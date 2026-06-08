@@ -27,10 +27,10 @@ export function UpdatesPageContent() {
           Updates
         </h1>
         <p className="max-w-2xl text-sm leading-relaxed text-zinc-400">
-          <span className="font-medium text-zinc-200">v{CURRENT_VERSION}</span>{" "}
-          is the first public release of Collection Hub. Everything listed below
-          is new — a snapshot of what the app can do today. Version 1.0 will
-          arrive once Armor Sets, Exotics, and Monument of Triumph are complete.
+          The current release is{" "}
+          <span className="font-medium text-zinc-200">v{CURRENT_VERSION}</span>.
+          Version 1.0 will arrive once Armor Sets, Exotics, and Monument of
+          Triumph are complete. Older releases stay listed below for reference.
         </p>
       </header>
 
