@@ -1,5 +1,14 @@
 export const CURRENT_VERSION = "0.6.0";
 
+export function formatReleaseDate(isoDate: string) {
+  const [year, month, day] = isoDate.split("-").map(Number);
+  return new Date(year, month - 1, day).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
 export type UpdateFeatureSection = {
   title: string;
   /** How this area is organized and what it covers. */
@@ -180,3 +189,6 @@ export const UPDATE_RELEASES: UpdateRelease[] = [
     ],
   },
 ];
+
+/** ISO date (YYYY-MM-DD) of the newest entry in UPDATE_RELEASES. */
+export const CURRENT_VERSION_PUBLISHED_AT = UPDATE_RELEASES[0].publishedAt;

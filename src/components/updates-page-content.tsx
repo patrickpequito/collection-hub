@@ -1,18 +1,11 @@
+import { AppVersionLabel } from "@/components/app-version-label";
 import { XFollowBanner } from "@/components/x-follow-banner";
 import {
   CURRENT_VERSION,
+  formatReleaseDate,
   UPDATE_RELEASES,
   UPDATE_ROADMAP,
 } from "@/data/updates";
-
-function formatReleaseDate(isoDate: string) {
-  const [year, month, day] = isoDate.split("-").map(Number);
-  return new Date(year, month - 1, day).toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-}
 
 export function UpdatesPageContent() {
   return (
@@ -26,6 +19,7 @@ export function UpdatesPageContent() {
         <h1 className="text-2xl font-semibold text-zinc-100 sm:text-3xl">
           Updates
         </h1>
+        <AppVersionLabel />
         <p className="max-w-2xl text-sm leading-relaxed text-zinc-400">
           The current release is{" "}
           <span className="font-medium text-zinc-200">v{CURRENT_VERSION}</span>.

@@ -1,3 +1,4 @@
+import { AppVersionLabel } from "@/components/app-version-label";
 import { HomeAuthSection } from "@/components/home-auth-section";
 import { HomeTriumphScores } from "@/components/home-triumph-scores";
 import { HubBanner } from "@/components/hub-banner";
@@ -29,6 +30,7 @@ export default async function Home({ searchParams }: HomeProps) {
             <h1 className="text-2xl font-semibold sm:text-3xl md:text-4xl">
               Destiny 2 Collection Hub
             </h1>
+            <AppVersionLabel className="mt-1" />
             <p className="mt-2 max-w-lg text-sm text-zinc-400">
               Track exotic gear and legendary armor sets. Sign in with Bungie to
               highlight what you already own.
