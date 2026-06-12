@@ -107,33 +107,43 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
   let raidCompletionsError: string | null = null;
 
   if (session) {
-    try {
-      ownedItemHashes = await fetchOwnedItemHashes(session);
-    } catch (error) {
+    const [inventoryResult, recordsResult, completionsResult] =
+      await Promise.allSettled([
+        fetchOwnedItemHashes(session),
+        hasTriumphSection
+          ? fetchRecordInstances(session)
+          : Promise.resolve(null),
+        isRaidCompletionSlug(slug)
+          ? fetchRaidCompletions(session, slug)
+          : Promise.resolve(null),
+      ]);
+
+    if (inventoryResult.status === "fulfilled") {
+      ownedItemHashes = inventoryResult.value;
+    } else {
       inventoryError =
-        error instanceof Error ? error.message : "Failed to load inventory";
+        inventoryResult.reason instanceof Error
+          ? inventoryResult.reason.message
+          : "Failed to load inventory";
     }
 
-    if (hasTriumphSection) {
-      try {
-        const profileData = await fetchRecordInstances(session);
-        recordInstances = profileData.instances;
-        stringVariables = profileData.stringVariables;
-      } catch (error) {
-        recordsError =
-          error instanceof Error ? error.message : "Failed to load triumph progress";
-      }
+    if (recordsResult.status === "fulfilled" && recordsResult.value) {
+      recordInstances = recordsResult.value.instances;
+      stringVariables = recordsResult.value.stringVariables;
+    } else if (hasTriumphSection && recordsResult.status === "rejected") {
+      recordsError =
+        recordsResult.reason instanceof Error
+          ? recordsResult.reason.message
+          : "Failed to load triumph progress";
     }
 
-    if (isRaidCompletionSlug(slug)) {
-      try {
-        raidCompletions = await fetchRaidCompletions(session, slug);
-      } catch (error) {
-        raidCompletionsError =
-          error instanceof Error
-            ? error.message
-            : "Failed to load raid completions";
-      }
+    if (completionsResult.status === "fulfilled") {
+      raidCompletions = completionsResult.value;
+    } else if (isRaidCompletionSlug(slug) && completionsResult.status === "rejected") {
+      raidCompletionsError =
+        completionsResult.reason instanceof Error
+          ? completionsResult.reason.message
+          : "Failed to load raid completions";
     }
   }
 

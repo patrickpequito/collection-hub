@@ -73,6 +73,35 @@ export async function exchangeCodeForTokens(input: {
   return (await response.json()) as BungieTokenResponse;
 }
 
+export async function refreshAccessToken(input: {
+  refreshToken: string;
+  clientId: string;
+  clientSecret: string;
+}): Promise<BungieTokenResponse> {
+  const body = new URLSearchParams({
+    grant_type: "refresh_token",
+    refresh_token: input.refreshToken,
+    client_id: input.clientId,
+    client_secret: input.clientSecret,
+  });
+
+  const response = await fetch(`${BUNGIE_ORIGIN}/platform/app/oauth/token/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body,
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Failed to refresh Bungie token: ${text}`);
+  }
+
+  return (await response.json()) as BungieTokenResponse;
+}
+
 export async function fetchCurrentBungieUser(
   apiKey: string,
   accessToken: string,

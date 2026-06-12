@@ -3,7 +3,6 @@ import { HomeTriumphScores } from "@/components/home-triumph-scores";
 import { HubBanner } from "@/components/hub-banner";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
-import { fetchTriumphScores } from "@/lib/destiny-records";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { getSession } from "@/lib/session";
 
@@ -19,18 +18,6 @@ export default async function Home({ searchParams }: HomeProps) {
   const session = await getSession();
   const params = await searchParams;
   const oauthConfigured = isBungieOAuthConfigured();
-
-  let triumphScores = null;
-  let scoresError: string | null = null;
-
-  if (session) {
-    try {
-      triumphScores = await fetchTriumphScores(session);
-    } catch (error) {
-      scoresError =
-        error instanceof Error ? error.message : "Failed to load triumph scores";
-    }
-  }
 
   return (
     <main className="min-h-dvh bg-zinc-950 text-zinc-100">
@@ -56,19 +43,15 @@ export default async function Home({ searchParams }: HomeProps) {
             />
           </div>
 
-          <HomeTriumphScores
-            scores={triumphScores}
-            signedIn={Boolean(session)}
-            error={scoresError}
-          />
+          <HomeTriumphScores signedIn={Boolean(session)} />
         </header>
 
         <div className="flex flex-1 flex-col justify-center gap-3 sm:gap-6">
           <HubBanner
+            href="/triumphs/group/monument-of-triumph"
             title="Monument of Triumph"
             description="The final triumphs and loot to chase in one place."
             imageFile="monument-of-triumph.webp"
-            comingSoon
           />
           <HubBanner
             href="/rad-loot"
@@ -95,10 +78,10 @@ export default async function Home({ searchParams }: HomeProps) {
             imageFile="exotics.webp"
           />
           <HubBanner
-            title="Eververse Rotations"
-            description="Weekly Eververse offerings in one place."
+            href="/eververse"
+            title="Eververse Rotation"
+            description="Today's Bright Dust shop with ownership and reset timer."
             imageFile="eververse-rotation.webp"
-            comingSoon
           />
         </div>
 

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { ExoticItemGrid } from "@/components/exotic-item-grid";
+import { useOwnedItemHashes } from "@/lib/use-owned-item-hashes";
 import {
   ARMOR_SECTIONS,
   countExoticsByCategory,
@@ -18,16 +19,17 @@ import type { ExoticCategory, ExoticItem } from "@/types/exotic-item";
 type ExoticsCatalogProps = {
   items: ExoticItem[];
   catalysts: CatalystItem[];
-  ownedItemHashes?: string[];
-  showOwnership?: boolean;
+  signedIn?: boolean;
 };
 
 export function ExoticsCatalog({
   items,
   catalysts,
-  ownedItemHashes = [],
-  showOwnership = false,
+  signedIn = false,
 }: ExoticsCatalogProps) {
+  const { itemHashes: ownedItemHashes, error: inventoryError } =
+    useOwnedItemHashes(signedIn);
+  const showOwnership = signedIn && !inventoryError;
   const counts = useMemo(
     () => countExoticsByCategory(items, catalysts.length),
     [items, catalysts.length],
@@ -61,6 +63,12 @@ export function ExoticsCatalog({
 
   return (
     <div className="space-y-6">
+      {inventoryError ? (
+        <p className="text-xs text-amber-200/80">
+          Collection unavailable: {inventoryError}
+        </p>
+      ) : null}
+
       {showOwnership ? (
         <p className="text-xs text-zinc-500">
           Green border = acquired. Dimmed icons = not collected yet.

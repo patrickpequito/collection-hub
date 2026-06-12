@@ -20,6 +20,7 @@ import { spireOfStarsLoot } from "@/data/rad-loot/spire-of-stars";
 import { spireOfTheWatcherLoot } from "@/data/rad-loot/spire-of-the-watcher";
 import { sunderedDoctrineLoot } from "@/data/rad-loot/sundered-doctrine";
 import { theDesertPerpetualLoot } from "@/data/rad-loot/the-desert-perpetual";
+import { thePantheonLoot } from "@/data/rad-loot/the-pantheon";
 import { theShatteredThroneLoot } from "@/data/rad-loot/the-shattered-throne";
 import { vaultOfGlassLoot } from "@/data/rad-loot/vault-of-glass";
 import { vespersHostLoot } from "@/data/rad-loot/vespers-host";
@@ -27,6 +28,7 @@ import { vowOfTheDiscipleLoot } from "@/data/rad-loot/vow-of-the-disciple";
 import { warlordsRuinLoot } from "@/data/rad-loot/warlords-ruin";
 
 const ACTIVITY_PAGES: Record<string, ActivityLootPage> = {
+  "the-pantheon": thePantheonLoot,
   "vault-of-glass": vaultOfGlassLoot,
   "crotas-end": crotasEndLoot,
   "kings-fall": kingsFallLoot,

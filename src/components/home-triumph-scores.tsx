@@ -1,9 +1,10 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import type { TriumphScores } from "@/lib/destiny-records";
 
 type HomeTriumphScoresProps = {
-  scores: TriumphScores | null;
   signedIn: boolean;
-  error?: string | null;
 };
 
 function formatScore(value: number | null) {
@@ -11,11 +12,43 @@ function formatScore(value: number | null) {
   return value.toLocaleString();
 }
 
-export function HomeTriumphScores({
-  scores,
-  signedIn,
-  error,
-}: HomeTriumphScoresProps) {
+export function HomeTriumphScores({ signedIn }: HomeTriumphScoresProps) {
+  const [scores, setScores] = useState<TriumphScores | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!signedIn) {
+      setScores(null);
+      setError(null);
+      return;
+    }
+
+    let cancelled = false;
+
+    fetch("/api/triumphs/scores", { cache: "no-store" })
+      .then(async (response) => {
+        const payload = (await response.json()) as {
+          scores: TriumphScores | null;
+          error: string | null;
+        };
+        if (cancelled) return;
+        setScores(payload.scores);
+        setError(payload.error);
+      })
+      .catch((fetchError) => {
+        if (cancelled) return;
+        setError(
+          fetchError instanceof Error
+            ? fetchError.message
+            : "Failed to load triumph scores",
+        );
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [signedIn]);
+
   const activeScore = signedIn && scores ? scores.activeScore : null;
   const lifetimeScore = signedIn && scores ? scores.lifetimeScore : null;
 

@@ -1,5 +1,6 @@
 import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
+import { unstable_cache } from "next/cache";
 import type {
   TriumphCatalog,
   TriumphGroup,
@@ -51,7 +52,7 @@ function normalizeTriumphCatalog(catalog: TriumphCatalog): TriumphCatalog {
   };
 }
 
-export async function loadTriumphCatalog(): Promise<TriumphCatalog> {
+async function readTriumphCatalogFromDisk(): Promise<TriumphCatalog> {
   const filePath = path.join(process.cwd(), "public/data/triumphs.json");
   const fileStat = await stat(filePath);
 
@@ -63,6 +64,16 @@ export async function loadTriumphCatalog(): Promise<TriumphCatalog> {
   const catalog = normalizeTriumphCatalog(JSON.parse(raw) as TriumphCatalog);
   catalogCache = { catalog, mtimeMs: fileStat.mtimeMs };
   return catalog;
+}
+
+const loadTriumphCatalogCached = unstable_cache(
+  readTriumphCatalogFromDisk,
+  ["triumph-catalog"],
+  { revalidate: false },
+);
+
+export async function loadTriumphCatalog(): Promise<TriumphCatalog> {
+  return loadTriumphCatalogCached();
 }
 
 export function getTriumphGroup(

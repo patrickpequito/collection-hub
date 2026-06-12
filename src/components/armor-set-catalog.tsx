@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { ArmorSetCard } from "@/components/armor-set-card";
+import { useOwnedItemHashes } from "@/lib/use-owned-item-hashes";
 import {
   ARMOR_CATEGORIES,
   countSetsByCategory,
@@ -11,15 +12,16 @@ import type { ArmorCategory, ArmorSet } from "@/types/armor-set";
 
 type ArmorSetCatalogProps = {
   sets: ArmorSet[];
-  ownedItemHashes?: string[];
-  showOwnership?: boolean;
+  signedIn?: boolean;
 };
 
 export function ArmorSetCatalog({
   sets,
-  ownedItemHashes = [],
-  showOwnership = false,
+  signedIn = false,
 }: ArmorSetCatalogProps) {
+  const { itemHashes: ownedItemHashes, error: inventoryError } =
+    useOwnedItemHashes(signedIn);
+  const showOwnership = signedIn && !inventoryError;
   const counts = useMemo(() => countSetsByCategory(sets), [sets]);
   const [activeCategory, setActiveCategory] = useState<ArmorCategory>("raids");
 
@@ -35,10 +37,17 @@ export function ArmorSetCatalog({
 
   return (
     <div className="space-y-6">
+      {inventoryError ? (
+        <p className="text-xs text-amber-200/80">
+          Collection unavailable: {inventoryError}
+        </p>
+      ) : null}
+
       {showOwnership ? (
         <p className="text-xs text-zinc-500">
           Gold border = acquired. Dimmed icons = not collected yet.
-          Hover a piece for its source.
+          Hover a piece for its source. Tracking {ownedItemHashes.length}{" "}
+          acquired items.
         </p>
       ) : null}
 

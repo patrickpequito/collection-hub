@@ -5,9 +5,11 @@ import {
   type RaidCompletions,
 } from "@/lib/destiny-activity-stats";
 import { fetchRecordInstances } from "@/lib/destiny-records";
-import { getActivityBannerMeta } from "@/lib/rad-loot-banner-meta";
+import {
+  getActivityBannerMeta,
+  getStaticActivityBannerMeta,
+} from "@/lib/rad-loot-banner-meta";
 import { isRecordRedeemed } from "@/lib/triumphs/record-progress";
-import { getTitleEntry, loadTriumphCatalog } from "@/lib/triumphs/load";
 import type { ActivityEntry } from "@/types/activity-loot";
 import type { RecordInstance } from "@/types/triumph";
 
@@ -19,15 +21,13 @@ export type ActivityBannerStats = {
   totalCompletions: number | null;
 };
 
-export async function loadActivityBannerStats(
+function buildIconOnlyStats(
   entries: ActivityEntry[],
-  session: BungieUserSession | null,
-): Promise<Record<string, ActivityBannerStats>> {
-  const catalog = await loadTriumphCatalog();
+): Record<string, ActivityBannerStats> {
   const stats: Record<string, ActivityBannerStats> = {};
 
   for (const entry of entries) {
-    const meta = getActivityBannerMeta(catalog, entry.slug);
+    const meta = getStaticActivityBannerMeta(entry.slug);
     stats[entry.slug] = {
       iconPath: meta?.iconPath ?? null,
       titleEarned: null,
@@ -35,7 +35,20 @@ export async function loadActivityBannerStats(
     };
   }
 
-  if (!session) return stats;
+  return stats;
+}
+
+export function buildInitialActivityBannerStats(
+  entries: ActivityEntry[],
+): Record<string, ActivityBannerStats> {
+  return buildIconOnlyStats(entries);
+}
+
+export async function loadSignedInActivityBannerStats(
+  entries: ActivityEntry[],
+  session: BungieUserSession,
+): Promise<Record<string, ActivityBannerStats>> {
+  const stats = buildIconOnlyStats(entries);
 
   let completionsBySlug: Partial<Record<string, RaidCompletions>> = {};
   let recordInstances = new Map<string, RecordInstance>();
@@ -52,10 +65,8 @@ export async function loadActivityBannerStats(
   }
 
   for (const entry of entries) {
-    const meta = getActivityBannerMeta(catalog, entry.slug);
-    const title = getTitleEntry(catalog, entry.slug);
-    const completionRecordHash =
-      title?.completionRecordHash ?? meta?.completionRecordHash ?? null;
+    const meta = getStaticActivityBannerMeta(entry.slug);
+    const completionRecordHash = meta?.completionRecordHash ?? null;
 
     let titleEarned: boolean | null = null;
     if (completionRecordHash) {
@@ -80,4 +91,16 @@ export async function loadActivityBannerStats(
   }
 
   return stats;
+}
+
+/** @deprecated Prefer buildInitialActivityBannerStats + loadSignedInActivityBannerStats */
+export async function loadActivityBannerStats(
+  entries: ActivityEntry[],
+  session: BungieUserSession | null,
+): Promise<Record<string, ActivityBannerStats>> {
+  if (!session) {
+    return buildInitialActivityBannerStats(entries);
+  }
+
+  return loadSignedInActivityBannerStats(entries, session);
 }

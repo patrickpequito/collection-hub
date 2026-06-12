@@ -1,4 +1,4 @@
-export const CURRENT_VERSION = "0.5.1";
+export const CURRENT_VERSION = "0.6.0";
 
 export type UpdateFeatureSection = {
   title: string;
@@ -19,16 +19,75 @@ export type UpdateRelease = {
 
 /** Major sections still in progress before a 1.0 release. */
 export const UPDATE_ROADMAP: string[] = [
-  "Build the Monument of Triumph section (seasonal and event triumphs).",
+  "Monument of Triumph loot vendor and rewards (beyond triumphs and titles).",
   "Full rework of the Armor Sets page.",
   "Dedicated gear pages with weapon and armor stats, perks, recommended god rolls, and a view of what you own — highlighting your best roll or the one closest to the god roll.",
   "Rework the Exotics page layout and browsing experience.",
+  "Eververse Rotation — complete daily Bright Dust shop. Blocked until Bungie exposes daily offers in the API again after Destiny 2 update 9.7.0.",
 ];
 
 /**
  * Newest release first. Add a new entry at the top when shipping an update.
  */
 export const UPDATE_RELEASES: UpdateRelease[] = [
+  {
+    version: "0.6.0",
+    publishedAt: "2026-06-14",
+    summary:
+      "Monument of Triumph triumphs and the Immortal title join the Triumphs hub. Pantheon 2.0 is added to RAD Loot with a full activity page. Eververse Rotation debuts in early access. Faster page loads and smoother navigation across the site.",
+    sections: [
+      {
+        title: "Triumphs",
+        description:
+          "Monument of Triumph from update 9.7.0 — triumphs, categories, and title tracking.",
+        items: [
+          "New Monument of Triumph group with five sections: Worlds, Stories, Combat, Teamwork, and Competitions.",
+          "Browse every MoT triumph with objectives, progress bars, and rewards when signed in with Bungie.",
+          "Track the Immortal title — base seal progress and gilding requirements on a dedicated title page.",
+          "Monument of Triumph home banner now links to the live triumph group (no longer coming soon).",
+        ],
+      },
+      {
+        title: "RAD Loot",
+        description: "Pantheon 2.0 endgame raid added to the Raids column.",
+        items: [
+          "Pantheon 2.0 listed at the top of the Raids column on the RAD Loot index.",
+          "Full activity page with Pantheos Resplendent armor sets for all three classes, raid weapons, and cosmetics.",
+          "Pantheon completion counts on the activity banner when signed in.",
+          "Linked Pantheon triumphs on the activity page.",
+        ],
+      },
+      {
+        title: "Home & navigation",
+        description: "Hub and nav updates for the new sections.",
+        items: [
+          "Eververse Rotation banner and nav link added.",
+        ],
+      },
+      {
+        title: "Performance",
+        description:
+          "Faster loads across the site — pages render first, Bungie data follows in the background.",
+        items: [
+          "Global loading indicator when moving between sections: centered spinner with a dimmed overlay so the current page stays visible until the next one is ready.",
+          "Home, Exotics, Armor sets, and Eververse show catalogs immediately; collection ownership and triumph scores load afterward when signed in.",
+          "RAD Loot index opens with activity banners right away; completion counts and title seal status fill in after sign-in data arrives.",
+          "Server-side caching for catalog data and Bungie membership resolution — fewer repeated API calls per visit.",
+          "Eververse rotation uses a daily cache by default instead of forcing a live Bungie fetch on every page load.",
+          "Activity loot pages fetch inventory, triumph progress, and raid completions in parallel when signed in.",
+        ],
+      },
+      {
+        title: "Eververse Rotation",
+        description:
+          "Early access — today's Bright Dust shop at Tess Everis.",
+        items: [
+          "New page with ownership highlighting and a daily reset countdown.",
+          "Incomplete until Bungie exposes daily Bright Dust offers in the API again after update 9.7.0. Only partial data is available for now; use in-game Eververse or the Companion App for the full daily shop.",
+        ],
+      },
+    ],
+  },
   {
     version: "0.5.1",
     publishedAt: "2026-06-08",

@@ -1,3 +1,4 @@
+import { cache } from "react";
 import type { BungieUserSession } from "@/lib/bungie";
 import { getBungieApiKey } from "@/lib/env";
 
@@ -114,27 +115,58 @@ function orderMembershipCandidates(
   return ordered;
 }
 
-export async function resolveDestinyMembership(
-  session: BungieUserSession,
-): Promise<DestinyMembership | null> {
-  const memberships = await bungieGet<MembershipsResponse>(
-    "/Platform/User/GetMembershipsForCurrentUser/",
-    session.accessToken,
-  );
+export const listDestinyMembershipCandidates = cache(
+  async function listDestinyMembershipCandidates(
+    session: BungieUserSession,
+  ): Promise<DestinyMembership[]> {
+    const memberships = await bungieGet<MembershipsResponse>(
+      "/Platform/User/GetMembershipsForCurrentUser/",
+      session.accessToken,
+    );
 
-  const destinyMemberships = memberships.destinyMemberships ?? [];
-  if (!destinyMemberships.length) return null;
+    const destinyMemberships = memberships.destinyMemberships ?? [];
+    if (!destinyMemberships.length) return [];
 
-  const candidates = orderMembershipCandidates(
-    destinyMemberships,
-    memberships.primaryMembershipId,
-  );
+    return orderMembershipCandidates(
+      destinyMemberships,
+      memberships.primaryMembershipId,
+    );
+  },
+);
 
-  for (const membership of candidates) {
-    if (await membershipHasD2Profile(membership, session.accessToken)) {
-      return membership;
+/** Memberships that respond to a Destiny 2 profile request, in priority order. */
+export const listValidDestinyMemberships = cache(
+  async function listValidDestinyMemberships(
+    session: BungieUserSession,
+  ): Promise<DestinyMembership[]> {
+    const candidates = await listDestinyMembershipCandidates(session);
+    const valid: DestinyMembership[] = [];
+
+    for (const membership of candidates) {
+      if (await membershipHasD2Profile(membership, session.accessToken)) {
+        valid.push(membership);
+      }
     }
-  }
 
-  return candidates[0] ?? null;
+    return valid;
+  },
+);
+
+export function isDestinyAccountNotFoundError(error: unknown): boolean {
+  if (!(error instanceof Error)) return false;
+
+  return (
+    error.message.includes("DestinyAccountNotFound") ||
+    error.message.includes('"ErrorCode":1601') ||
+    error.message.includes("unable to find your Destiny account")
+  );
 }
+
+export const resolveDestinyMembership = cache(
+  async function resolveDestinyMembership(
+    session: BungieUserSession,
+  ): Promise<DestinyMembership | null> {
+    const valid = await listValidDestinyMemberships(session);
+    return valid[0] ?? null;
+  },
+);

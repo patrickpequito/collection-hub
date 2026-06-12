@@ -4,6 +4,7 @@ export const PAGE_HEADERS = {
   exotics: "/images/banners/exotics.webp",
   triumphs: "/images/banners/triumphs.webp",
   armorSets: "/images/banners/armor-sets.webp",
+  eververse: "/images/banners/eververse-rotation.webp",
 } as const;
 
 export function activityHeaderUrl(imageFile: string): string {

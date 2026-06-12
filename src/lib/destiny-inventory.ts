@@ -214,7 +214,7 @@ export async function fetchOwnedItemHashes(
   const collectibles =
     profile.profileCollectibles?.data?.collectibles ?? {};
   const plugHashes = collectUnlockedPlugHashes(profile);
-  const catalystHashes = collectOwnedCatalystHashes({
+  const catalystHashes = await collectOwnedCatalystHashes({
     profileRecords: profile.profileRecords?.data?.records,
     characterRecordsByCharacter: profile.characterRecords?.data,
     unlockedPlugHashes: plugHashes,
@@ -225,7 +225,7 @@ export async function fetchOwnedItemHashes(
     inventoryHashes.add(hash);
   }
 
-  return expandAcquiredItemHashes({
+  return await expandAcquiredItemHashes({
     inventoryHashes,
     collectibles,
     plugHashes,

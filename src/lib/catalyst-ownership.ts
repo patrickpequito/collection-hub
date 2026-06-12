@@ -1,12 +1,22 @@
 import catalystData from "../../public/data/catalysts.json";
 import type { ItemHashIndex } from "@/lib/item-acquisition-index";
 import type { CatalystCatalog } from "@/types/catalyst-item";
-import indexData from "../../public/data/item-hash-index.json";
 
 const catalog = catalystData as CatalystCatalog;
-const itemIndex = indexData as ItemHashIndex;
 
-function expandWeaponHashes(hashes: Iterable<string>): Set<string> {
+let indexPromise: Promise<ItemHashIndex> | null = null;
+
+async function loadItemHashIndex(): Promise<ItemHashIndex> {
+  if (!indexPromise) {
+    indexPromise = import("../../public/data/item-hash-index.json").then(
+      (mod) => mod.default as ItemHashIndex,
+    );
+  }
+  return indexPromise;
+}
+
+async function expandWeaponHashes(hashes: Iterable<string>): Promise<Set<string>> {
+  const itemIndex = await loadItemHashIndex();
   const expanded = new Set<string>();
   for (const hash of hashes) {
     expanded.add(hash);
@@ -52,7 +62,7 @@ function collectRedeemedRecordHashes(
 }
 
 /** Hashes for catalysts the account has finished (triumph or unlocked plug). */
-export function collectOwnedCatalystHashes(input: {
+export async function collectOwnedCatalystHashes(input: {
   profileRecords?: Record<string, { state: number }>;
   characterRecordsByCharacter?: Record<
     string,
@@ -61,13 +71,13 @@ export function collectOwnedCatalystHashes(input: {
   unlockedPlugHashes: Iterable<string>;
   /** Parent exotic weapons that are masterworked (catalyst required to MW exotics). */
   masterworkWeaponHashes?: Iterable<string>;
-}): Set<string> {
+}): Promise<Set<string>> {
   const redeemed = collectRedeemedRecordHashes(
     input.profileRecords,
     input.characterRecordsByCharacter,
   );
   const unlockedPlugs = new Set(input.unlockedPlugHashes);
-  const masterworkWeapons = expandWeaponHashes(
+  const masterworkWeapons = await expandWeaponHashes(
     input.masterworkWeaponHashes ?? [],
   );
   const owned = new Set<string>();

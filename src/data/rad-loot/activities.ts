@@ -1,6 +1,12 @@
 import type { ActivityEntry } from "@/types/activity-loot";
 
 export const RAIDS: ActivityEntry[] = [
+  {
+    slug: "the-pantheon",
+    title: "Pantheon 2.0",
+    available: true,
+    imageFile: "the-pantheon.webp",
+  },
   { slug: "vault-of-glass", title: "Vault of Glass", available: true, imageFile: "vault-of-glass.webp" },
   {
     slug: "crotas-end",

@@ -1,5 +1,4 @@
-import { LEGACY_RAID_BANNER_META } from "@/data/rad-loot/legacy-raid-banner-meta";
-import { getActivityLootPage } from "@/data/rad-loot/activity-pages";
+import { ACTIVITY_BANNER_META } from "@/data/rad-loot/activity-banner-meta";
 import { getTitleEntry, resolveTriumphIcon } from "@/lib/triumphs/load";
 import type { TriumphCatalog } from "@/types/triumph";
 
@@ -8,12 +7,20 @@ export type ActivityBannerMeta = {
   completionRecordHash: string | null;
 };
 
-export function getActivityBannerMeta(
-  catalog: TriumphCatalog,
+export function getStaticActivityBannerMeta(
   slug: string,
 ): ActivityBannerMeta | null {
-  const legacy = LEGACY_RAID_BANNER_META[slug];
-  if (legacy) return legacy;
+  return ACTIVITY_BANNER_META[slug] ?? null;
+}
+
+export function getActivityBannerMeta(
+  catalog: TriumphCatalog | null,
+  slug: string,
+): ActivityBannerMeta | null {
+  const staticMeta = getStaticActivityBannerMeta(slug);
+  if (staticMeta) return staticMeta;
+
+  if (!catalog) return null;
 
   const title = getTitleEntry(catalog, slug);
   if (title) {
@@ -22,14 +29,6 @@ export function getActivityBannerMeta(
     return {
       iconPath,
       completionRecordHash: title.completionRecordHash,
-    };
-  }
-
-  const page = getActivityLootPage(slug);
-  if (page?.triumphPanel?.iconPath) {
-    return {
-      iconPath: page.triumphPanel.iconPath,
-      completionRecordHash: null,
     };
   }
 
