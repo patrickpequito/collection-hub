@@ -1,5 +1,3 @@
-import { AppVersionLabel } from "@/components/app-version-label";
-
 type PageHeaderProps = {
   title: string;
   /** Path under public/, e.g. /images/banners/exotics.webp */
@@ -14,12 +12,9 @@ export function PageHeader({ title, imageUrl }: PageHeaderProps) {
         style={{ backgroundImage: `url(${imageUrl})` }}
       />
       <div className="relative flex h-full items-end px-6 pb-6 sm:px-10">
-        <div className="space-y-1">
-          <h1 className="text-3xl font-semibold text-white sm:text-4xl">
-            {title}
-          </h1>
-          <AppVersionLabel variant="overlay" />
-        </div>
+        <h1 className="text-3xl font-semibold text-white sm:text-4xl">
+          {title}
+        </h1>
       </div>
     </header>
   );
