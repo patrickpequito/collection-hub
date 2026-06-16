@@ -8,6 +8,7 @@
     "generate:catalysts": "node scripts/generate-catalysts.mjs",
     "generate:triumphs": "node scripts/generate-triumphs.mjs",
     "generate:item-index": "node scripts/generate-item-hash-index.mjs",
+    "generate:all-loot": "node scripts/generate-all-loot.mjs",
     "setup:https": "mkdir -p certificates && test -f certificates/localhost.pem || openssl req -x509 -newkey rsa:2048 -keyout certificates/localhost-key.pem -out certificates/localhost.pem -days 365 -nodes -subj '/CN=127.0.0.1'",
     "dev": "npm run setup:https && next dev --experimental-https --experimental-https-key ./certificates/localhost-key.pem --experimental-https-cert ./certificates/localhost.pem -H 127.0.0.1 -p 3000",
     "build": "next build",

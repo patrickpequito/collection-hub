@@ -1,0 +1,37 @@
+import type { Metadata } from "next";
+import { AllLootPageContent } from "@/components/all-loot-page-content";
+import { SectionPageLayout } from "@/components/section-page-layout";
+import { isBungieOAuthConfigured } from "@/lib/env";
+import { PAGE_HEADERS } from "@/lib/page-headers";
+import { getSession } from "@/lib/session";
+
+export const metadata: Metadata = {
+  title: "All Loot | Destiny 2 Collection Hub",
+  description: "Search the full Destiny 2 collectible catalog.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
+export default async function AllLootPage() {
+  const session = await getSession();
+  const oauthConfigured = isBungieOAuthConfigured();
+
+  return (
+    <SectionPageLayout
+      title="All Loot"
+      imageUrl={PAGE_HEADERS.exotics}
+      session={session}
+      oauthConfigured={oauthConfigured}
+      maxWidth="5xl"
+    >
+      <p className="text-sm text-zinc-400">
+        Search the full collectible catalog. Duplicate names show only the most
+        recent version.
+      </p>
+
+      <AllLootPageContent signedIn={Boolean(session)} />
+    </SectionPageLayout>
+  );
+}
