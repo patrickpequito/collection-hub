@@ -225,9 +225,15 @@ export const SEASON_SOURCE_PATTERNS = [
   [/sundial/i, "S9 Season of Dawn"],
   [/season of the undying|\bundying\b/i, "S8 Season of the Undying"],
   [
-    /shadowkeep|\bmoon\b.*(?:dungeon|raid|pit)|garden of salvation|pit of heresy|nightmare hunt|nightmare\b/i,
+    /exploring the moon|shadowkeep|\bmoon\b.*(?:dungeon|raid|pit|activity)|garden of salvation|pit of heresy|nightmare hunt|nightmare\b/i,
     "Shadowkeep",
   ],
+  [/leviathan,? eater of worlds|leviathan raid/i, "Red War"],
+  [/zero hour|outbreak perfected/i, "S9 Season of Dawn"],
+  [/presage|dead man's tale/i, "S13 Season of the Chosen"],
+  [/harbinger|hawkmoon/i, "S12 Season of the Hunt"],
+  [/exotic mission rotation|exotic missions/i, "S16 Season of the Risen"],
+  [/xûr's treasure hoard|star horse/i, "S15 Season of the Lost"],
   [/season of opulence|\bopulence\b|\bmenagerie\b|\bcrown of sorrow/i, "S7 Season of Opulence"],
   [/season of the drifter|\bdrifter\b|\bgambit prime|\breckoning\b/i, "S6 Season of the Drifter"],
   [/season of the forge|\bforge\b|\bblack armory|\bscourge of the past/i, "S5 Season of the Forge"],
@@ -311,6 +317,102 @@ export const UNOBTAINABLE_SOURCE_PATTERNS = [
 export const FINISHER_ITEM_CATEGORY_HASH = 1112488720;
 export const EMOTE_ITEM_CATEGORY_HASH = 44;
 
+/** Debut season for exotics re-listed in the Tower Exotic Archive (source is not era-specific). */
+export const EXOTIC_ARCHIVE_DEBUT_BY_NAME = {
+  "witherhoard": "S11 Season of Arrivals",
+  "traveler's chosen": "S11 Season of Arrivals",
+  "ruinous effigy": "S11 Season of Arrivals",
+  "duality": "S17 Season of the Haunted",
+  "ticuu's divination": "S14 Season of the Splicer",
+  "cryosthesia 77k": "S14 Season of the Splicer",
+  "lorentz driver": "S14 Season of the Splicer",
+  "ager's scepter": "S15 Season of the Lost",
+  "delicate tomb": "S15 Season of the Lost",
+  "sturm": "Red War",
+  "legend of acrius": "Red War",
+  "rat king": "Red War",
+  "mida multi-tool": "Red War",
+  "polaris lance": "Warmind",
+  "worldline zero": "Warmind",
+  "sleeper simulant": "Warmind",
+  "whisper of the worm": "Warmind",
+  "ace of spades": "Forsaken",
+  "le monarque": "S5 Season of the Forge",
+  "anarchy": "Forsaken",
+  "jotunn": "S5 Season of the Forge",
+  "izanagi's burden": "S5 Season of the Forge",
+  "the last word": "S6 Season of the Drifter",
+  "thorn": "S6 Season of the Drifter",
+  "outbreak perfected": "S9 Season of Dawn",
+  "lumina": "S6 Season of the Drifter",
+  "tarrabah": "S7 Season of Opulence",
+  "bad juju": "S7 Season of Opulence",
+  "truth": "S8 Season of the Undying",
+  "leviathan's breath": "S8 Season of the Undying",
+  "eriana's vow": "S8 Season of the Undying",
+  "bastion": "S9 Season of Dawn",
+  "symmetry": "S12 Season of the Hunt",
+  "devil's ruin": "S9 Season of Dawn",
+  "tommy's matchbook": "S13 Season of the Chosen",
+  "the fourth horseman": "S10 Season of the Worthy",
+};
+
+export function normalizeItemName(name = "") {
+  return name
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "");
+}
+
+/** Strip adept suffix so debut season is shared across normal and adept variants. */
+export function debutBaseNameKey(name = "") {
+  return normalizeItemName(name).replace(/\s*\(adept\)\s*$/, "");
+}
+
+export function isDebutRelevantVariant(item, group) {
+  if (!item?.hash) return false;
+  if (item.itemType === 0) return false;
+  if (item.itemType === 20) return false;
+
+  const hasWeapon = group.some((variant) => variant.itemType === 3);
+  if (hasWeapon && item.itemType === 19) return false;
+
+  return true;
+}
+
+export function resolveDimManifestSeasonNumber(
+  item,
+  dimSeasons = {},
+  watermarkToSeason = {},
+) {
+  const hashSeason = dimSeasons[String(item.hash)];
+  if (hashSeason) return hashSeason;
+
+  for (const watermark of [
+    item.iconWatermark,
+    item.iconWatermarkShelved,
+    item.iconWatermarkFeatured,
+  ]) {
+    if (watermark && watermarkToSeason[watermark]) {
+      return watermarkToSeason[watermark];
+    }
+  }
+
+  return 0;
+}
+
+export function buildManifestItemsByName(items) {
+  const itemsByName = new Map();
+  for (const item of Object.values(items)) {
+    const name = normalizeItemName(item.displayProperties?.name);
+    if (!name) continue;
+    if (!itemsByName.has(name)) itemsByName.set(name, []);
+    itemsByName.get(name).push(item);
+  }
+  return itemsByName;
+}
+
 export function currentSeasonNumber() {
   const match = CANONICAL_SEASON_ORDER[0]?.match(/^S(\d+)/);
   return match ? Number(match[1]) : 0;
@@ -383,37 +485,7 @@ export function buildSeasonPassItemSeasonMap(seasons, seasonPasses, progressions
   return map;
 }
 
-export function buildSeasonIndexAnchors(
-  items,
-  collectibles,
-  seasons,
-  seasonPassItemSeason,
-) {
-  const anchors = [];
-
-  for (const item of Object.values(items)) {
-    if (!item?.collectibleHash) continue;
-    const collectible = collectibles[String(item.collectibleHash)];
-    if (!collectible) continue;
-
-    const seasonLabel = resolveItemSeasonLabel(
-      item,
-      collectible,
-      seasons,
-      seasonPassItemSeason,
-    );
-    if (!seasonLabel) continue;
-
-    anchors.push({
-      index: item.index ?? 0,
-      seasonLabel,
-    });
-  }
-
-  return anchors;
-}
-
-export function resolveItemSeasonLabel(
+export function resolveVariantSeasonLabel(
   item,
   collectible,
   seasons,
@@ -422,6 +494,12 @@ export function resolveItemSeasonLabel(
   const source = collectible?.sourceString ?? "";
   const fromSource = resolveSeasonLabelFromSource(source, seasons);
   if (fromSource) return fromSource;
+
+  const normalizedName = normalizeItemName(item.displayProperties?.name);
+  if (/exotic archive/i.test(source) && normalizedName) {
+    const debut = EXOTIC_ARCHIVE_DEBUT_BY_NAME[normalizedName];
+    if (debut) return debut;
+  }
 
   const manifestSeason = seasonPassItemSeason?.get(String(item.hash));
   if (manifestSeason) {
@@ -437,6 +515,276 @@ export function resolveItemSeasonLabel(
   }
 
   return null;
+}
+
+export function resolveDebutSeasonLabelForGroup(
+  group,
+  collectibles,
+  seasons,
+  seasonPassItemSeason,
+  seasonIndexAnchors,
+  dimSeasonData = {},
+) {
+  const { dimSeasons = {}, watermarkToSeason = {} } = dimSeasonData;
+  const relevant = [...group]
+    .filter((item) => isDebutRelevantVariant(item, group))
+    .sort((a, b) => (a.index ?? 0) - (b.index ?? 0));
+
+  if (!relevant.length) return null;
+
+  for (const item of relevant) {
+    if (!item.collectibleHash) continue;
+    const collectible = collectibles[String(item.collectibleHash)];
+    if (!collectible) continue;
+    const label = resolveVariantSeasonLabel(
+      item,
+      collectible,
+      seasons,
+      seasonPassItemSeason,
+    );
+    if (label) return label;
+  }
+
+  let earliestDimSeason = Infinity;
+  for (const item of relevant) {
+    const manifestSeason = resolveDimManifestSeasonNumber(
+      item,
+      dimSeasons,
+      watermarkToSeason,
+    );
+    if (manifestSeason > 0 && manifestSeason < earliestDimSeason) {
+      earliestDimSeason = manifestSeason;
+    }
+  }
+  if (Number.isFinite(earliestDimSeason) && earliestDimSeason < Infinity) {
+    return seasonLabelFromManifestNumber(earliestDimSeason);
+  }
+
+  const minIndex = Math.min(...relevant.map((variant) => variant.index ?? Infinity));
+  if (Number.isFinite(minIndex) && seasonIndexAnchors?.length) {
+    return inferSeasonLabelFromIndex(minIndex, seasonIndexAnchors);
+  }
+
+  return null;
+}
+
+export function buildMergedDebutGroups(itemsByName) {
+  const merged = new Map();
+
+  for (const [nameKey, group] of itemsByName) {
+    const baseKey = debutBaseNameKey(nameKey);
+    if (!merged.has(baseKey)) merged.set(baseKey, new Map());
+    const byHash = merged.get(baseKey);
+    for (const item of group) {
+      byHash.set(String(item.hash), item);
+    }
+  }
+
+  return merged;
+}
+
+export function buildSeasonIndexAnchors(
+  items,
+  collectibles,
+  seasons,
+  seasonPassItemSeason,
+  itemsByName = null,
+  debutSeasonByName = null,
+  dimSeasonData = {},
+) {
+  const byName = itemsByName ?? buildManifestItemsByName(items);
+  const anchors = [];
+
+  for (const item of Object.values(items)) {
+    if (!item?.collectibleHash) continue;
+    const collectible = collectibles[String(item.collectibleHash)];
+    if (!collectible) continue;
+
+    const label = resolveVariantSeasonLabel(
+      item,
+      collectible,
+      seasons,
+      seasonPassItemSeason,
+    );
+    if (!label) continue;
+
+    anchors.push({
+      index: item.index ?? 0,
+      seasonLabel: label,
+    });
+  }
+
+  const debutMap = debutSeasonByName ?? new Map();
+  if (!debutSeasonByName) {
+    const mergedGroups = buildMergedDebutGroups(byName);
+    for (const [baseKey, byHash] of mergedGroups) {
+      const label = resolveDebutSeasonLabelForGroup(
+        [...byHash.values()],
+        collectibles,
+        seasons,
+        seasonPassItemSeason,
+        anchors,
+        dimSeasonData,
+      );
+      if (!label) continue;
+      for (const nameKey of byName.keys()) {
+        if (debutBaseNameKey(nameKey) === baseKey) debutMap.set(nameKey, label);
+      }
+    }
+  }
+
+  for (const item of Object.values(items)) {
+    const nameKey = normalizeItemName(item.displayProperties?.name);
+    const label = debutMap.get(nameKey);
+    if (!label) continue;
+
+    anchors.push({
+      index: item.index ?? 0,
+      seasonLabel: label,
+    });
+  }
+
+  return anchors;
+}
+
+export function buildDebutSeasonByName(
+  itemsByName,
+  collectibles,
+  seasons,
+  seasonPassItemSeason,
+  seasonIndexAnchors,
+  dimSeasonData = {},
+) {
+  const debutSeasonByName = new Map();
+  const mergedGroups = buildMergedDebutGroups(itemsByName);
+
+  for (const [baseKey, byHash] of mergedGroups) {
+    const label = resolveDebutSeasonLabelForGroup(
+      [...byHash.values()],
+      collectibles,
+      seasons,
+      seasonPassItemSeason,
+      seasonIndexAnchors,
+      dimSeasonData,
+    );
+    if (!label) continue;
+
+    for (const nameKey of itemsByName.keys()) {
+      if (debutBaseNameKey(nameKey) === baseKey) {
+        debutSeasonByName.set(nameKey, label);
+      }
+    }
+  }
+
+  return debutSeasonByName;
+}
+
+/**
+ * Generic reissue sources where the watermark/hash reflects the version season
+ * more accurately than the collectible source text.
+ */
+export const RECURRING_VERSION_SOURCE_PATTERNS = [
+  /^the drifter$/i,
+  /^source:\s*the drifter$/i,
+  /^source:\s*eververse$/i,
+  /^source:\s*x[uû]r$/i,
+  /^source:\s*bright engrams$/i,
+  /^source:\s*season pass reward$/i,
+  /^source:\s*rewards pass$/i,
+  /trials of osiris challenges/i,
+  /trials of osiris wins/i,
+  /flawless chest in trials of osiris/i,
+  /open legendary engrams and earn faction rank-up packages/i,
+  /random perks:\s*this item cannot be reacquired/i,
+  /complete iron banner matches/i,
+  /complete strikes and earn rank-up packages/i,
+  /complete crucible matches and earn rank-up packages/i,
+  /earn rank-up packages from/i,
+  /exotic archive at the tower/i,
+  /exploring the moon/i,
+  /^the moon$/i,
+  /^source:\s*unlocked by a special offer\.?$/i,
+];
+
+export function isRecurringVersionSource(source = "") {
+  const text = source.trim();
+  if (!text) return true;
+
+  if (
+    /complete the\s+["']|associated .{0,48} quest|quest from|quest line|presage|zero hour|nightmare hunt|lost sector|campaign|exotic quest|seasonal quest|dungeon|raid|strike:|nightfall/i.test(
+      text,
+    )
+  ) {
+    return false;
+  }
+
+  return RECURRING_VERSION_SOURCE_PATTERNS.some((pattern) =>
+    pattern.test(text),
+  );
+}
+
+export function resolveVersionSeasonLabel(
+  item,
+  collectible,
+  seasons,
+  seasonPassItemSeason,
+  seasonIndexAnchors,
+  dimSeasonData = {},
+) {
+  const { dimSeasons = {}, watermarkToSeason = {} } = dimSeasonData;
+  const source = collectible?.sourceString ?? "";
+
+  const dimSeason = resolveDimManifestSeasonNumber(
+    item,
+    dimSeasons,
+    watermarkToSeason,
+  );
+  const fromSource = resolveSeasonLabelFromSource(source, seasons);
+
+  if (dimSeason) {
+    if (!fromSource || isRecurringVersionSource(source)) {
+      return seasonLabelFromManifestNumber(dimSeason);
+    }
+
+    const dimDisplay = manifestSeasonToDisplayNumber(dimSeason);
+    const sourceDisplay = displayNumberFromLabel(fromSource);
+    if (dimDisplay > sourceDisplay) {
+      return seasonLabelFromManifestNumber(dimSeason);
+    }
+  }
+
+  if (fromSource) return fromSource;
+
+  const manifestSeason = seasonPassItemSeason?.get(String(item.hash));
+  if (manifestSeason) {
+    return seasonLabelFromManifestNumber(manifestSeason);
+  }
+
+  const seasonHash = item.seasonHash ?? collectible?.seasonHash ?? null;
+  if (seasonHash) {
+    const season = seasons[String(seasonHash)];
+    if (season?.seasonNumber) {
+      return seasonLabelFromManifestNumber(season.seasonNumber);
+    }
+  }
+
+  if (dimSeason) return seasonLabelFromManifestNumber(dimSeason);
+
+  return inferSeasonLabelFromIndex(item.index ?? 0, seasonIndexAnchors);
+}
+
+export function resolveItemSeasonLabel(
+  item,
+  collectible,
+  seasons,
+  seasonPassItemSeason,
+) {
+  return resolveVariantSeasonLabel(
+    item,
+    collectible,
+    seasons,
+    seasonPassItemSeason,
+  );
 }
 
 export function resolveKnownSeasonNumber(

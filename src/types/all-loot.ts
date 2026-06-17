@@ -9,11 +9,22 @@ export type AllLootFacets = {
   gearSlots: string[];
 };
 
+export type AllLootItemVersion = {
+  itemHash: string;
+  name: string;
+  iconPath: string;
+  seasonIconPath?: string;
+  seasonLabel: string;
+  seasonNumber: number;
+};
+
 export type AllLootItem = {
   itemHash: string;
   alternateItemHashes?: string[];
+  versions?: AllLootItemVersion[];
   name: string;
   iconPath: string;
+  seasonIconPath?: string;
   seasonLabel: string;
   seasonNumber: number;
   type: string;

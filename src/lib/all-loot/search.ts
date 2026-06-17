@@ -36,10 +36,18 @@ export async function loadAllLootFacets(): Promise<AllLootFacets> {
   return catalog.facets;
 }
 
-function matchesMultiFilter(values: string[], candidate: string | null) {
+function matchesMultiFilter(values: string[], candidates: string | string[] | null) {
   if (!values.length) return true;
-  if (!candidate) return false;
-  return values.includes(candidate);
+  if (!candidates) return false;
+  const list = Array.isArray(candidates) ? candidates : [candidates];
+  return list.some((candidate) => values.includes(candidate));
+}
+
+function itemSeasonLabels(item: AllLootItem) {
+  if (item.versions?.length) {
+    return item.versions.map((version) => version.seasonLabel);
+  }
+  return [item.seasonLabel];
 }
 
 function matchesQuery(item: AllLootItem, query: string) {
@@ -55,7 +63,7 @@ export function searchAllLootItems(
   return items.filter((item) => {
     if (!matchesQuery(item, filters.query)) return false;
     if (!matchesMultiFilter(filters.types, item.type)) return false;
-    if (!matchesMultiFilter(filters.seasons, item.seasonLabel)) return false;
+    if (!matchesMultiFilter(filters.seasons, itemSeasonLabels(item))) return false;
     if (!matchesMultiFilter(filters.rarities, item.rarity)) return false;
     if (!matchesMultiFilter(filters.damageTypes, item.damageType)) return false;
 

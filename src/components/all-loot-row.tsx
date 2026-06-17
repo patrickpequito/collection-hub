@@ -1,5 +1,6 @@
 "use client";
 
+import { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 import { classOrWeaponTypeIconPath, isGuardianClass } from "@/lib/class-weapon-type-icon";
@@ -9,7 +10,7 @@ import {
   weaponAmmoIconPath,
   weaponAmmoLabel,
 } from "@/lib/weapon-slot-icon";
-import type { AllLootItem } from "@/types/all-loot";
+import type { AllLootItem, AllLootItemVersion } from "@/types/all-loot";
 import { isItemOwned } from "@/lib/all-loot/ownership";
 
 export { isItemOwned };
@@ -43,17 +44,63 @@ function shouldShowItemType(type: string) {
   return type !== "Weapon" && type !== "Armor";
 }
 
+function ItemIconWithSeasonBadge({
+  iconPath,
+  seasonIconPath,
+  size = "row",
+  className = "",
+}: {
+  iconPath: string;
+  seasonIconPath?: string | null;
+  size?: "row" | "popover";
+  className?: string;
+}) {
+  const iconClass =
+    size === "popover"
+      ? "h-8 w-8 border border-zinc-800 bg-zinc-900 object-cover sm:h-9 sm:w-9"
+      : "h-8 w-8 border border-zinc-800 bg-zinc-900 object-cover sm:h-12 sm:w-12";
+
+  return (
+    <div className={`relative shrink-0 ${className}`}>
+      <Image
+        src={bungieIconUrl(iconPath)}
+        alt=""
+        width={48}
+        height={48}
+        className={iconClass}
+        unoptimized
+      />
+      {seasonIconPath ? (
+        <Image
+          src={bungieIconUrl(seasonIconPath)}
+          alt=""
+          width={48}
+          height={48}
+          className="pointer-events-none absolute left-0 top-0 size-full"
+          unoptimized
+        />
+      ) : null}
+    </div>
+  );
+}
+
 function ItemMetaLine({
   type,
   seasonLabel,
+  onHover,
 }: {
   type: string;
   seasonLabel: string;
+  onHover?: (active: boolean) => void;
 }) {
   const showType = shouldShowItemType(type);
 
   return (
-    <p className="truncate text-[10px] sm:text-xs">
+    <p
+      className="truncate text-[10px] sm:text-xs"
+      onMouseEnter={() => onHover?.(true)}
+      onMouseLeave={() => onHover?.(false)}
+    >
       {showType ? (
         <>
           <span className="font-medium uppercase tracking-wide text-zinc-400">
@@ -67,6 +114,77 @@ function ItemMetaLine({
       <span className="text-zinc-500">{seasonLabel}</span>
     </p>
   );
+}
+
+function AllLootVersionsPopover({
+  versions,
+  open,
+  onHover,
+}: {
+  versions: AllLootItemVersion[];
+  open: boolean;
+  onHover: (active: boolean) => void;
+}) {
+  if (!open || versions.length <= 1) return null;
+
+  return (
+    <div
+      className="absolute left-0 top-full z-50 mt-1.5 w-[min(18rem,calc(100vw-2rem))] rounded-lg border border-zinc-700 bg-zinc-950/98 p-2 shadow-xl backdrop-blur-sm"
+      role="tooltip"
+      onMouseEnter={() => onHover(true)}
+      onMouseLeave={() => onHover(false)}
+    >
+      <p className="mb-1.5 px-1 text-[10px] font-medium uppercase tracking-wide text-zinc-500">
+        All versions
+      </p>
+      <ul className="max-h-56 space-y-1 overflow-y-auto">
+        {versions.map((version) => (
+          <li
+            key={version.itemHash}
+            className="flex items-center gap-2 rounded-md px-1 py-1.5 hover:bg-zinc-900/80"
+          >
+            <ItemIconWithSeasonBadge
+              iconPath={version.iconPath}
+              seasonIconPath={version.seasonIconPath}
+              size="popover"
+            />
+            <div className="min-w-0">
+              <p className="truncate text-xs font-medium text-zinc-100 sm:text-sm">
+                {version.name}
+              </p>
+              <p className="truncate text-[10px] text-zinc-500 sm:text-xs">
+                {version.seasonLabel}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function useVersionsHover(versions: AllLootItemVersion[] | undefined) {
+  const [open, setOpen] = useState(false);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const hasVersions = Boolean(versions && versions.length > 1);
+
+  const setHover = useCallback(
+    (active: boolean) => {
+      if (!hasVersions) return;
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current);
+        closeTimerRef.current = null;
+      }
+      if (active) {
+        setOpen(true);
+        return;
+      }
+      closeTimerRef.current = setTimeout(() => setOpen(false), 120);
+    },
+    [hasVersions],
+  );
+
+  return { open, setHover, hasVersions, versions: versions ?? [] };
 }
 
 function ObtainableIcon({ obtainable }: { obtainable: boolean }) {
@@ -212,6 +330,10 @@ function SlotCell({
 
 
 export function AllLootRow({ item, owned, showOwnership }: AllLootRowProps) {
+  const { open, setHover, hasVersions, versions } = useVersionsHover(
+    item.versions,
+  );
+
   const ownedStyles =
     showOwnership && owned
       ? "ring-1 ring-[rgb(255,188,0)] shadow-[0_0_4px_rgba(255,188,0,0.35)]"
@@ -219,24 +341,41 @@ export function AllLootRow({ item, owned, showOwnership }: AllLootRowProps) {
         ? "opacity-75 saturate-75"
         : "";
 
+  const hoverableClass = hasVersions
+    ? "cursor-default underline decoration-zinc-700 decoration-dotted underline-offset-2"
+    : "";
+
   return (
     <article className={ALL_LOOT_ROW_LAYOUT}>
-      <div className={`relative ${COL_ICON} ${ownedStyles}`}>
-        <Image
-          src={bungieIconUrl(item.iconPath)}
-          alt=""
-          width={48}
-          height={48}
-          className="h-8 w-8 border border-zinc-800 bg-zinc-900 object-cover sm:h-12 sm:w-12"
-          unoptimized
+      <div
+        className={`relative ${COL_ICON} ${ownedStyles}`}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
+        <ItemIconWithSeasonBadge
+          iconPath={item.iconPath}
+          seasonIconPath={item.seasonIconPath}
         />
       </div>
 
-      <div className={COL_ITEM}>
-        <p className="truncate text-xs font-semibold text-zinc-100 sm:text-sm">
+      <div className={`relative ${COL_ITEM}`}>
+        <p
+          className={`truncate text-xs font-semibold text-zinc-100 sm:text-sm ${hoverableClass}`}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
           {item.name}
         </p>
-        <ItemMetaLine type={item.type} seasonLabel={item.seasonLabel} />
+        <ItemMetaLine
+          type={item.type}
+          seasonLabel={item.seasonLabel}
+          onHover={setHover}
+        />
+        <AllLootVersionsPopover
+          versions={versions}
+          open={open}
+          onHover={setHover}
+        />
       </div>
 
       <RarityCell rarity={item.rarity} />

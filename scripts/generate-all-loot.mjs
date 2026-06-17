@@ -15,14 +15,17 @@ import {
   TYPE_ORDER,
   WEAPON_SLOT_ORDER,
   buildActiveArtifactSeasonNumbers,
+  buildDebutSeasonByName,
+  buildManifestItemsByName,
   buildSeasonIndexAnchors,
   buildSeasonPassItemSeasonMap,
   displayNumberFromLabel,
-  inferSeasonLabelFromIndex,
   isActiveSeasonalArtifact,
+  isDebutRelevantVariant,
   isSourceObtainable,
+  normalizeItemName,
   orderFacetValues,
-  resolveItemSeasonLabel,
+  resolveVersionSeasonLabel,
 } from "./all-loot-mappings.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -125,12 +128,26 @@ const WEAPON_ORNAMENT_PLUG_PATTERNS = [
 
 const EXCLUDED_ITEM_TYPES = new Set([0, 1, 4, 5, 7, 8, 9, 10, 14, 15, 16, 20, 23]);
 
+const DIM_SEASONS_URL =
+  "https://raw.githubusercontent.com/DestinyItemManager/d2-additional-info/master/output/seasons.json";
+const DIM_WATERMARK_TO_SEASON_URL =
+  "https://raw.githubusercontent.com/DestinyItemManager/d2-additional-info/master/output/watermark-to-season.json";
+
 async function fetchJson(path) {
   const url = path.startsWith("http") ? path : `https://www.bungie.net${path}`;
-  const res = await fetch(url, { headers: { "X-API-Key": API_KEY } });
+  const headers = path.startsWith("http") ? {} : { "X-API-Key": API_KEY };
+  const res = await fetch(url, { headers });
   if (!res.ok) throw new Error(`Failed to fetch ${url}: ${res.status}`);
   const data = await res.json();
   return data.Response ?? data;
+}
+
+async function loadDimSeasonData() {
+  const [dimSeasons, watermarkToSeason] = await Promise.all([
+    fetchJson(DIM_SEASONS_URL),
+    fetchJson(DIM_WATERMARK_TO_SEASON_URL),
+  ]);
+  return { dimSeasons, watermarkToSeason };
 }
 
 async function loadManifestTables() {
@@ -150,33 +167,8 @@ async function loadManifestTables() {
 }
 
 
-function resolveSeasonLabel(
-  item,
-  collectible,
-  seasons,
-  seasonIndexAnchors,
-  seasonPassItemSeason,
-) {
-  const label = resolveItemSeasonLabel(
-    item,
-    collectible,
-    seasons,
-    seasonPassItemSeason,
-  );
-  if (label) return label;
-
-  return inferSeasonLabelFromIndex(item.index ?? 0, seasonIndexAnchors);
-}
-
 function buildItemsByName(items) {
-  const itemsByName = new Map();
-  for (const item of Object.values(items)) {
-    const name = item.displayProperties?.name?.trim()?.toLowerCase();
-    if (!name) continue;
-    if (!itemsByName.has(name)) itemsByName.set(name, []);
-    itemsByName.get(name).push(item);
-  }
-  return itemsByName;
+  return buildManifestItemsByName(items);
 }
 
 function isDisplayVariant(item) {
@@ -215,9 +207,7 @@ function relatedItemHashes(primaryHash, item, itemsByName) {
 
 function dedupeScore(entry) {
   return (
-    (entry.source ? 1_000_000_000_000 : 0) +
-    entry.seasonNumber * 1_000_000_000 +
-    (entry._manifestIndex ?? 0)
+    (entry.source ? 1_000_000_000_000 : 0) + (entry._manifestIndex ?? 0)
   );
 }
 
@@ -505,9 +495,15 @@ function isObtainable(
 }
 
 function buildSearchText(entry) {
+  const versionText = (entry.versions ?? []).flatMap((version) => [
+    version.name,
+    version.seasonLabel,
+  ]);
+
   return [
     entry.name,
     entry.seasonLabel,
+    ...versionText,
     entry.type,
     entry.rarity,
     entry.classOrWeaponType,
@@ -522,7 +518,91 @@ function buildSearchText(entry) {
     .toLowerCase();
 }
 
-function buildCatalog(items, collectibles, seasons, seasonPasses, progressions) {
+function isCatalogVersionCandidate(item, group) {
+  if (!isDisplayVariant(item)) return false;
+  if (!isDebutRelevantVariant(item, group)) return false;
+
+  const name = item.displayProperties?.name?.trim();
+  const icon = item.displayProperties?.icon;
+  if (!name || !icon) return false;
+
+  const type = resolveTypeLabel(item);
+  if (!type) return false;
+
+  const rarity = item.inventory?.tierTypeName ?? "";
+  if (!rarity || rarity === "Unknown") return false;
+
+  return true;
+}
+
+function resolveSeasonIconPath(item) {
+  return item?.iconWatermark || undefined;
+}
+
+function buildVersionsForNameGroup(
+  group,
+  collectibles,
+  seasons,
+  seasonPassItemSeason,
+  seasonIndexAnchors,
+  dimSeasonData,
+) {
+  const candidates = group
+    .filter((item) => isCatalogVersionCandidate(item, group))
+    .sort((a, b) => (b.index ?? 0) - (a.index ?? 0));
+
+  const bySeason = new Map();
+
+  for (const item of candidates) {
+    const collectible = item.collectibleHash
+      ? collectibles[String(item.collectibleHash)]
+      : null;
+    const seasonLabel = resolveVersionSeasonLabel(
+      item,
+      collectible,
+      seasons,
+      seasonPassItemSeason,
+      seasonIndexAnchors,
+      dimSeasonData,
+    );
+    const existing = bySeason.get(seasonLabel);
+    if (!existing || (item.index ?? 0) > existing._manifestIndex) {
+      bySeason.set(seasonLabel, {
+        itemHash: String(item.hash),
+        name: item.displayProperties.name.trim(),
+        iconPath: item.displayProperties.icon,
+        seasonIconPath: resolveSeasonIconPath(item),
+        seasonLabel,
+        seasonNumber: displayNumberFromLabel(seasonLabel),
+        _manifestIndex: item.index ?? 0,
+      });
+    }
+  }
+
+  return [...bySeason.values()]
+    .sort(
+      (a, b) =>
+        b.seasonNumber - a.seasonNumber || b._manifestIndex - a._manifestIndex,
+    )
+    .map(({ _manifestIndex, ...version }) => version);
+}
+
+function applyLatestVersionToEntry(entry, versions) {
+  const latest = versions[0];
+  if (!latest) return entry;
+
+  entry.itemHash = latest.itemHash;
+  entry.name = latest.name;
+  entry.iconPath = latest.iconPath;
+  entry.seasonIconPath = latest.seasonIconPath;
+  entry.seasonLabel = latest.seasonLabel;
+  entry.seasonNumber = latest.seasonNumber;
+  entry.versions = versions.length > 1 ? versions : undefined;
+  entry.searchText = buildSearchText(entry);
+  return entry;
+}
+
+function buildCatalog(items, collectibles, seasons, seasonPasses, progressions, dimSeasonData) {
   const byName = new Map();
   const itemsByName = buildItemsByName(items);
   const seasonPassItemSeason = buildSeasonPassItemSeasonMap(
@@ -530,11 +610,39 @@ function buildCatalog(items, collectibles, seasons, seasonPasses, progressions) 
     seasonPasses,
     progressions,
   );
+  const initialAnchors = buildSeasonIndexAnchors(
+    items,
+    collectibles,
+    seasons,
+    seasonPassItemSeason,
+    itemsByName,
+    null,
+    dimSeasonData,
+  );
+  let debutSeasonByName = buildDebutSeasonByName(
+    itemsByName,
+    collectibles,
+    seasons,
+    seasonPassItemSeason,
+    initialAnchors,
+    dimSeasonData,
+  );
   const seasonIndexAnchors = buildSeasonIndexAnchors(
     items,
     collectibles,
     seasons,
     seasonPassItemSeason,
+    itemsByName,
+    debutSeasonByName,
+    dimSeasonData,
+  );
+  debutSeasonByName = buildDebutSeasonByName(
+    itemsByName,
+    collectibles,
+    seasons,
+    seasonPassItemSeason,
+    seasonIndexAnchors,
+    dimSeasonData,
   );
   const recentSeasonPassHashes = buildRecentSeasonPassHashes(items, collectibles);
   const activeArtifactSeasonNumbers =
@@ -563,26 +671,28 @@ function buildCatalog(items, collectibles, seasons, seasonPasses, progressions) 
     const displayHash = String(displayItem.hash);
     const alternates = relatedItemHashes(displayHash, item, itemsByName);
 
-    const source = collectible?.sourceString ?? "";
-    const seasonLabel = collectible
-      ? resolveSeasonLabel(
-          item,
-          collectible,
-          seasons,
-          seasonIndexAnchors,
-          seasonPassItemSeason,
-        )
-      : inferSeasonLabelFromIndex(item.index ?? 0, seasonIndexAnchors);
+    const displayCollectible = displayItem.collectibleHash
+      ? collectibles[String(displayItem.collectibleHash)]
+      : collectible;
+    const source = displayCollectible?.sourceString ?? "";
+    const seasonLabel = resolveVersionSeasonLabel(
+      displayItem,
+      displayCollectible,
+      seasons,
+      seasonPassItemSeason,
+      seasonIndexAnchors,
+      dimSeasonData,
+    );
     const seasonNumber = displayNumberFromLabel(seasonLabel);
     const classOrWeaponType = resolveClassOrWeaponType(displayItem, type);
     const damageType =
       displayItem.itemType === 3 ? resolveDamageType(displayItem) : null;
     const slot = resolveSlotLabel(displayItem, type);
     const ammoType = resolveAmmoType(displayItem);
-    const obtainable = collectible
+    const obtainable = displayCollectible
       ? isObtainable(
-          item,
-          collectible,
+          displayItem,
+          displayCollectible,
           seasonNumber,
           recentSeasonPassHashes,
           seasons,
@@ -595,6 +705,7 @@ function buildCatalog(items, collectibles, seasons, seasonPasses, progressions) 
       alternateItemHashes: alternates.length ? alternates : undefined,
       name,
       iconPath: displayItem.displayProperties?.icon ?? "",
+      seasonIconPath: resolveSeasonIconPath(displayItem),
       seasonLabel,
       seasonNumber,
       type,
@@ -626,7 +737,32 @@ function buildCatalog(items, collectibles, seasons, seasonPasses, progressions) 
     a.name.localeCompare(b.name),
   );
 
-  const seasonSet = new Set(catalog.map((item) => item.seasonLabel));
+  for (const entry of catalog) {
+    const nameKey = normalizeItemName(entry.name);
+    const group = itemsByName.get(nameKey) ?? [];
+    const versions = buildVersionsForNameGroup(
+      group,
+      collectibles,
+      seasons,
+      seasonPassItemSeason,
+      seasonIndexAnchors,
+      dimSeasonData,
+    );
+    applyLatestVersionToEntry(entry, versions);
+    const alternates = group
+      .map((item) => String(item.hash))
+      .filter((hash) => hash !== entry.itemHash);
+    entry.alternateItemHashes = alternates.length ? alternates : undefined;
+  }
+
+  const seasonSet = new Set();
+  for (const item of catalog) {
+    if (item.versions?.length) {
+      for (const version of item.versions) seasonSet.add(version.seasonLabel);
+    } else {
+      seasonSet.add(item.seasonLabel);
+    }
+  }
   const facets = {
     types: orderFacetValues(
       catalog.map((item) => item.type),
@@ -689,14 +825,15 @@ function isClassLabel(value) {
 
 async function main() {
   console.log("Loading Bungie manifest…");
-  const { items, collectibles, seasons, seasonPasses, progressions } =
-    await loadManifestTables();
+  const [{ items, collectibles, seasons, seasonPasses, progressions }, dimSeasonData] =
+    await Promise.all([loadManifestTables(), loadDimSeasonData()]);
   const { catalog, facets } = buildCatalog(
     items,
     collectibles,
     seasons,
     seasonPasses,
     progressions,
+    dimSeasonData,
   );
 
   const obtainableCount = catalog.filter((item) => item.obtainable).length;
