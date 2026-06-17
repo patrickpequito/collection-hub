@@ -44,10 +44,14 @@ function matchesMultiFilter(values: string[], candidates: string | string[] | nu
 }
 
 function itemSeasonLabels(item: AllLootItem) {
+  const labels = new Set<string>();
+  if (item.expansionLabel) labels.add(item.expansionLabel);
   if (item.versions?.length) {
-    return item.versions.map((version) => version.seasonLabel);
+    for (const version of item.versions) labels.add(version.seasonLabel);
+  } else {
+    labels.add(item.seasonLabel);
   }
-  return [item.seasonLabel];
+  return [...labels];
 }
 
 function matchesQuery(item: AllLootItem, query: string) {

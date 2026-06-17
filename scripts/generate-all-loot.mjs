@@ -19,12 +19,17 @@ import {
   buildManifestItemsByName,
   buildSeasonIndexAnchors,
   buildSeasonPassItemSeasonMap,
+  buildWatermarkIndexAnchors,
+  buildWatermarkLabelMap,
+  buildSalvationsEdgeS29ReissueMinIndex,
   displayNumberFromLabel,
   isActiveSeasonalArtifact,
   isDebutRelevantVariant,
   isSourceObtainable,
   normalizeItemName,
   orderFacetValues,
+  resolveCollectibleForVariant,
+  resolveExpansionLabelForGroup,
   resolveVersionSeasonLabel,
 } from "./all-loot-mappings.mjs";
 
@@ -503,6 +508,7 @@ function buildSearchText(entry) {
   return [
     entry.name,
     entry.seasonLabel,
+    entry.expansionLabel,
     ...versionText,
     entry.type,
     entry.rarity,
@@ -546,6 +552,9 @@ function buildVersionsForNameGroup(
   seasonPassItemSeason,
   seasonIndexAnchors,
   dimSeasonData,
+  indexCohortAnchors,
+  watermarkLabelMap,
+  salvationsEdgeS29MinIndex,
 ) {
   const candidates = group
     .filter((item) => isCatalogVersionCandidate(item, group))
@@ -555,7 +564,7 @@ function buildVersionsForNameGroup(
 
   for (const item of candidates) {
     const collectible = item.collectibleHash
-      ? collectibles[String(item.collectibleHash)]
+      ? collectibles[String(item.collectibleHash)] ?? null
       : null;
     const seasonLabel = resolveVersionSeasonLabel(
       item,
@@ -564,6 +573,7 @@ function buildVersionsForNameGroup(
       seasonPassItemSeason,
       seasonIndexAnchors,
       dimSeasonData,
+      { peerItems: group, indexCohortAnchors, watermarkLabelMap, salvationsEdgeS29MinIndex },
     );
     const existing = bySeason.get(seasonLabel);
     if (!existing || (item.index ?? 0) > existing._manifestIndex) {
@@ -644,6 +654,12 @@ function buildCatalog(items, collectibles, seasons, seasonPasses, progressions, 
     seasonIndexAnchors,
     dimSeasonData,
   );
+  const indexCohortAnchors = buildWatermarkIndexAnchors(items, dimSeasonData);
+  const watermarkLabelMap = buildWatermarkLabelMap(items, collectibles, seasons);
+  const salvationsEdgeS29MinIndex = buildSalvationsEdgeS29ReissueMinIndex(
+    items,
+    dimSeasonData,
+  );
   const recentSeasonPassHashes = buildRecentSeasonPassHashes(items, collectibles);
   const activeArtifactSeasonNumbers =
     buildActiveArtifactSeasonNumbers(seasons);
@@ -670,10 +686,13 @@ function buildCatalog(items, collectibles, seasons, seasonPasses, progressions, 
     const displayItem = pickNewestItemVariant(item, itemsByName);
     const displayHash = String(displayItem.hash);
     const alternates = relatedItemHashes(displayHash, item, itemsByName);
+    const nameGroup = itemsByName.get(normalizeItemName(name)) ?? [item];
 
-    const displayCollectible = displayItem.collectibleHash
-      ? collectibles[String(displayItem.collectibleHash)]
-      : collectible;
+    const displayCollectible = resolveCollectibleForVariant(
+      displayItem,
+      nameGroup,
+      collectibles,
+    );
     const source = displayCollectible?.sourceString ?? "";
     const seasonLabel = resolveVersionSeasonLabel(
       displayItem,
@@ -682,6 +701,12 @@ function buildCatalog(items, collectibles, seasons, seasonPasses, progressions, 
       seasonPassItemSeason,
       seasonIndexAnchors,
       dimSeasonData,
+      { peerItems: nameGroup, indexCohortAnchors, watermarkLabelMap, salvationsEdgeS29MinIndex },
+    );
+    const expansionLabel = resolveExpansionLabelForGroup(
+      nameGroup,
+      collectibles,
+      seasons,
     );
     const seasonNumber = displayNumberFromLabel(seasonLabel);
     const classOrWeaponType = resolveClassOrWeaponType(displayItem, type);
@@ -708,6 +733,7 @@ function buildCatalog(items, collectibles, seasons, seasonPasses, progressions, 
       seasonIconPath: resolveSeasonIconPath(displayItem),
       seasonLabel,
       seasonNumber,
+      expansionLabel: expansionLabel || undefined,
       type,
       rarity,
       classOrWeaponType,
@@ -747,8 +773,14 @@ function buildCatalog(items, collectibles, seasons, seasonPasses, progressions, 
       seasonPassItemSeason,
       seasonIndexAnchors,
       dimSeasonData,
+      indexCohortAnchors,
+      watermarkLabelMap,
+      salvationsEdgeS29MinIndex,
     );
     applyLatestVersionToEntry(entry, versions);
+    entry.expansionLabel =
+      resolveExpansionLabelForGroup(group, collectibles, seasons) || undefined;
+    entry.searchText = buildSearchText(entry);
     const alternates = group
       .map((item) => String(item.hash))
       .filter((hash) => hash !== entry.itemHash);

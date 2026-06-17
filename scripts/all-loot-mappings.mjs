@@ -34,7 +34,7 @@ export const MANIFEST_CHAPTER_LABEL = {
   28: "S29 Monument of Triumph",
 };
 
-/** Facet order (newest first). Season before expansion when S numbers match. */
+/** Facet order (newest first). Expansion before season when S numbers match. */
 export const CANONICAL_SEASON_ORDER = [
   "S29 Monument of Triumph",
   "Renegades",
@@ -43,8 +43,8 @@ export const CANONICAL_SEASON_ORDER = [
   "S26 Episode: Heresy",
   "S25 Episode: Revenant",
   "S24 Episode: Echoes",
-  "S23 Season of the Wish",
   "The Final Shape",
+  "S23 Season of the Wish",
   "S22 Season of the Witch",
   "S21 Season of the Deep",
   "S20 Season of Defiance",
@@ -87,6 +87,12 @@ export const EXPANSION_DISPLAY_NUMBER = {
   "Curse of Osiris": 2,
   "Red War": 1,
 };
+
+const EXPANSION_LABELS = new Set(Object.keys(EXPANSION_DISPLAY_NUMBER));
+
+export function isExpansionLabel(label) {
+  return Boolean(label && EXPANSION_LABELS.has(label));
+}
 
 export function displayNumberFromLabel(label) {
   const match = label.match(/^S(\d+)/);
@@ -188,8 +194,22 @@ export const SEASON_SOURCE_PATTERNS = [
   [/episode:\s*heresy|\bheresy\b/i, "S26 Episode: Heresy"],
   [/episode:\s*revenant|\brevenant\b/i, "S25 Episode: Revenant"],
   [/episode:\s*echoes|\bechoes\b/i, "S24 Episode: Echoes"],
-  [/salvation'?s edge|warlord'?s ruin/i, "The Final Shape"],
+  [/salvation'?s edge/i, "The Final Shape"],
+  [/pale heart|exploring the pale heart/i, "The Final Shape"],
+  [/wild card exotic/i, "The Final Shape"],
+  [/dual destiny/i, "The Final Shape"],
   [/the final shape/i, "The Final Shape"],
+  [/"warlord'?s ruin"/i, "S23 Season of the Wish"],
+  [/warlord'?s ruin/i, "S23 Season of the Wish"],
+  [/"vow of the disciple"/i, "The Witch Queen"],
+  [/"root of nightmares"/i, "Lightfall"],
+  [/"deep stone crypt"/i, "Beyond Light"],
+  [/"garden of salvation"/i, "Shadowkeep"],
+  [/"pit of heresy"/i, "Shadowkeep"],
+  [/"last wish"/i, "Forsaken"],
+  [/"scourge of the past"/i, "Forsaken"],
+  [/"crown of sorrow"/i, "S7 Season of Opulence"],
+  [/"leviathan"/i, "Red War"],
   [/season of the wish/i, "S23 Season of the Wish"],
   [/season of the witch|\bwitch\b.*(?:season|raid)/i, "S22 Season of the Witch"],
   [/crotas? end/i, "S22 Season of the Witch"],
@@ -261,6 +281,94 @@ export const SEASON_SOURCE_PATTERNS = [
   [/the dawning 2024|the dawning 2025/i, "S29 Monument of Triumph"],
   [/guardian games 2024|guardian games 2025/i, "S29 Monument of Triumph"],
 ];
+
+/** Expansion-only sources for the expansion filter (stricter than season patterns). */
+export const EXPANSION_SOURCE_PATTERNS = [
+  [/salvation'?s edge/i, "The Final Shape"],
+  [/pale heart|exploring the pale heart/i, "The Final Shape"],
+  [/wild card exotic/i, "The Final Shape"],
+  [/dual destiny/i, "The Final Shape"],
+  [/the final shape/i, "The Final Shape"],
+  [/"vow of the disciple"/i, "The Witch Queen"],
+  [/witch queen|throne world|wellspring/i, "The Witch Queen"],
+  [/"root of nightmares"/i, "Lightfall"],
+  [/lightfall|heist battlegrounds/i, "Lightfall"],
+  [/"deep stone crypt"/i, "Beyond Light"],
+  [/"garden of salvation"/i, "Shadowkeep"],
+  [/"pit of heresy"/i, "Shadowkeep"],
+  [/"last wish"/i, "Forsaken"],
+  [
+    /exploring the moon|shadowkeep|\bmoon\b.*(?:dungeon|raid|pit|activity)|garden of salvation|pit of heresy|nightmare hunt|nightmare\b/i,
+    "Shadowkeep",
+  ],
+  [/deep stone crypt|\beuropa\b|\bbeyond light\b/i, "Beyond Light"],
+  [
+    /forsaken|\blast wish|\bshattered throne|\bdreaming city|\btangled shore|\breef\b/i,
+    "Forsaken",
+  ],
+  [/the edge of fate activities|edge of fate campaign/i, "The Edge of Fate"],
+  [
+    /edge of fate|desert perpetual|equilibrium|vesper'?s host|sundered doctrine|pantheon/i,
+    "The Edge of Fate",
+  ],
+  [/renegades|fireteam ops/i, "Renegades"],
+  [/kepler|exploring kepler/i, "Renegades"],
+  [/warmind|\bescalation protocol|\bspire of stars|\bmars\b/i, "Warmind"],
+  [/curse of osiris|\beater of worlds|\bmercury\b/i, "Curse of Osiris"],
+  [
+    /red war|\bedz\b|\bhomecoming|\bleviathan raid|\bcalistoga|\btitan\b|\bio\b|\bn Nessus|\beuropean/i,
+    "Red War",
+  ],
+  [/destiny 2\b|\bnew light\b|\bintroductory\b/i, "Red War"],
+];
+
+export function resolveExpansionLabelFromSource(source = "") {
+  for (const [pattern, label] of EXPANSION_SOURCE_PATTERNS) {
+    if (pattern.test(source)) return label;
+  }
+  return null;
+}
+
+/** Salvation's Edge raid armor sets share a reissue wave even when some hashes keep a stale watermark. */
+export const SALVATIONS_EDGE_ARMOR_NAME_PATTERN =
+  /^Promised (Reign|Reunion|Victory) /;
+
+export function buildSalvationsEdgeS29ReissueMinIndex(
+  items,
+  dimSeasonData = {},
+) {
+  let minIndex = Infinity;
+
+  for (const item of Object.values(items)) {
+    const name = item.displayProperties?.name ?? "";
+    if (!SALVATIONS_EDGE_ARMOR_NAME_PATTERN.test(name)) continue;
+
+    const season = resolveWatermarkSeasonNumber(item, dimSeasonData);
+    if (season >= 28) {
+      minIndex = Math.min(minIndex, item.index ?? Infinity);
+    }
+  }
+
+  return Number.isFinite(minIndex) ? minIndex : null;
+}
+
+export function applySalvationsEdgeReissueLabel(
+  item,
+  label,
+  minReissueIndex,
+) {
+  if (minReissueIndex === null || !label) return label;
+
+  const name = item.displayProperties?.name ?? "";
+  if (!SALVATIONS_EDGE_ARMOR_NAME_PATTERN.test(name)) return label;
+  if ((item.index ?? 0) < minReissueIndex) return label;
+
+  if (label === "The Final Shape" || label === "S24 Episode: Echoes") {
+    return "S29 Monument of Triumph";
+  }
+
+  return label;
+}
 
 /** Sources tied to the current live season — resolved from manifest at build time. */
 export const LATEST_SEASON_SOURCE_PATTERNS = [];
@@ -381,13 +489,16 @@ export function isDebutRelevantVariant(item, group) {
   return true;
 }
 
-export function resolveDimManifestSeasonNumber(
+/** Reissues in the same manifest batch can share a newer watermark than a stale sibling. */
+export const WATERMARK_COHORT_INDEX_WINDOW = 300;
+
+export function resolveWatermarkSeasonNumber(
   item,
-  dimSeasons = {},
-  watermarkToSeason = {},
+  dimSeasonData = {},
 ) {
-  const hashSeason = dimSeasons[String(item.hash)];
-  if (hashSeason) return hashSeason;
+  const { dimSeasons = {}, watermarkToSeason = {} } = dimSeasonData;
+  const hashSeason = dimSeasons[String(item.hash)] ?? 0;
+  let watermarkSeason = 0;
 
   for (const watermark of [
     item.iconWatermark,
@@ -395,11 +506,173 @@ export function resolveDimManifestSeasonNumber(
     item.iconWatermarkFeatured,
   ]) {
     if (watermark && watermarkToSeason[watermark]) {
-      return watermarkToSeason[watermark];
+      watermarkSeason = Math.max(watermarkSeason, watermarkToSeason[watermark]);
     }
   }
 
-  return 0;
+  return Math.max(hashSeason, watermarkSeason);
+}
+
+export function resolveCohortWatermarkSeasonNumber(
+  item,
+  peerItems = [],
+  dimSeasonData = {},
+  window = WATERMARK_COHORT_INDEX_WINDOW,
+) {
+  const index = item.index ?? 0;
+  let maxSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
+
+  for (const peer of peerItems) {
+    if (peer === item) continue;
+    const peerIndex = peer.index ?? 0;
+    if (Math.abs(peerIndex - index) > window) continue;
+    maxSeason = Math.max(
+      maxSeason,
+      resolveWatermarkSeasonNumber(peer, dimSeasonData),
+    );
+  }
+
+  return maxSeason;
+}
+
+export function resolveIndexCohortWatermarkSeason(
+  item,
+  indexCohortAnchors = [],
+  dimSeasonData = {},
+  window = WATERMARK_COHORT_INDEX_WINDOW,
+) {
+  const index = item.index ?? 0;
+  const ownSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
+  const lo = index - window;
+  const hi = index + window;
+  const seasonRanges = new Map();
+
+  for (const anchor of indexCohortAnchors) {
+    if (anchor.index < lo || anchor.index > hi) continue;
+
+    const range = seasonRanges.get(anchor.season) ?? {
+      min: Infinity,
+      max: -Infinity,
+    };
+    range.min = Math.min(range.min, anchor.index);
+    range.max = Math.max(range.max, anchor.index);
+    seasonRanges.set(anchor.season, range);
+  }
+
+  let cohortSeason = 0;
+  for (const [season, range] of seasonRanges) {
+    if (season <= ownSeason) continue;
+    if (index >= range.min - 50 && index <= range.max + 50) {
+      cohortSeason = Math.max(cohortSeason, season);
+    }
+  }
+
+  return cohortSeason;
+}
+
+export function resolveItemManifestSeasonNumber(
+  item,
+  peerItems = [],
+  dimSeasonData = {},
+  indexCohortAnchors = [],
+) {
+  const ownSeason = resolveCohortWatermarkSeasonNumber(item, peerItems, dimSeasonData);
+  const cohortSeason = resolveIndexCohortWatermarkSeason(
+    item,
+    indexCohortAnchors,
+    dimSeasonData,
+  );
+
+  return Math.max(ownSeason, cohortSeason);
+}
+
+export function resolveSeasonIconWatermark(
+  item,
+  dimSeasonData = {},
+) {
+  const { watermarkToSeason = {} } = dimSeasonData;
+  let bestPath;
+  let bestSeason = 0;
+
+  for (const watermark of [
+    item.iconWatermark,
+    item.iconWatermarkShelved,
+    item.iconWatermarkFeatured,
+  ]) {
+    if (!watermark) continue;
+    const season = watermarkToSeason[watermark] ?? 0;
+    if (season >= bestSeason) {
+      bestSeason = season;
+      bestPath = watermark;
+    }
+  }
+
+  return bestPath;
+}
+
+export function resolveBestSeasonIconPath(
+  item,
+  dimSeasonData = {},
+  indexCohortAnchors = [],
+  window = WATERMARK_COHORT_INDEX_WINDOW,
+) {
+  let bestPath = resolveSeasonIconWatermark(item, dimSeasonData);
+  let bestSeason = 0;
+  const { watermarkToSeason = {} } = dimSeasonData;
+
+  if (bestPath) {
+    bestSeason = watermarkToSeason[bestPath] ?? 0;
+  }
+
+  if (!indexCohortAnchors.length) {
+    return bestPath;
+  }
+
+  const cohortSeason = resolveIndexCohortWatermarkSeason(
+    item,
+    indexCohortAnchors,
+    dimSeasonData,
+    window,
+  );
+  if (cohortSeason <= bestSeason) {
+    return bestPath;
+  }
+
+  const index = item.index ?? 0;
+  const lo = index - window;
+  const hi = index + window;
+
+  for (const anchor of indexCohortAnchors) {
+    if (anchor.index < lo || anchor.index > hi) continue;
+    if (anchor.season !== cohortSeason || !anchor.watermark) continue;
+    return anchor.watermark;
+  }
+
+  return bestPath;
+}
+
+export function buildWatermarkIndexAnchors(items, dimSeasonData = {}) {
+  const anchors = [];
+
+  for (const item of Object.values(items)) {
+    const watermark = resolveSeasonIconWatermark(item, dimSeasonData);
+    const season = watermark
+      ? dimSeasonData.watermarkToSeason?.[watermark] ?? 0
+      : 0;
+    if (!season) continue;
+    anchors.push({ index: item.index ?? 0, season, watermark });
+  }
+
+  anchors.sort((a, b) => a.index - b.index);
+  return anchors;
+}
+
+export function resolveDimManifestSeasonNumber(
+  item,
+  dimSeasons = {},
+  watermarkToSeason = {},
+) {
+  return resolveWatermarkSeasonNumber(item, { dimSeasons, watermarkToSeason });
 }
 
 export function buildManifestItemsByName(items) {
@@ -723,6 +996,132 @@ export function isRecurringVersionSource(source = "") {
   );
 }
 
+export function resolveExpansionLabelForGroup(group, collectibles, seasons = {}) {
+  const sorted = [...group].sort((a, b) => (a.index ?? 0) - (b.index ?? 0));
+
+  for (const item of sorted) {
+    if (!item.collectibleHash) continue;
+    const collectible = collectibles[String(item.collectibleHash)];
+    const source = collectible?.sourceString ?? "";
+    if (!source || isRecurringVersionSource(source)) continue;
+
+    const label = resolveExpansionLabelFromSource(source);
+    if (label) return label;
+  }
+
+  return null;
+}
+
+export function watermarkBasename(watermarkPath = "") {
+  return watermarkPath.split("/").pop() ?? "";
+}
+
+/**
+ * Majority label per iconWatermark from activity sources. Aligns text labels with
+ * the season emblem shown on the icon when DIM season numbers are ambiguous.
+ */
+export function buildWatermarkLabelMap(items, collectibles, seasons = {}) {
+  const votes = new Map();
+
+  for (const item of Object.values(items)) {
+    const watermark = item.iconWatermark;
+    if (!watermark || !item.collectibleHash) continue;
+
+    const collectible = collectibles[String(item.collectibleHash)];
+    const source = collectible?.sourceString ?? "";
+    if (!source || isRecurringVersionSource(source)) continue;
+
+    const label = resolveSeasonLabelFromSource(source, seasons);
+    if (!label) continue;
+
+    const key = watermarkBasename(watermark);
+    if (!votes.has(key)) votes.set(key, new Map());
+    const labelVotes = votes.get(key);
+    labelVotes.set(label, (labelVotes.get(label) ?? 0) + 1);
+  }
+
+  const result = new Map();
+  for (const [key, labelVotes] of votes) {
+    let bestLabel = null;
+    let bestCount = 0;
+    for (const [label, count] of labelVotes) {
+      if (count > bestCount) {
+        bestLabel = label;
+        bestCount = count;
+      }
+    }
+    if (bestLabel) result.set(key, bestLabel);
+  }
+
+  return result;
+}
+
+function shouldApplyCohortSeasonBoost(
+  ownSeason,
+  cohortSeason,
+  fromSource,
+  source,
+) {
+  if (cohortSeason <= ownSeason) return false;
+  if (!fromSource || isRecurringVersionSource(source)) return true;
+
+  const ownDisplay = manifestSeasonToDisplayNumber(ownSeason);
+  const sourceDisplay = displayNumberFromLabel(fromSource);
+  const ownLabel = seasonLabelFromManifestNumber(ownSeason);
+
+  if (sourceDisplay === ownDisplay && fromSource === ownLabel) {
+    return false;
+  }
+
+  if (isExpansionLabel(fromSource) && sourceDisplay === ownDisplay) {
+    return false;
+  }
+
+  const cohortDisplay = manifestSeasonToDisplayNumber(cohortSeason);
+  return cohortDisplay > sourceDisplay;
+}
+
+function resolveManifestSeasonForLabel(
+  item,
+  dimSeasonData,
+  indexCohortAnchors,
+  fromSource,
+  source,
+) {
+  const ownSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
+  const cohortSeason = resolveIndexCohortWatermarkSeason(
+    item,
+    indexCohortAnchors,
+    dimSeasonData,
+  );
+
+  if (
+    shouldApplyCohortSeasonBoost(ownSeason, cohortSeason, fromSource, source)
+  ) {
+    return Math.max(ownSeason, cohortSeason);
+  }
+
+  return ownSeason;
+}
+
+export function resolveCollectibleForVariant(item, group, collectibles) {
+  if (item.collectibleHash) {
+    return collectibles[String(item.collectibleHash)] ?? null;
+  }
+
+  for (const peer of [...group].sort((a, b) => (b.index ?? 0) - (a.index ?? 0))) {
+    if (!peer.collectibleHash) continue;
+    const collectible = collectibles[String(peer.collectibleHash)];
+    if (collectible?.sourceString) return collectible;
+  }
+
+  return null;
+}
+
+/**
+ * Season label for a specific item hash (version). The icon watermark emblem is the
+ * visual source of truth; activity sources disambiguate expansion vs season.
+ */
 export function resolveVersionSeasonLabel(
   item,
   collectible,
@@ -730,47 +1129,63 @@ export function resolveVersionSeasonLabel(
   seasonPassItemSeason,
   seasonIndexAnchors,
   dimSeasonData = {},
+  {
+    peerItems = [],
+    indexCohortAnchors = [],
+    watermarkLabelMap = new Map(),
+    salvationsEdgeS29MinIndex = null,
+  } = {},
 ) {
-  const { dimSeasons = {}, watermarkToSeason = {} } = dimSeasonData;
   const source = collectible?.sourceString ?? "";
-
-  const dimSeason = resolveDimManifestSeasonNumber(
-    item,
-    dimSeasons,
-    watermarkToSeason,
-  );
   const fromSource = resolveSeasonLabelFromSource(source, seasons);
+  const votedLabel = watermarkLabelMap.get(watermarkBasename(item.iconWatermark));
+  const ownSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
 
-  if (dimSeason) {
-    if (!fromSource || isRecurringVersionSource(source)) {
-      return seasonLabelFromManifestNumber(dimSeason);
-    }
+  let label = null;
 
-    const dimDisplay = manifestSeasonToDisplayNumber(dimSeason);
-    const sourceDisplay = displayNumberFromLabel(fromSource);
-    if (dimDisplay > sourceDisplay) {
-      return seasonLabelFromManifestNumber(dimSeason);
+  if (votedLabel && isExpansionLabel(votedLabel)) {
+    label = votedLabel;
+  } else if (ownSeason > 0) {
+    label = seasonLabelFromManifestNumber(ownSeason);
+  } else {
+    const manifestSeason = resolveManifestSeasonForLabel(
+      item,
+      dimSeasonData,
+      indexCohortAnchors,
+      fromSource,
+      source,
+    );
+    if (manifestSeason > 0) {
+      label = seasonLabelFromManifestNumber(manifestSeason);
+    } else if (votedLabel) {
+      label = votedLabel;
+    } else if (fromSource && !isRecurringVersionSource(source)) {
+      label = fromSource;
+    } else {
+      const seasonPassSeason = seasonPassItemSeason?.get(String(item.hash));
+      if (seasonPassSeason) {
+        label = seasonLabelFromManifestNumber(seasonPassSeason);
+      } else {
+        const seasonHash = item.seasonHash ?? collectible?.seasonHash ?? null;
+        if (seasonHash) {
+          const season = seasons[String(seasonHash)];
+          if (season?.seasonNumber) {
+            label = seasonLabelFromManifestNumber(season.seasonNumber);
+          }
+        }
+      }
     }
   }
 
-  if (fromSource) return fromSource;
-
-  const manifestSeason = seasonPassItemSeason?.get(String(item.hash));
-  if (manifestSeason) {
-    return seasonLabelFromManifestNumber(manifestSeason);
+  if (!label) {
+    label = inferSeasonLabelFromIndex(item.index ?? 0, seasonIndexAnchors);
   }
 
-  const seasonHash = item.seasonHash ?? collectible?.seasonHash ?? null;
-  if (seasonHash) {
-    const season = seasons[String(seasonHash)];
-    if (season?.seasonNumber) {
-      return seasonLabelFromManifestNumber(season.seasonNumber);
-    }
-  }
-
-  if (dimSeason) return seasonLabelFromManifestNumber(dimSeason);
-
-  return inferSeasonLabelFromIndex(item.index ?? 0, seasonIndexAnchors);
+  return applySalvationsEdgeReissueLabel(
+    item,
+    label,
+    salvationsEdgeS29MinIndex,
+  );
 }
 
 export function resolveItemSeasonLabel(

@@ -27,6 +27,7 @@ export type AllLootItem = {
   seasonIconPath?: string;
   seasonLabel: string;
   seasonNumber: number;
+  expansionLabel?: string;
   type: string;
   rarity: string;
   classOrWeaponType: string | null;
