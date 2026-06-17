@@ -7,6 +7,8 @@ type ArmorPieceIconProps = {
   sourceLabel?: string;
   owned?: boolean;
   showOwnership?: boolean;
+  tooltipAlign?: "start" | "center" | "end";
+  fluid?: boolean;
 };
 
 export function ArmorPieceIcon({
@@ -15,11 +17,17 @@ export function ArmorPieceIcon({
   sourceLabel,
   owned = false,
   showOwnership = false,
+  tooltipAlign = "center",
+  fluid = false,
 }: ArmorPieceIconProps) {
   if (!piece?.iconPath) {
     return (
       <div
-        className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-dashed border-zinc-700 bg-zinc-900/60 text-[10px] text-zinc-500"
+        className={
+          fluid
+            ? "flex aspect-square w-full max-w-[3.75rem] items-center justify-center rounded-md border border-dashed border-zinc-700 bg-zinc-900/60 text-[10px] text-zinc-500"
+            : "flex h-[60px] w-[60px] items-center justify-center rounded-md border border-dashed border-zinc-700 bg-zinc-900/60 text-[10px] text-zinc-500"
+        }
         title={`Missing ${slotLabel}`}
       >
         —
@@ -34,6 +42,8 @@ export function ArmorPieceIcon({
       source={sourceLabel}
       owned={owned}
       showOwnership={showOwnership}
+      tooltipAlign={tooltipAlign}
+      fluid={fluid}
     />
   );
 }

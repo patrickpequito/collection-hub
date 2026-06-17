@@ -47,18 +47,30 @@ export function ActivityArmorSection({
             <p className="text-xs text-zinc-500">
               {CLASS_LABELS[row.guardianClass]} — {row.setName}
             </p>
-            <div className="flex flex-nowrap gap-1.5">
-              {ARMOR_SLOTS.map((slot) => {
+            <div className="grid grid-cols-5 gap-1.5">
+              {ARMOR_SLOTS.map((slot, slotIndex) => {
                 const piece = row.pieces[slot];
+                const tooltipAlign =
+                  slotIndex === 0
+                    ? "start"
+                    : slotIndex === ARMOR_SLOTS.length - 1
+                      ? "end"
+                      : "center";
                 return (
-                  <ArmorPieceIcon
+                  <div
                     key={`${row.setName}-${row.guardianClass}-${slot}`}
-                    piece={piece}
-                    slotLabel={SLOT_LABELS[slot]}
-                    sourceLabel={piece.source}
-                    owned={ownedItemHashes.has(piece.itemHash)}
-                    showOwnership={showOwnership}
-                  />
+                    className="min-w-0"
+                  >
+                    <ArmorPieceIcon
+                      piece={piece}
+                      slotLabel={SLOT_LABELS[slot]}
+                      sourceLabel={piece.source}
+                      owned={ownedItemHashes.has(piece.itemHash)}
+                      showOwnership={showOwnership}
+                      tooltipAlign={tooltipAlign}
+                      fluid
+                    />
+                  </div>
                 );
               })}
             </div>
