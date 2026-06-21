@@ -4,7 +4,6 @@ import {
   CURRENT_VERSION,
   formatReleaseDate,
   UPDATE_RELEASES,
-  UPDATE_ROADMAP,
 } from "@/data/updates";
 
 export function UpdatesPageContent() {
@@ -27,22 +26,6 @@ export function UpdatesPageContent() {
           Triumph are complete. Older releases stay listed below for reference.
         </p>
       </header>
-
-      <section className="rounded-xl border border-zinc-800 bg-zinc-900/30 p-5">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">
-          Coming next
-        </h2>
-        <ul className="mt-3 space-y-2">
-          {UPDATE_ROADMAP.map((item) => (
-            <li
-              key={item}
-              className="flex gap-2 text-sm text-zinc-300 before:shrink-0 before:text-zinc-600 before:content-['–']"
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
-      </section>
 
       <section className="space-y-6">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">

@@ -1,6 +1,7 @@
 import { AppVersionLabel } from "@/components/app-version-label";
 import { HomeAuthSection } from "@/components/home-auth-section";
 import { HomeTriumphScores } from "@/components/home-triumph-scores";
+import { HomeUpdatesNotice } from "@/components/home-updates-notice";
 import { HubBanner } from "@/components/hub-banner";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
@@ -48,6 +49,10 @@ export default async function Home({ searchParams }: HomeProps) {
           <HomeTriumphScores signedIn={Boolean(session)} />
         </header>
 
+        <div className="mb-6 sm:mb-8">
+          <HomeUpdatesNotice />
+        </div>
+
         <div className="flex flex-1 flex-col justify-center gap-3 sm:gap-6">
           <HubBanner
             href="/triumphs/group/monument-of-triumph"
@@ -56,34 +61,16 @@ export default async function Home({ searchParams }: HomeProps) {
             imageFile="monument-of-triumph.webp"
           />
           <HubBanner
-            href="/rad-loot"
-            title="RAD Loot"
-            description="Raid and dungeon loot organized by activity."
-            imageFile="rad-loot.webp"
+            href="/all-loot"
+            title="Loot Collector"
+            description="Search the full collectible catalog."
+            imageFile="loot-collector.webp"
           />
           <HubBanner
             href="/triumphs"
             title="Triumphs"
             description="Track triumph groups and title progress."
             imageFile="triumphs.webp"
-          />
-          <HubBanner
-            href="/sets"
-            title="Armor sets"
-            description="Legendary sets from raids, dungeons, seasons, and more."
-            imageFile="armor-sets.webp"
-          />
-          <HubBanner
-            href="/exotics"
-            title="Exotics"
-            description="Weapons and armor. Browse by slot and class."
-            imageFile="exotics.webp"
-          />
-          <HubBanner
-            href="/eververse"
-            title="Eververse Rotation"
-            description="Today's Bright Dust shop with ownership and reset timer."
-            imageFile="eververse-rotation.webp"
           />
         </div>
 

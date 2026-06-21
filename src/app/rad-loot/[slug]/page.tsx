@@ -30,6 +30,7 @@ import {
   loadTriumphCatalog,
   resolveActivityTriumphRecords,
 } from "@/lib/triumphs/load";
+import { buildWeaponHrefByItemHash } from "@/lib/weapons/lookup";
 import { resolveTriumphIcon } from "@/lib/triumphs/icons";
 
 import type { RecordInstance, TriumphStringVariables } from "@/types/triumph";
@@ -76,7 +77,10 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
   const activity = filterExpiredActivityLoot(rawActivity);
   const session = await getSession();
   const oauthConfigured = isBungieOAuthConfigured();
-  const catalog = await loadTriumphCatalog();
+  const [catalog, weaponHrefs] = await Promise.all([
+    loadTriumphCatalog(),
+    buildWeaponHrefByItemHash(`/rad-loot/${slug}`),
+  ]);
   const title = getTitleEntry(catalog, slug);
   const triumphRecords = filterExpiredTriumphRecords(
     slug,
@@ -242,6 +246,7 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
             ownedItemHashes={ownedItemHashes}
             showOwnership={showOwnership}
             exoticItemHashes={exoticItemHashes}
+            weaponHrefs={weaponHrefs}
           />
 
           {activity.timelostWeapons.length > 0 ? (
@@ -250,6 +255,7 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
               items={activity.timelostWeapons}
               ownedItemHashes={ownedItemHashes}
               showOwnership={showOwnership}
+              weaponHrefs={weaponHrefs}
             />
           ) : null}
 
@@ -259,6 +265,7 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
             ownedItemHashes={ownedItemHashes}
             showOwnership={showOwnership}
             exoticItemHashes={exoticItemHashes}
+            weaponHrefs={weaponHrefs}
           />
         </div>
 

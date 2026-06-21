@@ -1,17 +1,27 @@
 import Link from "next/link";
+import { HistoryBackButton } from "@/components/history-back-button";
 import { BungieLoginButton } from "@/components/bungie-login-button";
 import type { BungieUserSession } from "@/lib/bungie";
 
 const GREY_BUTTON_CLASS =
   "rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-1.5 text-xs font-medium text-zinc-500 transition hover:border-zinc-700 hover:bg-zinc-900 hover:text-zinc-300";
 
+type BackLinkConfig =
+  | {
+      href: string;
+      label: string;
+      useHistory?: false;
+    }
+  | {
+      label: string;
+      useHistory: true;
+      fallbackHref: string;
+    };
+
 type AuthBarProps = {
   session: BungieUserSession | null;
   oauthConfigured: boolean;
-  backLink?: {
-    href: string;
-    label: string;
-  };
+  backLink?: BackLinkConfig;
 };
 
 export function AuthBar({ session, oauthConfigured, backLink }: AuthBarProps) {
@@ -20,9 +30,16 @@ export function AuthBar({ session, oauthConfigured, backLink }: AuthBarProps) {
       <div className="mx-auto flex h-11 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
         <div className="min-w-0">
           {backLink ? (
-            <Link href={backLink.href} className={GREY_BUTTON_CLASS}>
-              {backLink.label}
-            </Link>
+            backLink.useHistory ? (
+              <HistoryBackButton
+                label={backLink.label}
+                fallbackHref={backLink.fallbackHref}
+              />
+            ) : (
+              <Link href={backLink.href} className={GREY_BUTTON_CLASS}>
+                {backLink.label}
+              </Link>
+            )
           ) : null}
         </div>
 

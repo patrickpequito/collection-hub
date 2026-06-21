@@ -7,16 +7,24 @@ import { SiteNav } from "@/components/site-nav";
 import type { BungieUserSession } from "@/lib/bungie";
 
 type SectionPageLayoutProps = {
-  title: string;
-  imageUrl: string;
+  title?: string;
+  imageUrl?: string;
+  showHeader?: boolean;
   session: BungieUserSession | null;
   oauthConfigured: boolean;
   children: React.ReactNode;
   maxWidth?: "4xl" | "5xl";
-  backLink?: {
-    href: string;
-    label: string;
-  };
+  backLink?:
+    | {
+        href: string;
+        label: string;
+        useHistory?: false;
+      }
+    | {
+        label: string;
+        useHistory: true;
+        fallbackHref: string;
+      };
 };
 
 const MAX_WIDTH_CLASSES = {
@@ -29,6 +37,7 @@ const HOME_BACK_LINK = { href: "/", label: "← Home" } as const;
 export function SectionPageLayout({
   title,
   imageUrl,
+  showHeader = true,
   session,
   oauthConfigured,
   children,
@@ -42,7 +51,9 @@ export function SectionPageLayout({
         <AuthCallbackFlash />
       </Suspense>
       <main className="min-h-dvh bg-zinc-950 text-zinc-100">
-        <PageHeader title={title} imageUrl={imageUrl} />
+        {showHeader && title && imageUrl ? (
+          <PageHeader title={title} imageUrl={imageUrl} />
+        ) : null}
         <AuthBar
           session={session}
           oauthConfigured={oauthConfigured}

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { bungieIconUrl } from "@/lib/bungie-icon";
@@ -20,6 +21,7 @@ type CollectionItemIconProps = {
   tooltipAlign?: "start" | "center" | "end";
   /** Shrink to fit grid cells in narrow armor-set rows. */
   fluid?: boolean;
+  href?: string;
 };
 
 const OWNED_BORDER_STYLES = {
@@ -45,6 +47,7 @@ export function CollectionItemIcon({
   ownedBorder = "gold",
   tooltipAlign = "center",
   fluid = false,
+  href,
 }: CollectionItemIconProps) {
   const anchorRef = useRef<HTMLDivElement>(null);
   const [tooltipTop, setTooltipTop] = useState<number | null>(null);
@@ -61,6 +64,8 @@ export function CollectionItemIcon({
   const iconClass = fluid
     ? `aspect-square w-full max-w-[3.75rem] rounded-md border bg-zinc-900 object-contain transition duration-200 ease-out hover:brightness-110 ${ownedStyles} ${unownedStyles}`
     : `size-[60px] shrink-0 rounded-md border bg-zinc-900 object-contain transition duration-200 ease-out hover:scale-110 hover:brightness-110 ${ownedStyles} ${unownedStyles}`;
+
+  const wrapperClass = fluid ? "relative min-w-0 w-full" : "relative shrink-0";
 
   const showTooltip = useCallback(() => {
     const rect = anchorRef.current?.getBoundingClientRect();
@@ -102,24 +107,38 @@ export function CollectionItemIcon({
         )
       : null;
 
+  const iconBody = (
+    <Image
+      src={bungieIconUrl(iconPath)}
+      alt={name}
+      width={ICON_SIZE}
+      height={ICON_SIZE}
+      className={iconClass}
+      unoptimized
+    />
+  );
+
   return (
     <>
       <div
         ref={anchorRef}
-        className={fluid ? "relative min-w-0 w-full" : "relative shrink-0"}
+        className={wrapperClass}
         onMouseEnter={showTooltip}
         onMouseLeave={hideTooltip}
         onFocus={showTooltip}
         onBlur={hideTooltip}
       >
-        <Image
-          src={bungieIconUrl(iconPath)}
-          alt={name}
-          width={ICON_SIZE}
-          height={ICON_SIZE}
-          className={iconClass}
-          unoptimized
-        />
+        {href ? (
+          <Link
+            href={href}
+            className="block rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400/80"
+            aria-label={name}
+          >
+            {iconBody}
+          </Link>
+        ) : (
+          iconBody
+        )}
       </div>
       {tooltip}
     </>

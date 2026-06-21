@@ -19,12 +19,14 @@ type ExoticItemGridProps = {
   items: OwnableItem[];
   ownedItemHashes: Set<string>;
   showOwnership: boolean;
+  weaponHrefs?: Record<string, string>;
 };
 
 export function ExoticItemGrid({
   items,
   ownedItemHashes,
   showOwnership,
+  weaponHrefs,
 }: ExoticItemGridProps) {
   if (items.length === 0) {
     return <p className="text-xs text-zinc-500">No items in this section.</p>;
@@ -41,6 +43,7 @@ export function ExoticItemGrid({
           owned={isItemOwned(item, ownedItemHashes)}
           showOwnership={showOwnership}
           ownedBorder="green"
+          href={weaponHrefs?.[item.itemHash]}
         />
       ))}
     </div>

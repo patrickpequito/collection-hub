@@ -94,6 +94,245 @@ export function isExpansionLabel(label) {
   return Boolean(label && EXPANSION_LABELS.has(label));
 }
 
+/** Watermarks whose majority vote is misleading (shared across legacy eras). */
+export const WATERMARK_LABEL_OVERRIDES = {
+  "7ba9d804508dd083ec20fcdb8ba0869d.png": "Curse of Osiris",
+  "4376a7d734583ae347acf9732aa3bb43.png": "S28 Season: Reclamation",
+};
+
+/** DIM watermark-to-season mistakes or cross-era reuse. Values are manifest season numbers. */
+export const WATERMARK_MANIFEST_SEASON_OVERRIDES = {
+  "4376a7d734583ae347acf9732aa3bb43.png": 27,
+};
+
+function resolveWatermarkManifestSeason(watermark, watermarkToSeason = {}) {
+  const basename = watermarkBasename(watermark);
+  if (WATERMARK_MANIFEST_SEASON_OVERRIDES[basename]) {
+    return WATERMARK_MANIFEST_SEASON_OVERRIDES[basename];
+  }
+  return watermarkToSeason[watermark] ?? 0;
+}
+
+const EXCLUDED_PRESENTATION_PARENTS = new Set(["Titles", "Badges"]);
+
+function isExcludedPresentationChild(entry, presentationNodes) {
+  const parentHash = entry.parentNodeHashes?.[0];
+  if (!parentHash) return false;
+  const parent = presentationNodes[String(parentHash)];
+  return EXCLUDED_PRESENTATION_PARENTS.has(
+    parent?.displayProperties?.name ?? "",
+  );
+}
+
+/** Full square season/expansion icons from manifest (not item watermarks). */
+function pickPresentationNodeIcon(name, presentationNodes) {
+  const matches = Object.values(presentationNodes ?? {}).filter(
+    (entry) =>
+      entry.displayProperties?.name === name &&
+      entry.displayProperties?.icon &&
+      !isExcludedPresentationChild(entry, presentationNodes),
+  );
+  if (!matches.length) return null;
+  if (matches.length === 1) return matches[0].displayProperties.icon;
+
+  return matches
+    .sort(
+      (a, b) =>
+        (b.children?.presentationNodes?.length ?? 0) -
+          (a.children?.presentationNodes?.length ?? 0) ||
+        (b.hash ?? 0) - (a.hash ?? 0),
+    )[0].displayProperties.icon;
+}
+
+function isTitlesPresentationChild(entry, presentationNodes) {
+  const parentHash = entry.parentNodeHashes?.[0];
+  if (!parentHash) return false;
+  const parent = presentationNodes[String(parentHash)];
+  return parent?.displayProperties?.name === "Titles";
+}
+
+function isBadgesPresentationChild(entry, presentationNodes) {
+  const parentHash = entry.parentNodeHashes?.[0];
+  if (!parentHash) return false;
+  const parent = presentationNodes[String(parentHash)];
+  return parent?.displayProperties?.name === "Badges";
+}
+
+/** Full destination badge art for legacy expansions (not item watermarks). */
+const EXPANSION_DESTINATION_BADGE_NAMES = {
+  "Red War": ["Destinations: Red War"],
+  "Curse of Osiris": ["Destinations: Curse of Osiris and Warmind"],
+  Warmind: ["Destinations: Curse of Osiris and Warmind"],
+  Forsaken: ["Destinations: Forsaken"],
+};
+
+function pickExpansionDestinationBadgeIcon(expansionLabel, presentationNodes) {
+  const preferredNames = EXPANSION_DESTINATION_BADGE_NAMES[expansionLabel];
+  if (!preferredNames) return null;
+
+  for (const name of preferredNames) {
+    const node = Object.values(presentationNodes ?? {}).find(
+      (entry) =>
+        entry.displayProperties?.name === name && entry.displayProperties?.icon,
+    );
+    if (node?.displayProperties?.icon) return node.displayProperties.icon;
+  }
+
+  return null;
+}
+
+/** Expansion hubs (not title seals under the Titles tree). */
+function pickExpansionPresentationNodeIcon(expansionLabel, presentationNodes) {
+  const badgeIcon = pickExpansionDestinationBadgeIcon(
+    expansionLabel,
+    presentationNodes,
+  );
+  if (badgeIcon) return badgeIcon;
+
+  const matches = Object.values(presentationNodes ?? {}).filter(
+    (entry) =>
+      entry.displayProperties?.name === expansionLabel &&
+      entry.displayProperties?.icon &&
+      !isTitlesPresentationChild(entry, presentationNodes) &&
+      !isBadgesPresentationChild(entry, presentationNodes),
+  );
+  if (!matches.length) return null;
+  if (matches.length === 1) return matches[0].displayProperties.icon;
+
+  return matches
+    .sort(
+      (a, b) =>
+        (b.children?.presentationNodes?.length ?? 0) -
+          (a.children?.presentationNodes?.length ?? 0) ||
+        (b.hash ?? 0) - (a.hash ?? 0),
+    )[0].displayProperties.icon;
+}
+
+function buildExpansionWatermarkIconLookup(items, collectibles, seasons) {
+  const labelMap = buildWatermarkLabelMap(items, collectibles, seasons);
+  const pathsByExpansion = new Map();
+
+  for (const [wmBasename, label] of labelMap) {
+    if (!isExpansionLabel(label)) continue;
+    const path = `/common/destiny2_content/icons/${wmBasename}`;
+    const list = pathsByExpansion.get(label) ?? [];
+    list.push(path);
+    pathsByExpansion.set(label, list);
+  }
+
+  const votes = new Map();
+  for (const item of Object.values(items)) {
+    if (!item.iconWatermark || !item.collectibleHash) continue;
+    const collectible = collectibles[String(item.collectibleHash)];
+    const source = collectible?.sourceString ?? "";
+    if (!source || isRecurringVersionSource(source)) continue;
+    const label = resolveSeasonLabelFromSource(source, seasons);
+    if (!label || !isExpansionLabel(label)) continue;
+    const perExpansion = votes.get(label) ?? new Map();
+    perExpansion.set(
+      item.iconWatermark,
+      (perExpansion.get(item.iconWatermark) ?? 0) + 1,
+    );
+    votes.set(label, perExpansion);
+  }
+
+  const result = new Map();
+  const allExpansionLabels = new Set([
+    ...pathsByExpansion.keys(),
+    ...votes.keys(),
+  ]);
+
+  for (const label of allExpansionLabels) {
+    const paths = pathsByExpansion.get(label) ?? [];
+    if (paths.length === 1) {
+      result.set(label, paths[0]);
+      continue;
+    }
+
+    const wmCounts = votes.get(label) ?? new Map();
+    for (const path of paths) {
+      wmCounts.set(path, (wmCounts.get(path) ?? 0) + 1);
+    }
+
+    const ranked = [...wmCounts.entries()].sort((a, b) => b[1] - a[1]);
+    if (ranked[0]?.[0]) {
+      result.set(label, ranked[0][0]);
+    }
+  }
+
+  return result;
+}
+
+export function buildSeasonDisplayIconLookup(
+  seasons,
+  presentationNodes,
+  items,
+  collectibles,
+) {
+  const byLabel = new Map();
+  const seasonDefs = Object.values(seasons ?? {});
+  const expansionWatermarkIcons = buildExpansionWatermarkIconLookup(
+    items,
+    collectibles,
+    seasons,
+  );
+
+  for (const [manifestStr, chapterLabel] of Object.entries(
+    MANIFEST_CHAPTER_LABEL,
+  )) {
+    const manifestNum = Number(manifestStr);
+    const def = seasonDefs.find((entry) => entry.seasonNumber === manifestNum);
+    const icon = def?.displayProperties?.icon;
+    if (icon) byLabel.set(chapterLabel, { path: icon, watermark: false });
+  }
+
+  for (const expansionLabel of Object.keys(EXPANSION_DISPLAY_NUMBER)) {
+    const nodeIcon = pickExpansionPresentationNodeIcon(
+      expansionLabel,
+      presentationNodes,
+    );
+    if (nodeIcon) {
+      byLabel.set(expansionLabel, { path: nodeIcon, watermark: false });
+      continue;
+    }
+
+    const watermarkIcon = expansionWatermarkIcons.get(expansionLabel);
+    if (watermarkIcon) {
+      byLabel.set(expansionLabel, { path: watermarkIcon, watermark: true });
+    }
+  }
+
+  // Triumph / episode presentation nodes are more accurate than season-definition
+  // icons for some chapters (e.g. Monument of Triumph).
+  for (const chapterLabel of Object.values(MANIFEST_CHAPTER_LABEL)) {
+    const suffix = chapterLabel.replace(/^S\d+\s+/, "");
+    const icon = pickPresentationNodeIcon(suffix, presentationNodes);
+    if (icon) {
+      byLabel.set(chapterLabel, { path: icon, watermark: false });
+    }
+  }
+
+  return byLabel;
+}
+
+export function resolveSeasonDisplayIconPath(
+  seasonLabel,
+  watermarkPath,
+  lookup,
+) {
+  if (!seasonLabel) return watermarkPath || undefined;
+  const entry = lookup.get(seasonLabel);
+  if (entry) return entry.path;
+  return watermarkPath || undefined;
+}
+
+export function resolveSeasonDisplayIconWatermark(seasonLabel, lookup) {
+  if (!seasonLabel) return true;
+  const entry = lookup.get(seasonLabel);
+  if (entry) return entry.watermark;
+  return true;
+}
+
 export function displayNumberFromLabel(label) {
   const match = label.match(/^S(\d+)/);
   if (match) return Number(match[1]);
@@ -248,7 +487,8 @@ export const SEASON_SOURCE_PATTERNS = [
     /exploring the moon|shadowkeep|\bmoon\b.*(?:dungeon|raid|pit|activity)|garden of salvation|pit of heresy|nightmare hunt|nightmare\b/i,
     "Shadowkeep",
   ],
-  [/leviathan,? eater of worlds|leviathan raid/i, "Red War"],
+  [/eater of worlds/i, "Curse of Osiris"],
+  [/leviathan raid/i, "Red War"],
   [/zero hour|outbreak perfected/i, "S9 Season of Dawn"],
   [/presage|dead man's tale/i, "S13 Season of the Chosen"],
   [/harbinger|hawkmoon/i, "S12 Season of the Hunt"],
@@ -262,8 +502,11 @@ export const SEASON_SOURCE_PATTERNS = [
     "Forsaken",
   ],
   [/warmind|\bescalation protocol|\bspire of stars|\bmars\b/i, "Warmind"],
-  [/curse of osiris|\beater of worlds|\bmercury\b/i, "Curse of Osiris"],
-  [/red war|\bedz\b|\bhomecoming|\bleviathan raid|\bcalistoga|\btitan\b|\bio\b|\bn Nessus|\beuropean/i, "Red War"],
+  [
+    /curse of osiris|\beater of worlds|lost prophecies|\bbrother vance|rank-up packages on mercury|activities.*\bon mercury\b/i,
+    "Curse of Osiris",
+  ],
+  [/red war|\bedz\b|\bhomecoming|\bcalistoga|\btitan\b|\bio\b|\bn Nessus|\beuropean/i, "Red War"],
   [/destiny 2\b|\bnew light\b|\bintroductory\b/i, "Red War"],
   [/solstice 2024|solstice 2025/i, "S29 Monument of Triumph"],
   [/solstice 2023/i, "S23 Season of the Wish"],
@@ -314,7 +557,10 @@ export const EXPANSION_SOURCE_PATTERNS = [
   [/renegades|fireteam ops/i, "Renegades"],
   [/kepler|exploring kepler/i, "Renegades"],
   [/warmind|\bescalation protocol|\bspire of stars|\bmars\b/i, "Warmind"],
-  [/curse of osiris|\beater of worlds|\bmercury\b/i, "Curse of Osiris"],
+  [
+    /curse of osiris|\beater of worlds|lost prophecies|\bbrother vance|rank-up packages on mercury|activities.*\bon mercury\b/i,
+    "Curse of Osiris",
+  ],
   [
     /red war|\bedz\b|\bhomecoming|\bleviathan raid|\bcalistoga|\btitan\b|\bio\b|\bn Nessus|\beuropean/i,
     "Red War",
@@ -383,7 +629,6 @@ export const UNOBTAINABLE_SOURCE_PATTERNS = [
   /\brank-up packages on mercury\b/i,
   /\bzero hour\b/i,
   /\btrials of the nine\b/i,
-  /\bemissary of the nine\b/i,
   /\brite of the nine\b/i,
   /\bfaction rally\b/i,
   /\bprismatic matrix\b/i,
@@ -473,6 +718,24 @@ export function normalizeItemName(name = "") {
     .replace(/\p{M}/gu, "");
 }
 
+export function catalogGroupKey(name, type) {
+  const normalizedName = normalizeItemName(name);
+  if (!normalizedName || !type) return "";
+  return `${normalizedName}::${type}`;
+}
+
+export function debutCatalogGroupKey(name, type) {
+  const normalizedName = debutBaseNameKey(name);
+  if (!normalizedName || !type) return "";
+  return `${normalizedName}::${type}`;
+}
+
+function debutCatalogGroupKeyFromGroupKey(groupKey) {
+  const sep = groupKey.lastIndexOf("::");
+  if (sep < 0) return debutBaseNameKey(groupKey);
+  return `${debutBaseNameKey(groupKey.slice(0, sep))}::${groupKey.slice(sep + 2)}`;
+}
+
 /** Strip adept suffix so debut season is shared across normal and adept variants. */
 export function debutBaseNameKey(name = "") {
   return normalizeItemName(name).replace(/\s*\(adept\)\s*$/, "");
@@ -505,9 +768,11 @@ export function resolveWatermarkSeasonNumber(
     item.iconWatermarkShelved,
     item.iconWatermarkFeatured,
   ]) {
-    if (watermark && watermarkToSeason[watermark]) {
-      watermarkSeason = Math.max(watermarkSeason, watermarkToSeason[watermark]);
-    }
+    if (!watermark) continue;
+    watermarkSeason = Math.max(
+      watermarkSeason,
+      resolveWatermarkManifestSeason(watermark, watermarkToSeason),
+    );
   }
 
   return Math.max(hashSeason, watermarkSeason);
@@ -657,7 +922,10 @@ export function buildWatermarkIndexAnchors(items, dimSeasonData = {}) {
   for (const item of Object.values(items)) {
     const watermark = resolveSeasonIconWatermark(item, dimSeasonData);
     const season = watermark
-      ? dimSeasonData.watermarkToSeason?.[watermark] ?? 0
+      ? resolveWatermarkManifestSeason(
+          watermark,
+          dimSeasonData.watermarkToSeason ?? {},
+        )
       : 0;
     if (!season) continue;
     anchors.push({ index: item.index ?? 0, season, watermark });
@@ -675,15 +943,21 @@ export function resolveDimManifestSeasonNumber(
   return resolveWatermarkSeasonNumber(item, { dimSeasons, watermarkToSeason });
 }
 
-export function buildManifestItemsByName(items) {
+export function buildManifestItemsByGroupKey(items, getGroupKey) {
   const itemsByName = new Map();
   for (const item of Object.values(items)) {
-    const name = normalizeItemName(item.displayProperties?.name);
-    if (!name) continue;
-    if (!itemsByName.has(name)) itemsByName.set(name, []);
-    itemsByName.get(name).push(item);
+    const key = getGroupKey(item);
+    if (!key) continue;
+    if (!itemsByName.has(key)) itemsByName.set(key, []);
+    itemsByName.get(key).push(item);
   }
   return itemsByName;
+}
+
+export function buildManifestItemsByName(items) {
+  return buildManifestItemsByGroupKey(items, (item) =>
+    normalizeItemName(item.displayProperties?.name),
+  );
 }
 
 export function currentSeasonNumber() {
@@ -844,8 +1118,8 @@ export function resolveDebutSeasonLabelForGroup(
 export function buildMergedDebutGroups(itemsByName) {
   const merged = new Map();
 
-  for (const [nameKey, group] of itemsByName) {
-    const baseKey = debutBaseNameKey(nameKey);
+  for (const [groupKey, group] of itemsByName) {
+    const baseKey = debutCatalogGroupKeyFromGroupKey(groupKey);
     if (!merged.has(baseKey)) merged.set(baseKey, new Map());
     const byHash = merged.get(baseKey);
     for (const item of group) {
@@ -864,6 +1138,7 @@ export function buildSeasonIndexAnchors(
   itemsByName = null,
   debutSeasonByName = null,
   dimSeasonData = {},
+  { itemGroupKeyFn = null } = {},
 ) {
   const byName = itemsByName ?? buildManifestItemsByName(items);
   const anchors = [];
@@ -901,13 +1176,18 @@ export function buildSeasonIndexAnchors(
       );
       if (!label) continue;
       for (const nameKey of byName.keys()) {
-        if (debutBaseNameKey(nameKey) === baseKey) debutMap.set(nameKey, label);
+        if (debutCatalogGroupKeyFromGroupKey(nameKey) === baseKey) {
+          debutMap.set(nameKey, label);
+        }
       }
     }
   }
 
   for (const item of Object.values(items)) {
-    const nameKey = normalizeItemName(item.displayProperties?.name);
+    const nameKey = itemGroupKeyFn
+      ? itemGroupKeyFn(item)
+      : normalizeItemName(item.displayProperties?.name);
+    if (!nameKey) continue;
     const label = debutMap.get(nameKey);
     if (!label) continue;
 
@@ -943,7 +1223,7 @@ export function buildDebutSeasonByName(
     if (!label) continue;
 
     for (const nameKey of itemsByName.keys()) {
-      if (debutBaseNameKey(nameKey) === baseKey) {
+      if (debutCatalogGroupKeyFromGroupKey(nameKey) === baseKey) {
         debutSeasonByName.set(nameKey, label);
       }
     }
@@ -1053,6 +1333,10 @@ export function buildWatermarkLabelMap(items, collectibles, seasons = {}) {
     if (bestLabel) result.set(key, bestLabel);
   }
 
+  for (const [key, label] of Object.entries(WATERMARK_LABEL_OVERRIDES)) {
+    result.set(key, label);
+  }
+
   return result;
 }
 
@@ -1139,11 +1423,21 @@ export function resolveVersionSeasonLabel(
   const source = collectible?.sourceString ?? "";
   const fromSource = resolveSeasonLabelFromSource(source, seasons);
   const votedLabel = watermarkLabelMap.get(watermarkBasename(item.iconWatermark));
+  const watermarkOverride =
+    WATERMARK_LABEL_OVERRIDES[watermarkBasename(item.iconWatermark)];
   const ownSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
 
   let label = null;
 
-  if (votedLabel && isExpansionLabel(votedLabel)) {
+  if (fromSource && !isRecurringVersionSource(source)) {
+    if (watermarkOverride && fromSource === "Red War") {
+      label = watermarkOverride;
+    } else {
+      label = fromSource;
+    }
+  } else if (watermarkOverride) {
+    label = watermarkOverride;
+  } else if (votedLabel && isExpansionLabel(votedLabel)) {
     label = votedLabel;
   } else if (ownSeason > 0) {
     label = seasonLabelFromManifestNumber(ownSeason);
@@ -1159,8 +1453,6 @@ export function resolveVersionSeasonLabel(
       label = seasonLabelFromManifestNumber(manifestSeason);
     } else if (votedLabel) {
       label = votedLabel;
-    } else if (fromSource && !isRecurringVersionSource(source)) {
-      label = fromSource;
     } else {
       const seasonPassSeason = seasonPassItemSeason?.get(String(item.hash));
       if (seasonPassSeason) {
@@ -1265,6 +1557,10 @@ export function isSourceObtainable(
     collectible?.stateInfo?.requirements?.entitlementUnavailableMessage ?? "";
   if (/preorder exclusive|timed exclusive|no longer/i.test(entitlement)) {
     return false;
+  }
+
+  if (/complete trials tickets/i.test(source)) {
+    return true;
   }
 
   for (const pattern of UNOBTAINABLE_SOURCE_PATTERNS) {

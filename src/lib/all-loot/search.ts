@@ -45,7 +45,6 @@ function matchesMultiFilter(values: string[], candidates: string | string[] | nu
 
 function itemSeasonLabels(item: AllLootItem) {
   const labels = new Set<string>();
-  if (item.expansionLabel) labels.add(item.expansionLabel);
   if (item.versions?.length) {
     for (const version of item.versions) labels.add(version.seasonLabel);
   } else {

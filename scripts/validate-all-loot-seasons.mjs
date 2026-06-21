@@ -10,7 +10,6 @@ import { fileURLToPath } from "node:url";
 import {
   CANONICAL_SEASON_ORDER,
   EXPANSION_DISPLAY_NUMBER,
-  isExpansionLabel,
 } from "./all-loot-mappings.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -20,10 +19,18 @@ const catalog = JSON.parse(readFileSync(catalogPath, "utf8"));
 const knownSeasons = new Set(CANONICAL_SEASON_ORDER);
 const issues = [];
 
+function itemSeasonLabels(item) {
+  const labels = new Set();
+  if (item.versions?.length) {
+    for (const version of item.versions) labels.add(version.seasonLabel);
+  } else {
+    labels.add(item.seasonLabel);
+  }
+  return [...labels];
+}
+
 for (const item of catalog.items) {
-  const labels = new Set([item.seasonLabel]);
-  if (item.expansionLabel) labels.add(item.expansionLabel);
-  for (const version of item.versions ?? []) labels.add(version.seasonLabel);
+  const labels = new Set([item.seasonLabel, ...itemSeasonLabels(item)]);
 
   for (const label of labels) {
     if (!knownSeasons.has(label) && !/^S\d+/.test(label)) {
@@ -32,27 +39,6 @@ for (const item of catalog.items) {
         name: item.name,
         label,
       });
-    }
-  }
-
-  if (item.expansionLabel && item.versions?.length) {
-    const expansionNumbers = new Set(
-      [item.expansionLabel]
-        .filter(isExpansionLabel)
-        .map((label) => EXPANSION_DISPLAY_NUMBER[label] ?? 0),
-    );
-    const versionNumbers = item.versions.map((version) => version.seasonNumber);
-    const debutNumber = Math.min(...versionNumbers);
-    for (const expansionNumber of expansionNumbers) {
-      if (expansionNumber > 0 && debutNumber < expansionNumber - 1) {
-        issues.push({
-          type: "expansion-before-debut",
-          name: item.name,
-          expansionLabel: item.expansionLabel,
-          debutSeasonNumber: debutNumber,
-        });
-        break;
-      }
     }
   }
 
@@ -71,7 +57,6 @@ for (const item of catalog.items) {
 
     const seen = new Set();
     for (const version of item.versions) {
-      const key = `${version.seasonLabel}:${version.itemHash}`;
       if (seen.has(version.seasonLabel)) {
         issues.push({
           type: "duplicate-version-label",
@@ -90,11 +75,7 @@ const expansionCounts = Object.fromEntries(
 );
 
 for (const item of catalog.items) {
-  const filterLabels = new Set([item.seasonLabel]);
-  if (item.expansionLabel) filterLabels.add(item.expansionLabel);
-  for (const version of item.versions ?? []) filterLabels.add(version.seasonLabel);
-
-  for (const label of filterLabels) {
+  for (const label of itemSeasonLabels(item)) {
     if (expansionCounts[label] !== undefined) expansionCounts[label]++;
   }
 }

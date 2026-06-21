@@ -1,7 +1,10 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import Image from "next/image";
+import { ObtainableIcon } from "@/components/obtainable-icon";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 import { classOrWeaponTypeIconPath, isGuardianClass } from "@/lib/class-weapon-type-icon";
 import { damageTypeIconPath } from "@/lib/damage-type-icon";
@@ -10,6 +13,7 @@ import {
   weaponAmmoIconPath,
   weaponAmmoLabel,
 } from "@/lib/weapon-slot-icon";
+import { weaponPageHref } from "@/lib/weapons/paths";
 import type { AllLootItem, AllLootItemVersion } from "@/types/all-loot";
 import { isItemOwned } from "@/lib/all-loot/ownership";
 
@@ -187,30 +191,6 @@ function useVersionsHover(versions: AllLootItemVersion[] | undefined) {
   return { open, setHover, hasVersions, versions: versions ?? [] };
 }
 
-function ObtainableIcon({ obtainable }: { obtainable: boolean }) {
-  if (obtainable) {
-    return (
-      <span
-        className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/15 text-xs text-emerald-300 sm:h-6 sm:w-6 sm:text-sm"
-        title="Obtainable today"
-        aria-label="Obtainable today"
-      >
-        ✓
-      </span>
-    );
-  }
-
-  return (
-    <span
-      className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-zinc-800 text-xs text-zinc-500 sm:h-6 sm:w-6 sm:text-sm"
-      title="Not obtainable"
-      aria-label="Not obtainable"
-    >
-      ✕
-    </span>
-  );
-}
-
 function DamageTypeCell({
   damageType,
 }: {
@@ -330,9 +310,14 @@ function SlotCell({
 
 
 export function AllLootRow({ item, owned, showOwnership }: AllLootRowProps) {
+  const pathname = usePathname();
   const { open, setHover, hasVersions, versions } = useVersionsHover(
     item.versions,
   );
+  const weaponHref =
+    item.type === "Weapon" && item.slug
+      ? weaponPageHref(item.slug, pathname)
+      : null;
 
   const ownedStyles =
     showOwnership && owned
@@ -343,7 +328,19 @@ export function AllLootRow({ item, owned, showOwnership }: AllLootRowProps) {
 
   const hoverableClass = hasVersions
     ? "cursor-default underline decoration-zinc-700 decoration-dotted underline-offset-2"
-    : "";
+    : weaponHref
+      ? "hover:text-amber-200"
+      : "";
+
+  const nameContent = (
+    <p
+      className={`truncate text-xs font-semibold text-zinc-100 sm:text-sm ${hoverableClass}`}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      {item.name}
+    </p>
+  );
 
   return (
     <article className={ALL_LOOT_ROW_LAYOUT}>
@@ -352,20 +349,29 @@ export function AllLootRow({ item, owned, showOwnership }: AllLootRowProps) {
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        <ItemIconWithSeasonBadge
-          iconPath={item.iconPath}
-          seasonIconPath={item.seasonIconPath}
-        />
+        {weaponHref ? (
+          <Link href={weaponHref} aria-label={item.name}>
+            <ItemIconWithSeasonBadge
+              iconPath={item.iconPath}
+              seasonIconPath={item.seasonIconPath}
+            />
+          </Link>
+        ) : (
+          <ItemIconWithSeasonBadge
+            iconPath={item.iconPath}
+            seasonIconPath={item.seasonIconPath}
+          />
+        )}
       </div>
 
       <div className={`relative ${COL_ITEM}`}>
-        <p
-          className={`truncate text-xs font-semibold text-zinc-100 sm:text-sm ${hoverableClass}`}
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-        >
-          {item.name}
-        </p>
+        {weaponHref ? (
+          <Link href={weaponHref} className="block min-w-0">
+            {nameContent}
+          </Link>
+        ) : (
+          nameContent
+        )}
         <ItemMetaLine
           type={item.type}
           seasonLabel={item.seasonLabel}

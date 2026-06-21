@@ -6,7 +6,7 @@ import { PAGE_HEADERS } from "@/lib/page-headers";
 import { getSession } from "@/lib/session";
 
 export const metadata: Metadata = {
-  title: "All Loot | Destiny 2 Collection Hub",
+  title: "Loot Collector | Destiny 2 Collection Hub",
   description: "Search the full Destiny 2 collectible catalog.",
   robots: {
     index: false,
@@ -20,8 +20,8 @@ export default async function AllLootPage() {
 
   return (
     <SectionPageLayout
-      title="All Loot"
-      imageUrl={PAGE_HEADERS.exotics}
+      title="Loot Collector"
+      imageUrl={PAGE_HEADERS.lootCollectorHeader}
       session={session}
       oauthConfigured={oauthConfigured}
       maxWidth="5xl"

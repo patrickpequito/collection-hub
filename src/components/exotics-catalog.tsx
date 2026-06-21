@@ -20,12 +20,14 @@ type ExoticsCatalogProps = {
   items: ExoticItem[];
   catalysts: CatalystItem[];
   signedIn?: boolean;
+  weaponHrefs?: Record<string, string>;
 };
 
 export function ExoticsCatalog({
   items,
   catalysts,
   signedIn = false,
+  weaponHrefs,
 }: ExoticsCatalogProps) {
   const { itemHashes: ownedItemHashes, error: inventoryError } =
     useOwnedItemHashes(signedIn);
@@ -109,6 +111,7 @@ export function ExoticsCatalog({
                 }
                 ownedItemHashes={ownedSet}
                 showOwnership={showOwnership}
+                weaponHrefs={activeTab === "weapons" ? weaponHrefs : undefined}
               />
             </section>
           ))}

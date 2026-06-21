@@ -7,11 +7,7 @@ export type NavItem = {
 
 export const NAV_ITEMS: NavItem[] = [
   { href: "/", label: "Home" },
-  { href: "/rad-loot", label: "RAD Loot", matchPrefix: true },
   { href: "/triumphs", label: "Triumphs", matchPrefix: true },
-  { href: "/sets", label: "Armor sets" },
-  { href: "/exotics", label: "Exotics" },
-  { href: "/eververse", label: "Eververse" },
   { href: "/updates", label: "Updates" },
 ];
 

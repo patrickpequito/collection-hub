@@ -4,11 +4,48 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { isNavItemActive, NAV_ITEMS } from "@/lib/navigation";
+import { LootNavMenu } from "@/components/loot-nav-menu";
+import { isNavItemActive, NAV_ITEMS, type NavItem } from "@/lib/navigation";
+
+function navLinkClassName(active: boolean, variant: "desktop" | "mobile") {
+  if (variant === "desktop") {
+    return `rounded-lg px-3 py-1.5 text-sm font-medium transition ${
+      active
+        ? "bg-zinc-800 text-zinc-100"
+        : "text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200"
+    }`;
+  }
+
+  return `block rounded-lg px-3 py-2.5 text-sm font-medium transition ${
+    active
+      ? "bg-zinc-800 text-zinc-100"
+      : "text-zinc-300 hover:bg-zinc-900"
+  }`;
+}
+
+function NavLink({
+  item,
+  pathname,
+  variant,
+}: {
+  item: NavItem;
+  pathname: string;
+  variant: "desktop" | "mobile";
+}) {
+  const active = isNavItemActive(pathname, item);
+
+  return (
+    <Link href={item.href} className={navLinkClassName(active, variant)}>
+      {item.label}
+    </Link>
+  );
+}
 
 export function SiteNav() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const homeItem = NAV_ITEMS.find((item) => item.href === "/");
+  const menuItems = NAV_ITEMS.filter((item) => item.href !== "/");
 
   useEffect(() => {
     setMenuOpen(false);
@@ -43,23 +80,17 @@ export function SiteNav() {
           </Link>
 
           <ul className="hidden items-center gap-1 md:flex">
-            {NAV_ITEMS.map((item) => {
-              const active = isNavItemActive(pathname, item);
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={`rounded-lg px-3 py-1.5 text-sm font-medium transition ${
-                      active
-                        ? "bg-zinc-800 text-zinc-100"
-                        : "text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              );
-            })}
+            {homeItem ? (
+              <li>
+                <NavLink item={homeItem} pathname={pathname} variant="desktop" />
+              </li>
+            ) : null}
+            <LootNavMenu variant="desktop" />
+            {menuItems.map((item) => (
+              <li key={item.href}>
+                <NavLink item={item} pathname={pathname} variant="desktop" />
+              </li>
+            ))}
           </ul>
 
           <button
@@ -88,23 +119,20 @@ export function SiteNav() {
         <div className="fixed inset-0 top-12 z-40 flex flex-col md:hidden">
           <div className="shrink-0 border-b border-zinc-800/80 bg-black/50 px-4 py-3 shadow-xl backdrop-blur-md">
             <ul className="space-y-1">
-              {NAV_ITEMS.map((item) => {
-                const active = isNavItemActive(pathname, item);
-                return (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className={`block rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                        active
-                          ? "bg-zinc-800 text-zinc-100"
-                          : "text-zinc-300 hover:bg-zinc-900"
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                );
-              })}
+              {homeItem ? (
+                <li>
+                  <NavLink item={homeItem} pathname={pathname} variant="mobile" />
+                </li>
+              ) : null}
+              <LootNavMenu
+                variant="mobile"
+                onNavigate={() => setMenuOpen(false)}
+              />
+              {menuItems.map((item) => (
+                <li key={item.href}>
+                  <NavLink item={item} pathname={pathname} variant="mobile" />
+                </li>
+              ))}
             </ul>
           </div>
           <button

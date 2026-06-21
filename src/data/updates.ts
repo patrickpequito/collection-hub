@@ -1,4 +1,4 @@
-export const CURRENT_VERSION = "0.6.0";
+export const CURRENT_VERSION = "0.7.0";
 
 export function formatReleaseDate(isoDate: string) {
   const [year, month, day] = isoDate.split("-").map(Number);
@@ -26,24 +26,81 @@ export type UpdateRelease = {
   sections: UpdateFeatureSection[];
 };
 
-/** Major sections still in progress before a 1.0 release. */
-export const UPDATE_ROADMAP: string[] = [
-  "Monument of Triumph loot vendor and rewards (beyond triumphs and titles).",
-  "Full rework of the Armor Sets page.",
-  "Dedicated gear pages with weapon and armor stats, perks, recommended god rolls, and a view of what you own — highlighting your best roll or the one closest to the god roll.",
-  "Rework the Exotics page layout and browsing experience.",
-  "Eververse Rotation — complete daily Bright Dust shop. Blocked until Bungie exposes daily offers in the API again after Destiny 2 update 9.7.0.",
-];
-
 /**
  * Newest release first. Add a new entry at the top when shipping an update.
  */
 export const UPDATE_RELEASES: UpdateRelease[] = [
   {
+    version: "0.7.0",
+    publishedAt: "2026-06-21",
+    summary:
+      "Loot Collector debuts with the full collectible catalog, powerful search and filters, and dedicated weapon pages with stats, perks, and Voltron god rolls. Loot sections are grouped under one hub; navigation and home are streamlined. Eververse Rotation is removed until Bungie's API supports it again.",
+    sections: [
+      {
+        title: "Loot Collector catalog",
+        description:
+          "Every collectible in one generated catalog — weapons, armor, cosmetics, and more.",
+        items: [
+          "New Loot Collector section with the full deduplicated item database (most recent version when names repeat).",
+          "Season badges, obtainability, sources, and collection highlighting when signed in with Bungie.",
+          "Thin collection banners for RAD Loot, Exotics, Armor sets, Collections, activities, destinations, and expansions/seasons — with artwork for each category.",
+        ],
+      },
+      {
+        title: "Search & filters",
+        description:
+          "Browse the entire catalog without loading every item at once.",
+        items: [
+          "Full-text search across names, types, sources, and seasons.",
+          "Multi-select filters for type, season, rarity, class, weapon type, damage type, slot, and more.",
+          "Collection filter to show only owned or missing items when signed in.",
+          "Infinite scroll with server-side search and facet endpoints.",
+        ],
+      },
+      {
+        title: "Weapon pages",
+        description:
+          "Dedicated page for every catalogued weapon.",
+        items: [
+          "Stats panel with bar and plain stat layouts (RPM, magazine, recoil, and similar stats shown without bars).",
+          "Perk columns from the Bungie manifest — masterworks, barrels, magazines, and traits with icon tooltips.",
+          "Season badges, description, obtainability, and source on each weapon page.",
+        ],
+      },
+      {
+        title: "God rolls",
+        description:
+          "Community recommendations powered by DIM's Voltron wishlist.",
+        items: [
+          "Off · PvE · PvP toggle on weapon pages to highlight recommended perks.",
+          "God roll data built from Voltron at generate time.",
+          "Covers 1,000+ weapons with PvE and/or PvP recommendations.",
+        ],
+      },
+      {
+        title: "Loot hub & navigation",
+        description:
+          "All loot sections grouped under Loot Collector with a clearer site structure.",
+        items: [
+          "Header Loot menu with Search loot plus every collection category — available sections link through; coming-soon entries stay visible but disabled.",
+          "Home and header simplified: Triumphs stays prominent; RAD Loot, Exotics, and Armor sets move into the Loot menu.",
+        ],
+      },
+      {
+        title: "Removed",
+        description:
+          "Sections dropped when they can no longer be maintained reliably.",
+        items: [
+          "Eververse Rotation removed — Bungie's API no longer exposes the full daily Bright Dust shop after update 9.7.0.",
+        ],
+      },
+    ],
+  },
+  {
     version: "0.6.0",
     publishedAt: "2026-06-14",
     summary:
-      "Monument of Triumph triumphs and the Immortal title join the Triumphs hub. Pantheon 2.0 is added to RAD Loot with a full activity page. Eververse Rotation debuts in early access. Faster page loads and smoother navigation across the site.",
+      "Monument of Triumph triumphs and the Immortal title join the Triumphs hub. Pantheon 2.0 is added to RAD Loot with a full activity page. Faster page loads and smoother navigation across the site.",
     sections: [
       {
         title: "Triumphs",
@@ -67,32 +124,15 @@ export const UPDATE_RELEASES: UpdateRelease[] = [
         ],
       },
       {
-        title: "Home & navigation",
-        description: "Hub and nav updates for the new sections.",
-        items: [
-          "Eververse Rotation banner and nav link added.",
-        ],
-      },
-      {
         title: "Performance",
         description:
           "Faster loads across the site — pages render first, Bungie data follows in the background.",
         items: [
           "Global loading indicator when moving between sections: centered spinner with a dimmed overlay so the current page stays visible until the next one is ready.",
-          "Home, Exotics, Armor sets, and Eververse show catalogs immediately; collection ownership and triumph scores load afterward when signed in.",
+          "Home, Exotics, and Armor sets show catalogs immediately; collection ownership and triumph scores load afterward when signed in.",
           "RAD Loot index opens with activity banners right away; completion counts and title seal status fill in after sign-in data arrives.",
           "Server-side caching for catalog data and Bungie membership resolution — fewer repeated API calls per visit.",
-          "Eververse rotation uses a daily cache by default instead of forcing a live Bungie fetch on every page load.",
           "Activity loot pages fetch inventory, triumph progress, and raid completions in parallel when signed in.",
-        ],
-      },
-      {
-        title: "Eververse Rotation",
-        description:
-          "Early access — today's Bright Dust shop at Tess Everis.",
-        items: [
-          "New page with ownership highlighting and a daily reset countdown.",
-          "Incomplete until Bungie exposes daily Bright Dust offers in the API again after update 9.7.0. Only partial data is available for now; use in-game Eververse or the Companion App for the full daily shop.",
         ],
       },
     ],
@@ -107,7 +147,6 @@ export const UPDATE_RELEASES: UpdateRelease[] = [
         title: "Home",
         description: "New coming-soon banner and copy update.",
         items: [
-          "Eververse Rotations added as a coming-soon banner after Exotics.",
           "Monument of Triumph description updated to: “The final triumphs and loot to chase in one place.”",
         ],
       },

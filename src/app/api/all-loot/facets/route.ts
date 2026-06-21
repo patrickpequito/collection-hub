@@ -12,7 +12,7 @@ export async function GET() {
         error:
           error instanceof Error
             ? error.message
-            : "Failed to load All Loot filters",
+            : "Failed to load Loot Collector filters",
       },
       { status: 500 },
     );

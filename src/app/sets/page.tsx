@@ -1,4 +1,5 @@
 import { ArmorSetCatalog } from "@/components/armor-set-catalog";
+import { SectionPlaceholderNotice } from "@/components/section-placeholder-notice";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { loadArmorSetCatalog } from "@/lib/armor-sets/load";
@@ -13,10 +14,12 @@ export default async function SetsPage() {
   return (
     <SectionPageLayout
       title="Armor sets"
-      imageUrl={PAGE_HEADERS.armorSets}
+      imageUrl={PAGE_HEADERS.armorSetsHeader}
       session={session}
       oauthConfigured={oauthConfigured}
     >
+      <SectionPlaceholderNotice />
+
       <p className="text-sm text-zinc-400">
         Legendary armor sets by activity type ({catalog.sets.length} sets).
       </p>

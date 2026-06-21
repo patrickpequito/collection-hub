@@ -42,7 +42,7 @@ export async function GET(request: Request) {
         error:
           error instanceof Error
             ? error.message
-            : "Failed to search All Loot catalog",
+            : "Failed to search Loot Collector catalog",
       },
       { status: 500 },
     );
@@ -95,7 +95,7 @@ export async function POST(request: Request) {
         error:
           error instanceof Error
             ? error.message
-            : "Failed to search All Loot catalog",
+            : "Failed to search Loot Collector catalog",
       },
       { status: 500 },
     );

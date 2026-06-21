@@ -4,8 +4,14 @@ export const PAGE_HEADERS = {
   exotics: "/images/banners/exotics.webp",
   triumphs: "/images/banners/triumphs.webp",
   armorSets: "/images/banners/armor-sets.webp",
-  eververse: "/images/banners/eververse-rotation.webp",
+  armorSetsHeader: "/images/headers/armor-sets-header.webp",
+  lootCollector: "/images/banners/loot-collector.webp",
+  lootCollectorHeader: "/images/headers/loot-collector-header.webp",
 } as const;
+
+export function sectionHeaderUrl(imageFile: string): string {
+  return `/images/headers/${imageFile}`;
+}
 
 export function activityHeaderUrl(imageFile: string): string {
   return `/images/rad-loot/headers/${imageFile}`;

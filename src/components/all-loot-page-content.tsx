@@ -7,6 +7,7 @@ import {
   emptyAllLootFilterState,
   type AllLootFilterState,
 } from "@/components/all-loot-filters";
+import { AllLootCollectionBanners } from "@/components/all-loot-collection-banners";
 import { AllLootResultsHeader, AllLootRow, isItemOwned } from "@/components/all-loot-row";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { useOwnedItemHashes } from "@/lib/use-owned-item-hashes";
@@ -197,6 +198,8 @@ export function AllLootPageContent({ signedIn }: AllLootPageContentProps) {
         </p>
       ) : null}
 
+      <AllLootCollectionBanners />
+
       <AllLootFiltersPanel
         facets={facets}
         filters={filters}
@@ -214,7 +217,7 @@ export function AllLootPageContent({ signedIn }: AllLootPageContentProps) {
 
       {searching ? (
         <div className="flex justify-center py-10">
-          <LoadingSpinner size="sm" label="Searching All Loot" />
+          <LoadingSpinner size="sm" label="Searching Loot Collector" />
         </div>
       ) : null}
 

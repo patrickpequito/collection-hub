@@ -8,6 +8,7 @@ type LootItemGridProps = {
   ownedBorder?: "gold" | "green";
   /** Item hashes that use green border (exotics) regardless of ownedBorder default. */
   exoticItemHashes?: Set<string>;
+  weaponHrefs?: Record<string, string>;
 };
 
 export function LootItemGrid({
@@ -16,6 +17,7 @@ export function LootItemGrid({
   showOwnership,
   ownedBorder = "gold",
   exoticItemHashes,
+  weaponHrefs,
 }: LootItemGridProps) {
   return (
     <div className="flex flex-wrap gap-1.5">
@@ -30,6 +32,7 @@ export function LootItemGrid({
           ownedBorder={
             exoticItemHashes?.has(item.itemHash) ? "green" : ownedBorder
           }
+          href={weaponHrefs?.[item.itemHash]}
         />
       ))}
     </div>
@@ -43,6 +46,7 @@ type LootSectionProps = {
   showOwnership: boolean;
   ownedBorder?: "gold" | "green";
   exoticItemHashes?: Set<string>;
+  weaponHrefs?: Record<string, string>;
 };
 
 export function LootSection({
@@ -52,6 +56,7 @@ export function LootSection({
   showOwnership,
   ownedBorder = "gold",
   exoticItemHashes,
+  weaponHrefs,
 }: LootSectionProps) {
   return (
     <section className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
@@ -64,6 +69,7 @@ export function LootSection({
         showOwnership={showOwnership}
         ownedBorder={ownedBorder}
         exoticItemHashes={exoticItemHashes}
+        weaponHrefs={weaponHrefs}
       />
     </section>
   );
