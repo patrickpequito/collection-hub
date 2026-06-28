@@ -6,7 +6,7 @@ import { createPortal } from "react-dom";
 import { formatPerkDescription } from "@/lib/weapons/perks";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 import type { ResolvedWeaponPerk } from "@/types/all-loot";
-import type { WeaponGodRollMode } from "@/types/weapon-god-rolls";
+import type { PerkHighlightMode } from "@/types/weapon-god-rolls";
 
 const ICON_OUTER_SIZE = "size-12";
 const ICON_INNER_SIZE = "size-9";
@@ -16,7 +16,7 @@ type WeaponPerkIconProps = {
   perk: ResolvedWeaponPerk;
   shape?: "circle" | "square";
   highlighted?: boolean;
-  highlightMode?: WeaponGodRollMode | null;
+  highlightMode?: PerkHighlightMode;
 };
 
 export function WeaponPerkIcon({
@@ -54,9 +54,13 @@ export function WeaponPerkIcon({
   const isSquare = shape === "square";
   const outerHighlightClass = !highlighted
     ? "border-zinc-700 bg-zinc-900"
-    : highlightMode === "pve"
-      ? "border-emerald-500/70 bg-emerald-500/30"
-      : "border-amber-500/70 bg-amber-500/30";
+    : highlightMode === "match"
+      ? "border-yellow-400/80 bg-yellow-500/30 shadow-[0_0_6px_rgba(250,204,21,0.3)]"
+      : highlightMode === "pve"
+        ? "border-emerald-500/70 bg-emerald-500/30"
+        : highlightMode === "pvp"
+          ? "border-amber-500/70 bg-amber-500/30"
+          : "border-blue-500/70 bg-blue-500/30";
 
   const tooltip =
     tooltipTop !== null && tooltipLeftPx !== null

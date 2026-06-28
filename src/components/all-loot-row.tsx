@@ -15,6 +15,7 @@ import {
 } from "@/lib/weapon-slot-icon";
 import { weaponPageHref } from "@/lib/weapons/paths";
 import type { AllLootItem, AllLootItemVersion } from "@/types/all-loot";
+import { resolveVersionDisplayLabel } from "@/lib/all-loot/season-badges";
 import { isItemOwned } from "@/lib/all-loot/ownership";
 
 export { isItemOwned };
@@ -157,7 +158,7 @@ function AllLootVersionsPopover({
                 {version.name}
               </p>
               <p className="truncate text-[10px] text-zinc-500 sm:text-xs">
-                {version.seasonLabel}
+                {resolveVersionDisplayLabel(version)}
               </p>
             </div>
           </li>

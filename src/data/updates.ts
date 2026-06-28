@@ -1,4 +1,4 @@
-export const CURRENT_VERSION = "0.7.0";
+export const CURRENT_VERSION = "0.7.1";
 
 export function formatReleaseDate(isoDate: string) {
   const [year, month, day] = isoDate.split("-").map(Number);
@@ -30,6 +30,67 @@ export type UpdateRelease = {
  * Newest release first. Add a new entry at the top when shipping an update.
  */
 export const UPDATE_RELEASES: UpdateRelease[] = [
+  {
+    version: "0.7.1",
+    publishedAt: "2026-06-24",
+    summary:
+      "Weapon pages now show your own rolls when signed in — with PvE/PvP scoring, Aegis tier ratings, and clear markers for your best copy and safe-to-dismantle duplicates. Compare perks against the god roll side by side, browse stats and perk pools per weapon version, and benefit from a cleaner catalog with fixed season labels and consolidated Edge of Fate / Into the Light entries.",
+    sections: [
+      {
+        title: "Your rolls",
+        description:
+          "See every copy you own on a weapon page and compare it to the community god roll.",
+        items: [
+          "Show your rolls on weapon pages when signed in with Bungie — vault, inventory, and equipped copies in one list.",
+          "Hover or tap a roll to highlight its perks on the grid; god roll perks show at the same time for easy comparison.",
+          "Matching perks glow gold; your-roll-only perks stay blue and god-roll-only perks use the PvE or PvP highlight colour.",
+          "Multi-version weapons label each roll with its season (e.g. S9 Season of the Dawn) so you know which reissue you are looking at.",
+        ],
+      },
+      {
+        title: "Roll scoring & recommendations",
+        description:
+          "Quick read on whether a copy is worth keeping.",
+        items: [
+          "PvE and PvP match percentages against the Voltron god roll for each copy.",
+          "Aegis tier rating from the community wishlist — overall score, perk columns hit, and trait combo match.",
+          "★ marks your best copy; ✕ flags duplicates that are worse in both PvE and PvP (safe dismantle candidates).",
+          "Rolls sorted by Aegis tier, then PvE, then PvP.",
+        ],
+      },
+      {
+        title: "Perks & stats per version",
+        description:
+          "Reissued weapons no longer share one static perk pool across every season.",
+        items: [
+          "Perk columns and stat blocks are resolved per manifest version — BrayTech Werewolf, Austringer, and similar reissues show the correct pool for each season badge.",
+          "Click a season badge on the weapon page to switch stats, perks, and god roll data for that version.",
+          "Hovering a roll switches the perk grid to that copy's version automatically.",
+        ],
+      },
+      {
+        title: "Catalog & season labels",
+        description:
+          "Cleaner search results and more accurate obtainability and event tagging.",
+        items: [
+          "Call to Arms treated as an event label, not a season — search and filters use the underlying season (e.g. The Edge of Fate).",
+          "Duplicate catalog rows collapsed when versions share the same season, stats, and perks; event reissues merge into the base release where appropriate.",
+          "Edge of Fate and S28 content consolidated; Into the Light separated from adjacent season groupings.",
+          "Obtainability fixes for random-roll sources and reissued weapons (e.g. A Good Shout).",
+          "God roll highlighting matches perks by name across alternate manifest hashes, not just exact plug IDs.",
+        ],
+      },
+      {
+        title: "Behind the scenes",
+        description:
+          "Data pipelines that keep roll features up to date.",
+        items: [
+          "Perk pools patched from the Bungie manifest for every weapon version and alternate item hash.",
+          "Daily GitHub Action refreshes Voltron god rolls and Aegis wishlist data.",
+        ],
+      },
+    ],
+  },
   {
     version: "0.7.0",
     publishedAt: "2026-06-21",

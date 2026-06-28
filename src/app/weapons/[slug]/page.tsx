@@ -7,7 +7,7 @@ import { isBungieOAuthConfigured } from "@/lib/env";
 import { getSession } from "@/lib/session";
 import {
   loadWeaponGodRollIndex,
-  resolveWeaponGodRoll,
+  resolveGodRollsForWeapon,
 } from "@/lib/weapons/god-rolls";
 import { getWeaponBySlug } from "@/lib/weapons/lookup";
 import {
@@ -59,7 +59,7 @@ export default async function WeaponPage({
   );
   if (!weapon) notFound();
 
-  const godRoll = resolveWeaponGodRoll(weapon, godRollIndex);
+  const godRollsByHash = resolveGodRollsForWeapon(weapon, godRollIndex);
 
   const session = await getSession();
   const oauthConfigured = isBungieOAuthConfigured();
@@ -80,7 +80,8 @@ export default async function WeaponPage({
       <WeaponDetailContent
         weapon={weapon}
         plugIndex={catalog.plugIndex ?? {}}
-        godRoll={godRoll}
+        godRollsByHash={godRollsByHash}
+        isSignedIn={Boolean(session)}
       />
     </SectionPageLayout>
   );

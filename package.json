@@ -10,6 +10,8 @@
     "generate:item-index": "node scripts/generate-item-hash-index.mjs",
     "generate:all-loot": "node scripts/generate-all-loot.mjs",
     "generate:god-rolls": "node scripts/generate-weapon-god-rolls.mjs",
+    "generate:aegis-rolls": "node scripts/generate-weapon-aegis-rolls.mjs",
+    "patch:version-perks": "node scripts/patch-version-perk-columns.mjs",
     "setup:https": "mkdir -p certificates && test -f certificates/localhost.pem || openssl req -x509 -newkey rsa:2048 -keyout certificates/localhost-key.pem -out certificates/localhost.pem -days 365 -nodes -subj '/CN=127.0.0.1'",
     "dev": "npm run setup:https && next dev --experimental-https --experimental-https-key ./certificates/localhost-key.pem --experimental-https-cert ./certificates/localhost.pem -H 127.0.0.1 -p 3000",
     "build": "next build",

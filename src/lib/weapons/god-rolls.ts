@@ -6,6 +6,7 @@ import type {
   ResolvedWeaponGodRoll,
   WeaponGodRollIndex,
 } from "@/types/weapon-god-rolls";
+import { collectWeaponItemHashes } from "@/lib/weapons/item-hashes";
 
 let indexCache: WeaponGodRollIndex | null = null;
 
@@ -29,16 +30,7 @@ export async function loadWeaponGodRollIndex(): Promise<WeaponGodRollIndex> {
 }
 
 function collectItemHashes(weapon: AllLootItem): string[] {
-  const hashes = new Set<string>([weapon.itemHash]);
-
-  for (const hash of weapon.alternateItemHashes ?? []) {
-    hashes.add(hash);
-  }
-  for (const version of weapon.versions ?? []) {
-    hashes.add(version.itemHash);
-  }
-
-  return [...hashes];
+  return collectWeaponItemHashes(weapon);
 }
 
 export function resolveWeaponGodRoll(
@@ -51,4 +43,25 @@ export function resolveWeaponGodRoll(
   }
 
   return null;
+}
+
+export function resolveGodRollForItemHash(
+  itemHash: string,
+  index: WeaponGodRollIndex,
+): ResolvedWeaponGodRoll | null {
+  return index.rolls[itemHash] ?? null;
+}
+
+export function resolveGodRollsForWeapon(
+  weapon: AllLootItem,
+  index: WeaponGodRollIndex,
+): Record<string, ResolvedWeaponGodRoll> {
+  const rolls: Record<string, ResolvedWeaponGodRoll> = {};
+
+  for (const itemHash of collectItemHashes(weapon)) {
+    const entry = index.rolls[itemHash];
+    if (entry) rolls[itemHash] = entry;
+  }
+
+  return rolls;
 }

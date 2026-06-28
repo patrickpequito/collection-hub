@@ -31,6 +31,9 @@ import {
   normalizeItemName,
   orderFacetValues,
   resolveCollectibleForVariant,
+  resolveEventLabel,
+  catalogVersionsEquivalent,
+  preferCatalogVersion,
   resolveSeasonDisplayIconPath,
   resolveSeasonDisplayIconWatermark,
   resolveVersionSeasonLabel,
@@ -848,11 +851,13 @@ function buildSearchText(entry) {
   const versionText = (entry.versions ?? []).flatMap((version) => [
     version.name,
     version.seasonLabel,
+    version.eventLabel,
   ]);
 
   return [
     entry.name,
     entry.seasonLabel,
+    entry.eventLabel,
     ...versionText,
     entry.type,
     entry.rarity,
@@ -900,12 +905,20 @@ function buildVersionsForNameGroup(
   watermarkLabelMap,
   salvationsEdgeS29MinIndex,
   seasonDisplayIconLookup,
+  items,
+  plugSets,
+  socketTypes,
+  socketCategories,
+  statGroups,
+  statDefs,
+  plugIndex,
 ) {
   const candidates = group
     .filter((item) => isCatalogVersionCandidate(item, group))
     .sort((a, b) => (b.index ?? 0) - (a.index ?? 0));
 
   const bySeason = new Map();
+  const perkColumnsByHash = new Map();
 
   for (const item of candidates) {
     const collectible = item.collectibleHash
@@ -920,28 +933,63 @@ function buildVersionsForNameGroup(
       dimSeasonData,
       { peerItems: group, indexCohortAnchors, watermarkLabelMap, salvationsEdgeS29MinIndex },
     );
-    const existing = bySeason.get(seasonLabel);
-    if (!existing || (item.index ?? 0) > existing._manifestIndex) {
-      const seasonIconPath = resolveSeasonIconPath(item);
-      bySeason.set(seasonLabel, {
-        itemHash: String(item.hash),
-        name: item.displayProperties.name.trim(),
-        iconPath: item.displayProperties.icon,
-        seasonIconPath,
-        seasonDisplayIconPath: resolveSeasonDisplayIconPath(
-          seasonLabel,
-          seasonIconPath,
-          seasonDisplayIconLookup,
-        ),
-        seasonDisplayIconWatermark: resolveSeasonDisplayIconWatermark(
-          seasonLabel,
-          seasonDisplayIconLookup,
-        ),
+    const seasonIconPath = resolveSeasonIconPath(item);
+    const source = collectible?.sourceString ?? "";
+    const eventLabel = resolveEventLabel(source, seasonIconPath, seasonLabel);
+    const perkColumns = resolveWeaponPerkColumns(
+      item,
+      items,
+      plugSets,
+      socketTypes,
+      socketCategories,
+      statGroups,
+      statDefs,
+      plugIndex,
+    );
+    perkColumnsByHash.set(String(item.hash), perkColumns);
+
+    const candidate = {
+      itemHash: String(item.hash),
+      name: item.displayProperties.name.trim(),
+      iconPath: item.displayProperties.icon,
+      seasonIconPath,
+      seasonDisplayIconPath: resolveSeasonDisplayIconPath(
         seasonLabel,
-        seasonNumber: displayNumberFromLabel(seasonLabel),
-        _manifestIndex: item.index ?? 0,
-      });
+        seasonIconPath,
+        seasonDisplayIconLookup,
+      ),
+      seasonDisplayIconWatermark: resolveSeasonDisplayIconWatermark(
+        seasonLabel,
+        seasonDisplayIconLookup,
+      ),
+      seasonLabel,
+      seasonNumber: displayNumberFromLabel(seasonLabel),
+      ...(eventLabel ? { eventLabel } : {}),
+      perkColumns,
+      _manifestIndex: item.index ?? 0,
+    };
+
+    const compareContext = {
+      perkColumnsForHash: (hash) => perkColumnsByHash.get(hash),
+    };
+
+    const mergeKey = [...bySeason.keys()].find((key) =>
+      catalogVersionsEquivalent(bySeason.get(key), candidate, compareContext),
+    );
+
+    if (!mergeKey) {
+      let key = seasonLabel;
+      if (bySeason.has(key)) {
+        key = `${seasonLabel}\0${candidate.itemHash}`;
+      }
+      bySeason.set(key, candidate);
+      continue;
     }
+
+    bySeason.set(
+      mergeKey,
+      preferCatalogVersion(bySeason.get(mergeKey), candidate),
+    );
   }
 
   return [...bySeason.values()]
@@ -964,6 +1012,11 @@ function applyLatestVersionToEntry(entry, versions) {
   entry.seasonDisplayIconWatermark = latest.seasonDisplayIconWatermark;
   entry.seasonLabel = latest.seasonLabel;
   entry.seasonNumber = latest.seasonNumber;
+  if (latest.eventLabel) {
+    entry.eventLabel = latest.eventLabel;
+  } else {
+    delete entry.eventLabel;
+  }
   entry.versions = versions.length > 1 ? versions : undefined;
   entry.searchText = buildSearchText(entry);
   return entry;
@@ -1101,6 +1154,7 @@ function buildCatalog(
       : false;
 
     const seasonIconPath = resolveSeasonIconPath(displayItem);
+    const eventLabel = resolveEventLabel(source, seasonIconPath, seasonLabel);
     const entry = {
       itemHash: displayHash,
       alternateItemHashes: alternates.length ? alternates : undefined,
@@ -1118,6 +1172,7 @@ function buildCatalog(
       ),
       seasonLabel,
       seasonNumber,
+      ...(eventLabel ? { eventLabel } : {}),
       type,
       rarity,
       classOrWeaponType,
@@ -1190,8 +1245,43 @@ function buildCatalog(
       watermarkLabelMap,
       salvationsEdgeS29MinIndex,
       seasonDisplayIconLookup,
+      items,
+      plugSets,
+      socketTypes,
+      socketCategories,
+      statGroups,
+      statDefs,
+      plugIndex,
     );
     applyLatestVersionToEntry(entry, versions);
+
+    if (entry.type === "Weapon" && versions.length) {
+      const groupByHash = new Map(
+        group.map((item) => [String(item.hash), item]),
+      );
+      for (const version of versions) {
+        const manifestItem = groupByHash.get(version.itemHash);
+        if (manifestItem) {
+          version.perkColumns = resolveWeaponPerkColumns(
+            manifestItem,
+            items,
+            plugSets,
+            socketTypes,
+            socketCategories,
+            statGroups,
+            statDefs,
+            plugIndex,
+          );
+        }
+      }
+      if (versions[0]?.perkColumns?.length) {
+        entry.perkColumns = versions[0].perkColumns;
+      }
+      if (versions.length > 1) {
+        entry.versions = versions;
+      }
+    }
+
     entry.searchText = buildSearchText(entry);
     const alternates = group
       .map((item) => String(item.hash))
@@ -1202,7 +1292,9 @@ function buildCatalog(
   const seasonSet = new Set();
   for (const item of catalog) {
     if (item.versions?.length) {
-      for (const version of item.versions) seasonSet.add(version.seasonLabel);
+      for (const version of item.versions) {
+        seasonSet.add(version.seasonLabel);
+      }
     } else {
       seasonSet.add(item.seasonLabel);
     }

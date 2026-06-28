@@ -14,6 +14,8 @@ export type WeaponGodRollIndex = {
 
 export type WeaponGodRollMode = "pve" | "pvp";
 
+export type PerkHighlightMode = WeaponGodRollMode | "roll" | "match" | null;
+
 export type ResolvedWeaponGodRoll = {
   pve?: string[];
   pvp?: string[];

@@ -1,6 +1,7 @@
 import { loadAllLootCatalog } from "@/lib/all-loot/search";
 import { weaponPageHref } from "@/lib/weapons/paths";
 import type { AllLootItem } from "@/types/all-loot";
+import { collectWeaponItemHashes } from "@/lib/weapons/item-hashes";
 
 let slugIndex: Map<string, AllLootItem> | null = null;
 let hashIndex: Map<string, AllLootItem> | null = null;
@@ -16,13 +17,8 @@ async function ensureWeaponIndexes() {
     if (item.type !== "Weapon" || !item.slug) continue;
 
     slugIndex.set(item.slug, item);
-    hashIndex.set(item.itemHash, item);
-
-    for (const hash of item.alternateItemHashes ?? []) {
+    for (const hash of collectWeaponItemHashes(item)) {
       hashIndex.set(hash, item);
-    }
-    for (const version of item.versions ?? []) {
-      hashIndex.set(version.itemHash, item);
     }
   }
 }

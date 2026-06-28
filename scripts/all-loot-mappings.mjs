@@ -1,8 +1,9 @@
 /**
  * Player-facing chapters S1–S29. Bungie manifest seasons are 1–28; manifest 27–28
- * map to display S28–S29. Expansion and season labels sharing an S number are
- * separate filters — see CANONICAL_SEASON_ORDER.
+ * map to display chapters (27 → The Edge of Fate half-year, 28 → Monument of Triumph).
  */
+export const MONUMENT_OF_TRIUMPH_LABEL = "Monument of Triumph";
+
 export const MANIFEST_CHAPTER_LABEL = {
   1: "Red War",
   2: "Curse of Osiris",
@@ -30,20 +31,20 @@ export const MANIFEST_CHAPTER_LABEL = {
   24: "S24 Episode: Echoes",
   25: "S25 Episode: Revenant",
   26: "S26 Episode: Heresy",
-  27: "S28 Season: Reclamation",
-  28: "S29 Monument of Triumph",
+  27: "The Edge of Fate",
+  28: MONUMENT_OF_TRIUMPH_LABEL,
 };
 
 /** Facet order (newest first). Expansion before season when S numbers match. */
 export const CANONICAL_SEASON_ORDER = [
-  "S29 Monument of Triumph",
+  MONUMENT_OF_TRIUMPH_LABEL,
   "Renegades",
-  "S28 Season: Reclamation",
   "The Edge of Fate",
   "S26 Episode: Heresy",
   "S25 Episode: Revenant",
   "S24 Episode: Echoes",
   "The Final Shape",
+  "Into the Light",
   "S23 Season of the Wish",
   "S22 Season of the Witch",
   "S21 Season of the Deep",
@@ -73,11 +74,21 @@ export const CANONICAL_SEASON_ORDER = [
   "Red War",
 ];
 
+export const INTO_THE_LIGHT_LABEL = "Into the Light";
+export const INTO_THE_LIGHT_WATERMARK =
+  "60d34bc853c51063b79592233c3661d4.png";
+
+export const CALL_TO_ARMS_LABEL = "Call to Arms";
+export const CALL_TO_ARMS_WATERMARK =
+  "6eeb62a30439cecc7699c22f3e1fb3cf.png";
+
 /** Expansion labels keyed by display season number (no S prefix in UI). */
 export const EXPANSION_DISPLAY_NUMBER = {
+  [MONUMENT_OF_TRIUMPH_LABEL]: 29,
   Renegades: 29,
   "The Edge of Fate": 28,
   "The Final Shape": 23,
+  "Into the Light": 23,
   Lightfall: 20,
   "The Witch Queen": 16,
   "Beyond Light": 12,
@@ -97,8 +108,13 @@ export function isExpansionLabel(label) {
 /** Watermarks whose majority vote is misleading (shared across legacy eras). */
 export const WATERMARK_LABEL_OVERRIDES = {
   "7ba9d804508dd083ec20fcdb8ba0869d.png": "Curse of Osiris",
-  "4376a7d734583ae347acf9732aa3bb43.png": "S28 Season: Reclamation",
+  "4376a7d734583ae347acf9732aa3bb43.png": "The Edge of Fate",
+  "95f7754d52d6016fdc445fb62aa7a31e.png": "Renegades",
+  "0ac354c1c326441716ddb15d2c158c59.png": "S26 Episode: Heresy",
 };
+
+/** Year-8 featured gear watermark reused across chapters; DIM maps to manifest 28. */
+const MONUMENT_FEATURED_WATERMARK = "e78fd9419f99464816ac8f628bc3c4af.png";
 
 /** DIM watermark-to-season mistakes or cross-era reuse. Values are manifest season numbers. */
 export const WATERMARK_MANIFEST_SEASON_OVERRIDES = {
@@ -166,6 +182,15 @@ const EXPANSION_DESTINATION_BADGE_NAMES = {
   Forsaken: ["Destinations: Forsaken"],
 };
 
+/** Triumph destination hubs for modern expansions (not title seals or item watermarks). */
+const EXPANSION_TRIUMPH_DESTINATION_NAMES = {
+  "The Final Shape": "The Pale Heart",
+  Lightfall: "Neomuna",
+  "The Witch Queen": "Throne World",
+  "Beyond Light": "Europa",
+  Shadowkeep: "The Moon",
+};
+
 function pickExpansionDestinationBadgeIcon(expansionLabel, presentationNodes) {
   const preferredNames = EXPANSION_DESTINATION_BADGE_NAMES[expansionLabel];
   if (!preferredNames) return null;
@@ -188,6 +213,15 @@ function pickExpansionPresentationNodeIcon(expansionLabel, presentationNodes) {
     presentationNodes,
   );
   if (badgeIcon) return badgeIcon;
+
+  const triumphDestination = EXPANSION_TRIUMPH_DESTINATION_NAMES[expansionLabel];
+  if (triumphDestination) {
+    const triumphIcon = pickPresentationNodeIcon(
+      triumphDestination,
+      presentationNodes,
+    );
+    if (triumphIcon) return triumphIcon;
+  }
 
   const matches = Object.values(presentationNodes ?? {}).filter(
     (entry) =>
@@ -312,6 +346,13 @@ export function buildSeasonDisplayIconLookup(
     }
   }
 
+  byLabel.set(INTO_THE_LIGHT_LABEL, {
+    path:
+      pickPresentationNodeIcon(INTO_THE_LIGHT_LABEL, presentationNodes) ??
+      `/common/destiny2_content/icons/${INTO_THE_LIGHT_WATERMARK}`,
+    watermark: false,
+  });
+
   return byLabel;
 }
 
@@ -424,12 +465,16 @@ export function isActiveSeasonalArtifact(item, seasons, activeArtifactSeasons) {
  * Order matters — more specific patterns first.
  */
 export const SEASON_SOURCE_PATTERNS = [
-  [/monument of triumph/i, "S29 Monument of Triumph"],
+  [/monument of triumph/i, MONUMENT_OF_TRIUMPH_LABEL],
   [/renegades|fireteam ops/i, "Renegades"],
-  [/kepler|exploring kepler/i, "S29 Monument of Triumph"],
-  [/season:\s*reclamation|\breclamation\b/i, "S28 Season: Reclamation"],
+  [/equilibrium/i, "Renegades"],
+  [/pantheon/i, MONUMENT_OF_TRIUMPH_LABEL],
+  [/sundered doctrine/i, "S26 Episode: Heresy"],
+  [/vesper'?s host/i, "S26 Episode: Heresy"],
+  [/kepler|exploring kepler/i, "The Edge of Fate"],
+  [/season:\s*reclamation|\breclamation\b/i, "The Edge of Fate"],
   [/the edge of fate activities|edge of fate campaign/i, "The Edge of Fate"],
-  [/edge of fate|desert perpetual|equilibrium|vesper'?s host|sundered doctrine|pantheon/i, "The Edge of Fate"],
+  [/desert perpetual|\bthe edge of fate\b/i, "The Edge of Fate"],
   [/episode:\s*heresy|\bheresy\b/i, "S26 Episode: Heresy"],
   [/episode:\s*revenant|\brevenant\b/i, "S25 Episode: Revenant"],
   [/episode:\s*echoes|\bechoes\b/i, "S24 Episode: Echoes"],
@@ -508,21 +553,21 @@ export const SEASON_SOURCE_PATTERNS = [
   ],
   [/red war|\bedz\b|\bhomecoming|\bcalistoga|\btitan\b|\bio\b|\bn Nessus|\beuropean/i, "Red War"],
   [/destiny 2\b|\bnew light\b|\bintroductory\b/i, "Red War"],
-  [/solstice 2024|solstice 2025/i, "S29 Monument of Triumph"],
+  [/solstice 2024|solstice 2025/i, MONUMENT_OF_TRIUMPH_LABEL],
   [/solstice 2023/i, "S23 Season of the Wish"],
   [/solstice 2022/i, "S17 Season of the Haunted"],
   [/solstice 2021/i, "S15 Season of the Lost"],
   [/solstice 2020/i, "Beyond Light"],
   [/solstice 2019/i, "Shadowkeep"],
   [/solstice 2018/i, "Forsaken"],
-  [/festival of the lost 2024|festival of the lost 2025/i, "S29 Monument of Triumph"],
+  [/festival of the lost 2024|festival of the lost 2025/i, MONUMENT_OF_TRIUMPH_LABEL],
   [/festival of the lost 2023/i, "S23 Season of the Wish"],
   [/festival of the lost 2022/i, "S18 Season of Plunder"],
   [/festival of the lost 2021/i, "S15 Season of the Lost"],
   [/festival of the lost 2020/i, "S12 Season of the Hunt"],
   [/festival of the lost 2018/i, "Forsaken"],
-  [/the dawning 2024|the dawning 2025/i, "S29 Monument of Triumph"],
-  [/guardian games 2024|guardian games 2025/i, "S29 Monument of Triumph"],
+  [/the dawning 2024|the dawning 2025/i, MONUMENT_OF_TRIUMPH_LABEL],
+  [/guardian games 2024|guardian games 2025/i, MONUMENT_OF_TRIUMPH_LABEL],
 ];
 
 /** Expansion-only sources for the expansion filter (stricter than season patterns). */
@@ -610,14 +655,170 @@ export function applySalvationsEdgeReissueLabel(
   if ((item.index ?? 0) < minReissueIndex) return label;
 
   if (label === "The Final Shape" || label === "S24 Episode: Echoes") {
-    return "S29 Monument of Triumph";
+    return MONUMENT_OF_TRIUMPH_LABEL;
   }
 
   return label;
 }
 
+/** MoT label only applies with the MoT featured watermark — not every post-Heresy hash. */
+export function stripIncorrectMonumentLabel(
+  item,
+  label,
+  source = "",
+) {
+  if (label !== MONUMENT_OF_TRIUMPH_LABEL) return label;
+  if (watermarkBasename(item.iconWatermark) === MONUMENT_FEATURED_WATERMARK) {
+    return label;
+  }
+
+  const fromSource = resolveSeasonLabelFromSource(source, {});
+  return fromSource ?? label;
+}
+
 /** Sources tied to the current live season — resolved from manifest at build time. */
 export const LATEST_SEASON_SOURCE_PATTERNS = [];
+
+/**
+ * Limited-time event labels from collectible sources. Used for weapon-page version
+ * badges so event loot shows the event emblem/name (matching the search icon overlay).
+ */
+export const EVENT_SOURCE_PATTERNS = [
+  [
+    /30th anniversary|treasure hoard in eternity|xûr's treasure hoard|xûr \(eternity\)/i,
+    "30th Anniversary",
+  ],
+  [/call to arms(?:\s+event)?/i, CALL_TO_ARMS_LABEL],
+  [/moments of triumph(?:\s+\d{4})?/i, "Moments of Triumph"],
+  [/festival of the lost(?:\s+\d{4})?/i, "Festival of the Lost"],
+  [/the dawning(?:\s+\d{4})?/i, "The Dawning"],
+  [/solstice(?:\s+\d{4})?/i, "Solstice"],
+  [/crimson days/i, "Crimson Days"],
+  [/guardian games(?:\s+\d{4})?/i, "Guardian Games"],
+  [/the revelry|seasonal revelry(?:\s+event)?/i, "The Revelry"],
+];
+
+export function resolveIntoTheLightSeasonLabel(item, label, source = "") {
+  if (label !== "S23 Season of the Wish") return label;
+  if (/into the light/i.test(source)) return INTO_THE_LIGHT_LABEL;
+  if (watermarkBasename(item.iconWatermark) === INTO_THE_LIGHT_WATERMARK) {
+    return INTO_THE_LIGHT_LABEL;
+  }
+  return label;
+}
+
+/** Item watermarks that always denote a specific event (not a season chapter). */
+export const WATERMARK_EVENT_LABELS = {
+  "bcc26708e314306fb2fc8cb98fcbf47e.png": "30th Anniversary",
+  [CALL_TO_ARMS_WATERMARK]: CALL_TO_ARMS_LABEL,
+};
+
+export function resolveEventLabel(
+  source = "",
+  seasonIconPath = "",
+  seasonLabel = "",
+) {
+  for (const [pattern, label] of EVENT_SOURCE_PATTERNS) {
+    if (pattern.test(source)) return label;
+  }
+
+  const watermark = seasonIconPath.split("/").pop() ?? "";
+  return WATERMARK_EVENT_LABELS[watermark] ?? null;
+}
+
+/** Event names used for weapon version badges — not season/expansion filters. */
+export const KNOWN_EVENT_LABELS = new Set([
+  ...EVENT_SOURCE_PATTERNS.map(([, label]) => label),
+  ...Object.values(WATERMARK_EVENT_LABELS),
+]);
+
+export function isEventLabel(label) {
+  return Boolean(label && KNOWN_EVENT_LABELS.has(label));
+}
+
+/**
+ * When several manifest hashes are functionally identical, keep the base release
+ * over an event reissue (same stats/perks, different watermark).
+ */
+export function weaponPerkFingerprint(perkColumns) {
+  if (!perkColumns?.length) return null;
+  return perkColumns
+    .map((column) =>
+      column.plugHashes
+        .slice()
+        .sort((a, b) => Number(a) - Number(b))
+        .join(","),
+    )
+    .join("|");
+}
+
+export function weaponStatsFingerprint(stats) {
+  if (!stats?.length) return null;
+  return stats.map((stat) => `${stat.name}:${stat.value}`).join("|");
+}
+
+export function catalogVersionsEquivalent(current, candidate, context = {}) {
+  if (!current || !candidate) return false;
+  if (current.seasonLabel !== candidate.seasonLabel) return false;
+
+  const perkColumnsForHash = context.perkColumnsForHash;
+  const statsForHash = context.statsForHash;
+  const fallbackPerks = context.fallbackPerkColumns;
+  const fallbackStats = context.fallbackStats;
+
+  const currentPerks =
+    current.perkColumns ??
+    perkColumnsForHash?.(current.itemHash) ??
+    fallbackPerks;
+  const candidatePerks =
+    candidate.perkColumns ??
+    perkColumnsForHash?.(candidate.itemHash) ??
+    fallbackPerks;
+  const currentStats =
+    current.stats ?? statsForHash?.(current.itemHash) ?? fallbackStats;
+  const candidateStats =
+    candidate.stats ?? statsForHash?.(candidate.itemHash) ?? fallbackStats;
+
+  const perkFpCurrent = weaponPerkFingerprint(currentPerks);
+  const perkFpCandidate = weaponPerkFingerprint(candidatePerks);
+  if (perkFpCurrent && perkFpCandidate && perkFpCurrent !== perkFpCandidate) {
+    return false;
+  }
+
+  const statsFpCurrent = weaponStatsFingerprint(currentStats);
+  const statsFpCandidate = weaponStatsFingerprint(candidateStats);
+  if (statsFpCurrent && statsFpCandidate && statsFpCurrent !== statsFpCandidate) {
+    return false;
+  }
+
+  return Boolean(perkFpCurrent && perkFpCandidate);
+}
+
+export function preferCatalogVersion(current, candidate) {
+  if (!candidate) return current;
+  if (!current) return candidate;
+
+  if (current.seasonLabel !== candidate.seasonLabel) {
+    return current.seasonNumber > candidate.seasonNumber ? current : candidate;
+  }
+
+  if (current.eventLabel && !candidate.eventLabel) return candidate;
+  if (!current.eventLabel && candidate.eventLabel) return current;
+
+  const eventWatermarks = new Set(Object.keys(WATERMARK_EVENT_LABELS));
+  const currentWm = current.seasonIconPath?.split("/").pop() ?? "";
+  const candidateWm = candidate.seasonIconPath?.split("/").pop() ?? "";
+  if (eventWatermarks.has(currentWm) && !eventWatermarks.has(candidateWm)) {
+    return candidate;
+  }
+  if (!eventWatermarks.has(currentWm) && eventWatermarks.has(candidateWm)) {
+    return current;
+  }
+
+  const currentIndex = current._manifestIndex ?? Number(current.itemHash) ?? 0;
+  const candidateIndex = candidate._manifestIndex ?? Number(candidate.itemHash) ?? 0;
+  return candidateIndex > currentIndex ? candidate : current;
+}
 
 /** Sources where the item can no longer be acquired in-game today. */
 export const UNOBTAINABLE_SOURCE_PATTERNS = [
@@ -1402,6 +1603,56 @@ export function resolveCollectibleForVariant(item, group, collectibles) {
   return null;
 }
 
+function isEdgeOfFateActivitySource(source = "") {
+  return /edge of fate campaign|the edge of fate activities|\breclaim\b|desert perpetual|kepler/i.test(
+    source,
+  );
+}
+
+const EDGE_OF_FATE_WATERMARKS = new Set([
+  "249813e647271a8227bae0d8a39ed505.png",
+  "6129365b4fad6754f2b8c4478fc3c4ac.png",
+  "4376a7d734583ae347acf9732aa3bb43.png",
+]);
+
+/**
+ * Corrects labels when activity sources or cohort watermarks disagree with the
+ * chapter emblem on the item icon (Year 8 featured gear, Renegades dungeon, etc.).
+ */
+export function applyFeaturedWatermarkLabelCorrection(
+  item,
+  label,
+  source = "",
+  dimSeasonData = {},
+) {
+  const basename = watermarkBasename(item.iconWatermark);
+  const manifestSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
+  const forced = WATERMARK_LABEL_OVERRIDES[basename];
+
+  if (forced === "Renegades" || forced === "S26 Episode: Heresy") {
+    return forced;
+  }
+
+  if (
+    basename === MONUMENT_FEATURED_WATERMARK &&
+    manifestSeason === 28 &&
+    (label === "The Edge of Fate" || label === "S28 Season: Reclamation") &&
+    !isEdgeOfFateActivitySource(source)
+  ) {
+    return MONUMENT_OF_TRIUMPH_LABEL;
+  }
+
+  if (EDGE_OF_FATE_WATERMARKS.has(basename) && manifestSeason === 27) {
+    return "The Edge of Fate";
+  }
+
+  if (label === "S28 Season: Reclamation") {
+    return "The Edge of Fate";
+  }
+
+  return label;
+}
+
 /**
  * Season label for a specific item hash (version). The icon watermark emblem is the
  * visual source of truth; activity sources disambiguate expansion vs season.
@@ -1473,10 +1724,23 @@ export function resolveVersionSeasonLabel(
     label = inferSeasonLabelFromIndex(item.index ?? 0, seasonIndexAnchors);
   }
 
-  return applySalvationsEdgeReissueLabel(
+  return stripIncorrectMonumentLabel(
     item,
-    label,
-    salvationsEdgeS29MinIndex,
+    applySalvationsEdgeReissueLabel(
+      item,
+      resolveIntoTheLightSeasonLabel(
+        item,
+        applyFeaturedWatermarkLabelCorrection(
+          item,
+          label,
+          source,
+          dimSeasonData,
+        ),
+        source,
+      ),
+      salvationsEdgeS29MinIndex,
+    ),
+    source,
   );
 }
 
@@ -1560,6 +1824,10 @@ export function isSourceObtainable(
   }
 
   if (/complete trials tickets/i.test(source)) {
+    return true;
+  }
+
+  if (/cannot be reacquired from collections/i.test(source)) {
     return true;
   }
 

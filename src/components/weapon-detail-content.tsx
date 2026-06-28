@@ -1,28 +1,84 @@
+"use client";
+
+import { useMemo, useState } from "react";
 import { ExpandableImage } from "@/components/expandable-image";
 import { ObtainableIcon } from "@/components/obtainable-icon";
 import { WeaponDetailMeta } from "@/components/weapon-detail-meta";
 import { WeaponPerksSection } from "@/components/weapon-perks-section";
+import { WeaponRollsPanel } from "@/components/weapon-rolls-panel";
 import { WeaponSeasonBadges } from "@/components/weapon-season-badges";
 import { WeaponStatsPanel } from "@/components/weapon-stats-panel";
 import { resolveSeasonBadges } from "@/lib/all-loot/season-badges";
 import { bungieIconUrl } from "@/lib/bungie-icon";
-import { resolveWeaponPerkColumns } from "@/lib/weapons/perks";
+import { useWeaponRolls } from "@/lib/use-weapon-rolls";
+import { rollHighlightedPerks } from "@/lib/weapons/god-roll-highlights";
+import {
+  resolveWeaponPerkColumnsForHash,
+  resolveWeaponStatsForHash,
+} from "@/lib/weapons/perks";
 import type { AllLootItem, WeaponPlugDefinition } from "@/types/all-loot";
 import type { ResolvedWeaponGodRoll } from "@/types/weapon-god-rolls";
 
 type WeaponDetailContentProps = {
   weapon: AllLootItem;
   plugIndex?: Record<string, WeaponPlugDefinition>;
-  godRoll?: ResolvedWeaponGodRoll | null;
+  godRollsByHash?: Record<string, ResolvedWeaponGodRoll>;
+  isSignedIn?: boolean;
 };
 
 export function WeaponDetailContent({
   weapon,
   plugIndex = {},
-  godRoll = null,
+  godRollsByHash = {},
+  isSignedIn = false,
 }: WeaponDetailContentProps) {
   const seasonBadges = resolveSeasonBadges(weapon);
-  const perkColumns = resolveWeaponPerkColumns(weapon, plugIndex);
+  const weaponSlug = weapon.slug ?? "";
+
+  const [selectedVersionHash, setSelectedVersionHash] = useState(
+    weapon.itemHash,
+  );
+  const [showRolls, setShowRolls] = useState(false);
+  const [hoveredRollId, setHoveredRollId] = useState<string | null>(null);
+  const [pinnedRollId, setPinnedRollId] = useState<string | null>(null);
+
+  const { rolls, loading, error } = useWeaponRolls(
+    weaponSlug,
+    isSignedIn && showRolls,
+  );
+
+  const activeRollId = pinnedRollId ?? hoveredRollId;
+
+  const activeRoll = useMemo(
+    () =>
+      activeRollId
+        ? rolls.find((entry) => entry.itemInstanceId === activeRollId) ?? null
+        : null,
+    [activeRollId, rolls],
+  );
+
+  const displayItemHash = activeRoll?.itemHash ?? selectedVersionHash;
+
+  const perkColumns = useMemo(
+    () => resolveWeaponPerkColumnsForHash(weapon, displayItemHash, plugIndex),
+    [weapon, displayItemHash, plugIndex],
+  );
+
+  const stats = useMemo(
+    () => resolveWeaponStatsForHash(weapon, displayItemHash),
+    [weapon, displayItemHash],
+  );
+
+  const godRoll = godRollsByHash[displayItemHash] ?? null;
+
+  const rollHighlightPerks = useMemo(() => {
+    if (!activeRoll) return new Set<string>();
+    return rollHighlightedPerks(
+      activeRoll.equippedWeaponPerkHashes ?? activeRoll.equippedPlugHashes,
+      perkColumns,
+      plugIndex,
+    );
+  }, [activeRoll, perkColumns, plugIndex]);
 
   return (
     <div className="space-y-8">
@@ -30,7 +86,14 @@ export function WeaponDetailContent({
         <h1 className="min-w-0 text-3xl font-semibold leading-none text-zinc-100 sm:text-4xl">
           {weapon.name}
         </h1>
-        <WeaponSeasonBadges badges={seasonBadges} className="ml-auto" />
+        <WeaponSeasonBadges
+          badges={seasonBadges}
+          selectedKey={selectedVersionHash}
+          onSelect={
+            seasonBadges.length > 1 ? setSelectedVersionHash : undefined
+          }
+          className="ml-auto"
+        />
       </div>
 
       <div className="grid gap-8 lg:grid-cols-3">
@@ -66,8 +129,30 @@ export function WeaponDetailContent({
             ) : null}
           </div>
 
-          {weapon.stats?.length ? (
-            <WeaponStatsPanel stats={weapon.stats} />
+          {stats?.length ? (
+            <WeaponStatsPanel stats={stats} />
+          ) : null}
+
+          {isSignedIn && weaponSlug ? (
+            <WeaponRollsPanel
+              rolls={rolls}
+              loading={loading}
+              error={error}
+              showRolls={showRolls}
+              onShowRollsChange={(next) => {
+                setShowRolls(next);
+                if (!next) {
+                  setHoveredRollId(null);
+                  setPinnedRollId(null);
+                }
+              }}
+              activeRollId={activeRollId}
+              pinnedRollId={pinnedRollId}
+              onRollHover={setHoveredRollId}
+              onRollPin={setPinnedRollId}
+              plugIndex={plugIndex}
+              showVersionLabels={(weapon.versions?.length ?? 0) > 1}
+            />
           ) : null}
         </div>
 
@@ -87,7 +172,13 @@ export function WeaponDetailContent({
           )}
 
           {perkColumns.length ? (
-            <WeaponPerksSection columns={perkColumns} godRoll={godRoll} />
+            <WeaponPerksSection
+              key={displayItemHash}
+              columns={perkColumns}
+              godRoll={godRoll}
+              plugIndex={plugIndex}
+              rollHighlightPerks={rollHighlightPerks}
+            />
           ) : null}
         </div>
       </div>

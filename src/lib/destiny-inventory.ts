@@ -1,8 +1,16 @@
 import { collectOwnedCatalystHashes } from "@/lib/catalyst-ownership";
-import { resolveDestinyMembership } from "@/lib/destiny-membership";
+import {
+  resolveDestinyMembership,
+  type DestinyMembership,
+} from "@/lib/destiny-membership";
 import { getBungieApiKey } from "@/lib/env";
 import { expandAcquiredItemHashes } from "@/lib/item-acquisition-index";
 import type { BungieUserSession } from "@/lib/bungie";
+import type { WeaponRollLocation } from "@/types/weapon-rolls";
+
+export const DESTINY_PROFILE_COMPONENTS = [
+  102, 200, 201, 205, 300, 305, 800, 900,
+] as const;
 
 const BUNGIE_ORIGIN = "https://www.bungie.net";
 
@@ -15,6 +23,22 @@ type BungieResponse<T> = {
 type InventoryItem = {
   itemHash: number;
   itemInstanceId?: string;
+};
+
+export type LocatedInventoryItem = {
+  itemHash: string;
+  itemInstanceId: string;
+  location: WeaponRollLocation;
+  characterId?: string;
+};
+
+export type RawWeaponRollInstance = {
+  itemInstanceId: string;
+  itemHash: string;
+  location: WeaponRollLocation;
+  characterId?: string;
+  isMasterwork: boolean;
+  equippedPlugHashes: string[];
 };
 
 type ItemInstanceComponent = {
@@ -32,7 +56,9 @@ type DestinyPlugSetsComponent = {
 };
 
 type DestinyItemSocketState = {
+  plugHash?: number;
   plug?: DestinyItemPlug;
+  isEnabled?: boolean;
   isEquipped?: boolean;
 };
 
@@ -132,6 +158,75 @@ function collectInventoryItems(
   return items;
 }
 
+function collectLocatedInventoryItems(
+  profile: ProfileInventoryResponse,
+): LocatedInventoryItem[] {
+  const items: LocatedInventoryItem[] = [];
+
+  for (const item of profile.profileInventory?.data?.items ?? []) {
+    if (!item.itemInstanceId) continue;
+    items.push({
+      itemHash: String(item.itemHash),
+      itemInstanceId: item.itemInstanceId,
+      location: "vault",
+    });
+  }
+
+  for (const [characterId, bucket] of Object.entries(
+    profile.characterInventories?.data ?? {},
+  )) {
+    for (const item of bucket.items ?? []) {
+      if (!item.itemInstanceId) continue;
+      items.push({
+        itemHash: String(item.itemHash),
+        itemInstanceId: item.itemInstanceId,
+        location: "inventory",
+        characterId,
+      });
+    }
+  }
+
+  for (const [characterId, bucket] of Object.entries(
+    profile.characterEquipment?.data ?? {},
+  )) {
+    for (const item of bucket.items ?? []) {
+      if (!item.itemInstanceId) continue;
+      items.push({
+        itemHash: String(item.itemHash),
+        itemInstanceId: item.itemInstanceId,
+        location: "equipped",
+        characterId,
+      });
+    }
+  }
+
+  return items;
+}
+
+function resolveSocketPlugHash(socket: DestinyItemSocketState): string | null {
+  const plugHash = socket.plugHash ?? socket.plug?.plugItemHash;
+  if (!plugHash) return null;
+  if (socket.isEnabled === false) return null;
+  return String(plugHash);
+}
+
+function collectEquippedPlugHashes(
+  profile: ProfileInventoryResponse,
+  itemInstanceId: string,
+): string[] {
+  const sockets =
+    profile.itemComponents?.sockets?.data?.[itemInstanceId]?.sockets ?? [];
+  const hashes: string[] = [];
+
+  for (const socket of sockets) {
+    const plugHash = resolveSocketPlugHash(socket);
+    if (!plugHash) continue;
+    hashes.push(plugHash);
+  }
+
+  return hashes;
+}
+
 function collectInventoryHashes(profile: ProfileInventoryResponse): Set<string> {
   const hashes = new Set<string>();
   for (const item of collectInventoryItems(profile)) {
@@ -185,13 +280,57 @@ function collectUnlockedPlugHashes(
   )) {
     for (const socket of itemSockets.sockets ?? []) {
       considerPlug(socket.plug);
-      if (socket.isEquipped && socket.plug?.plugItemHash) {
-        hashes.add(String(socket.plug.plugItemHash));
+      const plugHash = resolveSocketPlugHash(socket);
+      if (plugHash) {
+        hashes.add(plugHash);
       }
     }
   }
 
   return hashes;
+}
+
+export async function fetchDestinyProfile(
+  session: BungieUserSession,
+  membership: DestinyMembership,
+  components: readonly number[] = DESTINY_PROFILE_COMPONENTS,
+): Promise<ProfileInventoryResponse> {
+  return bungieGet<ProfileInventoryResponse>(
+    `/Platform/Destiny2/${membership.membershipType}/Profile/${membership.membershipId}/?components=${components.join(",")}`,
+    session.accessToken,
+  );
+}
+
+/** Physical weapon copies held on characters or in the vault. */
+export async function fetchWeaponRollInstances(
+  session: BungieUserSession,
+  itemHashes: ReadonlySet<string>,
+): Promise<RawWeaponRollInstance[]> {
+  const membership = await resolveDestinyMembership(session);
+  if (!membership) return [];
+
+  const profile = await fetchDestinyProfile(session, membership);
+  const instances = profile.itemComponents?.instances?.data ?? {};
+  const rolls: RawWeaponRollInstance[] = [];
+
+  for (const item of collectLocatedInventoryItems(profile)) {
+    if (!itemHashes.has(item.itemHash)) continue;
+
+    const instance = instances[item.itemInstanceId];
+    rolls.push({
+      itemInstanceId: item.itemInstanceId,
+      itemHash: item.itemHash,
+      location: item.location,
+      characterId: item.characterId,
+      isMasterwork: instance?.isMasterwork ?? false,
+      equippedPlugHashes: collectEquippedPlugHashes(
+        profile,
+        item.itemInstanceId,
+      ),
+    });
+  }
+
+  return rolls;
 }
 
 /** Items currently held on characters or in the vault. */
@@ -204,11 +343,7 @@ export async function fetchOwnedItemHashes(
     return new Set();
   }
 
-  const components = [102, 200, 201, 205, 300, 305, 800, 900].join(",");
-  const profile = await bungieGet<ProfileInventoryResponse>(
-    `/Platform/Destiny2/${membership.membershipType}/Profile/${membership.membershipId}/?components=${components}`,
-    session.accessToken,
-  );
+  const profile = await fetchDestinyProfile(session, membership);
 
   const inventoryHashes = collectInventoryHashes(profile);
   const collectibles =

@@ -1,19 +1,42 @@
 import { WeaponPerkIcon } from "@/components/weapon-perk-icon";
 import type { ResolvedWeaponPerkColumn } from "@/types/all-loot";
-import type { WeaponGodRollMode } from "@/types/weapon-god-rolls";
+import type {
+  PerkHighlightMode,
+  WeaponGodRollMode,
+} from "@/types/weapon-god-rolls";
 
 type WeaponPerksPanelProps = {
   columns: ResolvedWeaponPerkColumn[];
-  highlightMode?: WeaponGodRollMode | null;
-  highlightedPerks?: Set<string>;
+  rollHighlightPerks?: Set<string>;
+  godRollHighlightPerks?: Set<string>;
+  godRollMode?: WeaponGodRollMode | null;
 };
+
+function resolvePerkHighlightMode(
+  plugHash: string,
+  rollHighlightPerks: Set<string>,
+  godRollHighlightPerks: Set<string>,
+  godRollMode: WeaponGodRollMode | null,
+): PerkHighlightMode {
+  const inRoll = rollHighlightPerks.has(plugHash);
+  const inGod = godRollHighlightPerks.has(plugHash);
+
+  if (inRoll && inGod) return "match";
+  if (inRoll) return "roll";
+  if (inGod && godRollMode) return godRollMode;
+  return null;
+}
 
 export function WeaponPerksPanel({
   columns,
-  highlightMode = null,
-  highlightedPerks = new Set(),
+  rollHighlightPerks = new Set(),
+  godRollHighlightPerks = new Set(),
+  godRollMode = null,
 }: WeaponPerksPanelProps) {
   if (!columns.length) return null;
+
+  const hasHighlights =
+    rollHighlightPerks.size > 0 || godRollHighlightPerks.size > 0;
 
   return (
     <div className="overflow-x-auto pb-1">
@@ -23,17 +46,26 @@ export function WeaponPerksPanel({
             key={`${column.type}-${columnIndex}`}
             className="flex shrink-0 flex-col gap-2"
           >
-            {column.perks.map((perk) => (
-              <WeaponPerkIcon
-                key={perk.plugHash}
-                perk={perk}
-                shape={column.type === "masterwork" ? "square" : "circle"}
-                highlighted={
-                  highlightMode !== null && highlightedPerks.has(perk.plugHash)
-                }
-                highlightMode={highlightMode}
-              />
-            ))}
+            {column.perks.map((perk) => {
+              const highlightMode = hasHighlights
+                ? resolvePerkHighlightMode(
+                    perk.plugHash,
+                    rollHighlightPerks,
+                    godRollHighlightPerks,
+                    godRollMode,
+                  )
+                : null;
+
+              return (
+                <WeaponPerkIcon
+                  key={perk.plugHash}
+                  perk={perk}
+                  shape={column.type === "masterwork" ? "square" : "circle"}
+                  highlighted={highlightMode !== null}
+                  highlightMode={highlightMode}
+                />
+              );
+            })}
           </div>
         ))}
       </div>

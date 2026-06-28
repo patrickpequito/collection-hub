@@ -44,11 +44,16 @@ export type AllLootItemVersion = {
   seasonDisplayIconWatermark?: boolean;
   seasonLabel: string;
   seasonNumber: number;
+  eventLabel?: string;
+  perkColumns?: WeaponPerkColumn[];
+  stats?: WeaponStat[];
 };
 
 export type AllLootItem = {
   itemHash: string;
   alternateItemHashes?: string[];
+  /** Manifest hashes merged into the canonical catalog row (same perks/stats). */
+  mergedVersionHashes?: string[];
   versions?: AllLootItemVersion[];
   name: string;
   iconPath: string;
@@ -57,6 +62,7 @@ export type AllLootItem = {
   seasonDisplayIconWatermark?: boolean;
   seasonLabel: string;
   seasonNumber: number;
+  eventLabel?: string;
   type: string;
   rarity: string;
   classOrWeaponType: string | null;
@@ -71,6 +77,9 @@ export type AllLootItem = {
   screenshotPath?: string;
   stats?: WeaponStat[];
   perkColumns?: WeaponPerkColumn[];
+  /** Perk pools keyed by manifest item hash (alternates / merged versions). */
+  perkColumnsByItemHash?: Record<string, WeaponPerkColumn[]>;
+  statsByItemHash?: Record<string, WeaponStat[]>;
 };
 
 export type AllLootCatalog = {
