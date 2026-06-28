@@ -2,10 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import {
-  localSeasonFilterIconPath,
-  localSeasonIconPath,
-} from "@/lib/all-loot/season-icon-path";
+import { localSeasonFilterIconPath } from "@/lib/all-loot/season-icon-path";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 import {
   classOrWeaponTypeIconPath,
@@ -31,28 +28,16 @@ type FilterDropdownProps = {
 };
 
 function SeasonFilterLabel({ season }: { season: string }) {
-  const [iconSrc, setIconSrc] = useState(() =>
-    bungieIconUrl(localSeasonFilterIconPath(season)),
-  );
-
-  useEffect(() => {
-    setIconSrc(bungieIconUrl(localSeasonFilterIconPath(season)));
-  }, [season]);
-
   return (
     <span className="inline-flex min-w-0 items-center gap-1.5 truncate">
       <Image
-        src={iconSrc}
+        src={bungieIconUrl(localSeasonFilterIconPath(season))}
         alt=""
         width={14}
         height={14}
         className="h-[1em] w-[1em] shrink-0 object-contain"
         aria-hidden
         unoptimized
-        onError={() => {
-          const fallback = bungieIconUrl(localSeasonIconPath(season));
-          setIconSrc((current) => (current === fallback ? current : fallback));
-        }}
       />
       <span className="truncate">{season}</span>
     </span>
