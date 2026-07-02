@@ -95,7 +95,7 @@ export function rollHighlightedPerks(
 ): Set<string> {
   if (!equippedPlugHashes.length || !columns.length) return new Set();
 
-  const perkColumns: WeaponPerkColumn[] =
+  const perkColumns: readonly WeaponPerkColumn[] =
     rawColumns ??
     columns.map((column) => ({
       type: column.type,
