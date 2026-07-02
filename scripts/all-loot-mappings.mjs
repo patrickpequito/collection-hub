@@ -1625,6 +1625,77 @@ const EDGE_OF_FATE_WATERMARKS = new Set([
 ]);
 
 /**
+ * Edge of Fate chapter emblem reused on Renegades expansion armor (Swordmaster, etc.).
+ * Weapons and cosmetics with this watermark still belong to The Edge of Fate.
+ */
+export const RENEGADES_ARMOR_CHAPTER_WATERMARK =
+  "4376a7d734583ae347acf9732aa3bb43.png";
+
+function finalizeArmor30SeasonLabel(item, label, source = "", dimSeasonData = {}) {
+  return stripIncorrectMonumentLabel(
+    item,
+    applyFeaturedWatermarkLabelCorrection(
+      item,
+      label,
+      source,
+      dimSeasonData,
+    ),
+    source,
+  );
+}
+
+/**
+ * Armor 3.0 uses chapter emblems on icons. Manifest season 28 alone maps to
+ * Monument of Triumph, but Renegades sets share the Renegades or Edge-of-Fate emblems.
+ */
+export function resolveArmor30SeasonLabel(
+  item,
+  source = "",
+  seasons = {},
+  dimSeasonData = {},
+) {
+  const basename = watermarkBasename(item.iconWatermark);
+  const fromSource = resolveSeasonLabelFromSource(source, seasons);
+
+  if (fromSource && !isRecurringVersionSource(source)) {
+    return finalizeArmor30SeasonLabel(item, fromSource, source, dimSeasonData);
+  }
+
+  const watermarkOverride = WATERMARK_LABEL_OVERRIDES[basename];
+  if (
+    watermarkOverride === "Renegades" ||
+    watermarkOverride === "S26 Episode: Heresy"
+  ) {
+    return watermarkOverride;
+  }
+
+  if (basename === RENEGADES_ARMOR_CHAPTER_WATERMARK) {
+    return "Renegades";
+  }
+
+  if (watermarkOverride) {
+    return finalizeArmor30SeasonLabel(
+      item,
+      watermarkOverride,
+      source,
+      dimSeasonData,
+    );
+  }
+
+  const watermarkSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
+  if (watermarkSeason > 1) {
+    return finalizeArmor30SeasonLabel(
+      item,
+      seasonLabelFromManifestNumber(watermarkSeason),
+      source,
+      dimSeasonData,
+    );
+  }
+
+  return null;
+}
+
+/**
  * Corrects labels when activity sources or cohort watermarks disagree with the
  * chapter emblem on the item icon (Year 8 featured gear, Renegades dungeon, etc.).
  */

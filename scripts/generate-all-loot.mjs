@@ -36,6 +36,7 @@ import {
   preferCatalogVersion,
   resolveSeasonDisplayIconPath,
   resolveSeasonDisplayIconWatermark,
+  resolveArmor30SeasonLabel,
   resolveVersionSeasonLabel,
   resolveWatermarkSeasonNumber,
   seasonLabelFromManifestNumber,
@@ -259,10 +260,14 @@ function resolveArmorVersionSeasonLabel(
     String(sortedPeers[0]?.hash) === String(item.hash);
 
   if (isArmor30Item(item)) {
-    const watermarkSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
-    if (watermarkSeason > 1) {
-      return seasonLabelFromManifestNumber(watermarkSeason);
-    }
+    const source = collectible?.sourceString ?? "";
+    const armorLabel = resolveArmor30SeasonLabel(
+      item,
+      source,
+      seasons,
+      dimSeasonData,
+    );
+    if (armorLabel) return armorLabel;
     return inferYear8ArmorChapterLabel(item.index ?? 0, seasonIndexAnchors);
   }
 

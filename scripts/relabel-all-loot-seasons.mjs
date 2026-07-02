@@ -20,6 +20,7 @@ import {
   preferCatalogVersion,
   resolveEventLabel,
   resolveIntoTheLightSeasonLabel,
+  resolveArmor30SeasonLabel,
   stripIncorrectMonumentLabel,
   resolveSeasonLabelFromSource,
   isSourceObtainable,
@@ -144,6 +145,28 @@ function resolveVersionLabel(version, entry) {
 function applyVersionLabels(entry, version, source = "") {
   if (version.seasonLabel === INTO_THE_LIGHT_LABEL) return;
 
+  if (entry.type === "Armor") {
+    const armorLabel = resolveArmor30SeasonLabel(
+      mockItem(version.seasonIconPath),
+      source || entry.source || "",
+      {},
+      { watermarkToSeason: DIM_WATERMARK_TO_SEASON },
+    );
+    if (armorLabel) {
+      version.seasonLabel = normalizeMonumentLabel(armorLabel);
+      version.seasonNumber = displayNumberFromLabel(version.seasonLabel);
+
+      const versionEvent = resolveEventLabel(
+        source,
+        version.seasonIconPath ?? entry.seasonIconPath ?? "",
+        version.seasonLabel ?? "",
+      );
+      if (versionEvent) version.eventLabel = versionEvent;
+      else delete version.eventLabel;
+      return;
+    }
+  }
+
   if (version.seasonLabel === CALL_TO_ARMS_LABEL) {
     version.seasonLabel = unwrapCallToArmsSeasonLabel(
       entry,
@@ -266,6 +289,25 @@ function applyEntryLabels(entry) {
       entry.seasonLabel = latest.seasonLabel;
       entry.seasonNumber = latest.seasonNumber;
       if (latest.eventLabel) entry.eventLabel = latest.eventLabel;
+      else delete entry.eventLabel;
+    } else if (entry.type === "Armor") {
+      const armorLabel = resolveArmor30SeasonLabel(
+        mockItem(entry.seasonIconPath),
+        entry.source ?? "",
+        {},
+        { watermarkToSeason: DIM_WATERMARK_TO_SEASON },
+      );
+      entry.seasonLabel = normalizeMonumentLabel(
+        armorLabel ?? resolvePrimaryLabel(entry),
+      );
+      entry.seasonNumber = displayNumberFromLabel(entry.seasonLabel);
+
+      const eventLabel = resolveEventLabel(
+        entry.source ?? "",
+        entry.seasonIconPath ?? "",
+        entry.seasonLabel ?? "",
+      );
+      if (eventLabel) entry.eventLabel = eventLabel;
       else delete entry.eventLabel;
     } else {
       entry.seasonLabel = resolvePrimaryLabel(entry);
