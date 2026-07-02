@@ -95,6 +95,89 @@ export function resolveWeaponRawPerkColumnsForHash(
   return resolveRawPerkColumnsForHash(weapon, itemHash);
 }
 
+function equippedPlugNames(
+  equippedPlugHashes: readonly string[],
+  plugIndex: Record<string, WeaponPlugDefinition>,
+): Set<string> {
+  const names = new Set<string>();
+  for (const hash of equippedPlugHashes) {
+    const name = plugIndex[hash]?.name;
+    if (name) names.add(name);
+  }
+  return names;
+}
+
+function resolveEquippedPlugForColumn(
+  equippedHash: string,
+  column: WeaponPerkColumn,
+  plugIndex: Record<string, WeaponPlugDefinition>,
+): string | null {
+  if (column.plugHashes.includes(equippedHash)) return equippedHash;
+
+  const equippedName = plugIndex[equippedHash]?.name;
+  if (equippedName) {
+    const byName = column.plugHashes.find(
+      (hash) => plugIndex[hash]?.name === equippedName,
+    );
+    if (byName) return byName;
+  }
+
+  return null;
+}
+
+/** Map equipped socket plugs to one catalog hash per weapon column. */
+export function resolveEquippedPerColumn(
+  equippedPlugHashes: readonly string[],
+  perkColumns: readonly WeaponPerkColumn[],
+  plugIndex: Record<string, WeaponPlugDefinition>,
+  socketPlugHashesByIndex?: readonly (string | undefined)[],
+): (string | null)[] {
+  const equipped = new Set(equippedPlugHashes);
+  const equippedNames = equippedPlugNames(equippedPlugHashes, plugIndex);
+
+  return perkColumns.map((column) => {
+    if (
+      column.socketIndex !== undefined &&
+      socketPlugHashesByIndex &&
+      column.socketIndex < socketPlugHashesByIndex.length
+    ) {
+      const socketHash = socketPlugHashesByIndex[column.socketIndex];
+      if (socketHash) {
+        return resolveEquippedPlugForColumn(socketHash, column, plugIndex);
+      }
+    }
+
+    const direct = column.plugHashes.find((hash) => equipped.has(hash));
+    if (direct) return direct;
+
+    return (
+      column.plugHashes.find((hash) => {
+        const name = plugIndex[hash]?.name;
+        return Boolean(name && equippedNames.has(name));
+      }) ?? null
+    );
+  });
+}
+
+/** Equipped perk hashes for roll UI, one entry per perk column. */
+export function resolveEquippedRollPerkHashes(
+  equippedPlugHashes: readonly string[],
+  perkColumns: readonly WeaponPerkColumn[] | undefined,
+  plugIndex: Record<string, WeaponPlugDefinition>,
+  socketPlugHashesByIndex?: readonly (string | undefined)[],
+): string[] {
+  if (!perkColumns?.length) return [];
+
+  return resolveEquippedPerColumn(
+    equippedPlugHashes,
+    perkColumns,
+    plugIndex,
+    socketPlugHashesByIndex,
+  ).flatMap((hash, index) =>
+    hash && perkColumns[index]?.type === "perk" ? [hash] : [],
+  );
+}
+
 export function resolveWeaponStatsForHash(
   weapon: AllLootItem,
   itemHash: string,
@@ -108,37 +191,41 @@ export function resolveWeaponStatsForHash(
   return undefined;
 }
 
+export function resolveWeaponScreenshotForHash(
+  weapon: AllLootItem,
+  itemHash: string,
+): string | undefined {
+  const version = weapon.versions?.find((entry) => entry.itemHash === itemHash);
+  if (version?.screenshotPath) return version.screenshotPath;
+
+  const byHash = weapon.screenshotPathByItemHash?.[itemHash];
+  if (byHash) return byHash;
+
+  if (weapon.itemHash === itemHash) return weapon.screenshotPath;
+
+  if (collectWeaponItemHashes(weapon).includes(itemHash)) {
+    return weapon.screenshotPath;
+  }
+
+  return undefined;
+}
+
 export function filterEquippedWeaponPerkHashes(
   equippedPlugHashes: readonly string[],
   weapon: AllLootItem,
+  itemHash: string,
   plugIndex: Record<string, WeaponPlugDefinition>,
+  socketPlugHashesByIndex?: readonly (string | undefined)[],
 ): string[] {
-  const poolHashes = collectWeaponPoolPlugHashes(weapon);
-  if (!poolHashes.size) return [...equippedPlugHashes];
+  const columns = resolveRawPerkColumnsForHash(weapon, itemHash);
+  if (!columns?.length) return [...equippedPlugHashes];
 
-  const poolNames = new Set<string>();
-  for (const hash of poolHashes) {
-    const name = plugIndex[hash]?.name;
-    if (name) poolNames.add(name);
-  }
-
-  const filtered: string[] = [];
-  const seenNames = new Set<string>();
-
-  for (const hash of equippedPlugHashes) {
-    if (poolHashes.has(hash)) {
-      filtered.push(hash);
-      continue;
-    }
-
-    const name = plugIndex[hash]?.name;
-    if (name && poolNames.has(name) && !seenNames.has(name)) {
-      filtered.push(hash);
-      seenNames.add(name);
-    }
-  }
-
-  return filtered;
+  return resolveEquippedRollPerkHashes(
+    equippedPlugHashes,
+    columns,
+    plugIndex,
+    socketPlugHashesByIndex,
+  );
 }
 
 export function formatPerkDescription(description: string) {

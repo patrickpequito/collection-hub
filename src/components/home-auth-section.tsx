@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { BungieLoginButton } from "@/components/bungie-login-button";
 import type { BungieUserSession } from "@/lib/bungie";
@@ -88,7 +88,13 @@ export function HomeAuthSection({
         </div>
       ) : (
         <div className="flex flex-wrap items-center gap-3">
-          <BungieLoginButton configured={oauthConfigured} variant="compact" />
+          <Suspense
+            fallback={
+              <span className="text-xs text-zinc-500">Sign in…</span>
+            }
+          >
+            <BungieLoginButton configured={oauthConfigured} variant="compact" />
+          </Suspense>
           {!oauthConfigured ? (
             <p className="text-xs text-zinc-500">
               Configure OAuth in{" "}

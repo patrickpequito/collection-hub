@@ -32,7 +32,11 @@ export type WeaponRollInstance = {
   equippedPlugHashes: string[];
   /** Equipped plugs filtered to this weapon's perk/masterwork pools. */
   equippedWeaponPerkHashes: string[];
+  socketPlugHashesByIndex: (string | undefined)[];
   version: WeaponVersionDisplay;
+  /** Bungie gear tier (1–5) for Edge of Fate / Renegades / Monument weapons. */
+  gearTier: number | null;
+  /** Aegis community tier label. */
   tier: string | null;
   aegis: WeaponRollAegisScore;
   scores: WeaponRollScores;

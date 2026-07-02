@@ -7,6 +7,9 @@ import type {
 
 type GodRollHighlightMode = WeaponGodRollMode | null;
 
+/** Shared bar height for god roll controls and the unavailable placeholder. */
+export const GOD_ROLL_CONTROLS_BAR_CLASS = "flex h-9 items-center gap-2.5";
+
 type WeaponGodRollControlsProps = {
   godRoll: ResolvedWeaponGodRoll;
   mode: GodRollHighlightMode;
@@ -28,7 +31,7 @@ export function WeaponGodRollControls({
   const hasPvp = Boolean(godRoll.pvp?.length);
 
   return (
-    <div className="flex flex-wrap items-center gap-2.5">
+    <div className={`flex flex-wrap ${GOD_ROLL_CONTROLS_BAR_CLASS}`}>
       <span className="text-xs text-zinc-400">Show God Roll</span>
       <div
         className="inline-flex rounded-lg border border-zinc-800 bg-zinc-900/60 p-0.5"
@@ -58,7 +61,7 @@ export function WeaponGodRollControls({
                   ? segment.id === "pve"
                     ? "bg-emerald-500/15 text-emerald-200"
                     : segment.id === "pvp"
-                      ? "bg-amber-500/15 text-amber-200"
+                      ? "bg-rose-500/15 text-rose-200"
                       : "bg-zinc-800 text-zinc-100"
                   : "text-zinc-400 hover:text-zinc-200"
             }`}

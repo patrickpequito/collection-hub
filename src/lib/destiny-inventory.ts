@@ -12,6 +12,11 @@ export const DESTINY_PROFILE_COMPONENTS = [
   102, 200, 201, 205, 300, 305, 800, 900,
 ] as const;
 
+export const ARMOR_PROFILE_COMPONENTS = [
+  ...DESTINY_PROFILE_COMPONENTS,
+  304,
+] as const;
+
 const BUNGIE_ORIGIN = "https://www.bungie.net";
 
 type BungieResponse<T> = {
@@ -39,10 +44,26 @@ export type RawWeaponRollInstance = {
   characterId?: string;
   isMasterwork: boolean;
   equippedPlugHashes: string[];
+  socketPlugHashesByIndex: (string | undefined)[];
+  gearTier: number | null;
+};
+
+export type RawArmorRollInstance = {
+  itemInstanceId: string;
+  itemHash: string;
+  location: WeaponRollLocation;
+  characterId?: string;
+  statsByHash: Record<string, number>;
+  equippedPlugHashes: string[];
+  socketPlugHashesByIndex: (string | undefined)[];
+  gearTier: number | null;
+  defense: number | null;
 };
 
 type ItemInstanceComponent = {
   isMasterwork?: boolean;
+  gearTier?: number | null;
+  primaryStat?: { statHash?: number; value?: number };
 };
 
 type DestinyItemPlug = {
@@ -93,6 +114,12 @@ type ProfileInventoryResponse = {
     };
     sockets?: {
       data?: Record<string, DestinyItemSocketsComponent>;
+    };
+    stats?: {
+      data?: Record<
+        string,
+        { stats?: Record<string, { statHash?: number; value?: number }> }
+      >;
     };
   };
   characters?: {
@@ -210,6 +237,19 @@ function resolveSocketPlugHash(socket: DestinyItemSocketState): string | null {
   return String(plugHash);
 }
 
+function collectSocketPlugHashesByIndex(
+  profile: ProfileInventoryResponse,
+  itemInstanceId: string,
+): (string | undefined)[] {
+  const sockets =
+    profile.itemComponents?.sockets?.data?.[itemInstanceId]?.sockets ?? [];
+
+  return sockets.map((socket) => {
+    const plugHash = socket.plugHash ?? socket.plug?.plugItemHash;
+    return plugHash ? String(plugHash) : undefined;
+  });
+}
+
 function collectEquippedPlugHashes(
   profile: ProfileInventoryResponse,
   itemInstanceId: string,
@@ -317,6 +357,8 @@ export async function fetchWeaponRollInstances(
     if (!itemHashes.has(item.itemHash)) continue;
 
     const instance = instances[item.itemInstanceId];
+    const gearTier =
+      typeof instance?.gearTier === "number" ? instance.gearTier : null;
     rolls.push({
       itemInstanceId: item.itemInstanceId,
       itemHash: item.itemHash,
@@ -327,6 +369,74 @@ export async function fetchWeaponRollInstances(
         profile,
         item.itemInstanceId,
       ),
+      socketPlugHashesByIndex: collectSocketPlugHashesByIndex(
+        profile,
+        item.itemInstanceId,
+      ),
+      gearTier,
+    });
+  }
+
+  return rolls;
+}
+
+/** Physical armor copies held on characters or in the vault. */
+export async function fetchArmorRollInstances(
+  session: BungieUserSession,
+  itemHashes: ReadonlySet<string>,
+): Promise<RawArmorRollInstance[]> {
+  const membership = await resolveDestinyMembership(session);
+  if (!membership) return [];
+
+  const profile = await fetchDestinyProfile(
+    session,
+    membership,
+    ARMOR_PROFILE_COMPONENTS,
+  );
+  const itemStats = profile.itemComponents?.stats?.data ?? {};
+  const instances = profile.itemComponents?.instances?.data ?? {};
+  const socketData = profile.itemComponents?.sockets?.data ?? {};
+  const rolls: RawArmorRollInstance[] = [];
+
+  for (const item of collectLocatedInventoryItems(profile)) {
+    if (!itemHashes.has(item.itemHash)) continue;
+
+    const statsByHash: Record<string, number> = {};
+    for (const [hash, entry] of Object.entries(
+      itemStats[item.itemInstanceId]?.stats ?? {},
+    )) {
+      if (entry.value !== undefined) {
+        statsByHash[hash] = entry.value;
+      }
+    }
+
+    const instance = instances[item.itemInstanceId];
+    const gearTier =
+      typeof instance?.gearTier === "number" ? instance.gearTier : null;
+    const defense =
+      typeof instance?.primaryStat?.value === "number"
+        ? instance.primaryStat.value
+        : null;
+    const socketPlugHashesByIndex = (
+      socketData[item.itemInstanceId]?.sockets ?? []
+    ).map((socket) => {
+      const plugHash = socket.plugHash ?? socket.plug?.plugItemHash;
+      return plugHash ? String(plugHash) : undefined;
+    });
+
+    rolls.push({
+      itemInstanceId: item.itemInstanceId,
+      itemHash: item.itemHash,
+      location: item.location,
+      characterId: item.characterId,
+      statsByHash,
+      equippedPlugHashes: collectEquippedPlugHashes(
+        profile,
+        item.itemInstanceId,
+      ),
+      socketPlugHashesByIndex,
+      gearTier,
+      defense,
     });
   }
 

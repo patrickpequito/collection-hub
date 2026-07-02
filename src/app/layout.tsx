@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { AppNavigationProvider } from "@/components/app-navigation-provider";
 import { NavigationLoadingIndicator } from "@/components/navigation-loading-indicator";
 import "./globals.css";
 
@@ -37,6 +39,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {children}
+        <Suspense fallback={null}>
+          <AppNavigationProvider />
+        </Suspense>
         <NavigationLoadingIndicator />
         <Analytics />
       </body>

@@ -6,12 +6,20 @@ type ActivityArmorSetPreviewProps = {
   imageFile: string;
   imageUrl: string;
   label: string;
+  /** `file-hint` shows the expected filename (RAD Loot). `contribute` asks users to share art on X. */
+  missingImageVariant?: "file-hint" | "contribute";
+  contributionLink?: {
+    href: string;
+    handle: string;
+  };
 };
 
 export function ActivityArmorSetPreview({
   imageFile,
   imageUrl,
   label,
+  missingImageVariant = "file-hint",
+  contributionLink,
 }: ActivityArmorSetPreviewProps) {
   const [imageError, setImageError] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -53,6 +61,34 @@ export function ActivityArmorSetPreview({
               onError={() => setImageError(true)}
             />
           </button>
+        ) : missingImageVariant === "contribute" && contributionLink ? (
+          <div className="flex min-h-36 w-full flex-col items-center justify-center gap-3 px-6 py-10 text-center">
+            <p className="text-sm text-zinc-400">
+              Full set preview image is not available yet.
+            </p>
+            <p className="max-w-md text-xs leading-relaxed text-zinc-500">
+              If you have a screenshot showing all three classes, share it with us
+              on{" "}
+              <a
+                href={contributionLink.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-amber-200/90 underline decoration-amber-200/30 underline-offset-2 transition hover:text-amber-100"
+              >
+                X
+              </a>{" "}
+              at{" "}
+              <a
+                href={contributionLink.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-zinc-300 underline decoration-zinc-600 underline-offset-2 transition hover:text-zinc-100"
+              >
+                {contributionLink.handle}
+              </a>
+              .
+            </p>
+          </div>
         ) : (
           <div
             className="flex min-h-28 w-full flex-col items-center justify-center gap-2 px-4 py-8 text-center"

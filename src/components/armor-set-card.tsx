@@ -10,12 +10,14 @@ type ArmorSetCardProps = {
   set: ArmorSet;
   ownedItemHashes?: Set<string>;
   showOwnership?: boolean;
+  itemHrefs?: Record<string, string>;
 };
 
 export function ArmorSetCard({
   set,
   ownedItemHashes,
   showOwnership = false,
+  itemHrefs,
 }: ArmorSetCardProps) {
   return (
     <article className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
@@ -40,6 +42,7 @@ export function ArmorSetCard({
                   sourceLabel={set.source}
                   owned={owned}
                   showOwnership={showOwnership}
+                  href={piece ? itemHrefs?.[piece.itemHash] : undefined}
                 />
               );
             })}

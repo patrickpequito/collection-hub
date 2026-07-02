@@ -791,7 +791,16 @@ export function catalogVersionsEquivalent(current, candidate, context = {}) {
     return false;
   }
 
-  return Boolean(perkFpCurrent && perkFpCandidate);
+  if (perkFpCurrent && perkFpCandidate) {
+    return true;
+  }
+
+  // Armor reissues share a season label but have no weapon perk columns.
+  if (!perkFpCurrent && !perkFpCandidate) {
+    return true;
+  }
+
+  return false;
 }
 
 export function preferCatalogVersion(current, candidate) {

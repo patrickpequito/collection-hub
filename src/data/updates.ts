@@ -1,4 +1,4 @@
-export const CURRENT_VERSION = "0.7.1";
+export const CURRENT_VERSION = "0.7.2";
 
 export function formatReleaseDate(isoDate: string) {
   const [year, month, day] = isoDate.split("-").map(Number);
@@ -30,6 +30,43 @@ export type UpdateRelease = {
  * Newest release first. Add a new entry at the top when shipping an update.
  */
 export const UPDATE_RELEASES: UpdateRelease[] = [
+  {
+    version: "0.7.2",
+    publishedAt: "2026-07-02",
+    summary:
+      "Armor pages arrive — browse any legendary or exotic armor piece with base stats, archetypes, set bonuses, and a full set preview, then sign in to see every copy you own with gear tier markers, defense values, and per-roll archetype and stat data. Weapon roll perk highlighting is also more accurate.",
+    sections: [
+      {
+        title: "Armor pages",
+        description:
+          "Dedicated pages for every armor piece, matching the depth of weapon pages.",
+        items: [
+          "Open any armor piece from All Loot to see its base stats, archetype, set bonuses, and slot type at a glance.",
+          "Full Set Preview shows the complete armor set image below the set pieces, with quick links to each piece.",
+          "Set Bonuses and Set Pieces panels surface 2-piece and 4-piece perks for Armor 3.0 sets (The Edge of Fate, Renegades, Monument of Triumph).",
+        ],
+      },
+      {
+        title: "Your armor rolls",
+        description:
+          "See every copy of an armor piece you own when signed in with Bungie.",
+        items: [
+          "Show your rolls lists your vault, inventory, and equipped copies, sorted newest-first.",
+          "Tiered gear is also visually displayed with diamonds like in-game for gear introduced during The Edge of Fate or later.",
+          "Each roll shows its defense value, archetype, and total stats, with ★ marking your best copy per archetype and ✕ flagging lower-stat duplicates.",
+          "Hover or tap a roll to update the stats panel with that copy's exact rolls.",
+        ],
+      },
+      {
+        title: "Weapon roll fixes",
+        description:
+          "More accurate perk highlighting on your weapon rolls.",
+        items: [
+          "Roll perk highlighting is more accurate, so your copies should match up better with the perk grid.",
+        ],
+      },
+    ],
+  },
   {
     version: "0.7.1",
     publishedAt: "2026-06-24",

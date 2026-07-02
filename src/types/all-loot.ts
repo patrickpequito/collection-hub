@@ -15,15 +15,30 @@ export type WeaponStat = {
   max: number;
 };
 
+export type ExoticArmorPerk = {
+  name: string;
+  description: string;
+  iconPath?: string;
+};
+
+export type PlugInvestmentStat = {
+  statHash: string;
+  value: number;
+};
+
 export type WeaponPlugDefinition = {
   name: string;
   description: string;
   iconPath: string;
+  investmentStats?: PlugInvestmentStat[];
+  plugCategoryIdentifier?: string;
 };
 
 export type WeaponPerkColumn = {
   type: "masterwork" | "perk";
   plugHashes: string[];
+  /** Bungie item socket index for this column (perk columns only). */
+  socketIndex?: number;
 };
 
 export type ResolvedWeaponPerk = WeaponPlugDefinition & {
@@ -47,6 +62,8 @@ export type AllLootItemVersion = {
   eventLabel?: string;
   perkColumns?: WeaponPerkColumn[];
   stats?: WeaponStat[];
+  exoticPerk?: ExoticArmorPerk;
+  screenshotPath?: string;
 };
 
 export type AllLootItem = {
@@ -76,10 +93,20 @@ export type AllLootItem = {
   description?: string;
   screenshotPath?: string;
   stats?: WeaponStat[];
+  exoticPerk?: ExoticArmorPerk;
   perkColumns?: WeaponPerkColumn[];
   /** Perk pools keyed by manifest item hash (alternates / merged versions). */
   perkColumnsByItemHash?: Record<string, WeaponPerkColumn[]>;
   statsByItemHash?: Record<string, WeaponStat[]>;
+  screenshotPathByItemHash?: Record<string, string>;
+  /** DestinyEquipableItemSetDefinition hash for legendary armor set bonuses. */
+  equipableItemSetHash?: string;
+  /** Armor 3.0 pieces expose gear tier and archetype stat rolls. */
+  isArmor30?: boolean;
+  isArmor30ByItemHash?: Record<string, boolean>;
+  manifestInvestmentStats?: PlugInvestmentStat[];
+  manifestInvestmentByItemHash?: Record<string, PlugInvestmentStat[]>;
+  exoticPerkByItemHash?: Record<string, ExoticArmorPerk>;
 };
 
 export type AllLootCatalog = {

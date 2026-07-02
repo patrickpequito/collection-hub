@@ -229,7 +229,8 @@ export function resolveWeaponPerkColumnsFromManifest(
   const masterworkPlugs = [];
   const perkColumns = [];
 
-  for (const socket of item.sockets?.socketEntries ?? []) {
+  for (let socketIndex = 0; socketIndex < (item.sockets?.socketEntries?.length ?? 0); socketIndex++) {
+    const socket = item.sockets.socketEntries[socketIndex];
     const socketType = socketTypes[String(socket.socketTypeHash)];
     const categoryHash = socketType?.socketCategoryHash;
     const categoryName =
@@ -247,7 +248,18 @@ export function resolveWeaponPerkColumnsFromManifest(
     }
 
     if (isWeaponPerkSocket(categoryName, plugs)) {
-      perkColumns.push(dedupeWeaponPlugsByName(plugs));
+      for (const plug of plugs) {
+        const hash = String(plug.hash);
+        plugIndex[hash] ??= {
+          name: plug.displayProperties.name,
+          description: plug.displayProperties.description ?? "",
+          iconPath: plug.displayProperties.icon,
+        };
+      }
+      perkColumns.push({
+        socketIndex,
+        plugs: dedupeWeaponPlugsByName(plugs),
+      });
     }
   }
 
@@ -269,9 +281,10 @@ export function resolveWeaponPerkColumnsFromManifest(
     });
   }
 
-  for (const plugs of perkColumns) {
+  for (const { socketIndex, plugs } of perkColumns) {
     columns.push({
       type: "perk",
+      socketIndex,
       plugHashes: plugs.map((plug) => {
         const hash = String(plug.hash);
         plugIndex[hash] = {
@@ -285,4 +298,8 @@ export function resolveWeaponPerkColumnsFromManifest(
   }
 
   return columns.length ? columns : undefined;
+}
+
+export function resolveWeaponScreenshotFromManifest(item) {
+  return item?.screenshot || undefined;
 }

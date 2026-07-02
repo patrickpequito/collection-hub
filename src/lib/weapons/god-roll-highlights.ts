@@ -1,7 +1,44 @@
 import type {
   ResolvedWeaponPerkColumn,
+  WeaponPerkColumn,
   WeaponPlugDefinition,
 } from "@/types/all-loot";
+import { resolveEquippedPerColumn } from "@/lib/weapons/perks";
+
+export type GodRollChipHighlight = "pve" | "pvp" | "both" | null;
+
+function perkMatchesGodRollList(
+  plugHash: string,
+  godRollPerks: readonly string[] | undefined,
+  plugIndex: Record<string, WeaponPlugDefinition>,
+): boolean {
+  if (!godRollPerks?.length) return false;
+
+  const plugName = plugIndex[plugHash]?.name;
+
+  for (const godHash of godRollPerks) {
+    if (godHash === plugHash) return true;
+    const godName = plugIndex[godHash]?.name;
+    if (godName && plugName && godName === plugName) return true;
+  }
+
+  return false;
+}
+
+export function resolveGodRollChipHighlight(
+  plugHash: string,
+  pveGodRoll: readonly string[] | undefined,
+  pvpGodRoll: readonly string[] | undefined,
+  plugIndex: Record<string, WeaponPlugDefinition>,
+): GodRollChipHighlight {
+  const inPve = perkMatchesGodRollList(plugHash, pveGodRoll, plugIndex);
+  const inPvp = perkMatchesGodRollList(plugHash, pvpGodRoll, plugIndex);
+
+  if (inPve && inPvp) return "both";
+  if (inPve) return "pve";
+  if (inPvp) return "pvp";
+  return null;
+}
 
 /** Highlight god-roll perks by matching plug hash or name in any perk column. */
 export function godRollHighlightedPerks(
@@ -48,37 +85,31 @@ export function godRollHighlightedPerks(
   return highlights;
 }
 
-/** Highlight equipped roll perks by matching plug hash or name in any column. */
+/** Highlight equipped roll perks by resolving one plug per catalog column. */
 export function rollHighlightedPerks(
   equippedPlugHashes: readonly string[],
   columns: readonly ResolvedWeaponPerkColumn[],
   plugIndex: Record<string, WeaponPlugDefinition>,
+  socketPlugHashesByIndex?: readonly (string | undefined)[],
+  rawColumns?: readonly WeaponPerkColumn[],
 ): Set<string> {
+  if (!equippedPlugHashes.length || !columns.length) return new Set();
+
+  const perkColumns: WeaponPerkColumn[] =
+    rawColumns ??
+    columns.map((column) => ({
+      type: column.type,
+      plugHashes: column.perks.map((perk) => perk.plugHash),
+    }));
+
   const highlights = new Set<string>();
-  if (!equippedPlugHashes.length) return highlights;
-
-  for (const equippedHash of equippedPlugHashes) {
-    const equippedName = plugIndex[equippedHash]?.name;
-
-    for (const column of columns) {
-      const byHash = column.perks.find((perk) => perk.plugHash === equippedHash);
-      if (byHash) {
-        highlights.add(byHash.plugHash);
-        break;
-      }
-
-      if (equippedName) {
-        const byName = column.perks.find(
-          (perk) =>
-            perk.name === equippedName ||
-            plugIndex[perk.plugHash]?.name === equippedName,
-        );
-        if (byName) {
-          highlights.add(byName.plugHash);
-          break;
-        }
-      }
-    }
+  for (const hash of resolveEquippedPerColumn(
+    equippedPlugHashes,
+    perkColumns,
+    plugIndex,
+    socketPlugHashesByIndex,
+  )) {
+    if (hash) highlights.add(hash);
   }
 
   return highlights;

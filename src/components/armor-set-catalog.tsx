@@ -13,11 +13,13 @@ import type { ArmorCategory, ArmorSet } from "@/types/armor-set";
 type ArmorSetCatalogProps = {
   sets: ArmorSet[];
   signedIn?: boolean;
+  itemHrefs?: Record<string, string>;
 };
 
 export function ArmorSetCatalog({
   sets,
   signedIn = false,
+  itemHrefs,
 }: ArmorSetCatalogProps) {
   const { itemHashes: ownedItemHashes, error: inventoryError } =
     useOwnedItemHashes(signedIn);
@@ -83,6 +85,7 @@ export function ArmorSetCatalog({
               set={set}
               ownedItemHashes={ownedSet}
               showOwnership={showOwnership}
+              itemHrefs={itemHrefs}
             />
           ))}
         </div>

@@ -30,7 +30,9 @@ import {
   loadTriumphCatalog,
   resolveActivityTriumphRecords,
 } from "@/lib/triumphs/load";
-import { buildWeaponHrefByItemHash } from "@/lib/weapons/lookup";
+import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
+import { loadCatalogHashIndex } from "@/lib/all-loot/catalog-hash-index";
+import { isLootHashOwned } from "@/lib/all-loot/loot-ownership";
 import { resolveTriumphIcon } from "@/lib/triumphs/icons";
 
 import type { RecordInstance, TriumphStringVariables } from "@/types/triumph";
@@ -77,9 +79,10 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
   const activity = filterExpiredActivityLoot(rawActivity);
   const session = await getSession();
   const oauthConfigured = isBungieOAuthConfigured();
-  const [catalog, weaponHrefs] = await Promise.all([
+  const [catalog, itemHrefs, catalogByHash] = await Promise.all([
     loadTriumphCatalog(),
-    buildWeaponHrefByItemHash(`/rad-loot/${slug}`),
+    buildCollectibleHrefByItemHash(`/rad-loot/${slug}`),
+    loadCatalogHashIndex(),
   ]);
   const title = getTitleEntry(catalog, slug);
   const triumphRecords = filterExpiredTriumphRecords(
@@ -152,6 +155,8 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
   }
 
   const showOwnership = Boolean(session && !inventoryError);
+  const resolveItemOwned = (itemHash: string) =>
+    isLootHashOwned(itemHash, ownedItemHashes, catalogByHash);
   const showTriumphProgress = Boolean(hasTriumphSection && session && !recordsError);
   const exoticItemHashes = ACTIVITY_EXOTIC_HASHES[slug] ?? new Set<string>();
   const titleProgress = title
@@ -238,6 +243,8 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
             previewFiles={activity.armorSetPreviewFiles}
             ownedItemHashes={ownedItemHashes}
             showOwnership={showOwnership}
+            resolveItemOwned={resolveItemOwned}
+            itemHrefs={itemHrefs}
           />
 
           <LootSection
@@ -245,8 +252,9 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
             items={activity.weapons}
             ownedItemHashes={ownedItemHashes}
             showOwnership={showOwnership}
+            resolveItemOwned={resolveItemOwned}
             exoticItemHashes={exoticItemHashes}
-            weaponHrefs={weaponHrefs}
+            itemHrefs={itemHrefs}
           />
 
           {activity.timelostWeapons.length > 0 ? (
@@ -255,7 +263,8 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
               items={activity.timelostWeapons}
               ownedItemHashes={ownedItemHashes}
               showOwnership={showOwnership}
-              weaponHrefs={weaponHrefs}
+              resolveItemOwned={resolveItemOwned}
+              itemHrefs={itemHrefs}
             />
           ) : null}
 
@@ -264,8 +273,9 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
             items={activity.other}
             ownedItemHashes={ownedItemHashes}
             showOwnership={showOwnership}
+            resolveItemOwned={resolveItemOwned}
             exoticItemHashes={exoticItemHashes}
-            weaponHrefs={weaponHrefs}
+            itemHrefs={itemHrefs}
           />
         </div>
 

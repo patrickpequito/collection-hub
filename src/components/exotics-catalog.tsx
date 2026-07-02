@@ -21,6 +21,7 @@ type ExoticsCatalogProps = {
   catalysts: CatalystItem[];
   signedIn?: boolean;
   weaponHrefs?: Record<string, string>;
+  itemHrefs?: Record<string, string>;
 };
 
 export function ExoticsCatalog({
@@ -28,7 +29,9 @@ export function ExoticsCatalog({
   catalysts,
   signedIn = false,
   weaponHrefs,
+  itemHrefs,
 }: ExoticsCatalogProps) {
+  const hrefs = itemHrefs ?? weaponHrefs;
   const { itemHashes: ownedItemHashes, error: inventoryError } =
     useOwnedItemHashes(signedIn);
   const showOwnership = signedIn && !inventoryError;
@@ -111,7 +114,7 @@ export function ExoticsCatalog({
                 }
                 ownedItemHashes={ownedSet}
                 showOwnership={showOwnership}
-                weaponHrefs={activeTab === "weapons" ? weaponHrefs : undefined}
+                itemHrefs={activeTab === "weapons" ? hrefs : undefined}
               />
             </section>
           ))}
@@ -127,6 +130,7 @@ export function ExoticsCatalog({
                 items={armorGroups[section.id]}
                 ownedItemHashes={ownedSet}
                 showOwnership={showOwnership}
+                itemHrefs={hrefs}
               />
             </section>
           ))}

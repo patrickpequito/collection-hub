@@ -35,6 +35,15 @@ export const CLASS_LABELS: Record<(typeof GUARDIAN_CLASSES)[number], string> = {
   warlock: "Warlock",
 };
 
+export const GUARDIAN_CLASS_ICON_PATHS: Record<
+  (typeof GUARDIAN_CLASSES)[number],
+  string
+> = {
+  hunter: "/icons/d2/class_hunter.svg",
+  titan: "/icons/d2/class_titan.svg",
+  warlock: "/icons/d2/class_warlock.svg",
+};
+
 export function filterSetsByCategory(
   sets: ArmorSet[],
   category: ArmorCategory,

@@ -15,7 +15,6 @@ import {
 import { getWeaponBySlug } from "@/lib/weapons/lookup";
 import { collectWeaponPageItemHashes } from "@/lib/weapons/page-hashes";
 import {
-  compareWeaponRollsByPveThenPvp,
   rankWeaponRolls,
   scoreWeaponRoll,
 } from "@/lib/weapons/roll-scoring";
@@ -25,6 +24,8 @@ import {
   resolveWeaponRawPerkColumnsForHash,
 } from "@/lib/weapons/perks";
 import { resolveWeaponVersionForHash } from "@/lib/weapons/version-for-hash";
+import { versionHasGearTierSystem } from "@/lib/gear-tier";
+import { compareRollInstancesByRecency } from "@/lib/roll-instance-sort";
 import type { WeaponRollInstance } from "@/types/weapon-rolls";
 
 type RouteContext = {
@@ -76,7 +77,9 @@ export async function GET(_request: Request, context: RouteContext) {
       const equippedWeaponPerkHashes = filterEquippedWeaponPerkHashes(
         instance.equippedPlugHashes,
         weapon,
+        instance.itemHash,
         plugIndex,
+        instance.socketPlugHashesByIndex,
       );
 
       const aegisResult = scoreAegisRoll(
@@ -84,14 +87,20 @@ export async function GET(_request: Request, context: RouteContext) {
         rawPerkColumns ?? weapon.perkColumns,
         aegisEntry,
         plugIndex,
+        instance.socketPlugHashesByIndex,
       );
 
       const { tier, ...aegis } = aegisResult;
+      const version = resolveWeaponVersionForHash(weapon, instance.itemHash);
+      const gearTier = versionHasGearTierSystem(version)
+        ? instance.gearTier
+        : null;
 
       return {
         ...instance,
         equippedWeaponPerkHashes,
-        version: resolveWeaponVersionForHash(weapon, instance.itemHash),
+        version,
+        gearTier,
         tier,
         aegis,
         scores: scoreWeaponRoll(
@@ -103,7 +112,7 @@ export async function GET(_request: Request, context: RouteContext) {
     });
 
     const rolls: WeaponRollInstance[] = rankWeaponRolls(scoredRolls).sort(
-      compareWeaponRollsByPveThenPvp,
+      compareRollInstancesByRecency,
     );
 
     return NextResponse.json({ rolls, error: null });

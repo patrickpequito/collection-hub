@@ -38,9 +38,9 @@ function partitionStats(stats: WeaponStat[]) {
 
 function StatRow({ stat }: { stat: WeaponStat }) {
   return (
-    <div className="flex items-baseline justify-between gap-3 text-sm">
-      <span className="text-zinc-300">{stat.name}</span>
-      <span className="tabular-nums text-zinc-100">{stat.value}</span>
+    <div className="flex items-baseline justify-between gap-2 text-xs leading-tight">
+      <span className="text-zinc-400">{stat.name}</span>
+      <span className="tabular-nums font-medium text-zinc-100">{stat.value}</span>
     </div>
   );
 }
@@ -51,13 +51,11 @@ export function WeaponStatsPanel({ stats }: WeaponStatsPanelProps) {
   const { barStats, plainStats } = partitionStats(stats);
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       {barStats.map((stat) => (
         <div key={stat.name}>
-          <div className="mb-1">
-            <StatRow stat={stat} />
-          </div>
-          <div className="h-1.5 overflow-hidden rounded-full bg-zinc-800">
+          <StatRow stat={stat} />
+          <div className="mt-0.5 h-1 overflow-hidden rounded-full bg-zinc-800">
             <div
               className="h-full rounded-full bg-zinc-100"
               style={{ width: `${statBarWidth(stat)}%` }}
@@ -67,7 +65,13 @@ export function WeaponStatsPanel({ stats }: WeaponStatsPanelProps) {
       ))}
 
       {plainStats.length > 0 ? (
-        <div className={barStats.length > 0 ? "space-y-2 border-t border-zinc-800 pt-3" : "space-y-2"}>
+        <div
+          className={
+            barStats.length > 0
+              ? "space-y-1 border-t border-zinc-800/80 pt-2"
+              : "space-y-1"
+          }
+        >
           {plainStats.map((stat) => (
             <StatRow key={stat.name} stat={stat} />
           ))}

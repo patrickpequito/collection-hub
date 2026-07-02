@@ -57,6 +57,8 @@ const ACTIVITY_PAGES: Record<string, ActivityLootPage> = {
   "crown-of-sorrow": crownOfSorrowLoot,
 };
 
+export const RAD_LOOT_ACTIVITY_PAGES = ACTIVITY_PAGES;
+
 export function getActivityLootPage(slug: string): ActivityLootPage | null {
   return ACTIVITY_PAGES[slug] ?? null;
 }

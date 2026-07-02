@@ -59,7 +59,7 @@ export function WeaponPerkIcon({
       : highlightMode === "pve"
         ? "border-emerald-500/70 bg-emerald-500/30"
         : highlightMode === "pvp"
-          ? "border-amber-500/70 bg-amber-500/30"
+          ? "border-rose-500/70 bg-rose-500/30 shadow-[0_0_6px_rgba(244,63,94,0.25)]"
           : "border-blue-500/70 bg-blue-500/30";
 
   const tooltip =

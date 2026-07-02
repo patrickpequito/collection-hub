@@ -6,6 +6,7 @@ import {
 } from "@/lib/bungie";
 import { appendQueryParam } from "@/lib/auth-return-to";
 import { getAppOrigin, getBungieOAuthConfig } from "@/lib/env";
+import { oauthReplaceRedirect } from "@/lib/oauth-redirect";
 import { parseSignedOAuthState } from "@/lib/oauth-state";
 import {
   consumeOAuthReturnTo,
@@ -33,9 +34,13 @@ function redirectAfterLogin(
   param: "login" | "error",
   value: string,
 ) {
-  return NextResponse.redirect(
-    new URL(appendQueryParam(returnTo, param, value), base),
-  );
+  const target = new URL(appendQueryParam(returnTo, param, value), base).toString();
+  return new NextResponse(oauthReplaceRedirect(target), {
+    headers: {
+      "Content-Type": "text/html; charset=utf-8",
+      "Cache-Control": "no-store",
+    },
+  });
 }
 
 export async function GET(request: Request) {

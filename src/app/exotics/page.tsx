@@ -5,15 +5,15 @@ import { isBungieOAuthConfigured } from "@/lib/env";
 import { loadCatalystCatalog } from "@/lib/catalysts/load";
 import { loadExoticCatalog } from "@/lib/exotics/load";
 import { PAGE_HEADERS } from "@/lib/page-headers";
-import { buildWeaponHrefByItemHash } from "@/lib/weapons/lookup";
+import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { getSession } from "@/lib/session";
 
 export default async function ExoticsPage() {
   const session = await getSession();
-  const [catalog, catalystCatalog, weaponHrefs] = await Promise.all([
+  const [catalog, catalystCatalog, itemHrefs] = await Promise.all([
     loadExoticCatalog(),
     loadCatalystCatalog(),
-    buildWeaponHrefByItemHash("/exotics"),
+    buildCollectibleHrefByItemHash("/exotics"),
   ]);
   const oauthConfigured = isBungieOAuthConfigured();
 
@@ -36,7 +36,7 @@ export default async function ExoticsPage() {
         items={catalog.items}
         catalysts={catalystCatalog.items}
         signedIn={Boolean(session)}
-        weaponHrefs={weaponHrefs}
+        itemHrefs={itemHrefs}
       />
     </SectionPageLayout>
   );

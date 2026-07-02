@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   WeaponGodRollControls,
+  GOD_ROLL_CONTROLS_BAR_CLASS,
   type GodRollHighlightMode,
 } from "@/components/weapon-god-roll-controls";
 import { WeaponPerksPanel } from "@/components/weapon-perks-panel";
@@ -22,6 +23,26 @@ type WeaponPerksSectionProps = {
   plugIndex?: Record<string, WeaponPlugDefinition>;
   rollHighlightPerks?: Set<string>;
 };
+
+function RollComparisonLegend({
+  godRollMode,
+}: {
+  godRollMode: WeaponGodRollMode;
+}) {
+  return (
+    <p className="text-xs text-zinc-500">
+      <span className="text-blue-300">Blue</span> your roll ·{" "}
+      <span
+        className={
+          godRollMode === "pve" ? "text-emerald-300" : "text-rose-300"
+        }
+      >
+        {godRollMode === "pve" ? "Green" : "Crimson"}
+      </span>{" "}
+      god roll · <span className="text-yellow-300">Gold</span> match
+    </p>
+  );
+}
 
 export function WeaponPerksSection({
   columns,
@@ -58,28 +79,27 @@ export function WeaponPerksSection({
   return (
     <div className="space-y-3">
       {hasGodRollData && godRoll ? (
-        <WeaponGodRollControls
-          godRoll={godRoll}
-          mode={mode}
-          onModeChange={setMode}
-        />
+        <div
+          className={
+            showComparisonLegend
+              ? "flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
+              : undefined
+          }
+        >
+          <WeaponGodRollControls
+            godRoll={godRoll}
+            mode={mode}
+            onModeChange={setMode}
+          />
+          {showComparisonLegend && godRollMode ? (
+            <RollComparisonLegend godRollMode={godRollMode} />
+          ) : null}
+        </div>
       ) : (
-        <p className="text-xs text-zinc-500">God roll info not available.</p>
+        <div className={GOD_ROLL_CONTROLS_BAR_CLASS}>
+          <p className="text-xs text-zinc-500">God roll info not available.</p>
+        </div>
       )}
-
-      {showComparisonLegend ? (
-        <p className="text-xs text-zinc-500">
-          <span className="text-blue-300">Blue</span> your roll ·{" "}
-          <span
-            className={
-              godRollMode === "pve" ? "text-emerald-300" : "text-amber-300"
-            }
-          >
-            {godRollMode === "pve" ? "Green" : "Amber"}
-          </span>{" "}
-          god roll · <span className="text-yellow-300">Gold</span> match
-        </p>
-      ) : null}
 
       <WeaponPerksPanel
         columns={columns}

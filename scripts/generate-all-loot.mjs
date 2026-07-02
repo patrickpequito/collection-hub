@@ -37,6 +37,10 @@ import {
   resolveSeasonDisplayIconPath,
   resolveSeasonDisplayIconWatermark,
   resolveVersionSeasonLabel,
+  resolveWatermarkSeasonNumber,
+  seasonLabelFromManifestNumber,
+  MONUMENT_OF_TRIUMPH_LABEL,
+  inferSeasonLabelFromIndex,
 } from "./all-loot-mappings.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -183,6 +187,112 @@ const EXCLUDED_WEAPON_STAT_HASHES = new Set([
   1935470627, // Attack
   1931675084, // Ammo Generation
 ]);
+
+const ARMOR_30_ARCHETYPE_PLUG_SET_HASH = 1315181101;
+
+const YEAR8_ARMOR_CHAPTER_LABELS = new Set([
+  MONUMENT_OF_TRIUMPH_LABEL,
+  "The Edge of Fate",
+  "Renegades",
+  "S26 Episode: Heresy",
+]);
+
+function hasArtificeArmorSocket(item, items) {
+  for (const entry of item.sockets?.socketEntries ?? []) {
+    const plugHash = entry.singleInitialItemHash;
+    if (!plugHash) continue;
+    const plug = items[String(plugHash)];
+    const name = plug?.displayProperties?.name ?? "";
+    if (/artifice/i.test(name)) return true;
+  }
+  return false;
+}
+
+function inferYear8ArmorChapterLabel(index, seasonIndexAnchors) {
+  const anchors = seasonIndexAnchors.filter(
+    (anchor) =>
+      YEAR8_ARMOR_CHAPTER_LABELS.has(anchor.seasonLabel) &&
+      anchor.index >= 32000,
+  );
+  if (!anchors.length) return MONUMENT_OF_TRIUMPH_LABEL;
+  return inferSeasonLabelFromIndex(index, anchors);
+}
+
+function resolveExoticIntrinsic(item, items) {
+  for (const entry of item.sockets?.socketEntries ?? []) {
+    const plugHash = entry.singleInitialItemHash;
+    if (!plugHash) continue;
+    const plug = items[String(plugHash)];
+    if (!plug) continue;
+    const category = plugCategoryId(plug);
+    const name = plug.displayProperties?.name?.trim() ?? "";
+    const description = plug.displayProperties?.description?.trim() ?? "";
+    if (!name || !description) continue;
+    if (!category.includes("intrinsics")) continue;
+    if (/empty|default shader|default ornament|upgrade armor/i.test(name)) {
+      continue;
+    }
+    return {
+      name,
+      description,
+      iconPath: plug.displayProperties?.icon || undefined,
+    };
+  }
+  return undefined;
+}
+
+function resolveArmorVersionSeasonLabel(
+  item,
+  collectible,
+  seasons,
+  seasonPassItemSeason,
+  seasonIndexAnchors,
+  dimSeasonData,
+  context,
+) {
+  const { peerItems = [], items = {} } = context;
+  const sortedPeers = [...peerItems].sort(
+    (a, b) => (a.index ?? 0) - (b.index ?? 0),
+  );
+  const isOldestPeer =
+    sortedPeers.length > 1 &&
+    String(sortedPeers[0]?.hash) === String(item.hash);
+
+  if (isArmor30Item(item)) {
+    const watermarkSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
+    if (watermarkSeason > 1) {
+      return seasonLabelFromManifestNumber(watermarkSeason);
+    }
+    return inferYear8ArmorChapterLabel(item.index ?? 0, seasonIndexAnchors);
+  }
+
+  if (isOldestPeer && item.inventory?.tierTypeName === "Exotic") {
+    return "Red War";
+  }
+
+  if (hasArtificeArmorSocket(item, items)) {
+    return "Shadowkeep";
+  }
+
+  return resolveVersionSeasonLabel(
+    item,
+    collectible,
+    seasons,
+    seasonPassItemSeason,
+    seasonIndexAnchors,
+    dimSeasonData,
+    context,
+  );
+}
+
+const ARMOR_STAT_ORDER = [
+  { hash: 392767087, name: "Health" },
+  { hash: 3493869314, name: "Melee" },
+  { hash: 1735777505, name: "Grenade" },
+  { hash: 144602215, name: "Super" },
+  { hash: 1943323491, name: "Class" },
+  { hash: 2996146975, name: "Weapons" },
+];
 
 function slugify(value) {
   return value
@@ -356,6 +466,132 @@ function resolveWeaponDetailFields(displayItem, statDefs) {
   };
 }
 
+function resolveArmorStats(displayItem, statDefs, rarity) {
+  const statsBlock = displayItem.stats?.stats ?? {};
+  const byHash = new Map(
+    Object.values(statsBlock).map((entry) => [String(entry.statHash), entry]),
+  );
+
+  if (rarity !== "Exotic") {
+    return ARMOR_STAT_ORDER.map(({ hash, name }) => ({
+      name,
+      value: 0,
+      max: statDefs[String(hash)]?.displayMaximum || 100,
+    }));
+  }
+
+  const investmentByName = new Map();
+  for (const investment of mapManifestInvestmentStats(displayItem)) {
+    const statName = ARMOR_STAT_ORDER.find(
+      ({ hash }) => String(hash) === investment.statHash,
+    )?.name;
+    if (statName) {
+      investmentByName.set(statName, investment.value);
+    }
+  }
+
+  return ARMOR_STAT_ORDER.map(({ hash, name }) => {
+    const entry = byHash.get(String(hash));
+    return {
+      name,
+      value: investmentByName.get(name) ?? entry?.value ?? 0,
+      max:
+        entry?.displayMaximum ||
+        statDefs[String(hash)]?.displayMaximum ||
+        100,
+    };
+  });
+}
+
+function resolveArmorDetailFields(displayItem, statDefs, rarity, items) {
+  const description =
+    displayItem.flavorText?.trim() ||
+    displayItem.displayProperties?.description?.trim() ||
+    undefined;
+  const screenshotPath = displayItem.screenshot || undefined;
+  const stats = resolveArmorStats(displayItem, statDefs, rarity);
+  const equipableItemSetHash =
+    displayItem.equippingBlock?.equipableItemSetHash || undefined;
+  const exoticPerk =
+    rarity === "Exotic"
+      ? resolveExoticIntrinsic(displayItem, items)
+      : undefined;
+
+  return {
+    description,
+    screenshotPath,
+    stats,
+    equipableItemSetHash,
+    exoticPerk,
+  };
+}
+
+function resolveEquipableItemSetHashFromGroup(group) {
+  let bestHash = null;
+  let bestIndex = -1;
+
+  for (const item of group) {
+    const setHash = item.equippingBlock?.equipableItemSetHash;
+    if (!setHash) continue;
+    const index = item.index ?? 0;
+    if (index >= bestIndex) {
+      bestIndex = index;
+      bestHash = String(setHash);
+    }
+  }
+
+  return bestHash;
+}
+
+function isArmor30Item(item) {
+  return (item.sockets?.socketEntries ?? []).some(
+    (entry) =>
+      entry.randomizedPlugSetHash === ARMOR_30_ARCHETYPE_PLUG_SET_HASH,
+  );
+}
+
+function mapManifestInvestmentStats(item) {
+  return (item.investmentStats ?? [])
+    .map((entry) => ({
+      statHash: String(entry.statTypeHash ?? entry.statHash),
+      value: entry.value,
+    }))
+    .filter((entry) => entry.statHash && entry.statHash !== "undefined");
+}
+
+function plugCatalogEntry(plug) {
+  return {
+    name: plug.displayProperties.name,
+    description: plug.displayProperties.description?.trim() || "",
+    iconPath: plug.displayProperties.icon || "",
+    investmentStats: mapManifestInvestmentStats(plug),
+    plugCategoryIdentifier: plugCategoryId(plug),
+  };
+}
+
+function indexArmorRollPlugs(displayItem, items, plugSets, plugIndex) {
+  for (const socket of displayItem.sockets?.socketEntries ?? []) {
+    for (const setHash of [
+      socket.randomizedPlugSetHash,
+      socket.reusablePlugSetHash,
+    ]) {
+      if (!setHash) continue;
+      const set = plugSets[String(setHash)];
+      for (const plug of set?.reusablePlugItems ?? []) {
+        const plugItem = items[String(plug.plugItemHash)];
+        if (
+          !plugItem?.displayProperties?.name ||
+          (!plugCategoryId(plugItem).includes("armor_archetypes") &&
+            !plugCategoryId(plugItem).includes("armor_stats"))
+        ) {
+          continue;
+        }
+        plugIndex.set(String(plug.plugItemHash), plugCatalogEntry(plugItem));
+      }
+    }
+  }
+}
+
 function collectSocketPlugHashes(socket, plugSets) {
   const hashes = new Set();
   for (const plug of socket.reusablePlugItems ?? []) {
@@ -511,7 +747,8 @@ function resolveWeaponPerkColumns(
   const masterworkPlugs = [];
   const perkColumns = [];
 
-  for (const socket of item.sockets?.socketEntries ?? []) {
+  for (let socketIndex = 0; socketIndex < (item.sockets?.socketEntries?.length ?? 0); socketIndex++) {
+    const socket = item.sockets.socketEntries[socketIndex];
     const socketType = socketTypes[String(socket.socketTypeHash)];
     const categoryHash = socketType?.socketCategoryHash;
     const categoryName =
@@ -529,7 +766,18 @@ function resolveWeaponPerkColumns(
     }
 
     if (isWeaponPerkSocket(categoryName, plugs)) {
-      perkColumns.push(dedupeWeaponPlugsByName(plugs));
+      for (const plug of plugs) {
+        const hash = String(plug.hash);
+        plugIndex.set(hash, plugIndex.get(hash) ?? {
+          name: plug.displayProperties.name,
+          description: plug.displayProperties.description ?? "",
+          iconPath: plug.displayProperties.icon,
+        });
+      }
+      perkColumns.push({
+        socketIndex,
+        plugs: dedupeWeaponPlugsByName(plugs),
+      });
     }
   }
 
@@ -551,9 +799,10 @@ function resolveWeaponPerkColumns(
     });
   }
 
-  for (const plugs of perkColumns) {
+  for (const { socketIndex, plugs } of perkColumns) {
     columns.push({
       type: "perk",
+      socketIndex,
       plugHashes: plugs.map((plug) => {
         const hash = String(plug.hash);
         plugIndex.set(hash, {
@@ -924,18 +1173,44 @@ function buildVersionsForNameGroup(
     const collectible = item.collectibleHash
       ? collectibles[String(item.collectibleHash)] ?? null
       : null;
-    const seasonLabel = resolveVersionSeasonLabel(
-      item,
-      collectible,
-      seasons,
-      seasonPassItemSeason,
-      seasonIndexAnchors,
-      dimSeasonData,
-      { peerItems: group, indexCohortAnchors, watermarkLabelMap, salvationsEdgeS29MinIndex },
-    );
+    const seasonLabel =
+      item.itemType === 2
+        ? resolveArmorVersionSeasonLabel(
+            item,
+            collectible,
+            seasons,
+            seasonPassItemSeason,
+            seasonIndexAnchors,
+            dimSeasonData,
+            {
+              peerItems: group,
+              indexCohortAnchors,
+              watermarkLabelMap,
+              salvationsEdgeS29MinIndex,
+              items,
+            },
+          )
+        : resolveVersionSeasonLabel(
+            item,
+            collectible,
+            seasons,
+            seasonPassItemSeason,
+            seasonIndexAnchors,
+            dimSeasonData,
+            {
+              peerItems: group,
+              indexCohortAnchors,
+              watermarkLabelMap,
+              salvationsEdgeS29MinIndex,
+            },
+          );
     const seasonIconPath = resolveSeasonIconPath(item);
     const source = collectible?.sourceString ?? "";
     const eventLabel = resolveEventLabel(source, seasonIconPath, seasonLabel);
+    const isExotic = item.inventory?.tierTypeName === "Exotic";
+    const exoticPerk = isExotic
+      ? resolveExoticIntrinsic(item, items)
+      : undefined;
     const perkColumns = resolveWeaponPerkColumns(
       item,
       items,
@@ -965,6 +1240,8 @@ function buildVersionsForNameGroup(
       seasonLabel,
       seasonNumber: displayNumberFromLabel(seasonLabel),
       ...(eventLabel ? { eventLabel } : {}),
+      ...(item.screenshot ? { screenshotPath: item.screenshot } : {}),
+      ...(exoticPerk ? { exoticPerk } : {}),
       perkColumns,
       _manifestIndex: item.index ?? 0,
     };
@@ -1016,6 +1293,9 @@ function applyLatestVersionToEntry(entry, versions) {
     entry.eventLabel = latest.eventLabel;
   } else {
     delete entry.eventLabel;
+  }
+  if (latest.screenshotPath) {
+    entry.screenshotPath = latest.screenshotPath;
   }
   entry.versions = versions.length > 1 ? versions : undefined;
   entry.searchText = buildSearchText(entry);
@@ -1200,6 +1480,32 @@ function buildCatalog(
         statDefs,
         plugIndex,
       );
+      if (rarity === "Exotic") {
+        const exoticPerk = resolveExoticIntrinsic(displayItem, items);
+        if (exoticPerk) {
+          entry.exoticPerk = exoticPerk;
+        }
+      }
+    }
+
+    if (type === "Armor") {
+      const armorDetail = resolveArmorDetailFields(
+        displayItem,
+        statDefs,
+        rarity,
+        items,
+      );
+      entry.slug = slugify(name);
+      entry.description = armorDetail.description;
+      entry.screenshotPath = armorDetail.screenshotPath;
+      entry.stats = armorDetail.stats;
+      if (armorDetail.exoticPerk) {
+        entry.exoticPerk = armorDetail.exoticPerk;
+      }
+      if (armorDetail.equipableItemSetHash) {
+        entry.equipableItemSetHash = String(armorDetail.equipableItemSetHash);
+      }
+      indexArmorRollPlugs(displayItem, items, plugSets, plugIndex);
     }
 
     entry.searchText = buildSearchText(entry);
@@ -1222,7 +1528,9 @@ function buildCatalog(
 
   const usedSlugs = new Set();
   for (const entry of catalog) {
-    if (entry.type !== "Weapon" || !entry.slug) continue;
+    if ((entry.type !== "Weapon" && entry.type !== "Armor") || !entry.slug) {
+      continue;
+    }
     let slug = entry.slug;
     if (usedSlugs.has(slug)) {
       slug = `${slug}-${entry.itemHash}`;
@@ -1255,6 +1563,94 @@ function buildCatalog(
     );
     applyLatestVersionToEntry(entry, versions);
 
+    if (entry.type === "Armor") {
+      const setHash = resolveEquipableItemSetHashFromGroup(group);
+      if (setHash) {
+        entry.equipableItemSetHash = setHash;
+      }
+
+      const armor30ByItemHash = {};
+      const manifestInvestmentByItemHash = {};
+      const exoticPerkByItemHash = {};
+      for (const item of group) {
+        const hash = String(item.hash);
+        armor30ByItemHash[hash] = isArmor30Item(item);
+        const investmentStats = mapManifestInvestmentStats(item);
+        if (investmentStats.length) {
+          manifestInvestmentByItemHash[hash] = investmentStats;
+        }
+        if (entry.rarity === "Exotic") {
+          const exoticPerk = resolveExoticIntrinsic(item, items);
+          if (exoticPerk) {
+            exoticPerkByItemHash[hash] = exoticPerk;
+          }
+        }
+      }
+
+      entry.isArmor30 = armor30ByItemHash[entry.itemHash] ?? false;
+      entry.manifestInvestmentStats =
+        manifestInvestmentByItemHash[entry.itemHash];
+      entry.isArmor30ByItemHash = armor30ByItemHash;
+      if (entry.rarity === "Exotic") {
+        entry.exoticPerk =
+          exoticPerkByItemHash[entry.itemHash] ?? entry.exoticPerk;
+      }
+      if (Object.keys(manifestInvestmentByItemHash).length) {
+        entry.manifestInvestmentByItemHash = manifestInvestmentByItemHash;
+      }
+      if (Object.keys(exoticPerkByItemHash).length) {
+        entry.exoticPerkByItemHash = exoticPerkByItemHash;
+      }
+
+      if (versions.length) {
+        const groupByHash = new Map(
+          group.map((item) => [String(item.hash), item]),
+        );
+        for (const version of versions) {
+          const manifestItem = groupByHash.get(version.itemHash);
+          if (manifestItem) {
+            version.stats = resolveArmorStats(
+              manifestItem,
+              statDefs,
+              entry.rarity,
+            );
+            if (entry.rarity === "Exotic") {
+              const versionPerk =
+                exoticPerkByItemHash[version.itemHash] ??
+                resolveExoticIntrinsic(manifestItem, items);
+              if (versionPerk) {
+                version.exoticPerk = versionPerk;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    if (entry.type === "Weapon" && entry.rarity === "Exotic") {
+      const exoticPerkByItemHash = {};
+      for (const item of group) {
+        const hash = String(item.hash);
+        const exoticPerk = resolveExoticIntrinsic(item, items);
+        if (exoticPerk) {
+          exoticPerkByItemHash[hash] = exoticPerk;
+        }
+      }
+      if (Object.keys(exoticPerkByItemHash).length) {
+        entry.exoticPerkByItemHash = exoticPerkByItemHash;
+        entry.exoticPerk =
+          exoticPerkByItemHash[entry.itemHash] ?? entry.exoticPerk;
+      }
+      if (versions.length) {
+        for (const version of versions) {
+          const versionPerk = exoticPerkByItemHash[version.itemHash];
+          if (versionPerk) {
+            version.exoticPerk = versionPerk;
+          }
+        }
+      }
+    }
+
     if (entry.type === "Weapon" && versions.length) {
       const groupByHash = new Map(
         group.map((item) => [String(item.hash), item]),
@@ -1262,6 +1658,13 @@ function buildCatalog(
       for (const version of versions) {
         const manifestItem = groupByHash.get(version.itemHash);
         if (manifestItem) {
+          const weaponDetail = resolveWeaponDetailFields(manifestItem, statDefs);
+          if (weaponDetail.screenshotPath) {
+            version.screenshotPath = weaponDetail.screenshotPath;
+          }
+          if (weaponDetail.stats?.length) {
+            version.stats = weaponDetail.stats;
+          }
           version.perkColumns = resolveWeaponPerkColumns(
             manifestItem,
             items,
@@ -1277,6 +1680,23 @@ function buildCatalog(
       if (versions[0]?.perkColumns?.length) {
         entry.perkColumns = versions[0].perkColumns;
       }
+      if (versions[0]?.screenshotPath) {
+        entry.screenshotPath = versions[0].screenshotPath;
+      }
+
+      const screenshotPathByItemHash = {};
+      for (const version of versions) {
+        if (
+          version.screenshotPath &&
+          version.itemHash !== entry.itemHash
+        ) {
+          screenshotPathByItemHash[version.itemHash] = version.screenshotPath;
+        }
+      }
+      if (Object.keys(screenshotPathByItemHash).length) {
+        entry.screenshotPathByItemHash = screenshotPathByItemHash;
+      }
+
       if (versions.length > 1) {
         entry.versions = versions;
       }
@@ -1352,7 +1772,29 @@ function buildCatalog(
     ),
   };
 
+  indexAllPlugInvestments(items, plugIndex);
+
   return { catalog, facets, plugIndex: Object.fromEntries(plugIndex) };
+}
+
+function indexAllPlugInvestments(items, plugIndex) {
+  for (const item of Object.values(items)) {
+    if (!item.investmentStats?.length) continue;
+    const name = item.displayProperties?.name?.trim();
+    if (!name) continue;
+
+    const hash = String(item.hash);
+    const existing = plugIndex.get(hash);
+    plugIndex.set(hash, {
+      name,
+      description:
+        item.displayProperties.description?.trim() || existing?.description || "",
+      iconPath: item.displayProperties.icon || existing?.iconPath || "",
+      investmentStats: mapManifestInvestmentStats(item),
+      plugCategoryIdentifier:
+        plugCategoryId(item) || existing?.plugCategoryIdentifier || "",
+    });
+  }
 }
 
 function isClassLabel(value) {

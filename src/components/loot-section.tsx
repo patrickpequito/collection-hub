@@ -5,20 +5,27 @@ type LootItemGridProps = {
   items: LootItem[];
   ownedItemHashes: Set<string>;
   showOwnership: boolean;
+  resolveItemOwned?: (itemHash: string) => boolean;
   ownedBorder?: "gold" | "green";
   /** Item hashes that use green border (exotics) regardless of ownedBorder default. */
   exoticItemHashes?: Set<string>;
   weaponHrefs?: Record<string, string>;
+  itemHrefs?: Record<string, string>;
 };
 
 export function LootItemGrid({
   items,
   ownedItemHashes,
   showOwnership,
+  resolveItemOwned,
   ownedBorder = "gold",
   exoticItemHashes,
   weaponHrefs,
+  itemHrefs,
 }: LootItemGridProps) {
+  const hrefs = itemHrefs ?? weaponHrefs;
+  const isOwned = (itemHash: string) =>
+    resolveItemOwned?.(itemHash) ?? ownedItemHashes.has(itemHash);
   return (
     <div className="flex flex-wrap gap-1.5">
       {items.map((item) => (
@@ -27,12 +34,12 @@ export function LootItemGrid({
           name={item.name}
           iconPath={item.iconPath}
           source={item.source}
-          owned={ownedItemHashes.has(item.itemHash)}
+          owned={isOwned(item.itemHash)}
           showOwnership={showOwnership}
           ownedBorder={
             exoticItemHashes?.has(item.itemHash) ? "green" : ownedBorder
           }
-          href={weaponHrefs?.[item.itemHash]}
+          href={hrefs?.[item.itemHash]}
         />
       ))}
     </div>
@@ -44,9 +51,11 @@ type LootSectionProps = {
   items: LootItem[];
   ownedItemHashes: Set<string>;
   showOwnership: boolean;
+  resolveItemOwned?: (itemHash: string) => boolean;
   ownedBorder?: "gold" | "green";
   exoticItemHashes?: Set<string>;
   weaponHrefs?: Record<string, string>;
+  itemHrefs?: Record<string, string>;
 };
 
 export function LootSection({
@@ -54,9 +63,11 @@ export function LootSection({
   items,
   ownedItemHashes,
   showOwnership,
+  resolveItemOwned,
   ownedBorder = "gold",
   exoticItemHashes,
   weaponHrefs,
+  itemHrefs,
 }: LootSectionProps) {
   return (
     <section className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
@@ -67,9 +78,10 @@ export function LootSection({
         items={items}
         ownedItemHashes={ownedItemHashes}
         showOwnership={showOwnership}
+        resolveItemOwned={resolveItemOwned}
         ownedBorder={ownedBorder}
         exoticItemHashes={exoticItemHashes}
-        weaponHrefs={weaponHrefs}
+        itemHrefs={itemHrefs ?? weaponHrefs}
       />
     </section>
   );

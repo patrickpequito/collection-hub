@@ -8,6 +8,7 @@ import { bungieIconUrl } from "@/lib/bungie-icon";
 import type { SeasonBadge } from "@/lib/all-loot/season-badges";
 
 const TOOLTIP_WIDTH = 200;
+const TOOLTIP_AUTO_DISMISS_MS = 3000;
 const BADGE_SIZE_CLASS = "size-10 sm:size-12";
 
 type WeaponSeasonBadgesProps = {
@@ -31,6 +32,7 @@ function SeasonBadgeIcon({
   onSelect,
 }: SeasonBadgeIconProps) {
   const anchorRef = useRef<HTMLDivElement>(null);
+  const dismissTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [iconSrc, setIconSrc] = useState(() =>
     bungieIconUrl(localSeasonIconPath(badge.label)),
   );
@@ -41,9 +43,31 @@ function SeasonBadgeIcon({
     setIconSrc(bungieIconUrl(localSeasonIconPath(badge.label)));
   }, [badge.label, badge.iconPath]);
 
+  useEffect(
+    () => () => {
+      if (dismissTimerRef.current) {
+        clearTimeout(dismissTimerRef.current);
+      }
+    },
+    [],
+  );
+
+  const hideTooltip = useCallback(() => {
+    if (dismissTimerRef.current) {
+      clearTimeout(dismissTimerRef.current);
+      dismissTimerRef.current = null;
+    }
+    setTooltipTop(null);
+    setTooltipLeftPx(null);
+  }, []);
+
   const showTooltip = useCallback(() => {
     const rect = anchorRef.current?.getBoundingClientRect();
     if (!rect) return;
+
+    if (dismissTimerRef.current) {
+      clearTimeout(dismissTimerRef.current);
+    }
 
     setTooltipTop(rect.bottom + 8);
     setTooltipLeftPx(
@@ -55,11 +79,12 @@ function SeasonBadgeIcon({
         ),
       ),
     );
-  }, []);
 
-  const hideTooltip = useCallback(() => {
-    setTooltipTop(null);
-    setTooltipLeftPx(null);
+    dismissTimerRef.current = setTimeout(() => {
+      dismissTimerRef.current = null;
+      setTooltipTop(null);
+      setTooltipLeftPx(null);
+    }, TOOLTIP_AUTO_DISMISS_MS);
   }, []);
 
   const tooltip =
@@ -84,8 +109,21 @@ function SeasonBadgeIcon({
   const ringClass = selected
     ? "ring-2 ring-amber-400/70 ring-offset-1 ring-offset-zinc-950"
     : selectable
-      ? "hover:ring-1 hover:ring-zinc-500"
+      ? "hover:ring-1 hover:ring-amber-400/50"
       : "";
+
+  const containerClass = [
+    `relative shrink-0 overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900 ${BADGE_SIZE_CLASS}`,
+    selectable
+      ? "cursor-pointer transition-[transform,background-color,border-color,box-shadow] duration-200 hover:bg-zinc-800/90 hover:border-zinc-600 active:scale-95 active:duration-75"
+      : "",
+    selectable && !selected
+      ? "hover:scale-105 hover:shadow-lg hover:shadow-black/25"
+      : "",
+    ringClass,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   const inner = (
     <Image
@@ -103,41 +141,28 @@ function SeasonBadgeIcon({
     />
   );
 
-  if (selectable && onSelect) {
-    return (
-      <>
-        <div
-          ref={anchorRef}
-          className={`relative shrink-0 rounded-sm border border-zinc-800 bg-zinc-900 transition-shadow ${BADGE_SIZE_CLASS} ${ringClass}`}
-          onMouseEnter={showTooltip}
-          onMouseLeave={hideTooltip}
-        >
+  return (
+    <>
+      <div
+        ref={anchorRef}
+        className={containerClass}
+        onMouseEnter={showTooltip}
+        onMouseLeave={hideTooltip}
+      >
+        {selectable && onSelect ? (
           <button
             type="button"
             className="absolute inset-0 z-10 rounded-sm"
             onFocus={showTooltip}
             onBlur={hideTooltip}
-            onClick={() => onSelect(badge.key)}
+            onClick={() => {
+              showTooltip();
+              onSelect(badge.key);
+            }}
             aria-label={badge.label}
             aria-pressed={selected}
           />
-          {inner}
-        </div>
-        {tooltip}
-      </>
-    );
-  }
-
-  return (
-    <>
-      <div
-        ref={anchorRef}
-        className={`relative shrink-0 rounded-sm border border-zinc-800 bg-zinc-900 ${BADGE_SIZE_CLASS}`}
-        onMouseEnter={showTooltip}
-        onMouseLeave={hideTooltip}
-        onFocus={showTooltip}
-        onBlur={hideTooltip}
-      >
+        ) : null}
         {inner}
       </div>
       {tooltip}

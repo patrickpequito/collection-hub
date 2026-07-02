@@ -2,13 +2,17 @@ import { ArmorSetCatalog } from "@/components/armor-set-catalog";
 import { SectionPlaceholderNotice } from "@/components/section-placeholder-notice";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import { isBungieOAuthConfigured } from "@/lib/env";
+import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { loadArmorSetCatalog } from "@/lib/armor-sets/load";
 import { PAGE_HEADERS } from "@/lib/page-headers";
 import { getSession } from "@/lib/session";
 
 export default async function SetsPage() {
   const session = await getSession();
-  const catalog = await loadArmorSetCatalog();
+  const [catalog, itemHrefs] = await Promise.all([
+    loadArmorSetCatalog(),
+    buildCollectibleHrefByItemHash("/sets"),
+  ]);
   const oauthConfigured = isBungieOAuthConfigured();
 
   return (
@@ -34,7 +38,11 @@ export default async function SetsPage() {
         </p>
       )}
 
-      <ArmorSetCatalog sets={catalog.sets} signedIn={Boolean(session)} />
+      <ArmorSetCatalog
+        sets={catalog.sets}
+        signedIn={Boolean(session)}
+        itemHrefs={itemHrefs}
+      />
     </SectionPageLayout>
   );
 }

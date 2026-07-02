@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { HistoryBackButton } from "@/components/history-back-button";
 import { BungieLoginButton } from "@/components/bungie-login-button";
 import type { BungieUserSession } from "@/lib/bungie";
@@ -31,10 +32,16 @@ export function AuthBar({ session, oauthConfigured, backLink }: AuthBarProps) {
         <div className="min-w-0">
           {backLink ? (
             backLink.useHistory ? (
-              <HistoryBackButton
-                label={backLink.label}
-                fallbackHref={backLink.fallbackHref}
-              />
+              <Suspense
+                fallback={
+                  <span className={GREY_BUTTON_CLASS}>{backLink.label}</span>
+                }
+              >
+                <HistoryBackButton
+                  label={backLink.label}
+                  fallbackHref={backLink.fallbackHref}
+                />
+              </Suspense>
             ) : (
               <Link href={backLink.href} className={GREY_BUTTON_CLASS}>
                 {backLink.label}
@@ -51,7 +58,13 @@ export function AuthBar({ session, oauthConfigured, backLink }: AuthBarProps) {
               </button>
             </form>
           ) : (
-            <BungieLoginButton configured={oauthConfigured} variant="compact" />
+            <Suspense
+              fallback={
+                <span className="text-xs text-zinc-500">Sign in…</span>
+              }
+            >
+              <BungieLoginButton configured={oauthConfigured} variant="compact" />
+            </Suspense>
           )}
         </div>
       </div>

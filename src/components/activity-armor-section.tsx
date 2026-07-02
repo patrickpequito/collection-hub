@@ -18,6 +18,8 @@ type ActivityArmorSectionProps = {
   previewFiles?: string[];
   ownedItemHashes: Set<string>;
   showOwnership: boolean;
+  resolveItemOwned?: (itemHash: string) => boolean;
+  itemHrefs?: Record<string, string>;
 };
 
 export function ActivityArmorSection({
@@ -27,7 +29,11 @@ export function ActivityArmorSection({
   previewFiles,
   ownedItemHashes,
   showOwnership,
+  resolveItemOwned,
+  itemHrefs,
 }: ActivityArmorSectionProps) {
+  const isOwned = (itemHash: string) =>
+    resolveItemOwned?.(itemHash) ?? ownedItemHashes.has(itemHash);
   const resolvedPreviewFiles = resolveArmorSetPreviewFiles(
     activitySlug,
     previewFiles,
@@ -65,10 +71,11 @@ export function ActivityArmorSection({
                       piece={piece}
                       slotLabel={SLOT_LABELS[slot]}
                       sourceLabel={piece.source}
-                      owned={ownedItemHashes.has(piece.itemHash)}
+                      owned={isOwned(piece.itemHash)}
                       showOwnership={showOwnership}
                       tooltipAlign={tooltipAlign}
                       fluid
+                      href={itemHrefs?.[piece.itemHash]}
                     />
                   </div>
                 );

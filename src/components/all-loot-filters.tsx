@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { localSeasonFilterIconPath } from "@/lib/all-loot/season-icon-path";
+import { armorSlotIconPath } from "@/lib/armor-slot-icon";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 import {
   classOrWeaponTypeIconPath,
@@ -72,6 +73,25 @@ function RarityFilterLabel({ rarity }: { rarity: string }) {
       style={{ color: itemRarityColor(rarity) }}
     >
       {rarity}
+    </span>
+  );
+}
+
+function ArmorSlotFilterLabel({ slot }: { slot: string }) {
+  const iconPath = armorSlotIconPath(slot);
+
+  return (
+    <span className="inline-flex min-w-0 items-center gap-1.5 truncate">
+      {iconPath ? (
+        // eslint-disable-next-line @next/next/no-img-element -- local PNG slot icons
+        <img
+          src={iconPath}
+          alt=""
+          aria-hidden
+          className="h-[1em] w-[1em] shrink-0 object-contain"
+        />
+      ) : null}
+      <span className="truncate">{slot}</span>
     </span>
   );
 }
@@ -582,6 +602,8 @@ export function AllLootFiltersPanel({
             options={facets.gearSlots}
             selected={filters.gearSlots}
             onChange={(gearSlots) => update({ gearSlots })}
+            renderOption={(slot) => <ArmorSlotFilterLabel slot={slot} />}
+            renderSummaryItem={(slot) => <ArmorSlotFilterLabel slot={slot} />}
           />
           <ObtainableFilter
             value={filters.obtainable}

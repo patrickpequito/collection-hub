@@ -9,11 +9,15 @@ type ExpandableImageProps = {
   imageClassName?: string;
 };
 
+/** Fixed preview frame so version screenshots do not shift the page layout. */
+export const DETAIL_PREVIEW_FRAME_CLASS =
+  "flex aspect-video w-full items-center justify-center bg-zinc-950/30";
+
 export function ExpandableImage({
   src,
   alt,
   expandLabel,
-  imageClassName = "h-auto w-full object-contain",
+  imageClassName = "max-h-full max-w-full object-contain",
 }: ExpandableImageProps) {
   const [expanded, setExpanded] = useState(false);
   const closeLightbox = useCallback(() => setExpanded(false), []);
@@ -42,8 +46,10 @@ export function ExpandableImage({
         className="block w-full cursor-zoom-in transition hover:opacity-90"
         aria-label={expandLabel ?? `Expand ${alt}`}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={alt} className={imageClassName} />
+        <div className={DETAIL_PREVIEW_FRAME_CLASS}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={src} alt={alt} className={imageClassName} />
+        </div>
       </button>
 
       {expanded ? (

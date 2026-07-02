@@ -45,6 +45,6 @@ One image per activity (all three classes), below the piece icons in the **Armor
 
 | | |
 |---|---|
-| **Path** | `public/images/rad-loot/armor-sets/{slug}.webp` |
+| **Path** | `public/images/armor-set-previews/{slug}.webp` |
 | **Recommended width** | **1200 px** (height as needed) |
-| **Details** | See `armor-sets/README.md` for the full filename list |
+| **Details** | See `../armor-set-previews/README.md` for the full filename list |

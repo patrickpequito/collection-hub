@@ -1,4 +1,5 @@
 import { collectWeaponPageItemHashes } from "@/lib/weapons/page-hashes";
+import { resolveEquippedPerColumn } from "@/lib/weapons/perks";
 import type {
   AllLootItem,
   WeaponPerkColumn,
@@ -93,27 +94,6 @@ function traitComboColumnIndices(
   return indices.length >= 2 ? indices.slice(-2) : [];
 }
 
-function resolveEquippedPerColumn(
-  equippedPlugHashes: readonly string[],
-  perkColumns: readonly WeaponPerkColumn[],
-  plugIndex: Record<string, WeaponPlugDefinition>,
-): (string | null)[] {
-  const equipped = new Set(equippedPlugHashes);
-  const equippedNames = equippedPlugNames(equippedPlugHashes, plugIndex);
-
-  return perkColumns.map((column) => {
-    const direct = column.plugHashes.find((hash) => equipped.has(hash));
-    if (direct) return direct;
-
-    return (
-      column.plugHashes.find((hash) => {
-        const name = plugName(hash, plugIndex);
-        return Boolean(name && equippedNames.has(name));
-      }) ?? null
-    );
-  });
-}
-
 function isDesirablePlug(
   plugHash: string,
   desirableHashes: ReadonlySet<string>,
@@ -163,6 +143,7 @@ export function scoreAegisRoll(
   perkColumns: readonly WeaponPerkColumn[] | undefined,
   entry: WeaponAegisWeaponEntry | null,
   plugIndex: Record<string, WeaponPlugDefinition> = {},
+  socketPlugHashesByIndex?: readonly (string | undefined)[],
 ): WeaponRollAegisScore & { tier: string | null } {
   if (!entry?.lines.length) {
     return {
@@ -179,6 +160,7 @@ export function scoreAegisRoll(
     equippedPlugHashes,
     columns,
     plugIndex,
+    socketPlugHashesByIndex,
   );
   const desirable = new Set(entry.lines.flat());
 

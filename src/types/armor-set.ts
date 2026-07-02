@@ -18,6 +18,8 @@ export type ArmorPiece = {
   itemHash: string;
   name: string;
   iconPath: string;
+  /** All manifest hashes for this slot (versions / alternates). */
+  itemHashes?: string[];
 };
 
 export type ClassArmorPieces = Partial<Record<ArmorSlot, ArmorPiece>>;

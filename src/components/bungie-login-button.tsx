@@ -1,6 +1,7 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+import { markOAuthPending } from "@/lib/app-navigation-stack";
 
 type BungieLoginButtonProps = {
   configured: boolean;
@@ -12,7 +13,10 @@ export function BungieLoginButton({
   variant = "default",
 }: BungieLoginButtonProps) {
   const pathname = usePathname();
-  const loginHref = `/api/auth/bungie?returnTo=${encodeURIComponent(pathname)}`;
+  const searchParams = useSearchParams();
+  const search = searchParams.toString();
+  const returnTo = `${pathname}${search ? `?${search}` : ""}`;
+  const loginHref = `/api/auth/bungie?returnTo=${encodeURIComponent(returnTo)}`;
 
   if (!configured) {
     if (variant === "compact") {
@@ -40,6 +44,7 @@ export function BungieLoginButton({
   return (
     <a
       href={loginHref}
+      onClick={() => markOAuthPending()}
       className={variant === "compact" ? compactClass : defaultClass}
     >
       Sign in with Bungie

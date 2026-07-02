@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "generate:armor-sets": "node scripts/generate-armor-sets.mjs",
+    "generate:armor-set-bonuses": "node scripts/generate-armor-set-bonuses.mjs",
     "generate:exotics": "node scripts/generate-exotics.mjs",
     "generate:catalysts": "node scripts/generate-catalysts.mjs",
     "generate:triumphs": "node scripts/generate-triumphs.mjs",

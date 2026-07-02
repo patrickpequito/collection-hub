@@ -14,6 +14,7 @@ import {
   weaponAmmoLabel,
 } from "@/lib/weapon-slot-icon";
 import { weaponPageHref } from "@/lib/weapons/paths";
+import { armorPageHref } from "@/lib/armor/paths";
 import type { AllLootItem, AllLootItemVersion } from "@/types/all-loot";
 import { resolveVersionDisplayLabel } from "@/lib/all-loot/season-badges";
 import { isItemOwned } from "@/lib/all-loot/ownership";
@@ -72,7 +73,7 @@ function ItemIconWithSeasonBadge({
         alt=""
         width={48}
         height={48}
-        className={iconClass}
+        className={`${iconClass} transition-transform duration-200 group-hover:scale-105`}
         unoptimized
       />
       {seasonIconPath ? (
@@ -315,10 +316,13 @@ export function AllLootRow({ item, owned, showOwnership }: AllLootRowProps) {
   const { open, setHover, hasVersions, versions } = useVersionsHover(
     item.versions,
   );
-  const weaponHref =
+  const itemHref =
     item.type === "Weapon" && item.slug
       ? weaponPageHref(item.slug, pathname)
-      : null;
+      : item.type === "Armor" && item.slug
+        ? armorPageHref(item.slug, pathname)
+        : null;
+  const isItemLink = Boolean(itemHref);
 
   const ownedStyles =
     showOwnership && owned
@@ -327,15 +331,22 @@ export function AllLootRow({ item, owned, showOwnership }: AllLootRowProps) {
         ? "opacity-75 saturate-75"
         : "";
 
-  const hoverableClass = hasVersions
-    ? "cursor-default underline decoration-zinc-700 decoration-dotted underline-offset-2"
-    : weaponHref
-      ? "hover:text-amber-200"
-      : "";
+  const rowClass = isItemLink
+    ? "group -mx-2 cursor-pointer rounded-md px-2 transition-[background-color,box-shadow] duration-200 hover:bg-zinc-800/90 hover:shadow-[inset_3px_0_0_0_rgba(251,191,36,0.55)]"
+    : "";
+
+  const nameClass = [
+    "truncate text-xs font-semibold text-zinc-100 sm:text-sm",
+    hasVersions &&
+      "underline decoration-zinc-700 decoration-dotted underline-offset-2",
+    isItemLink && "transition-colors duration-200 group-hover:text-amber-200",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   const nameContent = (
     <p
-      className={`truncate text-xs font-semibold text-zinc-100 sm:text-sm ${hoverableClass}`}
+      className={nameClass}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
@@ -344,14 +355,14 @@ export function AllLootRow({ item, owned, showOwnership }: AllLootRowProps) {
   );
 
   return (
-    <article className={ALL_LOOT_ROW_LAYOUT}>
+    <article className={`${ALL_LOOT_ROW_LAYOUT} ${rowClass}`}>
       <div
         className={`relative ${COL_ICON} ${ownedStyles}`}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        {weaponHref ? (
-          <Link href={weaponHref} aria-label={item.name}>
+        {itemHref ? (
+          <Link href={itemHref} aria-label={item.name}>
             <ItemIconWithSeasonBadge
               iconPath={item.iconPath}
               seasonIconPath={item.seasonIconPath}
@@ -366,8 +377,8 @@ export function AllLootRow({ item, owned, showOwnership }: AllLootRowProps) {
       </div>
 
       <div className={`relative ${COL_ITEM}`}>
-        {weaponHref ? (
-          <Link href={weaponHref} className="block min-w-0">
+        {itemHref ? (
+          <Link href={itemHref} className="block min-w-0">
             {nameContent}
           </Link>
         ) : (

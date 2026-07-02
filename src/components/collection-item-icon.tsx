@@ -21,6 +21,8 @@ type CollectionItemIconProps = {
   tooltipAlign?: "start" | "center" | "end";
   /** Shrink to fit grid cells in narrow armor-set rows. */
   fluid?: boolean;
+  /** When fluid, grow to fill the full grid cell (no 60px cap). */
+  fillCell?: boolean;
   href?: string;
 };
 
@@ -47,6 +49,7 @@ export function CollectionItemIcon({
   ownedBorder = "gold",
   tooltipAlign = "center",
   fluid = false,
+  fillCell = false,
   href,
 }: CollectionItemIconProps) {
   const anchorRef = useRef<HTMLDivElement>(null);
@@ -62,8 +65,8 @@ export function CollectionItemIcon({
     showOwnership && !owned ? "opacity-70 brightness-90 saturate-75" : "";
 
   const iconClass = fluid
-    ? `aspect-square w-full max-w-[3.75rem] rounded-md border bg-zinc-900 object-contain transition duration-200 ease-out hover:brightness-110 ${ownedStyles} ${unownedStyles}`
-    : `size-[60px] shrink-0 rounded-md border bg-zinc-900 object-contain transition duration-200 ease-out hover:scale-110 hover:brightness-110 ${ownedStyles} ${unownedStyles}`;
+    ? `aspect-square w-full ${fillCell ? "" : "max-w-[3.75rem] "}rounded-md border bg-zinc-900 object-contain transition duration-200 ease-out hover:scale-105 hover:brightness-110 active:scale-95 ${ownedStyles} ${unownedStyles}`
+    : `size-[60px] shrink-0 rounded-md border bg-zinc-900 object-contain transition duration-200 ease-out hover:scale-110 hover:brightness-110 active:scale-95 ${ownedStyles} ${unownedStyles}`;
 
   const wrapperClass = fluid ? "relative min-w-0 w-full" : "relative shrink-0";
 
@@ -131,7 +134,7 @@ export function CollectionItemIcon({
         {href ? (
           <Link
             href={href}
-            className="block rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400/80"
+            className="block rounded-md transition-transform duration-200 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400/80"
             aria-label={name}
           >
             {iconBody}

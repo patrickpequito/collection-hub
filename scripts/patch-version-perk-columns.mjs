@@ -9,6 +9,7 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   resolveWeaponPerkColumnsFromManifest,
+  resolveWeaponScreenshotFromManifest,
   resolveWeaponStatsFromManifest,
 } from "./lib/weapon-perk-columns.mjs";
 
@@ -93,6 +94,7 @@ async function main() {
 
     const columnsByHash = new Map();
     const statsByHash = new Map();
+    const screenshotByHash = new Map();
 
     for (const hash of collectHashesForEntry(entry)) {
       const item = items[hash];
@@ -100,32 +102,39 @@ async function main() {
 
       const perkColumns = resolveWeaponPerkColumnsFromManifest(item, manifestDeps);
       const stats = resolveWeaponStatsFromManifest(item, statDefs);
+      const screenshotPath = resolveWeaponScreenshotFromManifest(item);
       if (perkColumns?.length) columnsByHash.set(hash, perkColumns);
       if (stats?.length) statsByHash.set(hash, stats);
+      if (screenshotPath) screenshotByHash.set(hash, screenshotPath);
     }
 
     if (entry.versions?.length) {
       for (const version of entry.versions) {
         const perkColumns = columnsByHash.get(version.itemHash);
         const stats = statsByHash.get(version.itemHash);
+        const screenshotPath = screenshotByHash.get(version.itemHash);
         if (perkColumns?.length) {
           version.perkColumns = perkColumns;
           patchedVersions += 1;
         }
         if (stats?.length) version.stats = stats;
+        if (screenshotPath) version.screenshotPath = screenshotPath;
       }
     }
 
     const primaryPerks = columnsByHash.get(entry.itemHash);
     const primaryStats = statsByHash.get(entry.itemHash);
+    const primaryScreenshot = screenshotByHash.get(entry.itemHash);
     if (primaryPerks?.length) {
       entry.perkColumns = primaryPerks;
       patchedWeapons += 1;
     }
     if (primaryStats?.length) entry.stats = primaryStats;
+    if (primaryScreenshot) entry.screenshotPath = primaryScreenshot;
 
     const perkColumnsByItemHash = {};
     const statsByItemHash = {};
+    const screenshotPathByItemHash = {};
     for (const [hash, columns] of columnsByHash.entries()) {
       if (hash === entry.itemHash) continue;
       if (columns?.length) perkColumnsByItemHash[hash] = columns;
@@ -134,11 +143,18 @@ async function main() {
       if (hash === entry.itemHash) continue;
       if (stats?.length) statsByItemHash[hash] = stats;
     }
+    for (const [hash, screenshotPath] of screenshotByHash.entries()) {
+      if (hash === entry.itemHash) continue;
+      screenshotPathByItemHash[hash] = screenshotPath;
+    }
     if (Object.keys(perkColumnsByItemHash).length) {
       entry.perkColumnsByItemHash = perkColumnsByItemHash;
     }
     if (Object.keys(statsByItemHash).length) {
       entry.statsByItemHash = statsByItemHash;
+    }
+    if (Object.keys(screenshotPathByItemHash).length) {
+      entry.screenshotPathByItemHash = screenshotPathByItemHash;
     }
   }
 
