@@ -1,6 +1,5 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { unstable_cache } from "next/cache";
 import type {
   AllLootCatalog,
   AllLootFacets,
@@ -21,14 +20,8 @@ async function readAllLootCatalogFromDisk(): Promise<AllLootCatalog> {
   return catalogCache;
 }
 
-const loadAllLootCatalogCached = unstable_cache(
-  readAllLootCatalogFromDisk,
-  ["all-loot-catalog"],
-  { revalidate: false },
-);
-
 export async function loadAllLootCatalog(): Promise<AllLootCatalog> {
-  return loadAllLootCatalogCached();
+  return readAllLootCatalogFromDisk();
 }
 
 export async function loadAllLootFacets(): Promise<AllLootFacets> {

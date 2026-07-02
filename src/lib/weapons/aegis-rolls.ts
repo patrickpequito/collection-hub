@@ -1,6 +1,5 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { unstable_cache } from "next/cache";
 import type { WeaponAegisRollIndex } from "@/types/weapon-aegis-rolls";
 
 let indexCache: WeaponAegisRollIndex | null = null;
@@ -17,14 +16,8 @@ async function readWeaponAegisRollIndexFromDisk(): Promise<WeaponAegisRollIndex>
   return indexCache;
 }
 
-const loadWeaponAegisRollIndexCached = unstable_cache(
-  readWeaponAegisRollIndexFromDisk,
-  ["weapon-aegis-roll-index"],
-  { revalidate: false },
-);
-
 export async function loadWeaponAegisRollIndex(): Promise<WeaponAegisRollIndex> {
-  return loadWeaponAegisRollIndexCached();
+  return readWeaponAegisRollIndexFromDisk();
 }
 
 export function resolveAegisEntryForItemHash(

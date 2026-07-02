@@ -20,14 +20,6 @@ type ArmorPageProps = {
   searchParams: Promise<{ from?: string }>;
 };
 
-export async function generateStaticParams() {
-  const catalog = await loadAllLootCatalog();
-
-  return catalog.items
-    .filter((item) => item.type === "Armor" && item.slug)
-    .map((item) => ({ slug: item.slug! }));
-}
-
 export async function generateMetadata({
   params,
 }: ArmorPageProps): Promise<Metadata> {
