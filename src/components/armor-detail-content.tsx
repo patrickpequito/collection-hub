@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
 import { ArmorDetailMeta } from "@/components/armor-detail-meta";
 import { ArmorArchetypeIcon } from "@/components/armor-archetype-icon";
 import { ExoticPerkPanel } from "@/components/exotic-perk-panel";
@@ -35,33 +34,33 @@ type ArmorDetailContentProps = {
   isSignedIn?: boolean;
 };
 
+function ArmorPreviewUnavailable() {
+  return (
+    <div className="overflow-hidden rounded-xl border border-dashed border-zinc-800 bg-zinc-900/40">
+      <div className={`${DETAIL_PREVIEW_FRAME_CLASS} text-sm text-zinc-500`}>
+        No preview image available.
+      </div>
+    </div>
+  );
+}
+
 function ArmorPreview({ armor }: { armor: AllLootItem }) {
-  if (armor.screenshotPath) {
+  const [screenshotFailed, setScreenshotFailed] = useState(false);
+
+  if (armor.screenshotPath && !screenshotFailed) {
     return (
       <div className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/40">
         <ExpandableImage
           src={bungieIconUrl(armor.screenshotPath)}
           alt={armor.name}
           expandLabel={`Expand ${armor.name} preview`}
+          onError={() => setScreenshotFailed(true)}
         />
       </div>
     );
   }
 
-  return (
-    <div className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/40">
-      <div className={DETAIL_PREVIEW_FRAME_CLASS}>
-        <Image
-          src={bungieIconUrl(armor.iconPath)}
-          alt={armor.name}
-          width={256}
-          height={256}
-          className="max-h-[70%] max-w-[70%] object-contain"
-          unoptimized
-        />
-      </div>
-    </div>
-  );
+  return <ArmorPreviewUnavailable />;
 }
 
 export function ArmorDetailContent({

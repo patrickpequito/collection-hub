@@ -7,6 +7,7 @@ type ExpandableImageProps = {
   alt: string;
   expandLabel?: string;
   imageClassName?: string;
+  onError?: () => void;
 };
 
 /** Fixed preview frame so version screenshots do not shift the page layout. */
@@ -18,6 +19,7 @@ export function ExpandableImage({
   alt,
   expandLabel,
   imageClassName = "max-h-full max-w-full object-contain",
+  onError,
 }: ExpandableImageProps) {
   const [expanded, setExpanded] = useState(false);
   const closeLightbox = useCallback(() => setExpanded(false), []);
@@ -48,7 +50,12 @@ export function ExpandableImage({
       >
         <div className={DETAIL_PREVIEW_FRAME_CLASS}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={src} alt={alt} className={imageClassName} />
+          <img
+            src={src}
+            alt={alt}
+            className={imageClassName}
+            onError={onError}
+          />
         </div>
       </button>
 
