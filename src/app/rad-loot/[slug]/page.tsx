@@ -31,6 +31,7 @@ import {
   resolveActivityTriumphRecords,
 } from "@/lib/triumphs/load";
 import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
+import { enrichWeaponLootItems } from "@/lib/activities/loot-item";
 import { loadCatalogHashIndex } from "@/lib/all-loot/catalog-hash-index";
 import { isLootHashOwned } from "@/lib/all-loot/loot-ownership";
 import { resolveTriumphIcon } from "@/lib/triumphs/icons";
@@ -159,6 +160,11 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
     isLootHashOwned(itemHash, ownedItemHashes, catalogByHash);
   const showTriumphProgress = Boolean(hasTriumphSection && session && !recordsError);
   const exoticItemHashes = ACTIVITY_EXOTIC_HASHES[slug] ?? new Set<string>();
+  const weapons = enrichWeaponLootItems(activity.weapons, catalogByHash);
+  const timelostWeapons = enrichWeaponLootItems(
+    activity.timelostWeapons,
+    catalogByHash,
+  );
   const titleProgress = title
     ? countTitleProgress({ ...title, records: triumphRecords }, recordInstances)
     : hasTriumphSection
@@ -249,7 +255,7 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
 
           <LootSection
             title="Weapons"
-            items={activity.weapons}
+            items={weapons}
             ownedItemHashes={ownedItemHashes}
             showOwnership={showOwnership}
             resolveItemOwned={resolveItemOwned}
@@ -260,7 +266,7 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
           {activity.timelostWeapons.length > 0 ? (
             <LootSection
               title={activity.timelostWeaponsTitle ?? "Timelost Weapons"}
-              items={activity.timelostWeapons}
+              items={timelostWeapons}
               ownedItemHashes={ownedItemHashes}
               showOwnership={showOwnership}
               resolveItemOwned={resolveItemOwned}

@@ -5,17 +5,21 @@ export type LootItem = {
   name: string;
   iconPath: string;
   source: string;
+  /** Weapon metadata for hover tooltips (type, element, ammo). */
+  classOrWeaponType?: string | null;
+  damageType?: string | null;
+  ammoType?: string | null;
 };
 
 export type ActivityArmorRow = {
   setName: string;
   guardianClass: "hunter" | "titan" | "warlock";
   pieces: {
-    helmet: LootItem;
-    gauntlets: LootItem;
-    chest: LootItem;
-    legs: LootItem;
-    classItem: LootItem;
+    helmet?: LootItem;
+    gauntlets?: LootItem;
+    chest?: LootItem;
+    legs?: LootItem;
+    classItem?: LootItem;
   };
 };
 

@@ -1,4 +1,4 @@
-export const CURRENT_VERSION = "0.7.2";
+export const CURRENT_VERSION = "0.7.3";
 
 export function formatReleaseDate(isoDate: string) {
   const [year, month, day] = isoDate.split("-").map(Number);
@@ -30,6 +30,43 @@ export type UpdateRelease = {
  * Newest release first. Add a new entry at the top when shipping an update.
  */
 export const UPDATE_RELEASES: UpdateRelease[] = [
+  {
+    version: "0.7.3",
+    publishedAt: "2026-07-03",
+    summary:
+      "Iron Banner gets its own activity hub — current armor and weapons, rotating focus pools, Event Card rewards with claim status, cosmetics, Iron Lord triumphs, and legacy armor sets in one place. The homepage now highlights Iron Banner and Monument of Triumph in a Featured row above the main catalog banners.",
+    sections: [
+      {
+        title: "Iron Banner hub",
+        description:
+          "A dedicated page for everything worth chasing during the event.",
+        items: [
+          "Track armor, weapons, and cosmetics in loot panels, with collection highlighting when signed in.",
+          "Rotating weapon focus pools (Pool 1 and Pool 2) so you can browse this week’s Saladin lineup and the alternate pool.",
+          "Legacy Iron Banner armor sets listed below, in expandable tabs.",
+          "Event Card reward track with claim status when signed in — gold for claimed, green for ready to claim, grey for locked.",
+          "Iron Banner triumphs and Iron Lord title progress on the same page when signed in.",
+        ],
+      },
+      {
+        title: "Homepage",
+        description:
+          "Featured row for seasonal highlights above the main catalog entry points.",
+        items: [
+          "Featured section with Iron Banner and Monument of Triumph side by side.",
+          "Updated site logo in the header and on the home title.",
+        ],
+      },
+      {
+        title: "Weapon tooltips",
+        description:
+          "Richer hover details on activity loot pages.",
+        items: [
+          "Weapon icons on RAD Loot and Iron Banner now show weapon type, damage type, and ammo icons between the name and source.",
+        ],
+      },
+    ],
+  },
   {
     version: "0.7.2",
     publishedAt: "2026-07-02",

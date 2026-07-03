@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { AppVersionLabel } from "@/components/app-version-label";
 import { HomeAuthSection } from "@/components/home-auth-section";
 import { HomeTriumphScores } from "@/components/home-triumph-scores";
@@ -7,6 +8,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { getSession } from "@/lib/session";
+import siteLogo from "../../public/icon.png";
 
 type HomeProps = {
   searchParams: Promise<{
@@ -28,14 +30,17 @@ export default async function Home({ searchParams }: HomeProps) {
       <div className="mx-auto flex min-h-[calc(100dvh-3rem)] max-w-5xl flex-col px-6 py-10 sm:py-14">
         <header className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0 flex-1">
-            <h1 className="text-2xl font-semibold sm:text-3xl md:text-4xl">
-              Destiny 2 Collection Hub
+            <h1 className="flex items-center gap-3 text-2xl font-semibold sm:text-3xl md:text-4xl">
+              <Image
+                src={siteLogo}
+                alt=""
+                className="h-8 w-auto shrink-0 sm:h-10"
+                priority
+                unoptimized
+              />
+              <span>Destiny 2 Collection Hub</span>
             </h1>
             <AppVersionLabel className="mt-1" />
-            <p className="mt-2 max-w-lg text-sm text-zinc-400">
-              Track exotic gear and legendary armor sets. Sign in with Bungie to
-              highlight what you already own.
-            </p>
 
             <HomeAuthSection
               session={session}
@@ -53,25 +58,51 @@ export default async function Home({ searchParams }: HomeProps) {
           <HomeUpdatesNotice />
         </div>
 
-        <div className="flex flex-1 flex-col justify-center gap-3 sm:gap-6">
-          <HubBanner
-            href="/triumphs/group/monument-of-triumph"
-            title="Monument of Triumph"
-            description="The final triumphs and loot to chase in one place."
-            imageFile="monument-of-triumph.webp"
-          />
-          <HubBanner
-            href="/all-loot"
-            title="Loot Collector"
-            description="Search the full collectible catalog."
-            imageFile="loot-collector.webp"
-          />
-          <HubBanner
-            href="/triumphs"
-            title="Triumphs"
-            description="Track triumph groups and title progress."
-            imageFile="triumphs.webp"
-          />
+        <div className="flex flex-1 flex-col justify-center gap-5 sm:gap-8">
+          <section className="rounded-2xl border border-amber-500/25 bg-gradient-to-br from-amber-950/30 via-zinc-900/50 to-zinc-900/20 p-3 sm:p-4">
+            <div className="mb-3 sm:mb-4">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-400/90 sm:text-xs">
+                Featured
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <HubBanner
+                size="featured"
+                href="/activities/iron-banner"
+                title="Iron Banner"
+                description="Current loot, weapons, and event card rewards."
+                imageUrl="/images/headers/iron-banner-header.webp"
+              />
+              <HubBanner
+                size="featured"
+                href="/triumphs/group/monument-of-triumph"
+                title="Monument of Triumph"
+                description="The final triumphs and loot to chase in one place."
+                imageFile="monument-of-triumph.webp"
+              />
+            </div>
+          </section>
+
+          <section className="space-y-3 sm:space-y-5">
+            <div className="flex items-center gap-3">
+              <p className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500 sm:text-xs">
+                Catalogs
+              </p>
+              <div className="h-px flex-1 bg-zinc-800" aria-hidden />
+            </div>
+            <HubBanner
+              href="/all-loot"
+              title="Loot Collector"
+              description="Search the full collectible catalog."
+              imageFile="loot-collector.webp"
+            />
+            <HubBanner
+              href="/triumphs"
+              title="Triumphs"
+              description="Track triumph groups and title progress."
+              imageFile="triumphs.webp"
+            />
+          </section>
         </div>
 
         <SiteFooter>

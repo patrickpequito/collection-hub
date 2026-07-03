@@ -34,6 +34,9 @@ export function LootItemGrid({
           name={item.name}
           iconPath={item.iconPath}
           source={item.source}
+          classOrWeaponType={item.classOrWeaponType}
+          damageType={item.damageType}
+          ammoType={item.ammoType}
           owned={isOwned(item.itemHash)}
           showOwnership={showOwnership}
           ownedBorder={

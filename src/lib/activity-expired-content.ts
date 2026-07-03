@@ -39,6 +39,15 @@ const EXPIRED_ACTIVITY_CONTENT: Record<
       "2680217522", // Dredgen's Descent (emblem)
     ],
   },
+  "iron-banner": {
+    recordHashes: [
+      "1309367942", // Gunnora's Seal (legacy armor collection)
+      "2519991248", // Orimund's Taste (legacy weapon collection)
+      "1469486982", // Frostmire's Will (legacy Iron Banner challenges)
+      "89629611", // Jorum's Howl (legacy armor-equipped matches)
+    ],
+    lootItemHashes: [],
+  },
 };
 
 function expiredRecordHashes(slug: string): Set<string> {

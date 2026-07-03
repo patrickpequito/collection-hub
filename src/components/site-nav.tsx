@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LootNavMenu } from "@/components/loot-nav-menu";
 import { isNavItemActive, NAV_ITEMS, type NavItem } from "@/lib/navigation";
+import siteLogo from "../../public/icon.png";
 
 function navLinkClassName(active: boolean, variant: "desktop" | "mobile") {
   if (variant === "desktop") {
@@ -66,14 +67,12 @@ export function SiteNav() {
         <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link
             href="/"
-            className="flex items-center gap-1.5 text-xs font-medium tracking-[0.2em] text-zinc-400 transition hover:text-zinc-200"
+            className="group flex items-center gap-1.5 text-xs font-medium tracking-[0.2em] text-zinc-400 transition hover:text-zinc-200"
           >
             <Image
-              src="/icon.png"
+              src={siteLogo}
               alt=""
-              width={12}
-              height={12}
-              className="h-[1em] w-[1em] shrink-0 opacity-60"
+              className="h-6 w-auto shrink-0 opacity-60 transition-opacity group-hover:opacity-100"
               unoptimized
             />
             COLLECTION HUB

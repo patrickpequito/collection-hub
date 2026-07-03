@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { WeaponMetaIcons } from "@/components/weapon-meta-icons";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 
 const ICON_SIZE = 60;
@@ -24,6 +25,9 @@ type CollectionItemIconProps = {
   /** When fluid, grow to fill the full grid cell (no 60px cap). */
   fillCell?: boolean;
   href?: string;
+  classOrWeaponType?: string | null;
+  damageType?: string | null;
+  ammoType?: string | null;
 };
 
 const OWNED_BORDER_STYLES = {
@@ -51,6 +55,9 @@ export function CollectionItemIcon({
   fluid = false,
   fillCell = false,
   href,
+  classOrWeaponType,
+  damageType,
+  ammoType,
 }: CollectionItemIconProps) {
   const anchorRef = useRef<HTMLDivElement>(null);
   const [tooltipTop, setTooltipTop] = useState<number | null>(null);
@@ -100,6 +107,12 @@ export function CollectionItemIcon({
             role="tooltip"
           >
             <p className="text-xs font-medium text-zinc-100">{name}</p>
+            <WeaponMetaIcons
+              classOrWeaponType={classOrWeaponType}
+              damageType={damageType}
+              ammoType={ammoType}
+              className="mt-1.5"
+            />
             {source ? (
               <p className="mt-1 text-[10px] leading-snug text-zinc-400">
                 {source}

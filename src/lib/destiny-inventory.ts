@@ -131,6 +131,17 @@ type ProfileInventoryResponse = {
   characterRecords?: {
     data?: Record<string, { records?: Record<string, { state: number }> }>;
   };
+  characterProgressions?: {
+    data?: Record<
+      string,
+      {
+        progressions?: Record<
+          string,
+          { level?: number; rewardItemStates?: number[] }
+        >;
+      }
+    >;
+  };
 };
 
 function bungieHeaders(accessToken: string) {

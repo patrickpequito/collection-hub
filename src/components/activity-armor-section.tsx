@@ -56,6 +56,15 @@ export function ActivityArmorSection({
             <div className="grid grid-cols-5 gap-1.5">
               {ARMOR_SLOTS.map((slot, slotIndex) => {
                 const piece = row.pieces[slot];
+                if (!piece) {
+                  return (
+                    <div
+                      key={`${row.setName}-${row.guardianClass}-${slot}`}
+                      className="min-w-0"
+                      aria-hidden
+                    />
+                  );
+                }
                 const tooltipAlign =
                   slotIndex === 0
                     ? "start"

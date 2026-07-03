@@ -1,0 +1,52 @@
+name: Refresh weapon roll data
+
+on:
+  schedule:
+    # Daily at 06:00 UTC (~07:00 Madrid in winter, ~08:00 in summer).
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: refresh-weapon-roll-data
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Regenerate god rolls (DIM voltron)
+        run: npm run generate:god-rolls
+
+      - name: Regenerate Aegis rolls (MrCharles wishlist)
+        run: npm run generate:aegis-rolls
+
+      - name: Commit and push if changed
+        run: |
+          git add public/data/weapon-god-rolls.json public/data/weapon-aegis-rolls.json
+
+          if git diff --cached --quiet; then
+            echo "No changes in weapon roll data"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "$(cat <<'EOF'
+chore(data): refresh weapon god rolls and Aegis data
+
+Scheduled sync of public/data/weapon-god-rolls.json and
+public/data/weapon-aegis-rolls.json.
+EOF
+)"
+          git push

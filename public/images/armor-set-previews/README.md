@@ -72,7 +72,7 @@ Filename is the slugified set name. These sets are not tied to a single RAD acti
 | `exodus-down.webp`        | Exodus Down         | **todo** |
 | `ferropotent.webp`        | Ferropotent         | **todo** |
 | `first-ascent.webp`       | First Ascent        | **todo** |
-| `iron-battalion-set.webp` | Iron Battalion Set  | **todo** |
+| `iron-battalion-set.webp` | Iron Banner (Iron Battalion) | done     |
 | `iron-panoply-set.webp`   | Iron Panoply Set    | **todo** |
 | `last-discipline.webp`    | Last Discipline     | **todo** |
 | `luminopotent.webp`       | Luminopotent        | **todo** |

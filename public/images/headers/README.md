@@ -6,6 +6,7 @@ Full-width strip at the top of catalog pages (**200 px** tall on screen). Images
 |---------|-----------|
 | Loot Collector | `public/images/headers/loot-collector-header.webp` |
 | Armor sets | `public/images/headers/armor-sets-header.webp` |
+| Iron Banner | `public/images/headers/iron-banner-header.webp` |
 
 | | |
 |---|---|
