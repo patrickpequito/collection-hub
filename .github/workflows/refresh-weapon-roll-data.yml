@@ -42,11 +42,5 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "$(cat <<'EOF'
-chore(data): refresh weapon god rolls and Aegis data
-
-Scheduled sync of public/data/weapon-god-rolls.json and
-public/data/weapon-aegis-rolls.json.
-EOF
-)"
+          git commit -m "chore(data): refresh weapon god rolls and Aegis data" -m "Scheduled sync of public/data/weapon-god-rolls.json and public/data/weapon-aegis-rolls.json."
           git push
