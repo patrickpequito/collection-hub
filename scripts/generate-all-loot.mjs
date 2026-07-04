@@ -23,14 +23,18 @@ import {
   buildWatermarkLabelMap,
   buildSalvationsEdgeS29ReissueMinIndex,
   buildSeasonDisplayIconLookup,
-  catalogGroupKey,
+  catalogArmorGroupName,
+  catalogArmorPieceGroupKey,
+  catalogEntryGroupKey,
   displayNumberFromLabel,
   isActiveSeasonalArtifact,
   isDebutRelevantVariant,
+  isMonumentWeaponReissue,
   isSourceObtainable,
   normalizeItemName,
   orderFacetValues,
   resolveCollectibleForVariant,
+  resolveCollectibleSourceString,
   resolveEventLabel,
   catalogVersionsEquivalent,
   preferCatalogVersion,
@@ -242,6 +246,29 @@ function resolveExoticIntrinsic(item, items) {
   return undefined;
 }
 
+function isCodaLegacyRedWarArmor(item, peerItems) {
+  const name = item.displayProperties?.name?.trim() ?? "";
+  if (!name || /\(CODA\)/i.test(name)) return false;
+  if (item.inventory?.tierTypeName !== "Legendary") return false;
+  if (
+    !peerItems.some((peer) =>
+      /\(CODA\)/i.test(peer.displayProperties?.name ?? ""),
+    )
+  ) {
+    return false;
+  }
+
+  const legacyPeers = peerItems.filter(
+    (peer) => !/\(CODA\)/i.test(peer.displayProperties?.name ?? ""),
+  );
+  if (!legacyPeers.length) return false;
+
+  const oldestLegacy = [...legacyPeers].sort(
+    (a, b) => (a.index ?? 0) - (b.index ?? 0),
+  )[0];
+  return String(oldestLegacy?.hash) === String(item.hash);
+}
+
 function resolveArmorVersionSeasonLabel(
   item,
   collectible,
@@ -259,8 +286,12 @@ function resolveArmorVersionSeasonLabel(
     sortedPeers.length > 1 &&
     String(sortedPeers[0]?.hash) === String(item.hash);
 
+  if (isCodaLegacyRedWarArmor(item, peerItems)) {
+    return "Red War";
+  }
+
   if (isArmor30Item(item)) {
-    const source = collectible?.sourceString ?? "";
+    const source = resolveCollectibleSourceString(collectible);
     const armorLabel = resolveArmor30SeasonLabel(
       item,
       source,
@@ -272,10 +303,25 @@ function resolveArmorVersionSeasonLabel(
   }
 
   if (isOldestPeer && item.inventory?.tierTypeName === "Exotic") {
-    return "Red War";
+    const hasCollectible = Boolean(collectible?.sourceString);
+    if (hasCollectible) {
+      return "Red War";
+    }
   }
 
   if (hasArtificeArmorSocket(item, items)) {
+    const watermarkLabel = resolveVersionSeasonLabel(
+      item,
+      collectible,
+      seasons,
+      seasonPassItemSeason,
+      seasonIndexAnchors,
+      dimSeasonData,
+      context,
+    );
+    if (watermarkLabel && watermarkLabel !== "Shadowkeep") {
+      return watermarkLabel;
+    }
     return "Shadowkeep";
   }
 
@@ -375,11 +421,25 @@ async function loadManifestTables() {
 }
 
 
+function resolveCatalogTypeLabel(item) {
+  const type = resolveTypeLabel(item);
+  if (type) return type;
+  if (isMonumentWeaponReissue(item)) return "Weapon";
+  return null;
+}
+
 function catalogItemGroupKey(item) {
   const name = item.displayProperties?.name;
-  const type = resolveTypeLabel(item);
+  const type = resolveCatalogTypeLabel(item);
   if (!name?.trim() || !type) return null;
-  return catalogGroupKey(name, type);
+  if (type === "Armor") {
+    const slot = resolveSlotLabel(item, type);
+    const guardianClass = resolveClassOrWeaponType(item, type);
+    if (slot && guardianClass) {
+      return catalogArmorPieceGroupKey(name, guardianClass, slot);
+    }
+  }
+  return catalogEntryGroupKey(name, type);
 }
 
 function buildItemsByName(items) {
@@ -1135,11 +1195,17 @@ function isCatalogVersionCandidate(item, group) {
   const icon = item.displayProperties?.icon;
   if (!name || !icon) return false;
 
-  const type = resolveTypeLabel(item);
+  const type = resolveCatalogTypeLabel(item);
   if (!type) return false;
 
   const rarity = item.inventory?.tierTypeName ?? "";
   if (!rarity || rarity === "Unknown") return false;
+
+  // Stale manifest rows for exotic armor lack a collectible and must not become
+  // catalog versions (they are mislabeled "Red War" via oldest-peer logic).
+  if (item.itemType === 2 && rarity === "Exotic" && !item.collectibleHash) {
+    return false;
+  }
 
   return true;
 }
@@ -1170,6 +1236,12 @@ function buildVersionsForNameGroup(
   const candidates = group
     .filter((item) => isCatalogVersionCandidate(item, group))
     .sort((a, b) => (b.index ?? 0) - (a.index ?? 0));
+
+  const groupByHash = new Map(group.map((item) => [String(item.hash), item]));
+  const isArmor30ForHash = (hash) => {
+    const item = groupByHash.get(hash);
+    return item ? isArmor30Item(item) : undefined;
+  };
 
   const bySeason = new Map();
   const perkColumnsByHash = new Map();
@@ -1210,13 +1282,13 @@ function buildVersionsForNameGroup(
             },
           );
     const seasonIconPath = resolveSeasonIconPath(item);
-    const source = collectible?.sourceString ?? "";
+    const source = resolveCollectibleSourceString(collectible);
     const eventLabel = resolveEventLabel(source, seasonIconPath, seasonLabel);
     const isExotic = item.inventory?.tierTypeName === "Exotic";
     const exoticPerk = isExotic
       ? resolveExoticIntrinsic(item, items)
       : undefined;
-    const perkColumns = resolveWeaponPerkColumns(
+    let perkColumns = resolveWeaponPerkColumns(
       item,
       items,
       plugSets,
@@ -1226,6 +1298,23 @@ function buildVersionsForNameGroup(
       statDefs,
       plugIndex,
     );
+    if (!perkColumns?.length && isMonumentWeaponReissue(item)) {
+      const weaponPeer = group
+        .filter((variant) => variant.itemType === 3)
+        .sort((a, b) => (b.index ?? 0) - (a.index ?? 0))[0];
+      if (weaponPeer) {
+        perkColumns = resolveWeaponPerkColumns(
+          weaponPeer,
+          items,
+          plugSets,
+          socketTypes,
+          socketCategories,
+          statGroups,
+          statDefs,
+          plugIndex,
+        );
+      }
+    }
     perkColumnsByHash.set(String(item.hash), perkColumns);
 
     const candidate = {
@@ -1253,6 +1342,7 @@ function buildVersionsForNameGroup(
 
     const compareContext = {
       perkColumnsForHash: (hash) => perkColumnsByHash.get(hash),
+      isArmor30ForHash,
     };
 
     const mergeKey = [...bySeason.keys()].find((key) =>
@@ -1404,14 +1494,14 @@ function buildCatalog(
     const displayItem = pickNewestItemVariant(item, itemsByName);
     const displayHash = String(displayItem.hash);
     const alternates = relatedItemHashes(displayHash, item, itemsByName);
-    const nameGroup = itemsByName.get(catalogGroupKey(name, type)) ?? [item];
+    const nameGroup = itemsByName.get(catalogItemGroupKey(item)) ?? [item];
 
     const displayCollectible = resolveCollectibleForVariant(
       displayItem,
       nameGroup,
       collectibles,
     );
-    const source = displayCollectible?.sourceString ?? "";
+    const source = resolveCollectibleSourceString(displayCollectible);
     const seasonLabel = resolveVersionSeasonLabel(
       displayItem,
       displayCollectible,
@@ -1515,7 +1605,10 @@ function buildCatalog(
 
     entry.searchText = buildSearchText(entry);
 
-    const key = catalogGroupKey(name, type);
+    const key =
+      type === "Armor" && classOrWeaponType && slot
+        ? catalogArmorPieceGroupKey(name, classOrWeaponType, slot)
+        : catalogEntryGroupKey(name, type);
     const existing = byName.get(key);
     if (!existing) {
       byName.set(key, entry);
@@ -1545,7 +1638,14 @@ function buildCatalog(
   }
 
   for (const entry of catalog) {
-    const nameKey = catalogGroupKey(entry.name, entry.type);
+    const nameKey =
+      entry.type === "Armor" && entry.classOrWeaponType && entry.slot
+        ? catalogArmorPieceGroupKey(
+            entry.name,
+            entry.classOrWeaponType,
+            entry.slot,
+          )
+        : catalogEntryGroupKey(entry.name, entry.type);
     const group = itemsByName.get(nameKey) ?? [];
     const versions = buildVersionsForNameGroup(
       group,
@@ -1596,6 +1696,36 @@ function buildCatalog(
       entry.manifestInvestmentStats =
         manifestInvestmentByItemHash[entry.itemHash];
       entry.isArmor30ByItemHash = armor30ByItemHash;
+
+      if (versions.length > 1) {
+        const armor30Version = versions.find(
+          (version) => armor30ByItemHash[version.itemHash],
+        );
+        if (armor30Version) {
+          entry.itemHash = armor30Version.itemHash;
+          entry.iconPath = armor30Version.iconPath;
+          entry.seasonIconPath = armor30Version.seasonIconPath;
+          entry.seasonDisplayIconPath = armor30Version.seasonDisplayIconPath;
+          entry.seasonDisplayIconWatermark =
+            armor30Version.seasonDisplayIconWatermark;
+          entry.seasonLabel = armor30Version.seasonLabel;
+          entry.seasonNumber = armor30Version.seasonNumber;
+          if (armor30Version.eventLabel) {
+            entry.eventLabel = armor30Version.eventLabel;
+          } else {
+            delete entry.eventLabel;
+          }
+          entry.isArmor30 = true;
+          entry.manifestInvestmentStats =
+            manifestInvestmentByItemHash[armor30Version.itemHash];
+          if (entry.rarity === "Exotic") {
+            entry.exoticPerk =
+              exoticPerkByItemHash[armor30Version.itemHash] ?? entry.exoticPerk;
+          }
+          entry.versions = versions;
+        }
+      }
+
       if (entry.rarity === "Exotic") {
         entry.exoticPerk =
           exoticPerkByItemHash[entry.itemHash] ?? entry.exoticPerk;

@@ -72,11 +72,61 @@ function buildRadSetPreviewMap(): ReadonlyMap<string, string> {
 
 const RAD_SET_PREVIEW_FILES = buildRadSetPreviewMap();
 
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function buildActivitySourcePreviewPatterns(): [RegExp, string][] {
+  const patterns: [RegExp, string][] = [];
+  const seen = new Set<string>();
+
+  for (const page of Object.values(RAD_LOOT_ACTIVITY_PAGES)) {
+    const previewFile =
+      (page.armorSetPreviewFiles ?? [defaultActivityPreviewFile(page.slug)])[0]!;
+
+    const labels = new Set<string>([
+      page.title,
+      page.slug,
+      page.slug.replace(/-/g, " "),
+    ]);
+
+    for (const row of page.armorSets) {
+      for (const piece of Object.values(row.pieces)) {
+        if (!piece?.source) continue;
+        const quoted = piece.source.match(/"([^"]+)"/);
+        if (quoted?.[1]) labels.add(quoted[1]);
+      }
+    }
+
+    for (const label of labels) {
+      const key = `${label.toLowerCase()}::${previewFile}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      const pattern = escapeRegExp(label).replace(/'/g, "['']?");
+      patterns.push([new RegExp(pattern, "i"), previewFile]);
+    }
+  }
+
+  return patterns;
+}
+
+const ACTIVITY_SOURCE_PREVIEW_PATTERNS = buildActivitySourcePreviewPatterns();
+
 /** Preview filename for a legendary set (RAD activity image or slugified set name). */
-export function resolveArmorSetPreviewFile(setName: string): string {
-  return (
-    RAD_SET_PREVIEW_FILES.get(setName) ?? `${slugifySetName(setName)}.webp`
-  );
+export function resolveArmorSetPreviewFile(
+  setName: string,
+  source = "",
+): string {
+  const mapped = RAD_SET_PREVIEW_FILES.get(setName);
+  if (mapped) return mapped;
+
+  if (source) {
+    for (const [pattern, previewFile] of ACTIVITY_SOURCE_PREVIEW_PATTERNS) {
+      if (pattern.test(source)) return previewFile;
+    }
+  }
+
+  return `${slugifySetName(setName)}.webp`;
 }
 
 /** Resolves preview filenames for a RAD Loot activity page. */

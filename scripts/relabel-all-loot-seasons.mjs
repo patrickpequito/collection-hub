@@ -17,13 +17,20 @@ import {
   applyFeaturedWatermarkLabelCorrection,
   catalogVersionsEquivalent,
   displayNumberFromLabel,
+  MONUMENT_FEATURED_WATERMARK,
   preferCatalogVersion,
   resolveEventLabel,
   resolveIntoTheLightSeasonLabel,
   resolveArmor30SeasonLabel,
+  REVENANT_EPISODE_WATERMARK,
+  resolveActivitySourceSeasonLabel,
+  resolveCollectibleSourceString,
+  resolveWatermarkSeasonNumber,
+  seasonLabelFromManifestNumber,
   stripIncorrectMonumentLabel,
   resolveSeasonLabelFromSource,
   isSourceObtainable,
+  isRecurringVersionSource,
 } from "./all-loot-mappings.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -36,6 +43,7 @@ const DIM_WATERMARK_TO_SEASON = {
   "/common/destiny2_content/icons/4376a7d734583ae347acf9732aa3bb43.png": 27,
   "/common/destiny2_content/icons/95f7754d52d6016fdc445fb62aa7a31e.png": 28,
   "/common/destiny2_content/icons/e78fd9419f99464816ac8f628bc3c4af.png": 28,
+  "/common/destiny2_content/icons/5232219633cc4d90570bffda36caccf4.png": 25,
   "/common/destiny2_content/icons/0ac354c1c326441716ddb15d2c158c59.png": 26,
   "/common/destiny2_content/icons/6eeb62a30439cecc7699c22f3e1fb3cf.png": 28,
 };
@@ -89,7 +97,7 @@ function unwrapCallToArmsSeasonLabel(entry, version, currentLabel) {
   return "The Edge of Fate";
 }
 
-function resolvePrimaryLabel(entry) {
+function resolvePrimaryLabel(entry, dimSeasonData) {
   const source = entry.source ?? "";
   let label =
     resolveSeasonLabelFromSource(source, {}) ??
@@ -100,7 +108,7 @@ function resolvePrimaryLabel(entry) {
     mockItem(entry.seasonIconPath),
     label,
     source,
-    { watermarkToSeason: DIM_WATERMARK_TO_SEASON },
+    dimSeasonData,
   );
 
   return resolveIntoTheLightSeasonLabel(
@@ -110,24 +118,41 @@ function resolvePrimaryLabel(entry) {
   );
 }
 
-function resolveVersionLabel(version, entry) {
+const DIM_WATERMARK_TO_SEASON_URL =
+  "https://raw.githubusercontent.com/DestinyItemManager/d2-additional-info/master/output/watermark-to-season.json";
+
+function resolveVersionLabel(version, entry, dimSeasonData) {
+  const source = entry.source ?? "";
   let label = version.seasonLabel;
+  const fromSource = resolveSeasonLabelFromSource(source, {});
+  const ownSeason = resolveWatermarkSeasonNumber(
+    mockItem(version.seasonIconPath),
+    dimSeasonData,
+  );
+
+  if (fromSource && !isRecurringVersionSource(source)) {
+    label =
+      resolveActivitySourceSeasonLabel(fromSource, ownSeason) ?? fromSource;
+  } else if (ownSeason > 0) {
+    label = seasonLabelFromManifestNumber(ownSeason);
+  }
+
   if (label === "S28 Season: Reclamation") {
     label = "The Edge of Fate";
   }
 
   const wm = version.seasonIconPath?.split("/").pop() ?? "";
+  if (wm === MONUMENT_FEATURED_WATERMARK) {
+    return MONUMENT_OF_TRIUMPH_LABEL;
+  }
+  if (wm === REVENANT_EPISODE_WATERMARK) {
+    return "S25 Episode: Revenant";
+  }
   if (wm === "95f7754d52d6016fdc445fb62aa7a31e.png") {
     return "Renegades";
   }
   if (wm === "0ac354c1c326441716ddb15d2c158c59.png") {
     return "S26 Episode: Heresy";
-  }
-  if (
-    wm === "e78fd9419f99464816ac8f628bc3c4af.png" &&
-    (label === "The Edge of Fate" || label === "S28 Season: Reclamation")
-  ) {
-    return MONUMENT_OF_TRIUMPH_LABEL;
   }
 
   return stripIncorrectMonumentLabel(
@@ -136,13 +161,13 @@ function resolveVersionLabel(version, entry) {
       mockItem(version.seasonIconPath),
       label,
       entry.source ?? "",
-      { watermarkToSeason: DIM_WATERMARK_TO_SEASON },
+      dimSeasonData,
     ),
     entry.source ?? "",
   );
 }
 
-function applyVersionLabels(entry, version, source = "") {
+function applyVersionLabels(entry, version, dimSeasonData, source = "") {
   if (version.seasonLabel === INTO_THE_LIGHT_LABEL) return;
 
   if (entry.type === "Armor") {
@@ -150,7 +175,7 @@ function applyVersionLabels(entry, version, source = "") {
       mockItem(version.seasonIconPath),
       source || entry.source || "",
       {},
-      { watermarkToSeason: DIM_WATERMARK_TO_SEASON },
+      dimSeasonData,
     );
     if (armorLabel) {
       version.seasonLabel = normalizeMonumentLabel(armorLabel);
@@ -175,7 +200,9 @@ function applyVersionLabels(entry, version, source = "") {
     );
   }
 
-  version.seasonLabel = normalizeMonumentLabel(resolveVersionLabel(version, entry));
+  version.seasonLabel = normalizeMonumentLabel(
+    resolveVersionLabel(version, entry, dimSeasonData),
+  );
   version.seasonNumber = displayNumberFromLabel(version.seasonLabel);
 
   const versionEvent = resolveEventLabel(
@@ -265,12 +292,23 @@ function normalizeMonumentLabel(label) {
   return label === "S29 Monument of Triumph" ? MONUMENT_OF_TRIUMPH_LABEL : label;
 }
 
-function applyEntryLabels(entry) {
+function correctEntrySource(entry) {
+  if (
+    entry.name === "Tyranny of Heaven" &&
+    /garden of salvation/i.test(entry.source ?? "")
+  ) {
+    return "Source: Last Wish raid.";
+  }
+  return entry.source ?? "";
+}
+
+function applyEntryLabels(entry, dimSeasonData) {
+  entry.source = correctEntrySource(entry);
   entry.seasonLabel = normalizeMonumentLabel(entry.seasonLabel);
   applyIntoTheLightLabel(entry);
 
   for (const version of entry.versions ?? []) {
-    applyVersionLabels(entry, version);
+    applyVersionLabels(entry, version, dimSeasonData);
   }
 
   collapseItemVersions(entry);
@@ -295,10 +333,10 @@ function applyEntryLabels(entry) {
         mockItem(entry.seasonIconPath),
         entry.source ?? "",
         {},
-        { watermarkToSeason: DIM_WATERMARK_TO_SEASON },
+        dimSeasonData,
       );
       entry.seasonLabel = normalizeMonumentLabel(
-        armorLabel ?? resolvePrimaryLabel(entry),
+        armorLabel ?? resolvePrimaryLabel(entry, dimSeasonData),
       );
       entry.seasonNumber = displayNumberFromLabel(entry.seasonLabel);
 
@@ -310,7 +348,7 @@ function applyEntryLabels(entry) {
       if (eventLabel) entry.eventLabel = eventLabel;
       else delete entry.eventLabel;
     } else {
-      entry.seasonLabel = resolvePrimaryLabel(entry);
+      entry.seasonLabel = resolvePrimaryLabel(entry, dimSeasonData);
       entry.seasonNumber = displayNumberFromLabel(entry.seasonLabel);
 
       const eventLabel = resolveEventLabel(
@@ -385,8 +423,20 @@ function countCallToArmsEvent(items) {
 
 const loot = JSON.parse(readFileSync(catalogPath, "utf8"));
 
+let watermarkToSeason = { ...DIM_WATERMARK_TO_SEASON };
+try {
+  const response = await fetch(DIM_WATERMARK_TO_SEASON_URL);
+  if (response.ok) {
+    watermarkToSeason = { ...await response.json(), ...DIM_WATERMARK_TO_SEASON };
+  }
+} catch {
+  // Fall back to the partial local map.
+}
+
+const relabelDimSeasonData = { watermarkToSeason };
+
 for (const item of loot.items) {
-  applyEntryLabels(item);
+  applyEntryLabels(item, relabelDimSeasonData);
   item.searchText = buildSearchText(item);
 }
 

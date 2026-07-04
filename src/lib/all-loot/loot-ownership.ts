@@ -1,5 +1,4 @@
-import { collectArmorItemHashes } from "@/lib/armor/item-hashes";
-import { collectWeaponItemHashes } from "@/lib/weapons/item-hashes";
+import { collectAllLootItemHashes } from "@/lib/all-loot/item-hashes";
 import type { AllLootItem } from "@/types/all-loot";
 
 export function isLootHashOwned(
@@ -12,10 +11,5 @@ export function isLootHashOwned(
   const item = catalogByHash.get(itemHash);
   if (!item) return false;
 
-  const hashes =
-    item.type === "Armor"
-      ? collectArmorItemHashes(item)
-      : collectWeaponItemHashes(item);
-
-  return hashes.some((hash) => ownedSet.has(hash));
+  return collectAllLootItemHashes(item).some((hash) => ownedSet.has(hash));
 }

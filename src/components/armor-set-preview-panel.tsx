@@ -9,10 +9,14 @@ import { X_PROFILE_HANDLE, X_PROFILE_URL } from "@/lib/social";
 
 type ArmorSetPreviewPanelProps = {
   setName: string;
+  source?: string;
 };
 
-export function ArmorSetPreviewPanel({ setName }: ArmorSetPreviewPanelProps) {
-  const imageFile = resolveArmorSetPreviewFile(setName);
+export function ArmorSetPreviewPanel({
+  setName,
+  source = "",
+}: ArmorSetPreviewPanelProps) {
+  const imageFile = resolveArmorSetPreviewFile(setName, source);
 
   return (
     <div className="space-y-3">

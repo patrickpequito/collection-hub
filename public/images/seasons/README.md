@@ -54,6 +54,31 @@ The filename is the **season label slug**: lowercase, no apostrophes, non-alphan
 
 You only need files for seasons you have art for. Missing files fall back to the Bungie watermark icon automatically.
 
+## Filter dropdown icons
+
+Some seasons use a second, more compact PNG in the All Loot season filter: `{slug}-small.png` (same slug rules as above). Detail pages and version badges use the standard `{slug}.png` file.
+
+Configured labels (see `src/lib/all-loot/season-icon-path.ts`):
+
+- 30th Anniversary
+- Beyond Light
+- Curse of Osiris
+- Lightfall
+- Red War
+- S5 Season of the Forge
+- S7 Season of Opulence
+- S10 Season of the Worthy
+- S12 Season of the Hunt
+- S13 Season of the Chosen
+- S15 Season of the Lost
+- S16 Season of the Risen
+- S17 Season of the Haunted
+- S19 Season of the Seraph
+- S20 Season of Defiance
+- The Final Shape
+- The Witch Queen
+- Warmind
+
 ## Event badges
 
 Weapons from limited-time events (30th Anniversary, Solstice, Festival of the Lost, etc.) use these filenames on weapon pages when the catalog has an `eventLabel`:

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-29T12:43:40.626Z",
+  "generatedAt": "2026-07-04T06:37:54.191Z",
   "sets": [
     {
       "id": "expansions-aion-adapter",
@@ -190,9 +190,9 @@
             "iconPath": "/common/destiny2_content/icons/dedcc45cb8108b5cf7c82709a9124c16.jpg"
           },
           "classItem": {
-            "itemHash": "436615288",
-            "name": "Ancient Apocalypse Cloak",
-            "iconPath": "/common/destiny2_content/icons/ccc5b4164104b566fb22ad9b65a5ba85.jpg"
+            "itemHash": "938218310",
+            "name": "Calamity Rig Cloak",
+            "iconPath": "/common/destiny2_content/icons/de2c40348bc3da6e7ddaacde6860e3f1.jpg"
           }
         },
         "warlock": {
@@ -270,9 +270,9 @@
             "iconPath": "/common/destiny2_content/icons/c48b0c5ca65ff882cb3e934b97bd9aa4.jpg"
           },
           "classItem": {
-            "itemHash": "119859462",
-            "name": "Wing Theorem",
-            "iconPath": "/common/destiny2_content/icons/8bfbc76f5c8a5971dc9a70f324f3c91e.jpg"
+            "itemHash": "4269346472",
+            "name": "Binary Phoenix Bond",
+            "iconPath": "/common/destiny2_content/icons/5c47b2adbc3e344d2a70d4b642dae066.jpg"
           }
         }
       }
@@ -338,6 +338,96 @@
             "itemHash": "1875607511",
             "name": "Stella Incognita Mark",
             "iconPath": "/common/destiny2_content/icons/a44edec8b86445e0f8325f8335171984.jpg"
+          }
+        }
+      }
+    },
+    {
+      "id": "dungeons-apostate-s-blade",
+      "name": "Apostate's Blade",
+      "category": "dungeons",
+      "source": "Source: \"Pit of Heresy\" Dungeon",
+      "sourceLabel": "Pit of Heresy",
+      "classes": {
+        "titan": {
+          "gauntlets": {
+            "itemHash": "280416716",
+            "name": "Apostate's Blade Gauntlets",
+            "iconPath": "/common/destiny2_content/icons/28059c8db2e13dd9e3436cd79721c234.jpg"
+          },
+          "legs": {
+            "itemHash": "926252150",
+            "name": "Apostate's Blade Greaves",
+            "iconPath": "/common/destiny2_content/icons/69fda58f34290731b98860b2a4b718b0.jpg"
+          },
+          "helmet": {
+            "itemHash": "1393530461",
+            "name": "Apostate's Blade Helm",
+            "iconPath": "/common/destiny2_content/icons/7351d41c982ad05d4b5f1159fe005a1b.jpg"
+          },
+          "chest": {
+            "itemHash": "3622930836",
+            "name": "Apostate's Blade Plate",
+            "iconPath": "/common/destiny2_content/icons/35dbd275635ccdad16c508a69cce6b1f.jpg"
+          },
+          "classItem": {
+            "itemHash": "496251113",
+            "name": "Apostate's Blade Mark",
+            "iconPath": "/common/destiny2_content/icons/bc0b495a8e566927b753742920fe9387.jpg"
+          }
+        },
+        "hunter": {
+          "gauntlets": {
+            "itemHash": "306365328",
+            "name": "Apostate's Blade Grips",
+            "iconPath": "/common/destiny2_content/icons/fa6a3329981ad379b3c10b3c277d0795.jpg"
+          },
+          "legs": {
+            "itemHash": "665000682",
+            "name": "Apostate's Blade Strides",
+            "iconPath": "/common/destiny2_content/icons/94d9788eb091b71fce6e1506d8a1aa25.jpg"
+          },
+          "helmet": {
+            "itemHash": "834580249",
+            "name": "Apostate's Blade Mask",
+            "iconPath": "/common/destiny2_content/icons/6fa208b5ed2cd7c956284f54d87e4b70.jpg"
+          },
+          "chest": {
+            "itemHash": "2817890488",
+            "name": "Apostate's Blade Vest",
+            "iconPath": "/common/destiny2_content/icons/baab3c1221d28778ecf184fda5b5ae26.jpg"
+          },
+          "classItem": {
+            "itemHash": "1213384789",
+            "name": "Apostate's Blade Cloak",
+            "iconPath": "/common/destiny2_content/icons/7a10b1658a1ba91e1af2c1ec57a7cae7.jpg"
+          }
+        },
+        "warlock": {
+          "legs": {
+            "itemHash": "1195966527",
+            "name": "Apostate's Blade Boots",
+            "iconPath": "/common/destiny2_content/icons/7ff4c7ed87ebdc1fb56fb385399127d1.jpg"
+          },
+          "chest": {
+            "itemHash": "2621477411",
+            "name": "Apostate's Blade Robe",
+            "iconPath": "/common/destiny2_content/icons/37f138c807950f94f38e233c2bc2ee29.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "3549765533",
+            "name": "Apostate's Blade Gloves",
+            "iconPath": "/common/destiny2_content/icons/e5c8e50fc8d576ac78ee04c4d68c4296.jpg"
+          },
+          "helmet": {
+            "itemHash": "3602570948",
+            "name": "Apostate's Blade Hood",
+            "iconPath": "/common/destiny2_content/icons/239a0ba341514eaf97b98a8df300d4ed.jpg"
+          },
+          "classItem": {
+            "itemHash": "1903284250",
+            "name": "Apostate's Blade Bond",
+            "iconPath": "/common/destiny2_content/icons/0be1cce11ec0843d141efa53e04a12be.jpg"
           }
         }
       }
@@ -488,9 +578,9 @@
             "iconPath": "/common/destiny2_content/icons/a85a44d566d418f564f4e86c22ed91c8.jpg"
           },
           "classItem": {
-            "itemHash": "2376585692",
-            "name": "Mark of the Exile",
-            "iconPath": "/common/destiny2_content/icons/baed01a16d01c792222b901d7c898c1f.jpg"
+            "itemHash": "1885235312",
+            "name": "Cruel Electrum Mark",
+            "iconPath": "/common/destiny2_content/icons/c210174e6fe0ae463da931898cc54c66.jpg"
           }
         },
         "warlock": {
@@ -676,9 +766,9 @@
             "iconPath": "/common/destiny2_content/icons/3801908e7e59352eadd8c308978317a7.jpg"
           },
           "classItem": {
-            "itemHash": "1934339678",
-            "name": "Swordmaster's Mark",
-            "iconPath": "/common/destiny2_content/icons/f9cbd21881a6815a9afc1e0eebc12298.jpg"
+            "itemHash": "1334855187",
+            "name": "Wild Anthem Mark",
+            "iconPath": "/common/destiny2_content/icons/8f8f55a7a39f188a125bbb7fe60b93a6.jpg"
           }
         },
         "warlock": {
@@ -903,9 +993,9 @@
             "iconPath": "/common/destiny2_content/icons/ee8953f418edcd6f22ecf8e4640919cb.jpg"
           },
           "classItem": {
-            "itemHash": "3884544409",
-            "name": "Binary Phoenix Mark",
-            "iconPath": "/common/destiny2_content/icons/ba2e44f4117f8b49a4808378084fff35.jpg"
+            "itemHash": "4150060382",
+            "name": "Clutch Extol Mark",
+            "iconPath": "/common/destiny2_content/icons/b37607378391f2c73c5186769b96e381.jpg"
           }
         }
       }
@@ -956,9 +1046,9 @@
             "iconPath": "/common/destiny2_content/icons/1eed30f03c439d808b9655c3fa6e680d.jpg"
           },
           "classItem": {
-            "itemHash": "87665893",
-            "name": "Binary Phoenix Cloak",
-            "iconPath": "/common/destiny2_content/icons/66e458fa4b01c340b966f63eeadb1ce5.jpg"
+            "itemHash": "693067797",
+            "name": "Wing Contender",
+            "iconPath": "/common/destiny2_content/icons/47d4acc211e5ac4e7dcb4cbecf86a45e.jpg"
           }
         },
         "titan": {
@@ -1116,6 +1206,86 @@
       }
     },
     {
+      "id": "expansions-cruel-electrum",
+      "name": "Cruel Electrum",
+      "category": "expansions",
+      "source": "Source: Trials of Osiris Challenges",
+      "sourceLabel": "Trials of Osiris Challenges",
+      "classes": {
+        "warlock": {
+          "gauntlets": {
+            "itemHash": "164616118",
+            "name": "Cruel Electrum Gloves",
+            "iconPath": "/common/destiny2_content/icons/862cc39bb017a86de90be1b3e9aa7cd4.jpg"
+          },
+          "legs": {
+            "itemHash": "1376998416",
+            "name": "Cruel Electrum Boots",
+            "iconPath": "/common/destiny2_content/icons/772054c1233595e9d80f57a65fb5368c.jpg"
+          },
+          "helmet": {
+            "itemHash": "2346028079",
+            "name": "Cruel Electrum Hood",
+            "iconPath": "/common/destiny2_content/icons/4bbce216444d7a454d3f2a238968f347.jpg"
+          }
+        },
+        "titan": {
+          "chest": {
+            "itemHash": "381670717",
+            "name": "Cruel Electrum Plate",
+            "iconPath": "/common/destiny2_content/icons/f363335743d5d1d1245dbd36dcef969b.jpg"
+          },
+          "legs": {
+            "itemHash": "1931809125",
+            "name": "Cruel Electrum Greaves",
+            "iconPath": "/common/destiny2_content/icons/3f9857fb3e6f44f60ade3b9952f96ec5.jpg"
+          },
+          "helmet": {
+            "itemHash": "2149717194",
+            "name": "Cruel Electrum Helm",
+            "iconPath": "/common/destiny2_content/icons/0954529d457587805811c35b7cfc11e0.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "2196855059",
+            "name": "Cruel Electrum Gauntlets",
+            "iconPath": "/common/destiny2_content/icons/dc2ea6c2c3091583c91b97dc23efd8f9.jpg"
+          },
+          "classItem": {
+            "itemHash": "2376585692",
+            "name": "Mark of the Exile",
+            "iconPath": "/common/destiny2_content/icons/baed01a16d01c792222b901d7c898c1f.jpg"
+          }
+        },
+        "hunter": {
+          "helmet": {
+            "itemHash": "442462278",
+            "name": "Cruel Electrum Mask",
+            "iconPath": "/common/destiny2_content/icons/dfd4af0d5b26246b9a15baf578580830.jpg"
+          },
+          "legs": {
+            "itemHash": "1223380281",
+            "name": "Cruel Electrum Strides",
+            "iconPath": "/common/destiny2_content/icons/7a83d5efd3faa625d9eebefe040686e1.jpg"
+          },
+          "chest": {
+            "itemHash": "2719275361",
+            "name": "Cruel Electrum Vest",
+            "iconPath": "/common/destiny2_content/icons/2c43e62649985d41cef2a2c737d2502a.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "4134167063",
+            "name": "Cruel Electrum Grips",
+            "iconPath": "/common/destiny2_content/icons/bb6311ab1d9214c0dc253d0cc2ff7ecb.jpg"
+          },
+          "classItem": {
+            "itemHash": "1283202269",
+            "name": "Atavistic Idol Cloak",
+            "iconPath": "/common/destiny2_content/icons/3986e244f9881d567cd41660368d6185.jpg"
+          }
+        }
+      }
+    },
+    {
       "id": "expansions-crystocrene",
       "name": "Crystocrene",
       "category": "expansions",
@@ -1196,6 +1366,81 @@
       }
     },
     {
+      "id": "expansions-cyberserpent-null",
+      "name": "Cyberserpent Null",
+      "category": "expansions",
+      "source": "Source: Complete Gambit matches and earn rank-up packages from the Drifter.",
+      "sourceLabel": "Complete Gambit matches and earn rank-up packages from the Drifter.",
+      "classes": {
+        "hunter": {
+          "legs": {
+            "itemHash": "190415264",
+            "name": "Cyberserpent Null Strides",
+            "iconPath": "/common/destiny2_content/icons/02a95a835d4fbbeb534157c559deadd6.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "672962726",
+            "name": "Cyberserpent Null Grips",
+            "iconPath": "/common/destiny2_content/icons/ff3f08b289cf56d63b379bac36570782.jpg"
+          },
+          "helmet": {
+            "itemHash": "697518687",
+            "name": "Cyberserpent Null Mask",
+            "iconPath": "/common/destiny2_content/icons/381476453721064c2a48c4aac95faa46.jpg"
+          },
+          "chest": {
+            "itemHash": "3805392714",
+            "name": "Cyberserpent Null Vest",
+            "iconPath": "/common/destiny2_content/icons/2be35eff5a66e4f1f90524c28395682a.jpg"
+          },
+          "classItem": {
+            "itemHash": "117457123",
+            "name": "Poison Promise Cloak",
+            "iconPath": "/common/destiny2_content/icons/e4328cb35ce6dd935d5d4d32a755e058.jpg"
+          }
+        },
+        "titan": {
+          "legs": {
+            "itemHash": "428001412",
+            "name": "Cyberserpent Null Greaves",
+            "iconPath": "/common/destiny2_content/icons/12dd689dd59192c998a4a712d7a3d42f.jpg"
+          },
+          "chest": {
+            "itemHash": "1239854366",
+            "name": "Cyberserpent Null Plate",
+            "iconPath": "/common/destiny2_content/icons/e64e3b3948c5b0d76b989fe15b9748fc.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "1388789482",
+            "name": "Cyberserpent Null Gauntlets",
+            "iconPath": "/common/destiny2_content/icons/14109293495cca5fe94615e84a51e677.jpg"
+          },
+          "helmet": {
+            "itemHash": "4182898491",
+            "name": "Cyberserpent Null Helm",
+            "iconPath": "/common/destiny2_content/icons/9ea408c883c23e4da5402db53433ae02.jpg"
+          },
+          "classItem": {
+            "itemHash": "2666189615",
+            "name": "Poison Promise Mark",
+            "iconPath": "/common/destiny2_content/icons/70496cbc2d3c8d02d01787669388ca60.jpg"
+          }
+        },
+        "warlock": {
+          "legs": {
+            "itemHash": "1690092421",
+            "name": "Cyberserpent Null Boots",
+            "iconPath": "/common/destiny2_content/icons/3c234886c9fe5ea0719b40a4da283775.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "1955241651",
+            "name": "Cyberserpent Null Gloves",
+            "iconPath": "/common/destiny2_content/icons/5a79bdde2dcf780e43dae270f8f01789.jpg"
+          }
+        }
+      }
+    },
+    {
       "id": "expansions-dead-end-cure-2-1",
       "name": "Dead End Cure 2.1",
       "category": "expansions",
@@ -1238,65 +1483,65 @@
       "source": "Source: Dungeon \"Duality\"",
       "sourceLabel": "Duality",
       "classes": {
-        "warlock": {
-          "helmet": {
-            "itemHash": "630469185",
-            "name": "Deep Explorer Hood",
-            "iconPath": "/common/destiny2_content/icons/cf6ee97251ea760bed9e63b04fb45db8.jpg"
-          },
-          "gauntlets": {
-            "itemHash": "1468388696",
-            "name": "Deep Explorer Gloves",
-            "iconPath": "/common/destiny2_content/icons/e15bd704f6871b90cb2df7cbc0d662ef.jpg"
-          },
-          "legs": {
-            "itemHash": "3798520466",
-            "name": "Deep Explorer Boots",
-            "iconPath": "/common/destiny2_content/icons/b260b1b0071ad340eb21808a327ee739.jpg"
-          }
-        },
         "titan": {
           "legs": {
-            "itemHash": "2351264197",
+            "itemHash": "360883781",
             "name": "Deep Explorer Greaves",
             "iconPath": "/common/destiny2_content/icons/5125df7348372048ad53f813a140e323.jpg"
           },
           "helmet": {
-            "itemHash": "2610749098",
+            "itemHash": "620368682",
             "name": "Deep Explorer Helmet",
             "iconPath": "/common/destiny2_content/icons/08487ead23df300f8123ded8f7eeb00e.jpg"
           },
           "gauntlets": {
-            "itemHash": "2616310259",
+            "itemHash": "625929843",
             "name": "Deep Explorer Gauntlets",
             "iconPath": "/common/destiny2_content/icons/ee0bd4b71c61589fec09c519ab7f1868.jpg"
           },
           "chest": {
-            "itemHash": "3570529565",
+            "itemHash": "2458622621",
             "name": "Deep Explorer Plate",
             "iconPath": "/common/destiny2_content/icons/018014859a1ddf8838f931785669dd65.jpg"
           },
           "classItem": {
-            "itemHash": "737550160",
+            "itemHash": "3920610512",
             "name": "Deep Explorer Mark",
             "iconPath": "/common/destiny2_content/icons/43ded926d41e0e20be948c5de4a9b77f.jpg"
           }
         },
-        "hunter": {
+        "warlock": {
+          "helmet": {
+            "itemHash": "1272123715",
+            "name": "Deep Explorer Hood",
+            "iconPath": "/common/destiny2_content/icons/cf6ee97251ea760bed9e63b04fb45db8.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "1943628306",
+            "name": "Deep Explorer Gloves",
+            "iconPath": "/common/destiny2_content/icons/e15bd704f6871b90cb2df7cbc0d662ef.jpg"
+          },
           "legs": {
-            "itemHash": "2364756343",
+            "itemHash": "2344969900",
+            "name": "Deep Explorer Boots",
+            "iconPath": "/common/destiny2_content/icons/b260b1b0071ad340eb21808a327ee739.jpg"
+          }
+        },
+        "hunter": {
+          "chest": {
+            "itemHash": "2800738009",
+            "name": "Deep Explorer Vest",
+            "iconPath": "/common/destiny2_content/icons/6ee7d7e68daadda53a87e05a624ef44f.jpg"
+          },
+          "legs": {
+            "itemHash": "2912260705",
             "name": "Deep Explorer Strides",
             "iconPath": "/common/destiny2_content/icons/470db91034af58352581823c6f387c33.jpg"
           },
           "helmet": {
-            "itemHash": "3262689948",
+            "itemHash": "2965807150",
             "name": "Deep Explorer Mask",
             "iconPath": "/common/destiny2_content/icons/59713a96f590ddd582a7defb6bf63532.jpg"
-          },
-          "chest": {
-            "itemHash": "4289018379",
-            "name": "Deep Explorer Vest",
-            "iconPath": "/common/destiny2_content/icons/6ee7d7e68daadda53a87e05a624ef44f.jpg"
           }
         }
       }
@@ -1366,9 +1611,9 @@
             "iconPath": "/common/destiny2_content/icons/7bc074e1bb1c6c30e197b591e73e9149.jpg"
           },
           "classItem": {
-            "itemHash": "2719854935",
-            "name": "Techsec Mark",
-            "iconPath": "/common/destiny2_content/icons/b33208b69c5e22fc89c2840f59b4fc86.jpg"
+            "itemHash": "2517367247",
+            "name": "Bushido Mark",
+            "iconPath": "/common/destiny2_content/icons/1e23eb74652b5db50b4971e0cd7926a5.jpg"
           }
         },
         "hunter": {
@@ -1680,6 +1925,71 @@
       }
     },
     {
+      "id": "expansions-eutechnology",
+      "name": "Eutechnology",
+      "category": "expansions",
+      "source": "Random Perks: This item cannot be reacquired from Collections.",
+      "sourceLabel": "Random Perks: This item cannot be reacquired from Collections.",
+      "classes": {
+        "titan": {
+          "chest": {
+            "itemHash": "433193440",
+            "name": "Eutechnology Plate",
+            "iconPath": "/common/destiny2_content/icons/1968347852a4858ef17c61053ec85b7d.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "591555944",
+            "name": "Eutechnology Gauntlets",
+            "iconPath": "/common/destiny2_content/icons/abb7cf5e15b6513399b498cae850466c.jpg"
+          },
+          "legs": {
+            "itemHash": "1692895170",
+            "name": "Eutechnology Greaves",
+            "iconPath": "/common/destiny2_content/icons/a7af8402c09a18e319412ca7b87f8e68.jpg"
+          },
+          "helmet": {
+            "itemHash": "1975004305",
+            "name": "Eutechnology Helm",
+            "iconPath": "/common/destiny2_content/icons/e93a2d082b966abd1b00c437f49093e7.jpg"
+          },
+          "classItem": {
+            "itemHash": "2757996223",
+            "name": "Disaster Corps Mark",
+            "iconPath": "/common/destiny2_content/icons/8accb9f3b6d8ad549f500bbccc6c9ef5.jpg"
+          }
+        },
+        "hunter": {
+          "chest": {
+            "itemHash": "726639044",
+            "name": "Eutechnology Vest",
+            "iconPath": "/common/destiny2_content/icons/b29bd77b341122c6391be150a2cdfeeb.jpg"
+          },
+          "helmet": {
+            "itemHash": "1152238701",
+            "name": "Eutechnology Cowl",
+            "iconPath": "/common/destiny2_content/icons/95e2d03d4faa2493c26fad06cd316de2.jpg"
+          },
+          "legs": {
+            "itemHash": "1232186726",
+            "name": "Eutechnology Strides",
+            "iconPath": "/common/destiny2_content/icons/bbfdfc1125f81689be655196b47ba9ff.jpg"
+          }
+        },
+        "warlock": {
+          "legs": {
+            "itemHash": "1683071779",
+            "name": "Eutechnology Boots",
+            "iconPath": "/common/destiny2_content/icons/a586af28be1e5e9e442f4488b99a2451.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "1851922001",
+            "name": "Eutechnology Gloves",
+            "iconPath": "/common/destiny2_content/icons/1579f493272bfaa337966eeff0dd7f98.jpg"
+          }
+        }
+      }
+    },
+    {
       "id": "expansions-exodus-down",
       "name": "Exodus Down",
       "category": "expansions",
@@ -1817,9 +2127,9 @@
             "iconPath": "/common/destiny2_content/icons/f2e5b2abd4f59f2634055bf3e59654b6.jpg"
           },
           "classItem": {
-            "itemHash": "536035447",
-            "name": "Wild Anthem Cloak",
-            "iconPath": "/common/destiny2_content/icons/356a013a19c09b766a54e190668a3406.jpg"
+            "itemHash": "1109145282",
+            "name": "Last Discipline Cloak",
+            "iconPath": "/common/destiny2_content/icons/4149f95578f01d6ae9664c542c1e42f9.jpg"
           }
         }
       }
@@ -2831,6 +3141,81 @@
       }
     },
     {
+      "id": "expansions-iron-battalion",
+      "name": "Iron Battalion",
+      "category": "expansions",
+      "source": "Source: Iron Banner",
+      "sourceLabel": "Iron Banner",
+      "classes": {
+        "hunter": {
+          "chest": {
+            "itemHash": "832474547",
+            "name": "Iron Battalion Vest",
+            "iconPath": "/common/destiny2_content/icons/a2c1c3ad7d5535cbc1f56cc9e890f778.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "1115024653",
+            "name": "Iron Battalion Grips",
+            "iconPath": "/common/destiny2_content/icons/3efe1f8914f11d2224d6edd87ee5f1be.jpg"
+          },
+          "legs": {
+            "itemHash": "1785823695",
+            "name": "Iron Battalion Strides",
+            "iconPath": "/common/destiny2_content/icons/16a08f0f7a57f90e8cb072ee54462ca7.jpg"
+          },
+          "helmet": {
+            "itemHash": "2242619636",
+            "name": "Iron Battalion Cowl",
+            "iconPath": "/common/destiny2_content/icons/3bb32455d504d605382dcc5e580ef154.jpg"
+          },
+          "classItem": {
+            "itemHash": "2911341942",
+            "name": "Iron Panoply Cloak",
+            "iconPath": "/common/destiny2_content/icons/6d266f3e5f594c7c3f8a468c33cd217d.jpg"
+          }
+        },
+        "titan": {
+          "helmet": {
+            "itemHash": "1448206048",
+            "name": "Iron Battalion Helm",
+            "iconPath": "/common/destiny2_content/icons/3e64530b6e3310d63985c21c81ca0a6c.jpg"
+          },
+          "chest": {
+            "itemHash": "1994130151",
+            "name": "Iron Battalion Plate",
+            "iconPath": "/common/destiny2_content/icons/314cbb771219df372a6653064969588c.jpg"
+          },
+          "legs": {
+            "itemHash": "3181972995",
+            "name": "Iron Battalion Greaves",
+            "iconPath": "/common/destiny2_content/icons/eb99e0ec6c10b6602b340ad9c2965aba.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "3350720177",
+            "name": "Iron Battalion Gauntlets",
+            "iconPath": "/common/destiny2_content/icons/5db1b9d7d45cbcc275f5996ee8fd8aad.jpg"
+          },
+          "classItem": {
+            "itemHash": "3408036410",
+            "name": "Iron Panoply Mark",
+            "iconPath": "/common/destiny2_content/icons/505405faae2cd207cb1768feb5e032b3.jpg"
+          }
+        },
+        "warlock": {
+          "legs": {
+            "itemHash": "3656265024",
+            "name": "Iron Battalion Boots",
+            "iconPath": "/common/destiny2_content/icons/1d70873aedfdb18a77dcb972ecbb9dd6.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "3672778310",
+            "name": "Iron Battalion Gloves",
+            "iconPath": "/common/destiny2_content/icons/1bd745236c5549668d55d6716f54e0e5.jpg"
+          }
+        }
+      }
+    },
+    {
       "id": "expansions-iron-companion",
       "name": "Iron Companion",
       "category": "expansions",
@@ -3173,9 +3558,9 @@
             "iconPath": "/common/destiny2_content/icons/e4aa3d8df93863a8b63050bd5455e67f.jpg"
           },
           "classItem": {
-            "itemHash": "3408036410",
-            "name": "Iron Panoply Mark",
-            "iconPath": "/common/destiny2_content/icons/505405faae2cd207cb1768feb5e032b3.jpg"
+            "itemHash": "2709627894",
+            "name": "Iron Battalion Mark",
+            "iconPath": "/common/destiny2_content/icons/95ae8ad96874b5005a02fc9d0746c300.jpg"
           }
         }
       }
@@ -3706,9 +4091,9 @@
             "iconPath": "/common/destiny2_content/icons/a300aff2e7484728d5e1cc4fd85cbeb5.jpg"
           },
           "classItem": {
-            "itemHash": "2773786868",
-            "name": "Last Discipline Mark",
-            "iconPath": "/common/destiny2_content/icons/90deeb6f24506b8f3553f68554ada533.jpg"
+            "itemHash": "4038196765",
+            "name": "Eutechnology Mark",
+            "iconPath": "/common/destiny2_content/icons/4908362c047a097ccf0426e468221ae7.jpg"
           }
         },
         "warlock": {
@@ -3754,75 +4139,75 @@
       "source": "Source: \"Deep Stone Crypt\" Raid",
       "sourceLabel": "Deep Stone Crypt",
       "classes": {
-        "warlock": {
-          "gauntlets": {
-            "itemHash": "79460168",
-            "name": "Legacy's Oath Gloves",
-            "iconPath": "/common/destiny2_content/icons/bd15c2dbf85a4d8dd9888843fffcd118.jpg"
+        "titan": {
+          "helmet": {
+            "itemHash": "129329474",
+            "name": "Legacy's Oath Helm",
+            "iconPath": "/common/destiny2_content/icons/2e43c0325063750172c6c51b1ef0a85b.jpg"
           },
           "legs": {
-            "itemHash": "756445218",
-            "name": "Legacy's Oath Boots",
-            "iconPath": "/common/destiny2_content/icons/a1e39c6f259c2ab40190a1dc0412dddf.jpg"
+            "itemHash": "943612349",
+            "name": "Legacy's Oath Greaves",
+            "iconPath": "/common/destiny2_content/icons/bdd939c72721db01184cdd4ea512d9ca.jpg"
           },
-          "helmet": {
-            "itemHash": "1462908657",
-            "name": "Legacy's Oath Cowl",
-            "iconPath": "/common/destiny2_content/icons/1862f38a8fb74634082cbed46761e94b.jpg"
-          }
-        },
-        "titan": {
           "chest": {
-            "itemHash": "751162931",
+            "itemHash": "3046896869",
             "name": "Legacy's Oath Plate",
             "iconPath": "/common/destiny2_content/icons/9ed0ee27a295dddad1e5cd070446c5b8.jpg"
           },
           "gauntlets": {
-            "itemHash": "1887490701",
+            "itemHash": "3763941291",
             "name": "Legacy's Oath Gauntlets",
             "iconPath": "/common/destiny2_content/icons/d874653d69ca08699f4f9893a66979f5.jpg"
           },
-          "legs": {
-            "itemHash": "2558289743",
-            "name": "Legacy's Oath Greaves",
-            "iconPath": "/common/destiny2_content/icons/bdd939c72721db01184cdd4ea512d9ca.jpg"
-          },
-          "helmet": {
-            "itemHash": "3015085684",
-            "name": "Legacy's Oath Helm",
-            "iconPath": "/common/destiny2_content/icons/2e43c0325063750172c6c51b1ef0a85b.jpg"
-          },
           "classItem": {
-            "itemHash": "2956588906",
+            "itemHash": "1702811704",
             "name": "Legacy's Oath Mark",
             "iconPath": "/common/destiny2_content/icons/75f481aa2758181c7f71d594a31f6066.jpg"
           }
         },
         "hunter": {
-          "helmet": {
-            "itemHash": "893751566",
-            "name": "Legacy's Oath Mask",
-            "iconPath": "/common/destiny2_content/icons/df1b5f30b9f8f0f3de16d8f91524ac4f.jpg"
-          },
-          "legs": {
-            "itemHash": "1264765761",
-            "name": "Legacy's Oath Strides",
-            "iconPath": "/common/destiny2_content/icons/13bdf076be15bb6d00b4973da60ddfb9.jpg"
-          },
           "gauntlets": {
-            "itemHash": "2343515647",
+            "itemHash": "726855135",
             "name": "Legacy's Oath Grips",
             "iconPath": "/common/destiny2_content/icons/2fb3a18d334cc836c63e916120b84381.jpg"
           },
           "chest": {
-            "itemHash": "4001862073",
+            "itemHash": "1657654553",
             "name": "Legacy's Oath Vest",
             "iconPath": "/common/destiny2_content/icons/d71f8d103ff809c856f2b80d54d6b11a.jpg"
           },
+          "helmet": {
+            "itemHash": "3572161646",
+            "name": "Legacy's Oath Mask",
+            "iconPath": "/common/destiny2_content/icons/df1b5f30b9f8f0f3de16d8f91524ac4f.jpg"
+          },
+          "legs": {
+            "itemHash": "3943072673",
+            "name": "Legacy's Oath Strides",
+            "iconPath": "/common/destiny2_content/icons/13bdf076be15bb6d00b4973da60ddfb9.jpg"
+          },
           "classItem": {
-            "itemHash": "1021060724",
+            "itemHash": "3013397204",
             "name": "Legacy's Oath Cloak",
             "iconPath": "/common/destiny2_content/icons/61c552eeec49e985fc0b130aa17da805.jpg"
+          }
+        },
+        "warlock": {
+          "gauntlets": {
+            "itemHash": "2654264556",
+            "name": "Legacy's Oath Gloves",
+            "iconPath": "/common/destiny2_content/icons/bd15c2dbf85a4d8dd9888843fffcd118.jpg"
+          },
+          "legs": {
+            "itemHash": "3299996694",
+            "name": "Legacy's Oath Boots",
+            "iconPath": "/common/destiny2_content/icons/a1e39c6f259c2ab40190a1dc0412dddf.jpg"
+          },
+          "helmet": {
+            "itemHash": "4191732605",
+            "name": "Legacy's Oath Cowl",
+            "iconPath": "/common/destiny2_content/icons/1862f38a8fb74634082cbed46761e94b.jpg"
           }
         }
       }
@@ -3978,6 +4363,81 @@
             "itemHash": "1431190694",
             "name": "Illicit Invader Cloak",
             "iconPath": "/common/destiny2_content/icons/db54c39d00a40ee4c9e8a610398acd21.jpg"
+          }
+        }
+      }
+    },
+    {
+      "id": "expansions-luminopotent",
+      "name": "Luminopotent",
+      "category": "expansions",
+      "source": "Random Perks: This item cannot be reacquired from Collections.",
+      "sourceLabel": "Random Perks: This item cannot be reacquired from Collections.",
+      "classes": {
+        "hunter": {
+          "helmet": {
+            "itemHash": "593554567",
+            "name": "Luminopotent Mask",
+            "iconPath": "/common/destiny2_content/icons/b9241a82716cb31315b35dd983298d1c.jpg"
+          },
+          "legs": {
+            "itemHash": "1047792392",
+            "name": "Luminopotent Strides",
+            "iconPath": "/common/destiny2_content/icons/2c17b0fca6dc15e4044d675202be4074.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "2835120910",
+            "name": "Luminopotent Grips",
+            "iconPath": "/common/destiny2_content/icons/d7abf9f674a844455c76ba6257764ba0.jpg"
+          },
+          "chest": {
+            "itemHash": "2883433250",
+            "name": "Luminopotent Cuirass",
+            "iconPath": "/common/destiny2_content/icons/f8684accf31f6180323fe833345eedbb.jpg"
+          },
+          "classItem": {
+            "itemHash": "1003997240",
+            "name": "Smoke Jumper Cloak",
+            "iconPath": "/common/destiny2_content/icons/4e700b992eb737d488fb0063aab4300e.jpg"
+          }
+        },
+        "titan": {
+          "legs": {
+            "itemHash": "1689821714",
+            "name": "Luminopotent Greaves",
+            "iconPath": "/common/destiny2_content/icons/68260602ad60c4d66918ac23211bee88.jpg"
+          },
+          "helmet": {
+            "itemHash": "2816737729",
+            "name": "Luminopotent Helm",
+            "iconPath": "/common/destiny2_content/icons/6ca2447b1f35e1cb3ab667b88be12148.jpg"
+          },
+          "chest": {
+            "itemHash": "3307308272",
+            "name": "Luminopotent Plate",
+            "iconPath": "/common/destiny2_content/icons/b925e4c7db92776935709e1bb386e32d.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "3654657240",
+            "name": "Luminopotent Gauntlets",
+            "iconPath": "/common/destiny2_content/icons/91d60b8234efa6a4c9ce38c137788db1.jpg"
+          },
+          "classItem": {
+            "itemHash": "2773786868",
+            "name": "Last Discipline Mark",
+            "iconPath": "/common/destiny2_content/icons/90deeb6f24506b8f3553f68554ada533.jpg"
+          }
+        },
+        "warlock": {
+          "legs": {
+            "itemHash": "1829877749",
+            "name": "Luminopotent Boots",
+            "iconPath": "/common/destiny2_content/icons/056a7491635a96df780a74d41dbde821.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "3737830979",
+            "name": "Luminopotent Gloves",
+            "iconPath": "/common/destiny2_content/icons/8870f2e6d70dafd01a13a0cd6b0c4239.jpg"
           }
         }
       }
@@ -5089,6 +5549,76 @@
       }
     },
     {
+      "id": "expansions-pantheos-resplendent",
+      "name": "Pantheos Resplendent",
+      "category": "expansions",
+      "source": "Source: Pantheon",
+      "sourceLabel": "Pantheon",
+      "classes": {
+        "hunter": {
+          "legs": {
+            "itemHash": "176521975",
+            "name": "Pantheos Resplendent Strides",
+            "iconPath": "/common/destiny2_content/icons/7f5c872a6463b808631d5b3c6f022265.jpg"
+          },
+          "chest": {
+            "itemHash": "751380107",
+            "name": "Pantheos Resplendent Vest",
+            "iconPath": "/common/destiny2_content/icons/7986813114fee45a647901ca1e2ced31.jpg"
+          },
+          "helmet": {
+            "itemHash": "1074455580",
+            "name": "Pantheos Resplendent Mask",
+            "iconPath": "/common/destiny2_content/icons/7e85b0b4d539f4ee58a9353fc258b212.jpg"
+          }
+        },
+        "titan": {
+          "chest": {
+            "itemHash": "1774949103",
+            "name": "Pantheos Resplendent Plate",
+            "iconPath": "/common/destiny2_content/icons/44e76fea51365dcd5671bfc997c0a2a1.jpg"
+          },
+          "helmet": {
+            "itemHash": "2145853080",
+            "name": "Pantheos Resplendent Helm",
+            "iconPath": "/common/destiny2_content/icons/096ca9c4666f78fdaf910db296cb7c43.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "2609656681",
+            "name": "Pantheos Resplendent Gauntlets",
+            "iconPath": "/common/destiny2_content/icons/a6fc61dee80b948fda5c51ff33950044.jpg"
+          },
+          "legs": {
+            "itemHash": "2901598523",
+            "name": "Pantheos Resplendent Greaves",
+            "iconPath": "/common/destiny2_content/icons/9d29a3513cdbb05851489d064d0ae68f.jpg"
+          },
+          "classItem": {
+            "itemHash": "3022107774",
+            "name": "Pantheos Resplendent Mark",
+            "iconPath": "/common/destiny2_content/icons/6e4e7c85b3aa7486640c7737a53048c5.jpg"
+          }
+        },
+        "warlock": {
+          "gauntlets": {
+            "itemHash": "2235536812",
+            "name": "Pantheos Resplendent Gloves",
+            "iconPath": "/common/destiny2_content/icons/6477b887ee36eee57b7b30929ed267df.jpg"
+          },
+          "legs": {
+            "itemHash": "3305726422",
+            "name": "Pantheos Resplendent Boots",
+            "iconPath": "/common/destiny2_content/icons/758c89ef1b627b637f8714b037d5081d.jpg"
+          },
+          "helmet": {
+            "itemHash": "3773004861",
+            "name": "Pantheos Resplendent Hood",
+            "iconPath": "/common/destiny2_content/icons/3caf353b02e4910b090cd1c23a6b672f.jpg"
+          }
+        }
+      }
+    },
+    {
       "id": "expansions-parade",
       "name": "Parade",
       "category": "expansions",
@@ -5224,6 +5754,71 @@
       }
     },
     {
+      "id": "expansions-per-audacia",
+      "name": "Per Audacia",
+      "category": "expansions",
+      "source": "Source: Glory Matches in Crucible",
+      "sourceLabel": "Glory Matches in Crucible",
+      "classes": {
+        "hunter": {
+          "gauntlets": {
+            "itemHash": "43450237",
+            "name": "Per Audacia Grips",
+            "iconPath": "/common/destiny2_content/icons/e722ec2d6204e5a6f632ee5f595c0a01.jpg"
+          },
+          "legs": {
+            "itemHash": "2367602335",
+            "name": "Per Audacia Strides",
+            "iconPath": "/common/destiny2_content/icons/9f9c4a3e840ee0f230805cdaa9cffc1e.jpg"
+          },
+          "chest": {
+            "itemHash": "3913444611",
+            "name": "Per Audacia Cuirass",
+            "iconPath": "/common/destiny2_content/icons/d700bb7467d6b30415e29065b018e818.jpg"
+          }
+        },
+        "warlock": {
+          "gauntlets": {
+            "itemHash": "1001635962",
+            "name": "Per Audacia Gloves",
+            "iconPath": "/common/destiny2_content/icons/f0421f7291c786cdc829a85c003e039f.jpg"
+          },
+          "legs": {
+            "itemHash": "2682565300",
+            "name": "Per Audacia Boots",
+            "iconPath": "/common/destiny2_content/icons/29230aadc37021eccf3623f75351605f.jpg"
+          }
+        },
+        "titan": {
+          "helmet": {
+            "itemHash": "2373605528",
+            "name": "Per Audacia Helm",
+            "iconPath": "/common/destiny2_content/icons/8aadd4deedd7c93fe207f006b7557621.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "2837409129",
+            "name": "Per Audacia Gauntlets",
+            "iconPath": "/common/destiny2_content/icons/754485568cc4541edb44aacdad5196ae.jpg"
+          },
+          "legs": {
+            "itemHash": "3129350971",
+            "name": "Per Audacia Greaves",
+            "iconPath": "/common/destiny2_content/icons/faff967a09000105c1401eb192b853a8.jpg"
+          },
+          "chest": {
+            "itemHash": "3364872431",
+            "name": "Per Audacia Plate",
+            "iconPath": "/common/destiny2_content/icons/296a21bc7195a8f99806474543bcb9fd.jpg"
+          },
+          "classItem": {
+            "itemHash": "317063806",
+            "name": "Per Audacia Mark",
+            "iconPath": "/common/destiny2_content/icons/06ed61adc3070eb0ab5e1d439fedd1b6.jpg"
+          }
+        }
+      }
+    },
+    {
       "id": "destinations-phobos-warden",
       "name": "Phobos Warden",
       "category": "destinations",
@@ -5322,9 +5917,9 @@
             "iconPath": "/common/destiny2_content/icons/9c9d1aad60b8e7045d7b4fbc932d741a.jpg"
           },
           "classItem": {
-            "itemHash": "4150060382",
-            "name": "Clutch Extol Mark",
-            "iconPath": "/common/destiny2_content/icons/b37607378391f2c73c5186769b96e381.jpg"
+            "itemHash": "3884544409",
+            "name": "Binary Phoenix Mark",
+            "iconPath": "/common/destiny2_content/icons/ba2e44f4117f8b49a4808378084fff35.jpg"
           }
         }
       }
@@ -5358,9 +5953,9 @@
             "iconPath": "/common/destiny2_content/icons/5d8bb98d8bf761f5be82bbda706bcd3d.jpg"
           },
           "classItem": {
-            "itemHash": "1283202269",
-            "name": "Atavistic Idol Cloak",
-            "iconPath": "/common/destiny2_content/icons/3986e244f9881d567cd41660368d6185.jpg"
+            "itemHash": "1322042322",
+            "name": "Pyrrhic Ascent Cloak",
+            "iconPath": "/common/destiny2_content/icons/74ce829fdcb54658a88acf799c3db407.jpg"
           }
         }
       }
@@ -5474,9 +6069,9 @@
             "iconPath": "/common/destiny2_content/icons/d284afe851e02c2cedba6296be12b4e6.jpg"
           },
           "classItem": {
-            "itemHash": "2666189615",
-            "name": "Poison Promise Mark",
-            "iconPath": "/common/destiny2_content/icons/70496cbc2d3c8d02d01787669388ca60.jpg"
+            "itemHash": "569481511",
+            "name": "Cyberserpent Null Mark",
+            "iconPath": "/common/destiny2_content/icons/70ec7b64a10ed40a8ad3b4b237645883.jpg"
           }
         },
         "warlock": {
@@ -5594,27 +6189,27 @@
       "classes": {
         "hunter": {
           "legs": {
-            "itemHash": "129332559",
+            "itemHash": "157934631",
             "name": "Prime Zealot Strides",
             "iconPath": "/common/destiny2_content/icons/342a406ccdedbce8680910cfd93d4263.jpg"
           },
           "helmet": {
-            "itemHash": "586128500",
+            "itemHash": "656307180",
             "name": "Prime Zealot Mask",
             "iconPath": "/common/destiny2_content/icons/a74303d3afb22d91a66a616766278acc.jpg"
           },
           "chest": {
-            "itemHash": "1133961267",
+            "itemHash": "2245093627",
             "name": "Prime Zealot Cuirass",
             "iconPath": "/common/destiny2_content/icons/f8f4b1a69763ce8cb57e50766aec57b0.jpg"
           },
           "gauntlets": {
-            "itemHash": "3753500813",
+            "itemHash": "4105572261",
             "name": "Prime Zealot Gloves",
             "iconPath": "/common/destiny2_content/icons/c0ef7b4f342a19611f0c34e74db91dbf.jpg"
           },
           "classItem": {
-            "itemHash": "3339387242",
+            "itemHash": "601809810",
             "name": "Shattered Vault Cloak",
             "iconPath": "/common/destiny2_content/icons/64aca077d2bd3439f0130d59c97ba06c.jpg"
           }
@@ -5694,28 +6289,28 @@
       "sourceLabel": "Salvation's Edge",
       "classes": {
         "hunter": {
+          "gauntlets": {
+            "itemHash": "668401898",
+            "name": "Promised Reign Grips",
+            "iconPath": "/common/destiny2_content/icons/ec76b5b8f71acd4c5091cd3e1b05b098.jpg"
+          },
+          "chest": {
+            "itemHash": "2981434142",
+            "name": "Promised Reign Vest",
+            "iconPath": "/common/destiny2_content/icons/dabd995dce9fb6e90ad0f3382fd97500.jpg"
+          },
           "helmet": {
-            "itemHash": "1026610441",
+            "itemHash": "3462510907",
             "name": "Promised Reign Mask",
             "iconPath": "/common/destiny2_content/icons/f36719e6f9a7c946a0f7999558e75eee.jpg"
           },
           "legs": {
-            "itemHash": "1807926458",
+            "itemHash": "4002581124",
             "name": "Promised Reign Strides",
             "iconPath": "/common/destiny2_content/icons/0ad63b674ee3a408f5223b03a454dbaf.jpg"
           },
-          "chest": {
-            "itemHash": "2256359240",
-            "name": "Promised Reign Vest",
-            "iconPath": "/common/destiny2_content/icons/dabd995dce9fb6e90ad0f3382fd97500.jpg"
-          },
-          "gauntlets": {
-            "itemHash": "2730105984",
-            "name": "Promised Reign Grips",
-            "iconPath": "/common/destiny2_content/icons/ec76b5b8f71acd4c5091cd3e1b05b098.jpg"
-          },
           "classItem": {
-            "itemHash": "87946917",
+            "itemHash": "2311061287",
             "name": "Promised Reign Cloak",
             "iconPath": "/common/destiny2_content/icons/fe2d607ebe1efcc2603193b11cb356e9.jpg"
           }
@@ -5730,28 +6325,28 @@
       "sourceLabel": "Salvation's Edge",
       "classes": {
         "titan": {
-          "helmet": {
-            "itemHash": "659074261",
-            "name": "Promised Reunion Helm",
-            "iconPath": "/common/destiny2_content/icons/feb168f388b2204938d54d15c091dc89.jpg"
-          },
-          "legs": {
-            "itemHash": "1265563470",
-            "name": "Promised Reunion Greaves",
-            "iconPath": "/common/destiny2_content/icons/763be34b15ca48074a5a0ae87b3abb41.jpg"
-          },
-          "gauntlets": {
-            "itemHash": "3629884836",
-            "name": "Promised Reunion Gauntlets",
-            "iconPath": "/common/destiny2_content/icons/79387f8b554615540e418160e6d44c11.jpg"
-          },
           "chest": {
-            "itemHash": "3725435036",
+            "itemHash": "1286143186",
             "name": "Promised Reunion Plate",
             "iconPath": "/common/destiny2_content/icons/f431387f149fd212c85350f4c67dfa1d.jpg"
           },
+          "gauntlets": {
+            "itemHash": "2330310558",
+            "name": "Promised Reunion Gauntlets",
+            "iconPath": "/common/destiny2_content/icons/79387f8b554615540e418160e6d44c11.jpg"
+          },
+          "legs": {
+            "itemHash": "2749693048",
+            "name": "Promised Reunion Greaves",
+            "iconPath": "/common/destiny2_content/icons/763be34b15ca48074a5a0ae87b3abb41.jpg"
+          },
+          "helmet": {
+            "itemHash": "3256796439",
+            "name": "Promised Reunion Helm",
+            "iconPath": "/common/destiny2_content/icons/feb168f388b2204938d54d15c091dc89.jpg"
+          },
           "classItem": {
-            "itemHash": "1140861969",
+            "itemHash": "1922960867",
             "name": "Promised Reunion Mark",
             "iconPath": "/common/destiny2_content/icons/ac1b3858885da7455c199604b8ba853e.jpg"
           }
@@ -5836,74 +6431,74 @@
       "sourceLabel": "Vow of the Disciple",
       "classes": {
         "titan": {
-          "helmet": {
-            "itemHash": "362541459",
-            "name": "Resonant Fury Helm",
-            "iconPath": "/common/destiny2_content/icons/055e3c4032a12077f51518b70a87eea1.jpg"
-          },
           "legs": {
-            "itemHash": "365727964",
+            "itemHash": "336306726",
             "name": "Resonant Fury Greaves",
             "iconPath": "/common/destiny2_content/icons/b4f594335d373df578f14bfc2206c573.jpg"
           },
-          "chest": {
-            "itemHash": "1627640710",
-            "name": "Resonant Fury Plate",
-            "iconPath": "/common/destiny2_content/icons/c79a9f20d449419d6d8a68d8c990818d.jpg"
+          "helmet": {
+            "itemHash": "680713005",
+            "name": "Resonant Fury Helm",
+            "iconPath": "/common/destiny2_content/icons/055e3c4032a12077f51518b70a87eea1.jpg"
           },
           "gauntlets": {
-            "itemHash": "2150515362",
+            "itemHash": "1333378716",
             "name": "Resonant Fury Gauntlets",
             "iconPath": "/common/destiny2_content/icons/4f221010196c2d8ec78f3f573d8823ff.jpg"
           },
+          "chest": {
+            "itemHash": "1962502788",
+            "name": "Resonant Fury Plate",
+            "iconPath": "/common/destiny2_content/icons/c79a9f20d449419d6d8a68d8c990818d.jpg"
+          },
           "classItem": {
-            "itemHash": "2370089583",
+            "itemHash": "2706229721",
             "name": "Resonant Fury Mark",
             "iconPath": "/common/destiny2_content/icons/366f9700c370b36f040a3181cdabbfde.jpg"
           }
         },
-        "hunter": {
+        "warlock": {
           "legs": {
-            "itemHash": "1566699968",
-            "name": "Resonant Fury Strides",
-            "iconPath": "/common/destiny2_content/icons/ca468462234b47437d0c21aa3daa91d5.jpg"
+            "itemHash": "1379769261",
+            "name": "Resonant Fury Boots",
+            "iconPath": "/common/destiny2_content/icons/4f518fcdd08f21a5e2a6070b974f15b6.jpg"
+          },
+          "helmet": {
+            "itemHash": "2504952530",
+            "name": "Resonant Fury Cowl",
+            "iconPath": "/common/destiny2_content/icons/0b6ec4f07b0de0f65137f43088bae80f.jpg"
           },
           "gauntlets": {
-            "itemHash": "1583213254",
+            "itemHash": "2971305787",
+            "name": "Resonant Fury Gloves",
+            "iconPath": "/common/destiny2_content/icons/3db02161ecebd7b5112c6375a9801cd8.jpg"
+          }
+        },
+        "hunter": {
+          "gauntlets": {
+            "itemHash": "2771790736",
             "name": "Resonant Fury Grips",
             "iconPath": "/common/destiny2_content/icons/da8669bdb50ef263019c5015c7827cc9.jpg"
           },
+          "legs": {
+            "itemHash": "3130426090",
+            "name": "Resonant Fury Strides",
+            "iconPath": "/common/destiny2_content/icons/ca468462234b47437d0c21aa3daa91d5.jpg"
+          },
           "helmet": {
-            "itemHash": "1649346047",
+            "itemHash": "3300005657",
             "name": "Resonant Fury Mask",
             "iconPath": "/common/destiny2_content/icons/c5c3f94bc0480d09df1d41c2da8ae5dc.jpg"
           },
           "chest": {
-            "itemHash": "3487540074",
+            "itemHash": "4246884536",
             "name": "Resonant Fury Vest",
             "iconPath": "/common/destiny2_content/icons/4cf653856fc76709add5446ea9b37e79.jpg"
           },
           "classItem": {
-            "itemHash": "4124357755",
+            "itemHash": "2642378837",
             "name": "Resonant Fury Cloak",
             "iconPath": "/common/destiny2_content/icons/cad952fe45a5540e0d351ea73e2efa09.jpg"
-          }
-        },
-        "warlock": {
-          "gauntlets": {
-            "itemHash": "1656263403",
-            "name": "Resonant Fury Gloves",
-            "iconPath": "/common/destiny2_content/icons/3db02161ecebd7b5112c6375a9801cd8.jpg"
-          },
-          "helmet": {
-            "itemHash": "2316722050",
-            "name": "Resonant Fury Cowl",
-            "iconPath": "/common/destiny2_content/icons/0b6ec4f07b0de0f65137f43088bae80f.jpg"
-          },
-          "legs": {
-            "itemHash": "2748020989",
-            "name": "Resonant Fury Boots",
-            "iconPath": "/common/destiny2_content/icons/4f518fcdd08f21a5e2a6070b974f15b6.jpg"
           }
         }
       }
@@ -6701,9 +7296,9 @@
             "iconPath": "/common/destiny2_content/icons/799eb8cb8363a5126e75ae4634fbd87a.jpg"
           },
           "classItem": {
-            "itemHash": "1334855187",
-            "name": "Wild Anthem Mark",
-            "iconPath": "/common/destiny2_content/icons/8f8f55a7a39f188a125bbb7fe60b93a6.jpg"
+            "itemHash": "1064523906",
+            "name": "Triumphal Anthem Mark",
+            "iconPath": "/common/destiny2_content/icons/d0e1daf7aa81602b8fab92747bbe677d.jpg"
           }
         },
         "hunter": {
@@ -6808,57 +7403,57 @@
       "sourceLabel": "Vesper's Host",
       "classes": {
         "hunter": {
-          "helmet": {
-            "itemHash": "283230886",
-            "name": "Spacewalk Cowl",
-            "iconPath": "/common/destiny2_content/icons/5ccb1759915a2dadc619684c666542e0.jpg"
-          },
           "legs": {
-            "itemHash": "1105725465",
+            "itemHash": "1160343947",
             "name": "Spacewalk Strides",
             "iconPath": "/common/destiny2_content/icons/64efc9d1f68d51c4a7f8ce893dfb565f.jpg"
           },
           "chest": {
-            "itemHash": "2436714433",
+            "itemHash": "2041120767",
             "name": "Spacewalk Vest",
             "iconPath": "/common/destiny2_content/icons/93c287ab5da8c426ff84f5f082c9848b.jpg"
+          },
+          "helmet": {
+            "itemHash": "3215894536",
+            "name": "Spacewalk Cowl",
+            "iconPath": "/common/destiny2_content/icons/5ccb1759915a2dadc619684c666542e0.jpg"
           }
         },
         "warlock": {
           "legs": {
-            "itemHash": "1025368892",
+            "itemHash": "1218002566",
             "name": "Spacewalk Boots",
             "iconPath": "/common/destiny2_content/icons/e62d16650730f70675e04e10c9cbc512.jpg"
           },
           "gauntlets": {
-            "itemHash": "3234613634",
+            "itemHash": "2215074684",
             "name": "Spacewalk Gloves",
             "iconPath": "/common/destiny2_content/icons/7e430c984ba9bd47740efe1ff39c881c.jpg"
           }
         },
         "titan": {
-          "chest": {
-            "itemHash": "1615763427",
-            "name": "Spacewalk Plate",
-            "iconPath": "/common/destiny2_content/icons/b50fa7377b1af700316629842f91e4e4.jpg"
-          },
           "gauntlets": {
-            "itemHash": "1808327005",
+            "itemHash": "1280635717",
             "name": "Spacewalk Gauntlets",
             "iconPath": "/common/destiny2_content/icons/fde024346bb55adb55616e3a83e8ce66.jpg"
           },
-          "helmet": {
-            "itemHash": "2244013188",
-            "name": "Spacewalk Helm",
-            "iconPath": "/common/destiny2_content/icons/0052789b278ef66c46fd93fb665a2b17.jpg"
-          },
           "legs": {
-            "itemHash": "4132376063",
+            "itemHash": "1627862215",
             "name": "Spacewalk Greaves",
             "iconPath": "/common/destiny2_content/icons/943212f561de8e7d2c5362237bec763c.jpg"
           },
+          "chest": {
+            "itemHash": "1756488475",
+            "name": "Spacewalk Plate",
+            "iconPath": "/common/destiny2_content/icons/b50fa7377b1af700316629842f91e4e4.jpg"
+          },
+          "helmet": {
+            "itemHash": "2084761228",
+            "name": "Spacewalk Helm",
+            "iconPath": "/common/destiny2_content/icons/0052789b278ef66c46fd93fb665a2b17.jpg"
+          },
           "classItem": {
-            "itemHash": "514586330",
+            "itemHash": "113307954",
             "name": "Spacewalk Mark",
             "iconPath": "/common/destiny2_content/icons/497333077960142d80ade161dfc59a74.jpg"
           }
@@ -7160,9 +7755,9 @@
             "iconPath": "/common/destiny2_content/icons/2de56cf54e3c8fd5076e9b3878cc5c6b.jpg"
           },
           "classItem": {
-            "itemHash": "921467658",
-            "name": "Clutch Extol Cloak",
-            "iconPath": "/common/destiny2_content/icons/2b61b5f547fc8bb956a36f6b98b9e69c.jpg"
+            "itemHash": "87665893",
+            "name": "Binary Phoenix Cloak",
+            "iconPath": "/common/destiny2_content/icons/66e458fa4b01c340b966f63eeadb1ce5.jpg"
           }
         }
       }
@@ -7196,9 +7791,9 @@
             "iconPath": "/common/destiny2_content/icons/78db46d4be6f2210b355b2cdd3e54017.jpg"
           },
           "classItem": {
-            "itemHash": "2757996223",
-            "name": "Disaster Corps Mark",
-            "iconPath": "/common/destiny2_content/icons/8accb9f3b6d8ad549f500bbccc6c9ef5.jpg"
+            "itemHash": "2676446840",
+            "name": "Ferropotent Mark",
+            "iconPath": "/common/destiny2_content/icons/d4996634297984f1c9c2a2ff8b3cd079.jpg"
           }
         },
         "hunter": {
@@ -7403,6 +7998,86 @@
       }
     },
     {
+      "id": "dungeons-techeun-s-regalia",
+      "name": "Techeun's Regalia",
+      "category": "dungeons",
+      "source": "Complete the \"Shattered Throne\" dungeon.",
+      "sourceLabel": "Shattered Throne",
+      "classes": {
+        "titan": {
+          "chest": {
+            "itemHash": "950387978",
+            "name": "Techeun's Regalia Plate",
+            "iconPath": "/common/destiny2_content/icons/6085ef455581e313e769729aeda5438a.jpg"
+          },
+          "legs": {
+            "itemHash": "1926755680",
+            "name": "Techeun's Regalia Greaves",
+            "iconPath": "/common/destiny2_content/icons/7c34cc2565891850ac6582482c57b100.jpg"
+          },
+          "helmet": {
+            "itemHash": "2009401631",
+            "name": "Techeun's Regalia Helmet",
+            "iconPath": "/common/destiny2_content/icons/09e9a273f5fc6bf736fbc327a881ede6.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "2367623270",
+            "name": "Techeun's Regalia Gauntlets",
+            "iconPath": "/common/destiny2_content/icons/8c7dd8d5d5ce18478c4be74cf921252f.jpg"
+          },
+          "classItem": {
+            "itemHash": "1587205659",
+            "name": "Techeun's Regalia Mark",
+            "iconPath": "/common/destiny2_content/icons/3f5c97bb86d7cbc4c9171fc27e162284.jpg"
+          }
+        },
+        "warlock": {
+          "legs": {
+            "itemHash": "1092257813",
+            "name": "Techeun's Regalia Boots",
+            "iconPath": "/common/destiny2_content/icons/bd0b76b645868732378a423a7f9f42f8.jpg"
+          },
+          "helmet": {
+            "itemHash": "1228973722",
+            "name": "Techeun's Regalia Hood",
+            "iconPath": "/common/destiny2_content/icons/317a289dc64564fb8593d59a277014ac.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "3466245347",
+            "name": "Techeun's Regalia Gloves",
+            "iconPath": "/common/destiny2_content/icons/1de50e0400ca2271fbb9cd1c25535ae3.jpg"
+          }
+        },
+        "hunter": {
+          "gauntlets": {
+            "itemHash": "1106068818",
+            "name": "Techeun's Regalia Grips",
+            "iconPath": "/common/destiny2_content/icons/cb590f9e0b39b871c899c27cf7d642ea.jpg"
+          },
+          "legs": {
+            "itemHash": "1507307244",
+            "name": "Techeun's Regalia Strides",
+            "iconPath": "/common/destiny2_content/icons/6becf14b988b8ed640ff6a94e248defc.jpg"
+          },
+          "chest": {
+            "itemHash": "2438408214",
+            "name": "Techeun's Regalia Vest",
+            "iconPath": "/common/destiny2_content/icons/28019ab85ef0508784e727f667435238.jpg"
+          },
+          "helmet": {
+            "itemHash": "4263497347",
+            "name": "Techeun's Regalia Mask",
+            "iconPath": "/common/destiny2_content/icons/5567eb438a33d12b5e4b00f16bb474b3.jpg"
+          },
+          "classItem": {
+            "itemHash": "1768035391",
+            "name": "Techeun's Regalia Cloak",
+            "iconPath": "/common/destiny2_content/icons/88b92cd5dd13134e087007c6382c7fa7.jpg"
+          }
+        }
+      }
+    },
+    {
       "id": "expansions-techsec",
       "name": "Techsec",
       "category": "expansions",
@@ -7431,9 +8106,9 @@
             "iconPath": "/common/destiny2_content/icons/742593125b2bd51f7e3117ae931c6320.jpg"
           },
           "classItem": {
-            "itemHash": "2517367247",
-            "name": "Bushido Mark",
-            "iconPath": "/common/destiny2_content/icons/1e23eb74652b5db50b4971e0cd7926a5.jpg"
+            "itemHash": "1934339678",
+            "name": "Swordmaster's Mark",
+            "iconPath": "/common/destiny2_content/icons/f9cbd21881a6815a9afc1e0eebc12298.jpg"
           }
         },
         "warlock": {
@@ -7736,6 +8411,81 @@
       }
     },
     {
+      "id": "expansions-triumphal-anthem",
+      "name": "Triumphal Anthem",
+      "category": "expansions",
+      "source": "Random Perks: This item cannot be reacquired from Collections.",
+      "sourceLabel": "Random Perks: This item cannot be reacquired from Collections.",
+      "classes": {
+        "hunter": {
+          "legs": {
+            "itemHash": "374648029",
+            "name": "Triumphal Anthem Strides",
+            "iconPath": "/common/destiny2_content/icons/0543189da478821bf090a5fdfa46d444.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "3153400267",
+            "name": "Triumphal Anthem Grips",
+            "iconPath": "/common/destiny2_content/icons/feb1e5c18a0777fc89c8b3cc9031a169.jpg"
+          },
+          "helmet": {
+            "itemHash": "3855332578",
+            "name": "Triumphal Anthem Mask",
+            "iconPath": "/common/destiny2_content/icons/2e5fab3e8935110f13c2ae9add5a3d23.jpg"
+          },
+          "chest": {
+            "itemHash": "4071845509",
+            "name": "Triumphal Anthem Vest",
+            "iconPath": "/common/destiny2_content/icons/99a39d22632812720d53c336a5b34e12.jpg"
+          },
+          "classItem": {
+            "itemHash": "536035447",
+            "name": "Wild Anthem Cloak",
+            "iconPath": "/common/destiny2_content/icons/356a013a19c09b766a54e190668a3406.jpg"
+          }
+        },
+        "titan": {
+          "gauntlets": {
+            "itemHash": "571839605",
+            "name": "Triumphal Anthem Gauntlets",
+            "iconPath": "/common/destiny2_content/icons/f2e9fb436269349fa9ccc81754c03007.jpg"
+          },
+          "legs": {
+            "itemHash": "2147961687",
+            "name": "Triumphal Anthem Greaves",
+            "iconPath": "/common/destiny2_content/icons/c8095e5aafe569914857c70ef87eb094.jpg"
+          },
+          "chest": {
+            "itemHash": "2324823787",
+            "name": "Triumphal Anthem Plate",
+            "iconPath": "/common/destiny2_content/icons/e444df5528c09df116358908417fa977.jpg"
+          },
+          "helmet": {
+            "itemHash": "3470352892",
+            "name": "Triumphal Anthem Helm",
+            "iconPath": "/common/destiny2_content/icons/ff6a94bb648de056c44f9c4272fac10a.jpg"
+          },
+          "classItem": {
+            "itemHash": "2719854935",
+            "name": "Techsec Mark",
+            "iconPath": "/common/destiny2_content/icons/b33208b69c5e22fc89c2840f59b4fc86.jpg"
+          }
+        },
+        "warlock": {
+          "legs": {
+            "itemHash": "1973631360",
+            "name": "Triumphal Anthem Boots",
+            "iconPath": "/common/destiny2_content/icons/ba2fec09f6ad5a5b8d2cc96656c38e6d.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "2414602118",
+            "name": "Triumphal Anthem Gloves",
+            "iconPath": "/common/destiny2_content/icons/4e5cd745b4a4e19294a447992f49c1e0.jpg"
+          }
+        }
+      }
+    },
+    {
       "id": "raids-turris-shade",
       "name": "Turris Shade",
       "category": "raids",
@@ -7859,28 +8609,28 @@
       "sourceLabel": "Grasp of Avarice",
       "classes": {
         "hunter": {
-          "legs": {
-            "itemHash": "337875583",
-            "name": "Twisting Echo Strides",
-            "iconPath": "/common/destiny2_content/icons/5b6ff64b8b4b8243c69b9a4a1dea7b84.jpg"
-          },
           "gauntlets": {
-            "itemHash": "2308793821",
+            "itemHash": "2457568303",
             "name": "Twisting Echo Grips",
             "iconPath": "/common/destiny2_content/icons/ac0ef0bfb6dabb1a1768725308b6f70c.jpg"
           },
+          "legs": {
+            "itemHash": "2607610961",
+            "name": "Twisting Echo Strides",
+            "iconPath": "/common/destiny2_content/icons/5b6ff64b8b4b8243c69b9a4a1dea7b84.jpg"
+          },
           "helmet": {
-            "itemHash": "2744480004",
+            "itemHash": "3229172222",
             "name": "Twisting Echo Mask",
             "iconPath": "/common/destiny2_content/icons/5744ada76daa869bc1845424670a437a.jpg"
           },
           "chest": {
-            "itemHash": "3587911011",
+            "itemHash": "3276657033",
             "name": "Twisting Echo Vest",
             "iconPath": "/common/destiny2_content/icons/a1eb1f7b193aada9810afc8c80a509c9.jpg"
           },
           "classItem": {
-            "itemHash": "2486733914",
+            "itemHash": "761993028",
             "name": "Twisting Echo Cloak",
             "iconPath": "/common/destiny2_content/icons/b5fb765d8f4d4ee9fb48f918ba4444c7.jpg"
           }
@@ -8353,9 +9103,9 @@
             "iconPath": "/common/destiny2_content/icons/f612c76e32bb6291bd4946c0b6543910.jpg"
           },
           "classItem": {
-            "itemHash": "117457123",
-            "name": "Poison Promise Cloak",
-            "iconPath": "/common/destiny2_content/icons/e4328cb35ce6dd935d5d4d32a755e058.jpg"
+            "itemHash": "436615288",
+            "name": "Ancient Apocalypse Cloak",
+            "iconPath": "/common/destiny2_content/icons/ccc5b4164104b566fb22ad9b65a5ba85.jpg"
           }
         },
         "warlock": {
@@ -8546,9 +9296,9 @@
             "iconPath": "/common/destiny2_content/icons/505bb56a7fd21075b408a48dc41559bc.jpg"
           },
           "classItem": {
-            "itemHash": "2676446840",
-            "name": "Ferropotent Mark",
-            "iconPath": "/common/destiny2_content/icons/d4996634297984f1c9c2a2ff8b3cd079.jpg"
+            "itemHash": "2192886829",
+            "name": "Luminopotent Mark",
+            "iconPath": "/common/destiny2_content/icons/02c9b05f826c37a81f804998b1e1035a.jpg"
           }
         },
         "warlock": {
@@ -8739,9 +9489,9 @@
             "iconPath": "/common/destiny2_content/icons/b30843e1e7fbd76c0ab7e1dba1c60fa1.jpg"
           },
           "classItem": {
-            "itemHash": "693067797",
-            "name": "Wing Contender",
-            "iconPath": "/common/destiny2_content/icons/47d4acc211e5ac4e7dcb4cbecf86a45e.jpg"
+            "itemHash": "921467658",
+            "name": "Clutch Extol Cloak",
+            "iconPath": "/common/destiny2_content/icons/2b61b5f547fc8bb956a36f6b98b9e69c.jpg"
           }
         }
       }
@@ -8811,9 +9561,9 @@
             "iconPath": "/common/destiny2_content/icons/b9c248906318d076632348212ccc6e37.jpg"
           },
           "classItem": {
-            "itemHash": "2188974669",
-            "name": "Clutch Extol Bond",
-            "iconPath": "/common/destiny2_content/icons/6272aef5c37314441e09573fcf84051b.jpg"
+            "itemHash": "119859462",
+            "name": "Wing Theorem",
+            "iconPath": "/common/destiny2_content/icons/8bfbc76f5c8a5971dc9a70f324f3c91e.jpg"
           }
         }
       }

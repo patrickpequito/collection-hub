@@ -102,6 +102,12 @@ type ProfileInventoryResponse = {
       collectibles?: Record<string, { state: number }>;
     };
   };
+  characterCollectibles?: {
+    data?: Record<
+      string,
+      { collectibles?: Record<string, { state: number }> }
+    >;
+  };
   profilePlugSets?: {
     data?: DestinyPlugSetsComponent;
   };
@@ -454,6 +460,24 @@ export async function fetchArmorRollInstances(
   return rolls;
 }
 
+function collectProfileCollectibles(
+  profile: ProfileInventoryResponse,
+): Record<string, { state: number }> {
+  const merged: Record<string, { state: number }> = {
+    ...(profile.profileCollectibles?.data?.collectibles ?? {}),
+  };
+
+  for (const character of Object.values(
+    profile.characterCollectibles?.data ?? {},
+  )) {
+    for (const [hash, entry] of Object.entries(character.collectibles ?? {})) {
+      merged[hash] = entry;
+    }
+  }
+
+  return merged;
+}
+
 /** Items currently held on characters or in the vault. */
 export async function fetchOwnedItemHashes(
   session: BungieUserSession,
@@ -467,8 +491,7 @@ export async function fetchOwnedItemHashes(
   const profile = await fetchDestinyProfile(session, membership);
 
   const inventoryHashes = collectInventoryHashes(profile);
-  const collectibles =
-    profile.profileCollectibles?.data?.collectibles ?? {};
+  const collectibles = collectProfileCollectibles(profile);
   const plugHashes = collectUnlockedPlugHashes(profile);
   const catalystHashes = await collectOwnedCatalystHashes({
     profileRecords: profile.profileRecords?.data?.records,

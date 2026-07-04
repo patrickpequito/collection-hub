@@ -9,8 +9,9 @@ import {
 } from "@/lib/armor-sets/constants";
 import { orderedGuardianClasses } from "@/lib/armor-sets/lookup";
 import { isArmorPieceOwned } from "@/lib/armor/ownership";
+import { resolveArmorPieceForSeason } from "@/lib/armor/version-for-hash";
 import { useOwnedItemHashes } from "@/lib/use-owned-item-hashes";
-import type { ArmorSet, GuardianClass } from "@/types/armor-set";
+import type { ArmorPiece, ArmorSet, GuardianClass } from "@/types/armor-set";
 
 /**
  * Icon (1.5rem) + gap-1.5 + the same trailing slack used between capped piece
@@ -22,19 +23,35 @@ const CLASS_ICON_GUTTER_CLASS =
 type ArmorSetPiecesPanelProps = {
   set: ArmorSet;
   primaryClass: GuardianClass | null;
+  selectedSeasonKey?: string | null;
   isSignedIn?: boolean;
   itemHrefs?: Record<string, string>;
 };
 
+function resolvePieceHref(
+  piece: ArmorPiece,
+  displayHash: string,
+  itemHrefs?: Record<string, string>,
+): string | undefined {
+  if (itemHrefs?.[displayHash]) return itemHrefs[displayHash];
+  if (itemHrefs?.[piece.itemHash]) return itemHrefs[piece.itemHash];
+  for (const hash of piece.itemHashes ?? []) {
+    if (itemHrefs?.[hash]) return itemHrefs[hash];
+  }
+  return undefined;
+}
+
 function ArmorSetClassRow({
   guardianClass,
   set,
+  selectedSeasonKey,
   ownedItemHashes,
   showOwnership,
   itemHrefs,
 }: {
   guardianClass: GuardianClass;
   set: ArmorSet;
+  selectedSeasonKey?: string | null;
   ownedItemHashes: Set<string>;
   showOwnership: boolean;
   itemHrefs?: Record<string, string>;
@@ -49,6 +66,13 @@ function ArmorSetClassRow({
       <div className="grid grid-cols-5 gap-1.5">
         {ARMOR_SLOTS.map((slot, slotIndex) => {
           const piece = pieces?.[slot];
+          const display = piece
+            ? resolveArmorPieceForSeason(piece, selectedSeasonKey ?? null)
+            : null;
+          const displayPiece =
+            piece && display
+              ? { ...piece, itemHash: display.itemHash, iconPath: display.iconPath }
+              : piece;
           const tooltipAlign =
             slotIndex === 0
               ? "start"
@@ -59,14 +83,18 @@ function ArmorSetClassRow({
           return (
             <ArmorPieceIcon
               key={`${guardianClass}-${slot}`}
-              piece={piece}
+              piece={displayPiece}
               slotLabel={SLOT_LABELS[slot]}
               sourceLabel={set.source}
               owned={isArmorPieceOwned(piece, ownedItemHashes)}
               showOwnership={showOwnership}
               tooltipAlign={tooltipAlign}
               fluid
-              href={piece ? itemHrefs?.[piece.itemHash] : undefined}
+              href={
+                piece && display
+                  ? resolvePieceHref(piece, display.itemHash, itemHrefs)
+                  : undefined
+              }
             />
           );
         })}
@@ -78,6 +106,7 @@ function ArmorSetClassRow({
 export function ArmorSetPiecesPanel({
   set,
   primaryClass,
+  selectedSeasonKey = null,
   isSignedIn = false,
   itemHrefs,
 }: ArmorSetPiecesPanelProps) {
@@ -112,6 +141,7 @@ export function ArmorSetPiecesPanel({
         <ArmorSetClassRow
           guardianClass={primaryGuardianClass}
           set={set}
+          selectedSeasonKey={selectedSeasonKey}
           ownedItemHashes={ownedSet}
           showOwnership={showOwnership}
           itemHrefs={itemHrefs}
@@ -124,6 +154,7 @@ export function ArmorSetPiecesPanel({
                 key={guardianClass}
                 guardianClass={guardianClass}
                 set={set}
+                selectedSeasonKey={selectedSeasonKey}
                 ownedItemHashes={ownedSet}
                 showOwnership={showOwnership}
                 itemHrefs={itemHrefs}

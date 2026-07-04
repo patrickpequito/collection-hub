@@ -14,12 +14,23 @@ export type ArmorSlot =
 
 export type GuardianClass = "hunter" | "titan" | "warlock";
 
+export type ArmorPieceVersion = {
+  itemHash: string;
+  iconPath: string;
+  seasonLabel: string;
+  seasonNumber?: number;
+  eventLabel?: string;
+  screenshotPath?: string;
+};
+
 export type ArmorPiece = {
   itemHash: string;
   name: string;
   iconPath: string;
   /** All manifest hashes for this slot (versions / alternates). */
   itemHashes?: string[];
+  /** Season-specific icons and screenshots for version switching. */
+  versions?: ArmorPieceVersion[];
 };
 
 export type ClassArmorPieces = Partial<Record<ArmorSlot, ArmorPiece>>;

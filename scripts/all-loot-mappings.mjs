@@ -105,16 +105,33 @@ export function isExpansionLabel(label) {
   return Boolean(label && EXPANSION_LABELS.has(label));
 }
 
+/** Lightfall expansion emblem on Year 6 gear (manifest season 20). */
+export const LIGHTFALL_WATERMARK = "fc02418ad2002351a3f88faa5b14eb88.png";
+
 /** Watermarks whose majority vote is misleading (shared across legacy eras). */
 export const WATERMARK_LABEL_OVERRIDES = {
   "7ba9d804508dd083ec20fcdb8ba0869d.png": "Curse of Osiris",
+  "a15754752f40aaf7b1b00aadb70a8f35.png": "Shadowkeep",
+  [LIGHTFALL_WATERMARK]: "Lightfall",
   "4376a7d734583ae347acf9732aa3bb43.png": "The Edge of Fate",
   "95f7754d52d6016fdc445fb62aa7a31e.png": "Renegades",
   "0ac354c1c326441716ddb15d2c158c59.png": "S26 Episode: Heresy",
 };
 
 /** Year-8 featured gear watermark reused across chapters; DIM maps to manifest 28. */
-const MONUMENT_FEATURED_WATERMARK = "e78fd9419f99464816ac8f628bc3c4af.png";
+export const MONUMENT_FEATURED_WATERMARK = "e78fd9419f99464816ac8f628bc3c4af.png";
+
+/** Monument reprised weapons that only exist as itemType 19 rows in the manifest. */
+export function isMonumentWeaponReissue(item) {
+  return (
+    item?.itemType === 19 &&
+    item?.inventory?.tierTypeName === "Legendary" &&
+    watermarkBasename(item.iconWatermark) === MONUMENT_FEATURED_WATERMARK
+  );
+}
+
+/** Episode: Revenant chapter emblem on original Year-7 episode gear. */
+export const REVENANT_EPISODE_WATERMARK = "5232219633cc4d90570bffda36caccf4.png";
 
 /** DIM watermark-to-season mistakes or cross-era reuse. Values are manifest season numbers. */
 export const WATERMARK_MANIFEST_SEASON_OVERRIDES = {
@@ -470,12 +487,15 @@ export const SEASON_SOURCE_PATTERNS = [
   [/equilibrium/i, "Renegades"],
   [/pantheon/i, MONUMENT_OF_TRIUMPH_LABEL],
   [/sundered doctrine/i, "S26 Episode: Heresy"],
-  [/vesper'?s host/i, "S26 Episode: Heresy"],
+  [/vesper'?s host/i, "S25 Episode: Revenant"],
+  [/shattered throne/i, "S20 Season of Defiance"],
+  [/"pit of heresy"/i, "Shadowkeep"],
+  [/\bpit of heresy\b/i, "Shadowkeep"],
   [/kepler|exploring kepler/i, "The Edge of Fate"],
   [/season:\s*reclamation|\breclamation\b/i, "The Edge of Fate"],
   [/the edge of fate activities|edge of fate campaign/i, "The Edge of Fate"],
   [/desert perpetual|\bthe edge of fate\b/i, "The Edge of Fate"],
-  [/episode:\s*heresy|\bheresy\b/i, "S26 Episode: Heresy"],
+  [/episode:\s*heresy|(?<!pit of )heresy\b/i, "S26 Episode: Heresy"],
   [/episode:\s*revenant|\brevenant\b/i, "S25 Episode: Revenant"],
   [/episode:\s*echoes|\bechoes\b/i, "S24 Episode: Echoes"],
   [/salvation'?s edge/i, "The Final Shape"],
@@ -489,7 +509,6 @@ export const SEASON_SOURCE_PATTERNS = [
   [/"root of nightmares"/i, "Lightfall"],
   [/"deep stone crypt"/i, "Beyond Light"],
   [/"garden of salvation"/i, "Shadowkeep"],
-  [/"pit of heresy"/i, "Shadowkeep"],
   [/"last wish"/i, "Forsaken"],
   [/"scourge of the past"/i, "Forsaken"],
   [/"crown of sorrow"/i, "S7 Season of Opulence"],
@@ -500,6 +519,7 @@ export const SEASON_SOURCE_PATTERNS = [
   [/season of the deep|\bdeep\b.*(?:dungeon|season)/i, "S21 Season of the Deep"],
   [/ghosts of the deep/i, "S21 Season of the Deep"],
   [/season of defiance|\bdefiance\b/i, "S20 Season of Defiance"],
+  [/exotic armor focusing/i, "Lightfall"],
   [/lightfall|root of nightmares|heist battlegrounds/i, "Lightfall"],
   [/season of the seraph|\bseraph\b/i, "S19 Season of the Seraph"],
   [/spire of the watcher/i, "S19 Season of the Seraph"],
@@ -543,7 +563,7 @@ export const SEASON_SOURCE_PATTERNS = [
   [/season of the drifter|\bdrifter\b|\bgambit prime|\breckoning\b/i, "S6 Season of the Drifter"],
   [/season of the forge|\bforge\b|\bblack armory|\bscourge of the past/i, "S5 Season of the Forge"],
   [
-    /forsaken|\blast wish|\bshattered throne|\bdreaming city|\btangled shore|\breef\b/i,
+    /forsaken|\blast wish|\bdreaming city|\btangled shore|\breef\b/i,
     "Forsaken",
   ],
   [/warmind|\bescalation protocol|\bspire of stars|\bmars\b/i, "Warmind"],
@@ -591,7 +611,7 @@ export const EXPANSION_SOURCE_PATTERNS = [
   ],
   [/deep stone crypt|\beuropa\b|\bbeyond light\b/i, "Beyond Light"],
   [
-    /forsaken|\blast wish|\bshattered throne|\bdreaming city|\btangled shore|\breef\b/i,
+    /forsaken|\blast wish|\bdreaming city|\btangled shore|\breef\b/i,
     "Forsaken",
   ],
   [/the edge of fate activities|edge of fate campaign/i, "The Edge of Fate"],
@@ -797,6 +817,18 @@ export function catalogVersionsEquivalent(current, candidate, context = {}) {
 
   // Armor reissues share a season label but have no weapon perk columns.
   if (!perkFpCurrent && !perkFpCandidate) {
+    const isArmor30ForHash = context.isArmor30ForHash;
+    if (isArmor30ForHash) {
+      const currentIsArmor30 = isArmor30ForHash(current.itemHash);
+      const candidateIsArmor30 = isArmor30ForHash(candidate.itemHash);
+      if (
+        currentIsArmor30 !== undefined &&
+        candidateIsArmor30 !== undefined &&
+        currentIsArmor30 !== candidateIsArmor30
+      ) {
+        return false;
+      }
+    }
     return true;
   }
 
@@ -934,6 +966,37 @@ export function catalogGroupKey(name, type) {
   return `${normalizedName}::${type}`;
 }
 
+/** Trials of the Nine armor was renamed with a (CODA) suffix for Prophecy. */
+export const ARMOR_CATALOG_GROUP_ALIASES = new Map([
+  [normalizeItemName("Judgement's Wrap"), "Bond Judgment"],
+]);
+
+export function catalogArmorGroupName(name = "") {
+  const withoutCoda = name.trim().replace(/\s+\(CODA\)\s*$/i, "");
+  return (
+    ARMOR_CATALOG_GROUP_ALIASES.get(normalizeItemName(withoutCoda)) ??
+    withoutCoda
+  );
+}
+
+export function catalogEntryGroupKey(name, type) {
+  const groupedName = type === "Armor" ? catalogArmorGroupName(name) : name.trim();
+  return catalogGroupKey(groupedName, type);
+}
+
+/** Legacy vendor sets reuse the same display name on every slot (e.g. Ankaa Seeker IV). */
+export function catalogArmorPieceGroupKey(
+  name,
+  classOrWeaponType,
+  slot,
+) {
+  const groupedName = catalogArmorGroupName(name);
+  const pieceName = [groupedName, classOrWeaponType, slot]
+    .filter(Boolean)
+    .join(" ");
+  return catalogGroupKey(pieceName, "Armor");
+}
+
 export function debutCatalogGroupKey(name, type) {
   const normalizedName = debutBaseNameKey(name);
   if (!normalizedName || !type) return "";
@@ -946,9 +1009,13 @@ function debutCatalogGroupKeyFromGroupKey(groupKey) {
   return `${debutBaseNameKey(groupKey.slice(0, sep))}::${groupKey.slice(sep + 2)}`;
 }
 
-/** Strip adept suffix so debut season is shared across normal and adept variants. */
+/** Strip adept / CODA suffixes so debut season is shared across related variants. */
 export function debutBaseNameKey(name = "") {
-  return normalizeItemName(name).replace(/\s*\(adept\)\s*$/, "");
+  const stripped = normalizeItemName(name)
+    .replace(/\s*\(adept\)\s*$/, "")
+    .replace(/\s*\(coda\)\s*$/, "");
+  const alias = ARMOR_CATALOG_GROUP_ALIASES.get(stripped);
+  return alias ? normalizeItemName(alias) : stripped;
 }
 
 export function isDebutRelevantVariant(item, group) {
@@ -957,7 +1024,9 @@ export function isDebutRelevantVariant(item, group) {
   if (item.itemType === 20) return false;
 
   const hasWeapon = group.some((variant) => variant.itemType === 3);
-  if (hasWeapon && item.itemType === 19) return false;
+  if (hasWeapon && item.itemType === 19) {
+    return isMonumentWeaponReissue(item);
+  }
 
   return true;
 }
@@ -1598,6 +1667,54 @@ function resolveManifestSeasonForLabel(
   return ownSeason;
 }
 
+/** Bungie collectible definitions with incorrect activity sources. */
+export const COLLECTIBLE_SOURCE_OVERRIDES = {
+  "301231525": 'Source: Last Wish raid.',
+};
+
+export function resolveCollectibleSourceString(collectible) {
+  if (!collectible) return "";
+  const override = COLLECTIBLE_SOURCE_OVERRIDES[String(collectible.hash)];
+  return override ?? collectible.sourceString ?? "";
+}
+
+/**
+ * When an activity source still maps to an expansion (e.g. Dreaming City → Forsaken)
+ * but the item watermark encodes a newer numbered season, trust the watermark.
+ */
+export function resolveActivitySourceSeasonLabel(
+  fromSource,
+  ownSeason,
+  { watermarkOverride = null } = {},
+) {
+  if (!fromSource) return null;
+
+  const ownLabel =
+    ownSeason > 0 ? seasonLabelFromManifestNumber(ownSeason) : null;
+
+  if (
+    isExpansionLabel(fromSource) &&
+    ownSeason > 0 &&
+    manifestSeasonToDisplayNumber(ownSeason) > displayNumberFromLabel(fromSource)
+  ) {
+    return ownLabel;
+  }
+
+  if (
+    isExpansionLabel(fromSource) &&
+    isExpansionLabel(ownLabel) &&
+    ownLabel !== fromSource
+  ) {
+    return ownLabel;
+  }
+
+  if (watermarkOverride && fromSource === "Red War") {
+    return watermarkOverride;
+  }
+
+  return fromSource;
+}
+
 export function resolveCollectibleForVariant(item, group, collectibles) {
   if (item.collectibleHash) {
     return collectibles[String(item.collectibleHash)] ?? null;
@@ -1657,15 +1774,30 @@ export function resolveArmor30SeasonLabel(
   const basename = watermarkBasename(item.iconWatermark);
   const fromSource = resolveSeasonLabelFromSource(source, seasons);
 
+  if (basename === MONUMENT_FEATURED_WATERMARK) {
+    return MONUMENT_OF_TRIUMPH_LABEL;
+  }
+
   if (fromSource && !isRecurringVersionSource(source)) {
     return finalizeArmor30SeasonLabel(item, fromSource, source, dimSeasonData);
   }
 
   const watermarkOverride = WATERMARK_LABEL_OVERRIDES[basename];
-  if (
-    watermarkOverride === "Renegades" ||
-    watermarkOverride === "S26 Episode: Heresy"
-  ) {
+  if (watermarkOverride === "Renegades") {
+    return watermarkOverride;
+  }
+  if (watermarkOverride === "S26 Episode: Heresy") {
+    // Armor 3.0 dungeon/raid reissues keep the Heresy chapter emblem but
+    // belong to Monument of Triumph — not the original S26 release.
+    if (/dungeon|raid/i.test(source)) {
+      return MONUMENT_OF_TRIUMPH_LABEL;
+    }
+
+    const manifestSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
+    if (manifestSeason >= 28) {
+      return MONUMENT_OF_TRIUMPH_LABEL;
+    }
+
     return watermarkOverride;
   }
 
@@ -1709,7 +1841,15 @@ export function applyFeaturedWatermarkLabelCorrection(
   const manifestSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
   const forced = WATERMARK_LABEL_OVERRIDES[basename];
 
-  if (forced === "Renegades" || forced === "S26 Episode: Heresy") {
+  if (basename === MONUMENT_FEATURED_WATERMARK) {
+    return MONUMENT_OF_TRIUMPH_LABEL;
+  }
+
+  if (basename === REVENANT_EPISODE_WATERMARK) {
+    return "S25 Episode: Revenant";
+  }
+
+  if (forced) {
     return forced;
   }
 
@@ -1751,9 +1891,23 @@ export function resolveVersionSeasonLabel(
     salvationsEdgeS29MinIndex = null,
   } = {},
 ) {
-  const source = collectible?.sourceString ?? "";
+  const source = resolveCollectibleSourceString(collectible);
+  const basename = watermarkBasename(item.iconWatermark);
+
+  if (basename === MONUMENT_FEATURED_WATERMARK) {
+    return stripIncorrectMonumentLabel(
+      item,
+      MONUMENT_OF_TRIUMPH_LABEL,
+      source,
+    );
+  }
+
+  if (basename === REVENANT_EPISODE_WATERMARK) {
+    return "S25 Episode: Revenant";
+  }
+
   const fromSource = resolveSeasonLabelFromSource(source, seasons);
-  const votedLabel = watermarkLabelMap.get(watermarkBasename(item.iconWatermark));
+  const votedLabel = watermarkLabelMap.get(basename);
   const watermarkOverride =
     WATERMARK_LABEL_OVERRIDES[watermarkBasename(item.iconWatermark)];
   const ownSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
@@ -1761,11 +1915,9 @@ export function resolveVersionSeasonLabel(
   let label = null;
 
   if (fromSource && !isRecurringVersionSource(source)) {
-    if (watermarkOverride && fromSource === "Red War") {
-      label = watermarkOverride;
-    } else {
-      label = fromSource;
-    }
+    label = resolveActivitySourceSeasonLabel(fromSource, ownSeason, {
+      watermarkOverride,
+    });
   } else if (watermarkOverride) {
     label = watermarkOverride;
   } else if (votedLabel && isExpansionLabel(votedLabel)) {

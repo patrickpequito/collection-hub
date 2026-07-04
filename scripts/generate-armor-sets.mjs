@@ -78,6 +78,13 @@ const SLOT_SUFFIXES = [
 const SLOTS = ["helmet", "gauntlets", "chest", "legs", "classItem"];
 const CLASSES = ["hunter", "titan", "warlock"];
 
+/** Crucible sets whose armor slots share one display name. */
+const UNIFORM_CRUCIBLE_CLASS_ITEMS = {
+  "Ankaa Seeker IV": { warlock: "Binary Phoenix Bond" },
+  "Swordflight 4.1": { hunter: "Binary Phoenix Cloak" },
+  "Phoenix Strife Type 0": { titan: "Binary Phoenix Mark" },
+};
+
 function isLegendaryArmor(item) {
   return item.inventory?.tierTypeName === "Legendary";
 }
@@ -195,29 +202,61 @@ function buildArmorSets(items, collectibles) {
   const classItems = pieces.filter((p) => p.slot === "classItem");
   const usedClassItems = new Set();
 
+  const uniformClassItemNames = new Set(
+    Object.values(UNIFORM_CRUCIBLE_CLASS_ITEMS).flatMap((byClass) =>
+      Object.values(byClass),
+    ),
+  );
+
+  function assignClassItem(set, cls, match) {
+    set.classes[cls].classItem = {
+      itemHash: match.hash,
+      name: match.name,
+      iconPath: match.iconPath,
+    };
+    usedClassItems.add(match.hash);
+  }
+
+  function tryAssignClassItem(set, cls, classItemName = null) {
+    if (!set.classes[cls]) return false;
+    const hasClassItem = Boolean(set.classes[cls].classItem);
+    const coreSlots = SLOTS.filter((s) => s !== "classItem");
+    const coreFilled = coreSlots.every((s) => set.classes[cls][s]);
+    if (!coreFilled || hasClassItem) return false;
+
+    const match = classItemName
+      ? classItems.find(
+          (item) =>
+            item.name === classItemName &&
+            item.cls === cls &&
+            !usedClassItems.has(item.hash),
+        )
+      : classItems.find(
+          (item) =>
+            item.sourceLabel === set.sourceLabel &&
+            item.cls === cls &&
+            !usedClassItems.has(item.hash) &&
+            !uniformClassItemNames.has(item.name),
+        );
+
+    if (!match) return false;
+    assignClassItem(set, cls, match);
+    return true;
+  }
+
+  // Reserve Binary Phoenix class items for uniform Crucible sets first.
+  for (const set of sets.values()) {
+    const uniformByClass = UNIFORM_CRUCIBLE_CLASS_ITEMS[set.name];
+    if (!uniformByClass) continue;
+    for (const cls of CLASSES) {
+      const classItemName = uniformByClass[cls];
+      if (classItemName) tryAssignClassItem(set, cls, classItemName);
+    }
+  }
+
   for (const set of sets.values()) {
     for (const cls of CLASSES) {
-      if (!set.classes[cls]) continue;
-      const hasClassItem = Boolean(set.classes[cls].classItem);
-      const coreSlots = SLOTS.filter((s) => s !== "classItem");
-      const coreFilled = coreSlots.every((s) => set.classes[cls][s]);
-      if (!coreFilled || hasClassItem) continue;
-
-      const match = classItems.find(
-        (item) =>
-          item.sourceLabel === set.sourceLabel &&
-          item.cls === cls &&
-          !usedClassItems.has(item.hash),
-      );
-
-      if (match) {
-        set.classes[cls].classItem = {
-          itemHash: match.hash,
-          name: match.name,
-          iconPath: match.iconPath,
-        };
-        usedClassItems.add(match.hash);
-      }
+      tryAssignClassItem(set, cls);
     }
   }
 
@@ -232,18 +271,16 @@ function buildArmorSets(items, collectibles) {
     if (isComplete) complete.push(set);
   }
 
-  // Fallback: include sets with at least one full class row (all 5 slots)
-  if (complete.length < 20) {
-    const seen = new Set(complete.map((s) => s.id));
-    for (const set of sets.values()) {
-      if (seen.has(set.id)) continue;
-      const hasFullClass = CLASSES.some((cls) =>
-        SLOTS.every((slot) => set.classes[cls]?.[slot]),
-      );
-      if (hasFullClass) {
-        complete.push(set);
-        seen.add(set.id);
-      }
+  // Include sets with at least one full class row (all 5 slots).
+  const seen = new Set(complete.map((s) => s.id));
+  for (const set of sets.values()) {
+    if (seen.has(set.id)) continue;
+    const hasFullClass = CLASSES.some((cls) =>
+      SLOTS.every((slot) => set.classes[cls]?.[slot]),
+    );
+    if (hasFullClass) {
+      complete.push(set);
+      seen.add(set.id);
     }
   }
 

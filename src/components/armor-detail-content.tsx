@@ -17,6 +17,11 @@ import { ARMOR_STAT_ORDER } from "@/lib/armor/constants";
 import { resolveIsArmor30ForHash } from "@/lib/armor/base-stats";
 import { resolveExoticArmorPerkForHash } from "@/lib/armor/exotic-perk";
 import { resolveArmorStatsForItemHash } from "@/lib/armor/stats";
+import {
+  resolveArmorScreenshotForHash,
+  resolveArmorVersionForHash,
+  resolveSeasonKeyFromVersion,
+} from "@/lib/armor/version-for-hash";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 import { useArmorRolls } from "@/lib/use-armor-rolls";
 import type { AllLootItem } from "@/types/all-loot";
@@ -44,14 +49,22 @@ function ArmorPreviewUnavailable() {
   );
 }
 
-function ArmorPreview({ armor }: { armor: AllLootItem }) {
+function ArmorPreview({
+  armor,
+  itemHash,
+}: {
+  armor: AllLootItem;
+  itemHash: string;
+}) {
   const [screenshotFailed, setScreenshotFailed] = useState(false);
+  const screenshotPath = resolveArmorScreenshotForHash(armor, itemHash);
 
-  if (armor.screenshotPath && !screenshotFailed) {
+  if (screenshotPath && !screenshotFailed) {
     return (
       <div className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/40">
         <ExpandableImage
-          src={bungieIconUrl(armor.screenshotPath)}
+          key={screenshotPath}
+          src={bungieIconUrl(screenshotPath)}
           alt={armor.name}
           expandLabel={`Expand ${armor.name} preview`}
           onError={() => setScreenshotFailed(true)}
@@ -76,6 +89,10 @@ export function ArmorDetailContent({
   const seasonBadges = resolveSeasonBadges(armor);
   const armorSlug = armor.slug ?? "";
   const [selectedVersionHash, setSelectedVersionHash] = useState(armor.itemHash);
+  const selectedSeasonKey = useMemo(() => {
+    const version = resolveArmorVersionForHash(armor, selectedVersionHash);
+    return resolveSeasonKeyFromVersion(version);
+  }, [armor, selectedVersionHash]);
   const catalogStats = useMemo(
     () => resolveArmorStatsForItemHash(armor, selectedVersionHash),
     [armor, selectedVersionHash],
@@ -169,7 +186,7 @@ export function ArmorDetailContent({
           </div>
 
           <div className="lg:hidden">
-            <ArmorPreview armor={armor} />
+            <ArmorPreview armor={armor} itemHash={selectedVersionHash} />
           </div>
 
           <ArmorStatsPanel
@@ -215,7 +232,7 @@ export function ArmorDetailContent({
 
         <div className="space-y-6 lg:col-span-2">
           <div className="hidden lg:block">
-            <ArmorPreview armor={armor} />
+            <ArmorPreview armor={armor} itemHash={selectedVersionHash} />
           </div>
 
           {armor.rarity === "Exotic" ? (
@@ -243,10 +260,14 @@ export function ArmorDetailContent({
                   <ArmorSetPiecesPanel
                     set={armorSet}
                     primaryClass={primaryGuardianClass}
+                    selectedSeasonKey={selectedSeasonKey}
                     isSignedIn={isSignedIn}
                     itemHrefs={itemHrefs}
                   />
-                  <ArmorSetPreviewPanel setName={armorSet.name} />
+                  <ArmorSetPreviewPanel
+                    setName={armorSet.name}
+                    source={armorSet.source}
+                  />
                 </>
               ) : null}
             </div>
