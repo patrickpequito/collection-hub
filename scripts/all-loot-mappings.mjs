@@ -1712,6 +1712,19 @@ export function resolveActivitySourceSeasonLabel(
     return watermarkOverride;
   }
 
+  // Watermark is the season emblem on the icon; when an activity source maps to a
+  // different numbered season (e.g. Seraph Bounties reissues with Worthy emblems),
+  // trust the watermark.
+  if (
+    ownLabel &&
+    ownSeason > 0 &&
+    !isExpansionLabel(fromSource) &&
+    !isExpansionLabel(ownLabel) &&
+    displayNumberFromLabel(fromSource) !== displayNumberFromLabel(ownLabel)
+  ) {
+    return ownLabel;
+  }
+
   return fromSource;
 }
 

@@ -140,6 +140,12 @@ export const sunderedDoctrineLoot: ActivityLootPage = {
       SOURCE,
     ),
     item(
+      "1303313141",
+      "Unsworn",
+      "/common/destiny2_content/icons/dd0ae6e8b9aeccfcbec7d5971c48984c.jpg",
+      SOURCE,
+    ),
+    item(
       "3360937899",
       "Unvoiced",
       "/common/destiny2_content/icons/0c30a57365acedf3d2b116c96edd0cfd.jpg",

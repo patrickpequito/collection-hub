@@ -7,8 +7,7 @@ export type SeasonBadge = {
 };
 
 function badgeFromVersion(version: AllLootItemVersion): SeasonBadge | null {
-  const iconPath =
-    version.seasonDisplayIconPath ?? version.seasonIconPath ?? undefined;
+  const iconPath = version.seasonIconPath ?? version.seasonDisplayIconPath ?? undefined;
   const label = version.eventLabel ?? version.seasonLabel;
   if (!iconPath || !label) return null;
 
@@ -30,8 +29,8 @@ export function resolveSeasonBadges(weapon: AllLootItem): SeasonBadge[] {
   const seen = new Set<string>();
 
   const addBadge = (badge: SeasonBadge | null) => {
-    if (!badge || seen.has(badge.label)) return;
-    seen.add(badge.label);
+    if (!badge || seen.has(badge.key)) return;
+    seen.add(badge.key);
     badges.push(badge);
   };
 
