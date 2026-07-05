@@ -38,24 +38,26 @@ export async function GET(_request: Request, context: RouteContext) {
 
   if (!weapon) {
     return NextResponse.json(
-      { rolls: [], error: "Weapon not found" },
+      { rolls: [], characters: [], error: "Weapon not found" },
       { status: 404 },
     );
   }
 
   const session = await getSession();
   if (!session) {
-    return NextResponse.json({ rolls: [], error: "Not signed in" });
+    return NextResponse.json({ rolls: [], characters: [], error: "Not signed in" });
   }
 
   try {
-    const [instances, godRollIndex, aegisRollIndex, catalog] =
+    const [instancesResult, godRollIndex, aegisRollIndex, catalog] =
       await Promise.all([
         fetchWeaponRollInstances(session, collectWeaponPageItemHashes(weapon)),
         loadWeaponGodRollIndex(),
         loadWeaponAegisRollIndex(),
         loadAllLootCatalog(),
       ]);
+
+    const { instances, characters } = instancesResult;
 
     const aegisEntry = mergeAegisEntriesForWeaponPage(weapon, aegisRollIndex);
     const plugIndex = catalog.plugIndex ?? {};
@@ -115,10 +117,11 @@ export async function GET(_request: Request, context: RouteContext) {
       compareRollInstancesByRecency,
     );
 
-    return NextResponse.json({ rolls, error: null });
+    return NextResponse.json({ rolls, characters, error: null });
   } catch (error) {
     return NextResponse.json({
       rolls: [],
+      characters: [],
       error:
         error instanceof Error
           ? error.message

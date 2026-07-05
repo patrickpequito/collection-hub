@@ -39,6 +39,15 @@ Design your image at a proportion close to what is visible on screen (~**3.4 : 1
 
 Images use `object-cover` anchored to the **left**. Keep title and key art on the left; the right edge may crop slightly on wider viewports.
 
+## Featured icon (weekly rotator)
+
+| | |
+|---|---|
+| **Path** | `public/images/rad-loot/featured.png` |
+| **Border** | `#24b4b3` on featured raid/dungeon banners |
+| **Usage** | Top-left badge on featured raid/dungeon banners on the RAD Loot index |
+| **Data** | `public/data/featured-activities.json` (refreshed Tuesdays 17:05 UTC via GitHub Actions) |
+
 ## Armor set previews (activity pages)
 
 One image per activity (all three classes), below the piece icons in the **Armor sets** panel.

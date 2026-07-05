@@ -1,4 +1,4 @@
-export const CURRENT_VERSION = "0.7.3";
+export const CURRENT_VERSION = "0.7.4";
 
 export function formatReleaseDate(isoDate: string) {
   const [year, month, day] = isoDate.split("-").map(Number);
@@ -30,6 +30,32 @@ export type UpdateRelease = {
  * Newest release first. Add a new entry at the top when shipping an update.
  */
 export const UPDATE_RELEASES: UpdateRelease[] = [
+  {
+    version: "0.7.4",
+    publishedAt: "2026-07-05",
+    summary:
+      "Transfer items between your characters and the vault directly from weapon and armor roll panels, and see this week’s featured raids and dungeons on RAD Loot and the homepage.",
+    sections: [
+      {
+        title: "Item transfer",
+        description:
+          "Move copies without leaving the detail page when signed in.",
+        items: [
+          "Send items to the vault, Hunter, Titan, or Warlock — the current location is marked and cannot be selected again.",
+          "Transfer status and a location animation keep the roll pinned until the move completes.",
+        ],
+      },
+      {
+        title: "Featured raids & dungeons",
+        description:
+          "Weekly rotation highlights on RAD Loot and the homepage.",
+        items: [
+          "RAD Loot calls out this week’s featured raids and dungeons at the top of the page.",
+          "The homepage shows the same featured activities in a compact grid above the main catalog banners.",
+        ],
+      },
+    ],
+  },
   {
     version: "0.7.3",
     publishedAt: "2026-07-03",

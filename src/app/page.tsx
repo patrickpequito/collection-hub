@@ -1,12 +1,14 @@
 import Image from "next/image";
 import { AppVersionLabel } from "@/components/app-version-label";
 import { HomeAuthSection } from "@/components/home-auth-section";
+import { HomeFeaturedActivityBanner } from "@/components/home-featured-activity-banner";
 import { HomeTriumphScores } from "@/components/home-triumph-scores";
 import { HomeUpdatesNotice } from "@/components/home-updates-notice";
 import { HubBanner } from "@/components/hub-banner";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 import { isBungieOAuthConfigured } from "@/lib/env";
+import { featuredActivityEntries } from "@/lib/rad-loot/featured-activities";
 import { getSession } from "@/lib/session";
 import siteLogo from "../../public/icon.png";
 
@@ -22,6 +24,7 @@ export default async function Home({ searchParams }: HomeProps) {
   const session = await getSession();
   const params = await searchParams;
   const oauthConfigured = isBungieOAuthConfigured();
+  const featured = featuredActivityEntries();
 
   return (
     <main className="min-h-dvh bg-zinc-950 text-zinc-100">
@@ -81,6 +84,45 @@ export default async function Home({ searchParams }: HomeProps) {
                 imageFile="monument-of-triumph.webp"
               />
             </div>
+
+            {featured.raids.length > 0 || featured.dungeons.length > 0 ? (
+              <div className="mt-3 sm:mt-4">
+                <div className="mb-2 flex items-center gap-1.5 sm:mb-3">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/images/rad-loot/featured.png"
+                    alt=""
+                    width={14}
+                    height={14}
+                    className="shrink-0 object-contain"
+                    style={{ width: 14, height: 14 }}
+                  />
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#24b4b3] sm:text-xs">
+                    RAD featured this week
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+                  <div className="flex flex-col gap-3 sm:gap-4">
+                    {featured.raids.map((entry) => (
+                      <HomeFeaturedActivityBanner
+                        key={entry.slug}
+                        entry={entry}
+                        kind="raid"
+                      />
+                    ))}
+                  </div>
+                  <div className="flex flex-col gap-3 sm:gap-4">
+                    {featured.dungeons.map((entry) => (
+                      <HomeFeaturedActivityBanner
+                        key={entry.slug}
+                        entry={entry}
+                        kind="dungeon"
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : null}
           </section>
 
           <section className="space-y-3 sm:space-y-5">

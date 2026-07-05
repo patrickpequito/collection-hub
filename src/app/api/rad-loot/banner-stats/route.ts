@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import {
   DUNGEONS,
   LEGACY_RAIDS,
+  PANTHEON,
   RAID_LAIRS,
   RAIDS,
 } from "@/data/rad-loot/activities";
@@ -14,7 +15,7 @@ export async function GET() {
     return NextResponse.json({ bannerStats: null, error: "Not signed in" });
   }
 
-  const allEntries = [...RAIDS, ...DUNGEONS, ...LEGACY_RAIDS, ...RAID_LAIRS];
+  const allEntries = [PANTHEON, ...RAIDS, ...DUNGEONS, ...LEGACY_RAIDS, ...RAID_LAIRS];
 
   try {
     const bannerStats = await loadSignedInActivityBannerStats(

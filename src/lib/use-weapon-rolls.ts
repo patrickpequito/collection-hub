@@ -1,59 +1,157 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  applyRollLocationUpdates,
+  rollMatchesDestination,
+  sleep,
+  type RollLocationUpdate,
+} from "@/lib/roll-location-update";
+import type { ProfileCharacter } from "@/types/destiny-characters";
 import type { WeaponRollInstance } from "@/types/weapon-rolls";
+
+type RefetchOptions = {
+  silent?: boolean;
+  locationUpdate?: RollLocationUpdate;
+};
 
 type WeaponRollsState = {
   rolls: WeaponRollInstance[];
+  characters: ProfileCharacter[];
   loading: boolean;
   error: string | null;
+  refetch: (options?: RefetchOptions) => Promise<void>;
 };
+
+const REFETCH_RETRY_ATTEMPTS = 4;
+const REFETCH_RETRY_DELAY_MS = 400;
+
+async function fetchWeaponRolls(slug: string) {
+  const response = await fetch(`/api/weapons/${encodeURIComponent(slug)}/rolls`, {
+    cache: "no-store",
+  });
+  return (await response.json()) as {
+    rolls: WeaponRollInstance[];
+    characters: ProfileCharacter[];
+    error: string | null;
+  };
+}
 
 export function useWeaponRolls(slug: string, enabled: boolean): WeaponRollsState {
   const [rolls, setRolls] = useState<WeaponRollInstance[]>([]);
+  const [characters, setCharacters] = useState<ProfileCharacter[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [refreshNonce, setRefreshNonce] = useState({
+    id: 0,
+    silent: false,
+    locationUpdate: null as RollLocationUpdate | null,
+  });
+  const refetchResolveRef = useRef<(() => void) | null>(null);
+  const charactersRef = useRef(characters);
+  charactersRef.current = characters;
+
+  const refetch = useCallback((options?: RefetchOptions) => {
+    return new Promise<void>((resolve) => {
+      refetchResolveRef.current = resolve;
+      setRefreshNonce((current) => ({
+        id: current.id + 1,
+        silent: options?.silent ?? false,
+        locationUpdate: options?.locationUpdate ?? null,
+      }));
+    });
+  }, []);
 
   useEffect(() => {
     if (!enabled) {
       setRolls([]);
+      setCharacters([]);
       setLoading(false);
       setError(null);
+      refetchResolveRef.current?.();
+      refetchResolveRef.current = null;
       return;
     }
 
     let cancelled = false;
-    setLoading(true);
-    setError(null);
+    const { silent, locationUpdate } = refreshNonce;
 
-    fetch(`/api/weapons/${encodeURIComponent(slug)}/rolls`, {
-      cache: "no-store",
-    })
-      .then(async (response) => {
-        const payload = (await response.json()) as {
-          rolls: WeaponRollInstance[];
-          error: string | null;
-        };
+    if (locationUpdate) {
+      setRolls((current) =>
+        applyRollLocationUpdates(
+          current,
+          locationUpdate,
+          charactersRef.current,
+        ),
+      );
+    }
+
+    if (!silent) {
+      setLoading(true);
+      setError(null);
+    }
+
+    (async () => {
+      try {
+        let payload = await fetchWeaponRolls(slug);
         if (cancelled) return;
+
+        if (locationUpdate) {
+          for (let attempt = 0; attempt < REFETCH_RETRY_ATTEMPTS; attempt++) {
+            const updatedRoll = payload.rolls.find(
+              (roll) => roll.itemInstanceId === locationUpdate.itemInstanceId,
+            );
+            if (
+              updatedRoll &&
+              rollMatchesDestination(
+                updatedRoll,
+                locationUpdate.destination,
+                payload.characters ?? [],
+              )
+            ) {
+              break;
+            }
+
+            if (attempt < REFETCH_RETRY_ATTEMPTS - 1) {
+              await sleep(REFETCH_RETRY_DELAY_MS);
+              if (cancelled) return;
+              payload = await fetchWeaponRolls(slug);
+              if (cancelled) return;
+            } else {
+              payload = {
+                ...payload,
+                rolls: applyRollLocationUpdates(
+                  payload.rolls,
+                  locationUpdate,
+                  payload.characters ?? [],
+                ),
+              };
+            }
+          }
+        }
+
         setRolls(payload.rolls);
+        setCharacters(payload.characters ?? []);
         setError(payload.error);
-      })
-      .catch((fetchError) => {
+      } catch (fetchError) {
         if (cancelled) return;
         setError(
           fetchError instanceof Error
             ? fetchError.message
             : "Failed to load weapon rolls",
         );
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
+      } finally {
+        if (cancelled) return;
+        if (!silent) setLoading(false);
+        refetchResolveRef.current?.();
+        refetchResolveRef.current = null;
+      }
+    })();
 
     return () => {
       cancelled = true;
     };
-  }, [slug, enabled]);
+  }, [slug, enabled, refreshNonce]);
 
-  return { rolls, loading, error };
+  return { rolls, characters, loading, error, refetch };
 }

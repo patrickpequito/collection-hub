@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-07-05T10:19:00.679Z",
+  "weekIndex": 3,
+  "weekStart": "2026-06-30T17:00:00.000Z",
+  "weekEnd": "2026-07-07T17:00:00.000Z",
+  "featuredRaids": [
+    "crotas-end",
+    "vault-of-glass"
+  ],
+  "featuredDungeons": [
+    "warlords-ruin",
+    "grasp-of-avarice"
+  ],
+  "rotationWeeks": 30
+}

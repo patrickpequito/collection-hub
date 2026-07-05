@@ -112,7 +112,7 @@ export function ArmorDetailContent({
   const [hoveredRollId, setHoveredRollId] = useState<string | null>(null);
   const [pinnedRollId, setPinnedRollId] = useState<string | null>(null);
 
-  const { rolls, loading, error } = useArmorRolls(
+  const { rolls, characters, loading, error, refetch } = useArmorRolls(
     armorSlug,
     isSignedIn && showRolls,
   );
@@ -210,6 +210,7 @@ export function ArmorDetailContent({
           {armorSlug ? (
             <ArmorRollsPanel
               rolls={rolls}
+              characters={characters}
               loading={loading}
               error={error}
               showRolls={showRolls}
@@ -225,6 +226,14 @@ export function ArmorDetailContent({
               pinnedRollId={pinnedRollId}
               onRollHover={setHoveredRollId}
               onRollPin={setPinnedRollId}
+              onTransferComplete={(destination) =>
+                refetch({
+                  silent: true,
+                  locationUpdate: pinnedRollId
+                    ? { itemInstanceId: pinnedRollId, destination }
+                    : undefined,
+                })
+              }
               showVersionLabels={(armor.versions?.length ?? 0) > 1}
             />
           ) : null}

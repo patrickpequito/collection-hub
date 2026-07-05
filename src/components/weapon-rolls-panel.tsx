@@ -2,16 +2,19 @@
 
 import Image from "next/image";
 import { AegisTierGrade } from "@/components/aegis-tier-grade";
+import { RollTransferPanel } from "@/components/roll-transfer-panel";
 import { WeaponRollIcon } from "@/components/weapon-roll-icon";
-import { resolveVersionDisplayLabel } from "@/lib/all-loot/season-badges";
 import { resolveGodRollChipHighlight } from "@/lib/weapons/god-roll-highlights";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 import type { WeaponPlugDefinition } from "@/types/all-loot";
+import type { ProfileCharacter } from "@/types/destiny-characters";
+import type { TransferDestinationId } from "@/types/destiny-characters";
 import type { ResolvedWeaponGodRoll } from "@/types/weapon-god-rolls";
 import type { WeaponRollInstance } from "@/types/weapon-rolls";
 
 type WeaponRollsPanelProps = {
   rolls: WeaponRollInstance[];
+  characters: ProfileCharacter[];
   loading: boolean;
   error: string | null;
   showRolls: boolean;
@@ -20,8 +23,10 @@ type WeaponRollsPanelProps = {
   pinnedRollId: string | null;
   onRollHover: (rollId: string | null) => void;
   onRollPin: (rollId: string | null) => void;
+  onTransferComplete?: (
+    destination: TransferDestinationId,
+  ) => void | Promise<void>;
   plugIndex?: Record<string, WeaponPlugDefinition>;
-  showVersionLabels?: boolean;
   godRollsByHash?: Record<string, ResolvedWeaponGodRoll>;
   signedIn?: boolean;
 };
@@ -165,32 +170,35 @@ function RollRow({
   roll,
   isActive,
   isPinned,
+  characters,
   plugIndex,
-  showVersionLabel,
   godRoll,
   onHover,
   onPin,
+  onTransferComplete,
 }: {
   roll: WeaponRollInstance;
   isActive: boolean;
   isPinned: boolean;
+  characters: ProfileCharacter[];
   plugIndex: Record<string, WeaponPlugDefinition>;
-  showVersionLabel: boolean;
   godRoll: ResolvedWeaponGodRoll | null;
   onHover: (rollId: string | null) => void;
   onPin: (rollId: string) => void;
+  onTransferComplete?: (
+    destination: TransferDestinationId,
+  ) => void | Promise<void>;
 }) {
-  const versionLabel = resolveVersionDisplayLabel(roll.version);
-
   return (
-    <button
-      type="button"
-      className={`w-full rounded-md px-2 py-2 text-left ${rollRowClass(isActive, roll.isBest)}`}
-      aria-pressed={isPinned}
-      onMouseEnter={() => onHover(roll.itemInstanceId)}
-      onMouseLeave={() => onHover(null)}
-      onClick={() => onPin(roll.itemInstanceId)}
-    >
+    <div className={`rounded-md ${rollRowClass(isActive, roll.isBest)}`}>
+      <button
+        type="button"
+        className="w-full px-2 py-2 text-left"
+        aria-pressed={isPinned}
+        onMouseEnter={() => onHover(roll.itemInstanceId)}
+        onMouseLeave={() => onHover(null)}
+        onClick={() => onPin(roll.itemInstanceId)}
+      >
       <div className="grid grid-cols-5 items-center gap-2 sm:gap-3">
         <div className="flex justify-center">
           <WeaponRollIcon version={roll.version} gearTier={roll.gearTier} />
@@ -221,35 +229,23 @@ function RollRow({
           <RollStatusIcon roll={roll} />
         </div>
       </div>
-      {showVersionLabel ? (
-        <p
-          className="mt-1 hidden truncate text-xs text-zinc-500 sm:block"
-          title={versionLabel}
-        >
-          {versionLabel}
-        </p>
-      ) : null}
-      <div
-        className={`mt-1 flex items-center gap-2 sm:hidden ${
-          showVersionLabel ? "" : "justify-end"
-        }`}
-      >
-        {showVersionLabel ? (
-          <p
-            className="min-w-0 flex-1 truncate text-[10px] text-zinc-500"
-            title={versionLabel}
-          >
-            {versionLabel}
-          </p>
-        ) : null}
+      <div className="mt-1 flex justify-end sm:hidden">
         <RollPerkChips roll={roll} plugIndex={plugIndex} godRoll={godRoll} />
       </div>
-    </button>
+      </button>
+      <RollTransferPanel
+        roll={roll}
+        characters={characters}
+        open={isPinned}
+        onTransferComplete={onTransferComplete}
+      />
+    </div>
   );
 }
 
 export function WeaponRollsPanel({
   rolls,
+  characters,
   loading,
   error,
   showRolls,
@@ -258,8 +254,8 @@ export function WeaponRollsPanel({
   pinnedRollId,
   onRollHover,
   onRollPin,
+  onTransferComplete,
   plugIndex = {},
-  showVersionLabels = false,
   godRollsByHash = {},
   signedIn = true,
 }: WeaponRollsPanelProps) {
@@ -301,21 +297,24 @@ export function WeaponRollsPanel({
               No copies of this weapon in your inventory.
             </p>
           ) : (
-            rolls.map((roll) => (
-              <RollRow
-                key={roll.itemInstanceId}
-                roll={roll}
-                isActive={activeRollId === roll.itemInstanceId}
-                isPinned={pinnedRollId === roll.itemInstanceId}
-                plugIndex={plugIndex}
-                showVersionLabel={showVersionLabels}
-                godRoll={godRollsByHash[roll.itemHash] ?? null}
-                onHover={onRollHover}
-                onPin={(rollId) =>
-                  onRollPin(pinnedRollId === rollId ? null : rollId)
-                }
-              />
-            ))
+            <div className="space-y-2">
+              {rolls.map((roll) => (
+                <RollRow
+                  key={roll.itemInstanceId}
+                  roll={roll}
+                  isActive={activeRollId === roll.itemInstanceId}
+                  isPinned={pinnedRollId === roll.itemInstanceId}
+                  characters={characters}
+                  plugIndex={plugIndex}
+                  godRoll={godRollsByHash[roll.itemHash] ?? null}
+                  onHover={onRollHover}
+                  onPin={(rollId) =>
+                    onRollPin(pinnedRollId === rollId ? null : rollId)
+                  }
+                  onTransferComplete={onTransferComplete}
+                />
+              ))}
+            </div>
           )}
         </div>
       ) : null}

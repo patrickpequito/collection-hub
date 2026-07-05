@@ -2,11 +2,14 @@
 
 import { WeaponRollIcon } from "@/components/weapon-roll-icon";
 import { ArmorArchetypeIcon } from "@/components/armor-archetype-icon";
+import { RollTransferPanel } from "@/components/roll-transfer-panel";
 import { resolveVersionDisplayLabel } from "@/lib/all-loot/season-badges";
 import type { ArmorRollInstance } from "@/types/armor-rolls";
+import type { ProfileCharacter, TransferDestinationId } from "@/types/destiny-characters";
 
 type ArmorRollsPanelProps = {
   rolls: ArmorRollInstance[];
+  characters: ProfileCharacter[];
   loading: boolean;
   error: string | null;
   showRolls: boolean;
@@ -15,6 +18,9 @@ type ArmorRollsPanelProps = {
   pinnedRollId: string | null;
   onRollHover: (rollId: string | null) => void;
   onRollPin: (rollId: string | null) => void;
+  onTransferComplete?: (
+    destination: TransferDestinationId,
+  ) => void | Promise<void>;
   showVersionLabels?: boolean;
   signedIn?: boolean;
 };
@@ -80,28 +86,35 @@ function RollRow({
   roll,
   isActive,
   isPinned,
+  characters,
   showVersionLabel,
   onHover,
   onPin,
+  onTransferComplete,
 }: {
   roll: ArmorRollInstance;
   isActive: boolean;
   isPinned: boolean;
+  characters: ProfileCharacter[];
   showVersionLabel: boolean;
   onHover: (rollId: string | null) => void;
   onPin: (rollId: string) => void;
+  onTransferComplete?: (
+    destination: TransferDestinationId,
+  ) => void | Promise<void>;
 }) {
   const versionLabel = resolveVersionDisplayLabel(roll.version);
 
   return (
-    <button
-      type="button"
-      className={`w-full rounded-md px-2 py-2 text-left ${rollRowClass(isActive, roll.isBest)}`}
-      aria-pressed={isPinned}
-      onMouseEnter={() => onHover(roll.itemInstanceId)}
-      onMouseLeave={() => onHover(null)}
-      onClick={() => onPin(roll.itemInstanceId)}
-    >
+    <div className={`rounded-md ${rollRowClass(isActive, roll.isBest)}`}>
+      <button
+        type="button"
+        className="w-full px-2 py-2 text-left"
+        aria-pressed={isPinned}
+        onMouseEnter={() => onHover(roll.itemInstanceId)}
+        onMouseLeave={() => onHover(null)}
+        onClick={() => onPin(roll.itemInstanceId)}
+      >
       <div className="grid grid-cols-5 items-start gap-2 sm:gap-3">
         <div className="flex justify-center pt-0.5">
           <WeaponRollIcon version={roll.version} gearTier={roll.tier} />
@@ -155,12 +168,20 @@ function RollRow({
           {versionLabel}
         </p>
       ) : null}
-    </button>
+      </button>
+      <RollTransferPanel
+        roll={roll}
+        characters={characters}
+        open={isPinned}
+        onTransferComplete={onTransferComplete}
+      />
+    </div>
   );
 }
 
 export function ArmorRollsPanel({
   rolls,
+  characters,
   loading,
   error,
   showRolls,
@@ -169,6 +190,7 @@ export function ArmorRollsPanel({
   pinnedRollId,
   onRollHover,
   onRollPin,
+  onTransferComplete,
   showVersionLabels = false,
   signedIn = false,
 }: ArmorRollsPanelProps) {
@@ -216,9 +238,13 @@ export function ArmorRollsPanel({
                   roll={roll}
                   isActive={activeRollId === roll.itemInstanceId}
                   isPinned={pinnedRollId === roll.itemInstanceId}
+                  characters={characters}
                   showVersionLabel={showVersionLabels}
                   onHover={onRollHover}
-                  onPin={onRollPin}
+                  onPin={(rollId) =>
+                    onRollPin(pinnedRollId === rollId ? null : rollId)
+                  }
+                  onTransferComplete={onTransferComplete}
                 />
               ))}
             </>

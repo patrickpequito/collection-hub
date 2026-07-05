@@ -31,21 +31,23 @@ export async function GET(_request: Request, context: RouteContext) {
 
   if (!armor) {
     return NextResponse.json(
-      { rolls: [], error: "Armor not found" },
+      { rolls: [], characters: [], error: "Armor not found" },
       { status: 404 },
     );
   }
 
   const session = await getSession();
   if (!session) {
-    return NextResponse.json({ rolls: [], error: "Not signed in" });
+    return NextResponse.json({ rolls: [], characters: [], error: "Not signed in" });
   }
 
   try {
-    const [instances, catalog] = await Promise.all([
+    const [instancesResult, catalog] = await Promise.all([
       fetchArmorRollInstances(session, collectArmorPageItemHashes(armor)),
       loadAllLootCatalog(),
     ]);
+
+    const { instances, characters } = instancesResult;
 
     const plugIndex = catalog.plugIndex ?? {};
     const baseStats = resolveArmorCatalogStats(armor);
@@ -86,10 +88,11 @@ export async function GET(_request: Request, context: RouteContext) {
       compareRollInstancesByRecency,
     );
 
-    return NextResponse.json({ rolls, error: null });
+    return NextResponse.json({ rolls, characters, error: null });
   } catch (error) {
     return NextResponse.json({
       rolls: [],
+      characters: [],
       error:
         error instanceof Error ? error.message : "Failed to load armor rolls",
     });

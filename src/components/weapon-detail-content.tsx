@@ -77,7 +77,7 @@ export function WeaponDetailContent({
   const [hoveredRollId, setHoveredRollId] = useState<string | null>(null);
   const [pinnedRollId, setPinnedRollId] = useState<string | null>(null);
 
-  const { rolls, loading, error } = useWeaponRolls(
+  const { rolls, characters, loading, error, refetch } = useWeaponRolls(
     weaponSlug,
     isSignedIn && showRolls,
   );
@@ -190,6 +190,7 @@ export function WeaponDetailContent({
           {weaponSlug ? (
             <WeaponRollsPanel
               rolls={rolls}
+              characters={characters}
               loading={loading}
               error={error}
               showRolls={showRolls}
@@ -205,8 +206,15 @@ export function WeaponDetailContent({
               pinnedRollId={pinnedRollId}
               onRollHover={setHoveredRollId}
               onRollPin={setPinnedRollId}
+              onTransferComplete={(destination) =>
+                refetch({
+                  silent: true,
+                  locationUpdate: pinnedRollId
+                    ? { itemInstanceId: pinnedRollId, destination }
+                    : undefined,
+                })
+              }
               plugIndex={plugIndex}
-              showVersionLabels={(weapon.versions?.length ?? 0) > 1}
               godRollsByHash={godRollsByHash}
             />
           ) : null}

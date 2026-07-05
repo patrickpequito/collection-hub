@@ -59,4 +59,6 @@ export type ActivityEntry = {
   placeholder?: boolean;
   /** Optional: public/images/rad-loot/activities/{imageFile} */
   imageFile?: string;
+  /** Optional wide banner art for md+ viewports (same folder as imageFile). */
+  wideImageFile?: string;
 };

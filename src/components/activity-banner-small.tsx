@@ -11,6 +11,7 @@ import { bungieIconUrl } from "@/lib/bungie-icon";
 const BANNER_HEIGHT_CLASS = "h-[140px]";
 
 const BANNER_ICON_SIZE_PX = 30;
+const FEATURED_ICON_SIZE_PX = 18;
 const LEVIATHAN_BANNER_ICON_SIZE_PX = 38;
 
 const LEVIATHAN_FAMILY_SLUGS = new Set([
@@ -26,6 +27,9 @@ type ActivityBannerSmallProps = {
   titleEarned?: boolean | null;
   /** null = signed out — hide completion count. */
   totalCompletions?: number | null;
+  /** Weekly Tier 5 rotator highlight. */
+  featured?: boolean;
+  featuredIconPath?: string;
 };
 
 export function ActivityBannerSmall({
@@ -33,13 +37,18 @@ export function ActivityBannerSmall({
   iconPath = null,
   titleEarned = null,
   totalCompletions = null,
+  featured = false,
+  featuredIconPath = "/images/rad-loot/featured.png",
 }: ActivityBannerSmallProps) {
   const href = getActivityHref(entry);
-  const imageUrl = entry.imageFile
+  const mobileImageUrl = entry.imageFile
     ? `/images/rad-loot/activities/${entry.imageFile}`
     : null;
+  const wideImageUrl = entry.wideImageFile
+    ? `/images/rad-loot/activities/${entry.wideImageFile}`
+    : null;
   const [imageError, setImageError] = useState(false);
-  const showImage = imageUrl && !imageError;
+  const showImage = mobileImageUrl && !imageError;
   const sealIconUrl = iconPath ? bungieIconUrl(iconPath) : "";
   const isLeviathanFamily = LEVIATHAN_FAMILY_SLUGS.has(entry.slug);
   const iconSizePx = isLeviathanFamily
@@ -53,12 +62,30 @@ export function ActivityBannerSmall({
     <div className={`relative ${BANNER_HEIGHT_CLASS} overflow-hidden bg-zinc-900`}>
       {showImage ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={imageUrl}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover object-left transition duration-300 group-hover:scale-[1.01]"
-          onError={() => setImageError(true)}
-        />
+        <picture className="absolute inset-0 block h-full w-full">
+          {wideImageUrl ? (
+            <source media="(min-width: 768px)" srcSet={wideImageUrl} />
+          ) : null}
+          <img
+            src={mobileImageUrl}
+            alt=""
+            className="h-full w-full object-cover object-left transition duration-300 group-hover:scale-[1.01]"
+            onError={() => setImageError(true)}
+          />
+        </picture>
+      ) : null}
+      {featured ? (
+        <div className="absolute left-0 top-0 z-10 p-3">
+          <Image
+            src={featuredIconPath}
+            alt=""
+            width={FEATURED_ICON_SIZE_PX}
+            height={FEATURED_ICON_SIZE_PX}
+            className="object-contain drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]"
+            style={{ width: FEATURED_ICON_SIZE_PX, height: FEATURED_ICON_SIZE_PX }}
+            unoptimized
+          />
+        </div>
       ) : null}
       {sealIconUrl ? (
         <div className="absolute right-0 top-0 z-10 flex items-center p-3">
@@ -98,8 +125,10 @@ export function ActivityBannerSmall({
     </div>
   );
 
-  const bannerClass =
-    "group relative block overflow-hidden rounded-xl border border-zinc-800 transition hover:border-zinc-600";
+  const borderClass = featured
+    ? "border-[1.5px] border-[#24b4b3] hover:border-[#24b4b3]"
+    : "border border-zinc-800 hover:border-zinc-600";
+  const bannerClass = `group relative block overflow-hidden rounded-xl transition ${borderClass}`;
 
   if (!href && entry.placeholder) {
     return (
@@ -109,7 +138,9 @@ export function ActivityBannerSmall({
 
   if (!href) {
     return (
-      <div className="group overflow-hidden rounded-xl border border-zinc-800/80 opacity-60">
+      <div
+        className={`group overflow-hidden rounded-xl opacity-60 ${featured ? "border-[1.5px] border-[#24b4b3]" : "border border-zinc-800/80"}`}
+      >
         {content}
       </div>
     );

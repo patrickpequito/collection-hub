@@ -1,4 +1,5 @@
 import { collectOwnedCatalystHashes } from "@/lib/catalyst-ownership";
+import { parseProfileCharacters } from "@/lib/destiny-characters";
 import {
   resolveDestinyMembership,
   type DestinyMembership,
@@ -6,6 +7,7 @@ import {
 import { getBungieApiKey } from "@/lib/env";
 import { expandAcquiredItemHashes } from "@/lib/item-acquisition-index";
 import type { BungieUserSession } from "@/lib/bungie";
+import type { ProfileCharacter } from "@/types/destiny-characters";
 import type { WeaponRollLocation } from "@/types/weapon-rolls";
 
 export const DESTINY_PROFILE_COMPONENTS = [
@@ -202,7 +204,7 @@ function collectInventoryItems(
   return items;
 }
 
-function collectLocatedInventoryItems(
+export function collectLocatedInventoryItems(
   profile: ProfileInventoryResponse,
 ): LocatedInventoryItem[] {
   const items: LocatedInventoryItem[] = [];
@@ -358,15 +360,21 @@ export async function fetchDestinyProfile(
   );
 }
 
+export type RollInstancesResult<TRoll> = {
+  instances: TRoll[];
+  characters: ProfileCharacter[];
+};
+
 /** Physical weapon copies held on characters or in the vault. */
 export async function fetchWeaponRollInstances(
   session: BungieUserSession,
   itemHashes: ReadonlySet<string>,
-): Promise<RawWeaponRollInstance[]> {
+): Promise<RollInstancesResult<RawWeaponRollInstance>> {
   const membership = await resolveDestinyMembership(session);
-  if (!membership) return [];
+  if (!membership) return { instances: [], characters: [] };
 
   const profile = await fetchDestinyProfile(session, membership);
+  const characters = parseProfileCharacters(profile);
   const instances = profile.itemComponents?.instances?.data ?? {};
   const rolls: RawWeaponRollInstance[] = [];
 
@@ -394,22 +402,23 @@ export async function fetchWeaponRollInstances(
     });
   }
 
-  return rolls;
+  return { instances: rolls, characters };
 }
 
 /** Physical armor copies held on characters or in the vault. */
 export async function fetchArmorRollInstances(
   session: BungieUserSession,
   itemHashes: ReadonlySet<string>,
-): Promise<RawArmorRollInstance[]> {
+): Promise<RollInstancesResult<RawArmorRollInstance>> {
   const membership = await resolveDestinyMembership(session);
-  if (!membership) return [];
+  if (!membership) return { instances: [], characters: [] };
 
   const profile = await fetchDestinyProfile(
     session,
     membership,
     ARMOR_PROFILE_COMPONENTS,
   );
+  const characters = parseProfileCharacters(profile);
   const itemStats = profile.itemComponents?.stats?.data ?? {};
   const instances = profile.itemComponents?.instances?.data ?? {};
   const socketData = profile.itemComponents?.sockets?.data ?? {};
@@ -457,7 +466,7 @@ export async function fetchArmorRollInstances(
     });
   }
 
-  return rolls;
+  return { instances: rolls, characters };
 }
 
 function collectProfileCollectibles(
