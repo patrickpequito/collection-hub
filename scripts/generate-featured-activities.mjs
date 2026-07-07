@@ -26,14 +26,20 @@ const RAID_MILESTONE_SLUGS = {
   541780856: "deep-stone-crypt",
   2136320298: "vow-of-the-disciple",
   3699252268: "root-of-nightmares",
+  4196566271: "salvations-edge",
 };
+
+const EXCLUDED_FEATURED_RAID_SLUGS = new Set([
+  "the-desert-perpetual",
+  "the-pantheon",
+]);
 
 const DUNGEON_ROTATION_WEEKS = [
   ["duality", "the-shattered-throne"],
   ["spire-of-the-watcher", "pit-of-heresy"],
   ["ghosts-of-the-deep", "prophecy"],
   ["warlords-ruin", "grasp-of-avarice"],
-  ["the-shattered-throne", "duality"],
+  ["duality", "vespers-host"],
   ["pit-of-heresy", "spire-of-the-watcher"],
   ["prophecy", "ghosts-of-the-deep"],
   ["grasp-of-avarice", "warlords-ruin"],
@@ -127,7 +133,7 @@ async function resolveFeaturedRaids() {
 
   for (const [milestoneHash, live] of Object.entries(milestones)) {
     const slug = RAID_MILESTONE_SLUGS[milestoneHash];
-    if (!slug) continue;
+    if (!slug || EXCLUDED_FEATURED_RAID_SLUGS.has(slug)) continue;
 
     const standard = live.activities?.[0];
     const challengeCount = standard?.challengeObjectiveHashes?.length ?? 0;
