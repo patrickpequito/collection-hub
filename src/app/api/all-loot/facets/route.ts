@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { loadAllLootFacets } from "@/lib/all-loot/search";
 
+export const revalidate = 3600;
+
 export async function GET() {
   try {
     const facets = await loadAllLootFacets();

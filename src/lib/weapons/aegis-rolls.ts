@@ -7,10 +7,7 @@ let indexCache: WeaponAegisRollIndex | null = null;
 async function readWeaponAegisRollIndexFromDisk(): Promise<WeaponAegisRollIndex> {
   if (indexCache) return indexCache;
 
-  const filePath = path.join(
-    process.cwd(),
-    "public/data/weapon-aegis-rolls.json",
-  );
+  const filePath = path.join(process.cwd(), "data/weapon-aegis-rolls.json");
   const raw = await readFile(filePath, "utf8");
   indexCache = JSON.parse(raw) as WeaponAegisRollIndex;
   return indexCache;

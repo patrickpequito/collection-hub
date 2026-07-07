@@ -14,7 +14,7 @@ let catalogCache: AllLootCatalog | null = null;
 async function readAllLootCatalogFromDisk(): Promise<AllLootCatalog> {
   if (catalogCache) return catalogCache;
 
-  const filePath = path.join(process.cwd(), "public/data/all-loot.json");
+  const filePath = path.join(process.cwd(), "data/all-loot.json");
   const raw = await readFile(filePath, "utf8");
   catalogCache = JSON.parse(raw) as AllLootCatalog;
   return catalogCache;

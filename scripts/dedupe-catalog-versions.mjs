@@ -5,7 +5,7 @@ import { preferCatalogVersion } from "./all-loot-mappings.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
-const catalogPath = resolve(root, "public/data/all-loot.json");
+const catalogPath = resolve(root, "data/all-loot.json");
 
 function buildSearchText(entry) {
   const versionText = (entry.versions ?? []).flatMap((version) => [

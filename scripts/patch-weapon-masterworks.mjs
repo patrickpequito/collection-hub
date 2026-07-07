@@ -1,5 +1,5 @@
 /**
- * Rebuilds weapon masterwork columns in public/data/all-loot.json using per-weapon
+ * Rebuilds weapon masterwork columns in data/all-loot.json using per-weapon
  * stat group filtering (same approach as DIM's isValidMasterworkStat).
  *
  * Usage: node scripts/patch-weapon-masterworks.mjs
@@ -159,7 +159,7 @@ function masterworkPlugCatalogEntry({ plug, statName, tier }) {
 }
 
 async function main() {
-  const catalogPath = resolve(root, "public/data/all-loot.json");
+  const catalogPath = resolve(root, "data/all-loot.json");
   const catalog = JSON.parse(readFileSync(catalogPath, "utf8"));
   const plugIndex = catalog.plugIndex ?? {};
 

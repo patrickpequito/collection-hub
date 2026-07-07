@@ -1,5 +1,5 @@
 /**
- * Sanity-checks season labels in public/data/all-loot.json.
+ * Sanity-checks season labels in data/all-loot.json.
  *
  * Usage: node scripts/validate-all-loot-seasons.mjs
  */
@@ -13,7 +13,7 @@ import {
 } from "./all-loot-mappings.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const catalogPath = resolve(__dirname, "../public/data/all-loot.json");
+const catalogPath = resolve(__dirname, "../data/all-loot.json");
 const catalog = JSON.parse(readFileSync(catalogPath, "utf8"));
 
 const knownSeasons = new Set(CANONICAL_SEASON_ORDER);

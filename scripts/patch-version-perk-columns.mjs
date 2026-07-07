@@ -59,7 +59,7 @@ function collectHashesForEntry(entry) {
 }
 
 async function main() {
-  const catalogPath = resolve(root, "public/data/all-loot.json");
+  const catalogPath = resolve(root, "data/all-loot.json");
   const catalog = JSON.parse(readFileSync(catalogPath, "utf8"));
   const plugIndex = catalog.plugIndex ?? {};
 

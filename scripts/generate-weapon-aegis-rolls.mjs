@@ -1,5 +1,5 @@
 /**
- * Builds public/data/weapon-aegis-rolls.json from MrCharles Aegis DIM wishlist.
+ * Builds data/weapon-aegis-rolls.json from MrCharles Aegis DIM wishlist.
  * Stores deduplicated desirable roll lines per itemHash for per-copy scoring.
  *
  * Usage: node scripts/generate-weapon-aegis-rolls.mjs
@@ -99,7 +99,7 @@ async function main() {
     weapons,
   };
 
-  const outDir = resolve(root, "public/data");
+  const outDir = resolve(root, "data");
   mkdirSync(outDir, { recursive: true });
   const outPath = resolve(outDir, "weapon-aegis-rolls.json");
   writeFileSync(outPath, `${JSON.stringify(output)}\n`);

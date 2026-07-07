@@ -1,5 +1,5 @@
 /**
- * Applies season-label migrations to all-loot.json without a full manifest regen.
+ * Applies season-label migrations to data/all-loot.json without a full manifest regen.
  *
  * Usage: node scripts/relabel-all-loot-seasons.mjs [catalog-path]
  */
@@ -35,7 +35,7 @@ import {
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const catalogPath =
-  process.argv[2] ?? resolve(__dirname, "../public/data/all-loot.json");
+  process.argv[2] ?? resolve(__dirname, "../data/all-loot.json");
 
 const DIM_WATERMARK_TO_SEASON = {
   "/common/destiny2_content/icons/249813e647271a8227bae0d8a39ed505.png": 27,

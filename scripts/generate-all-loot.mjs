@@ -1,5 +1,5 @@
 /**
- * Builds public/data/all-loot.json — deduplicated collectible catalog for All Loot.
+ * Builds data/all-loot.json — deduplicated collectible catalog for All Loot.
  *
  * Usage: node scripts/generate-all-loot.mjs
  */
@@ -1971,7 +1971,7 @@ async function main() {
 
   const obtainableCount = catalog.filter((item) => item.obtainable).length;
 
-  const outDir = resolve(root, "public/data");
+  const outDir = resolve(root, "data");
   mkdirSync(outDir, { recursive: true });
   const outPath = resolve(outDir, "all-loot.json");
   writeFileSync(
@@ -1990,7 +1990,7 @@ async function main() {
     ),
   );
 
-  console.log(`Wrote ${catalog.length} items to public/data/all-loot.json`);
+  console.log(`Wrote ${catalog.length} items to data/all-loot.json`);
   console.log(`Obtainable: ${obtainableCount} / ${catalog.length}`);
   console.log(
     "Facets:",
