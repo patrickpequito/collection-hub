@@ -71,10 +71,10 @@ export default async function Home({ searchParams }: HomeProps) {
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
               <HubBanner
                 size="featured"
-                href="/activities/iron-banner"
-                title="Iron Banner"
-                description="Current loot, weapons, and event card rewards."
-                imageUrl="/images/headers/iron-banner-header.webp"
+                href="/rad-loot/the-pantheon"
+                title="Pantheon 2.0"
+                description="Endgame raid challenges, loot, and triumphs."
+                imageUrl="/images/rad-loot/activities/the-pantheon.webp"
               />
               <HubBanner
                 size="featured"
