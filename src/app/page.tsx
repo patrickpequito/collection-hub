@@ -24,7 +24,7 @@ export default async function Home({ searchParams }: HomeProps) {
   const session = await getSession();
   const params = await searchParams;
   const oauthConfigured = isBungieOAuthConfigured();
-  const featured = featuredActivityEntries();
+  const featured = await featuredActivityEntries();
 
   return (
     <main className="min-h-dvh bg-zinc-950 text-zinc-100">

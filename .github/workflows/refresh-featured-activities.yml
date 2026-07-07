@@ -25,6 +25,13 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Check Bungie API key secret
+        run: |
+          if [ -z "${{ secrets.BUNGIE_API_KEY }}" ]; then
+            echo "::error::Missing repository secret BUNGIE_API_KEY. Add it under Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+
       - name: Regenerate featured activities
         env:
           BUNGIE_API_KEY: ${{ secrets.BUNGIE_API_KEY }}

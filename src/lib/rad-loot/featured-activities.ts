@@ -8,6 +8,13 @@ import {
   RAIDS,
 } from "@/data/rad-loot/activities";
 import type { ActivityEntry } from "@/types/activity-loot";
+import {
+  DUNGEON_ROTATION_WEEKS,
+  featuredDungeonSlugsForWeek,
+  fetchFeaturedRaidsFromBungie,
+  rotationWeekIndex,
+  weekBounds,
+} from "@/lib/rad-loot/featured-rotation";
 
 export type FeaturedActivitiesData = {
   generatedAt: string;
@@ -25,22 +32,71 @@ export const FEATURED_TIER_ICON_PATH = "/images/rad-loot/featured.png";
 /** Border highlight for featured activity banners. */
 export const FEATURED_BORDER_COLOR = "#24b4b3";
 
-let cache: FeaturedActivitiesData | null = null;
+let raidCache: {
+  weekIndex: number;
+  featuredRaids: string[];
+} | null = null;
 
-export function loadFeaturedActivities(): FeaturedActivitiesData {
-  if (cache) return cache;
-
-  const filePath = path.join(
-    process.cwd(),
-    "public/data/featured-activities.json",
-  );
-  const raw = readFileSync(filePath, "utf8");
-  cache = JSON.parse(raw) as FeaturedActivitiesData;
-  return cache;
+function readFeaturedActivitiesJson(): FeaturedActivitiesData | null {
+  try {
+    const filePath = path.join(
+      process.cwd(),
+      "public/data/featured-activities.json",
+    );
+    const raw = readFileSync(filePath, "utf8");
+    return JSON.parse(raw) as FeaturedActivitiesData;
+  } catch {
+    return null;
+  }
 }
 
-export function featuredActivitySlugs(): Set<string> {
-  const data = loadFeaturedActivities();
+async function resolveFeaturedRaids(weekIndex: number): Promise<string[]> {
+  if (raidCache?.weekIndex === weekIndex) {
+    return raidCache.featuredRaids;
+  }
+
+  const apiKey = process.env.BUNGIE_API_KEY?.trim();
+  if (apiKey) {
+    try {
+      const featuredRaids = await fetchFeaturedRaidsFromBungie(apiKey);
+      raidCache = { weekIndex, featuredRaids };
+      return featuredRaids;
+    } catch (error) {
+      console.error("Failed to fetch featured raids from Bungie:", error);
+    }
+  }
+
+  const fallback = readFeaturedActivitiesJson();
+  if (fallback?.featuredRaids.length) {
+    return fallback.featuredRaids;
+  }
+
+  return [];
+}
+
+/** Current featured raids/dungeons, computed at request time from reset schedule + Bungie. */
+export async function loadFeaturedActivities(): Promise<FeaturedActivitiesData> {
+  const now = new Date();
+  const weekIndex = rotationWeekIndex(now);
+  const { weekStart, weekEnd } = weekBounds(weekIndex);
+  const [featuredRaids, featuredDungeons] = await Promise.all([
+    resolveFeaturedRaids(weekIndex),
+    Promise.resolve(featuredDungeonSlugsForWeek(weekIndex)),
+  ]);
+
+  return {
+    generatedAt: now.toISOString(),
+    weekIndex,
+    weekStart,
+    weekEnd,
+    featuredRaids,
+    featuredDungeons,
+    rotationWeeks: DUNGEON_ROTATION_WEEKS.length,
+  };
+}
+
+export async function featuredActivitySlugs(): Promise<Set<string>> {
+  const data = await loadFeaturedActivities();
   return new Set([...data.featuredRaids, ...data.featuredDungeons]);
 }
 
@@ -59,11 +115,11 @@ function entriesForSlugs(slugs: string[]): ActivityEntry[] {
 }
 
 /** Featured raids + dungeons as banner entries, in rotation order. */
-export function featuredActivityEntries(): {
+export async function featuredActivityEntries(): Promise<{
   raids: ActivityEntry[];
   dungeons: ActivityEntry[];
-} {
-  const data = loadFeaturedActivities();
+}> {
+  const data = await loadFeaturedActivities();
   return {
     raids: entriesForSlugs(data.featuredRaids),
     dungeons: entriesForSlugs(data.featuredDungeons),

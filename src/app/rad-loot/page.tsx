@@ -22,7 +22,7 @@ export default async function RadLootPage() {
   const oauthConfigured = isBungieOAuthConfigured();
   const allEntries = [PANTHEON, ...RAIDS, ...DUNGEONS, ...LEGACY_RAIDS, ...RAID_LAIRS];
   const initialBannerStats = buildInitialActivityBannerStats(allEntries);
-  const featuredSlugs = [...featuredActivitySlugs()];
+  const featuredSlugs = [...(await featuredActivitySlugs())];
 
   return (
     <SectionPageLayout

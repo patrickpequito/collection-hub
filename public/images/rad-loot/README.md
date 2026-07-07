@@ -46,7 +46,7 @@ Images use `object-cover` anchored to the **left**. Keep title and key art on th
 | **Path** | `public/images/rad-loot/featured.png` |
 | **Border** | `#24b4b3` on featured raid/dungeon banners |
 | **Usage** | Top-left badge on featured raid/dungeon banners on the RAD Loot index |
-| **Data** | `public/data/featured-activities.json` (refreshed Tuesdays 17:05 UTC via GitHub Actions) |
+| **Data** | Computed at runtime from weekly reset schedule + Bungie milestones (`featured-activities.json` is a fallback snapshot) |
 
 ## Armor set previews (activity pages)
 

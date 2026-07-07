@@ -1,15 +1,14 @@
 {
-  "generatedAt": "2026-07-05T10:19:00.679Z",
-  "weekIndex": 3,
-  "weekStart": "2026-06-30T17:00:00.000Z",
-  "weekEnd": "2026-07-07T17:00:00.000Z",
+  "generatedAt": "2026-07-07T22:00:28.179Z",
+  "weekIndex": 4,
+  "weekStart": "2026-07-07T17:00:00.000Z",
+  "weekEnd": "2026-07-14T17:00:00.000Z",
   "featuredRaids": [
-    "crotas-end",
-    "vault-of-glass"
+    "vow-of-the-disciple"
   ],
   "featuredDungeons": [
-    "warlords-ruin",
-    "grasp-of-avarice"
+    "the-shattered-throne",
+    "duality"
   ],
   "rotationWeeks": 30
 }
