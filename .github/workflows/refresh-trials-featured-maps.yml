@@ -1,0 +1,52 @@
+name: Refresh Trials featured maps
+
+on:
+  schedule:
+    # Friday 17:05 UTC — Trials weekend start (19:05 Madrid summer).
+    - cron: "5 17 * * 5"
+  workflow_dispatch:
+
+concurrency:
+  group: refresh-trials-featured-maps
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Check Bungie API key secret
+        run: |
+          if [ -z "${{ secrets.BUNGIE_API_KEY }}" ]; then
+            echo "::error::Missing repository secret BUNGIE_API_KEY. Add it under Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+
+      - name: Regenerate Trials featured maps
+        env:
+          BUNGIE_API_KEY: ${{ secrets.BUNGIE_API_KEY }}
+        run: npm run generate:trials-featured-maps
+
+      - name: Commit and push if changed
+        run: |
+          git add public/data/trials-featured-maps.json
+
+          if git diff --cached --quiet; then
+            echo "No changes in Trials featured maps"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(data): refresh Trials of Osiris featured maps" -m "Scheduled sync of public/data/trials-featured-maps.json."
+          git push

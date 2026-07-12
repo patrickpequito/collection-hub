@@ -11,13 +11,13 @@ import { toLootItemFromCatalog } from "@/lib/activities/loot-item";
 import { loadAllLootCatalog } from "@/lib/all-loot/search";
 import { loadArmorSetCatalog } from "@/lib/armor-sets/load";
 import {
-  IRON_BANNER_ACTIVE_WEAPON_POOL_ID,
-  IRON_BANNER_HUB,
-  IRON_BANNER_WEAPON_POOLS,
-  LEGACY_IRON_BANNER_CLASS_ITEMS,
-} from "@/data/activities/iron-banner";
+  CRUCIBLE_HUB,
+  CRUCIBLE_CURRENT_ARMOR_SETS,
+  LEGACY_CRUCIBLE_CLASS_ITEMS,
+  LEGACY_CRUCIBLE_CROSS_CLASS_SETS,
+} from "@/data/activities/crucible";
 import type {
-  ActivityWeaponPool,
+  ActivityCurrentArmorPanel,
   LegacyArmorSetGroup,
   ResolvedActivityHubLoot,
 } from "@/types/activity-hub";
@@ -26,8 +26,11 @@ import type { AllLootItem } from "@/types/all-loot";
 import type { ArmorSet } from "@/types/armor-set";
 import type { ArmorSetBonusCatalog } from "@/types/armor-set-bonuses";
 
-function isIronBannerSource(source = ""): boolean {
-  return /iron banner/i.test(source);
+function isCrucibleSource(source = ""): boolean {
+  if (/vanguard ops, crucible, or gambit/i.test(source)) return false;
+  return /crucible|lord shaxx|glory matches in crucible|rank-up packages from lord shaxx|purchase from lord shaxx|shaxx rank/i.test(
+    source,
+  );
 }
 
 function toLootItem(item: AllLootItem): LootItem {
@@ -62,7 +65,7 @@ function buildSetNameIndex(
       continue;
     }
     const trimmed = item.name.replace(
-      / (Helm|Helmet|Gauntlets|Gloves|Grips|Plate|Chest|Rig|Robe|Robes|Vest|Greaves|Strides|Boots|Leg|Mark|Cloak|Bond|Cover|Mask|Cowl|Hood)$/i,
+      / (Helm|Helmet|Gauntlets|Gloves|Grips|Plate|Chest|Rig|Robe|Robes|Vest|Greaves|Strides|Boots|Leg|Mark|Cloak|Bond|Cover|Mask|Cowl|Hood|Casque|Cuirass)$/i,
       "",
     );
     index.set(hash, trimmed);
@@ -108,24 +111,41 @@ function collectCatalogItemsForLegacySet(
   setName: string,
   armorItems: AllLootItem[],
 ): AllLootItem[] {
-  const prefix = `${setName} `;
-  const items = armorItems.filter(
-    (item) => item.name === setName || item.name.startsWith(prefix),
-  );
-  const seen = new Set(items.map((item) => item.itemHash));
-  const classItemNames = LEGACY_IRON_BANNER_CLASS_ITEMS[setName];
+  const crossClassPrefixes = LEGACY_CRUCIBLE_CROSS_CLASS_SETS[setName];
+  if (crossClassPrefixes) {
+    const items: AllLootItem[] = [];
+    const seen = new Set<string>();
 
-  if (classItemNames) {
-    for (const name of Object.values(classItemNames)) {
-      const classItem = armorItems.find((item) => item.name === name);
-      if (classItem && !seen.has(classItem.itemHash)) {
-        items.push(classItem);
-        seen.add(classItem.itemHash);
+    for (const prefix of Object.values(crossClassPrefixes)) {
+      if (!prefix) continue;
+      const matches = armorItems.filter(
+        (item) => item.name === prefix || item.name.startsWith(`${prefix} `),
+      );
+      for (const item of matches) {
+        if (seen.has(item.itemHash)) continue;
+        items.push(item);
+        seen.add(item.itemHash);
       }
     }
+
+    const classItemNames = LEGACY_CRUCIBLE_CLASS_ITEMS[setName];
+    if (classItemNames) {
+      for (const name of Object.values(classItemNames)) {
+        const classItem = armorItems.find((item) => item.name === name);
+        if (classItem && !seen.has(classItem.itemHash)) {
+          items.push(classItem);
+          seen.add(classItem.itemHash);
+        }
+      }
+    }
+
+    return items;
   }
 
-  return items;
+  const prefix = `${setName} `;
+  return armorItems.filter(
+    (item) => item.name === setName || item.name.startsWith(prefix),
+  );
 }
 
 function seasonForArmorSetName(
@@ -166,8 +186,9 @@ function legacyGroupsFromCatalog(
 
   const groups: LegacyArmorSetGroup[] = [];
 
-  for (const [hash, items] of byHash) {
-    const setName = setNamesByHash.get(hash);
+  for (const [, items] of byHash) {
+    const hash = items[0]?.equipableItemSetHash;
+    const setName = hash ? setNamesByHash.get(hash) : undefined;
     if (!setName || isExcludedLegacyName(setName, excluded)) continue;
 
     const rows = buildArmorRowsFromCatalogItems(items, setName);
@@ -235,68 +256,73 @@ function legacyGroupsFromArmorSets(
     .filter((group) => group.rows.length > 0);
 }
 
-function resolveWeaponsByName(
-  weaponNames: readonly string[],
+function resolveCrucibleWeapons(items: AllLootItem[]): LootItem[] {
+  const byName = new Map<string, AllLootItem>();
+
+  for (const item of items) {
+    if (item.type !== "Weapon" || !item.obtainable) continue;
+    if (!byName.has(item.name)) {
+      byName.set(item.name, item);
+    }
+  }
+
+  return [...byName.values()]
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map(toLootItem);
+}
+
+function buildCurrentArmorPanel(
   catalogItems: AllLootItem[],
-): LootItem[] {
-  const weaponsByName = new Map(
-    catalogItems
-      .filter((item) => item.type === "Weapon")
-      .map((item) => [item.name, item]),
+  setHash: string,
+  bonusNames: Map<string, string>,
+  previewFiles?: string[],
+): ActivityCurrentArmorPanel {
+  const items = catalogItems.filter(
+    (item) =>
+      item.type === "Armor" &&
+      item.rarity !== "Exotic" &&
+      item.equipableItemSetHash === setHash,
   );
+  const setName = bonusNames.get(setHash) ?? "Current set";
 
-  return weaponNames.flatMap((name) => {
-    const item = weaponsByName.get(name);
-    return item ? [toLootItem(item)] : [];
-  });
+  return {
+    armorRows: buildArmorRowsFromCatalogItems(items, setName),
+    previewFiles,
+  };
 }
 
-function resolveIronBannerWeaponPools(
-  catalogItems: AllLootItem[],
-): ActivityWeaponPool[] {
-  return IRON_BANNER_WEAPON_POOLS.map((pool) => ({
-    id: pool.id,
-    label: pool.label,
-    isActive: pool.id === IRON_BANNER_ACTIVE_WEAPON_POOL_ID,
-    items: resolveWeaponsByName(pool.weaponNames, catalogItems),
-  }));
-}
-
-export async function resolveIronBannerLoot(): Promise<ResolvedActivityHubLoot> {
+export async function resolveCrucibleLoot(): Promise<ResolvedActivityHubLoot> {
   const [lootCatalog, armorCatalog, bonusNames] = await Promise.all([
     loadAllLootCatalog(),
     loadArmorSetCatalog(),
     loadArmorSetBonusNames(),
   ]);
 
-  const ironBannerItems = lootCatalog.items.filter((item) =>
-    isIronBannerSource(item.source),
+  const crucibleItems = lootCatalog.items.filter((item) =>
+    isCrucibleSource(item.source),
   );
-  const setNamesByHash = buildSetNameIndex(ironBannerItems, bonusNames);
-  const excludedLegacy = new Set(IRON_BANNER_HUB.excludeLegacySetNames ?? []);
-  const currentHashes = new Set(IRON_BANNER_HUB.currentArmorSetHashes);
+  const setNamesByHash = buildSetNameIndex(crucibleItems, bonusNames);
+  const excludedLegacy = new Set(CRUCIBLE_HUB.excludeLegacySetNames ?? []);
+  const currentHashes = new Set(CRUCIBLE_HUB.currentArmorSetHashes);
 
-  const ironBannerArmor = ironBannerItems.filter(
+  const crucibleArmor = crucibleItems.filter(
     (item) => item.type === "Armor" && item.rarity !== "Exotic",
   );
 
-  const currentArmorItems = ironBannerArmor.filter(
-    (item) =>
-      item.equipableItemSetHash &&
-      currentHashes.has(item.equipableItemSetHash),
+  const currentArmorPanels = CRUCIBLE_CURRENT_ARMOR_SETS.map((set) =>
+    buildCurrentArmorPanel(
+      lootCatalog.items,
+      set.hash,
+      bonusNames,
+      [set.previewFile],
+    ),
   );
 
-  const currentSetName =
-    setNamesByHash.get(IRON_BANNER_HUB.currentArmorSetHashes[0] ?? "") ??
-    "Current set";
-
-  const currentArmorRows = buildArmorRowsFromCatalogItems(
-    currentArmorItems,
-    currentSetName,
-  );
+  const currentArmorRows =
+    currentArmorPanels[currentArmorPanels.length - 1]?.armorRows ?? [];
 
   const catalogLegacyGroups = legacyGroupsFromCatalog(
-    ironBannerArmor,
+    crucibleArmor,
     setNamesByHash,
     currentHashes,
     excludedLegacy,
@@ -307,12 +333,18 @@ export async function resolveIronBannerLoot(): Promise<ResolvedActivityHubLoot> 
   );
 
   const legacyArmorSets = armorCatalog.sets.filter((set) =>
-    isIronBannerSource(set.source),
+    isCrucibleSource(set.source),
   );
 
+  const configuredLegacySetNames = Object.keys(LEGACY_CRUCIBLE_CROSS_CLASS_SETS);
+  const catalogLegacySetNames = legacyArmorSets.map((set) => set.name);
+  const legacySetNames = [
+    ...new Set([...configuredLegacySetNames, ...catalogLegacySetNames]),
+  ];
+
   const catalogByNameGroups = legacyGroupsFromCatalogBySetName(
-    ironBannerArmor,
-    legacyArmorSets.map((set) => set.name),
+    crucibleArmor,
+    legacySetNames,
     excludedLegacy,
     coveredKeys,
   );
@@ -323,7 +355,7 @@ export async function resolveIronBannerLoot(): Promise<ResolvedActivityHubLoot> 
 
   const armorSetLegacyGroups = legacyGroupsFromArmorSets(
     legacyArmorSets,
-    ironBannerArmor,
+    crucibleArmor,
     excludedLegacy,
     coveredKeys,
   );
@@ -334,10 +366,8 @@ export async function resolveIronBannerLoot(): Promise<ResolvedActivityHubLoot> 
     ...armorSetLegacyGroups,
   ]);
 
-  const currentWeaponPools = resolveIronBannerWeaponPools(lootCatalog.items);
-
   const currentOtherSections = groupActivityCosmeticLoot(
-    ironBannerItems.filter(
+    crucibleItems.filter(
       (item) =>
         item.obtainable &&
         item.type !== "Weapon" &&
@@ -346,9 +376,12 @@ export async function resolveIronBannerLoot(): Promise<ResolvedActivityHubLoot> 
     toLootItem,
   );
 
+  const currentWeapons = resolveCrucibleWeapons(crucibleItems);
+
   return {
     currentArmorRows,
-    currentWeaponPools,
+    currentArmorPanels,
+    currentWeapons,
     currentOtherSections,
     legacyArmorGroups,
   };

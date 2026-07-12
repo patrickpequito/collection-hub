@@ -1,5 +1,10 @@
 import type { ActivityArmorRow, LootItem } from "@/types/activity-loot";
 
+export type ActivityCurrentArmorPanel = {
+  armorRows: ActivityArmorRow[];
+  previewFiles?: string[];
+};
+
 export type ActivityHubConfig = {
   slug: string;
   title: string;
@@ -18,6 +23,12 @@ export type LegacyArmorSetGroup = {
   seasonLabel?: string;
   seasonNumber?: number;
   rows: ActivityArmorRow[];
+};
+
+export type TrialsWeaponSeasonGroup = {
+  seasonLabel: string;
+  seasonNumber: number;
+  items: LootItem[];
 };
 
 export type ActivityHubLootSection = {
@@ -46,8 +57,11 @@ export type EventCardRewardClaimStatus = "locked" | "claimable" | "claimed";
 
 export type ResolvedActivityHubLoot = {
   currentArmorRows: ActivityArmorRow[];
+  /** When set, render one loot panel per entry (e.g. multiple current armor rotations). */
+  currentArmorPanels?: ActivityCurrentArmorPanel[];
   currentWeapons?: LootItem[];
   currentWeaponPools?: ActivityWeaponPool[];
+  weaponSeasonGroups?: TrialsWeaponSeasonGroup[];
   currentOtherSections: ActivityHubLootSection[];
   legacyArmorGroups: LegacyArmorSetGroup[];
 };

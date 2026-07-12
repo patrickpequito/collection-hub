@@ -1,4 +1,4 @@
-export const CURRENT_VERSION = "0.7.4";
+export const CURRENT_VERSION = "0.7.5";
 
 export function formatReleaseDate(isoDate: string) {
   const [year, month, day] = isoDate.split("-").map(Number);
@@ -30,6 +30,24 @@ export type UpdateRelease = {
  * Newest release first. Add a new entry at the top when shipping an update.
  */
 export const UPDATE_RELEASES: UpdateRelease[] = [
+  {
+    version: "0.7.5",
+    publishedAt: "2026-07-13",
+    summary:
+      "PvP Activities joins the Loot menu as a hub for Crucible, Iron Banner, and Trials of Osiris, with new Crucible and Trials pages that follow the same layout as Iron Banner.",
+    sections: [
+      {
+        title: "PvP Activities",
+        description:
+          "One entry point for playlist loot, triumphs, and legacy armor across core PvP events.",
+        items: [
+          "New PvP Activities page with banners for Crucible, Iron Banner, and Trials of Osiris.",
+          "Crucible hub — current armor sets, obtainable weapons, cosmetics, Glorious title progress, and legacy armor sets grouped by introduction season.",
+          "Trials of Osiris hub — current armor, weapon pools and release history, featured maps, cosmetics, Flawless title progress, and legacy armor sets in the same Iron Banner-style layout.",
+        ],
+      },
+    ],
+  },
   {
     version: "0.7.4",
     publishedAt: "2026-07-05",

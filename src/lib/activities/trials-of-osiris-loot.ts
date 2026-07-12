@@ -8,14 +8,17 @@ import {
 import { groupActivityCosmeticLoot } from "@/lib/activities/cosmetic-loot-sections";
 import { resolveIntroductionSeasonFromItems } from "@/lib/activities/legacy-armor-season";
 import { toLootItemFromCatalog } from "@/lib/activities/loot-item";
+import { groupTrialsWeaponsByReleaseSeason } from "@/lib/activities/trials-weapons-by-season";
 import { loadAllLootCatalog } from "@/lib/all-loot/search";
 import { loadArmorSetCatalog } from "@/lib/armor-sets/load";
 import {
-  IRON_BANNER_ACTIVE_WEAPON_POOL_ID,
-  IRON_BANNER_HUB,
-  IRON_BANNER_WEAPON_POOLS,
-  LEGACY_IRON_BANNER_CLASS_ITEMS,
-} from "@/data/activities/iron-banner";
+  getActiveTrialsBonusPoolId,
+  LEGACY_TRIALS_CLASS_ITEMS,
+  LEGACY_TRIALS_CROSS_CLASS_SETS,
+  LEGACY_TRIALS_NAME_SUFFIX_SETS,
+  TRIALS_OF_OSIRIS_HUB,
+  TRIALS_WEAPON_POOLS,
+} from "@/data/activities/trials-of-osiris";
 import type {
   ActivityWeaponPool,
   LegacyArmorSetGroup,
@@ -26,8 +29,8 @@ import type { AllLootItem } from "@/types/all-loot";
 import type { ArmorSet } from "@/types/armor-set";
 import type { ArmorSetBonusCatalog } from "@/types/armor-set-bonuses";
 
-function isIronBannerSource(source = ""): boolean {
-  return /iron banner/i.test(source);
+function isTrialsSource(source = ""): boolean {
+  return /trials of osiris|saint-14 rank|lighthouse chest/i.test(source);
 }
 
 function toLootItem(item: AllLootItem): LootItem {
@@ -108,12 +111,37 @@ function collectCatalogItemsForLegacySet(
   setName: string,
   armorItems: AllLootItem[],
 ): AllLootItem[] {
+  const nameSuffix = LEGACY_TRIALS_NAME_SUFFIX_SETS[setName];
+  if (nameSuffix) {
+    return armorItems.filter((item) => item.name.endsWith(nameSuffix));
+  }
+
+  const crossClassPrefixes = LEGACY_TRIALS_CROSS_CLASS_SETS[setName];
+  if (crossClassPrefixes) {
+    const items: AllLootItem[] = [];
+    const seen = new Set<string>();
+
+    for (const prefix of Object.values(crossClassPrefixes)) {
+      if (!prefix) continue;
+      const matches = armorItems.filter(
+        (item) => item.name === prefix || item.name.startsWith(`${prefix} `),
+      );
+      for (const item of matches) {
+        if (seen.has(item.itemHash)) continue;
+        items.push(item);
+        seen.add(item.itemHash);
+      }
+    }
+
+    return items;
+  }
+
   const prefix = `${setName} `;
   const items = armorItems.filter(
     (item) => item.name === setName || item.name.startsWith(prefix),
   );
   const seen = new Set(items.map((item) => item.itemHash));
-  const classItemNames = LEGACY_IRON_BANNER_CLASS_ITEMS[setName];
+  const classItemNames = LEGACY_TRIALS_CLASS_ITEMS[setName];
 
   if (classItemNames) {
     for (const name of Object.values(classItemNames)) {
@@ -251,43 +279,46 @@ function resolveWeaponsByName(
   });
 }
 
-function resolveIronBannerWeaponPools(
+function resolveTrialsWeaponPools(
   catalogItems: AllLootItem[],
 ): ActivityWeaponPool[] {
-  return IRON_BANNER_WEAPON_POOLS.map((pool) => ({
+  const activeBonusPoolId = getActiveTrialsBonusPoolId();
+
+  return TRIALS_WEAPON_POOLS.map((pool) => ({
     id: pool.id,
     label: pool.label,
-    isActive: pool.id === IRON_BANNER_ACTIVE_WEAPON_POOL_ID,
+    isActive:
+      pool.id === "lighthouse" ? true : pool.id === activeBonusPoolId,
     items: resolveWeaponsByName(pool.weaponNames, catalogItems),
   }));
 }
 
-export async function resolveIronBannerLoot(): Promise<ResolvedActivityHubLoot> {
+export async function resolveTrialsOfOsirisLoot(): Promise<ResolvedActivityHubLoot> {
   const [lootCatalog, armorCatalog, bonusNames] = await Promise.all([
     loadAllLootCatalog(),
     loadArmorSetCatalog(),
     loadArmorSetBonusNames(),
   ]);
 
-  const ironBannerItems = lootCatalog.items.filter((item) =>
-    isIronBannerSource(item.source),
+  const trialsItems = lootCatalog.items.filter((item) =>
+    isTrialsSource(item.source),
   );
-  const setNamesByHash = buildSetNameIndex(ironBannerItems, bonusNames);
-  const excludedLegacy = new Set(IRON_BANNER_HUB.excludeLegacySetNames ?? []);
-  const currentHashes = new Set(IRON_BANNER_HUB.currentArmorSetHashes);
+  const setNamesByHash = buildSetNameIndex(trialsItems, bonusNames);
+  const excludedLegacy = new Set(TRIALS_OF_OSIRIS_HUB.excludeLegacySetNames ?? []);
+  const currentHashes = new Set(TRIALS_OF_OSIRIS_HUB.currentArmorSetHashes);
 
-  const ironBannerArmor = ironBannerItems.filter(
+  const trialsArmor = trialsItems.filter(
     (item) => item.type === "Armor" && item.rarity !== "Exotic",
   );
 
-  const currentArmorItems = ironBannerArmor.filter(
+  const currentArmorItems = trialsArmor.filter(
     (item) =>
       item.equipableItemSetHash &&
       currentHashes.has(item.equipableItemSetHash),
   );
 
   const currentSetName =
-    setNamesByHash.get(IRON_BANNER_HUB.currentArmorSetHashes[0] ?? "") ??
+    setNamesByHash.get(TRIALS_OF_OSIRIS_HUB.currentArmorSetHashes[0] ?? "") ??
     "Current set";
 
   const currentArmorRows = buildArmorRowsFromCatalogItems(
@@ -296,7 +327,7 @@ export async function resolveIronBannerLoot(): Promise<ResolvedActivityHubLoot> 
   );
 
   const catalogLegacyGroups = legacyGroupsFromCatalog(
-    ironBannerArmor,
+    trialsArmor,
     setNamesByHash,
     currentHashes,
     excludedLegacy,
@@ -307,12 +338,21 @@ export async function resolveIronBannerLoot(): Promise<ResolvedActivityHubLoot> 
   );
 
   const legacyArmorSets = armorCatalog.sets.filter((set) =>
-    isIronBannerSource(set.source),
+    isTrialsSource(set.source),
   );
 
+  const configuredLegacySetNames = [
+    ...Object.keys(LEGACY_TRIALS_CROSS_CLASS_SETS),
+    ...Object.keys(LEGACY_TRIALS_NAME_SUFFIX_SETS),
+  ];
+  const catalogLegacySetNames = legacyArmorSets.map((set) => set.name);
+  const legacySetNames = [
+    ...new Set([...configuredLegacySetNames, ...catalogLegacySetNames]),
+  ];
+
   const catalogByNameGroups = legacyGroupsFromCatalogBySetName(
-    ironBannerArmor,
-    legacyArmorSets.map((set) => set.name),
+    trialsArmor,
+    legacySetNames,
     excludedLegacy,
     coveredKeys,
   );
@@ -323,7 +363,7 @@ export async function resolveIronBannerLoot(): Promise<ResolvedActivityHubLoot> 
 
   const armorSetLegacyGroups = legacyGroupsFromArmorSets(
     legacyArmorSets,
-    ironBannerArmor,
+    trialsArmor,
     excludedLegacy,
     coveredKeys,
   );
@@ -334,10 +374,10 @@ export async function resolveIronBannerLoot(): Promise<ResolvedActivityHubLoot> 
     ...armorSetLegacyGroups,
   ]);
 
-  const currentWeaponPools = resolveIronBannerWeaponPools(lootCatalog.items);
+  const currentWeaponPools = resolveTrialsWeaponPools(lootCatalog.items);
 
   const currentOtherSections = groupActivityCosmeticLoot(
-    ironBannerItems.filter(
+    trialsItems.filter(
       (item) =>
         item.obtainable &&
         item.type !== "Weapon" &&
@@ -349,6 +389,7 @@ export async function resolveIronBannerLoot(): Promise<ResolvedActivityHubLoot> 
   return {
     currentArmorRows,
     currentWeaponPools,
+    weaponSeasonGroups: groupTrialsWeaponsByReleaseSeason(lootCatalog.items),
     currentOtherSections,
     legacyArmorGroups,
   };

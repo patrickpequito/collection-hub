@@ -6,6 +6,63 @@ export type SeasonBadge = {
   label: string;
 };
 
+function versionDisplayKey(
+  version: Pick<AllLootItemVersion, "seasonLabel" | "eventLabel">,
+): string {
+  return version.eventLabel ?? version.seasonLabel;
+}
+
+/** One row per season/event label — catalog can retain multiple hashes per label. */
+export function dedupeVersionsForDisplay(
+  weapon: Pick<AllLootItem, "itemHash" | "versions"> & {
+    seasonLabel?: string;
+    seasonNumber?: number;
+    eventLabel?: string;
+    iconPath?: string;
+    name?: string;
+    seasonIconPath?: string;
+    seasonDisplayIconPath?: string;
+  },
+): AllLootItemVersion[] {
+  const versions: AllLootItemVersion[] = weapon.versions?.length
+    ? weapon.versions
+    : [
+        {
+          itemHash: weapon.itemHash,
+          name: weapon.name ?? "",
+          iconPath: weapon.iconPath ?? "",
+          seasonLabel: weapon.seasonLabel ?? "",
+          seasonNumber: weapon.seasonNumber ?? 0,
+          eventLabel: weapon.eventLabel,
+          seasonIconPath: weapon.seasonIconPath,
+          seasonDisplayIconPath: weapon.seasonDisplayIconPath,
+        },
+      ];
+
+  const byLabel = new Map<string, AllLootItemVersion>();
+
+  for (const version of versions) {
+    const key = versionDisplayKey(version);
+    const existing = byLabel.get(key);
+    if (!existing) {
+      byLabel.set(key, version);
+      continue;
+    }
+    if (version.itemHash === weapon.itemHash) {
+      byLabel.set(key, version);
+      continue;
+    }
+    if (existing.itemHash === weapon.itemHash) {
+      continue;
+    }
+    if ((version.seasonNumber ?? 0) > (existing.seasonNumber ?? 0)) {
+      byLabel.set(key, version);
+    }
+  }
+
+  return [...byLabel.values()];
+}
+
 function badgeFromVersion(version: AllLootItemVersion): SeasonBadge | null {
   const iconPath = version.seasonIconPath ?? version.seasonDisplayIconPath ?? undefined;
   const label = version.eventLabel ?? version.seasonLabel;
@@ -26,33 +83,14 @@ export function resolveVersionDisplayLabel(
 
 export function resolveSeasonBadges(weapon: AllLootItem): SeasonBadge[] {
   const badges: SeasonBadge[] = [];
-  const seen = new Set<string>();
+  const seenLabels = new Set<string>();
 
-  const addBadge = (badge: SeasonBadge | null) => {
-    if (!badge || seen.has(badge.key)) return;
-    seen.add(badge.key);
+  for (const version of dedupeVersionsForDisplay(weapon)) {
+    const badge = badgeFromVersion(version);
+    if (!badge || seenLabels.has(badge.label)) continue;
+    seenLabels.add(badge.label);
     badges.push(badge);
-  };
-
-  if (weapon.versions?.length) {
-    for (const version of weapon.versions) {
-      addBadge(badgeFromVersion(version));
-    }
-    return badges;
   }
-
-  addBadge(
-    badgeFromVersion({
-      itemHash: weapon.itemHash,
-      name: weapon.name,
-      iconPath: weapon.iconPath,
-      seasonIconPath: weapon.seasonIconPath,
-      seasonDisplayIconPath: weapon.seasonDisplayIconPath,
-      seasonLabel: weapon.seasonLabel,
-      seasonNumber: weapon.seasonNumber,
-      eventLabel: weapon.eventLabel,
-    }),
-  );
 
   return badges;
 }

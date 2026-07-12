@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { InteractiveBannerLink } from "@/components/interactive-banner-link";
 import type { ActivityEntry } from "@/types/activity-loot";
-import { getActivityHref } from "@/data/rad-loot/activities";
+import { getActivityHref as getRadLootActivityHref } from "@/data/rad-loot/activities";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 
 /** Banner height — change here to tweak all activity banners. */
@@ -22,6 +22,10 @@ const LEVIATHAN_FAMILY_SLUGS = new Set([
 
 type ActivityBannerSmallProps = {
   entry: ActivityEntry;
+  /** Defaults to RAD Loot `/images/rad-loot/activities`. */
+  imageBasePath?: string;
+  /** Defaults to RAD Loot href resolver. */
+  getHref?: (entry: ActivityEntry) => string | null;
   iconPath?: string | null;
   /** null = signed out or no title seal — show icon at full opacity. */
   titleEarned?: boolean | null;
@@ -34,18 +38,20 @@ type ActivityBannerSmallProps = {
 
 export function ActivityBannerSmall({
   entry,
+  imageBasePath = "/images/rad-loot/activities",
+  getHref = getRadLootActivityHref,
   iconPath = null,
   titleEarned = null,
   totalCompletions = null,
   featured = false,
   featuredIconPath = "/images/rad-loot/featured.png",
 }: ActivityBannerSmallProps) {
-  const href = getActivityHref(entry);
+  const href = getHref(entry);
   const mobileImageUrl = entry.imageFile
-    ? `/images/rad-loot/activities/${entry.imageFile}`
+    ? `${imageBasePath}/${entry.imageFile}`
     : null;
   const wideImageUrl = entry.wideImageFile
-    ? `/images/rad-loot/activities/${entry.wideImageFile}`
+    ? `${imageBasePath}/${entry.wideImageFile}`
     : null;
   const [imageError, setImageError] = useState(false);
   const showImage = mobileImageUrl && !imageError;

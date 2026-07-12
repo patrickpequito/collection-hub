@@ -1,17 +1,15 @@
 import {
   ActivityCosmeticLootPanel,
   ActivityCurrentLootPanel,
+  ActivityWeaponsLootPanel,
 } from "@/components/activity-current-loot-panel";
-import { ActivityEventCardRewardsPanel } from "@/components/activity-event-card-rewards-panel";
 import { LegacyArmorSetsSection } from "@/components/legacy-armor-sets-section";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import { TitleDetailPanel } from "@/components/title-detail-panel";
 import { TriumphsListSection } from "@/components/triumphs-list-section";
-import { IRON_BANNER_HUB } from "@/data/activities/iron-banner";
-import { IRON_BANNER_EVENT_CARD_REWARDS } from "@/data/activities/iron-banner-event-card";
+import { CRUCIBLE_HUB } from "@/data/activities/crucible";
 import { filterExpiredTriumphRecords } from "@/lib/activity-expired-content";
-import { fetchIronBannerEventCardClaimStatuses } from "@/lib/activities/iron-banner-event-card-progression";
-import { resolveIronBannerLoot } from "@/lib/activities/iron-banner-loot";
+import { resolveCrucibleLoot } from "@/lib/activities/crucible-loot";
 import { loadCatalogHashIndex } from "@/lib/all-loot/catalog-hash-index";
 import { isLootHashOwned } from "@/lib/all-loot/loot-ownership";
 import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
@@ -26,17 +24,16 @@ import {
 } from "@/lib/triumphs/record-progress";
 import { getTitleEntry, loadTriumphCatalog } from "@/lib/triumphs/load";
 import { resolveTriumphIcon } from "@/lib/triumphs/icons";
-import type { EventCardRewardClaimStatus } from "@/types/activity-hub";
 import type { RecordInstance, TriumphStringVariables } from "@/types/triumph";
 import { EMPTY_TRIUMPH_STRING_VARIABLES } from "@/types/triumph";
 
-export default async function IronBannerActivityPage() {
-  const hub = IRON_BANNER_HUB;
+export default async function CrucibleActivityPage() {
+  const hub = CRUCIBLE_HUB;
   const session = await getSession();
   const oauthConfigured = isBungieOAuthConfigured();
 
   const [loot, catalog, itemHrefs, catalogByHash] = await Promise.all([
-    resolveIronBannerLoot(),
+    resolveCrucibleLoot(),
     loadTriumphCatalog(),
     buildCollectibleHrefByItemHash(`/activities/${hub.slug}`),
     loadCatalogHashIndex(),
@@ -57,19 +54,12 @@ export default async function IronBannerActivityPage() {
   let recordInstances = new Map<string, RecordInstance>();
   let stringVariables: TriumphStringVariables = EMPTY_TRIUMPH_STRING_VARIABLES;
   let recordsError: string | null = null;
-  let eventCardClaimError: string | null = null;
-  let eventCardClaimStatusByRank: Record<
-    number,
-    EventCardRewardClaimStatus
-  > | null = null;
 
   if (session) {
-    const [inventoryResult, recordsResult, eventCardResult] =
-      await Promise.allSettled([
-        fetchOwnedItemHashes(session),
-        fetchRecordInstances(session),
-        fetchIronBannerEventCardClaimStatuses(session),
-      ]);
+    const [inventoryResult, recordsResult] = await Promise.allSettled([
+      fetchOwnedItemHashes(session),
+      fetchRecordInstances(session),
+    ]);
 
     if (inventoryResult.status === "fulfilled") {
       ownedItemHashes = inventoryResult.value;
@@ -89,19 +79,9 @@ export default async function IronBannerActivityPage() {
           ? recordsResult.reason.message
           : "Failed to load triumph progress";
     }
-
-    if (eventCardResult.status === "fulfilled") {
-      eventCardClaimStatusByRank = eventCardResult.value;
-    } else {
-      eventCardClaimError =
-        eventCardResult.reason instanceof Error
-          ? eventCardResult.reason.message
-          : "Failed to load Event Card progress";
-    }
   }
 
   const showOwnership = Boolean(session && !inventoryError);
-  const showEventCardClaimStatus = Boolean(session && !eventCardClaimError);
   const resolveItemOwned = (itemHash: string) =>
     isLootHashOwned(itemHash, ownedItemHashes, catalogByHash);
   const showTriumphProgress = Boolean(session && !recordsError);
@@ -144,29 +124,31 @@ export default async function IronBannerActivityPage() {
         </p>
       ) : null}
 
-      {eventCardClaimError ? (
-        <p className="text-xs text-amber-200/80">
-          Event Card progress unavailable: {eventCardClaimError}
-        </p>
-      ) : null}
-
       <div className="space-y-8">
-        <ActivityCurrentLootPanel
-          activitySlug={hub.slug}
-          activityTitle={hub.title}
-          armorRows={loot.currentArmorRows}
-          previewFiles={hub.armorSetPreviewFiles}
-          weaponPools={loot.currentWeaponPools}
+        {(loot.currentArmorPanels ?? [
+          {
+            armorRows: loot.currentArmorRows,
+            previewFiles: hub.armorSetPreviewFiles,
+          },
+        ]).map((panel, index) => (
+          <ActivityCurrentLootPanel
+            key={hub.currentArmorSetHashes[index] ?? index}
+            activitySlug={hub.slug}
+            activityTitle={hub.title}
+            armorRows={panel.armorRows}
+            previewFiles={panel.previewFiles}
+            ownedItemHashes={ownedItemHashes}
+            showOwnership={showOwnership}
+            resolveItemOwned={resolveItemOwned}
+            itemHrefs={itemHrefs}
+          />
+        ))}
+
+        <ActivityWeaponsLootPanel
+          weapons={loot.currentWeapons ?? []}
           ownedItemHashes={ownedItemHashes}
           showOwnership={showOwnership}
           resolveItemOwned={resolveItemOwned}
-          itemHrefs={itemHrefs}
-        />
-
-        <ActivityEventCardRewardsPanel
-          rewards={IRON_BANNER_EVENT_CARD_REWARDS}
-          claimStatusByRank={eventCardClaimStatusByRank}
-          showClaimStatus={showEventCardClaimStatus}
           itemHrefs={itemHrefs}
         />
 
@@ -180,7 +162,7 @@ export default async function IronBannerActivityPage() {
 
         <div className="grid min-w-0 gap-8 lg:grid-cols-2">
           <TriumphsListSection
-            heading="Iron Banner // Triumphs"
+            heading="Crucible // Triumphs"
             records={triumphRecords}
             recordInstances={Object.fromEntries(recordInstances)}
             showProgress={showTriumphProgress}

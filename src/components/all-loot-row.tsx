@@ -16,7 +16,7 @@ import {
 import { weaponPageHref } from "@/lib/weapons/paths";
 import { armorPageHref } from "@/lib/armor/paths";
 import type { AllLootItem, AllLootItemVersion } from "@/types/all-loot";
-import { resolveVersionDisplayLabel } from "@/lib/all-loot/season-badges";
+import { resolveVersionDisplayLabel, dedupeVersionsForDisplay } from "@/lib/all-loot/season-badges";
 import { isItemOwned } from "@/lib/all-loot/ownership";
 
 export { isItemOwned };
@@ -169,10 +169,11 @@ function AllLootVersionsPopover({
   );
 }
 
-function useVersionsHover(versions: AllLootItemVersion[] | undefined) {
+function useVersionsHover(item: AllLootItem) {
+  const versions = dedupeVersionsForDisplay(item);
   const [open, setOpen] = useState(false);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const hasVersions = Boolean(versions && versions.length > 1);
+  const hasVersions = versions.length > 1;
 
   const setHover = useCallback(
     (active: boolean) => {
@@ -190,7 +191,7 @@ function useVersionsHover(versions: AllLootItemVersion[] | undefined) {
     [hasVersions],
   );
 
-  return { open, setHover, hasVersions, versions: versions ?? [] };
+  return { open, setHover, hasVersions, versions };
 }
 
 function DamageTypeCell({
@@ -313,9 +314,7 @@ function SlotCell({
 
 export function AllLootRow({ item, owned, showOwnership }: AllLootRowProps) {
   const pathname = usePathname();
-  const { open, setHover, hasVersions, versions } = useVersionsHover(
-    item.versions,
-  );
+  const { open, setHover, hasVersions, versions } = useVersionsHover(item);
   const itemHref =
     item.type === "Weapon" && item.slug
       ? weaponPageHref(item.slug, pathname)

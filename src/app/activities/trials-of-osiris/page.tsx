@@ -2,16 +2,16 @@ import {
   ActivityCosmeticLootPanel,
   ActivityCurrentLootPanel,
 } from "@/components/activity-current-loot-panel";
-import { ActivityEventCardRewardsPanel } from "@/components/activity-event-card-rewards-panel";
 import { LegacyArmorSetsSection } from "@/components/legacy-armor-sets-section";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import { TitleDetailPanel } from "@/components/title-detail-panel";
 import { TriumphsListSection } from "@/components/triumphs-list-section";
-import { IRON_BANNER_HUB } from "@/data/activities/iron-banner";
-import { IRON_BANNER_EVENT_CARD_REWARDS } from "@/data/activities/iron-banner-event-card";
+import { TrialsFeaturedMapsSection } from "@/components/trials-featured-maps-section";
+import { TrialsWeaponsBySeasonSection } from "@/components/trials-weapons-by-season-section";
+import { TRIALS_OF_OSIRIS_HUB } from "@/data/activities/trials-of-osiris";
 import { filterExpiredTriumphRecords } from "@/lib/activity-expired-content";
-import { fetchIronBannerEventCardClaimStatuses } from "@/lib/activities/iron-banner-event-card-progression";
-import { resolveIronBannerLoot } from "@/lib/activities/iron-banner-loot";
+import { resolveTrialsFeaturedMaps } from "@/lib/activities/trials-featured-maps";
+import { resolveTrialsOfOsirisLoot } from "@/lib/activities/trials-of-osiris-loot";
 import { loadCatalogHashIndex } from "@/lib/all-loot/catalog-hash-index";
 import { isLootHashOwned } from "@/lib/all-loot/loot-ownership";
 import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
@@ -26,20 +26,21 @@ import {
 } from "@/lib/triumphs/record-progress";
 import { getTitleEntry, loadTriumphCatalog } from "@/lib/triumphs/load";
 import { resolveTriumphIcon } from "@/lib/triumphs/icons";
-import type { EventCardRewardClaimStatus } from "@/types/activity-hub";
 import type { RecordInstance, TriumphStringVariables } from "@/types/triumph";
 import { EMPTY_TRIUMPH_STRING_VARIABLES } from "@/types/triumph";
 
-export default async function IronBannerActivityPage() {
-  const hub = IRON_BANNER_HUB;
+export default async function TrialsOfOsirisActivityPage() {
+  const hub = TRIALS_OF_OSIRIS_HUB;
   const session = await getSession();
   const oauthConfigured = isBungieOAuthConfigured();
 
-  const [loot, catalog, itemHrefs, catalogByHash] = await Promise.all([
-    resolveIronBannerLoot(),
+  const [loot, catalog, itemHrefs, catalogByHash, featuredMaps] =
+    await Promise.all([
+    resolveTrialsOfOsirisLoot(),
     loadTriumphCatalog(),
     buildCollectibleHrefByItemHash(`/activities/${hub.slug}`),
     loadCatalogHashIndex(),
+    resolveTrialsFeaturedMaps(),
   ]);
 
   const title = getTitleEntry(catalog, hub.titleSlug);
@@ -57,19 +58,12 @@ export default async function IronBannerActivityPage() {
   let recordInstances = new Map<string, RecordInstance>();
   let stringVariables: TriumphStringVariables = EMPTY_TRIUMPH_STRING_VARIABLES;
   let recordsError: string | null = null;
-  let eventCardClaimError: string | null = null;
-  let eventCardClaimStatusByRank: Record<
-    number,
-    EventCardRewardClaimStatus
-  > | null = null;
 
   if (session) {
-    const [inventoryResult, recordsResult, eventCardResult] =
-      await Promise.allSettled([
-        fetchOwnedItemHashes(session),
-        fetchRecordInstances(session),
-        fetchIronBannerEventCardClaimStatuses(session),
-      ]);
+    const [inventoryResult, recordsResult] = await Promise.allSettled([
+      fetchOwnedItemHashes(session),
+      fetchRecordInstances(session),
+    ]);
 
     if (inventoryResult.status === "fulfilled") {
       ownedItemHashes = inventoryResult.value;
@@ -89,19 +83,9 @@ export default async function IronBannerActivityPage() {
           ? recordsResult.reason.message
           : "Failed to load triumph progress";
     }
-
-    if (eventCardResult.status === "fulfilled") {
-      eventCardClaimStatusByRank = eventCardResult.value;
-    } else {
-      eventCardClaimError =
-        eventCardResult.reason instanceof Error
-          ? eventCardResult.reason.message
-          : "Failed to load Event Card progress";
-    }
   }
 
   const showOwnership = Boolean(session && !inventoryError);
-  const showEventCardClaimStatus = Boolean(session && !eventCardClaimError);
   const resolveItemOwned = (itemHash: string) =>
     isLootHashOwned(itemHash, ownedItemHashes, catalogByHash);
   const showTriumphProgress = Boolean(session && !recordsError);
@@ -144,31 +128,30 @@ export default async function IronBannerActivityPage() {
         </p>
       ) : null}
 
-      {eventCardClaimError ? (
-        <p className="text-xs text-amber-200/80">
-          Event Card progress unavailable: {eventCardClaimError}
-        </p>
-      ) : null}
-
       <div className="space-y-8">
         <ActivityCurrentLootPanel
           activitySlug={hub.slug}
           activityTitle={hub.title}
           armorRows={loot.currentArmorRows}
           previewFiles={hub.armorSetPreviewFiles}
-          weaponPools={loot.currentWeaponPools}
           ownedItemHashes={ownedItemHashes}
           showOwnership={showOwnership}
           resolveItemOwned={resolveItemOwned}
           itemHrefs={itemHrefs}
         />
 
-        <ActivityEventCardRewardsPanel
-          rewards={IRON_BANNER_EVENT_CARD_REWARDS}
-          claimStatusByRank={eventCardClaimStatusByRank}
-          showClaimStatus={showEventCardClaimStatus}
+        <TrialsWeaponsBySeasonSection
+          groups={loot.weaponSeasonGroups ?? []}
+          weaponPools={loot.currentWeaponPools}
+          activityTitle={hub.title}
+          footerNote="All Trials weapons can drop every weekend. Bonus focus pools rotate on a three-week schedule; the Lighthouse pool is for flawless chest rewards. Use weapon attunement in your inventory to target a specific drop."
+          ownedItemHashes={ownedItemHashes}
+          showOwnership={showOwnership}
+          resolveItemOwned={resolveItemOwned}
           itemHrefs={itemHrefs}
         />
+
+        <TrialsFeaturedMapsSection featuredMaps={featuredMaps} />
 
         <ActivityCosmeticLootPanel
           sections={loot.currentOtherSections}
@@ -180,7 +163,7 @@ export default async function IronBannerActivityPage() {
 
         <div className="grid min-w-0 gap-8 lg:grid-cols-2">
           <TriumphsListSection
-            heading="Iron Banner // Triumphs"
+            heading="Trials of Osiris // Triumphs"
             records={triumphRecords}
             recordInstances={Object.fromEntries(recordInstances)}
             showProgress={showTriumphProgress}

@@ -10,6 +10,9 @@ type ActivityWeaponPoolSectionProps = {
   ownedPoolItemHashes: string[];
   showOwnership: boolean;
   itemHrefs?: Record<string, string>;
+  inactivePoolMessage?: string;
+  /** Subsection label; pass `null` to hide. */
+  heading?: string | null;
 };
 
 export function ActivityWeaponPoolSection({
@@ -18,6 +21,8 @@ export function ActivityWeaponPoolSection({
   ownedPoolItemHashes,
   showOwnership,
   itemHrefs,
+  inactivePoolMessage = "Not in rotation this Iron Banner.",
+  heading = "Weapons",
 }: ActivityWeaponPoolSectionProps) {
   const [selectedPoolId, setSelectedPoolId] = useState(defaultPoolId);
   const ownedItemHashes = useMemo(
@@ -32,7 +37,9 @@ export function ActivityWeaponPoolSection({
   return (
     <div>
       <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-2">
-        <h3 className="text-sm font-medium text-zinc-300">Weapons</h3>
+        {heading ? (
+          <h3 className="text-sm font-medium text-zinc-300">{heading}</h3>
+        ) : null}
         <div
           className="inline-flex rounded-lg border border-zinc-800 bg-zinc-900/60 p-0.5"
           role="tablist"
@@ -67,9 +74,7 @@ export function ActivityWeaponPoolSection({
       </div>
 
       {!selectedPool.isActive ? (
-        <p className="mb-2 text-xs text-zinc-500">
-          Not in rotation this Iron Banner.
-        </p>
+        <p className="mb-2 text-xs text-zinc-500">{inactivePoolMessage}</p>
       ) : null}
 
       <LootItemGrid

@@ -551,9 +551,9 @@
             "iconPath": "/common/destiny2_content/icons/69c40ec61a939fcaa476b58c7c4389dd.jpg"
           },
           "classItem": {
-            "itemHash": "18990920",
-            "name": "Cloak of the Exile",
-            "iconPath": "/common/destiny2_content/icons/ede19e6e57b9c9f49b53438c5ea0940c.jpg"
+            "itemHash": "1283202269",
+            "name": "Atavistic Idol Cloak",
+            "iconPath": "/common/destiny2_content/icons/3986e244f9881d567cd41660368d6185.jpg"
           }
         },
         "titan": {
@@ -2313,12 +2313,129 @@
       }
     },
     {
+      "id": "expansions-exile",
+      "name": "Exile",
+      "category": "expansions",
+      "source": "Source: Trials of Osiris Challenges",
+      "sourceLabel": "Trials of Osiris Challenges",
+      "classes": {
+        "hunter": {
+          "helmet": {
+            "itemHash": "571925067",
+            "name": "Cover of the Exile",
+            "iconPath": "/common/destiny2_content/icons/13d4dd588461c4ba3f1bbfb260810443.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "2764588986",
+            "name": "Grips of the Exile",
+            "iconPath": "/common/destiny2_content/icons/2762d6cbaa9f8b549bf0cbe96ea36e7a.jpg"
+          },
+          "chest": {
+            "itemHash": "875395086",
+            "name": "Vest of the Exile",
+            "iconPath": "/common/destiny2_content/icons/346843dcd859df0a4c3ba715ba6a8dbc.jpg"
+          },
+          "legs": {
+            "itemHash": "150551028",
+            "name": "Boots of the Exile",
+            "iconPath": "/common/destiny2_content/icons/c155e4e411ca93665a901400dfabd379.jpg"
+          },
+          "classItem": {
+            "itemHash": "1193489623",
+            "name": "Cloak of the Exile",
+            "iconPath": "/common/destiny2_content/icons/ede19e6e57b9c9f49b53438c5ea0940c.jpg"
+          }
+        },
+        "titan": {
+          "helmet": {
+            "itemHash": "1164471069",
+            "name": "Helm of the Exile",
+            "iconPath": "/common/destiny2_content/icons/875883c96a5c5890356f6dcdf77afcad.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "3921970316",
+            "name": "Gauntlets of the Exile",
+            "iconPath": "/common/destiny2_content/icons/0fbaa6c992ac10a307c6ec964fc9130c.jpg"
+          },
+          "chest": {
+            "itemHash": "2579999316",
+            "name": "Plate of the Exile",
+            "iconPath": "/common/destiny2_content/icons/9426b74d867f96d49bc03906be006af4.jpg"
+          },
+          "legs": {
+            "itemHash": "272735286",
+            "name": "Greaves of the Exile",
+            "iconPath": "/common/destiny2_content/icons/83531f5f3fab3ec7bae4f1ac30d575e0.jpg"
+          },
+          "classItem": {
+            "itemHash": "3365406121",
+            "name": "Mark of the Exile",
+            "iconPath": "/common/destiny2_content/icons/baed01a16d01c792222b901d7c898c1f.jpg"
+          }
+        },
+        "warlock": {
+          "helmet": {
+            "itemHash": "495541988",
+            "name": "Hood of the Exile",
+            "iconPath": "/common/destiny2_content/icons/e7879d18489332b6a7f24803353bbf4b.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "442736573",
+            "name": "Gloves of the Exile",
+            "iconPath": "/common/destiny2_content/icons/9d8fd5ab3df6222a236dd48e6090d495.jpg"
+          },
+          "chest": {
+            "itemHash": "861160515",
+            "name": "Robe of the Exile",
+            "iconPath": "/common/destiny2_content/icons/e1d3da8d503d304403f637752397eba5.jpg"
+          },
+          "legs": {
+            "itemHash": "2808362207",
+            "name": "Legs of the Exile",
+            "iconPath": "/common/destiny2_content/icons/ca4d70233ea0e24945da33c13ff3fa13.jpg"
+          },
+          "classItem": {
+            "itemHash": "142864314",
+            "name": "Bond of the Exile",
+            "iconPath": "/common/destiny2_content/icons/908e3078a8811fd31bb7a458cdcb9b3e.jpg"
+          }
+        }
+      }
+    },
+    {
       "id": "expansions-fused-aurum",
       "name": "Fused Aurum",
       "category": "expansions",
       "source": "Source: Trials of Osiris Challenges",
       "sourceLabel": "Trials of Osiris Challenges",
       "classes": {
+        "hunter": {
+          "helmet": {
+            "itemHash": "806374817",
+            "name": "Photonic Cowl",
+            "iconPath": "/common/destiny2_content/icons/d26a5b6b1e1aca894d260ea8f175c323.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "1602717624",
+            "name": "Photonic Grips",
+            "iconPath": "/common/destiny2_content/icons/fbfcd123e59259610d6700cdb7acf0bd.jpg"
+          },
+          "chest": {
+            "itemHash": "2195467472",
+            "name": "Photonic Vest",
+            "iconPath": "/common/destiny2_content/icons/ecd0ef740652aaf8b239f94cf455f5af.jpg"
+          },
+          "legs": {
+            "itemHash": "3932952562",
+            "name": "Photonic Boots",
+            "iconPath": "/common/destiny2_content/icons/5d8bb98d8bf761f5be82bbda706bcd3d.jpg"
+          },
+          "classItem": {
+            "itemHash": "1547183373",
+            "name": "Photonic Cloak",
+            "iconPath": "/common/destiny2_content/icons/341aabe4148d77d1ccc45e9085b7b2c1.jpg"
+          }
+        },
         "titan": {
           "chest": {
             "itemHash": "297586990",
@@ -2341,9 +2458,36 @@
             "iconPath": "/common/destiny2_content/icons/520579f7c264a1befcce2bb13459fde0.jpg"
           },
           "classItem": {
-            "itemHash": "2381515079",
-            "name": "Atavistic Idol Mark",
-            "iconPath": "/common/destiny2_content/icons/689d4e669085d40c52ccea1ef02ab524.jpg"
+            "itemHash": "615681527",
+            "name": "Fused Aurum Mark",
+            "iconPath": "/common/destiny2_content/icons/3f7fd6355c247db8ce13b515ce967937.jpg"
+          }
+        },
+        "warlock": {
+          "helmet": {
+            "itemHash": "1482105402",
+            "name": "Skybreaker Hood",
+            "iconPath": "/common/destiny2_content/icons/b72ba9c9ad79f2eb01137e4a28c654ff.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "3719480067",
+            "name": "Skybreaker Gloves",
+            "iconPath": "/common/destiny2_content/icons/6c887299c735841037f456c319e9dcdc.jpg"
+          },
+          "chest": {
+            "itemHash": "2443507405",
+            "name": "Skybreaker Robes",
+            "iconPath": "/common/destiny2_content/icons/984fba15de9e1a605b03b2baf9f374b4.jpg"
+          },
+          "legs": {
+            "itemHash": "1769846965",
+            "name": "Skybreaker Boots",
+            "iconPath": "/common/destiny2_content/icons/02bfc6623793943689c5719417affdd1.jpg"
+          },
+          "classItem": {
+            "itemHash": "598995392",
+            "name": "Skybreaker Bond",
+            "iconPath": "/common/destiny2_content/icons/33a7c357db3d40219f7f2873e320dbbf.jpg"
           }
         }
       }
@@ -3847,6 +3991,33 @@
       "source": "Source: Trials of Osiris Challenges",
       "sourceLabel": "Trials of Osiris Challenges",
       "classes": {
+        "hunter": {
+          "helmet": {
+            "itemHash": "1435559164",
+            "name": "Cat-Eye Mask",
+            "iconPath": "/common/destiny2_content/icons/2e6f5ba2cd83e5e725c884b68dbab0c8.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "2832013173",
+            "name": "Cat-Eye Grasps",
+            "iconPath": "/common/destiny2_content/icons/e81a071807fb3bae31363433304cb084.jpg"
+          },
+          "chest": {
+            "itemHash": "2641704939",
+            "name": "Cat-Eye Vest",
+            "iconPath": "/common/destiny2_content/icons/d0204e17156fffff77ed4cc7e21a545e.jpg"
+          },
+          "legs": {
+            "itemHash": "113167959",
+            "name": "Cat-Eye Strides",
+            "iconPath": "/common/destiny2_content/icons/332ca70c75f3d3e6238d05331e43bbda.jpg"
+          },
+          "classItem": {
+            "itemHash": "1381405058",
+            "name": "Cat-Eye Cloak",
+            "iconPath": "/common/destiny2_content/icons/0cde20c9194303f60a729c9d92e15722.jpg"
+          }
+        },
         "titan": {
           "helmet": {
             "itemHash": "511773064",
@@ -3872,6 +4043,33 @@
             "itemHash": "2725889934",
             "name": "Jackal-Heart Mark",
             "iconPath": "/common/destiny2_content/icons/be84ca5149509eb2490c558681d4a23f.jpg"
+          }
+        },
+        "warlock": {
+          "helmet": {
+            "itemHash": "1479465109",
+            "name": "Falcon-Wing Cover",
+            "iconPath": "/common/destiny2_content/icons/e17a531bc09075b441021d2ce4af115a.jpg"
+          },
+          "gauntlets": {
+            "itemHash": "155308388",
+            "name": "Falcon-Wing Gloves",
+            "iconPath": "/common/destiny2_content/icons/d515d3712b19fe62fc315f1694b11b69.jpg"
+          },
+          "chest": {
+            "itemHash": "792171868",
+            "name": "Falcon-Wing Robes",
+            "iconPath": "/common/destiny2_content/icons/03c43b188677a682fbee689e64b1198f.jpg"
+          },
+          "legs": {
+            "itemHash": "1661393678",
+            "name": "Falcon-Wing Boots",
+            "iconPath": "/common/destiny2_content/icons/431a7486366face78434a13dc1760f6f.jpg"
+          },
+          "classItem": {
+            "itemHash": "2078005457",
+            "name": "Falcon-Wing Bond",
+            "iconPath": "/common/destiny2_content/icons/384041ae45a46f1ac0f167a16ba1f545.jpg"
           }
         }
       }
@@ -5953,9 +6151,9 @@
             "iconPath": "/common/destiny2_content/icons/5d8bb98d8bf761f5be82bbda706bcd3d.jpg"
           },
           "classItem": {
-            "itemHash": "1322042322",
-            "name": "Pyrrhic Ascent Cloak",
-            "iconPath": "/common/destiny2_content/icons/74ce829fdcb54658a88acf799c3db407.jpg"
+            "itemHash": "1547183373",
+            "name": "Photonic Cloak",
+            "iconPath": "/common/destiny2_content/icons/341aabe4148d77d1ccc45e9085b7b2c1.jpg"
           }
         }
       }

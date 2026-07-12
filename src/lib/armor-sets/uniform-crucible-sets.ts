@@ -15,6 +15,16 @@ export const BINARY_PHOENIX_CRUCIBLE_GROUP: Record<
   hunter: { setName: "Swordflight 4.1", classItem: "Binary Phoenix Cloak" },
 };
 
+/** Cross-class Crucible sets whose class items reuse the per-class set name. */
+export const WING_CRUCIBLE_GROUP: Record<
+  GuardianClass,
+  { setName: string }
+> = {
+  hunter: { setName: "Wing Contender" },
+  titan: { setName: "Wing Discipline" },
+  warlock: { setName: "Wing Theorem" },
+};
+
 /** Crucible sets whose four armor slots share one display name. */
 export const UNIFORM_CRUCIBLE_SET_CLASS_ITEMS: Record<
   string,
@@ -30,8 +40,20 @@ const UNIFORM_CRUCIBLE_SET_NAMES = new Set(
   Object.values(BINARY_PHOENIX_CRUCIBLE_GROUP).map((entry) => entry.setName),
 );
 
+const WING_CRUCIBLE_SET_NAMES = new Set(
+  Object.values(WING_CRUCIBLE_GROUP).map((entry) => entry.setName),
+);
+
 export function isUniformCrucibleSetName(setName: string): boolean {
   return UNIFORM_CRUCIBLE_SET_NAMES.has(setName);
+}
+
+export function isWingCrucibleSetName(setName: string): boolean {
+  return WING_CRUCIBLE_SET_NAMES.has(setName);
+}
+
+export function isGroupedCrucibleLegacySetName(setName: string): boolean {
+  return isUniformCrucibleSetName(setName) || isWingCrucibleSetName(setName);
 }
 
 export function binaryPhoenixClassItemForUniformSet(

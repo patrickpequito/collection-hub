@@ -3,8 +3,11 @@ import { resolveEquipableItemSetHash } from "@/lib/armor/set-bonuses";
 import { guardianClassFromLabel } from "@/lib/armor-sets/lookup";
 import {
   BINARY_PHOENIX_CRUCIBLE_GROUP,
+  WING_CRUCIBLE_GROUP,
   binaryPhoenixClassItemForUniformSet,
+  isGroupedCrucibleLegacySetName,
   isUniformCrucibleSetName,
+  isWingCrucibleSetName,
   uniformCrucibleSetForClassItem,
 } from "@/lib/armor-sets/uniform-crucible-sets";
 import {
@@ -137,6 +140,12 @@ function resolveNamedArmorSetName(
     }
   }
 
+  for (const entry of Object.values(WING_CRUCIBLE_GROUP)) {
+    if (belongsToNamedArmorSet(armor, entry.setName)) {
+      return entry.setName;
+    }
+  }
+
   const extracted = extractLegendaryArmorSetName(armor.name);
   if (extracted) return extracted;
 
@@ -182,6 +191,38 @@ function collectBinaryPhoenixCrucibleItems(items: AllLootItem[]): AllLootItem[] 
   }
 
   return collected;
+}
+
+function collectWingCrucibleItems(items: AllLootItem[]): AllLootItem[] {
+  const collected: AllLootItem[] = [];
+  const seen = new Set<string>();
+
+  const add = (item: AllLootItem) => {
+    if (seen.has(item.itemHash)) return;
+    seen.add(item.itemHash);
+    collected.push(item);
+  };
+
+  for (const entry of Object.values(WING_CRUCIBLE_GROUP)) {
+    for (const item of items) {
+      if (belongsToNamedArmorSet(item, entry.setName)) add(item);
+    }
+  }
+
+  return collected;
+}
+
+function collectGroupedCrucibleLegacyItems(
+  items: AllLootItem[],
+  setName: string,
+): AllLootItem[] {
+  if (isUniformCrucibleSetName(setName)) {
+    return collectBinaryPhoenixCrucibleItems(items);
+  }
+  if (isWingCrucibleSetName(setName)) {
+    return collectWingCrucibleItems(items);
+  }
+  return collectArmorItemsForSetName(items, setName);
 }
 
 function collectArmorItemsForSetName(
@@ -353,9 +394,9 @@ export function resolveArmorSetForItem(
   if (!setName) return null;
 
   const namedSetItems =
-    isUniformCrucibleSetName(setName) ||
+    isGroupedCrucibleLegacySetName(setName) ||
     uniformCrucibleSetForClassItem(armor.name)
-      ? collectBinaryPhoenixCrucibleItems(items)
+      ? collectGroupedCrucibleLegacyItems(items, setName)
       : collectArmorItemsForSetName(items, setName, armor);
   if (!namedSetItems.length) return null;
 

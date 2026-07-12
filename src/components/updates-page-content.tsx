@@ -1,7 +1,6 @@
 import { AppVersionLabel } from "@/components/app-version-label";
 import { XFollowBanner } from "@/components/x-follow-banner";
 import {
-  CURRENT_VERSION,
   formatReleaseDate,
   UPDATE_RELEASES,
 } from "@/data/updates";
@@ -19,12 +18,6 @@ export function UpdatesPageContent() {
           Updates
         </h1>
         <AppVersionLabel />
-        <p className="max-w-2xl text-sm leading-relaxed text-zinc-400">
-          The current release is{" "}
-          <span className="font-medium text-zinc-200">v{CURRENT_VERSION}</span>.
-          Version 1.0 will arrive once Armor Sets, Exotics, and Monument of
-          Triumph are complete. Older releases stay listed below for reference.
-        </p>
       </header>
 
       <section className="space-y-6">

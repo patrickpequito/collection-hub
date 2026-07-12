@@ -20,8 +20,33 @@ export function isLootCollectionBannerAvailable(
   return Boolean(banner.href) && !banner.comingSoon;
 }
 
+export function isLootCollectionBannerActive(
+  pathname: string,
+  banner: AllLootCollectionBanner,
+): boolean {
+  if (!banner.href) return false;
+
+  if (pathname === banner.href || pathname.startsWith(`${banner.href}/`)) {
+    return true;
+  }
+
+  if (banner.href === "/pvp-activities") {
+    return (
+      pathname.startsWith("/activities/crucible") ||
+      pathname.startsWith("/activities/iron-banner") ||
+      pathname.startsWith("/activities/trials-of-osiris")
+    );
+  }
+
+  return false;
+}
+
 export function isLootNavActive(pathname: string): boolean {
   if (isLootSearchNavActive(pathname)) {
+    return true;
+  }
+
+  if (pathname.startsWith("/activities/")) {
     return true;
   }
 

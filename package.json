@@ -13,6 +13,7 @@
     "generate:god-rolls": "node scripts/generate-weapon-god-rolls.mjs",
     "generate:aegis-rolls": "node scripts/generate-weapon-aegis-rolls.mjs",
     "generate:featured-activities": "node scripts/generate-featured-activities.mjs",
+    "generate:trials-featured-maps": "node scripts/generate-trials-featured-maps.mjs",
     "generate:featured-icon-candidates": "node scripts/generate-featured-icon-candidates.mjs",
     "generate:vault-icon-candidates": "node scripts/generate-vault-icon-candidates.mjs",
     "patch:version-perks": "node scripts/patch-version-perk-columns.mjs",

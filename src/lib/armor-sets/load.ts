@@ -16,7 +16,7 @@ async function readArmorSetCatalogFromDisk(): Promise<ArmorSetCatalog> {
 
 const loadArmorSetCatalogCached = unstable_cache(
   readArmorSetCatalogFromDisk,
-  ["armor-set-catalog"],
+  ["armor-set-catalog-v2"],
   { revalidate: false },
 );
 

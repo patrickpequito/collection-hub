@@ -14,6 +14,15 @@ type ActivityArmorSetPreviewProps = {
   };
 };
 
+async function imageExists(url: string): Promise<boolean> {
+  try {
+    const response = await fetch(url, { method: "HEAD" });
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
+
 export function ActivityArmorSetPreview({
   imageFile,
   imageUrl,
@@ -21,9 +30,27 @@ export function ActivityArmorSetPreview({
   missingImageVariant = "file-hint",
   contributionLink,
 }: ActivityArmorSetPreviewProps) {
-  const [imageError, setImageError] = useState(false);
+  const [imageStatus, setImageStatus] = useState<"loading" | "loaded" | "error">(
+    "loading",
+  );
   const [expanded, setExpanded] = useState(false);
-  const showImage = !imageError;
+  const showImage = imageStatus === "loaded";
+
+  useEffect(() => {
+    let cancelled = false;
+    setImageStatus("loading");
+    setExpanded(false);
+
+    void imageExists(imageUrl).then((exists) => {
+      if (!cancelled) {
+        setImageStatus(exists ? "loaded" : "error");
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [imageUrl]);
 
   const closeLightbox = useCallback(() => setExpanded(false), []);
 
@@ -43,9 +70,54 @@ export function ActivityArmorSetPreview({
     };
   }, [expanded, closeLightbox]);
 
+  const missingImageContent =
+    missingImageVariant === "contribute" && contributionLink ? (
+      <div className="flex min-h-36 w-full flex-col items-center justify-center gap-3 px-6 py-10 text-center">
+        <p className="text-sm text-zinc-400">
+          Full set preview image is not available yet.
+        </p>
+        <p className="max-w-md text-xs leading-relaxed text-zinc-500">
+          If you have a screenshot showing all three classes, share it with us
+          on{" "}
+          <a
+            href={contributionLink.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-amber-200/90 underline decoration-amber-200/30 underline-offset-2 transition hover:text-amber-100"
+          >
+            X
+          </a>{" "}
+          at{" "}
+          <a
+            href={contributionLink.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-zinc-300 underline decoration-zinc-600 underline-offset-2 transition hover:text-zinc-100"
+          >
+            {contributionLink.handle}
+          </a>
+          .
+        </p>
+      </div>
+    ) : (
+      <div
+        className="flex min-h-28 w-full flex-col items-center justify-center gap-2 px-4 py-8 text-center"
+        aria-hidden
+      >
+        <p className="text-[10px] uppercase tracking-wide text-zinc-600">
+          Armor set preview
+        </p>
+        <p className="font-mono text-xs text-zinc-500">{imageFile}</p>
+      </div>
+    );
+
   return (
     <>
       <div className="min-w-0 max-w-full overflow-hidden rounded-lg border border-zinc-800 bg-zinc-950/50">
+        {imageStatus === "loading" ? (
+          <div className="min-h-36 w-full" aria-hidden />
+        ) : null}
+
         {showImage ? (
           <button
             type="button"
@@ -58,48 +130,11 @@ export function ActivityArmorSetPreview({
               src={imageUrl}
               alt={label}
               className="block h-auto max-w-full w-full"
-              onError={() => setImageError(true)}
             />
           </button>
-        ) : missingImageVariant === "contribute" && contributionLink ? (
-          <div className="flex min-h-36 w-full flex-col items-center justify-center gap-3 px-6 py-10 text-center">
-            <p className="text-sm text-zinc-400">
-              Full set preview image is not available yet.
-            </p>
-            <p className="max-w-md text-xs leading-relaxed text-zinc-500">
-              If you have a screenshot showing all three classes, share it with us
-              on{" "}
-              <a
-                href={contributionLink.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-amber-200/90 underline decoration-amber-200/30 underline-offset-2 transition hover:text-amber-100"
-              >
-                X
-              </a>{" "}
-              at{" "}
-              <a
-                href={contributionLink.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium text-zinc-300 underline decoration-zinc-600 underline-offset-2 transition hover:text-zinc-100"
-              >
-                {contributionLink.handle}
-              </a>
-              .
-            </p>
-          </div>
-        ) : (
-          <div
-            className="flex min-h-28 w-full flex-col items-center justify-center gap-2 px-4 py-8 text-center"
-            aria-hidden
-          >
-            <p className="text-[10px] uppercase tracking-wide text-zinc-600">
-              Armor set preview
-            </p>
-            <p className="font-mono text-xs text-zinc-500">{imageFile}</p>
-          </div>
-        )}
+        ) : null}
+
+        {imageStatus === "error" ? missingImageContent : null}
       </div>
 
       {expanded && showImage ? (

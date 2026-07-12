@@ -55,6 +55,11 @@ type ActivityCosmeticLootPanelProps = ActivityLootPanelBaseProps & {
   sections: ActivityHubLootSection[];
 };
 
+type ActivityWeaponsLootPanelProps = ActivityLootPanelBaseProps & {
+  weapons: LootItem[];
+  heading?: string;
+};
+
 function ActivityArmorGrid({
   armorRows,
   ownedItemHashes,
@@ -186,6 +191,7 @@ export function ActivityCurrentLootPanel({
               ownedPoolItemHashes={ownedPoolItemHashes}
               showOwnership={showOwnership}
               itemHrefs={itemHrefs}
+              inactivePoolMessage={`Not in rotation this ${activityTitle}.`}
             />
           ) : weapons && weapons.length > 0 ? (
             <div>
@@ -232,6 +238,30 @@ export function ActivityCosmeticLootPanel({
           </div>
         ))}
       </div>
+    </section>
+  );
+}
+
+export function ActivityWeaponsLootPanel({
+  weapons,
+  heading = "Weapons",
+  ownedItemHashes,
+  showOwnership,
+  resolveItemOwned,
+  itemHrefs,
+}: ActivityWeaponsLootPanelProps) {
+  if (weapons.length === 0) return null;
+
+  return (
+    <section className={LOOT_PANEL_CLASS}>
+      <h3 className="mb-3 text-sm font-medium text-zinc-300">{heading}</h3>
+      <LootItemGrid
+        items={weapons}
+        ownedItemHashes={ownedItemHashes}
+        showOwnership={showOwnership}
+        resolveItemOwned={resolveItemOwned}
+        itemHrefs={itemHrefs}
+      />
     </section>
   );
 }

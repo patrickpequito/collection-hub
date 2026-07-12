@@ -6,6 +6,7 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
   ALL_LOOT_COLLECTION_BANNERS,
+  isLootCollectionBannerActive,
   isLootCollectionBannerAvailable,
   isLootNavActive,
   isLootSearchNavActive,
@@ -132,6 +133,7 @@ function LootDesktopMenuItems({
             pathname={pathname}
             onNavigate={onNavigate}
             variant="desktop"
+            active={isLootCollectionBannerActive(pathname, banner)}
           />
         </li>
       ))}
@@ -165,6 +167,7 @@ function LootMobileMenuItems({
             pathname={pathname}
             onNavigate={onNavigate}
             variant="mobile"
+            active={isLootCollectionBannerActive(pathname, banner)}
           />
         </li>
       ))}
