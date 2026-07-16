@@ -19,6 +19,7 @@ type LegacyArmorSetsSectionProps = {
   showOwnership: boolean;
   resolveItemOwned?: (itemHash: string) => boolean;
   itemHrefs?: Record<string, string>;
+  heading?: string;
 };
 
 function legacySetSource(group: LegacyArmorSetGroup): string {
@@ -36,6 +37,7 @@ export function LegacyArmorSetsSection({
   showOwnership,
   resolveItemOwned,
   itemHrefs,
+  heading = "Legacy armor sets",
 }: LegacyArmorSetsSectionProps) {
   if (!groups.length) return null;
 
@@ -45,22 +47,22 @@ export function LegacyArmorSetsSection({
   return (
     <section className="min-w-0 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
       <h2 className="mb-4 border-b border-zinc-800 pb-3 text-lg font-semibold text-zinc-100">
-        Legacy armor sets
+        {heading}
       </h2>
 
       <div className="divide-y divide-zinc-800">
         {groups.map((group) => {
           const progress = countOwnedArmorPieces(group.rows, isOwned);
-          const previewFile = resolveArmorSetPreviewFile(
-            group.setName,
-            legacySetSource(group),
-          );
+          const groupTitle = group.displayName ?? group.setName;
+          const previewFile =
+            group.previewFile ??
+            resolveArmorSetPreviewFile(group.setName, legacySetSource(group));
 
           return (
             <details key={group.setName} className="group py-1">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-lg px-2 py-3 transition hover:bg-zinc-800/40 [&::-webkit-details-marker]:hidden">
                 <div className="min-w-0">
-                  <p className="font-medium text-zinc-100">{group.setName}</p>
+                  <p className="font-medium text-zinc-100">{groupTitle}</p>
                   {group.seasonLabel ? (
                     <p className="text-xs text-zinc-500">{group.seasonLabel}</p>
                   ) : null}
@@ -127,7 +129,7 @@ export function LegacyArmorSetsSection({
                     <ActivityArmorSetPreview
                       imageFile={previewFile}
                       imageUrl={armorSetPreviewUrl(previewFile)}
-                      label={`${group.setName} armor set`}
+                      label={`${groupTitle} armor set`}
                       missingImageVariant="contribute"
                       contributionLink={{
                         href: X_PROFILE_URL,

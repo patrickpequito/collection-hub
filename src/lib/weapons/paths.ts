@@ -5,15 +5,23 @@ export function weaponPageHref(slug: string, from?: string) {
 }
 
 export function backLabelForPath(path: string) {
+  if (path === "/") return "← Home";
   if (path === "/all-loot") return "← Loot Collector";
   if (path === "/exotics") return "← Exotics";
+  if (path === "/pve-activities") return "← PvE Activities";
+  if (path === "/pvp-activities") return "← PvP Activities";
+  if (path === "/rad-loot") return "← RAD Loot";
   if (path.startsWith("/rad-loot/")) return "← Activity";
   return "← Back";
 }
 
-export function parseWeaponReturnPath(from: string | undefined) {
+export function parseAppReturnPath(from: string | undefined, defaultHref = "/") {
   if (!from || !from.startsWith("/") || from.startsWith("//")) {
-    return "/all-loot";
+    return defaultHref;
   }
   return from;
+}
+
+export function parseWeaponReturnPath(from: string | undefined) {
+  return parseAppReturnPath(from, "/all-loot");
 }

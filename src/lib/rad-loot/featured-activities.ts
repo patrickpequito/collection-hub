@@ -11,6 +11,7 @@ import type { ActivityEntry } from "@/types/activity-loot";
 import {
   DUNGEON_ROTATION_WEEKS,
   featuredDungeonSlugsForWeek,
+  featuredRaidFallbackForWeek,
   fetchFeaturedRaidsFromBungie,
   rotationWeekIndex,
   weekBounds,
@@ -59,19 +60,27 @@ async function resolveFeaturedRaids(weekIndex: number): Promise<string[]> {
   if (apiKey) {
     try {
       const featuredRaids = await fetchFeaturedRaidsFromBungie(apiKey);
-      raidCache = { weekIndex, featuredRaids };
-      return featuredRaids;
+      if (featuredRaids.length > 0) {
+        raidCache = { weekIndex, featuredRaids };
+        return featuredRaids;
+      }
+      console.warn(
+        "Bungie milestones returned no featured raids; using schedule fallback",
+      );
     } catch (error) {
       console.error("Failed to fetch featured raids from Bungie:", error);
     }
   }
 
   const fallback = readFeaturedActivitiesJson();
-  if (fallback?.featuredRaids.length) {
+  if (
+    fallback?.weekIndex === weekIndex &&
+    fallback.featuredRaids.length > 0
+  ) {
     return fallback.featuredRaids;
   }
 
-  return [];
+  return featuredRaidFallbackForWeek(weekIndex);
 }
 
 /** Current featured raids/dungeons, computed at request time from reset schedule + Bungie. */

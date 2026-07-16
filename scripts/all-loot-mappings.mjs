@@ -686,6 +686,7 @@ export function stripIncorrectMonumentLabel(
   item,
   label,
   source = "",
+  dimSeasonData = {},
 ) {
   if (label !== MONUMENT_OF_TRIUMPH_LABEL) return label;
   if (watermarkBasename(item.iconWatermark) === MONUMENT_FEATURED_WATERMARK) {
@@ -693,7 +694,17 @@ export function stripIncorrectMonumentLabel(
   }
 
   const fromSource = resolveSeasonLabelFromSource(source, {});
-  return fromSource ?? label;
+  if (fromSource) return fromSource;
+
+  const watermarkSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
+  if (watermarkSeason >= 1) {
+    const fromWatermark = seasonLabelFromManifestNumber(watermarkSeason);
+    if (fromWatermark !== MONUMENT_OF_TRIUMPH_LABEL) {
+      return fromWatermark;
+    }
+  }
+
+  return label;
 }
 
 /** Sources tied to the current live season — resolved from manifest at build time. */
@@ -1771,6 +1782,7 @@ function finalizeArmor30SeasonLabel(item, label, source = "", dimSeasonData = {}
       dimSeasonData,
     ),
     source,
+    dimSeasonData,
   );
 }
 
@@ -1828,7 +1840,7 @@ export function resolveArmor30SeasonLabel(
   }
 
   const watermarkSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
-  if (watermarkSeason > 1) {
+  if (watermarkSeason >= 1) {
     return finalizeArmor30SeasonLabel(
       item,
       seasonLabelFromManifestNumber(watermarkSeason),

@@ -1,4 +1,4 @@
-export const CURRENT_VERSION = "0.7.5";
+export const CURRENT_VERSION = "0.7.6";
 
 export function formatReleaseDate(isoDate: string) {
   const [year, month, day] = isoDate.split("-").map(Number);
@@ -30,6 +30,24 @@ export type UpdateRelease = {
  * Newest release first. Add a new entry at the top when shipping an update.
  */
 export const UPDATE_RELEASES: UpdateRelease[] = [
+  {
+    version: "0.7.6",
+    publishedAt: "2026-07-16",
+    summary:
+      "PvE Activities joins the Loot menu as a hub for Vanguard Ops, Gambit, and RAD Loot, with new Vanguard Ops and Gambit pages that follow the same layout as the PvP activity hubs.",
+    sections: [
+      {
+        title: "PvE Activities",
+        description:
+          "One entry point for playlist loot, triumphs, and legacy armor across core PvE activities.",
+        items: [
+          "New PvE Activities page with banners for Vanguard Ops, Gambit, and RAD Loot.",
+          "Vanguard Ops hub — current armor sets, obtainable weapons, cosmetics, Cosmodrome and Prison of Elders strike triumphs, Year of the Prophecy armor sets, and legacy armor sets grouped by introduction season.",
+          "Gambit hub — current armor, weapons, cosmetics, Dredgen title progress, and legacy armor sets in the same activity-hub layout.",
+        ],
+      },
+    ],
+  },
   {
     version: "0.7.5",
     publishedAt: "2026-07-13",

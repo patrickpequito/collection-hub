@@ -9,6 +9,8 @@ Full-width strip at the top of catalog pages (**200 px** tall on screen). Images
 | Iron Banner | `public/images/headers/iron-banner-header.webp` |
 | Trials of Osiris | `public/images/headers/trials-of-osiris-header.webp` |
 | Crucible | `public/images/headers/crucible-header.webp` |
+| Gambit | `public/images/headers/gambit-header.webp` |
+| Vanguard Ops | `public/images/headers/vanguard-ops-header.webp` |
 
 | | |
 |---|---|

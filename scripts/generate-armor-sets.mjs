@@ -59,8 +59,11 @@ const SLOT_SUFFIXES = [
   " Gloves",
   " Grips",
   " Plate",
+  " Robes",
   " Robe",
   " Vest",
+  " Cover",
+  " Sleeves",
   " Cuirass",
   " Chest Armor",
   " Chestplate",
@@ -85,15 +88,30 @@ const UNIFORM_CRUCIBLE_CLASS_ITEMS = {
   "Phoenix Strife Type 0": { titan: "Binary Phoenix Mark" },
 };
 
+/** Vanguard sets with explicit class item names. */
+const EXPLICIT_CLASS_ITEMS_BY_SET = {
+  "Wall-Watcher": {
+    titan: "Wall-watcher Mark",
+    hunter: "Wall-watcher Cloak",
+    warlock: "Wall-Watcher Bond",
+  },
+  ...UNIFORM_CRUCIBLE_CLASS_ITEMS,
+};
+
 function isLegendaryArmor(item) {
   return item.inventory?.tierTypeName === "Legendary";
 }
 
+function normalizeSetBaseName(base) {
+  if (base.toLowerCase() === "wall-watcher") return "Wall-Watcher";
+  return base;
+}
+
 function baseName(name) {
   for (const suffix of SLOT_SUFFIXES) {
-    if (name.endsWith(suffix)) return name.slice(0, -suffix.length).trim();
+    if (name.endsWith(suffix)) return normalizeSetBaseName(name.slice(0, -suffix.length).trim());
   }
-  return name;
+  return normalizeSetBaseName(name);
 }
 
 function categorizeSource(source = "") {
@@ -203,7 +221,7 @@ function buildArmorSets(items, collectibles) {
   const usedClassItems = new Set();
 
   const uniformClassItemNames = new Set(
-    Object.values(UNIFORM_CRUCIBLE_CLASS_ITEMS).flatMap((byClass) =>
+    Object.values(EXPLICIT_CLASS_ITEMS_BY_SET).flatMap((byClass) =>
       Object.values(byClass),
     ),
   );
@@ -246,7 +264,7 @@ function buildArmorSets(items, collectibles) {
 
   // Reserve Binary Phoenix class items for uniform Crucible sets first.
   for (const set of sets.values()) {
-    const uniformByClass = UNIFORM_CRUCIBLE_CLASS_ITEMS[set.name];
+    const uniformByClass = EXPLICIT_CLASS_ITEMS_BY_SET[set.name];
     if (!uniformByClass) continue;
     for (const cls of CLASSES) {
       const classItemName = uniformByClass[cls];

@@ -1,5 +1,6 @@
-/** Tuesday 17:00 UTC — weekly reset (19:00 Madrid summer). */
-export const ROTATION_EPOCH_MS = Date.UTC(2026, 5, 9, 17, 0, 0);
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import type { FeaturedRotationSchedule } from "@/types/featured-rotation";
 
 export const RAID_MILESTONE_SLUGS: Record<string, string> = {
   "1888320892": "vault-of-glass",
@@ -13,44 +14,45 @@ export const RAID_MILESTONE_SLUGS: Record<string, string> = {
   "4196566271": "salvations-edge",
 };
 
-/** Newest raids with challenges but outside the weekly rotator highlight pool. */
+/** Newest raids with weekly challenges but outside the rotator highlight pool. */
 export const EXCLUDED_FEATURED_RAID_SLUGS = new Set([
   "the-desert-perpetual",
   "the-pantheon",
 ]);
 
-export const DUNGEON_ROTATION_WEEKS: readonly (readonly string[])[] = [
-  ["duality", "the-shattered-throne"],
-  ["spire-of-the-watcher", "pit-of-heresy"],
-  ["ghosts-of-the-deep", "prophecy"],
-  ["warlords-ruin", "grasp-of-avarice"],
-  ["duality", "vespers-host"],
-  ["pit-of-heresy", "spire-of-the-watcher"],
-  ["prophecy", "ghosts-of-the-deep"],
-  ["grasp-of-avarice", "warlords-ruin"],
-  ["duality", "vespers-host"],
-  ["spire-of-the-watcher", "the-shattered-throne"],
-  ["ghosts-of-the-deep", "pit-of-heresy"],
-  ["warlords-ruin", "prophecy"],
-  ["vespers-host", "grasp-of-avarice"],
-  ["the-shattered-throne", "duality"],
-  ["pit-of-heresy", "spire-of-the-watcher"],
-  ["prophecy", "ghosts-of-the-deep"],
-  ["grasp-of-avarice", "warlords-ruin"],
-  ["duality", "vespers-host"],
-  ["spire-of-the-watcher", "the-shattered-throne"],
-  ["ghosts-of-the-deep", "pit-of-heresy"],
-  ["warlords-ruin", "prophecy"],
-  ["the-shattered-throne", "grasp-of-avarice"],
-  ["pit-of-heresy", "duality"],
-  ["prophecy", "ghosts-of-the-deep"],
-  ["grasp-of-avarice", "warlords-ruin"],
-  ["duality", "vespers-host"],
-  ["spire-of-the-watcher", "the-shattered-throne"],
-  ["ghosts-of-the-deep", "pit-of-heresy"],
-  ["warlords-ruin", "prophecy"],
-  ["the-shattered-throne", "grasp-of-avarice"],
-];
+let cachedSchedule: FeaturedRotationSchedule | null = null;
+
+function loadFeaturedRotationSchedule(): FeaturedRotationSchedule {
+  if (cachedSchedule) return cachedSchedule;
+
+  const filePath = path.join(
+    process.cwd(),
+    "public/data/featured-rotation-schedule.json",
+  );
+  const raw = JSON.parse(readFileSync(filePath, "utf8")) as {
+    epochUtc: string;
+    dungeonWeeks: string[][];
+    raidFallbackWeeks?: string[][];
+  };
+
+  cachedSchedule = {
+    epochMs: Date.parse(raw.epochUtc),
+    dungeonWeeks: raw.dungeonWeeks,
+    raidFallbackWeeks: raw.raidFallbackWeeks ?? [],
+  };
+  return cachedSchedule;
+}
+
+const rotationSchedule = loadFeaturedRotationSchedule();
+
+/** Tuesday 17:00 UTC — weekly reset (19:00 Madrid summer). */
+export const ROTATION_EPOCH_MS = rotationSchedule.epochMs;
+
+export const DUNGEON_ROTATION_WEEKS: readonly (readonly string[])[] =
+  rotationSchedule.dungeonWeeks;
+
+export const RAID_ROTATION_FALLBACK_WEEKS: readonly (readonly string[])[] =
+  rotationSchedule.raidFallbackWeeks;
 
 export function rotationWeekIndex(at = new Date()): number {
   const elapsed = at.getTime() - ROTATION_EPOCH_MS;
@@ -63,6 +65,15 @@ export function featuredDungeonSlugsForWeek(weekIndex: number): string[] {
     DUNGEON_ROTATION_WEEKS[weekIndex % DUNGEON_ROTATION_WEEKS.length] ??
     DUNGEON_ROTATION_WEEKS[0];
   return [...pair];
+}
+
+export function featuredRaidFallbackForWeek(weekIndex: number): string[] {
+  if (!RAID_ROTATION_FALLBACK_WEEKS.length) return [];
+  const pair =
+    RAID_ROTATION_FALLBACK_WEEKS[
+      weekIndex % RAID_ROTATION_FALLBACK_WEEKS.length
+    ] ?? RAID_ROTATION_FALLBACK_WEEKS[0];
+  return [...pair].sort();
 }
 
 export function weekBounds(weekIndex: number): {
@@ -84,6 +95,12 @@ type MilestoneActivity = {
 type LiveMilestone = {
   activities?: MilestoneActivity[];
 };
+
+function milestoneHasWeeklyChallenge(live: LiveMilestone): boolean {
+  return (live.activities ?? []).some(
+    (activity) => (activity.challengeObjectiveHashes?.length ?? 0) > 0,
+  );
+}
 
 export async function fetchFeaturedRaidsFromBungie(
   apiKey: string,
@@ -117,9 +134,7 @@ export async function fetchFeaturedRaidsFromBungie(
     const slug = RAID_MILESTONE_SLUGS[milestoneHash];
     if (!slug || EXCLUDED_FEATURED_RAID_SLUGS.has(slug)) continue;
 
-    const standard = live.activities?.[0];
-    const challengeCount = standard?.challengeObjectiveHashes?.length ?? 0;
-    if (challengeCount > 0) {
+    if (milestoneHasWeeklyChallenge(live)) {
       featured.push(slug);
     }
   }

@@ -38,7 +38,7 @@ export const ALL_LOOT_COLLECTION_BANNERS: AllLootCollectionBanner[] = [
   },
   {
     title: "PvE Activities",
-    comingSoon: true,
+    href: "/pve-activities",
     imageFile: "pve-activities.webp",
   },
   {

@@ -8,6 +8,7 @@ export const PAGE_HEADERS = {
   lootCollector: "/images/banners/loot-collector.webp",
   lootCollectorHeader: "/images/headers/loot-collector-header.webp",
   pvpActivities: "/images/banners/pvp-activities.webp",
+  pveActivities: "/images/banners/pve-activities.webp",
 } as const;
 
 export function sectionHeaderUrl(imageFile: string): string {

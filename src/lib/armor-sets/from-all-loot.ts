@@ -11,6 +11,18 @@ import {
   uniformCrucibleSetForClassItem,
 } from "@/lib/armor-sets/uniform-crucible-sets";
 import {
+  VANGUARD_SET_DISPLAY_NAME,
+  VANGUARD_SET_GROUP,
+  isGroupedVanguardLegacySetName,
+  uniformVanguardSetForClassItem,
+  vanguardClassItemForSetName,
+} from "@/lib/armor-sets/uniform-vanguard-sets";
+import {
+  canonicalArmorSetDisplayName,
+  extractLegendaryArmorSetName,
+  itemNameBelongsToArmorSet,
+} from "@/lib/armor-sets/named-set-match";
+import {
   catalogItemVersions,
 } from "@/lib/armor/version-for-hash";
 import type { AllLootItem } from "@/types/all-loot";
@@ -62,77 +74,26 @@ function normalizeSource(source = ""): string {
   return source.replace(/^Source:\s*/i, "").trim();
 }
 
-const ARMOR_NAME_SUFFIXES = [
-  "Chest Armor",
-  "Leg Armor",
-  "Class Item",
-  "Gauntlets",
-  "Greaves",
-  "Strides",
-  "Gloves",
-  "Helmet",
-  "Helm",
-  "Crown",
-  "Cowl",
-  "Mask",
-  "Rig",
-  "Chassis",
-  "Robe",
-  "Mark",
-  "Cloak",
-  "Bond",
-  "Grips",
-  "Boots",
-];
-
-const ARMOR_CATALOG_GROUP_ALIASES: Record<string, string> = {
-  "judgement's wrap": "Bond Judgment",
-};
-
-function canonicalArmorCatalogName(name: string): string {
-  const withoutCoda = name.replace(/\s+\(CODA\)\s*$/i, "").trim();
-  const normalized = withoutCoda
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/\p{M}/gu, "");
-  return ARMOR_CATALOG_GROUP_ALIASES[normalized] ?? withoutCoda;
-}
-
-function extractLegendaryArmorSetName(name: string): string | null {
-  const withoutCodaSuffix = canonicalArmorCatalogName(name);
-  const parenthetical = withoutCodaSuffix.match(/\(([^)]+)\)\s*$/);
-  if (parenthetical?.[1]) return parenthetical[1].trim();
-
-  for (const suffix of ARMOR_NAME_SUFFIXES) {
-    const needle = ` ${suffix}`;
-    if (withoutCodaSuffix.endsWith(needle)) {
-      return withoutCodaSuffix.slice(0, -needle.length).trim();
-    }
-  }
-
-  return null;
-}
-
 function belongsToNamedArmorSet(item: AllLootItem, setName: string): boolean {
   if (item.type !== "Armor" || item.rarity === "Exotic") return false;
-  const itemBase = canonicalArmorCatalogName(item.name);
-  const setBase = canonicalArmorCatalogName(setName);
-  const prefix = `${setBase} `;
-  return (
-    itemBase === setBase ||
-    item.name === setName ||
-    item.name.startsWith(prefix) ||
-    item.name.endsWith(`(${setBase})`) ||
-    item.name.endsWith(`(${setName})`)
-  );
+  return itemNameBelongsToArmorSet(item.name, setName);
 }
 
 function resolveNamedArmorSetName(
   armor: AllLootItem,
   items: AllLootItem[],
 ): string | null {
+  const fromVanguardClassItem = uniformVanguardSetForClassItem(armor.name);
+  if (fromVanguardClassItem) return fromVanguardClassItem.setName;
+
   const fromClassItem = uniformCrucibleSetForClassItem(armor.name);
   if (fromClassItem) return fromClassItem.setName;
+
+  for (const entry of Object.values(VANGUARD_SET_GROUP)) {
+    if (belongsToNamedArmorSet(armor, entry.setName)) {
+      return VANGUARD_SET_DISPLAY_NAME;
+    }
+  }
 
   for (const entry of Object.values(BINARY_PHOENIX_CRUCIBLE_GROUP)) {
     if (belongsToNamedArmorSet(armor, entry.setName)) {
@@ -147,7 +108,7 @@ function resolveNamedArmorSetName(
   }
 
   const extracted = extractLegendaryArmorSetName(armor.name);
-  if (extracted) return extracted;
+  if (extracted) return canonicalArmorSetDisplayName(extracted);
 
   if (armor.type !== "Armor" || armor.rarity === "Exotic") return null;
 
@@ -212,6 +173,36 @@ function collectWingCrucibleItems(items: AllLootItem[]): AllLootItem[] {
   return collected;
 }
 
+function collectVanguardSetItems(items: AllLootItem[]): AllLootItem[] {
+  const collected: AllLootItem[] = [];
+  const seen = new Set<string>();
+
+  const add = (item: AllLootItem) => {
+    if (seen.has(item.itemHash)) return;
+    seen.add(item.itemHash);
+    collected.push(item);
+  };
+
+  for (const [guardianClass, entry] of Object.entries(VANGUARD_SET_GROUP) as [
+    GuardianClass,
+    (typeof VANGUARD_SET_GROUP)[GuardianClass],
+  ][]) {
+    for (const item of items) {
+      if (belongsToNamedArmorSet(item, entry.setName)) add(item);
+    }
+
+    const classItem = items.find(
+      (item) =>
+        item.type === "Armor" &&
+        item.name === entry.classItem &&
+        guardianClassFromLabel(item.classOrWeaponType) === guardianClass,
+    );
+    if (classItem) add(classItem);
+  }
+
+  return collected;
+}
+
 function collectGroupedCrucibleLegacyItems(
   items: AllLootItem[],
   setName: string,
@@ -236,10 +227,9 @@ function collectArmorItemsForSetName(
     guardianClassFromLabel(
       collected.find((item) => item.classOrWeaponType)?.classOrWeaponType,
     );
-  const classItemName = binaryPhoenixClassItemForUniformSet(
-    setName,
-    guardianClass,
-  );
+  const classItemName =
+    binaryPhoenixClassItemForUniformSet(setName, guardianClass) ??
+    vanguardClassItemForSetName(setName, guardianClass);
 
   if (!classItemName) return collected;
 
@@ -369,9 +359,11 @@ export function resolveArmorSetForItem(
   if (armor.rarity === "Exotic") return null;
 
   const viewingHashes = new Set(collectArmorItemHashes(armor));
+  const vanguardClassItemMatch = uniformVanguardSetForClassItem(armor.name);
   const classItemMatch = uniformCrucibleSetForClassItem(armor.name);
   const primaryClass =
     guardianClassFromLabel(armor.classOrWeaponType) ??
+    vanguardClassItemMatch?.guardianClass ??
     classItemMatch?.guardianClass ??
     null;
 
@@ -395,8 +387,12 @@ export function resolveArmorSetForItem(
 
   const namedSetItems =
     isGroupedCrucibleLegacySetName(setName) ||
-    uniformCrucibleSetForClassItem(armor.name)
-      ? collectGroupedCrucibleLegacyItems(items, setName)
+    isGroupedVanguardLegacySetName(setName) ||
+    uniformCrucibleSetForClassItem(armor.name) ||
+    uniformVanguardSetForClassItem(armor.name)
+      ? isGroupedVanguardLegacySetName(setName)
+        ? collectVanguardSetItems(items)
+        : collectGroupedCrucibleLegacyItems(items, setName)
       : collectArmorItemsForSetName(items, setName, armor);
   if (!namedSetItems.length) return null;
 

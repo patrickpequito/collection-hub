@@ -12,6 +12,7 @@ export function defaultActivityPreviewFile(activitySlug: string): string {
 
 function slugifySetName(setName: string): string {
   return setName
+    .replace(/['']s\b/gi, "")
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")

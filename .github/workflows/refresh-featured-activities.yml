@@ -4,6 +4,8 @@ on:
   schedule:
     # Tuesday 17:05 UTC — weekly reset + 5 min (19:05 Madrid summer).
     - cron: "5 17 * * 2"
+    # Retry if Bungie milestones are slow to update after reset.
+    - cron: "35 17 * * 2"
   workflow_dispatch:
 
 concurrency:
@@ -36,6 +38,22 @@ jobs:
         env:
           BUNGIE_API_KEY: ${{ secrets.BUNGIE_API_KEY }}
         run: npm run generate:featured-activities
+
+      - name: Verify featured activities snapshot
+        run: |
+          node --input-type=module -e "
+          import { readFileSync } from 'node:fs';
+          import { rotationWeekIndex } from './scripts/featured-rotation-shared.mjs';
+          const data = JSON.parse(readFileSync('public/data/featured-activities.json', 'utf8'));
+          const currentWeek = rotationWeekIndex(new Date());
+          if (data.weekIndex !== currentWeek) {
+            throw new Error(\`featured-activities.json weekIndex \${data.weekIndex} != current \${currentWeek}\`);
+          }
+          if (!data.featuredRaids?.length || !data.featuredDungeons?.length) {
+            throw new Error('featured-activities.json is missing raids or dungeons');
+          }
+          console.log('Verified week', data.weekIndex + 1, 'raids', data.featuredRaids, 'dungeons', data.featuredDungeons);
+          "
 
       - name: Commit and push if changed
         run: |

@@ -111,10 +111,15 @@ function resolvePrimaryLabel(entry, dimSeasonData) {
     dimSeasonData,
   );
 
-  return resolveIntoTheLightSeasonLabel(
+  return stripIncorrectMonumentLabel(
     mockItem(entry.seasonIconPath),
-    label,
+    resolveIntoTheLightSeasonLabel(
+      mockItem(entry.seasonIconPath),
+      label,
+      source,
+    ),
     source,
+    dimSeasonData,
   );
 }
 

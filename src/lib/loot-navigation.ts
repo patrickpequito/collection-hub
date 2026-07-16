@@ -38,6 +38,13 @@ export function isLootCollectionBannerActive(
     );
   }
 
+  if (banner.href === "/pve-activities") {
+    return (
+      pathname.startsWith("/activities/gambit") ||
+      pathname.startsWith("/activities/vanguard-ops")
+    );
+  }
+
   return false;
 }
 

@@ -1,8 +1,8 @@
 /**
  * Builds public/data/featured-activities.json for RAD Loot weekly highlights.
  *
- * Raids: Bungie public milestones (challenge objectives on standard mode).
- * Dungeons: deterministic rotator schedule from Monument of Triumph launch.
+ * Raids: Bungie public milestones (weekly challenge on any difficulty).
+ * Dungeons: rotator schedule in public/data/featured-rotation-schedule.json.
  *
  * Usage: node scripts/generate-featured-activities.mjs
  */
@@ -10,62 +10,17 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  DUNGEON_ROTATION_WEEKS,
+  featuredDungeonSlugsForWeek,
+  featuredRaidsFromMilestones,
+  featuredRaidFallbackForWeek,
+  rotationWeekIndex,
+  weekBounds,
+} from "./featured-rotation-shared.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
-
-/** Tuesday 17:00 UTC — weekly reset (19:00 Madrid summer). */
-const ROTATION_EPOCH_MS = Date.UTC(2026, 5, 9, 17, 0, 0);
-
-const RAID_MILESTONE_SLUGS = {
-  1888320892: "vault-of-glass",
-  540415767: "crotas-end",
-  292102995: "kings-fall",
-  3181387331: "last-wish",
-  2712317338: "garden-of-salvation",
-  541780856: "deep-stone-crypt",
-  2136320298: "vow-of-the-disciple",
-  3699252268: "root-of-nightmares",
-  4196566271: "salvations-edge",
-};
-
-const EXCLUDED_FEATURED_RAID_SLUGS = new Set([
-  "the-desert-perpetual",
-  "the-pantheon",
-]);
-
-const DUNGEON_ROTATION_WEEKS = [
-  ["duality", "the-shattered-throne"],
-  ["spire-of-the-watcher", "pit-of-heresy"],
-  ["ghosts-of-the-deep", "prophecy"],
-  ["warlords-ruin", "grasp-of-avarice"],
-  ["duality", "vespers-host"],
-  ["pit-of-heresy", "spire-of-the-watcher"],
-  ["prophecy", "ghosts-of-the-deep"],
-  ["grasp-of-avarice", "warlords-ruin"],
-  ["duality", "vespers-host"],
-  ["spire-of-the-watcher", "the-shattered-throne"],
-  ["ghosts-of-the-deep", "pit-of-heresy"],
-  ["warlords-ruin", "prophecy"],
-  ["vespers-host", "grasp-of-avarice"],
-  ["the-shattered-throne", "duality"],
-  ["pit-of-heresy", "spire-of-the-watcher"],
-  ["prophecy", "ghosts-of-the-deep"],
-  ["grasp-of-avarice", "warlords-ruin"],
-  ["duality", "vespers-host"],
-  ["spire-of-the-watcher", "the-shattered-throne"],
-  ["ghosts-of-the-deep", "pit-of-heresy"],
-  ["warlords-ruin", "prophecy"],
-  ["the-shattered-throne", "grasp-of-avarice"],
-  ["pit-of-heresy", "duality"],
-  ["prophecy", "ghosts-of-the-deep"],
-  ["grasp-of-avarice", "warlords-ruin"],
-  ["duality", "vespers-host"],
-  ["spire-of-the-watcher", "the-shattered-throne"],
-  ["ghosts-of-the-deep", "pit-of-heresy"],
-  ["warlords-ruin", "prophecy"],
-  ["the-shattered-throne", "grasp-of-avarice"],
-];
 
 function loadEnv() {
   try {
@@ -82,28 +37,6 @@ function loadEnv() {
   } catch {
     // optional
   }
-}
-
-function rotationWeekIndex(at = new Date()) {
-  const elapsed = at.getTime() - ROTATION_EPOCH_MS;
-  if (elapsed < 0) return 0;
-  return Math.floor(elapsed / (7 * 24 * 60 * 60 * 1000));
-}
-
-function featuredDungeonSlugsForWeek(weekIndex) {
-  const pair =
-    DUNGEON_ROTATION_WEEKS[weekIndex % DUNGEON_ROTATION_WEEKS.length] ??
-    DUNGEON_ROTATION_WEEKS[0];
-  return [...pair];
-}
-
-function weekBounds(weekIndex) {
-  const startMs = ROTATION_EPOCH_MS + weekIndex * 7 * 24 * 60 * 60 * 1000;
-  const endMs = startMs + 7 * 24 * 60 * 60 * 1000;
-  return {
-    weekStart: new Date(startMs).toISOString(),
-    weekEnd: new Date(endMs).toISOString(),
-  };
 }
 
 loadEnv();
@@ -127,22 +60,19 @@ async function fetchJson(path) {
   return data.Response ?? data;
 }
 
-async function resolveFeaturedRaids() {
-  const milestones = await fetchJson("/Platform/Destiny2/Milestones/");
-  const featured = [];
-
-  for (const [milestoneHash, live] of Object.entries(milestones)) {
-    const slug = RAID_MILESTONE_SLUGS[milestoneHash];
-    if (!slug || EXCLUDED_FEATURED_RAID_SLUGS.has(slug)) continue;
-
-    const standard = live.activities?.[0];
-    const challengeCount = standard?.challengeObjectiveHashes?.length ?? 0;
-    if (challengeCount > 0) {
-      featured.push(slug);
-    }
+async function resolveFeaturedRaids(weekIndex) {
+  try {
+    const milestones = await fetchJson("/Platform/Destiny2/Milestones/");
+    const featured = featuredRaidsFromMilestones(milestones);
+    if (featured.length > 0) return featured;
+    console.warn(
+      "Bungie milestones returned no featured raids; using schedule fallback",
+    );
+  } catch (error) {
+    console.warn("Failed to fetch featured raids from Bungie:", error);
   }
 
-  return featured.sort();
+  return featuredRaidFallbackForWeek(weekIndex);
 }
 
 async function main() {
@@ -150,9 +80,17 @@ async function main() {
   const weekIndex = rotationWeekIndex(now);
   const { weekStart, weekEnd } = weekBounds(weekIndex);
   const [featuredRaids, featuredDungeons] = await Promise.all([
-    resolveFeaturedRaids(),
+    resolveFeaturedRaids(weekIndex),
     Promise.resolve(featuredDungeonSlugsForWeek(weekIndex)),
   ]);
+
+  if (featuredRaids.length === 0) {
+    throw new Error("Could not resolve featured raids for this week");
+  }
+
+  if (featuredDungeons.length === 0) {
+    throw new Error("Could not resolve featured dungeons for this week");
+  }
 
   const payload = {
     generatedAt: now.toISOString(),

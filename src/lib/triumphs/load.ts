@@ -90,6 +90,26 @@ export function getTitleEntry(
   return catalog.titles.find((title) => title.slug === slug);
 }
 
+export function getTriumphSectionRecords(
+  catalog: TriumphCatalog,
+  groupSlug: string,
+  sectionPath: string[],
+): TriumphRecord[] {
+  const group = getTriumphGroup(catalog, groupSlug);
+  if (!group?.sections?.length || sectionPath.length === 0) return [];
+
+  let sections = group.sections;
+  let section: TriumphSection | undefined;
+
+  for (const name of sectionPath) {
+    section = sections.find((entry) => entry.name === name);
+    if (!section) return [];
+    sections = section.children ?? [];
+  }
+
+  return section?.records ?? [];
+}
+
 export function findTriumphRecordByHash(
   catalog: TriumphCatalog,
   recordHash: string,

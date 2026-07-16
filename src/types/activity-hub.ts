@@ -20,6 +20,10 @@ export type ActivityHubConfig = {
 
 export type LegacyArmorSetGroup = {
   setName: string;
+  /** When set, shown instead of setName in the section heading. */
+  displayName?: string;
+  /** Overrides slugified set name for full-set preview images. */
+  previewFile?: string;
   seasonLabel?: string;
   seasonNumber?: number;
   rows: ActivityArmorRow[];
@@ -64,4 +68,5 @@ export type ResolvedActivityHubLoot = {
   weaponSeasonGroups?: TrialsWeaponSeasonGroup[];
   currentOtherSections: ActivityHubLootSection[];
   legacyArmorGroups: LegacyArmorSetGroup[];
+  yearOfProphecyArmorGroups?: LegacyArmorSetGroup[];
 };
