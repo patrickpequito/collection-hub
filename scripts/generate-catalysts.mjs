@@ -1,5 +1,5 @@
 /**
- * Builds public/data/catalysts.json — exotic weapon catalysts grouped by slot.
+ * Builds data/catalysts.json — exotic weapon catalysts grouped by slot.
  *
  * Usage: node scripts/generate-catalysts.mjs
  */
@@ -233,7 +233,7 @@ async function main() {
   const { items, plugSets, collectibles, records } = await loadManifestTables();
   const itemsList = buildCatalystCatalog(items, plugSets, collectibles, records);
 
-  const outDir = resolve(root, "public/data");
+  const outDir = resolve(root, "data");
   mkdirSync(outDir, { recursive: true });
   const outPath = resolve(outDir, "catalysts.json");
   writeFileSync(
@@ -252,7 +252,7 @@ async function main() {
     if (item.recordHash) withRecord++;
   }
 
-  console.log(`Wrote ${itemsList.length} catalysts to public/data/catalysts.json`);
+  console.log(`Wrote ${itemsList.length} catalysts to data/catalysts.json`);
   console.log(bySlot);
   console.log(`With triumph record: ${withRecord}`);
 }

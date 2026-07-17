@@ -119,7 +119,7 @@ async function loadLatestSnapshot(): Promise<TrialsFeaturedMapsSnapshot | null> 
   try {
     const filePath = path.join(
       process.cwd(),
-      "public/data/trials-featured-maps.json",
+      "data/trials-featured-maps.json",
     );
     const raw = await readFile(filePath, "utf8");
     const snapshot = JSON.parse(raw) as TrialsFeaturedMapsSnapshot;

@@ -11,10 +11,11 @@ import { AllLootCollectionBanners } from "@/components/all-loot-collection-banne
 import { AllLootResultsHeader, AllLootRow, isItemOwned } from "@/components/all-loot-row";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { useOwnedItemHashes } from "@/lib/use-owned-item-hashes";
+import { useSignedIn } from "@/lib/use-signed-in";
 import type { AllLootFacets, AllLootItem } from "@/types/all-loot";
 
 type AllLootPageContentProps = {
-  signedIn: boolean;
+  signedIn?: boolean;
 };
 
 type SearchResponse = {
@@ -25,7 +26,11 @@ type SearchResponse = {
   error: string | null;
 };
 
-export function AllLootPageContent({ signedIn }: AllLootPageContentProps) {
+export function AllLootPageContent({
+  signedIn: signedInProp,
+}: AllLootPageContentProps) {
+  const signedInHook = useSignedIn();
+  const signedIn = signedInProp ?? signedInHook;
   const {
     itemHashes,
     loading: inventoryLoading,

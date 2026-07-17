@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation";
 import { TriumphsListSection } from "@/components/triumphs-list-section";
-import { ActivityArmorSection } from "@/components/activity-armor-section";
-import { LootSection } from "@/components/loot-section";
+import { ClientOwnership } from "@/components/client-ownership";
+import {
+  OwnedActivityArmorSection,
+  OwnedLootSection,
+} from "@/components/owned-activity-loot";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import { TitleDetailPanel } from "@/components/title-detail-panel";
 import { getActivityLootPage } from "@/data/rad-loot/activity-pages";
@@ -10,20 +13,14 @@ import {
   filterExpiredTriumphRecords,
 } from "@/lib/activity-expired-content";
 import {
-  fetchRaidCompletions,
   isRaidCompletionSlug,
   raidHasMasterTier,
-  type RaidCompletions,
 } from "@/lib/destiny-activity-stats";
-import { fetchOwnedItemHashes } from "@/lib/destiny-inventory";
-import { fetchRecordInstances } from "@/lib/destiny-records";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { activityHeaderUrl } from "@/lib/page-headers";
-import { getSession } from "@/lib/session";
 import {
   countTitleProgress,
   countTriumphProgress,
-  getTitleCompletionTier,
 } from "@/lib/triumphs/record-progress";
 import {
   getTitleEntry,
@@ -33,11 +30,7 @@ import {
 import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { enrichWeaponLootItems } from "@/lib/activities/loot-item";
 import { loadCatalogHashIndex } from "@/lib/all-loot/catalog-hash-index";
-import { isLootHashOwned } from "@/lib/all-loot/loot-ownership";
 import { resolveTriumphIcon } from "@/lib/triumphs/icons";
-
-import type { RecordInstance, TriumphStringVariables } from "@/types/triumph";
-import { EMPTY_TRIUMPH_STRING_VARIABLES } from "@/types/triumph";
 
 type ActivityPageProps = {
   params: Promise<{ slug: string }>;
@@ -69,6 +62,8 @@ const ACTIVITY_EXOTIC_HASHES: Record<string, Set<string>> = {
   equilibrium: new Set(["1685137410", "2043430167", "4104431769"]),
 };
 
+export const revalidate = 3600;
+
 export default async function ActivityLootPage({ params }: ActivityPageProps) {
   const { slug } = await params;
   const rawActivity = getActivityLootPage(slug);
@@ -78,7 +73,6 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
   }
 
   const activity = filterExpiredActivityLoot(rawActivity);
-  const session = await getSession();
   const oauthConfigured = isBungieOAuthConfigured();
   const [catalog, itemHrefs, catalogByHash] = await Promise.all([
     loadTriumphCatalog(),
@@ -101,64 +95,7 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
         : [],
   );
   const hasTriumphSection = triumphRecords.length > 0;
-
-  let ownedItemHashes = new Set<string>();
-  let inventoryError: string | null = null;
-  let recordInstances = new Map<string, RecordInstance>();
-  let stringVariables: TriumphStringVariables = EMPTY_TRIUMPH_STRING_VARIABLES;
-  let recordsError: string | null = null;
-  let raidCompletions: RaidCompletions | null | undefined = isRaidCompletionSlug(
-    slug,
-  )
-    ? null
-    : undefined;
-  let raidCompletionsError: string | null = null;
-
-  if (session) {
-    const [inventoryResult, recordsResult, completionsResult] =
-      await Promise.allSettled([
-        fetchOwnedItemHashes(session),
-        hasTriumphSection
-          ? fetchRecordInstances(session)
-          : Promise.resolve(null),
-        isRaidCompletionSlug(slug)
-          ? fetchRaidCompletions(session, slug)
-          : Promise.resolve(null),
-      ]);
-
-    if (inventoryResult.status === "fulfilled") {
-      ownedItemHashes = inventoryResult.value;
-    } else {
-      inventoryError =
-        inventoryResult.reason instanceof Error
-          ? inventoryResult.reason.message
-          : "Failed to load inventory";
-    }
-
-    if (recordsResult.status === "fulfilled" && recordsResult.value) {
-      recordInstances = recordsResult.value.instances;
-      stringVariables = recordsResult.value.stringVariables;
-    } else if (hasTriumphSection && recordsResult.status === "rejected") {
-      recordsError =
-        recordsResult.reason instanceof Error
-          ? recordsResult.reason.message
-          : "Failed to load triumph progress";
-    }
-
-    if (completionsResult.status === "fulfilled") {
-      raidCompletions = completionsResult.value;
-    } else if (isRaidCompletionSlug(slug) && completionsResult.status === "rejected") {
-      raidCompletionsError =
-        completionsResult.reason instanceof Error
-          ? completionsResult.reason.message
-          : "Failed to load raid completions";
-    }
-  }
-
-  const showOwnership = Boolean(session && !inventoryError);
-  const resolveItemOwned = (itemHash: string) =>
-    isLootHashOwned(itemHash, ownedItemHashes, catalogByHash);
-  const showTriumphProgress = Boolean(hasTriumphSection && session && !recordsError);
+  const emptyInstances = new Map();
   const exoticItemHashes = ACTIVITY_EXOTIC_HASHES[slug] ?? new Set<string>();
   const weapons = enrichWeaponLootItems(activity.weapons, catalogByHash);
   const timelostWeapons = enrichWeaponLootItems(
@@ -166,20 +103,17 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
     catalogByHash,
   );
   const titleProgress = title
-    ? countTitleProgress({ ...title, records: triumphRecords }, recordInstances)
+    ? countTitleProgress({ ...title, records: triumphRecords }, emptyInstances)
     : hasTriumphSection
       ? (() => {
-          const progress = countTriumphProgress(triumphRecords, recordInstances);
-          return { base: progress, gilding: { completed: 0, total: 0 }, all: progress };
+          const progress = countTriumphProgress(triumphRecords, emptyInstances);
+          return {
+            base: progress,
+            gilding: { completed: 0, total: 0 },
+            all: progress,
+          };
         })()
       : null;
-  const titleTier =
-    title && showTriumphProgress
-      ? getTitleCompletionTier(
-          { ...title, records: triumphRecords },
-          recordInstances,
-        )
-      : "none";
   const panelName = title?.name ?? activity.triumphPanel?.name ?? "";
   const panelDescription =
     title?.description ?? activity.triumphPanel?.description ?? "";
@@ -194,34 +128,12 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
     <SectionPageLayout
       title={activity.title}
       imageUrl={activityHeaderUrl(activity.headerImageFile)}
-      session={session}
       oauthConfigured={oauthConfigured}
       maxWidth="5xl"
       backLink={{ href: "/rad-loot", label: "← RAD Loot" }}
     >
-      {inventoryError ? (
-        <p className="text-xs text-zinc-500">
-          Collection unavailable: {inventoryError}
-        </p>
-      ) : !session ? (
-        <p className="text-xs text-amber-200/80">
-          Sign in to highlight items you own.
-        </p>
-      ) : null}
-
-      {hasTriumphSection && recordsError ? (
-        <p className="text-xs text-amber-200/80">
-          Triumph progress unavailable: {recordsError}
-        </p>
-      ) : null}
-
-      {raidCompletionsError ? (
-        <p className="text-xs text-amber-200/80">
-          Raid completions unavailable: {raidCompletionsError}
-        </p>
-      ) : null}
-
-      <div className="grid min-w-0 gap-8 lg:grid-cols-3">
+      <ClientOwnership>
+<div className="grid min-w-0 gap-8 lg:grid-cols-3">
         <div className="min-w-0 space-y-6 lg:col-span-1">
           {hasTriumphSection && titleProgress ? (
             <TitleDetailPanel
@@ -232,9 +144,9 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
               baseProgress={titleProgress.base}
               overallProgress={titleProgress.all}
               hasGilding={false}
-              titleTier={titleTier}
+              titleTier="none"
               appearance="raid"
-              raidCompletions={raidCompletions}
+              raidCompletions={isRaidCompletionSlug(slug) ? null : undefined}
               showMasterCompletions={
                 isRaidCompletionSlug(slug) ? raidHasMasterTier(slug) : true
               }
@@ -242,44 +154,32 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
             />
           ) : null}
 
-          <ActivityArmorSection
+          <OwnedActivityArmorSection
             activitySlug={slug}
             activityTitle={activity.title}
             rows={activity.armorSets}
             previewFiles={activity.armorSetPreviewFiles}
-            ownedItemHashes={ownedItemHashes}
-            showOwnership={showOwnership}
-            resolveItemOwned={resolveItemOwned}
             itemHrefs={itemHrefs}
           />
 
-          <LootSection
+          <OwnedLootSection
             title="Weapons"
             items={weapons}
-            ownedItemHashes={ownedItemHashes}
-            showOwnership={showOwnership}
-            resolveItemOwned={resolveItemOwned}
             exoticItemHashes={exoticItemHashes}
             itemHrefs={itemHrefs}
           />
 
           {activity.timelostWeapons.length > 0 ? (
-            <LootSection
+            <OwnedLootSection
               title={activity.timelostWeaponsTitle ?? "Timelost Weapons"}
               items={timelostWeapons}
-              ownedItemHashes={ownedItemHashes}
-              showOwnership={showOwnership}
-              resolveItemOwned={resolveItemOwned}
               itemHrefs={itemHrefs}
             />
           ) : null}
 
-          <LootSection
+          <OwnedLootSection
             title="Other"
             items={activity.other}
-            ownedItemHashes={ownedItemHashes}
-            showOwnership={showOwnership}
-            resolveItemOwned={resolveItemOwned}
             exoticItemHashes={exoticItemHashes}
             itemHrefs={itemHrefs}
           />
@@ -287,18 +187,11 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
 
         {hasTriumphSection ? (
           <div className="min-w-0 lg:col-span-2">
-            <TriumphsListSection
-              records={triumphRecords}
-              recordInstances={Object.fromEntries(recordInstances)}
-              showProgress={showTriumphProgress}
-              stringVariables={stringVariables}
-              signInMessage={
-                !session ? "Sign in to see triumph progress." : undefined
-              }
-            />
+            <TriumphsListSection records={triumphRecords} />
           </div>
         ) : null}
       </div>
+      </ClientOwnership>
     </SectionPageLayout>
   );
 }

@@ -1,8 +1,8 @@
 /**
- * Builds public/data/featured-activities.json for RAD Loot weekly highlights.
+ * Builds data/featured-activities.json for RAD Loot weekly highlights.
  *
  * Raids: Bungie public milestones (weekly challenge on any difficulty).
- * Dungeons: rotator schedule in public/data/featured-rotation-schedule.json.
+ * Dungeons: rotator schedule in data/featured-rotation-schedule.json.
  *
  * Usage: node scripts/generate-featured-activities.mjs
  */
@@ -102,7 +102,7 @@ async function main() {
     rotationWeeks: DUNGEON_ROTATION_WEEKS.length,
   };
 
-  const outDir = resolve(root, "public/data");
+  const outDir = resolve(root, "data");
   mkdirSync(outDir, { recursive: true });
   const outPath = resolve(outDir, "featured-activities.json");
   writeFileSync(outPath, `${JSON.stringify(payload, null, 2)}\n`);

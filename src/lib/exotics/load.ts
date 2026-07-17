@@ -8,7 +8,7 @@ let catalogCache: ExoticCatalog | null = null;
 async function readExoticCatalogFromDisk(): Promise<ExoticCatalog> {
   if (catalogCache) return catalogCache;
 
-  const filePath = path.join(process.cwd(), "public/data/exotics.json");
+  const filePath = path.join(process.cwd(), "data/exotics.json");
   const raw = await readFile(filePath, "utf8");
   catalogCache = JSON.parse(raw) as ExoticCatalog;
   return catalogCache;

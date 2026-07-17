@@ -44,7 +44,7 @@ jobs:
           node --input-type=module -e "
           import { readFileSync } from 'node:fs';
           import { rotationWeekIndex } from './scripts/featured-rotation-shared.mjs';
-          const data = JSON.parse(readFileSync('public/data/featured-activities.json', 'utf8'));
+          const data = JSON.parse(readFileSync('data/featured-activities.json', 'utf8'));
           const currentWeek = rotationWeekIndex(new Date());
           if (data.weekIndex !== currentWeek) {
             throw new Error(\`featured-activities.json weekIndex \${data.weekIndex} != current \${currentWeek}\`);
@@ -57,7 +57,7 @@ jobs:
 
       - name: Commit and push if changed
         run: |
-          git add public/data/featured-activities.json
+          git add data/featured-activities.json
 
           if git diff --cached --quiet; then
             echo "No changes in featured activities"
@@ -66,5 +66,5 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore(data): refresh featured raid and dungeon rotation" -m "Scheduled sync of public/data/featured-activities.json."
+          git commit -m "chore(data): refresh featured raid and dungeon rotation" -m "Scheduled sync of data/featured-activities.json."
           git push

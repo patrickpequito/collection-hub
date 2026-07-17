@@ -53,7 +53,7 @@ function normalizeTriumphCatalog(catalog: TriumphCatalog): TriumphCatalog {
 }
 
 async function readTriumphCatalogFromDisk(): Promise<TriumphCatalog> {
-  const filePath = path.join(process.cwd(), "public/data/triumphs.json");
+  const filePath = path.join(process.cwd(), "data/triumphs.json");
   const fileStat = await stat(filePath);
 
   if (catalogCache && catalogCache.mtimeMs === fileStat.mtimeMs) {

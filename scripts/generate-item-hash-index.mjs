@@ -1,5 +1,5 @@
 /**
- * Builds public/data/item-hash-index.json from the Bungie manifest.
+ * Builds data/item-hash-index.json from the Bungie manifest.
  * Used to match catalog item hashes with inventory/collection variants.
  *
  * Usage: node scripts/generate-item-hash-index.mjs
@@ -101,7 +101,7 @@ async function main() {
   const items = await loadManifestTables();
   const index = buildIndex(items);
 
-  const outDir = resolve(root, "public/data");
+  const outDir = resolve(root, "data");
   mkdirSync(outDir, { recursive: true });
   const outPath = resolve(outDir, "item-hash-index.json");
   writeFileSync(outPath, `${JSON.stringify(index, null, 2)}\n`);

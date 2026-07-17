@@ -24,7 +24,7 @@ export const EXCLUDED_FEATURED_RAID_SLUGS = new Set([
 
 const schedule = JSON.parse(
   readFileSync(
-    resolve(root, "public/data/featured-rotation-schedule.json"),
+    resolve(root, "data/featured-rotation-schedule.json"),
     "utf8",
   ),
 );

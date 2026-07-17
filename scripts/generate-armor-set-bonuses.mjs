@@ -1,5 +1,5 @@
 /**
- * Builds public/data/armor-set-bonuses.json from DestinyEquipableItemSetDefinition.
+ * Builds data/armor-set-bonuses.json from DestinyEquipableItemSetDefinition.
  *
  * Usage: node scripts/generate-armor-set-bonuses.mjs
  */
@@ -88,7 +88,7 @@ async function main() {
     itemHashToSetHash[String(item.hash)] = String(setHash);
   }
 
-  const outDir = resolve(root, "public/data");
+  const outDir = resolve(root, "data");
   mkdirSync(outDir, { recursive: true });
   const output = {
     generatedAt: new Date().toISOString(),

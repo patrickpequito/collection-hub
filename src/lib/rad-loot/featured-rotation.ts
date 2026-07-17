@@ -27,7 +27,7 @@ function loadFeaturedRotationSchedule(): FeaturedRotationSchedule {
 
   const filePath = path.join(
     process.cwd(),
-    "public/data/featured-rotation-schedule.json",
+    "data/featured-rotation-schedule.json",
   );
   const raw = JSON.parse(readFileSync(filePath, "utf8")) as {
     epochUtc: string;

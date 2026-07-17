@@ -5,10 +5,10 @@ import { isBungieOAuthConfigured } from "@/lib/env";
 import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { loadArmorSetCatalog } from "@/lib/armor-sets/load";
 import { PAGE_HEADERS } from "@/lib/page-headers";
-import { getSession } from "@/lib/session";
+
+export const revalidate = 3600;
 
 export default async function SetsPage() {
-  const session = await getSession();
   const [catalog, itemHrefs] = await Promise.all([
     loadArmorSetCatalog(),
     buildCollectibleHrefByItemHash("/sets"),
@@ -19,7 +19,6 @@ export default async function SetsPage() {
     <SectionPageLayout
       title="Armor sets"
       imageUrl={PAGE_HEADERS.armorSetsHeader}
-      session={session}
       oauthConfigured={oauthConfigured}
     >
       <SectionPlaceholderNotice />
@@ -28,21 +27,7 @@ export default async function SetsPage() {
         Legendary armor sets by activity type ({catalog.sets.length} sets).
       </p>
 
-      {session ? (
-        <p className="text-xs text-zinc-500">
-          Signed in as {session.displayName}.
-        </p>
-      ) : (
-        <p className="text-xs text-amber-200/80">
-          Sign in to highlight pieces you already own.
-        </p>
-      )}
-
-      <ArmorSetCatalog
-        sets={catalog.sets}
-        signedIn={Boolean(session)}
-        itemHrefs={itemHrefs}
-      />
+      <ArmorSetCatalog sets={catalog.sets} itemHrefs={itemHrefs} />
     </SectionPageLayout>
   );
 }

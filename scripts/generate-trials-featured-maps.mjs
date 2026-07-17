@@ -1,5 +1,5 @@
 /**
- * Builds public/data/trials-featured-maps.json for the Trials of Osiris hub.
+ * Builds data/trials-featured-maps.json for the Trials of Osiris hub.
  *
  * Fetches featured Crucible maps from Bungie public milestones when Trials is
  * active. Intended to run every Friday after weekly reset (Trials start).
@@ -165,7 +165,7 @@ async function main() {
     maps: mapNames,
   };
 
-  const outDir = resolve(root, "public/data");
+  const outDir = resolve(root, "data");
   mkdirSync(outDir, { recursive: true });
   const outPath = resolve(outDir, "trials-featured-maps.json");
   writeFileSync(outPath, `${JSON.stringify(payload, null, 2)}\n`);

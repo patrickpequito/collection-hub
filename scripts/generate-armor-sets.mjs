@@ -1,5 +1,5 @@
 /**
- * Fetches Destiny 2 manifest data and writes public/data/armor-sets.json.
+ * Fetches Destiny 2 manifest data and writes data/armor-sets.json.
  * Requires BUNGIE_API_KEY in .env.local (or environment).
  *
  * Usage: node scripts/generate-armor-sets.mjs
@@ -311,7 +311,7 @@ async function main() {
   const { items, collectibles } = await loadManifestTables();
   const sets = buildArmorSets(items, collectibles);
 
-  const outDir = resolve(root, "public/data");
+  const outDir = resolve(root, "data");
   mkdirSync(outDir, { recursive: true });
   const outPath = resolve(outDir, "armor-sets.json");
   writeFileSync(outPath, JSON.stringify({ generatedAt: new Date().toISOString(), sets }, null, 2));
@@ -321,7 +321,7 @@ async function main() {
     byCategory[set.category] = (byCategory[set.category] || 0) + 1;
   }
 
-  console.log(`Wrote ${sets.length} armor sets to public/data/armor-sets.json`);
+  console.log(`Wrote ${sets.length} armor sets to data/armor-sets.json`);
   console.log(byCategory);
 }
 

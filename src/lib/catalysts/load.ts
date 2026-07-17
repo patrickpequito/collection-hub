@@ -8,7 +8,7 @@ let catalogCache: CatalystCatalog | null = null;
 async function readCatalystCatalogFromDisk(): Promise<CatalystCatalog> {
   if (catalogCache) return catalogCache;
 
-  const filePath = path.join(process.cwd(), "public/data/catalysts.json");
+  const filePath = path.join(process.cwd(), "data/catalysts.json");
   const raw = await readFile(filePath, "utf8");
   catalogCache = JSON.parse(raw) as CatalystCatalog;
   return catalogCache;

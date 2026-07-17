@@ -9,20 +9,12 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { featuredActivityEntries } from "@/lib/rad-loot/featured-activities";
-import { getSession } from "@/lib/session";
 import siteLogo from "../../public/icon.png";
 
-type HomeProps = {
-  searchParams: Promise<{
-    error?: string;
-    login?: string;
-    logout?: string;
-  }>;
-};
+/** Cacheable homepage — auth and scores hydrate on the client. */
+export const revalidate = 3600;
 
-export default async function Home({ searchParams }: HomeProps) {
-  const session = await getSession();
-  const params = await searchParams;
+export default async function Home() {
   const oauthConfigured = isBungieOAuthConfigured();
   const featured = await featuredActivityEntries();
 
@@ -45,16 +37,10 @@ export default async function Home({ searchParams }: HomeProps) {
             </h1>
             <AppVersionLabel className="mt-1" />
 
-            <HomeAuthSection
-              session={session}
-              oauthConfigured={oauthConfigured}
-              error={params.error}
-              loginSuccess={params.login === "success"}
-              logoutSuccess={params.logout === "success"}
-            />
+            <HomeAuthSection oauthConfigured={oauthConfigured} />
           </div>
 
-          <HomeTriumphScores signedIn={Boolean(session)} />
+          <HomeTriumphScores />
         </header>
 
         <div className="mb-6 sm:mb-8">

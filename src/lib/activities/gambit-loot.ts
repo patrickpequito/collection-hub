@@ -31,7 +31,7 @@ function toLootItem(item: AllLootItem): LootItem {
 async function loadArmorSetBonusNames(): Promise<Map<string, string>> {
   const filePath = path.join(
     process.cwd(),
-    "public/data/armor-set-bonuses.json",
+    "data/armor-set-bonuses.json",
   );
   const raw = await readFile(filePath, "utf8");
   const catalog = JSON.parse(raw) as ArmorSetBonusCatalog;

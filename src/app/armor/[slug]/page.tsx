@@ -13,7 +13,6 @@ import {
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { parseArmorReturnPath } from "@/lib/armor/paths";
 import { backLabelForPath } from "@/lib/weapons/paths";
-import { getSession } from "@/lib/session";
 
 type ArmorPageProps = {
   params: Promise<{ slug: string }>;
@@ -71,13 +70,11 @@ export default async function ArmorPage({
     armor,
   );
 
-  const session = await getSession();
   const oauthConfigured = isBungieOAuthConfigured();
 
   return (
     <SectionPageLayout
       showHeader={false}
-      session={session}
       oauthConfigured={oauthConfigured}
       maxWidth="5xl"
       backLink={{
@@ -94,7 +91,6 @@ export default async function ArmorPage({
         armorSet={armorSetMatch?.set ?? null}
         primaryGuardianClass={armorSetMatch?.primaryClass ?? null}
         itemHrefs={itemHrefs}
-        isSignedIn={Boolean(session)}
       />
     </SectionPageLayout>
   );

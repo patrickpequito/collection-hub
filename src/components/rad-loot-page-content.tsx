@@ -11,10 +11,11 @@ import {
   RAIDS,
 } from "@/data/rad-loot/activities";
 import type { ActivityBannerStats } from "@/lib/rad-loot-banner-stats";
+import { useSignedIn } from "@/lib/use-signed-in";
 import type { ActivityEntry } from "@/types/activity-loot";
 
 type RadLootPageContentProps = {
-  signedIn: boolean;
+  signedIn?: boolean;
   initialBannerStats: Record<string, ActivityBannerStats>;
   featuredSlugs: string[];
   featuredIconPath: string;
@@ -52,11 +53,13 @@ function ActivityBannerList({
 }
 
 export function RadLootPageContent({
-  signedIn,
+  signedIn: signedInProp,
   initialBannerStats,
   featuredSlugs,
   featuredIconPath,
 }: RadLootPageContentProps) {
+  const signedInHook = useSignedIn();
+  const signedIn = signedInProp ?? signedInHook;
   const [bannerStats, setBannerStats] = useState(initialBannerStats);
   const featuredSlugSet = new Set(featuredSlugs);
 

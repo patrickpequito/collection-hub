@@ -5,8 +5,8 @@ This guide walks through publishing the app with [Vercel](https://vercel.com) (f
 ## Before you deploy
 
 1. **Commit your catalog data** (already in the repo):
-   - `public/data/armor-sets.json`
-   - `public/data/exotics.json`
+   - `data/armor-sets.json`
+   - `data/exotics.json`
 2. **Never commit** `.env.local` (secrets stay out of Git).
 3. **Bungie allows one Redirect URL per application.** Use **two Bungie apps**:
    - **Production** → Vercel URL (env vars in Vercel)
@@ -169,7 +169,7 @@ After a Destiny patch, refresh catalogs locally and push:
 ```bash
 npm run generate:armor-sets
 npm run generate:exotics
-git add public/data/
+git add data/
 git commit -m "Refresh manifest catalogs"
 git push
 ```
@@ -182,7 +182,7 @@ git push
 |-------|-----|
 | OAuth redirect error | Redirect URL in Bungie must match `BUNGIE_REDIRECT_URI` exactly |
 | Sign-in works locally but not online | Prod needs its own Bungie app or updated Redirect URL |
-| Empty catalogs | Ensure `public/data/*.json` is committed and pushed |
+| Empty catalogs | Ensure `data/*.json` is committed and pushed |
 | 500 on sign-in | Check Vercel **Logs**; usually a missing env variable |
 
 ---

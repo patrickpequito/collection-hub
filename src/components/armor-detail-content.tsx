@@ -23,6 +23,7 @@ import {
   resolveSeasonKeyFromVersion,
 } from "@/lib/armor/version-for-hash";
 import { bungieIconUrl } from "@/lib/bungie-icon";
+import { useSignedIn } from "@/lib/use-signed-in";
 import { useArmorRolls } from "@/lib/use-armor-rolls";
 import type { AllLootItem } from "@/types/all-loot";
 import type { ArmorSetBonus } from "@/types/armor-set-bonuses";
@@ -36,6 +37,7 @@ type ArmorDetailContentProps = {
   armorSet?: ArmorSet | null;
   primaryGuardianClass?: GuardianClass | null;
   itemHrefs?: Record<string, string>;
+  /** @deprecated Prefer client-side useSignedIn; optional override. */
   isSignedIn?: boolean;
 };
 
@@ -84,8 +86,10 @@ export function ArmorDetailContent({
   armorSet = null,
   primaryGuardianClass = null,
   itemHrefs,
-  isSignedIn = false,
+  isSignedIn: isSignedInProp,
 }: ArmorDetailContentProps) {
+  const signedInHook = useSignedIn();
+  const isSignedIn = isSignedInProp ?? signedInHook;
   const seasonBadges = resolveSeasonBadges(armor);
   const armorSlug = armor.slug ?? "";
   const [selectedVersionHash, setSelectedVersionHash] = useState(armor.itemHash);

@@ -3,7 +3,8 @@ import { AllLootPageContent } from "@/components/all-loot-page-content";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { PAGE_HEADERS } from "@/lib/page-headers";
-import { getSession } from "@/lib/session";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Loot Collector | Destiny 2 Collection Hub",
@@ -15,14 +16,12 @@ export const metadata: Metadata = {
 };
 
 export default async function AllLootPage() {
-  const session = await getSession();
   const oauthConfigured = isBungieOAuthConfigured();
 
   return (
     <SectionPageLayout
       title="Loot Collector"
       imageUrl={PAGE_HEADERS.lootCollectorHeader}
-      session={session}
       oauthConfigured={oauthConfigured}
       maxWidth="5xl"
     >
@@ -31,7 +30,7 @@ export default async function AllLootPage() {
         recent version.
       </p>
 
-      <AllLootPageContent signedIn={Boolean(session)} />
+      <AllLootPageContent />
     </SectionPageLayout>
   );
 }

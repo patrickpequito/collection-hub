@@ -8,7 +8,7 @@ let catalogCache: ArmorSetCatalog | null = null;
 async function readArmorSetCatalogFromDisk(): Promise<ArmorSetCatalog> {
   if (catalogCache) return catalogCache;
 
-  const filePath = path.join(process.cwd(), "public/data/armor-sets.json");
+  const filePath = path.join(process.cwd(), "data/armor-sets.json");
   const raw = await readFile(filePath, "utf8");
   catalogCache = JSON.parse(raw) as ArmorSetCatalog;
   return catalogCache;

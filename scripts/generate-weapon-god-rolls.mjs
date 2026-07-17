@@ -1,5 +1,5 @@
 /**
- * Builds public/data/weapon-god-rolls.json from DIM's default voltron wishlist.
+ * Builds data/weapon-god-rolls.json from DIM's default voltron wishlist.
  *
  * PvE: first roll line under a god-pve block, else first line under any pve block.
  * PvP: first roll line under a god-pvp block, else first line under any pvp block.
@@ -102,7 +102,7 @@ async function main() {
     rolls,
   };
 
-  const outDir = resolve(root, "public/data");
+  const outDir = resolve(root, "data");
   mkdirSync(outDir, { recursive: true });
   const outPath = resolve(outDir, "weapon-god-rolls.json");
   writeFileSync(outPath, `${JSON.stringify(output, null, 2)}\n`);

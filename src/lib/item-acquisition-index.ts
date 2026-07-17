@@ -9,7 +9,7 @@ let indexPromise: Promise<ItemHashIndex> | null = null;
 
 async function loadItemHashIndex(): Promise<ItemHashIndex> {
   if (!indexPromise) {
-    indexPromise = import("../../public/data/item-hash-index.json").then(
+    indexPromise = import("../../data/item-hash-index.json").then(
       (mod) => mod.default as ItemHashIndex,
     );
   }

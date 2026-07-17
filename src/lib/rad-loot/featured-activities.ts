@@ -12,7 +12,6 @@ import {
   DUNGEON_ROTATION_WEEKS,
   featuredDungeonSlugsForWeek,
   featuredRaidFallbackForWeek,
-  fetchFeaturedRaidsFromBungie,
   rotationWeekIndex,
   weekBounds,
 } from "@/lib/rad-loot/featured-rotation";
@@ -33,16 +32,11 @@ export const FEATURED_TIER_ICON_PATH = "/images/rad-loot/featured.png";
 /** Border highlight for featured activity banners. */
 export const FEATURED_BORDER_COLOR = "#24b4b3";
 
-let raidCache: {
-  weekIndex: number;
-  featuredRaids: string[];
-} | null = null;
-
 function readFeaturedActivitiesJson(): FeaturedActivitiesData | null {
   try {
     const filePath = path.join(
       process.cwd(),
-      "public/data/featured-activities.json",
+      "data/featured-activities.json",
     );
     const raw = readFileSync(filePath, "utf8");
     return JSON.parse(raw) as FeaturedActivitiesData;
@@ -51,50 +45,28 @@ function readFeaturedActivitiesJson(): FeaturedActivitiesData | null {
   }
 }
 
-async function resolveFeaturedRaids(weekIndex: number): Promise<string[]> {
-  if (raidCache?.weekIndex === weekIndex) {
-    return raidCache.featuredRaids;
-  }
-
-  const apiKey = process.env.BUNGIE_API_KEY?.trim();
-  if (apiKey) {
-    try {
-      const featuredRaids = await fetchFeaturedRaidsFromBungie(apiKey);
-      if (featuredRaids.length > 0) {
-        raidCache = { weekIndex, featuredRaids };
-        return featuredRaids;
-      }
-      console.warn(
-        "Bungie milestones returned no featured raids; using schedule fallback",
-      );
-    } catch (error) {
-      console.error("Failed to fetch featured raids from Bungie:", error);
-    }
-  }
-
-  const fallback = readFeaturedActivitiesJson();
-  if (
-    fallback?.weekIndex === weekIndex &&
-    fallback.featuredRaids.length > 0
-  ) {
-    return fallback.featuredRaids;
-  }
-
-  return featuredRaidFallbackForWeek(weekIndex);
-}
-
-/** Current featured raids/dungeons, computed at request time from reset schedule + Bungie. */
+/**
+ * Featured raids/dungeons from the checked-in weekly snapshot + schedule.
+ * Never calls Bungie at request time (avoids CPU/origin cost on every visit).
+ */
 export async function loadFeaturedActivities(): Promise<FeaturedActivitiesData> {
   const now = new Date();
   const weekIndex = rotationWeekIndex(now);
   const { weekStart, weekEnd } = weekBounds(weekIndex);
-  const [featuredRaids, featuredDungeons] = await Promise.all([
-    resolveFeaturedRaids(weekIndex),
-    Promise.resolve(featuredDungeonSlugsForWeek(weekIndex)),
-  ]);
+  const snapshot = readFeaturedActivitiesJson();
+
+  const featuredRaids =
+    snapshot?.weekIndex === weekIndex && snapshot.featuredRaids.length > 0
+      ? snapshot.featuredRaids
+      : featuredRaidFallbackForWeek(weekIndex);
+
+  const featuredDungeons =
+    snapshot?.weekIndex === weekIndex && snapshot.featuredDungeons.length > 0
+      ? snapshot.featuredDungeons
+      : featuredDungeonSlugsForWeek(weekIndex);
 
   return {
-    generatedAt: now.toISOString(),
+    generatedAt: snapshot?.generatedAt ?? now.toISOString(),
     weekIndex,
     weekStart,
     weekEnd,

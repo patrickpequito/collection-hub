@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { ExoticItemGrid } from "@/components/exotic-item-grid";
 import { useOwnedItemHashes } from "@/lib/use-owned-item-hashes";
+import { useSignedIn } from "@/lib/use-signed-in";
 import {
   ARMOR_SECTIONS,
   countExoticsByCategory,
@@ -27,10 +28,12 @@ type ExoticsCatalogProps = {
 export function ExoticsCatalog({
   items,
   catalysts,
-  signedIn = false,
+  signedIn: signedInProp,
   weaponHrefs,
   itemHrefs,
 }: ExoticsCatalogProps) {
+  const signedInHook = useSignedIn();
+  const signedIn = signedInProp ?? signedInHook;
   const hrefs = itemHrefs ?? weaponHrefs;
   const { itemHashes: ownedItemHashes, error: inventoryError } =
     useOwnedItemHashes(signedIn);

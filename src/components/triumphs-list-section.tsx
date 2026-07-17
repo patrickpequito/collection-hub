@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { TriumphRecordList } from "@/components/triumph-record-list";
+import { useSignedIn } from "@/lib/use-signed-in";
 import { isTriumphRecordDisplayComplete } from "@/lib/triumphs/record-progress";
 import type {
   RecordInstance,
@@ -15,23 +16,74 @@ const TOGGLE_BUTTON_CLASS =
 
 type TriumphsListSectionProps = {
   records: TriumphRecord[];
-  recordInstances: Record<string, RecordInstance>;
-  showProgress: boolean;
+  recordInstances?: Record<string, RecordInstance>;
+  /** When omitted, progress loads client-side if the user is signed in. */
+  showProgress?: boolean;
   signInMessage?: string;
   stringVariables?: TriumphStringVariables;
-  /** Overrides the default "Triumphs" heading (e.g. "Renegades // Activities"). */
   heading?: string;
 };
 
 export function TriumphsListSection({
   records,
-  recordInstances,
-  showProgress,
-  signInMessage,
-  stringVariables = EMPTY_TRIUMPH_STRING_VARIABLES,
+  recordInstances: recordInstancesProp,
+  showProgress: showProgressProp,
+  signInMessage = "Sign in to see triumph progress.",
+  stringVariables: stringVariablesProp,
   heading = "Triumphs",
 }: TriumphsListSectionProps) {
+  const signedIn = useSignedIn();
   const [hideCompleted, setHideCompleted] = useState(false);
+  const [hydratedInstances, setHydratedInstances] = useState<
+    Record<string, RecordInstance>
+  >({});
+  const [hydratedVariables, setHydratedVariables] =
+    useState<TriumphStringVariables>(EMPTY_TRIUMPH_STRING_VARIABLES);
+  const [hydrateError, setHydrateError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (recordInstancesProp) return;
+    if (!signedIn) return;
+
+    let cancelled = false;
+    fetch("/api/triumphs/profile", { cache: "no-store" })
+      .then(async (response) => {
+        const payload = (await response.json()) as {
+          recordInstances: Record<string, RecordInstance>;
+          stringVariables: TriumphStringVariables;
+          error: string | null;
+        };
+        if (cancelled) return;
+        setHydratedInstances(payload.recordInstances ?? {});
+        setHydratedVariables(
+          payload.stringVariables ?? EMPTY_TRIUMPH_STRING_VARIABLES,
+        );
+        setHydrateError(payload.error);
+      })
+      .catch((error) => {
+        if (cancelled) return;
+        setHydrateError(
+          error instanceof Error
+            ? error.message
+            : "Failed to load triumph progress",
+        );
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [recordInstancesProp, signedIn]);
+
+  const recordInstances = useMemo(
+    () => recordInstancesProp ?? (signedIn ? hydratedInstances : {}),
+    [recordInstancesProp, signedIn, hydratedInstances],
+  );
+  const stringVariables =
+    stringVariablesProp ??
+    (signedIn ? hydratedVariables : EMPTY_TRIUMPH_STRING_VARIABLES);
+  const showProgress =
+    showProgressProp ?? (signedIn && !hydrateError);
+
   const instances = useMemo(
     () => new Map(Object.entries(recordInstances)),
     [recordInstances],
@@ -69,7 +121,11 @@ export function TriumphsListSection({
         ) : null}
       </div>
 
-      {signInMessage ? (
+      {hydrateError && signedIn ? (
+        <p className="text-xs text-amber-200/80">
+          Triumph progress unavailable: {hydrateError}
+        </p>
+      ) : !signedIn && signInMessage ? (
         <p className="text-xs text-amber-200/80">{signInMessage}</p>
       ) : null}
 
@@ -80,7 +136,7 @@ export function TriumphsListSection({
       <TriumphRecordList
         records={visibleRecords}
         recordInstances={instances}
-        showProgress={showProgress}
+        showProgress={Boolean(showProgress)}
         strictCompletion
         variant="title"
         stringVariables={stringVariables}

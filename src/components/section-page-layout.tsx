@@ -1,16 +1,16 @@
 import { Suspense } from "react";
-import { AuthBar } from "@/components/auth-bar";
 import { AuthCallbackFlash } from "@/components/auth-callback-flash";
+import { ClientAuthBar } from "@/components/client-auth-bar";
 import { PageHeader } from "@/components/page-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
-import type { BungieUserSession } from "@/lib/bungie";
 
 type SectionPageLayoutProps = {
   title?: string;
   imageUrl?: string;
   showHeader?: boolean;
-  session: BungieUserSession | null;
+  /** @deprecated Session is resolved client-side to keep pages cacheable. */
+  session?: unknown;
   oauthConfigured: boolean;
   children: React.ReactNode;
   maxWidth?: "4xl" | "5xl";
@@ -38,7 +38,6 @@ export function SectionPageLayout({
   title,
   imageUrl,
   showHeader = true,
-  session,
   oauthConfigured,
   children,
   maxWidth = "4xl",
@@ -54,8 +53,7 @@ export function SectionPageLayout({
         {showHeader && title && imageUrl ? (
           <PageHeader title={title} imageUrl={imageUrl} />
         ) : null}
-        <AuthBar
-          session={session}
+        <ClientAuthBar
           oauthConfigured={oauthConfigured}
           backLink={backLink}
         />

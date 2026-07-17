@@ -105,7 +105,7 @@ const radPages = readdirSync(radLootDir)
 
 const radMap = buildRadSetPreviewMap(radPages);
 const bonuses = JSON.parse(
-  readFileSync(resolve(root, "public/data/armor-set-bonuses.json"), "utf8"),
+  readFileSync(resolve(root, "data/armor-set-bonuses.json"), "utf8"),
 );
 
 const catalogSetNames = Object.values(bonuses.sets)

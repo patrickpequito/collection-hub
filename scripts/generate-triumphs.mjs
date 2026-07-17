@@ -1,5 +1,5 @@
 /**
- * Builds public/data/triumphs.json from Bungie manifest presentation nodes.
+ * Builds data/triumphs.json from Bungie manifest presentation nodes.
  *
  * Usage: node scripts/generate-triumphs.mjs
  */
@@ -355,12 +355,12 @@ const output = {
   titles,
 };
 
-mkdirSync(resolve(root, "public/data"), { recursive: true });
+mkdirSync(resolve(root, "data"), { recursive: true });
 writeFileSync(
-  resolve(root, "public/data/triumphs.json"),
+  resolve(root, "data/triumphs.json"),
   JSON.stringify(output, null, 2),
 );
 
 console.log(
-  `Wrote ${groups.length} triumph groups and ${titles.length} titles to public/data/triumphs.json`,
+  `Wrote ${groups.length} triumph groups and ${titles.length} titles to data/triumphs.json`,
 );

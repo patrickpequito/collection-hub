@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { ArmorSetCard } from "@/components/armor-set-card";
 import { useOwnedItemHashes } from "@/lib/use-owned-item-hashes";
+import { useSignedIn } from "@/lib/use-signed-in";
 import {
   ARMOR_CATEGORIES,
   countSetsByCategory,
@@ -18,9 +19,11 @@ type ArmorSetCatalogProps = {
 
 export function ArmorSetCatalog({
   sets,
-  signedIn = false,
+  signedIn: signedInProp,
   itemHrefs,
 }: ArmorSetCatalogProps) {
+  const signedInHook = useSignedIn();
+  const signedIn = signedInProp ?? signedInHook;
   const { itemHashes: ownedItemHashes, error: inventoryError } =
     useOwnedItemHashes(signedIn);
   const showOwnership = signedIn && !inventoryError;

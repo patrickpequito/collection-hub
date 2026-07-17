@@ -13,7 +13,7 @@ let indexCache: WeaponGodRollIndex | null = null;
 async function readWeaponGodRollIndexFromDisk(): Promise<WeaponGodRollIndex> {
   if (indexCache) return indexCache;
 
-  const filePath = path.join(process.cwd(), "public/data/weapon-god-rolls.json");
+  const filePath = path.join(process.cwd(), "data/weapon-god-rolls.json");
   const raw = await readFile(filePath, "utf8");
   indexCache = JSON.parse(raw) as WeaponGodRollIndex;
   return indexCache;

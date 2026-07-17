@@ -4,7 +4,6 @@ import { SectionPageLayout } from "@/components/section-page-layout";
 import { WeaponDetailContent } from "@/components/weapon-detail-content";
 import { loadAllLootCatalog } from "@/lib/all-loot/search";
 import { isBungieOAuthConfigured } from "@/lib/env";
-import { getSession } from "@/lib/session";
 import {
   loadWeaponGodRollIndex,
   resolveGodRollsForWeapon,
@@ -61,14 +60,12 @@ export default async function WeaponPage({
 
   const godRollsByHash = resolveGodRollsForWeapon(weapon, godRollIndex);
 
-  const session = await getSession();
   const oauthConfigured = isBungieOAuthConfigured();
   const fallbackHref = parseWeaponReturnPath(from);
 
   return (
     <SectionPageLayout
       showHeader={false}
-      session={session}
       oauthConfigured={oauthConfigured}
       maxWidth="5xl"
       backLink={{
@@ -81,7 +78,6 @@ export default async function WeaponPage({
         weapon={weapon}
         plugIndex={catalog.plugIndex ?? {}}
         godRollsByHash={godRollsByHash}
-        isSignedIn={Boolean(session)}
       />
     </SectionPageLayout>
   );

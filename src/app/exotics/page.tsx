@@ -6,10 +6,10 @@ import { loadCatalystCatalog } from "@/lib/catalysts/load";
 import { loadExoticCatalog } from "@/lib/exotics/load";
 import { PAGE_HEADERS } from "@/lib/page-headers";
 import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
-import { getSession } from "@/lib/session";
+
+export const revalidate = 3600;
 
 export default async function ExoticsPage() {
-  const session = await getSession();
   const [catalog, catalystCatalog, itemHrefs] = await Promise.all([
     loadExoticCatalog(),
     loadCatalystCatalog(),
@@ -21,21 +21,13 @@ export default async function ExoticsPage() {
     <SectionPageLayout
       title="Exotics"
       imageUrl={PAGE_HEADERS.exotics}
-      session={session}
       oauthConfigured={oauthConfigured}
     >
       <SectionPlaceholderNotice />
 
-      {!session ? (
-        <p className="text-xs text-amber-200/80">
-          Sign in to highlight exotics you already own.
-        </p>
-      ) : null}
-
       <ExoticsCatalog
         items={catalog.items}
         catalysts={catalystCatalog.items}
-        signedIn={Boolean(session)}
         itemHrefs={itemHrefs}
       />
     </SectionPageLayout>

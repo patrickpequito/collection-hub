@@ -1,5 +1,5 @@
 /**
- * Fetches exotic items from the Bungie manifest and writes public/data/exotics.json.
+ * Fetches exotic items from the Bungie manifest and writes data/exotics.json.
  *
  * Usage: node scripts/generate-exotics.mjs
  */
@@ -131,7 +131,7 @@ async function main() {
   const { items, collectibles } = await loadManifestTables();
   const itemsList = buildExoticCatalog(items, collectibles);
 
-  const outDir = resolve(root, "public/data");
+  const outDir = resolve(root, "data");
   mkdirSync(outDir, { recursive: true });
   const outPath = resolve(outDir, "exotics.json");
   writeFileSync(
@@ -144,7 +144,7 @@ async function main() {
     byCategory[item.category] = (byCategory[item.category] ?? 0) + 1;
   }
 
-  console.log(`Wrote ${itemsList.length} exotics to public/data/exotics.json`);
+  console.log(`Wrote ${itemsList.length} exotics to data/exotics.json`);
   console.log(byCategory);
 }
 

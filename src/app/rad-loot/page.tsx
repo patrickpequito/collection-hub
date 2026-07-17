@@ -15,34 +15,21 @@ import {
   FEATURED_TIER_ICON_PATH,
   featuredActivitySlugs,
 } from "@/lib/rad-loot/featured-activities";
-import { getSession } from "@/lib/session";
-import { backLabelForPath, parseAppReturnPath } from "@/lib/weapons/paths";
 
-type RadLootPageProps = {
-  searchParams: Promise<{ from?: string }>;
-};
+export const revalidate = 3600;
 
-export default async function RadLootPage({ searchParams }: RadLootPageProps) {
-  const { from } = await searchParams;
-  const session = await getSession();
+export default async function RadLootPage() {
   const oauthConfigured = isBungieOAuthConfigured();
   const allEntries = [PANTHEON, ...RAIDS, ...DUNGEONS, ...LEGACY_RAIDS, ...RAID_LAIRS];
   const initialBannerStats = buildInitialActivityBannerStats(allEntries);
   const featuredSlugs = [...(await featuredActivitySlugs())];
-  const fallbackHref = parseAppReturnPath(from);
 
   return (
     <SectionPageLayout
       title="RAD Loot"
       imageUrl={PAGE_HEADERS.radLoot}
-      session={session}
       oauthConfigured={oauthConfigured}
       maxWidth="5xl"
-      backLink={{
-        useHistory: true,
-        label: backLabelForPath(fallbackHref),
-        fallbackHref,
-      }}
     >
       <p className="flex items-center gap-1.5 text-xs text-zinc-400">
         <Image
@@ -57,7 +44,6 @@ export default async function RadLootPage({ searchParams }: RadLootPageProps) {
       </p>
 
       <RadLootPageContent
-        signedIn={Boolean(session)}
         initialBannerStats={initialBannerStats}
         featuredSlugs={featuredSlugs}
         featuredIconPath={FEATURED_TIER_ICON_PATH}

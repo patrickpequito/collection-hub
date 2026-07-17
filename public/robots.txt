@@ -1,6 +1,42 @@
 User-agent: *
-Allow: /
+Disallow: /api/
+Disallow: /data/
 Disallow: /weapons/
 Disallow: /armor/
-Disallow: /api/
+Disallow: /all-loot
+Disallow: /all-loot/
 
+# Allow major hubs for legitimate discovery; block deep/expensive trees above.
+Allow: /$
+Allow: /rad-loot$
+Allow: /rad-loot/$
+Allow: /triumphs$
+Allow: /exotics$
+Allow: /sets$
+Allow: /pve-activities$
+Allow: /pvp-activities$
+Allow: /updates$
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /

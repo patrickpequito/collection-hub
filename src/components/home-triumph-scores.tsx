@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import type { TriumphScores } from "@/lib/destiny-records";
+import { useSignedIn } from "@/lib/use-signed-in";
 
 type HomeTriumphScoresProps = {
-  signedIn: boolean;
+  signedIn?: boolean;
 };
 
 function formatScore(value: number | null) {
@@ -12,7 +13,11 @@ function formatScore(value: number | null) {
   return value.toLocaleString();
 }
 
-export function HomeTriumphScores({ signedIn }: HomeTriumphScoresProps) {
+export function HomeTriumphScores({
+  signedIn: signedInProp,
+}: HomeTriumphScoresProps) {
+  const signedInHook = useSignedIn();
+  const signedIn = signedInProp ?? signedInHook;
   const [scores, setScores] = useState<TriumphScores | null>(null);
   const [error, setError] = useState<string | null>(null);
 

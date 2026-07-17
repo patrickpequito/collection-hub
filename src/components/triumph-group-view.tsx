@@ -1,15 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PressableButton } from "@/components/pressable-button";
 import { TriumphsListSection } from "@/components/triumphs-list-section";
 import { bungieIconUrl } from "@/lib/bungie-icon";
+import { useSignedIn } from "@/lib/use-signed-in";
 import {
   collectLeafSections,
   countSectionProgress,
 } from "@/lib/triumphs/sections";
-import { progressPercent } from "@/lib/triumphs/record-progress";
+import {
+  countTriumphProgress,
+  progressPercent,
+} from "@/lib/triumphs/record-progress";
 import type {
   RecordInstance,
   TriumphGroup,
@@ -21,9 +25,10 @@ import { EMPTY_TRIUMPH_STRING_VARIABLES } from "@/types/triumph";
 
 type TriumphGroupViewProps = {
   group: TriumphGroup;
-  progress: TriumphProgress;
-  recordInstances: Record<string, RecordInstance>;
-  showProgress: boolean;
+  /** When omitted, progress loads client-side if the user is signed in. */
+  progress?: TriumphProgress;
+  recordInstances?: Record<string, RecordInstance>;
+  showProgress?: boolean;
   signInMessage?: string;
   stringVariables?: TriumphStringVariables;
 };
@@ -186,16 +191,69 @@ function GroupProgressBar({
 
 export function TriumphGroupView({
   group,
-  progress,
-  recordInstances,
-  showProgress,
-  signInMessage,
-  stringVariables = EMPTY_TRIUMPH_STRING_VARIABLES,
+  progress: progressProp,
+  recordInstances: recordInstancesProp,
+  showProgress: showProgressProp,
+  signInMessage = "Sign in to see triumph progress.",
+  stringVariables: stringVariablesProp,
 }: TriumphGroupViewProps) {
+  const signedIn = useSignedIn();
+  const [hydratedInstances, setHydratedInstances] = useState<
+    Record<string, RecordInstance>
+  >({});
+  const [hydratedVariables, setHydratedVariables] =
+    useState<TriumphStringVariables>(EMPTY_TRIUMPH_STRING_VARIABLES);
+  const [hydrateError, setHydrateError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (recordInstancesProp) return;
+    if (!signedIn) return;
+
+    let cancelled = false;
+    fetch("/api/triumphs/profile", { cache: "no-store" })
+      .then(async (response) => {
+        const payload = (await response.json()) as {
+          recordInstances: Record<string, RecordInstance>;
+          stringVariables: TriumphStringVariables;
+          error: string | null;
+        };
+        if (cancelled) return;
+        setHydratedInstances(payload.recordInstances ?? {});
+        setHydratedVariables(
+          payload.stringVariables ?? EMPTY_TRIUMPH_STRING_VARIABLES,
+        );
+        setHydrateError(payload.error);
+      })
+      .catch((error) => {
+        if (cancelled) return;
+        setHydrateError(
+          error instanceof Error
+            ? error.message
+            : "Failed to load triumph progress",
+        );
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [recordInstancesProp, signedIn]);
+
+  const recordInstances = useMemo(
+    () => recordInstancesProp ?? (signedIn ? hydratedInstances : {}),
+    [recordInstancesProp, signedIn, hydratedInstances],
+  );
+  const stringVariables =
+    stringVariablesProp ??
+    (signedIn ? hydratedVariables : EMPTY_TRIUMPH_STRING_VARIABLES);
+  const showProgress =
+    showProgressProp ?? (signedIn && !hydrateError);
   const instances = useMemo(
     () => new Map(Object.entries(recordInstances)),
     [recordInstances],
   );
+  const progress =
+    progressProp ?? countTriumphProgress(group.records, instances);
+  const ownsHydration = recordInstancesProp === undefined;
   const topSections = group.sections ?? [];
   const showTopTabs = topSections.length > 1;
 
@@ -242,15 +300,33 @@ export function TriumphGroupView({
     ? `${group.name} // ${selectedTopSection.name}`
     : group.name;
 
+  const listRecordInstances = ownsHydration
+    ? recordInstances
+    : recordInstancesProp;
+  const listShowProgress = ownsHydration
+    ? Boolean(showProgress)
+    : showProgressProp;
+  const listStringVariables = ownsHydration
+    ? stringVariables
+    : stringVariablesProp;
+
   if (!topSections.length) {
     return (
       <div className="space-y-6">
-        <GroupProgressBar progress={progress} showProgress={showProgress} />
+        {hydrateError && signedIn ? (
+          <p className="text-xs text-amber-200/80">
+            Progress unavailable: {hydrateError}
+          </p>
+        ) : null}
+        <GroupProgressBar
+          progress={progress}
+          showProgress={Boolean(showProgress)}
+        />
         <TriumphsListSection
           records={group.records}
-          recordInstances={recordInstances}
-          showProgress={showProgress}
-          stringVariables={stringVariables}
+          recordInstances={listRecordInstances}
+          showProgress={listShowProgress}
+          stringVariables={listStringVariables}
           signInMessage={signInMessage}
         />
       </div>
@@ -260,6 +336,11 @@ export function TriumphGroupView({
   return (
     <div className="grid gap-8 lg:grid-cols-3">
       <div className="lg:col-span-1">
+        {hydrateError && signedIn ? (
+          <p className="mb-4 text-xs text-amber-200/80">
+            Progress unavailable: {hydrateError}
+          </p>
+        ) : null}
         {showTopTabs ? (
           <div
             className="grid gap-1"
@@ -277,7 +358,7 @@ export function TriumphGroupView({
                 }
                 onSelect={handleTopSelect}
                 recordInstances={instances}
-                showProgress={showProgress}
+                showProgress={Boolean(showProgress)}
               />
             ))}
           </div>
@@ -288,19 +369,22 @@ export function TriumphGroupView({
           selectedHash={activeLeafHash}
           onSelect={setSelectedLeafHash}
           recordInstances={instances}
-          showProgress={showProgress}
+          showProgress={Boolean(showProgress)}
         />
 
-        <GroupProgressBar progress={progress} showProgress={showProgress} />
+        <GroupProgressBar
+          progress={progress}
+          showProgress={Boolean(showProgress)}
+        />
       </div>
 
       <div className="lg:col-span-2">
         <TriumphsListSection
           heading={heading}
           records={selectedLeaf?.records ?? []}
-          recordInstances={recordInstances}
-          showProgress={showProgress}
-          stringVariables={stringVariables}
+          recordInstances={listRecordInstances}
+          showProgress={listShowProgress}
+          stringVariables={listStringVariables}
           signInMessage={signInMessage}
         />
       </div>

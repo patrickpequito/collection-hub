@@ -11,6 +11,7 @@ import { WeaponSeasonBadges } from "@/components/weapon-season-badges";
 import { WeaponStatsPanel } from "@/components/weapon-stats-panel";
 import { resolveSeasonBadges } from "@/lib/all-loot/season-badges";
 import { bungieIconUrl } from "@/lib/bungie-icon";
+import { useSignedIn } from "@/lib/use-signed-in";
 import { useWeaponRolls } from "@/lib/use-weapon-rolls";
 import { rollHighlightedPerks } from "@/lib/weapons/god-roll-highlights";
 import {
@@ -27,6 +28,7 @@ type WeaponDetailContentProps = {
   weapon: AllLootItem;
   plugIndex?: Record<string, WeaponPlugDefinition>;
   godRollsByHash?: Record<string, ResolvedWeaponGodRoll>;
+  /** @deprecated Prefer client-side useSignedIn; optional override. */
   isSignedIn?: boolean;
 };
 
@@ -65,8 +67,10 @@ export function WeaponDetailContent({
   weapon,
   plugIndex = {},
   godRollsByHash = {},
-  isSignedIn = false,
+  isSignedIn: isSignedInProp,
 }: WeaponDetailContentProps) {
+  const signedInHook = useSignedIn();
+  const isSignedIn = isSignedInProp ?? signedInHook;
   const seasonBadges = resolveSeasonBadges(weapon);
   const weaponSlug = weapon.slug ?? "";
 
