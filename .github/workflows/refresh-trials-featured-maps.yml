@@ -4,6 +4,8 @@ on:
   schedule:
     # Friday 17:05 UTC — Trials weekend start (19:05 Madrid summer).
     - cron: "5 17 * * 5"
+    # Retry if Bungie milestones are slow to publish featured maps.
+    - cron: "35 17 * * 5"
   workflow_dispatch:
 
 concurrency:
@@ -39,6 +41,11 @@ jobs:
 
       - name: Commit and push if changed
         run: |
+          if [ ! -f data/trials-featured-maps.json ]; then
+            echo "No Trials featured maps snapshot yet (Bungie may not have published maps)."
+            exit 0
+          fi
+
           git add data/trials-featured-maps.json
 
           if git diff --cached --quiet; then

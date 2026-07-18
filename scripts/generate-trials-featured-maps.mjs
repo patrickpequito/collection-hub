@@ -146,9 +146,18 @@ async function main() {
   const mapNames = extractMapNamesFromMilestones(milestones);
 
   if (mapNames.length === 0) {
-    console.log(
-      "Trials featured maps not available in live milestones — keeping existing snapshot",
-    );
+    const existingPath = resolve(root, "data", "trials-featured-maps.json");
+    try {
+      readFileSync(existingPath, "utf8");
+      console.log(
+        "Trials featured maps not available in live milestones — keeping existing snapshot",
+      );
+    } catch {
+      console.log(
+        "Trials featured maps not available in live milestones — no snapshot on disk yet (retry later)",
+      );
+    }
+    // Soft success so scheduled retries / later Friday runs can pick maps up.
     process.exit(0);
   }
 
