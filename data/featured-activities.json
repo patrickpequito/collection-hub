@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-07-14T21:33:30.955Z",
-  "weekIndex": 5,
-  "weekStart": "2026-07-14T17:00:00.000Z",
-  "weekEnd": "2026-07-21T17:00:00.000Z",
+  "generatedAt": "2026-07-21T18:23:01.872Z",
+  "weekIndex": 6,
+  "weekStart": "2026-07-21T17:00:00.000Z",
+  "weekEnd": "2026-07-28T17:00:00.000Z",
   "featuredRaids": [
-    "kings-fall",
-    "last-wish"
+    "garden-of-salvation",
+    "root-of-nightmares"
   ],
   "featuredDungeons": [
-    "sundered-doctrine",
-    "spire-of-the-watcher"
+    "prophecy",
+    "ghosts-of-the-deep"
   ],
   "rotationWeeks": 30
 }
