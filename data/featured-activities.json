@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-21T18:51:33.192Z",
+  "generatedAt": "2026-07-22T09:00:00.000Z",
   "weekIndex": 6,
   "weekStart": "2026-07-21T17:00:00.000Z",
   "weekEnd": "2026-07-28T17:00:00.000Z",
@@ -8,8 +8,8 @@
     "root-of-nightmares"
   ],
   "featuredDungeons": [
-    "prophecy",
-    "ghosts-of-the-deep"
+    "ghosts-of-the-deep",
+    "the-shattered-throne"
   ],
   "rotationWeeks": 30
 }

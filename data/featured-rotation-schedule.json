@@ -1,6 +1,6 @@
 {
   "epochUtc": "2026-06-09T17:00:00.000Z",
-  "sourceNotes": "Dungeon weeks 0-4 from Dexerto (Monument of Triumph launch). Week 5 from Kyber (Jul 14, 2026). Later weeks extrapolated from the pre-Sundered schedule with Pit slots kept until Bungie publishes an official calendar.",
+  "sourceNotes": "Dungeon weeks 0-4 from Dexerto (Monument of Triumph launch). Week 5 from Kyber (Jul 14, 2026). Week 6 from Kyber/user confirm (Jul 21, 2026): Ghosts of the Deep + Shattered Throne. Later weeks are unverified extrapolations — do not trust without a weekly check. Raids come from Bungie public milestones (weekly challenge), not this schedule.",
   "dungeonWeeks": [
     ["the-shattered-throne", "duality"],
     ["pit-of-heresy", "spire-of-the-watcher"],
@@ -8,7 +8,7 @@
     ["warlords-ruin", "grasp-of-avarice"],
     ["vespers-host", "duality"],
     ["sundered-doctrine", "spire-of-the-watcher"],
-    ["prophecy", "ghosts-of-the-deep"],
+    ["ghosts-of-the-deep", "the-shattered-throne"],
     ["grasp-of-avarice", "warlords-ruin"],
     ["duality", "vespers-host"],
     ["spire-of-the-watcher", "the-shattered-throne"],
