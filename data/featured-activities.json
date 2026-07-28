@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-07-22T09:00:00.000Z",
-  "weekIndex": 6,
-  "weekStart": "2026-07-21T17:00:00.000Z",
-  "weekEnd": "2026-07-28T17:00:00.000Z",
+  "generatedAt": "2026-07-28T18:23:49.701Z",
+  "weekIndex": 7,
+  "weekStart": "2026-07-28T17:00:00.000Z",
+  "weekEnd": "2026-08-04T17:00:00.000Z",
   "featuredRaids": [
-    "garden-of-salvation",
-    "root-of-nightmares"
+    "crotas-end",
+    "deep-stone-crypt"
   ],
   "featuredDungeons": [
-    "ghosts-of-the-deep",
-    "the-shattered-throne"
+    "grasp-of-avarice",
+    "warlords-ruin"
   ],
   "rotationWeeks": 30
 }
