@@ -12,6 +12,7 @@ import {
   DUNGEON_ROTATION_WEEKS,
   featuredDungeonSlugsForWeek,
   featuredRaidFallbackForWeek,
+  fetchFeaturedRaidsFromBungie,
   rotationWeekIndex,
   weekBounds,
 } from "@/lib/rad-loot/featured-rotation";
@@ -46,27 +47,49 @@ function readFeaturedActivitiesJson(): FeaturedActivitiesData | null {
 }
 
 /**
- * Featured raids/dungeons from the checked-in weekly snapshot + schedule.
- * Never calls Bungie at request time (avoids CPU/origin cost on every visit).
+ * Featured raids/dungeons for the current weekly reset.
+ *
+ * Raids prefer live Bungie milestones (cached ~30m) so a missed CI run cannot
+ * strand the site on last week's pair. Dungeons use the weekly snapshot when
+ * current, otherwise the confirmed schedule (no invented extrapolation).
  */
 export async function loadFeaturedActivities(): Promise<FeaturedActivitiesData> {
   const now = new Date();
   const weekIndex = rotationWeekIndex(now);
   const { weekStart, weekEnd } = weekBounds(weekIndex);
   const snapshot = readFeaturedActivitiesJson();
+  const snapshotIsCurrent =
+    snapshot?.weekIndex === weekIndex &&
+    (snapshot.featuredRaids?.length ?? 0) > 0 &&
+    (snapshot.featuredDungeons?.length ?? 0) > 0;
 
-  const featuredRaids =
-    snapshot?.weekIndex === weekIndex && snapshot.featuredRaids.length > 0
-      ? snapshot.featuredRaids
-      : featuredRaidFallbackForWeek(weekIndex);
+  let featuredRaids: string[] = [];
+  const apiKey = process.env.BUNGIE_API_KEY?.trim();
+  if (apiKey) {
+    try {
+      featuredRaids = await fetchFeaturedRaidsFromBungie(apiKey);
+    } catch {
+      // Fall through to snapshot / schedule.
+    }
+  }
+  if (!featuredRaids.length && snapshotIsCurrent) {
+    featuredRaids = snapshot!.featuredRaids;
+  }
+  if (!featuredRaids.length) {
+    featuredRaids = featuredRaidFallbackForWeek(weekIndex);
+  }
 
-  const featuredDungeons =
-    snapshot?.weekIndex === weekIndex && snapshot.featuredDungeons.length > 0
-      ? snapshot.featuredDungeons
-      : featuredDungeonSlugsForWeek(weekIndex);
+  let featuredDungeons: string[] = [];
+  if (snapshotIsCurrent) {
+    featuredDungeons = snapshot!.featuredDungeons;
+  } else {
+    featuredDungeons = featuredDungeonSlugsForWeek(weekIndex);
+  }
 
   return {
-    generatedAt: snapshot?.generatedAt ?? now.toISOString(),
+    generatedAt: snapshotIsCurrent
+      ? snapshot!.generatedAt
+      : now.toISOString(),
     weekIndex,
     weekStart,
     weekEnd,

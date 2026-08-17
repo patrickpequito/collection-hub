@@ -9,6 +9,11 @@ export type LootItem = {
   classOrWeaponType?: string | null;
   damageType?: string | null;
   ammoType?: string | null;
+  /**
+   * Manifest hashes that count as owned for this row (primary + alternates /
+   * collectible-linked variants). When omitted, only `itemHash` is checked.
+   */
+  ownershipHashes?: string[];
 };
 
 export type ActivityArmorRow = {

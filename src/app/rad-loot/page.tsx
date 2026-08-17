@@ -16,7 +16,7 @@ import {
   featuredActivitySlugs,
 } from "@/lib/rad-loot/featured-activities";
 
-export const revalidate = 3600;
+export const revalidate = 1800;
 
 export default async function RadLootPage() {
   const oauthConfigured = isBungieOAuthConfigured();

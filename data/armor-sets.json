@@ -1032,6 +1032,16 @@
             "itemHash": "2097219064",
             "name": "Clutch Extol Gloves",
             "iconPath": "/common/destiny2_content/icons/b0e7d8eddad180277d6e2a2e75fdda93.jpg"
+          },
+          "classItem": {
+            "itemHash": "2188974669",
+            "name": "Clutch Extol Bond",
+            "iconPath": "/common/destiny2_content/icons/6272aef5c37314441e09573fcf84051b.jpg"
+          },
+          "chest": {
+            "itemHash": "3261819408",
+            "name": "Clutch Extol Robes",
+            "iconPath": "/common/destiny2_content/icons/713458d0255bbf2e3fad894283538c60.jpg"
           }
         },
         "hunter": {
@@ -1056,9 +1066,9 @@
             "iconPath": "/common/destiny2_content/icons/1eed30f03c439d808b9655c3fa6e680d.jpg"
           },
           "classItem": {
-            "itemHash": "693067797",
-            "name": "Wing Contender",
-            "iconPath": "/common/destiny2_content/icons/47d4acc211e5ac4e7dcb4cbecf86a45e.jpg"
+            "itemHash": "921467658",
+            "name": "Clutch Extol Cloak",
+            "iconPath": "/common/destiny2_content/icons/2b61b5f547fc8bb956a36f6b98b9e69c.jpg"
           }
         },
         "titan": {
@@ -1083,9 +1093,9 @@
             "iconPath": "/common/destiny2_content/icons/9c206a68d9535aeafe798302bf9d51b5.jpg"
           },
           "classItem": {
-            "itemHash": "1613581523",
-            "name": "Wing Discipline",
-            "iconPath": "/common/destiny2_content/icons/3f39ec70e3667d3545c346e4915f3541.jpg"
+            "itemHash": "4150060382",
+            "name": "Clutch Extol Mark",
+            "iconPath": "/common/destiny2_content/icons/b37607378391f2c73c5186769b96e381.jpg"
           }
         }
       }
@@ -6222,9 +6232,9 @@
             "iconPath": "/common/destiny2_content/icons/fc949a3a34dbbdc4517c73831ad7410d.jpg"
           },
           "classItem": {
-            "itemHash": "3014775444",
-            "name": "Mark of Shelter",
-            "iconPath": "/common/destiny2_content/icons/eb034f97382e845096dfdd20a01a5317.jpg"
+            "itemHash": "456484913",
+            "name": "Photosuede Mark",
+            "iconPath": "/common/destiny2_content/icons/d0047b6cc462af810da1b64098f025a5.jpg"
           }
         },
         "hunter": {
@@ -6249,9 +6259,9 @@
             "iconPath": "/common/destiny2_content/icons/fb5c379b8c818b30a8ed2b711d717e51.jpg"
           },
           "classItem": {
-            "itemHash": "2629204288",
-            "name": "Vigil of Heroes",
-            "iconPath": "/common/destiny2_content/icons/11cf5c07eb8ae8d51757c616dec5baad.jpg"
+            "itemHash": "3691455821",
+            "name": "Photosuede Cloak",
+            "iconPath": "/common/destiny2_content/icons/0288cc404c3ceeb66279b1b63bf33b6b.jpg"
           }
         },
         "warlock": {
@@ -6269,6 +6279,16 @@
             "itemHash": "3611754012",
             "name": "Photosuede Hood",
             "iconPath": "/common/destiny2_content/icons/1352dafd1c3e87f17aa855976f032403.jpg"
+          },
+          "classItem": {
+            "itemHash": "4156676002",
+            "name": "Photosuede Bond",
+            "iconPath": "/common/destiny2_content/icons/46d36e8d7d076e3191b8c704570c5be3.jpg"
+          },
+          "chest": {
+            "itemHash": "1080431755",
+            "name": "Photosuede Robes",
+            "iconPath": "/common/destiny2_content/icons/dcba5623ffdd42a5855eb27716e8f0f5.jpg"
           }
         }
       }
@@ -8831,6 +8851,16 @@
             "itemHash": "849255710",
             "name": "Tusked Allegiance Hood",
             "iconPath": "/common/destiny2_content/icons/e7097b6ea281566e88650f842cdf8503.jpg"
+          },
+          "classItem": {
+            "itemHash": "950963812",
+            "name": "Tusked Allegiance Bond",
+            "iconPath": "/common/destiny2_content/icons/457b307063a9288302b412ea4765aaa5.jpg"
+          },
+          "chest": {
+            "itemHash": "3465627817",
+            "name": "Tusked Allegiance Robes",
+            "iconPath": "/common/destiny2_content/icons/4f759538d3ba46c507322c1815dd600c.jpg"
           }
         },
         "titan": {
@@ -9364,9 +9394,9 @@
             "iconPath": "/common/destiny2_content/icons/5eadf804f71c966f654b30e009f21a7e.jpg"
           },
           "classItem": {
-            "itemHash": "2993008662",
-            "name": "Ancient Apocalypse Mark",
-            "iconPath": "/common/destiny2_content/icons/bdb04e3532962eb9732b895dce68d39e.jpg"
+            "itemHash": "3451283089",
+            "name": "Viperidax Mark",
+            "iconPath": "/common/destiny2_content/icons/5174210095153855aa1eb797a10a88d7.jpg"
           }
         },
         "hunter": {
@@ -9391,9 +9421,9 @@
             "iconPath": "/common/destiny2_content/icons/f612c76e32bb6291bd4946c0b6543910.jpg"
           },
           "classItem": {
-            "itemHash": "436615288",
-            "name": "Ancient Apocalypse Cloak",
-            "iconPath": "/common/destiny2_content/icons/ccc5b4164104b566fb22ad9b65a5ba85.jpg"
+            "itemHash": "2820165421",
+            "name": "Viperidax Cloak",
+            "iconPath": "/common/destiny2_content/icons/bce8a542e0cef9a737dda0fecae2856a.jpg"
           }
         },
         "warlock": {
@@ -9411,6 +9441,16 @@
             "itemHash": "4291183556",
             "name": "Viperidax Hood",
             "iconPath": "/common/destiny2_content/icons/6f2e965fe0de9835b8922252589d3052.jpg"
+          },
+          "classItem": {
+            "itemHash": "241291034",
+            "name": "Viperidax Bond",
+            "iconPath": "/common/destiny2_content/icons/c364164cc85069ba0c36fde8fb404760.jpg"
+          },
+          "chest": {
+            "itemHash": "959484195",
+            "name": "Viperidax Robes",
+            "iconPath": "/common/destiny2_content/icons/819942163f7ca63ee8f362a6d8855827.jpg"
           }
         }
       }

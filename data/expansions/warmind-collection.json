@@ -1,0 +1,26 @@
+{
+  "badgeName": "",
+  "iconPath": "",
+  "bannerIconPath": "",
+  "completionRecordHash": "",
+  "items": [],
+  "regionChests": {
+    "checklistHash": "",
+    "triumphHash": "",
+    "entries": []
+  },
+  "lostSectors": {
+    "checklistHash": "",
+    "discoveryRecordHash": "",
+    "sectors": []
+  },
+  "wellspring": {
+    "normalRecordHash": "",
+    "masterRecordHash": "",
+    "bosses": []
+  },
+  "campaign": {
+    "legendaryRecordHash": "",
+    "missions": []
+  }
+}

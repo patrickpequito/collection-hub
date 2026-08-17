@@ -24,8 +24,14 @@ export function LootItemGrid({
   itemHrefs,
 }: LootItemGridProps) {
   const hrefs = itemHrefs ?? weaponHrefs;
-  const isOwned = (itemHash: string) =>
-    resolveItemOwned?.(itemHash) ?? ownedItemHashes.has(itemHash);
+  const isOwned = (itemHash: string) => {
+    if (resolveItemOwned) return resolveItemOwned(itemHash);
+    const item = items.find((entry) => entry.itemHash === itemHash);
+    const hashes = item?.ownershipHashes?.length
+      ? item.ownershipHashes
+      : [itemHash];
+    return hashes.some((hash) => ownedItemHashes.has(hash));
+  };
   return (
     <div className="flex flex-wrap gap-1.5">
       {items.map((item) => (

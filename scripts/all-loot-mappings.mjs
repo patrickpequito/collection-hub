@@ -108,11 +108,37 @@ export function isExpansionLabel(label) {
 /** Lightfall expansion emblem on Year 6 gear (manifest season 20). */
 export const LIGHTFALL_WATERMARK = "fc02418ad2002351a3f88faa5b14eb88.png";
 
+/**
+ * Witch Queen expansion emblem. DIM maps this watermark to manifest season 16
+ * (Season of the Risen), but playlist/expansion gear with this icon belongs to
+ * The Witch Queen chapter — not S16.
+ */
+export const WITCH_QUEEN_WATERMARK = "0b441021fbc328e6d0e2abc895f5c96e.png";
+
+/** Season of the Risen watermark (true S16 season pass gear). */
+export const RISEN_WATERMARK = "7b41678824a620d4f295984862702179.png";
+
+/**
+ * Hard name-family overrides when watermark/source disagree (e.g. mixed emblems
+ * on one season-pass set).
+ */
+export function resolveItemNameSeasonOverride(name) {
+  if (!name) return null;
+  if (/^Tusked Allegiance\b/i.test(name)) {
+    return {
+      label: "S16 Season of the Risen",
+      seasonIconPath: `/common/destiny2_content/icons/${RISEN_WATERMARK}`,
+    };
+  }
+  return null;
+}
+
 /** Watermarks whose majority vote is misleading (shared across legacy eras). */
 export const WATERMARK_LABEL_OVERRIDES = {
   "7ba9d804508dd083ec20fcdb8ba0869d.png": "Curse of Osiris",
   "a15754752f40aaf7b1b00aadb70a8f35.png": "Shadowkeep",
   [LIGHTFALL_WATERMARK]: "Lightfall",
+  [WITCH_QUEEN_WATERMARK]: "The Witch Queen",
   "4376a7d734583ae347acf9732aa3bb43.png": "The Edge of Fate",
   "95f7754d52d6016fdc445fb62aa7a31e.png": "Renegades",
   "0ac354c1c326441716ddb15d2c158c59.png": "S26 Episode: Heresy",
@@ -1916,6 +1942,11 @@ export function resolveVersionSeasonLabel(
     salvationsEdgeS29MinIndex = null,
   } = {},
 ) {
+  const nameOverride = resolveItemNameSeasonOverride(
+    item?.displayProperties?.name,
+  );
+  if (nameOverride) return nameOverride.label;
+
   const source = resolveCollectibleSourceString(collectible);
   const basename = watermarkBasename(item.iconWatermark);
 

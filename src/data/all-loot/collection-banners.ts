@@ -32,8 +32,8 @@ export const ALL_LOOT_COLLECTION_BANNERS: AllLootCollectionBanner[] = [
     imageFile: "armor-sets.webp",
   },
   {
-    title: "Expansions/Seasons",
-    comingSoon: true,
+    title: "Expansions & Seasons",
+    href: "/expansions",
     imageFile: "expansions-seasons.webp",
   },
   {

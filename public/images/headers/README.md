@@ -11,6 +11,15 @@ Full-width strip at the top of catalog pages (**200 px** tall on screen). Images
 | Crucible | `public/images/headers/crucible-header.webp` |
 | Gambit | `public/images/headers/gambit-header.webp` |
 | Vanguard Ops | `public/images/headers/vanguard-ops-header.webp` |
+| Expansion hubs | `public/images/headers/{slug}-header.webp` (e.g. `the-witch-queen-header.webp`, `lightfall-header.webp`) |
+| Season hubs (later) | `public/images/headers/{slug}-header.webp` (e.g. `s16-season-of-the-risen-header.webp`) |
+
+Expansion / season **index card** art (the small banners on `/expansions`) lives in:
+
+- `public/images/expansions/activities/{slug}.webp`
+- `public/images/seasons/activities/{slug}.webp`
+
+See those folders’ README files for the full filename list.
 
 | | |
 |---|---|

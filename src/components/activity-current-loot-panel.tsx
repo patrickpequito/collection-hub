@@ -74,8 +74,19 @@ function ActivityArmorGrid({
   | "resolveItemOwned"
   | "itemHrefs"
 >) {
-  const isOwned = (itemHash: string) =>
-    resolveItemOwned?.(itemHash) ?? ownedItemHashes.has(itemHash);
+  const isOwned = (itemHash: string) => {
+    if (resolveItemOwned) return resolveItemOwned(itemHash);
+    for (const row of armorRows) {
+      for (const piece of Object.values(row.pieces)) {
+        if (!piece || piece.itemHash !== itemHash) continue;
+        const hashes = piece.ownershipHashes?.length
+          ? piece.ownershipHashes
+          : [itemHash];
+        return hashes.some((hash) => ownedItemHashes.has(hash));
+      }
+    }
+    return ownedItemHashes.has(itemHash);
+  };
 
   return (
     <div className="space-y-4">

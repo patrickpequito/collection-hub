@@ -12,7 +12,7 @@ import { featuredActivityEntries } from "@/lib/rad-loot/featured-activities";
 import siteLogo from "../../public/icon.png";
 
 /** Cacheable homepage — auth and scores hydrate on the client. */
-export const revalidate = 3600;
+export const revalidate = 1800;
 
 export default async function Home() {
   const oauthConfigured = isBungieOAuthConfigured();

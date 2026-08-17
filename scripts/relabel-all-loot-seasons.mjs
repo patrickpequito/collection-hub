@@ -31,6 +31,7 @@ import {
   resolveSeasonLabelFromSource,
   isSourceObtainable,
   isRecurringVersionSource,
+  resolveItemNameSeasonOverride,
 } from "./all-loot-mappings.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -307,6 +308,27 @@ function correctEntrySource(entry) {
   return entry.source ?? "";
 }
 
+function applyItemNameSeasonOverride(entry) {
+  const override = resolveItemNameSeasonOverride(entry.name);
+  if (!override) return;
+
+  entry.seasonLabel = override.label;
+  entry.seasonNumber = displayNumberFromLabel(override.label);
+  if (override.seasonIconPath) {
+    entry.seasonIconPath = override.seasonIconPath;
+  }
+  delete entry.eventLabel;
+
+  for (const version of entry.versions ?? []) {
+    version.seasonLabel = override.label;
+    version.seasonNumber = displayNumberFromLabel(override.label);
+    if (override.seasonIconPath) {
+      version.seasonIconPath = override.seasonIconPath;
+    }
+    delete version.eventLabel;
+  }
+}
+
 function applyEntryLabels(entry, dimSeasonData) {
   entry.source = correctEntrySource(entry);
   entry.seasonLabel = normalizeMonumentLabel(entry.seasonLabel);
@@ -365,6 +387,8 @@ function applyEntryLabels(entry, dimSeasonData) {
       else delete entry.eventLabel;
     }
   }
+
+  applyItemNameSeasonOverride(entry);
 
   entry.obtainable = isSourceObtainable(
     (entry.source ?? "").replace(/^Source:\s*/i, ""),

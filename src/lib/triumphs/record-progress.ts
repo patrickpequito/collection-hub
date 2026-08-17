@@ -55,9 +55,37 @@ export function formatProgressDescription(
 
 /** DestinyRecordState flags from Bungie manifest. */
 const RECORD_REDEEMED = 1;
+const OBJECTIVE_NOT_COMPLETED = 4;
+const ENTITLEMENT_UNOWNED = 32;
 
 export function isRecordRedeemed(state: number | undefined): boolean {
   return Boolean(state && (state & RECORD_REDEEMED));
+}
+
+/**
+ * Bungie clears ObjectiveNotCompleted when objectives are done — including
+ * completed-but-unclaimed records (state 0 / RewardUnavailable).
+ */
+export function isRecordObjectivesMet(state: number | undefined): boolean {
+  if (state === undefined) return false;
+  if (state & ENTITLEMENT_UNOWNED) return false;
+  return (state & OBJECTIVE_NOT_COMPLETED) === 0;
+}
+
+/** Profile record complete: redeemed, objectives met in state, or live objective progress. */
+export function isProfileRecordComplete(
+  instance: RecordInstance | undefined,
+): boolean {
+  if (!instance) return false;
+  if (isRecordRedeemed(instance.state)) return true;
+  if (isRecordObjectivesMet(instance.state)) return true;
+  const objectives = instance.objectives ?? [];
+  if (objectives.length === 0) return false;
+  return objectives.every(
+    (objective) =>
+      Boolean(objective.complete) ||
+      objective.progress >= objective.completionValue,
+  );
 }
 
 function isObjectiveComplete(
@@ -84,7 +112,7 @@ export function isRecordInstanceComplete(
   record: TriumphRecord,
   instance: RecordInstance | undefined,
 ): boolean {
-  if (isRecordRedeemed(instance?.state)) return true;
+  if (isProfileRecordComplete(instance)) return true;
 
   if (!record.objectives.length) {
     return false;

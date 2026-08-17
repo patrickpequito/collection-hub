@@ -2,7 +2,8 @@
  * Builds data/featured-activities.json for RAD Loot weekly highlights.
  *
  * Raids: Bungie public milestones (weekly challenge on any difficulty).
- * Dungeons: rotator schedule in data/featured-rotation-schedule.json.
+ * Dungeons: Kyber's Corner weekly reset (primary), Blueberries "Dungeon this
+ * week" cards (fallback). Bungie does not expose featured dungeons.
  *
  * Usage: node scripts/generate-featured-activities.mjs
  */
@@ -11,11 +12,15 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  DUNGEON_ROTATION_WEEKS,
   featuredDungeonSlugsForWeek,
   featuredRaidsFromMilestones,
   featuredRaidFallbackForWeek,
+  fetchFeaturedDungeonsFromBlueberries,
+  fetchFeaturedDungeonsFromKyber,
+  getDungeonRotationWeeks,
+  reloadSchedule,
   rotationWeekIndex,
+  upsertDungeonWeek,
   weekBounds,
 } from "./featured-rotation-shared.mjs";
 
@@ -75,13 +80,91 @@ async function resolveFeaturedRaids(weekIndex) {
   return featuredRaidFallbackForWeek(weekIndex);
 }
 
+function samePair(a, b) {
+  if (!a?.length || !b?.length || a.length !== b.length) return false;
+  const left = [...a].sort().join(",");
+  const right = [...b].sort().join(",");
+  return left === right;
+}
+
+async function resolveFeaturedDungeons(weekIndex, weekStart) {
+  const fromSchedule = featuredDungeonSlugsForWeek(weekIndex);
+  const candidates = [];
+
+  try {
+    const fromKyber = await fetchFeaturedDungeonsFromKyber(weekStart);
+    console.log(`Kyber live dungeons: [${fromKyber.join(", ")}]`);
+    candidates.push({ source: "kyber", pair: fromKyber });
+  } catch (error) {
+    console.warn("Kyber dungeon scrape skipped:", error.message ?? error);
+  }
+
+  try {
+    const fromBlueberries = await fetchFeaturedDungeonsFromBlueberries();
+    console.log(
+      `Blueberries this-week dungeons: [${fromBlueberries.join(", ")}]`,
+    );
+    candidates.push({ source: "blueberries", pair: fromBlueberries });
+  } catch (error) {
+    console.warn("Blueberries dungeon scrape skipped:", error.message ?? error);
+  }
+
+  // Prefer Kyber when present; Blueberries is the fast fallback.
+  // If Kyber still shows last week's pair but Blueberries already flipped,
+  // prefer Blueberries when they disagree.
+  let chosen = null;
+  if (candidates.length === 1) {
+    chosen = candidates[0];
+  } else if (candidates.length > 1) {
+    const kyber = candidates.find((entry) => entry.source === "kyber");
+    const blueberries = candidates.find(
+      (entry) => entry.source === "blueberries",
+    );
+    if (kyber && blueberries && !samePair(kyber.pair, blueberries.pair)) {
+      console.warn(
+        `Kyber/Blueberries disagree (kyber=[${kyber.pair.join(", ")}] blueberries=[${blueberries.pair.join(", ")}]); preferring Blueberries live cards`,
+      );
+      chosen = blueberries;
+    } else {
+      chosen = kyber ?? blueberries;
+    }
+  }
+
+  if (chosen?.pair?.length) {
+    if (!samePair(chosen.pair, fromSchedule)) {
+      try {
+        upsertDungeonWeek(weekIndex, chosen.pair);
+        reloadSchedule();
+        console.log(
+          `Updated schedule dungeon week ${weekIndex} from ${chosen.source} → [${chosen.pair.join(", ")}]`,
+        );
+      } catch (error) {
+        console.warn("Could not upsert dungeon schedule week:", error);
+      }
+    }
+    return chosen.pair;
+  }
+
+  if (fromSchedule.length > 0) {
+    console.warn(
+      `Using confirmed schedule fallback for week ${weekIndex}: [${fromSchedule.join(", ")}]`,
+    );
+    return fromSchedule;
+  }
+
+  throw new Error(
+    `No featured dungeons for week ${weekIndex}: live scrapes failed and schedule has no confirmed pair`,
+  );
+}
+
 async function main() {
+  reloadSchedule();
   const now = new Date();
   const weekIndex = rotationWeekIndex(now);
   const { weekStart, weekEnd } = weekBounds(weekIndex);
   const [featuredRaids, featuredDungeons] = await Promise.all([
     resolveFeaturedRaids(weekIndex),
-    Promise.resolve(featuredDungeonSlugsForWeek(weekIndex)),
+    resolveFeaturedDungeons(weekIndex, weekStart),
   ]);
 
   if (featuredRaids.length === 0) {
@@ -99,7 +182,7 @@ async function main() {
     weekEnd,
     featuredRaids,
     featuredDungeons,
-    rotationWeeks: DUNGEON_ROTATION_WEEKS.length,
+    rotationWeeks: getDungeonRotationWeeks().length,
   };
 
   const outDir = resolve(root, "data");

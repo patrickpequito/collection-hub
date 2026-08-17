@@ -95,6 +95,21 @@ const EXPLICIT_CLASS_ITEMS_BY_SET = {
     hunter: "Wall-watcher Cloak",
     warlock: "Wall-Watcher Bond",
   },
+  Photosuede: {
+    hunter: "Photosuede Cloak",
+    titan: "Photosuede Mark",
+    warlock: "Photosuede Bond",
+  },
+  "Clutch Extol": {
+    hunter: "Clutch Extol Cloak",
+    titan: "Clutch Extol Mark",
+    warlock: "Clutch Extol Bond",
+  },
+  Viperidax: {
+    hunter: "Viperidax Cloak",
+    titan: "Viperidax Mark",
+    warlock: "Viperidax Bond",
+  },
   ...UNIFORM_CRUCIBLE_CLASS_ITEMS,
 };
 
@@ -250,6 +265,12 @@ function buildArmorSets(items, collectibles) {
             !usedClassItems.has(item.hash),
         )
       : classItems.find(
+          (item) =>
+            item.base === set.name &&
+            item.cls === cls &&
+            !usedClassItems.has(item.hash),
+        ) ??
+        classItems.find(
           (item) =>
             item.sourceLabel === set.sourceLabel &&
             item.cls === cls &&

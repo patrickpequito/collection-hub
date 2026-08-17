@@ -2,10 +2,15 @@ name: Refresh featured activities
 
 on:
   schedule:
-    # Tuesday 17:05 UTC — weekly reset + 5 min (19:05 Madrid summer).
+    # Tuesday after weekly reset (17:00 UTC) — several retries because Bungie
+    # milestones and weekly reset posts often lag the reset by minutes/hours.
     - cron: "5 17 * * 2"
-    # Retry if Bungie milestones are slow to update after reset.
+    - cron: "20 17 * * 2"
     - cron: "35 17 * * 2"
+    - cron: "5 18 * * 2"
+    - cron: "5 19 * * 2"
+    # Daily safety net if Tuesday jobs were skipped (inactive repo / Actions lag).
+    - cron: "15 17 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -57,7 +62,7 @@ jobs:
 
       - name: Commit and push if changed
         run: |
-          git add data/featured-activities.json
+          git add data/featured-activities.json data/featured-rotation-schedule.json
 
           if git diff --cached --quiet; then
             echo "No changes in featured activities"
@@ -66,5 +71,5 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore(data): refresh featured raid and dungeon rotation" -m "Scheduled sync of data/featured-activities.json."
+          git commit -m "chore(data): refresh featured raid and dungeon rotation" -m "Scheduled sync of featured-activities.json (Bungie raids + Kyber/Blueberries dungeons)."
           git push

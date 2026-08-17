@@ -1,0 +1,483 @@
+{
+  "generatedAt": "2026-07-23T16:13:43.553Z",
+  "badgePresentationNodeHash": "3016040694",
+  "badgeName": "Throne World Collector",
+  "iconPath": "/common/destiny2_content/icons/1fe5c22c3381c99f26f91b03a95e5d77.png",
+  "bannerIconPath": "/common/destiny2_content/icons/576e5c4125b3eee8ee33eba1f388ffcc.jpg",
+  "completionRecordHash": "1236276112",
+  "items": [
+    {
+      "itemHash": "2812324400",
+      "collectibleHash": "4028619089",
+      "name": "Parasite",
+      "iconPath": "/common/destiny2_content/icons/0a71a14d8614d619a40649f09b28b466.jpg",
+      "itemTypeDisplayName": "Grenade Launcher",
+      "rarity": "Exotic",
+      "section": "weapons",
+      "source": ""
+    },
+    {
+      "itemHash": "2535142413",
+      "collectibleHash": "3810283242",
+      "name": "Edge of Action",
+      "iconPath": "/common/destiny2_content/icons/add494c1e1fbdb062b7f6dc4c179c35b.jpg",
+      "itemTypeDisplayName": "Glaive",
+      "rarity": "Exotic",
+      "section": "weapons",
+      "source": ""
+    },
+    {
+      "itemHash": "2607304614",
+      "collectibleHash": "4106136257",
+      "name": "Empirical Evidence",
+      "iconPath": "/common/destiny2_content/icons/97af54c6708760ad3e27ddc27fe1eb28.jpg",
+      "itemTypeDisplayName": "Sidearm",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "1526296434",
+      "collectibleHash": "1395483393",
+      "name": "Forensic Nightmare",
+      "iconPath": "/common/destiny2_content/icons/9ac3a0ba63e6e4e44e4157c95d8da018.jpg",
+      "itemTypeDisplayName": "Submachine Gun",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "297296830",
+      "collectibleHash": "3921390401",
+      "name": "Pointed Inquiry",
+      "iconPath": "/common/destiny2_content/icons/3e3cffd872a5ed87dbefad743cff8e13.jpg",
+      "itemTypeDisplayName": "Scout Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "1994645182",
+      "collectibleHash": "3257565710",
+      "name": "Likely Suspect",
+      "iconPath": "/common/destiny2_content/icons/00cc5ab4e029c8c7fc72bc10b46186ae.jpg",
+      "itemTypeDisplayName": "Fusion Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "3175851496",
+      "collectibleHash": "2825706382",
+      "name": "Red Herring",
+      "iconPath": "/common/destiny2_content/icons/1a1d84564db245c7fdf3f9bd5b75ef15.jpg",
+      "itemTypeDisplayName": "Rocket Launcher",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "1399109800",
+      "collectibleHash": "1458222686",
+      "name": "Fel Taradiddle",
+      "iconPath": "/common/destiny2_content/icons/b310e3fcc77442904c6ef28124be4d01.jpg",
+      "itemTypeDisplayName": "Combat Bow",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "927567426",
+      "collectibleHash": "1554180090",
+      "name": "Come to Pass",
+      "iconPath": "/common/destiny2_content/icons/42c740833f7ac00b78355473a1161ed7.jpg",
+      "itemTypeDisplayName": "Auto Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "3865728990",
+      "collectibleHash": "2040522335",
+      "name": "Father's Sins",
+      "iconPath": "/common/destiny2_content/icons/88f8dc84635c93e4cd2b0eded9575648.jpg",
+      "itemTypeDisplayName": "Sniper Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "2721157927",
+      "collectibleHash": "77011569",
+      "name": "Tarnation",
+      "iconPath": "/common/destiny2_content/icons/7fe6e137bf2355666de676608c813eca.jpg",
+      "itemTypeDisplayName": "Grenade Launcher",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "3499782248",
+      "collectibleHash": "2446789948",
+      "name": "Star Jasmine",
+      "iconPath": "/common/destiny2_content/icons/d5b73fa2695333976676885a2c1ee6e0.jpg",
+      "itemTypeDisplayName": "Ship",
+      "rarity": "Exotic",
+      "section": "other",
+      "source": ""
+    },
+    {
+      "itemHash": "528474811",
+      "collectibleHash": "3974629142",
+      "name": "Fundament Shell",
+      "iconPath": "/common/destiny2_content/icons/1c2a8bbbc6a04607e78ebf74396c92dc.jpg",
+      "itemTypeDisplayName": "Ghost Shell",
+      "rarity": "Exotic",
+      "section": "other",
+      "source": ""
+    },
+    {
+      "itemHash": "2641682052",
+      "collectibleHash": "3404704032",
+      "name": "Queen's Colors",
+      "iconPath": "/common/destiny2_content/icons/d50339e31cd29156418641d049585de9.jpg",
+      "itemTypeDisplayName": "Shader",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": ""
+    },
+    {
+      "itemHash": "816686753",
+      "collectibleHash": "4260661199",
+      "name": "Ruinous Clash",
+      "iconPath": "/common/destiny2_content/icons/1c618b1718e795ec2ae57095d47216af.jpg",
+      "itemTypeDisplayName": "Shader",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": ""
+    },
+    {
+      "itemHash": "787024997",
+      "collectibleHash": "2247400319",
+      "name": "A Higher Truth",
+      "iconPath": "/common/destiny2_content/icons/da283135842de6983df5ab6c595ce428.jpg",
+      "itemTypeDisplayName": "Emblem",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": ""
+    },
+    {
+      "itemHash": "2126560579",
+      "collectibleHash": "346673204",
+      "name": "Veritas Helm",
+      "iconPath": "/common/destiny2_content/icons/ccffe4de1669b7b703904e9a8d6b7fce.jpg",
+      "itemTypeDisplayName": "Helmet",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "2798065170",
+      "collectibleHash": "109985079",
+      "name": "Veritas Gauntlets",
+      "iconPath": "/common/destiny2_content/icons/4163b0ea6da2e342d9c7d398c9cfa885.jpg",
+      "itemTypeDisplayName": "Gauntlets",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "1320143318",
+      "collectibleHash": "478719209",
+      "name": "Veritas Plate",
+      "iconPath": "/common/destiny2_content/icons/07ec5b7dfa7c8a26eee35702f14889f0.jpg",
+      "itemTypeDisplayName": "Chest Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "3199406764",
+      "collectibleHash": "3172626413",
+      "name": "Veritas Greaves",
+      "iconPath": "/common/destiny2_content/icons/5f1323dbdabbd786347741d68d5fcf28.jpg",
+      "itemTypeDisplayName": "Leg Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "649770495",
+      "collectibleHash": "3243714838",
+      "name": "Veritas Mark",
+      "iconPath": "/common/destiny2_content/icons/a184a26590de4553e6c92198bb0ebcc4.jpg",
+      "itemTypeDisplayName": "Titan Mark",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "542203595",
+      "collectibleHash": "328283190",
+      "name": "Edge of Concurrence",
+      "iconPath": "/common/destiny2_content/icons/6301bf4e6d9d9728aaf5f9bea06c6a1a.jpg",
+      "itemTypeDisplayName": "Glaive",
+      "rarity": "Exotic",
+      "section": "weapons",
+      "source": ""
+    },
+    {
+      "itemHash": "3316852407",
+      "collectibleHash": "2688893296",
+      "name": "Veritas Cowl",
+      "iconPath": "/common/destiny2_content/icons/9aca6ac08ed5c93a081213d8d186380c.jpg",
+      "itemTypeDisplayName": "Helmet",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "2390366526",
+      "collectibleHash": "2585249179",
+      "name": "Veritas Grips",
+      "iconPath": "/common/destiny2_content/icons/1d8de7084bff5859fd4fd0d2857fce8e.jpg",
+      "itemTypeDisplayName": "Gauntlets",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "1660918514",
+      "collectibleHash": "212793517",
+      "name": "Veritas Vest",
+      "iconPath": "/common/destiny2_content/icons/c8ac9300c301bf9e973f133536c43306.jpg",
+      "itemTypeDisplayName": "Chest Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "2809748888",
+      "collectibleHash": "3120119393",
+      "name": "Veritas Strides",
+      "iconPath": "/common/destiny2_content/icons/1a21d64876c24eb94938229093cc9cac.jpg",
+      "itemTypeDisplayName": "Leg Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "2297736067",
+      "collectibleHash": "1784341858",
+      "name": "Veritas Cloak",
+      "iconPath": "/common/destiny2_content/icons/37db887453301832fa5b4a44248ccaf9.jpg",
+      "itemTypeDisplayName": "Hunter Cloak",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "14194600",
+      "collectibleHash": "1089205875",
+      "name": "Edge of Intent",
+      "iconPath": "/common/destiny2_content/icons/beec2a35b2cffd3fac488e0fb8cf25a5.jpg",
+      "itemTypeDisplayName": "Glaive",
+      "rarity": "Exotic",
+      "section": "weapons",
+      "source": ""
+    },
+    {
+      "itemHash": "1795262004",
+      "collectibleHash": "2641714485",
+      "name": "Veritas Hood",
+      "iconPath": "/common/destiny2_content/icons/62bb2d93ac146b1499ed66d19ae36823.jpg",
+      "itemTypeDisplayName": "Helmet",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "201529677",
+      "collectibleHash": "3860728530",
+      "name": "Veritas Gloves",
+      "iconPath": "/common/destiny2_content/icons/73dfc933f90c314d89a4a5344b461d3e.jpg",
+      "itemTypeDisplayName": "Gauntlets",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "4115572467",
+      "collectibleHash": "588781278",
+      "name": "Veritas Robe",
+      "iconPath": "/common/destiny2_content/icons/a6c3bd8d5d98658630a9c5bc9ba8e604.jpg",
+      "itemTypeDisplayName": "Chest Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "872328719",
+      "collectibleHash": "1681490480",
+      "name": "Veritas Boots",
+      "iconPath": "/common/destiny2_content/icons/1b4c388923ed9e56c9d1d7a8852c622c.jpg",
+      "itemTypeDisplayName": "Leg Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    },
+    {
+      "itemHash": "2026031146",
+      "collectibleHash": "1900950217",
+      "name": "Veritas Bond",
+      "iconPath": "/common/destiny2_content/icons/e7df0e1ecb00bf2a86b7e0e6f2f5de47.jpg",
+      "itemTypeDisplayName": "Warlock Bond",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Random Perks: This item cannot be reacquired from Collections."
+    }
+  ],
+  "regionChests": {
+    "checklistHash": "1697465175",
+    "triumphHash": "1473812699",
+    "entries": [
+      {
+        "entryHash": "4180769175",
+        "label": "Region chest 1"
+      },
+      {
+        "entryHash": "1476218840",
+        "label": "Region chest 2"
+      },
+      {
+        "entryHash": "2310431689",
+        "label": "Region chest 3"
+      },
+      {
+        "entryHash": "36550832",
+        "label": "Region chest 4"
+      },
+      {
+        "entryHash": "3879405391",
+        "label": "Region chest 5"
+      },
+      {
+        "entryHash": "331621230",
+        "label": "Region chest 6"
+      },
+      {
+        "entryHash": "2506158573",
+        "label": "Region chest 7"
+      },
+      {
+        "entryHash": "2413985082",
+        "label": "Region chest 8"
+      },
+      {
+        "entryHash": "826419291",
+        "label": "Region chest 9"
+      }
+    ]
+  },
+  "lostSectors": {
+    "checklistHash": "3142056444",
+    "discoveryRecordHash": "2898266416",
+    "sectors": [
+      {
+        "name": "Metamorphosis",
+        "checklistEntryHash": "37242594",
+        "discoveryObjectiveHash": "3916377949",
+        "expertRecordHash": "3139513784",
+        "masterRecordHash": "360449991",
+        "grandmasterRecordHash": "1024748579"
+      },
+      {
+        "name": "Sepulcher",
+        "checklistEntryHash": "2946946913",
+        "discoveryObjectiveHash": "3916377948",
+        "expertRecordHash": "3069389409",
+        "masterRecordHash": "4110051606",
+        "grandmasterRecordHash": "1203728788"
+      },
+      {
+        "name": "Extraction",
+        "checklistEntryHash": "3423978360",
+        "discoveryObjectiveHash": "3916377951",
+        "expertRecordHash": "2027297570",
+        "masterRecordHash": "2188781025",
+        "grandmasterRecordHash": "2691903949"
+      }
+    ]
+  },
+  "wellspring": {
+    "normalRecordHash": "3021602229",
+    "masterRecordHash": "771294727",
+    "bosses": [
+      {
+        "name": "Golmag, Warden of the Spring",
+        "normalObjectiveHash": "345652990",
+        "masterObjectiveHash": "3345283028"
+      },
+      {
+        "name": "Vezuul, Lightflayer",
+        "normalObjectiveHash": "345652991",
+        "masterObjectiveHash": "3345283029"
+      },
+      {
+        "name": "Bor'gong, Warden of the Spring",
+        "normalObjectiveHash": "345652988",
+        "masterObjectiveHash": "3345283030"
+      },
+      {
+        "name": "Zeerik, Lightflayer",
+        "normalObjectiveHash": "345652989",
+        "masterObjectiveHash": "3345283031"
+      }
+    ]
+  },
+  "campaign": {
+    "legendaryRecordHash": "487894732",
+    "missions": [
+      {
+        "name": "The Arrival",
+        "normalRecordHash": "1352545239",
+        "legendObjectiveHash": "2103314193"
+      },
+      {
+        "name": "The Investigation",
+        "normalRecordHash": null,
+        "legendObjectiveHash": "2103314192"
+      },
+      {
+        "name": "The Ghosts",
+        "normalRecordHash": "3881372746",
+        "legendObjectiveHash": "2103314195"
+      },
+      {
+        "name": "The Communion",
+        "normalRecordHash": "760837523",
+        "legendObjectiveHash": "2103314194"
+      },
+      {
+        "name": "The Mirror",
+        "normalRecordHash": null,
+        "legendObjectiveHash": "2103314197"
+      },
+      {
+        "name": "The Cunning",
+        "normalRecordHash": "3343191412",
+        "legendObjectiveHash": "2103314196"
+      },
+      {
+        "name": "The Last Chance",
+        "normalRecordHash": "2090258143",
+        "legendObjectiveHash": "2103314199"
+      },
+      {
+        "name": "The Ritual",
+        "normalRecordHash": "2341041476",
+        "legendObjectiveHash": "2103314198"
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "badgeName": "Europan Collector",
+  "iconPath": "",
+  "bannerIconPath": "",
+  "completionRecordHash": "2949079885",
+  "items": [],
+  "regionChests": {
+    "checklistHash": "",
+    "triumphHash": "",
+    "entries": []
+  },
+  "lostSectors": {
+    "checklistHash": "",
+    "discoveryRecordHash": "",
+    "sectors": []
+  },
+  "wellspring": {
+    "normalRecordHash": "",
+    "masterRecordHash": "",
+    "bosses": []
+  },
+  "campaign": {
+    "legendaryRecordHash": "",
+    "missions": []
+  }
+}

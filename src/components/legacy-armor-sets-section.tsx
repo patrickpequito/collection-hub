@@ -20,6 +20,8 @@ type LegacyArmorSetsSectionProps = {
   resolveItemOwned?: (itemHash: string) => boolean;
   itemHrefs?: Record<string, string>;
   heading?: string;
+  /** Skip the outer bordered section (e.g. nested inside another panel). */
+  bare?: boolean;
 };
 
 function legacySetSource(group: LegacyArmorSetGroup): string {
@@ -38,17 +40,22 @@ export function LegacyArmorSetsSection({
   resolveItemOwned,
   itemHrefs,
   heading = "Legacy armor sets",
+  bare = false,
 }: LegacyArmorSetsSectionProps) {
   if (!groups.length) return null;
 
   const isOwned = (itemHash: string) =>
     resolveItemOwned?.(itemHash) ?? ownedItemHashes.has(itemHash);
 
-  return (
-    <section className="min-w-0 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
-      <h2 className="mb-4 border-b border-zinc-800 pb-3 text-lg font-semibold text-zinc-100">
-        {heading}
-      </h2>
+  const body = (
+    <>
+      {bare ? (
+        <h4 className="mb-3 text-sm font-medium text-zinc-300">{heading}</h4>
+      ) : (
+        <h2 className="mb-4 border-b border-zinc-800 pb-3 text-lg font-semibold text-zinc-100">
+          {heading}
+        </h2>
+      )}
 
       <div className="divide-y divide-zinc-800">
         {groups.map((group) => {
@@ -59,7 +66,7 @@ export function LegacyArmorSetsSection({
             resolveArmorSetPreviewFile(group.setName, legacySetSource(group));
 
           return (
-            <details key={group.setName} className="group py-1">
+            <details key={group.setName} className="group py-1" open={bare}>
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-lg px-2 py-3 transition hover:bg-zinc-800/40 [&::-webkit-details-marker]:hidden">
                 <div className="min-w-0">
                   <p className="font-medium text-zinc-100">{groupTitle}</p>
@@ -143,6 +150,16 @@ export function LegacyArmorSetsSection({
           );
         })}
       </div>
+    </>
+  );
+
+  if (bare) {
+    return <div className="min-w-0">{body}</div>;
+  }
+
+  return (
+    <section className="min-w-0 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
+      {body}
     </section>
   );
 }

@@ -1,44 +1,84 @@
 {
   "epochUtc": "2026-06-09T17:00:00.000Z",
-  "sourceNotes": "Dungeon weeks 0-4 from Dexerto (Monument of Triumph launch). Week 5 from Kyber (Jul 14, 2026). Week 6 from Kyber/user confirm (Jul 21, 2026): Ghosts of the Deep + Shattered Throne. Later weeks are unverified extrapolations — do not trust without a weekly check. Raids come from Bungie public milestones (weekly challenge), not this schedule.",
+  "sourceNotes": "Dungeon weeks 0–8 historically confirmed against live sources (Jul 28 Warlord+Pit, Aug 4 Prophecy+Vesper). Do NOT extrapolate beyond confirmed weeks — generate:featured-activities scrapes Kyber's Corner (primary) and Blueberries this-week cards (fallback when sources disagree) and appends. Raids always prefer Bungie public milestones (weekly challenge).\nWeek 9 confirmed 2026-08-11: sundered-doctrine + grasp-of-avarice.",
   "dungeonWeeks": [
-    ["the-shattered-throne", "duality"],
-    ["pit-of-heresy", "spire-of-the-watcher"],
-    ["ghosts-of-the-deep", "duality"],
-    ["warlords-ruin", "grasp-of-avarice"],
-    ["vespers-host", "duality"],
-    ["sundered-doctrine", "spire-of-the-watcher"],
-    ["ghosts-of-the-deep", "the-shattered-throne"],
-    ["grasp-of-avarice", "warlords-ruin"],
-    ["duality", "vespers-host"],
-    ["spire-of-the-watcher", "the-shattered-throne"],
-    ["ghosts-of-the-deep", "pit-of-heresy"],
-    ["warlords-ruin", "prophecy"],
-    ["vespers-host", "grasp-of-avarice"],
-    ["the-shattered-throne", "duality"],
-    ["pit-of-heresy", "spire-of-the-watcher"],
-    ["prophecy", "ghosts-of-the-deep"],
-    ["grasp-of-avarice", "warlords-ruin"],
-    ["duality", "vespers-host"],
-    ["spire-of-the-watcher", "the-shattered-throne"],
-    ["ghosts-of-the-deep", "pit-of-heresy"],
-    ["warlords-ruin", "prophecy"],
-    ["the-shattered-throne", "grasp-of-avarice"],
-    ["pit-of-heresy", "duality"],
-    ["prophecy", "ghosts-of-the-deep"],
-    ["grasp-of-avarice", "warlords-ruin"],
-    ["duality", "vespers-host"],
-    ["spire-of-the-watcher", "the-shattered-throne"],
-    ["ghosts-of-the-deep", "pit-of-heresy"],
-    ["warlords-ruin", "prophecy"],
-    ["the-shattered-throne", "grasp-of-avarice"]
+    [
+      "the-shattered-throne",
+      "duality"
+    ],
+    [
+      "pit-of-heresy",
+      "spire-of-the-watcher"
+    ],
+    [
+      "ghosts-of-the-deep",
+      "duality"
+    ],
+    [
+      "warlords-ruin",
+      "grasp-of-avarice"
+    ],
+    [
+      "vespers-host",
+      "duality"
+    ],
+    [
+      "spire-of-the-watcher",
+      "sundered-doctrine"
+    ],
+    [
+      "ghosts-of-the-deep",
+      "the-shattered-throne"
+    ],
+    [
+      "warlords-ruin",
+      "pit-of-heresy"
+    ],
+    [
+      "prophecy",
+      "vespers-host"
+    ],
+    [
+      "sundered-doctrine",
+      "grasp-of-avarice"
+    ]
   ],
   "raidFallbackWeeks": [
-    ["vow-of-the-disciple", "last-wish"],
-    ["garden-of-salvation", "kings-fall"],
-    ["root-of-nightmares", "deep-stone-crypt"],
-    ["crotas-end", "vault-of-glass"],
-    ["salvations-edge", "vow-of-the-disciple"],
-    ["kings-fall", "last-wish"]
+    [
+      "vow-of-the-disciple",
+      "last-wish"
+    ],
+    [
+      "garden-of-salvation",
+      "kings-fall"
+    ],
+    [
+      "root-of-nightmares",
+      "deep-stone-crypt"
+    ],
+    [
+      "crotas-end",
+      "vault-of-glass"
+    ],
+    [
+      "salvations-edge",
+      "vow-of-the-disciple"
+    ],
+    [
+      "kings-fall",
+      "last-wish"
+    ],
+    [
+      "garden-of-salvation",
+      "root-of-nightmares"
+    ],
+    [
+      "deep-stone-crypt",
+      "crotas-end"
+    ],
+    [
+      "vault-of-glass",
+      "salvations-edge"
+    ]
   ]
 }

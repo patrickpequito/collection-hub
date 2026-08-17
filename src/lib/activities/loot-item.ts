@@ -1,18 +1,23 @@
 import type { LootItem } from "@/types/activity-loot";
 import type { AllLootItem } from "@/types/all-loot";
+import { collectAllLootItemHashes } from "@/lib/all-loot/item-hashes";
 
 export function weaponMetaFromCatalogItem(
   item: AllLootItem,
 ): Pick<LootItem, "classOrWeaponType" | "damageType" | "ammoType"> {
-  if (item.type !== "Weapon") {
-    return {};
+  if (item.type === "Weapon") {
+    return {
+      classOrWeaponType: item.classOrWeaponType,
+      damageType: item.damageType,
+      ammoType: item.ammoType,
+    };
   }
 
-  return {
-    classOrWeaponType: item.classOrWeaponType,
-    damageType: item.damageType,
-    ammoType: item.ammoType,
-  };
+  if (item.type === "Armor") {
+    return { classOrWeaponType: item.classOrWeaponType };
+  }
+
+  return {};
 }
 
 export function toLootItemFromCatalog(item: AllLootItem): LootItem {
@@ -21,6 +26,7 @@ export function toLootItemFromCatalog(item: AllLootItem): LootItem {
     name: item.name,
     iconPath: item.iconPath,
     source: item.source,
+    ownershipHashes: collectAllLootItemHashes(item),
     ...weaponMetaFromCatalogItem(item),
   };
 }

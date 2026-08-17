@@ -60,20 +60,24 @@ export function rotationWeekIndex(at = new Date()): number {
   return Math.floor(elapsed / (7 * 24 * 60 * 60 * 1000));
 }
 
+/**
+ * Confirmed dungeon pairs only — never modulo-extrapolate past the table.
+ */
 export function featuredDungeonSlugsForWeek(weekIndex: number): string[] {
-  const pair =
-    DUNGEON_ROTATION_WEEKS[weekIndex % DUNGEON_ROTATION_WEEKS.length] ??
-    DUNGEON_ROTATION_WEEKS[0];
-  return [...pair];
+  if (weekIndex < 0 || weekIndex >= DUNGEON_ROTATION_WEEKS.length) {
+    return [];
+  }
+  const pair = DUNGEON_ROTATION_WEEKS[weekIndex];
+  return pair ? [...pair] : [];
 }
 
 export function featuredRaidFallbackForWeek(weekIndex: number): string[] {
   if (!RAID_ROTATION_FALLBACK_WEEKS.length) return [];
   const pair =
-    RAID_ROTATION_FALLBACK_WEEKS[
-      weekIndex % RAID_ROTATION_FALLBACK_WEEKS.length
-    ] ?? RAID_ROTATION_FALLBACK_WEEKS[0];
-  return [...pair].sort();
+    weekIndex >= 0 && weekIndex < RAID_ROTATION_FALLBACK_WEEKS.length
+      ? RAID_ROTATION_FALLBACK_WEEKS[weekIndex]
+      : RAID_ROTATION_FALLBACK_WEEKS[RAID_ROTATION_FALLBACK_WEEKS.length - 1];
+  return pair ? [...pair].sort() : [];
 }
 
 export function weekBounds(weekIndex: number): {
@@ -109,7 +113,7 @@ export async function fetchFeaturedRaidsFromBungie(
     "https://www.bungie.net/Platform/Destiny2/Milestones/",
     {
       headers: { "X-API-Key": apiKey },
-      next: { revalidate: 3600 },
+      next: { revalidate: 1800 },
     },
   );
 

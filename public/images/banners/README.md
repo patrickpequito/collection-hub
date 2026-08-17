@@ -21,7 +21,7 @@ Thin banners on the Loot Collector page (`/all-loot`):
 | Banner | File path |
 |--------|-----------|
 | Destinations | `public/images/banners/destinations.webp` |
-| Expansions/Seasons | `public/images/banners/expansions-seasons.webp` |
+| Expansions & Seasons | `public/images/banners/expansions-seasons.webp` |
 | PvE Activities | `public/images/banners/pve-activities.webp` |
 | PvP Activities | `public/images/banners/pvp-activities.webp` |
 
