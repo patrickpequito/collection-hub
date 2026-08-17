@@ -12,6 +12,7 @@ import { SectionPageLayout } from "@/components/section-page-layout";
 import {
   getExpansionHub,
   getExpansionSlugs,
+  PUBLISHED_EXPANSION_SLUGS,
 } from "@/data/expansions";
 import { expansionHeaderUrl } from "@/lib/page-headers";
 import { resolveExpansionLoot } from "@/lib/expansions/resolve-expansion-loot";
@@ -35,13 +36,15 @@ type ExpansionPageProps = {
 };
 
 export function generateStaticParams() {
-  return getExpansionSlugs().map((slug) => ({ slug }));
+  return getExpansionSlugs()
+    .filter((slug) => PUBLISHED_EXPANSION_SLUGS.has(slug))
+    .map((slug) => ({ slug }));
 }
 
 export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
   const { slug } = await params;
   const hub = getExpansionHub(slug);
-  if (!hub) notFound();
+  if (!hub || !PUBLISHED_EXPANSION_SLUGS.has(hub.slug)) notFound();
 
   const oauthConfigured = isBungieOAuthConfigured();
 

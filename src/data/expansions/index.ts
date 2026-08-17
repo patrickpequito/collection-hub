@@ -13,6 +13,12 @@ import type {
   ExpansionIndexEntry,
 } from "@/data/expansions/types";
 
+/**
+ * Hubs linked from the Expansions index. Everything else stays Coming soon
+ * until reviewed one by one — keep the pages in the repo, just unpublished.
+ */
+export const PUBLISHED_EXPANSION_SLUGS = new Set<string>(["the-witch-queen"]);
+
 /** Chronological expansion hubs with pages (Red War is index-only for now). */
 export const EXPANSION_HUBS: readonly ExpansionHub[] = [
   CURSE_OF_OSIRIS_HUB,
@@ -52,10 +58,12 @@ export const EXPANSION_INDEX_ENTRIES: readonly ExpansionIndexEntry[] = [
   ...[...EXPANSION_HUBS].reverse().map((hub) => ({
     slug: hub.slug,
     title: hub.title,
-    available: hub.available,
+    available: PUBLISHED_EXPANSION_SLUGS.has(hub.slug),
     imageFile: `${hub.slug}.webp`,
     fallbackImageFile: hub.indexImageFile,
-    href: hub.available ? `/expansions/${hub.slug}` : undefined,
+    href: PUBLISHED_EXPANSION_SLUGS.has(hub.slug)
+      ? `/expansions/${hub.slug}`
+      : undefined,
   })),
   RED_WAR_INDEX_ENTRY,
 ];
