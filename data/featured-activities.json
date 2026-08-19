@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T19:33:53.639Z",
+  "generatedAt": "2026-08-19T17:41:58.013Z",
   "weekIndex": 10,
   "weekStart": "2026-08-18T17:00:00.000Z",
   "weekEnd": "2026-08-25T17:00:00.000Z",
@@ -8,8 +8,8 @@
     "kings-fall"
   ],
   "featuredDungeons": [
-    "sundered-doctrine",
-    "grasp-of-avarice"
+    "duality",
+    "the-shattered-throne"
   ],
   "rotationWeeks": 11
 }
