@@ -1,18 +1,503 @@
 {
-  "badgeName": "",
-  "iconPath": "",
-  "bannerIconPath": "",
-  "completionRecordHash": "",
-  "items": [],
+  "generatedAt": "2026-08-21T14:01:15.355Z",
+  "badgePresentationNodeHash": "2388540594",
+  "badgeName": "Lunar Rover",
+  "iconPath": "/common/destiny2_content/icons/51ade09da65039f14cc23b73da9708fa.png",
+  "bannerIconPath": "/common/destiny2_content/icons/576e5c4125b3eee8ee33eba1f388ffcc.jpg",
+  "completionRecordHash": "2961809412",
+  "items": [
+    {
+      "itemHash": "3325778512",
+      "collectibleHash": "2080095754",
+      "name": "A Fine Memorial",
+      "iconPath": "/common/destiny2_content/icons/6542d54fb8338c18b9fc8647f83080d7.jpg",
+      "itemTypeDisplayName": "Machine Gun",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "2164448701",
+      "collectibleHash": "935628460",
+      "name": "Apostate",
+      "iconPath": "/common/destiny2_content/icons/52525a4e5275b4ef070346c0002ea05e.jpg",
+      "itemTypeDisplayName": "Sniper Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Altars of Sorrow"
+    },
+    {
+      "itemHash": "2723909519",
+      "collectibleHash": "1310958655",
+      "name": "Arc Logic",
+      "iconPath": "/common/destiny2_content/icons/488032992ede7027e98ec030b7eab1e4.jpg",
+      "itemTypeDisplayName": "Auto Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "2782847179",
+      "collectibleHash": "3844835635",
+      "name": "Blasphemer",
+      "iconPath": "/common/destiny2_content/icons/a95ed4437f14a01b57b96698271a2f2d.jpg",
+      "itemTypeDisplayName": "Shotgun",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Altars of Sorrow"
+    },
+    {
+      "itemHash": "2232171099",
+      "collectibleHash": "888224289",
+      "name": "Deathbringer",
+      "iconPath": "/common/destiny2_content/icons/1f5c982a56b0fbbde83b2332f0049386.jpg",
+      "itemTypeDisplayName": "Rocket Launcher",
+      "rarity": "Exotic",
+      "section": "weapons",
+      "source": "Source: An Exotic quest or challenge."
+    },
+    {
+      "itemHash": "2931957300",
+      "collectibleHash": "2284436222",
+      "name": "Dream Breaker",
+      "iconPath": "/common/destiny2_content/icons/d856e3685bb9186650628629e2eb705a.jpg",
+      "itemTypeDisplayName": "Fusion Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "4277547616",
+      "collectibleHash": "1100947654",
+      "name": "Every Waking Moment",
+      "iconPath": "/common/destiny2_content/icons/a83c7d3f84bad01bb928848102c2f6aa.jpg",
+      "itemTypeDisplayName": "Submachine Gun",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "3067821200",
+      "collectibleHash": "651531704",
+      "name": "Heretic",
+      "iconPath": "/common/destiny2_content/icons/dbf2563fc0ab4d67ef23f69df28c5081.jpg",
+      "itemTypeDisplayName": "Rocket Launcher",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Altars of Sorrow"
+    },
+    {
+      "itemHash": "3924212056",
+      "collectibleHash": "3336082853",
+      "name": "Loud Lullaby",
+      "iconPath": "/common/destiny2_content/icons/0277cba0329b67398ac98092c566d321.jpg",
+      "itemTypeDisplayName": "Hand Cannon",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "3690523502",
+      "collectibleHash": "526244752",
+      "name": "Love and Death",
+      "iconPath": "/common/destiny2_content/icons/7cb3204cd5e64d887c55a11be3337130.jpg",
+      "itemTypeDisplayName": "Grenade Launcher",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "3870811754",
+      "collectibleHash": "2989993924",
+      "name": "Night Terror",
+      "iconPath": "/common/destiny2_content/icons/ddf05df4c474be05278a09add964cc5d.jpg",
+      "itemTypeDisplayName": "Sword",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "1016668089",
+      "collectibleHash": "4021830821",
+      "name": "One Small Step",
+      "iconPath": "/common/destiny2_content/icons/9fd40b5a4a9b9789ab6d27761bb6a8a7.jpg",
+      "itemTypeDisplayName": "Shotgun",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "208088207",
+      "collectibleHash": "4086234293",
+      "name": "Premonition",
+      "iconPath": "/common/destiny2_content/icons/5ca1e179e2768dfab233716c3844dae6.jpg",
+      "itemTypeDisplayName": "Pulse Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: \"Pit of Heresy\" Dungeon"
+    },
+    {
+      "itemHash": "1645386487",
+      "collectibleHash": "912599803",
+      "name": "Tranquility",
+      "iconPath": "/common/destiny2_content/icons/c2ef49545cf0f771e4e7d547e1a0ae1f.jpg",
+      "itemTypeDisplayName": "Sniper Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "1395261499",
+      "collectibleHash": "1258579677",
+      "name": "Xenophage",
+      "iconPath": "/common/destiny2_content/icons/db42fe5bb4b5158f57f5c2917bb2213a.jpg",
+      "itemTypeDisplayName": "Machine Gun",
+      "rarity": "Exotic",
+      "section": "weapons",
+      "source": "Source: An Exotic quest or challenge."
+    },
+    {
+      "itemHash": "2975563522",
+      "collectibleHash": "3878126055",
+      "name": "Dreambane Bond",
+      "iconPath": "/common/destiny2_content/icons/29487d3169c69cf7bc266951eda59e5f.jpg",
+      "itemTypeDisplayName": "Warlock Bond",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "399547095",
+      "collectibleHash": "2084712382",
+      "name": "Dreambane Boots",
+      "iconPath": "/common/destiny2_content/icons/037992decb484e8e7b33c5e3f7bfcf3e.jpg",
+      "itemTypeDisplayName": "Leg Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "2786161293",
+      "collectibleHash": "1858252020",
+      "name": "Dreambane Cloak",
+      "iconPath": "/common/destiny2_content/icons/65270336e26535bfcf53e9f1015941ab.jpg",
+      "itemTypeDisplayName": "Hunter Cloak",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "1496857121",
+      "collectibleHash": "3422910466",
+      "name": "Dreambane Cowl",
+      "iconPath": "/common/destiny2_content/icons/63fc22632b44523e21840fcc6b39831f.jpg",
+      "itemTypeDisplayName": "Helmet",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "1699964364",
+      "collectibleHash": "3519397513",
+      "name": "Dreambane Gauntlets",
+      "iconPath": "/common/destiny2_content/icons/4edde6deb421ee3939ec3592769759a7.jpg",
+      "itemTypeDisplayName": "Gauntlets",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "3118392309",
+      "collectibleHash": "3396045472",
+      "name": "Dreambane Gloves",
+      "iconPath": "/common/destiny2_content/icons/be4c5ae7d7e4cce0dc7f48475a85644e.jpg",
+      "itemTypeDisplayName": "Gauntlets",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "2345799798",
+      "collectibleHash": "1945708015",
+      "name": "Dreambane Greaves",
+      "iconPath": "/common/destiny2_content/icons/e2361abb2840ba277c6edfb8c3a871dc.jpg",
+      "itemTypeDisplayName": "Leg Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "2293199928",
+      "collectibleHash": "3722517805",
+      "name": "Dreambane Grips",
+      "iconPath": "/common/destiny2_content/icons/6c3dd58d31666e0ba908adde3dda06f7.jpg",
+      "itemTypeDisplayName": "Gauntlets",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "2813078109",
+      "collectibleHash": "2823630262",
+      "name": "Dreambane Helm",
+      "iconPath": "/common/destiny2_content/icons/f3047c9dd1846ab7f6157418d62e873f.jpg",
+      "itemTypeDisplayName": "Helmet",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "1721938300",
+      "collectibleHash": "2885181587",
+      "name": "Dreambane Hood",
+      "iconPath": "/common/destiny2_content/icons/0233fbe0ec36dead004dbc53a6861456.jpg",
+      "itemTypeDisplayName": "Helmet",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "1343302889",
+      "collectibleHash": "4057482792",
+      "name": "Dreambane Mark",
+      "iconPath": "/common/destiny2_content/icons/8df44733dff2d50c14e9fb3da1a7cb77.jpg",
+      "itemTypeDisplayName": "Titan Mark",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "175015316",
+      "collectibleHash": "797283143",
+      "name": "Dreambane Plate",
+      "iconPath": "/common/destiny2_content/icons/b7c549cd817bdf0865c5c084d88e2cde.jpg",
+      "itemTypeDisplayName": "Chest Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "4235863403",
+      "collectibleHash": "617926168",
+      "name": "Dreambane Robes",
+      "iconPath": "/common/destiny2_content/icons/595fdf566e2f8005be1b5870dccfab82.jpg",
+      "itemTypeDisplayName": "Chest Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "328467570",
+      "collectibleHash": "1002180131",
+      "name": "Dreambane Strides",
+      "iconPath": "/common/destiny2_content/icons/4a292d26299106569469a43a0ffebd28.jpg",
+      "itemTypeDisplayName": "Leg Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "3434445392",
+      "collectibleHash": "317834747",
+      "name": "Dreambane Vest",
+      "iconPath": "/common/destiny2_content/icons/58ac083465f7bec58de93934f098d647.jpg",
+      "itemTypeDisplayName": "Chest Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "298334057",
+      "collectibleHash": "292635427",
+      "name": "A Sibyl's Dreams",
+      "iconPath": "/common/destiny2_content/icons/c92f7dbf32b47dbdb37ec4d0fc0c0e75.jpg",
+      "itemTypeDisplayName": "Emblem",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Complete all Nightmare Hunt time trials on Master difficulty."
+    },
+    {
+      "itemHash": "3708784304",
+      "collectibleHash": "3016392134",
+      "name": "Bane of Crota Shell",
+      "iconPath": "/common/destiny2_content/icons/d0ae8f57bbc9c00b483a0a86dedd506b.jpg",
+      "itemTypeDisplayName": "Ghost Shell",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Altars of Sorrow"
+    },
+    {
+      "itemHash": "4023500750",
+      "collectibleHash": "3187653285",
+      "name": "Bane of Tyrants",
+      "iconPath": "/common/destiny2_content/icons/2220298c7a3610879031c18a3390d840.jpg",
+      "itemTypeDisplayName": "Ship",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: \"Pit of Heresy\" Dungeon"
+    },
+    {
+      "itemHash": "2056256565",
+      "collectibleHash": "1552790513",
+      "name": "Lunar Gloom",
+      "iconPath": "/common/destiny2_content/icons/33163da8f0f8fff402a639f05e56a9fc.jpg",
+      "itemTypeDisplayName": "Shader",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "2056256564",
+      "collectibleHash": "1552790512",
+      "name": "Lunar Halcyon Gilt",
+      "iconPath": "/common/destiny2_content/icons/6953830d6a17bc001aaa15bd33a692f4.jpg",
+      "itemTypeDisplayName": "Shader",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "298334056",
+      "collectibleHash": "292635426",
+      "name": "Lunar Memoriam",
+      "iconPath": "/common/destiny2_content/icons/91b1c495380b5296e3f46341605c10cb.jpg",
+      "itemTypeDisplayName": "Emblem",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Among the lost Ghosts of the Moon."
+    },
+    {
+      "itemHash": "3382260610",
+      "collectibleHash": "3614640153",
+      "name": "Moonrider One",
+      "iconPath": "/common/destiny2_content/icons/06a9b30a74824bed24fd72dce710885f.jpg",
+      "itemTypeDisplayName": "Vehicle",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "1272828316",
+      "collectibleHash": "673924006",
+      "name": "Moonshot Shell",
+      "iconPath": "/common/destiny2_content/icons/f8f9770c2c741bbef968492f468cde1d.jpg",
+      "itemTypeDisplayName": "Ghost Shell",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Exploring the Moon"
+    },
+    {
+      "itemHash": "298334061",
+      "collectibleHash": "3938759704",
+      "name": "Sanguine Static",
+      "iconPath": "/common/destiny2_content/icons/18dc6c427a49dc411027a22b413b8b7c.jpg",
+      "itemTypeDisplayName": "Emblem",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: \"Pit of Heresy\" Dungeon"
+    },
+    {
+      "itemHash": "672488948",
+      "collectibleHash": "3664961551",
+      "name": "The Third Tide",
+      "iconPath": "/common/destiny2_content/icons/2b19b8d9d0c8781f9d161d20a98e12e0.jpg",
+      "itemTypeDisplayName": "Ship",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Exploring the Moon"
+    }
+  ],
   "regionChests": {
-    "checklistHash": "",
-    "triumphHash": "",
-    "entries": []
+    "checklistHash": "1697465175",
+    "triumphHash": "1702032587",
+    "entries": [
+      {
+        "entryHash": "3947020272",
+        "label": "Region chest 1"
+      },
+      {
+        "entryHash": "3812883599",
+        "label": "Region chest 2"
+      },
+      {
+        "entryHash": "731133614",
+        "label": "Region chest 3"
+      },
+      {
+        "entryHash": "3147488613",
+        "label": "Region chest 4"
+      },
+      {
+        "entryHash": "3364328658",
+        "label": "Region chest 5"
+      },
+      {
+        "entryHash": "2448388435",
+        "label": "Region chest 6"
+      },
+      {
+        "entryHash": "2499619401",
+        "label": "Region chest 7"
+      },
+      {
+        "entryHash": "340933878",
+        "label": "Region chest 8"
+      },
+      {
+        "entryHash": "74989591",
+        "label": "Region chest 9"
+      },
+      {
+        "entryHash": "204962005",
+        "label": "Region chest 10"
+      },
+      {
+        "entryHash": "3138619650",
+        "label": "Region chest 11"
+      },
+      {
+        "entryHash": "3719379523",
+        "label": "Region chest 12"
+      }
+    ]
   },
   "lostSectors": {
-    "checklistHash": "",
-    "discoveryRecordHash": "",
-    "sectors": []
+    "checklistHash": "3142056444",
+    "discoveryRecordHash": "3623956709",
+    "sectors": [
+      {
+        "name": "K1 Logistics",
+        "checklistEntryHash": "1949102307",
+        "discoveryObjectiveHash": "1713814126",
+        "expertRecordHash": "1887599917",
+        "masterRecordHash": "1327177738",
+        "grandmasterRecordHash": "6245488"
+      },
+      {
+        "name": "K1 Revelation",
+        "checklistEntryHash": "4102839450",
+        "discoveryObjectiveHash": "1713814127",
+        "expertRecordHash": "1511640986",
+        "masterRecordHash": "3983292393",
+        "grandmasterRecordHash": "1565741749"
+      },
+      {
+        "name": "K1 Crew Quarters",
+        "checklistEntryHash": "3978091702",
+        "discoveryObjectiveHash": "1713814124",
+        "expertRecordHash": "2561650494",
+        "masterRecordHash": "1435133189",
+        "grandmasterRecordHash": "114953849"
+      },
+      {
+        "name": "K1 Communion",
+        "checklistEntryHash": "2955806106",
+        "discoveryObjectiveHash": "1713814125",
+        "expertRecordHash": "1803530104",
+        "masterRecordHash": "2317819527",
+        "grandmasterRecordHash": "4040235491"
+      }
+    ]
   },
   "wellspring": {
     "normalRecordHash": "",
@@ -21,6 +506,22 @@
   },
   "campaign": {
     "legendaryRecordHash": "",
-    "missions": []
+    "missions": [
+      {
+        "name": "A Mysterious Disturbance",
+        "normalRecordHash": "2636815577",
+        "legendObjectiveHash": ""
+      },
+      {
+        "name": "Running Through the Deep",
+        "normalRecordHash": "2534003978",
+        "legendObjectiveHash": ""
+      },
+      {
+        "name": "Once More into the Darkness",
+        "normalRecordHash": "3859629029",
+        "legendObjectiveHash": ""
+      }
+    ]
   }
 }

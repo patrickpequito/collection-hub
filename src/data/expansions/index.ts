@@ -17,7 +17,10 @@ import type {
  * Hubs linked from the Expansions index. Everything else stays Coming soon
  * until reviewed one by one — keep the pages in the repo, just unpublished.
  */
-export const PUBLISHED_EXPANSION_SLUGS = new Set<string>(["the-witch-queen"]);
+export const PUBLISHED_EXPANSION_SLUGS = new Set<string>([
+  "the-witch-queen",
+  "shadowkeep",
+]);
 
 /** Chronological expansion hubs with pages (Red War is index-only for now). */
 export const EXPANSION_HUBS: readonly ExpansionHub[] = [
