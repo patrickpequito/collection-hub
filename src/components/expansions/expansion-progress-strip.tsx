@@ -1,62 +1,41 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useOwnership } from "@/components/client-ownership";
+import {
+  useProfileActivityCompletions,
+  useProfileQuestCompletions,
+  useProfileRecordInstances,
+} from "@/components/profile-progress-provider";
 import { useSignedIn } from "@/lib/use-signed-in";
 import {
-  isProfileRecordComplete,
-} from "@/lib/triumphs/record-progress";
-import type { ExpansionCampaignMission } from "@/lib/expansions/resolve-expansion-loot";
-import type { RecordInstance, TriumphRecord } from "@/types/triumph";
+  collectDifficultyHuntActivityHashes,
+  collectQuestCompletionTargets,
+  computeCampaignProgress,
+  countOwnedGroups,
+  getCampaignTotal,
+  type ExpansionProgressInputs,
+} from "@/lib/expansions/expansion-progress";
+import { countTitleProgress } from "@/lib/triumphs/record-progress";
+import type { TitleEntry } from "@/types/triumph";
+import type {
+  ExpansionCampaignMission,
+  ExpansionCampaignQuest,
+  ExpansionDifficultyHunt,
+} from "@/lib/expansions/resolve-expansion-loot";
 
 type ExpansionProgressStripProps = {
   collectionTotal: number;
   /** Each entry is the set of hashes that count as one collection item. */
   collectionOwnershipGroups: string[][];
-  titleRecords: TriumphRecord[];
+  title: TitleEntry | null;
   campaignMissions: ExpansionCampaignMission[];
   campaignLegendaryRecordHash: string;
+  campaignQuests?: ExpansionCampaignQuest[];
+  difficultyHunts?: ExpansionDifficultyHunt[];
   lootTotal: number;
   lootOwnershipGroups: string[][];
 };
-
-function countOwnedGroups(
-  groups: string[][],
-  ownedItemHashes: Set<string>,
-): number {
-  let count = 0;
-  for (const group of groups) {
-    if (group.some((hash) => ownedItemHashes.has(hash))) count += 1;
-  }
-  return count;
-}
-
-function countCompleteRecords(
-  records: TriumphRecord[],
-  instances: Record<string, RecordInstance>,
-): number {
-  return records.filter((record) =>
-    isProfileRecordComplete(instances[record.recordHash]),
-  ).length;
-}
-
-function objectiveComplete(
-  instance: RecordInstance | undefined,
-  objectiveHash: string,
-): boolean | null {
-  if (!instance) return null;
-  const objective = instance.objectives?.find(
-    (entry) => entry.objectiveHash === objectiveHash,
-  );
-  if (objective) {
-    return (
-      Boolean(objective.complete) ||
-      objective.progress >= objective.completionValue
-    );
-  }
-  if (isProfileRecordComplete(instance)) return true;
-  return null;
-}
 
 function StatCard({
   label,
@@ -107,35 +86,27 @@ function StatCard({
 export function ExpansionProgressStrip({
   collectionTotal,
   collectionOwnershipGroups,
-  titleRecords,
+  title,
   campaignMissions,
   campaignLegendaryRecordHash,
+  campaignQuests = [],
+  difficultyHunts = [],
   lootTotal,
   lootOwnershipGroups,
 }: ExpansionProgressStripProps) {
   const signedIn = useSignedIn();
   const { ownedItemHashes, showOwnership } = useOwnership();
-  const [instances, setInstances] = useState<Record<string, RecordInstance>>(
-    {},
+  const instances = useProfileRecordInstances();
+  const huntActivityHashes = useMemo(
+    () => collectDifficultyHuntActivityHashes(difficultyHunts),
+    [difficultyHunts],
   );
-
-  useEffect(() => {
-    if (!signedIn) return;
-    let cancelled = false;
-    fetch("/api/triumphs/profile", { cache: "no-store" })
-      .then(async (response) => {
-        const payload = (await response.json()) as {
-          recordInstances?: Record<string, RecordInstance>;
-        };
-        if (!cancelled) setInstances(payload.recordInstances ?? {});
-      })
-      .catch(() => {
-        if (!cancelled) setInstances({});
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [signedIn]);
+  const campaignQuestTargets = useMemo(
+    () => collectQuestCompletionTargets(campaignQuests),
+    [campaignQuests],
+  );
+  const activityCompletions = useProfileActivityCompletions(huntActivityHashes);
+  const completedQuestHashes = useProfileQuestCompletions(campaignQuestTargets);
 
   const collectionOwned = useMemo(
     () =>
@@ -153,45 +124,60 @@ export function ExpansionProgressStrip({
     [lootOwnershipGroups, ownedItemHashes, showOwnership],
   );
 
-  const titleDone = signedIn
-    ? countCompleteRecords(titleRecords, instances)
-    : null;
+  const titleProgress = useMemo(() => {
+    if (!title) return { completed: 0, total: 0 };
+    const instanceMap = new Map(Object.entries(signedIn ? instances : {}));
+    return countTitleProgress(title, instanceMap).all;
+  }, [instances, signedIn, title]);
 
-  const campaignCounts = useMemo(() => {
-    if (!signedIn) return null;
-    const legendInstance = instances[campaignLegendaryRecordHash];
-    let normal = 0;
-    let legend = 0;
-    for (const mission of campaignMissions) {
-      const legendDone = objectiveComplete(
-        legendInstance,
-        mission.legendObjectiveHash,
-      );
-      let normalDone: boolean | null = null;
-      if (mission.normalRecordHash != null) {
-        normalDone = isProfileRecordComplete(
-          instances[mission.normalRecordHash],
-        );
-      }
-      if (legendDone === true) normalDone = true;
-      else if (mission.normalRecordHash == null) normalDone = legendDone;
+  const titleDone = signedIn && title ? titleProgress.completed : null;
+  const titleTotal = title?.records.length ?? 0;
 
-      if (normalDone === true) normal += 1;
-      if (legendDone === true) legend += 1;
-    }
-    return { normal, legend };
-  }, [
-    campaignLegendaryRecordHash,
+  const campaignInputs: Pick<
+    ExpansionProgressInputs,
+    | "campaignMissions"
+    | "campaignLegendaryRecordHash"
+    | "campaignQuests"
+    | "difficultyHunts"
+  > = {
     campaignMissions,
-    instances,
-    signedIn,
-  ]);
+    campaignLegendaryRecordHash,
+    campaignQuests,
+    difficultyHunts,
+  };
 
-  const missionCount = campaignMissions.length;
-  const campaignValue =
-    campaignCounts == null
-      ? `— / ${missionCount} · — / ${missionCount}`
-      : `${campaignCounts.normal}/${missionCount} N · ${campaignCounts.legend}/${missionCount} L`;
+  const campaignProgress = useMemo(
+    () =>
+      signedIn
+        ? computeCampaignProgress(
+            campaignInputs,
+            instances,
+            activityCompletions,
+            completedQuestHashes,
+            showOwnership ? ownedItemHashes : undefined,
+          )
+        : null,
+    [
+      activityCompletions,
+      campaignInputs,
+      completedQuestHashes,
+      instances,
+      signedIn,
+    ],
+  );
+
+  const campaignTotal = getCampaignTotal({
+    slug: "",
+    collectionTotal,
+    collectionOwnershipGroups,
+    title,
+    campaignMissions,
+    campaignLegendaryRecordHash,
+    campaignQuests,
+    difficultyHunts,
+    lootTotal,
+    lootOwnershipGroups,
+  });
 
   return (
     <section className="grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -212,23 +198,26 @@ export function ExpansionProgressStrip({
         label="Title"
         value={
           titleDone === null
-            ? `— / ${titleRecords.length}`
-            : `${titleDone}/${titleRecords.length}`
+            ? `— / ${titleTotal}`
+            : `${titleDone}/${titleTotal}`
         }
         progress={
-          titleDone == null || titleRecords.length === 0
+          titleDone == null || titleTotal === 0
             ? null
-            : titleDone / titleRecords.length
+            : titleDone / titleTotal
         }
       />
       <StatCard
         label="Campaign"
-        value={campaignValue}
+        value={
+          campaignProgress == null
+            ? `— / ${campaignTotal}`
+            : campaignProgress.label
+        }
         progress={
-          campaignCounts == null || missionCount === 0
+          campaignProgress == null || campaignProgress.total === 0
             ? null
-            : (campaignCounts.normal + campaignCounts.legend) /
-              (missionCount * 2)
+            : campaignProgress.completed / campaignProgress.total
         }
       />
       <StatCard

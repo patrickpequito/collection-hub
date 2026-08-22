@@ -6,8 +6,7 @@ import {
   useMemo,
   type ReactNode,
 } from "react";
-import { useOwnedItemHashes } from "@/lib/use-owned-item-hashes";
-import { useSignedIn } from "@/lib/use-signed-in";
+import { useProfileInventory } from "@/components/profile-progress-provider";
 
 type OwnershipContextValue = {
   ownedItemHashes: Set<string>;
@@ -32,32 +31,30 @@ type ClientOwnershipProps = {
   showSignInHint?: boolean;
 };
 
-/** Hydrates collection ownership on the client so pages stay statically cacheable. */
+/** Optional sign-in hint wrapper; inventory lives in ProfileProgressProvider. */
 export function ClientOwnership({
   children,
   showSignInHint = true,
 }: ClientOwnershipProps) {
-  const signedIn = useSignedIn();
-  const { itemHashes, error } = useOwnedItemHashes(signedIn);
-  const ownedItemHashes = useMemo(() => new Set(itemHashes), [itemHashes]);
-  const showOwnership = signedIn && !error;
+  const { ownedItemHashes, showOwnership, inventoryError, signedIn } =
+    useProfileInventory();
 
   const value = useMemo(
     () => ({
       ownedItemHashes,
       showOwnership,
-      inventoryError: error,
+      inventoryError,
       signedIn,
     }),
-    [ownedItemHashes, showOwnership, error, signedIn],
+    [ownedItemHashes, showOwnership, inventoryError, signedIn],
   );
 
   return (
     <OwnershipContext.Provider value={value}>
       {showSignInHint ? (
-        error ? (
+        inventoryError ? (
           <p className="mb-4 text-xs text-zinc-500">
-            Collection unavailable: {error}
+            Collection unavailable: {inventoryError}
           </p>
         ) : !signedIn ? (
           <p className="mb-4 text-xs text-amber-200/80">

@@ -55,6 +55,7 @@ export function formatProgressDescription(
 
 /** DestinyRecordState flags from Bungie manifest. */
 const RECORD_REDEEMED = 1;
+const RECORD_PUBLIC = 2;
 const OBJECTIVE_NOT_COMPLETED = 4;
 const ENTITLEMENT_UNOWNED = 32;
 
@@ -80,7 +81,18 @@ export function isProfileRecordComplete(
   if (isRecordRedeemed(instance.state)) return true;
   if (isRecordObjectivesMet(instance.state)) return true;
   const objectives = instance.objectives ?? [];
-  if (objectives.length === 0) return false;
+  if (objectives.length === 0) {
+    // Lore / ghost fragments can be unlocked at RecordPublic (state 6 = Public |
+    // ObjectiveNotCompleted) with no objective rows in the profile payload.
+    if (
+      instance.state !== undefined &&
+      (instance.state & ENTITLEMENT_UNOWNED) === 0 &&
+      (instance.state & RECORD_PUBLIC) !== 0
+    ) {
+      return true;
+    }
+    return false;
+  }
   return objectives.every(
     (objective) =>
       Boolean(objective.complete) ||

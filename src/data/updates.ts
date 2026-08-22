@@ -1,4 +1,4 @@
-export const CURRENT_VERSION = "0.7.6";
+export const CURRENT_VERSION = "0.8.0";
 
 export function formatReleaseDate(isoDate: string) {
   const [year, month, day] = isoDate.split("-").map(Number);
@@ -30,6 +30,33 @@ export type UpdateRelease = {
  * Newest release first. Add a new entry at the top when shipping an update.
  */
 export const UPDATE_RELEASES: UpdateRelease[] = [
+  {
+    version: "0.8.0",
+    publishedAt: "2026-08-22",
+    summary:
+      "Expansion hubs arrive for Beyond Light, Shadowkeep, and The Witch Queen — completionist dashboards with collection progress, campaign quests, difficulty activities, destination loot, and triumphs. Signed-in pages also load much faster thanks to local profile caching and a single shared sync layer.",
+    sections: [
+      {
+        title: "Expansions & Seasons",
+        description:
+          "Three expansion pages are live today; the rest stay on the index as coming soon.",
+        items: [
+          "New Expansions & Seasons index with a progress bar per published expansion when signed in — starting with Shadowkeep, Beyond Light, and The Witch Queen.",
+          "Track collection items, title seal triumphs, campaign quests, difficulty activities, and expansion loot in a single progress bar.",
+          "Campaign panels show quest completion and per-hunt difficulty checks when signed in.",
+          "Destination panels combine armor sets, weapons, checklist progress, and lost sector tiers on the same page.",
+        ],
+      },
+      {
+        title: "Faster signed-in loading",
+        description:
+          "Your last Bungie sync is kept locally and refreshed quietly in the background.",
+        items: [
+          "Collection highlights, triumph checks, and activity completions show instantly from your last sync while fresh inventory, triumph, quest, and activity data loads through one shared provider — and stays available as you move between expansion pages.",
+        ],
+      },
+    ],
+  },
   {
     version: "0.7.6",
     publishedAt: "2026-07-16",

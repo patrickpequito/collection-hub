@@ -5,6 +5,11 @@ import { ActivitySectionHeader } from "@/components/activity-section-header";
 import { InteractiveBannerLink } from "@/components/interactive-banner-link";
 import { EXPANSION_INDEX_ENTRIES } from "@/data/expansions";
 import { SEASONS_BY_EXPANSION_SLUG } from "@/data/seasons";
+import type {
+  ExpansionOverallProgress,
+  ExpansionProgressInputs,
+} from "@/lib/expansions/expansion-progress";
+import { useExpansionProfileProgress } from "@/lib/expansions/use-expansion-profile-progress";
 import type { ExpansionIndexEntry } from "@/data/expansions/types";
 import type { SeasonIndexEntry } from "@/data/seasons";
 
@@ -36,17 +41,57 @@ const EXPANSION_SEASON_ROWS: ExpansionSeasonRow[] = EXPANSION_INDEX_ENTRIES.map(
   }),
 );
 
+function BannerProgressBar({
+  progress,
+}: {
+  progress: ExpansionOverallProgress | undefined;
+}) {
+  if (progress?.progress == null || progress.percent == null) return null;
+
+  const widthPercent = Math.max(0, Math.min(100, progress.percent));
+
+  return (
+    <div className="absolute inset-x-0 bottom-0">
+      <div className="bg-gradient-to-t from-black/90 via-black/60 to-transparent px-3 pb-2.5 pt-8">
+        <div className="mb-1 flex items-center justify-between gap-2">
+          <span className="text-[10px] font-medium uppercase tracking-wide text-zinc-400">
+            Total completion
+          </span>
+          <span className="text-xs font-semibold tabular-nums text-[#c9a227]">
+            {progress.percent}%
+          </span>
+        </div>
+        <div
+          className="h-1.5 w-full overflow-hidden rounded-full bg-zinc-800/90"
+          role="progressbar"
+          aria-label="Total expansion completion"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={progress.percent}
+        >
+          <div
+            className="h-full rounded-full bg-[#c9a227] transition-[width] duration-300 ease-out"
+            style={{ width: `${widthPercent}%` }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function IndexBanner({
   entry,
   imageBase,
   fallbackBase = RAD_FALLBACK_BASE,
   compact = false,
+  progress,
 }: {
   entry: IndexBannerEntry;
   imageBase: string;
   fallbackBase?: string;
   /** Smaller type for season cells inside the 2×2 quad. */
   compact?: boolean;
+  progress?: ExpansionOverallProgress;
 }) {
   const primaryUrl = `${imageBase}/${entry.imageFile}`;
   const fallbackUrl = entry.fallbackImageFile
@@ -77,9 +122,9 @@ function IndexBanner({
         />
       ) : null}
       <div
-        className={`absolute inset-0 flex items-center ${
+        className={`absolute inset-x-0 top-0 flex items-center ${
           compact ? "gap-1.5 px-2.5 py-1.5" : "px-5 py-4"
-        }`}
+        } ${entry.available && progress?.progress != null ? "pb-12" : ""}`}
       >
         <span
           className={`font-bold text-zinc-100 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] ${
@@ -98,6 +143,7 @@ function IndexBanner({
           </span>
         ) : null}
       </div>
+      {entry.available ? <BannerProgressBar progress={progress} /> : null}
     </div>
   );
 
@@ -148,7 +194,15 @@ function SeasonQuad({ seasons }: { seasons: readonly SeasonIndexEntry[] }) {
   );
 }
 
-export function ExpansionsIndexContent() {
+type ExpansionsIndexContentProps = {
+  progressInputs: ExpansionProgressInputs[];
+};
+
+export function ExpansionsIndexContent({
+  progressInputs,
+}: ExpansionsIndexContentProps) {
+  const progressBySlug = useExpansionProfileProgress(progressInputs);
+
   return (
     <div className="space-y-3">
       <div className="hidden gap-8 md:grid md:grid-cols-2">
@@ -160,7 +214,11 @@ export function ExpansionsIndexContent() {
       <div className="hidden gap-x-8 gap-y-2 md:grid md:grid-cols-2">
         {EXPANSION_SEASON_ROWS.map(({ expansion, seasons }) => (
           <div key={expansion.slug} className="contents">
-            <IndexBanner entry={expansion} imageBase={EXPANSION_IMAGE_BASE} />
+            <IndexBanner
+              entry={expansion}
+              imageBase={EXPANSION_IMAGE_BASE}
+              progress={progressBySlug.get(expansion.slug)}
+            />
             <SeasonQuad seasons={seasons} />
           </div>
         ))}
@@ -170,7 +228,11 @@ export function ExpansionsIndexContent() {
       <div className="space-y-2 md:hidden">
         {EXPANSION_SEASON_ROWS.map(({ expansion, seasons }) => (
           <div key={expansion.slug} className="space-y-2">
-            <IndexBanner entry={expansion} imageBase={EXPANSION_IMAGE_BASE} />
+            <IndexBanner
+              entry={expansion}
+              imageBase={EXPANSION_IMAGE_BASE}
+              progress={progressBySlug.get(expansion.slug)}
+            />
             {seasons.length > 0 ? <SeasonQuad seasons={seasons} /> : null}
           </div>
         ))}

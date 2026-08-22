@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useProfileRecordInstances } from "@/components/profile-progress-provider";
 import { TriumphProgressBanner } from "@/components/triumph-progress-banner";
 import { useSignedIn } from "@/lib/use-signed-in";
 import { resolveTriumphIcon } from "@/lib/triumphs/icons";
@@ -61,46 +62,13 @@ export function TriumphsIndex({
   showProgress: showProgressProp,
 }: TriumphsIndexProps) {
   const signedIn = useSignedIn();
-  const [hydratedInstances, setHydratedInstances] = useState<
-    Record<string, RecordInstance>
-  >({});
-  const [hydrateError, setHydrateError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (recordInstancesProp) return;
-    if (!signedIn) return;
-
-    let cancelled = false;
-    fetch("/api/triumphs/profile", { cache: "no-store" })
-      .then(async (response) => {
-        const payload = (await response.json()) as {
-          recordInstances: Record<string, RecordInstance>;
-          error: string | null;
-        };
-        if (cancelled) return;
-        setHydratedInstances(payload.recordInstances ?? {});
-        setHydrateError(payload.error);
-      })
-      .catch((error) => {
-        if (cancelled) return;
-        setHydrateError(
-          error instanceof Error
-            ? error.message
-            : "Failed to load triumph progress",
-        );
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [recordInstancesProp, signedIn]);
+  const profileInstances = useProfileRecordInstances();
 
   const recordInstances = useMemo(
-    () => recordInstancesProp ?? (signedIn ? hydratedInstances : {}),
-    [recordInstancesProp, signedIn, hydratedInstances],
+    () => recordInstancesProp ?? (signedIn ? profileInstances : {}),
+    [recordInstancesProp, signedIn, profileInstances],
   );
-  const showProgress =
-    showProgressProp ?? (signedIn && !hydrateError);
+  const showProgress = showProgressProp ?? signedIn;
 
   const instances = useMemo(
     () => new Map(Object.entries(recordInstances)),
@@ -113,11 +81,7 @@ export function TriumphsIndex({
 
   return (
     <div className="space-y-4">
-      {hydrateError && signedIn ? (
-        <p className="text-xs text-amber-200/80">
-          Progress unavailable: {hydrateError}
-        </p>
-      ) : !signedIn && !recordInstancesProp ? (
+      {!signedIn && !recordInstancesProp ? (
         <p className="text-xs text-amber-200/80">
           Sign in to see triumph and title progress.
         </p>

@@ -1,8 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { PressableButton } from "@/components/pressable-button";
+import {
+  useProfileRecordInstances,
+  useProfileStringVariables,
+} from "@/components/profile-progress-provider";
 import { TriumphsListSection } from "@/components/triumphs-list-section";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 import { useSignedIn } from "@/lib/use-signed-in";
@@ -198,55 +202,17 @@ export function TriumphGroupView({
   stringVariables: stringVariablesProp,
 }: TriumphGroupViewProps) {
   const signedIn = useSignedIn();
-  const [hydratedInstances, setHydratedInstances] = useState<
-    Record<string, RecordInstance>
-  >({});
-  const [hydratedVariables, setHydratedVariables] =
-    useState<TriumphStringVariables>(EMPTY_TRIUMPH_STRING_VARIABLES);
-  const [hydrateError, setHydrateError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (recordInstancesProp) return;
-    if (!signedIn) return;
-
-    let cancelled = false;
-    fetch("/api/triumphs/profile", { cache: "no-store" })
-      .then(async (response) => {
-        const payload = (await response.json()) as {
-          recordInstances: Record<string, RecordInstance>;
-          stringVariables: TriumphStringVariables;
-          error: string | null;
-        };
-        if (cancelled) return;
-        setHydratedInstances(payload.recordInstances ?? {});
-        setHydratedVariables(
-          payload.stringVariables ?? EMPTY_TRIUMPH_STRING_VARIABLES,
-        );
-        setHydrateError(payload.error);
-      })
-      .catch((error) => {
-        if (cancelled) return;
-        setHydrateError(
-          error instanceof Error
-            ? error.message
-            : "Failed to load triumph progress",
-        );
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [recordInstancesProp, signedIn]);
+  const profileInstances = useProfileRecordInstances();
+  const profileVariables = useProfileStringVariables();
 
   const recordInstances = useMemo(
-    () => recordInstancesProp ?? (signedIn ? hydratedInstances : {}),
-    [recordInstancesProp, signedIn, hydratedInstances],
+    () => recordInstancesProp ?? (signedIn ? profileInstances : {}),
+    [recordInstancesProp, signedIn, profileInstances],
   );
   const stringVariables =
     stringVariablesProp ??
-    (signedIn ? hydratedVariables : EMPTY_TRIUMPH_STRING_VARIABLES);
-  const showProgress =
-    showProgressProp ?? (signedIn && !hydrateError);
+    (signedIn ? profileVariables : EMPTY_TRIUMPH_STRING_VARIABLES);
+  const showProgress = showProgressProp ?? signedIn;
   const instances = useMemo(
     () => new Map(Object.entries(recordInstances)),
     [recordInstances],
@@ -313,11 +279,6 @@ export function TriumphGroupView({
   if (!topSections.length) {
     return (
       <div className="space-y-6">
-        {hydrateError && signedIn ? (
-          <p className="text-xs text-amber-200/80">
-            Progress unavailable: {hydrateError}
-          </p>
-        ) : null}
         <GroupProgressBar
           progress={progress}
           showProgress={Boolean(showProgress)}
@@ -336,11 +297,6 @@ export function TriumphGroupView({
   return (
     <div className="grid gap-8 lg:grid-cols-3">
       <div className="lg:col-span-1">
-        {hydrateError && signedIn ? (
-          <p className="mb-4 text-xs text-amber-200/80">
-            Progress unavailable: {hydrateError}
-          </p>
-        ) : null}
         {showTopTabs ? (
           <div
             className="grid gap-1"

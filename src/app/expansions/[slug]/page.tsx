@@ -19,15 +19,10 @@ import { resolveExpansionLoot } from "@/lib/expansions/resolve-expansion-loot";
 import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import {
-  countTitleProgress,
-  splitTitleRecords,
-} from "@/lib/triumphs/record-progress";
-import {
   getTitleEntry,
   getTriumphGroup,
   loadTriumphCatalog,
 } from "@/lib/triumphs/load";
-import { resolveTriumphIcon } from "@/lib/triumphs/icons";
 
 export const revalidate = 3600;
 
@@ -55,7 +50,7 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
   ]);
 
   const title = hub.titleSlug
-    ? getTitleEntry(catalog, hub.titleSlug)
+    ? (getTitleEntry(catalog, hub.titleSlug) ?? null)
     : null;
   if (hub.titleSlug && !title) {
     throw new Error(`Missing triumph title catalog entry: ${hub.titleSlug}`);
@@ -67,16 +62,6 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
   if (hub.triumphGroupSlug && !triumphGroup) {
     throw new Error(`Missing triumph group: ${hub.triumphGroupSlug}`);
   }
-
-  const triumphRecords = title?.records ?? [];
-  const emptyInstances = new Map();
-  const titleProgress = title
-    ? countTitleProgress({ ...title, records: triumphRecords }, emptyInstances)
-    : { base: { completed: 0, total: 0 }, all: { completed: 0, total: 0 } };
-  const { gildingRecords } = splitTitleRecords(triumphRecords);
-  const iconPath = title
-    ? resolveTriumphIcon(title.iconPath, triumphRecords)
-    : "";
 
   const collectionOwnershipGroups = loot.collectionItems.map(
     (item) => item.ownershipHashes ?? [item.itemHash],
@@ -121,9 +106,11 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
           <ExpansionProgressStrip
             collectionTotal={loot.collectionItems.length}
             collectionOwnershipGroups={collectionOwnershipGroups}
-            titleRecords={triumphRecords}
+            title={title}
             campaignMissions={loot.campaignMissions}
             campaignLegendaryRecordHash={loot.campaignLegendaryRecordHash}
+            campaignQuests={loot.campaignQuests}
+            difficultyHunts={loot.difficultyHunts}
             lootTotal={lootOwnershipGroups.length}
             lootOwnershipGroups={lootOwnershipGroups}
           />
@@ -147,6 +134,9 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
           <ExpansionCampaignMissionsPanel
             missions={loot.campaignMissions}
             legendaryRecordHash={loot.campaignLegendaryRecordHash}
+            quests={loot.campaignQuests}
+            difficultyHunts={loot.difficultyHunts}
+            difficultyHuntsTitle={loot.difficultyHuntsTitle}
           />
 
           <ExpansionDestinationPanel
@@ -180,18 +170,9 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
           />
 
           <ExpansionTriumphsPanel
-            titleName={title?.name ?? ""}
-            guardianTitle={title?.guardianTitle ?? null}
-            titleDescription={title?.description ?? ""}
-            titleIconPath={iconPath}
-            baseProgress={titleProgress.base}
-            overallProgress={titleProgress.all}
-            hasGilding={gildingRecords.length > 0}
-            titleTier="none"
-            titleRecords={triumphRecords}
+            title={title}
             triumphGroup={triumphGroup ?? null}
             triumphsGroupTitle={hub.triumphsGroupTitle}
-            showTitleSeal={Boolean(hub.titleSlug && title)}
           />
 
           <ExpansionDeepLootSection

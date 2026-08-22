@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AppNavigationProvider } from "@/components/app-navigation-provider";
 import { NavigationLoadingIndicator } from "@/components/navigation-loading-indicator";
+import { ProfileBootstrap } from "@/components/profile-bootstrap";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -38,7 +39,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {children}
+        <ProfileBootstrap>{children}</ProfileBootstrap>
         <Suspense fallback={null}>
           <AppNavigationProvider />
         </Suspense>

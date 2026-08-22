@@ -480,6 +480,34 @@ export async function fetchRaidCompletions(
   return sumCompletionsForSlug(countsByCharacter, slug);
 }
 
+/**
+ * Sum completions for arbitrary activity hashes across all characters
+ * (aggregate stats with history fallback).
+ */
+export async function fetchActivityHashCompletions(
+  session: BungieUserSession,
+  activityHashes: readonly string[],
+): Promise<Record<string, number>> {
+  const wanted = activityHashes
+    .map((hash) => Number(hash))
+    .filter((hash) => Number.isFinite(hash) && hash > 0);
+  const result: Record<string, number> = {};
+  for (const hash of activityHashes) result[hash] = 0;
+  if (!wanted.length) return result;
+
+  const countsByCharacter = await fetchCompletionCountsByCharacter(session);
+  if (!countsByCharacter) return result;
+
+  for (const hash of wanted) {
+    let total = 0;
+    for (const counts of countsByCharacter) {
+      total += counts.get(hash) ?? 0;
+    }
+    result[String(hash)] = total;
+  }
+  return result;
+}
+
 export function isRaidCompletionSlug(slug: string): slug is RaidCompletionSlug {
   return slug in RAID_COMPLETION_ACTIVITY_HASHES;
 }

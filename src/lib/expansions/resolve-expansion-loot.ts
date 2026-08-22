@@ -1,7 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import {
-  buildArmorRowsFromCatalogItems,
   buildArmorRowsFromSet,
   buildPartialArmorRowsFromCatalogItems,
 } from "@/lib/activities/armor-rows";
@@ -22,6 +21,11 @@ import type {
 import type { ActivityArmorRow, LootItem } from "@/types/activity-loot";
 import type { AllLootItem } from "@/types/all-loot";
 import type { ArmorSet } from "@/types/armor-set";
+import {
+  findTriumphRecordByHash,
+  loadTriumphCatalog,
+} from "@/lib/triumphs/load";
+import type { TriumphCatalog } from "@/types/triumph";
 
 const ADEPT = /\(adept\)/i;
 
@@ -87,6 +91,51 @@ export type ExpansionCampaignMission = {
   legendObjectiveHash: string;
 };
 
+export type ExpansionCampaignQuest = {
+  name: string;
+  /** Triumph record when Bungie tracks completion as a record. */
+  recordHash?: string;
+  /** Single objective on recordHash that marks this quest done (interval milestones). */
+  recordObjectiveHash?: string;
+  /** All listed records must be complete (e.g. legacy campaign missions). */
+  fallbackRecordHashes?: string[];
+  /** Owning this item counts as quest complete (e.g. exotic reward). */
+  completionItemHash?: string;
+  /** Root quest item hash for profile quest completion. */
+  questHash?: string;
+  /** Final quest step hash — used when completed quests leave the active list. */
+  completionStepHash?: string;
+  /** All quest step hashes that may appear in profile quest progress. */
+  questStepHashes?: string[];
+  /** Final step objective — persists in uninstancedItemObjectives after completion. */
+  completionObjectiveHash?: string;
+  /** Every step objective — all must be complete in profile progress. */
+  stepObjectiveHashes?: string[];
+  iconPath?: string;
+};
+
+/** Playlist activity with difficulty tiers (Empire / Nightmare Hunts: 3 in-game). */
+export type ExpansionDifficultyHunt = {
+  name: string;
+  /** Optional triumph that also counts as Hero+ (e.g. Empire Hunt higher-difficulty). */
+  higherRecordHash?: string;
+  adeptActivityHashes: string[];
+  heroActivityHashes: string[];
+  legendActivityHashes: string[];
+  masterActivityHashes: string[];
+  /** When set, UI/progress use these tiers instead of the four legacy buckets. */
+  difficultyTiers?: ExpansionHuntDifficultyTier[];
+};
+
+export type ExpansionHuntDifficultyTier = {
+  label: string;
+  activityHashes: string[];
+  higherRecordHash?: string;
+};
+
+/** @deprecated Use ExpansionDifficultyHunt */
+export type ExpansionEmpireHunt = ExpansionDifficultyHunt;
+
 type ExpansionCollectionFile = {
   badgeName?: string;
   iconPath?: string;
@@ -120,6 +169,13 @@ type ExpansionCollectionFile = {
   campaign?: {
     legendaryRecordHash: string;
     missions: ExpansionCampaignMission[];
+    quests?: ExpansionCampaignQuest[];
+    /** Empire Hunts, Nightmare Hunts, etc. */
+    difficultyHunts?: ExpansionDifficultyHunt[];
+    /** Section heading for difficultyHunts (default: "Difficulty activities"). */
+    difficultyHuntsTitle?: string;
+    /** @deprecated Prefer difficultyHunts */
+    empireHunts?: ExpansionDifficultyHunt[];
   };
 };
 
@@ -140,6 +196,9 @@ export type ExpansionLoot = {
   wellspringBosses: ExpansionWellspringBoss[];
   campaignLegendaryRecordHash: string;
   campaignMissions: ExpansionCampaignMission[];
+  campaignQuests: ExpansionCampaignQuest[];
+  difficultyHunts: ExpansionDifficultyHunt[];
+  difficultyHuntsTitle: string;
   lootItemCount: number;
   lootItemHashes: string[];
   collectionHashes: string[];
@@ -203,7 +262,8 @@ function isHubEraExotic(item: AllLootItem, hub: ExpansionHub): boolean {
   ) {
     return false;
   }
-  if (hasHubSeasonIcon(item, hub)) return true;
+  // Season icons alone are unreliable for exotics remastered into later pools
+  // (e.g. Lightfall "Exotic Armor Focusing" entries keep a Beyond Light watermark).
   if (hub.seasonLabels.includes(item.seasonLabel ?? "")) return true;
   if (hub.exoticQuestSourcePattern?.test(item.source ?? "")) return true;
   return (item.versions ?? []).some((version) =>
@@ -378,7 +438,13 @@ function emptyCollectionFile(): ExpansionCollectionFile {
       masterRecordHash: "",
       bosses: [],
     },
-    campaign: { legendaryRecordHash: "", missions: [] },
+    campaign: {
+      legendaryRecordHash: "",
+      missions: [],
+      quests: [],
+      difficultyHunts: [],
+      difficultyHuntsTitle: "",
+    },
   };
 }
 
@@ -410,22 +476,78 @@ function isDestinationWeapon(
   hub: ExpansionHub,
 ): boolean {
   if (item.type !== "Weapon") return false;
+  if (item.rarity === "Exotic") return false;
   if (ADEPT.test(item.name)) return false;
-  if (!isHubChapterItem(item, hub)) return false;
-  if (hub.destinationWeaponSourcePattern.test(item.source ?? "")) {
+  // Curated destination names (remasters may no longer carry the expansion label).
+  if ((hub.destinationWeaponExtraNames ?? []).includes(item.name)) {
     return true;
   }
-  return (hub.destinationWeaponExtraNames ?? []).includes(item.name);
+  if (!isHubChapterItem(item, hub)) return false;
+  return hub.destinationWeaponSourcePattern.test(item.source ?? "");
+}
+
+function buildThreeTierHuntDifficulty(
+  hunt: ExpansionDifficultyHunt,
+): ExpansionHuntDifficultyTier[] {
+  // In-game selectable tiers are Advanced / Expert / Master. Manifest still
+  // stores legacy Adept+Hero+Legend buckets; Adept PGCR hashes map to Expert
+  // (Spanish UI labels them "Experto"), while Hero holds the Advanced variant.
+  return [
+    {
+      label: "Advanced",
+      activityHashes: hunt.heroActivityHashes,
+    },
+    {
+      label: "Expert",
+      activityHashes: [
+        ...new Set([
+          ...hunt.adeptActivityHashes,
+          ...hunt.legendActivityHashes,
+        ]),
+      ],
+      higherRecordHash: hunt.higherRecordHash,
+    },
+    {
+      label: "Master",
+      activityHashes: hunt.masterActivityHashes,
+    },
+  ];
+}
+
+function enrichDifficultyHunts(
+  hunts: ExpansionDifficultyHunt[],
+  title: string,
+): ExpansionDifficultyHunt[] {
+  if (title !== "Nightmare Hunts" && title !== "Empire Hunts") return hunts;
+
+  return hunts.map((hunt) => ({
+    ...hunt,
+    difficultyTiers: buildThreeTierHuntDifficulty(hunt),
+  }));
+}
+
+function enrichCampaignQuests(
+  quests: ExpansionCampaignQuest[],
+  triumphCatalog: TriumphCatalog,
+): ExpansionCampaignQuest[] {
+  return quests.map((quest) => {
+    if (quest.iconPath) return quest;
+    if (!quest.recordHash) return quest;
+    const record = findTriumphRecordByHash(triumphCatalog, quest.recordHash);
+    return record?.iconPath ? { ...quest, iconPath: record.iconPath } : quest;
+  });
 }
 
 export async function resolveExpansionLoot(
   hub: ExpansionHub,
 ): Promise<ExpansionLoot> {
-  const [catalog, armorCatalog, collectionFile] = await Promise.all([
-    loadAllLootCatalog(),
-    loadArmorSetCatalog(),
-    loadCollectionFile(hub.slug),
-  ]);
+  const [catalog, armorCatalog, collectionFile, triumphCatalog] =
+    await Promise.all([
+      loadAllLootCatalog(),
+      loadArmorSetCatalog(),
+      loadCollectionFile(hub.slug),
+      loadTriumphCatalog(),
+    ]);
 
   const items = catalog.items;
   const catalogByHash = indexCatalogByAnyHash(items);
@@ -468,25 +590,28 @@ export async function resolveExpansionLoot(
 
   const destinationArmorRows: ActivityArmorRow[] = [];
   for (const setName of hub.destinationArmorSetNames) {
+    // Prefer all-loot over armor-sets.json — equipable-set catalogs are often
+    // missing class items / chests for older destination sets (e.g. Dreambane).
+    const matching = items.filter(
+      (item) =>
+        item.type === "Armor" &&
+        item.rarity === "Legendary" &&
+        itemNameBelongsToArmorSet(item.name, setName),
+    );
+    const fromCatalog = enrichArmorRowsWithOwnership(
+      buildPartialArmorRowsFromCatalogItems(matching, setName),
+      catalogByHash,
+    );
+    if (fromCatalog.length > 0) {
+      destinationArmorRows.push(...fromCatalog);
+      continue;
+    }
+
     const set = findArmorSet(armorCatalog.sets, setName);
     if (set) {
       destinationArmorRows.push(
         ...enrichArmorRowsWithOwnership(
           buildArmorRowsFromSet(set),
-          catalogByHash,
-        ),
-      );
-      continue;
-    }
-    const matching = items.filter(
-      (item) =>
-        item.type === "Armor" &&
-        (item.name === setName || item.name.startsWith(`${setName} `)),
-    );
-    if (matching.length) {
-      destinationArmorRows.push(
-        ...enrichArmorRowsWithOwnership(
-          buildArmorRowsFromCatalogItems(matching, setName),
           catalogByHash,
         ),
       );
@@ -623,6 +748,24 @@ export async function resolveExpansionLoot(
     campaignLegendaryRecordHash:
       collectionFile.campaign?.legendaryRecordHash ?? "",
     campaignMissions: collectionFile.campaign?.missions ?? [],
+    campaignQuests: enrichCampaignQuests(
+      collectionFile.campaign?.quests ?? [],
+      triumphCatalog,
+    ),
+    difficultyHunts: enrichDifficultyHunts(
+      collectionFile.campaign?.difficultyHunts ??
+        collectionFile.campaign?.empireHunts ??
+        [],
+      collectionFile.campaign?.difficultyHuntsTitle ??
+        (collectionFile.campaign?.empireHunts?.length
+          ? "Empire Hunts"
+          : "Difficulty activities"),
+    ),
+    difficultyHuntsTitle:
+      collectionFile.campaign?.difficultyHuntsTitle ??
+      (collectionFile.campaign?.empireHunts?.length
+        ? "Empire Hunts"
+        : "Difficulty activities"),
     lootItemCount: lootHashes.size,
     lootItemHashes: [...lootHashes],
     collectionHashes,

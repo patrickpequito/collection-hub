@@ -6,7 +6,7 @@ export async function GET() {
   const session = await getSession();
   if (!session) {
     return NextResponse.json(
-      { signedIn: false, displayName: null },
+      { signedIn: false, membershipId: null, displayName: null },
       {
         headers: {
           "Cache-Control": "private, no-store",
@@ -18,6 +18,7 @@ export async function GET() {
   return NextResponse.json(
     {
       signedIn: true,
+      membershipId: session.membershipId,
       displayName: session.displayName || "Guardian",
     },
     {

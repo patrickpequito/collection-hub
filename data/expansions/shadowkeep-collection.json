@@ -506,21 +506,350 @@
   },
   "campaign": {
     "legendaryRecordHash": "",
-    "missions": [
+    "missions": [],
+    "quests": [
       {
-        "name": "A Mysterious Disturbance",
-        "normalRecordHash": "2636815577",
-        "legendObjectiveHash": ""
+        "name": "Legacy: Shadowkeep",
+        "questHash": "4039893890",
+        "completionStepHash": "1322836373",
+        "fallbackRecordHashes": [
+          "2636815577",
+          "2534003978",
+          "3859629029"
+        ],
+        "questStepHashes": [
+          "4039893890",
+          "4016941122",
+          "4010589224",
+          "2369227168",
+          "4039893891",
+          "2663040515",
+          "2579262077",
+          "1074168413",
+          "2369227171",
+          "3076437306",
+          "2369227170",
+          "4150657477",
+          "4141787158",
+          "1858645823",
+          "2369227173",
+          "1983731381",
+          "2369227172",
+          "1322836372",
+          "1322836373"
+        ],
+        "iconPath": "/common/destiny2_content/icons/aa75d0c0f7745a2b4cd1b1ac6a7f3a5b.jpg"
       },
       {
-        "name": "Running Through the Deep",
-        "normalRecordHash": "2534003978",
-        "legendObjectiveHash": ""
+        "name": "Memory of Sai Mota",
+        "recordHash": "4292949218",
+        "questHash": "1340580576",
+        "completionStepHash": "1340580579",
+        "completionObjectiveHash": "1063791717",
+        "stepObjectiveHashes": [
+          "2640343482",
+          "3210929559",
+          "493205512",
+          "1063791717"
+        ],
+        "questStepHashes": [
+          "1340580576",
+          "1340580577",
+          "1340580578",
+          "1340580579"
+        ],
+        "iconPath": "/common/destiny2_content/icons/3ef1b4b340ba528936a3277d2c638905.jpg"
       },
       {
-        "name": "Once More into the Darkness",
-        "normalRecordHash": "3859629029",
-        "legendObjectiveHash": ""
+        "name": "Memory of Eriana-3",
+        "recordHash": "4292949227",
+        "questHash": "1285862604",
+        "completionStepHash": "1285862607",
+        "completionObjectiveHash": "660009401",
+        "stepObjectiveHashes": [
+          "2236561038",
+          "2807147243",
+          "89423196",
+          "660009401"
+        ],
+        "questStepHashes": [
+          "1285862604",
+          "1285862605",
+          "1285862606",
+          "1285862607"
+        ],
+        "iconPath": "/common/destiny2_content/icons/3ef1b4b340ba528936a3277d2c638905.jpg"
+      },
+      {
+        "name": "Memory of Omar Agah",
+        "recordHash": "4292949220",
+        "questHash": "2174686652",
+        "completionStepHash": "2174686655",
+        "completionObjectiveHash": "1444589321",
+        "stepObjectiveHashes": [
+          "4094908702",
+          "1444295227",
+          "1947770860",
+          "1444589321"
+        ],
+        "questStepHashes": [
+          "2174686652",
+          "2174686653",
+          "2174686654",
+          "2174686655"
+        ],
+        "iconPath": "/common/destiny2_content/icons/3ef1b4b340ba528936a3277d2c638905.jpg"
+      },
+      {
+        "name": "Memory of Toland, the Shattered",
+        "recordHash": "4292949223",
+        "questHash": "3985923224",
+        "completionStepHash": "3985923227",
+        "completionObjectiveHash": "254943693",
+        "stepObjectiveHashes": [
+          "2368379298",
+          "2938965407",
+          "2368673520",
+          "254943693"
+        ],
+        "questStepHashes": [
+          "3985923224",
+          "3985923225",
+          "3985923226",
+          "3985923227"
+        ],
+        "iconPath": "/common/destiny2_content/icons/3ef1b4b340ba528936a3277d2c638905.jpg"
+      },
+      {
+        "name": "Memory of Vell Tarlowe",
+        "recordHash": "4292949226",
+        "questHash": "3077591737",
+        "completionStepHash": "3077591738",
+        "completionObjectiveHash": "401780368",
+        "stepObjectiveHashes": [
+          "3119504447",
+          "2548918210",
+          "435482733",
+          "401780368"
+        ],
+        "questStepHashes": [
+          "3077591737",
+          "3077591736",
+          "3077591739",
+          "3077591738"
+        ],
+        "iconPath": "/common/destiny2_content/icons/3ef1b4b340ba528936a3277d2c638905.jpg"
+      },
+      {
+        "name": "Symphony of Death",
+        "recordHash": "3391758361",
+        "questHash": "613601972",
+        "completionStepHash": "2887971121",
+        "completionItemHash": "2232171099",
+        "questStepHashes": [
+          "613601972",
+          "3908666296",
+          "1479328354",
+          "926942410",
+          "1325063399",
+          "1961485542",
+          "2887971121"
+        ],
+        "iconPath": "/common/destiny2_content/icons/6c1ebb7aafb678a8b11f712fef80abe0.jpg"
+      },
+      {
+        "name": "The Journey",
+        "questHash": "3715926175",
+        "completionStepHash": "1465888553",
+        "completionItemHash": "1395261499",
+        "questStepHashes": [
+          "3715926175",
+          "3710486535",
+          "2269402074",
+          "1503907116",
+          "60788839",
+          "1465888553"
+        ],
+        "iconPath": "/common/destiny2_content/icons/0dcf6a903c206a58968e8b97c069fe14.jpg"
+      }
+    ],
+    "difficultyHuntsTitle": "Nightmare Hunts",
+    "difficultyHunts": [
+      {
+        "name": "Nightmare Hunt: Anguish",
+        "adeptActivityHashes": [
+          "571058911",
+          "2195531046"
+        ],
+        "heroActivityHashes": [
+          "571058910",
+          "1907980098",
+          "2195531045"
+        ],
+        "legendActivityHashes": [
+          "571058905",
+          "1907980099",
+          "2195531044"
+        ],
+        "masterActivityHashes": [
+          "571058904",
+          "1907980100",
+          "2195531043"
+        ]
+      },
+      {
+        "name": "Nightmare Hunt: Despair",
+        "adeptActivityHashes": [
+          "1086094029",
+          "2450170732"
+        ],
+        "heroActivityHashes": [
+          "1086094030",
+          "1995864069",
+          "2450170733"
+        ],
+        "legendActivityHashes": [
+          "1086094031",
+          "1995864068",
+          "2450170730"
+        ],
+        "masterActivityHashes": [
+          "1086094024",
+          "1995864067",
+          "2450170731"
+        ]
+      },
+      {
+        "name": "Nightmare Hunt: Fear",
+        "adeptActivityHashes": [
+          "77280917",
+          "1342492676"
+        ],
+        "heroActivityHashes": [
+          "77280918",
+          "1342492677",
+          "4124423051"
+        ],
+        "legendActivityHashes": [
+          "77280919",
+          "1342492674",
+          "4124423050"
+        ],
+        "masterActivityHashes": [
+          "77280912",
+          "1342492675",
+          "4124423053"
+        ]
+      },
+      {
+        "name": "Nightmare Hunt: Insanity",
+        "adeptActivityHashes": [
+          "66809865",
+          "2639701096"
+        ],
+        "heroActivityHashes": [
+          "66809866",
+          "2319705055",
+          "2639701097"
+        ],
+        "legendActivityHashes": [
+          "66809867",
+          "2319705054",
+          "2639701102"
+        ],
+        "masterActivityHashes": [
+          "66809868",
+          "2319705049",
+          "2639701103"
+        ]
+      },
+      {
+        "name": "Nightmare Hunt: Isolation",
+        "adeptActivityHashes": [
+          "1344110075",
+          "3205253950"
+        ],
+        "heroActivityHashes": [
+          "1344110072",
+          "3205253951",
+          "4268776793"
+        ],
+        "legendActivityHashes": [
+          "1344110073",
+          "3205253944",
+          "4268776792"
+        ],
+        "masterActivityHashes": [
+          "1344110078",
+          "3205253945",
+          "4268776799"
+        ]
+      },
+      {
+        "name": "Nightmare Hunt: Pride",
+        "adeptActivityHashes": [
+          "1907493630",
+          "3821020451"
+        ],
+        "heroActivityHashes": [
+          "1907493631",
+          "3821020448",
+          "3975373119"
+        ],
+        "legendActivityHashes": [
+          "1907493624",
+          "3821020449",
+          "3975373118"
+        ],
+        "masterActivityHashes": [
+          "1907493625",
+          "3821020454",
+          "3975373113"
+        ]
+      },
+      {
+        "name": "Nightmare Hunt: Rage",
+        "adeptActivityHashes": [
+          "2055076379",
+          "4098556690"
+        ],
+        "heroActivityHashes": [
+          "109546469",
+          "2055076376",
+          "4098556691"
+        ],
+        "legendActivityHashes": [
+          "109546468",
+          "2055076377",
+          "4098556692"
+        ],
+        "masterActivityHashes": [
+          "109546467",
+          "2055076382",
+          "4098556693"
+        ]
+      },
+      {
+        "name": "Nightmare Hunt: Servitude",
+        "adeptActivityHashes": [
+          "1188363429",
+          "1743972308"
+        ],
+        "heroActivityHashes": [
+          "876619478",
+          "1188363428",
+          "1743972311"
+        ],
+        "legendActivityHashes": [
+          "876619479",
+          "1188363427",
+          "1743972310"
+        ],
+        "masterActivityHashes": [
+          "876619472",
+          "1188363426",
+          "1743972305"
+        ]
       }
     ]
   }

@@ -15,6 +15,7 @@ export const SHADOWKEEP_HUB: ExpansionHub = {
   seasonIconHashes: ["a15754752f40aaf7b1b00aadb70a8f35"],
   seasonNumber: 8,
   destinationArmorSetNames: ["Dreambane"],
+  destinationArmorPreviewFiles: ["dreambane.webp"],
   destinationTitle: "Destination // The Moon",
   destinationActivityTitle: "The Moon",
   destinationActivitySlug: "the-moon",
@@ -50,7 +51,7 @@ export const SHADOWKEEP_HUB: ExpansionHub = {
   ],
   excludedSourcePatterns: [/solstice/i, /pale heart/i, /pantheon/i],
   exoticQuestSourcePattern:
-    /exotic quest|deathbringer|xenophage|symphony of death/i,
+    /deathbringer|xenophage|symphony of death/i,
   exoticExcludedNames: ["Divinity"],
   raidDungeonDeepLootExcludedNames: [
     "Accrued Redemption",

@@ -1,29 +1,29 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
+import {
+  useProfileRecordInstances,
+  useProfileStringVariables,
+} from "@/components/profile-progress-provider";
 import { TitleDetailPanel } from "@/components/title-detail-panel";
 import { TriumphGroupView } from "@/components/triumph-group-view";
 import { TriumphsListSection } from "@/components/triumphs-list-section";
+import { useSignedIn } from "@/lib/use-signed-in";
+import { resolveTriumphIcon } from "@/lib/triumphs/icons";
+import {
+  countTitleProgress,
+  getTitleCompletionTier,
+  splitTitleRecords,
+} from "@/lib/triumphs/record-progress";
 import type {
-  TitleCompletionTier,
+  TitleEntry,
   TriumphGroup,
-  TriumphProgress,
-  TriumphRecord,
 } from "@/types/triumph";
 
 type ExpansionTriumphsPanelProps = {
-  titleName: string;
-  guardianTitle: string | null;
-  titleDescription: string;
-  titleIconPath: string;
-  baseProgress: TriumphProgress;
-  overallProgress: TriumphProgress;
-  hasGilding: boolean;
-  titleTier: TitleCompletionTier;
-  titleRecords: TriumphRecord[];
+  title: TitleEntry | null;
   triumphGroup: TriumphGroup | null;
   triumphsGroupTitle: string;
-  showTitleSeal: boolean;
 };
 
 function CollapsibleBlock({
@@ -56,41 +56,67 @@ function CollapsibleBlock({
 }
 
 export function ExpansionTriumphsPanel({
-  titleName,
-  guardianTitle,
-  titleDescription,
-  titleIconPath,
-  baseProgress,
-  overallProgress,
-  hasGilding,
-  titleTier,
-  titleRecords,
+  title,
   triumphGroup,
   triumphsGroupTitle,
-  showTitleSeal,
 }: ExpansionTriumphsPanelProps) {
-  if (!showTitleSeal && !triumphGroup) return null;
+  const signedIn = useSignedIn();
+  const hydratedInstances = useProfileRecordInstances();
+  const hydratedVariables = useProfileStringVariables();
+
+  const instanceMap = useMemo(
+    () => new Map(Object.entries(signedIn ? hydratedInstances : {})),
+    [hydratedInstances, signedIn],
+  );
+
+  const titleProgress = useMemo(() => {
+    if (!title) {
+      return {
+        base: { completed: 0, total: 0 },
+        all: { completed: 0, total: 0 },
+      };
+    }
+    return countTitleProgress(title, instanceMap);
+  }, [instanceMap, title]);
+
+  const titleTier = useMemo(() => {
+    if (!title || !signedIn) return "none" as const;
+    return getTitleCompletionTier(title, instanceMap);
+  }, [instanceMap, signedIn, title]);
+
+  const gildingRecords = title ? splitTitleRecords(title.records).gildingRecords : [];
+  const iconPath = title
+    ? resolveTriumphIcon(title.iconPath, title.records)
+    : "";
+
+  if (!title && !triumphGroup) return null;
 
   return (
     <div className="space-y-6">
-      {showTitleSeal ? (
+      {title ? (
         <CollapsibleBlock
-          title={guardianTitle ? `Title // ${guardianTitle}` : "Title"}
+          title={
+            title.guardianTitle
+              ? `Title // ${title.guardianTitle}`
+              : "Title"
+          }
           defaultOpen
         >
           <div className="grid min-w-0 gap-8 lg:grid-cols-2">
             <TriumphsListSection
               heading="Title triumphs"
-              records={titleRecords}
+              records={title.records}
+              recordInstances={signedIn ? hydratedInstances : undefined}
+              stringVariables={signedIn ? hydratedVariables : undefined}
             />
             <TitleDetailPanel
-              name={titleName}
-              guardianTitle={guardianTitle}
-              description={titleDescription}
-              iconPath={titleIconPath}
-              baseProgress={baseProgress}
-              overallProgress={overallProgress}
-              hasGilding={hasGilding}
+              name={title.name}
+              guardianTitle={title.guardianTitle}
+              description={title.description}
+              iconPath={iconPath}
+              baseProgress={titleProgress.base}
+              overallProgress={titleProgress.all}
+              hasGilding={gildingRecords.length > 0}
               titleTier={titleTier}
             />
           </div>
@@ -99,7 +125,11 @@ export function ExpansionTriumphsPanel({
 
       {triumphGroup ? (
         <CollapsibleBlock title={triumphsGroupTitle} defaultOpen>
-          <TriumphGroupView group={triumphGroup} />
+          <TriumphGroupView
+            group={triumphGroup}
+            recordInstances={signedIn ? hydratedInstances : undefined}
+            stringVariables={signedIn ? hydratedVariables : undefined}
+          />
         </CollapsibleBlock>
       ) : null}
     </div>

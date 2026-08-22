@@ -1,7 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useOwnership } from "@/components/client-ownership";
+import {
+  useProfileChecklists,
+  useProfileRecordInstances,
+} from "@/components/profile-progress-provider";
 import { ActivityCurrentLootPanel } from "@/components/activity-current-loot-panel";
 import { CompletionMark } from "@/components/expansions/completion-mark";
 import { useSignedIn } from "@/lib/use-signed-in";
@@ -83,54 +87,12 @@ export function ExpansionDestinationPanel({
 }: ExpansionDestinationPanelProps) {
   const { ownedItemHashes, showOwnership } = useOwnership();
   const signedIn = useSignedIn();
-  const [instances, setInstances] = useState<Record<string, RecordInstance>>(
-    {},
-  );
-  const [checklists, setChecklists] = useState<
-    Record<string, Record<string, boolean>>
-  >({});
-
   const hasLoot = armorRows.length > 0 || weapons.length > 0;
   const hasRegionChests = regionChests.length > 0;
   const hasLostSectors = lostSectors.length > 0;
   const hasWellspring = wellspringBosses.length > 0;
-  const needsProfile =
-    hasRegionChests || hasLostSectors || hasWellspring;
-
-  useEffect(() => {
-    if (!signedIn || !needsProfile) return;
-    let cancelled = false;
-    Promise.all([
-      fetch("/api/triumphs/profile", { cache: "no-store" }).then((r) =>
-        r.json(),
-      ),
-      hasRegionChests
-        ? fetch("/api/profile/checklists", { cache: "no-store" }).then((r) =>
-            r.json(),
-          )
-        : Promise.resolve({ checklists: {} }),
-    ])
-      .then(([triumphs, checklistPayload]) => {
-        if (cancelled) return;
-        setInstances(
-          (triumphs as { recordInstances?: Record<string, RecordInstance> })
-            .recordInstances ?? {},
-        );
-        setChecklists(
-          (checklistPayload as {
-            checklists?: Record<string, Record<string, boolean>>;
-          }).checklists ?? {},
-        );
-      })
-      .catch(() => {
-        if (cancelled) return;
-        setInstances({});
-        setChecklists({});
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [hasRegionChests, needsProfile, signedIn]);
+  const instances = useProfileRecordInstances();
+  const checklists = useProfileChecklists(hasRegionChests);
 
   const regionChecklist = checklists[regionChestsChecklistHash] ?? {};
   const discoveryInstance = instances[lostSectorsDiscoveryRecordHash];

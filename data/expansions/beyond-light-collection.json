@@ -1,18 +1,403 @@
 {
+  "generatedAt": "2026-08-21T15:20:10.839Z",
+  "badgePresentationNodeHash": "2078340986",
   "badgeName": "Europan Collector",
-  "iconPath": "",
-  "bannerIconPath": "",
+  "iconPath": "/common/destiny2_content/icons/b397a1aac773c1e9136a33a01c023a83.png",
+  "bannerIconPath": "/common/destiny2_content/icons/576e5c4125b3eee8ee33eba1f388ffcc.jpg",
   "completionRecordHash": "2949079885",
-  "items": [],
+  "items": [
+    {
+      "itemHash": "20935540",
+      "collectibleHash": "1109949704",
+      "name": "Arctic Haze",
+      "iconPath": "/common/destiny2_content/icons/10b1b067ba02cb50195d7e3e8dc44e55.jpg",
+      "itemTypeDisplayName": "Auto Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "1621657423",
+      "collectibleHash": "37988050",
+      "name": "Biting Winds",
+      "iconPath": "/common/destiny2_content/icons/b9e873ef06d72d94d12d8240c6971eb0.jpg",
+      "itemTypeDisplayName": "Combat Bow",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Fallen Empire Campaign"
+    },
+    {
+      "itemHash": "4037745684",
+      "collectibleHash": "4093353117",
+      "name": "Bonechiller",
+      "iconPath": "/common/destiny2_content/icons/a0fb7725f026d54436232a12e40e474a.jpg",
+      "itemTypeDisplayName": "Shotgun",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "2603483885",
+      "collectibleHash": "396432035",
+      "name": "Cloudstrike",
+      "iconPath": "/common/destiny2_content/icons/ce45921edb8e35a249f2c6f5b3abaab5.jpg",
+      "itemTypeDisplayName": "Sniper Rifle",
+      "rarity": "Exotic",
+      "section": "weapons",
+      "source": "Source: Higher Difficulty Empire Hunts"
+    },
+    {
+      "itemHash": "3512349612",
+      "collectibleHash": "1266395278",
+      "name": "Coriolis Force",
+      "iconPath": "/common/destiny2_content/icons/61d51e12edf2ea32684138dcf3a5144c.jpg",
+      "itemTypeDisplayName": "Fusion Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Fallen Empire Campaign"
+    },
+    {
+      "itemHash": "2870169846",
+      "collectibleHash": "3376687557",
+      "name": "Hailing Confusion",
+      "iconPath": "/common/destiny2_content/icons/987ff5982ba87c077adb19df7930a947.jpg",
+      "itemTypeDisplayName": "Pulse Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "1197486957",
+      "collectibleHash": "3094001295",
+      "name": "High Albedo",
+      "iconPath": "/common/destiny2_content/icons/17f903a3d1550f2f4984dc5ed2717d63.jpg",
+      "itemTypeDisplayName": "Sidearm",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "370712896",
+      "collectibleHash": "2289501267",
+      "name": "Salvation's Grip",
+      "iconPath": "/common/destiny2_content/icons/f7a37e909fe6f923501f2175dc3784b6.jpg",
+      "itemTypeDisplayName": "Grenade Launcher",
+      "rarity": "Exotic",
+      "section": "weapons",
+      "source": "Source: \"The Stasis Prototype\" Quest"
+    },
+    {
+      "itemHash": "42351395",
+      "collectibleHash": "382907867",
+      "name": "Subzero Salvo",
+      "iconPath": "/common/destiny2_content/icons/5cbd74e29cbe92f31cad9ed2b6e053d3.jpg",
+      "itemTypeDisplayName": "Rocket Launcher",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "3487253372",
+      "collectibleHash": "3935854305",
+      "name": "The Lament",
+      "iconPath": "/common/destiny2_content/icons/f6844ca3eb572c546e97a340c24531d5.jpg",
+      "itemTypeDisplayName": "Sword",
+      "rarity": "Exotic",
+      "section": "weapons",
+      "source": "Source: \"Lost Lament\" Exotic Quest"
+    },
+    {
+      "itemHash": "1766088024",
+      "collectibleHash": "2430541162",
+      "name": "Thermal Erosion",
+      "iconPath": "/common/destiny2_content/icons/3225dec7eeff6fac239810b2f4cb193b.jpg",
+      "itemTypeDisplayName": "Machine Gun",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Fallen Empire Campaign"
+    },
+    {
+      "itemHash": "3852725203",
+      "collectibleHash": "2967507602",
+      "name": "Crystocrene Bond",
+      "iconPath": "/common/destiny2_content/icons/b9f0cea7210be148b1a3b8eb55c3547d.jpg",
+      "itemTypeDisplayName": "Warlock Bond",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "1577514344",
+      "collectibleHash": "3964609617",
+      "name": "Crystocrene Boots",
+      "iconPath": "/common/destiny2_content/icons/46460e7b9aae99726fe3e80c9d1b901a.jpg",
+      "itemTypeDisplayName": "Leg Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "2371224642",
+      "collectibleHash": "1053282265",
+      "name": "Crystocrene Cloak",
+      "iconPath": "/common/destiny2_content/icons/c97e09dfcebdbe1db1759934ac2dfecc.jpg",
+      "itemTypeDisplayName": "Hunter Cloak",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "2511757244",
+      "collectibleHash": "3859356069",
+      "name": "Crystocrene Cowl",
+      "iconPath": "/common/destiny2_content/icons/54a52d950d06bf1f2a0a6624b7086748.jpg",
+      "itemTypeDisplayName": "Helmet",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "1928831167",
+      "collectibleHash": "2597883134",
+      "name": "Crystocrene Gauntlets",
+      "iconPath": "/common/destiny2_content/icons/efa75f39f8c502f81f59e98889c671f1.jpg",
+      "itemTypeDisplayName": "Gauntlets",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "3789403502",
+      "collectibleHash": "2319618155",
+      "name": "Crystocrene Gloves",
+      "iconPath": "/common/destiny2_content/icons/21209712641708b84262d28c980f1ccd.jpg",
+      "itemTypeDisplayName": "Gauntlets",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "850081281",
+      "collectibleHash": "3789220860",
+      "name": "Crystocrene Greaves",
+      "iconPath": "/common/destiny2_content/icons/9e07105569c5b886181fd0bc3d8b1dab.jpg",
+      "itemTypeDisplayName": "Leg Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "3866531381",
+      "collectibleHash": "3999379458",
+      "name": "Crystocrene Grips",
+      "iconPath": "/common/destiny2_content/icons/3e0448fec7a680b4f3c944dd66c4b4a4.jpg",
+      "itemTypeDisplayName": "Gauntlets",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "903627726",
+      "collectibleHash": "2896107177",
+      "name": "Crystocrene Helm",
+      "iconPath": "/common/destiny2_content/icons/ec1df09a148216b6b3b7215c0c4b663f.jpg",
+      "itemTypeDisplayName": "Helmet",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "1547733991",
+      "collectibleHash": "2428588096",
+      "name": "Crystocrene Hood",
+      "iconPath": "/common/destiny2_content/icons/d1cd26d0b8332c687b8f51175d9e3597.jpg",
+      "itemTypeDisplayName": "Helmet",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "2946767412",
+      "collectibleHash": "890536429",
+      "name": "Crystocrene Mark",
+      "iconPath": "/common/destiny2_content/icons/4b5f5240cefa148d164608dbb097a675.jpg",
+      "itemTypeDisplayName": "Titan Mark",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "1208040825",
+      "collectibleHash": "2161231834",
+      "name": "Crystocrene Plate",
+      "iconPath": "/common/destiny2_content/icons/9f2c7c71d304ae58d253bcf3c11009f4.jpg",
+      "itemTypeDisplayName": "Chest Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "333761922",
+      "collectibleHash": "1427090333",
+      "name": "Crystocrene Robes",
+      "iconPath": "/common/destiny2_content/icons/71d6063bdf608bfcd8ced589dd2b652e.jpg",
+      "itemTypeDisplayName": "Chest Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "1147686167",
+      "collectibleHash": "1815021888",
+      "name": "Crystocrene Strides",
+      "iconPath": "/common/destiny2_content/icons/09cd89bbb6c22aecc0d17052c30357e8.jpg",
+      "itemTypeDisplayName": "Leg Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "4014508459",
+      "collectibleHash": "4087999790",
+      "name": "Crystocrene Vest",
+      "iconPath": "/common/destiny2_content/icons/337b9ff803b0bc0d59875293afeddf88.jpg",
+      "itemTypeDisplayName": "Chest Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "3089508707",
+      "collectibleHash": "4268663427",
+      "name": "Bright Warning",
+      "iconPath": "/common/destiny2_content/icons/9e9a8b160860b274971e20061ecffa58.jpg",
+      "itemTypeDisplayName": "Shader",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "1230660642",
+      "collectibleHash": "4248075100",
+      "name": "Europan Eclipse",
+      "iconPath": "/common/destiny2_content/icons/bbcbb4381ef3f330c8cd48f86f13f621.jpg",
+      "itemTypeDisplayName": "Emblem",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "1948818058",
+      "collectibleHash": "539450592",
+      "name": "Gilded Smoke",
+      "iconPath": "/common/destiny2_content/icons/78f1e9a43fc8a192da587b95eb41778c.jpg",
+      "itemTypeDisplayName": "Shader",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Fallen Empire Campaign"
+    },
+    {
+      "itemHash": "3376331270",
+      "collectibleHash": "155612418",
+      "name": "Last Flight Home",
+      "iconPath": "/common/destiny2_content/icons/9671131375b88b2043cb8c6a86a62456.jpg",
+      "itemTypeDisplayName": "Ship",
+      "rarity": "Exotic",
+      "section": "other",
+      "source": "Source: Europan Tour"
+    },
+    {
+      "itemHash": "1230660643",
+      "collectibleHash": "4248075101",
+      "name": "Salvation's Downfall",
+      "iconPath": "/common/destiny2_content/icons/4f0ba599ec4cb2071b824cbe0b5a3190.jpg",
+      "itemTypeDisplayName": "Emblem",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Exploring Europa"
+    },
+    {
+      "itemHash": "3089508706",
+      "collectibleHash": "4268663426",
+      "name": "Shattered Sky",
+      "iconPath": "/common/destiny2_content/icons/0628fe956c5c6299b1edb4ca9ceb40e4.jpg",
+      "itemTypeDisplayName": "Shader",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Exploring Europa"
+    }
+  ],
   "regionChests": {
-    "checklistHash": "",
+    "checklistHash": "1697465175",
     "triumphHash": "",
-    "entries": []
+    "entries": [
+      {
+        "entryHash": "3888342093",
+        "label": "Region chest 1"
+      },
+      {
+        "entryHash": "201955226",
+        "label": "Region chest 2"
+      },
+      {
+        "entryHash": "763777083",
+        "label": "Region chest 3"
+      },
+      {
+        "entryHash": "2131720755",
+        "label": "Region chest 4"
+      },
+      {
+        "entryHash": "3206775572",
+        "label": "Region chest 5"
+      },
+      {
+        "entryHash": "260886981",
+        "label": "Region chest 6"
+      },
+      {
+        "entryHash": "1636954546",
+        "label": "Region chest 7"
+      },
+      {
+        "entryHash": "995760197",
+        "label": "Region chest 8"
+      },
+      {
+        "entryHash": "3941648788",
+        "label": "Region chest 9"
+      }
+    ]
   },
   "lostSectors": {
-    "checklistHash": "",
-    "discoveryRecordHash": "",
-    "sectors": []
+    "checklistHash": "3142056444",
+    "discoveryRecordHash": "3838089785",
+    "sectors": [
+      {
+        "name": "Concealed Void",
+        "checklistEntryHash": "373734578",
+        "discoveryObjectiveHash": "3634851930",
+        "expertRecordHash": "520634566",
+        "masterRecordHash": "2854743101",
+        "grandmasterRecordHash": "1416307185"
+      },
+      {
+        "name": "Perdition",
+        "checklistEntryHash": "3162269612",
+        "discoveryObjectiveHash": "3634851931",
+        "expertRecordHash": "430920723",
+        "masterRecordHash": "3227342880",
+        "grandmasterRecordHash": "745577862"
+      },
+      {
+        "name": "Bunker E15",
+        "checklistEntryHash": "1390564489",
+        "discoveryObjectiveHash": "3634851928",
+        "expertRecordHash": "4076413958",
+        "masterRecordHash": "631767421",
+        "grandmasterRecordHash": "1525617457"
+      }
+    ]
   },
   "wellspring": {
     "normalRecordHash": "",
@@ -21,6 +406,382 @@
   },
   "campaign": {
     "legendaryRecordHash": "",
-    "missions": []
+    "missions": [],
+    "quests": [
+      {
+        "name": "Legacy: Beyond Light",
+        "fallbackRecordHashes": [
+          "1209487292",
+          "1209487295",
+          "1209487294"
+        ],
+        "questHash": "3612061731",
+        "completionStepHash": "4224533134",
+        "questStepHashes": [
+          "3612061731",
+          "3987765209",
+          "3616224969",
+          "422583190",
+          "431984069",
+          "431984070",
+          "431984071",
+          "523748088",
+          "780325502",
+          "785647193",
+          "785647194",
+          "785647195",
+          "1013534599",
+          "1239957057",
+          "1239957058",
+          "1239957059",
+          "1239957060",
+          "1239957061",
+          "1239957062",
+          "1239957063",
+          "1239957064",
+          "1438363708",
+          "1438363709",
+          "1495419808",
+          "2577006689",
+          "2577006690",
+          "2577006691",
+          "2683598861",
+          "2757895693",
+          "2757895694",
+          "2943602311",
+          "3513278115",
+          "3577538268",
+          "3577538269",
+          "3824718318",
+          "3848329302",
+          "4224533134"
+        ],
+        "completionObjectiveHash": "1330251823",
+        "stepObjectiveHashes": [
+          "1051076453",
+          "1073685114",
+          "3283150090",
+          "1853386318",
+          "1857129539",
+          "1851419582",
+          "1397002441",
+          "3977348277",
+          "3576279035",
+          "1829844541",
+          "526006380",
+          "1782367587",
+          "2845282388",
+          "1621826255",
+          "4093629354",
+          "1383318661",
+          "1398132408",
+          "2842891047",
+          "3445224766",
+          "2990807625",
+          "1500118780",
+          "41039169",
+          "2468077878",
+          "434239149",
+          "271512047",
+          "1836997962",
+          "2342597925",
+          "2357722374",
+          "866071862",
+          "403259947",
+          "2012791120",
+          "3907766675",
+          "2507559361",
+          "2894710104",
+          "233478022",
+          "1481711502",
+          "1330251823"
+        ],
+        "iconPath": "/common/destiny2_content/icons/b5df0556c7239d00481ef0eaa4899122.jpg"
+      },
+      {
+        "name": "Reclaiming Europa",
+        "recordHash": "3728521063",
+        "questHash": "1589407358",
+        "completionStepHash": "3593342633",
+        "questStepHashes": [
+          "1589407358",
+          "3593342632",
+          "3593342633"
+        ],
+        "completionObjectiveHash": "4125506058",
+        "stepObjectiveHashes": [
+          "804255758",
+          "1570809861",
+          "4125506058"
+        ],
+        "iconPath": "/common/destiny2_content/icons/1653c1c3697fe021b9d49416d6945e7d.jpg"
+      },
+      {
+        "name": "Born in Darkness Part 1",
+        "recordHash": "2379995968",
+        "recordObjectiveHash": "963229548",
+        "questHash": "2975357706",
+        "completionStepHash": "2975357710",
+        "questStepHashes": [
+          "2975357706",
+          "2975357707",
+          "2975357704",
+          "2975357705",
+          "2975357710"
+        ],
+        "completionObjectiveHash": "1564730799",
+        "stepObjectiveHashes": [
+          "173632307",
+          "173632306",
+          "1071874000",
+          "1071874001",
+          "1246216933",
+          "2464037994",
+          "1564730799"
+        ],
+        "iconPath": "/common/destiny2_content/icons/4bfc1664e73ea011ed60a718755e7a17.jpg"
+      },
+      {
+        "name": "Born in Darkness Part 2",
+        "recordHash": "2379995968",
+        "recordObjectiveHash": "963229550",
+        "questHash": "285715023",
+        "completionStepHash": "285715019",
+        "questStepHashes": [
+          "285715023",
+          "285715022",
+          "285715021",
+          "285715020",
+          "285715019"
+        ],
+        "completionObjectiveHash": "4248875536",
+        "stepObjectiveHashes": [
+          "3714306156",
+          "3714306157",
+          "3468784111",
+          "3468784110",
+          "1746894406",
+          "393184657",
+          "4248875536"
+        ],
+        "iconPath": "/common/destiny2_content/icons/4bfc1664e73ea011ed60a718755e7a17.jpg"
+      },
+      {
+        "name": "Born in Darkness Part 3",
+        "recordHash": "2379995968",
+        "recordObjectiveHash": "963229544",
+        "questHash": "2205014136",
+        "completionStepHash": "2205014140",
+        "questStepHashes": [
+          "2205014136",
+          "2205014137",
+          "2205014138",
+          "2205014139",
+          "2205014140"
+        ],
+        "completionObjectiveHash": "1188557185",
+        "stepObjectiveHashes": [
+          "2766725333",
+          "2766725332",
+          "2766725335",
+          "1104038810",
+          "1104038811",
+          "2911893731",
+          "1580045632",
+          "1188557185"
+        ],
+        "iconPath": "/common/destiny2_content/icons/4bfc1664e73ea011ed60a718755e7a17.jpg"
+      },
+      {
+        "name": "Born in Darkness Part 4",
+        "recordHash": "2379995968",
+        "recordObjectiveHash": "963229546",
+        "questHash": "1891580901",
+        "completionStepHash": "1891580897",
+        "questStepHashes": [
+          "1891580901",
+          "1891580900",
+          "1891580903",
+          "1891580902",
+          "1891580897"
+        ],
+        "completionObjectiveHash": "1291850834",
+        "stepObjectiveHashes": [
+          "3849524078",
+          "3961658073",
+          "3961658072",
+          "2179172020",
+          "802194519",
+          "1291850834"
+        ],
+        "iconPath": "/common/destiny2_content/icons/4bfc1664e73ea011ed60a718755e7a17.jpg"
+      },
+      {
+        "name": "Empire's Fall",
+        "recordHash": "435168078",
+        "questHash": "113061891",
+        "completionStepHash": "1781597161",
+        "questStepHashes": [
+          "113061891",
+          "1708910513",
+          "1781597160",
+          "1781597161"
+        ],
+        "completionObjectiveHash": "1989902666",
+        "stepObjectiveHashes": [
+          "2626223928",
+          "3787760546",
+          "3984655685",
+          "1989902666"
+        ],
+        "iconPath": "/common/destiny2_content/icons/ca6502dcc0633a4afbe2ca48aa4a2071.jpg"
+      },
+      {
+        "name": "Lost Lament",
+        "recordHash": "1491879217",
+        "completionItemHash": "3487253372",
+        "questHash": "25511490",
+        "completionStepHash": "4257510940",
+        "questStepHashes": [
+          "25511490",
+          "465838244",
+          "1399678798",
+          "2423789933",
+          "2711270400",
+          "3263361561",
+          "3357553626",
+          "3535843838",
+          "3938019989",
+          "4107530250",
+          "4257510940"
+        ],
+        "completionObjectiveHash": "2734532235",
+        "stepObjectiveHashes": [
+          "1571362280",
+          "4031802009",
+          "4031802008",
+          "4031802011",
+          "3619075036",
+          "1358519734",
+          "1490877917",
+          "1988711497",
+          "3246847786",
+          "4223851534",
+          "1596308833",
+          "1658693517",
+          "2734532235"
+        ],
+        "iconPath": "/common/destiny2_content/icons/2742913c6800415e68f007272a9f822b.jpg"
+      },
+      {
+        "name": "Soon",
+        "completionItemHash": "1594120904",
+        "questHash": "2510021888",
+        "completionStepHash": "2510021895",
+        "questStepHashes": [
+          "2510021888",
+          "2510021889",
+          "2510021890",
+          "2510021895"
+        ],
+        "completionObjectiveHash": "2982153788",
+        "stepObjectiveHashes": [
+          "1182061173",
+          "519933977",
+          "1761777134",
+          "2982153788"
+        ],
+        "iconPath": "/common/destiny2_content/icons/e34c771217b377715243d6599f69894c.jpg"
+      },
+      {
+        "name": "The Stasis Prototype",
+        "recordHash": "2920141732",
+        "completionItemHash": "370712896",
+        "questHash": "1299795970",
+        "completionStepHash": "3599609918",
+        "questStepHashes": [
+          "1299795970",
+          "1388623635",
+          "3136133748",
+          "3184764590",
+          "3257985301",
+          "3459548846",
+          "3599609918"
+        ],
+        "completionObjectiveHash": "882310764",
+        "stepObjectiveHashes": [
+          "1692833192",
+          "3490967413",
+          "996308273",
+          "2902359057",
+          "3029994940",
+          "4149065667",
+          "1461054908",
+          "882310764"
+        ],
+        "iconPath": "/common/destiny2_content/icons/672c1fdc48f1bd9eabcd26de09e8ffb3.jpg"
+      }
+    ],
+    "difficultyHunts": [
+      {
+        "name": "The Warrior",
+        "higherRecordHash": "869599000",
+        "adeptActivityHashes": [
+          "4173217516"
+        ],
+        "heroActivityHashes": [
+          "4173217519",
+          "2994479751"
+        ],
+        "legendActivityHashes": [
+          "4173217518",
+          "2994479750"
+        ],
+        "masterActivityHashes": [
+          "4173217513",
+          "2994479745"
+        ]
+      },
+      {
+        "name": "The Technocrat",
+        "higherRecordHash": "1345853611",
+        "adeptActivityHashes": [
+          "5517247"
+        ],
+        "heroActivityHashes": [
+          "5517244",
+          "2555419880"
+        ],
+        "legendActivityHashes": [
+          "5517245",
+          "2555419881"
+        ],
+        "masterActivityHashes": [
+          "5517242",
+          "2555419886"
+        ]
+      },
+      {
+        "name": "The Dark Priestess",
+        "higherRecordHash": "575251332",
+        "adeptActivityHashes": [
+          "2205920672",
+          "2135920336"
+        ],
+        "heroActivityHashes": [
+          "2205920675",
+          "2370020739"
+        ],
+        "legendActivityHashes": [
+          "2205920674",
+          "2370020738"
+        ],
+        "masterActivityHashes": [
+          "2205920677",
+          "2370020741"
+        ]
+      }
+    ],
+    "difficultyHuntsTitle": "Empire Hunts"
   }
 }

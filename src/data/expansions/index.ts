@@ -20,6 +20,7 @@ import type {
 export const PUBLISHED_EXPANSION_SLUGS = new Set<string>([
   "the-witch-queen",
   "shadowkeep",
+  "beyond-light",
 ]);
 
 /** Chronological expansion hubs with pages (Red War is index-only for now). */
