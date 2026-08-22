@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { ActivityTitleDetailPanel } from "@/components/activity-title-detail-panel";
 import { TriumphsListSection } from "@/components/triumphs-list-section";
 import { ClientOwnership } from "@/components/client-ownership";
 import {
@@ -6,7 +7,6 @@ import {
   OwnedLootSection,
 } from "@/components/owned-activity-loot";
 import { SectionPageLayout } from "@/components/section-page-layout";
-import { TitleDetailPanel } from "@/components/title-detail-panel";
 import { getActivityLootPage } from "@/data/rad-loot/activity-pages";
 import {
   filterExpiredActivityLoot,
@@ -18,19 +18,15 @@ import {
 } from "@/lib/destiny-activity-stats";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { activityHeaderUrl } from "@/lib/page-headers";
-import {
-  countTitleProgress,
-  countTriumphProgress,
-} from "@/lib/triumphs/record-progress";
+import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
+import { enrichWeaponLootItems } from "@/lib/activities/loot-item";
+import { loadCatalogHashIndex } from "@/lib/all-loot/catalog-hash-index";
+import { resolveTriumphIcon } from "@/lib/triumphs/icons";
 import {
   getTitleEntry,
   loadTriumphCatalog,
   resolveActivityTriumphRecords,
 } from "@/lib/triumphs/load";
-import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
-import { enrichWeaponLootItems } from "@/lib/activities/loot-item";
-import { loadCatalogHashIndex } from "@/lib/all-loot/catalog-hash-index";
-import { resolveTriumphIcon } from "@/lib/triumphs/icons";
 
 type ActivityPageProps = {
   params: Promise<{ slug: string }>;
@@ -95,25 +91,12 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
         : [],
   );
   const hasTriumphSection = triumphRecords.length > 0;
-  const emptyInstances = new Map();
   const exoticItemHashes = ACTIVITY_EXOTIC_HASHES[slug] ?? new Set<string>();
   const weapons = enrichWeaponLootItems(activity.weapons, catalogByHash);
   const timelostWeapons = enrichWeaponLootItems(
     activity.timelostWeapons,
     catalogByHash,
   );
-  const titleProgress = title
-    ? countTitleProgress({ ...title, records: triumphRecords }, emptyInstances)
-    : hasTriumphSection
-      ? (() => {
-          const progress = countTriumphProgress(triumphRecords, emptyInstances);
-          return {
-            base: progress,
-            gilding: { completed: 0, total: 0 },
-            all: progress,
-          };
-        })()
-      : null;
   const panelName = title?.name ?? activity.triumphPanel?.name ?? "";
   const panelDescription =
     title?.description ?? activity.triumphPanel?.description ?? "";
@@ -135,18 +118,15 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
       <ClientOwnership>
 <div className="grid min-w-0 gap-8 lg:grid-cols-3">
         <div className="min-w-0 space-y-6 lg:col-span-1">
-          {hasTriumphSection && titleProgress ? (
-            <TitleDetailPanel
+          {hasTriumphSection ? (
+            <ActivityTitleDetailPanel
+              slug={slug}
+              title={title ?? null}
+              triumphRecords={triumphRecords}
               name={panelName}
               guardianTitle={panelGuardianTitle}
               description={panelDescription}
               iconPath={panelIconPath}
-              baseProgress={titleProgress.base}
-              overallProgress={titleProgress.all}
-              hasGilding={false}
-              titleTier="none"
-              appearance="raid"
-              raidCompletions={isRaidCompletionSlug(slug) ? null : undefined}
               showMasterCompletions={
                 isRaidCompletionSlug(slug) ? raidHasMasterTier(slug) : true
               }

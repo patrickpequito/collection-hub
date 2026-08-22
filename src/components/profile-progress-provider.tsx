@@ -12,6 +12,7 @@ import {
 } from "react";
 import type { QuestCompletionTarget } from "@/lib/destiny-quest-progress";
 import { serializeQuestCompletionTargets } from "@/lib/destiny-quest-progress";
+import type { RaidCompletions } from "@/lib/destiny-activity-stats";
 import {
   emptyProfileCacheSnapshot,
   mergeProfileCache,
@@ -30,6 +31,7 @@ type ProfileProgressContextValue = {
   recordInstances: Record<string, RecordInstance>;
   stringVariables: TriumphStringVariables;
   activityCompletions: Record<string, number>;
+  raidCompletionsBySlug: Partial<Record<string, RaidCompletions>>;
   questCompletions: Record<string, boolean>;
   checklists: Record<string, Record<string, boolean>>;
   registerActivityHashes: (hashes: readonly string[]) => void;
@@ -62,7 +64,13 @@ export function ProfileProgressProvider({
   signedIn,
   membershipId,
 }: ProfileProgressProviderProps) {
-  const [snapshot, setSnapshot] = useState<ProfileCacheSnapshot | null>(null);
+  const [snapshot, setSnapshot] = useState<ProfileCacheSnapshot | null>(() => {
+    if (!signedIn || !membershipId) return null;
+    return (
+      readProfileCache(membershipId) ??
+      emptyProfileCacheSnapshot(membershipId)
+    );
+  });
   const [inventoryError, setInventoryError] = useState<string | null>(null);
 
   const activityHashRegistryRef = useRef(new Set<string>());
@@ -144,6 +152,19 @@ export function ProfileProgressProvider({
       })
       .catch(() => {
         // Keep cached triumph data when refresh fails.
+      });
+
+    fetch("/api/profile/raid-completions", { cache: "no-store" })
+      .then(async (response) => {
+        const payload = (await response.json()) as {
+          completions?: Partial<Record<string, RaidCompletions>>;
+          error?: string | null;
+        };
+        if (cancelled || payload.error) return;
+        patchSnapshot({ raidCompletionsBySlug: payload.completions ?? {} });
+      })
+      .catch(() => {
+        // Keep cached raid completions when refresh fails.
       });
 
     return () => {
@@ -280,6 +301,7 @@ export function ProfileProgressProvider({
       recordInstances: snapshot?.recordInstances ?? {},
       stringVariables: snapshot?.stringVariables ?? EMPTY_TRIUMPH_STRING_VARIABLES,
       activityCompletions: snapshot?.activityCompletions ?? {},
+      raidCompletionsBySlug: snapshot?.raidCompletionsBySlug ?? {},
       questCompletions: snapshot?.questCompletions ?? {},
       checklists: snapshot?.checklists ?? {},
       registerActivityHashes,
@@ -292,6 +314,7 @@ export function ProfileProgressProvider({
       snapshot?.recordInstances,
       snapshot?.stringVariables,
       snapshot?.activityCompletions,
+      snapshot?.raidCompletionsBySlug,
       snapshot?.questCompletions,
       snapshot?.checklists,
       ownedItemHashes,
@@ -372,4 +395,10 @@ export function useProfileChecklists(
   }, [enabled, requestChecklists]);
 
   return checklists;
+}
+
+export function useProfileRaidCompletions(): Partial<
+  Record<string, RaidCompletions>
+> {
+  return useProfileProgressContext().raidCompletionsBySlug;
 }

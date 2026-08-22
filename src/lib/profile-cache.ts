@@ -1,3 +1,4 @@
+import type { RaidCompletions } from "@/lib/destiny-activity-stats";
 import type { RecordInstance, TriumphStringVariables } from "@/types/triumph";
 import { EMPTY_TRIUMPH_STRING_VARIABLES } from "@/types/triumph";
 
@@ -11,6 +12,7 @@ export type ProfileCacheSnapshot = {
   recordInstances: Record<string, RecordInstance>;
   stringVariables: TriumphStringVariables;
   activityCompletions: Record<string, number>;
+  raidCompletionsBySlug: Partial<Record<string, RaidCompletions>>;
   questCompletions: Record<string, boolean>;
   checklists: Record<string, Record<string, boolean>>;
 };
@@ -79,6 +81,7 @@ export function emptyProfileCacheSnapshot(
     recordInstances: {},
     stringVariables: EMPTY_TRIUMPH_STRING_VARIABLES,
     activityCompletions: {},
+    raidCompletionsBySlug: {},
     questCompletions: {},
     checklists: {},
   };
@@ -96,6 +99,10 @@ export function mergeProfileCache(
     activityCompletions: {
       ...current.activityCompletions,
       ...patch.activityCompletions,
+    },
+    raidCompletionsBySlug: {
+      ...current.raidCompletionsBySlug,
+      ...patch.raidCompletionsBySlug,
     },
     questCompletions: {
       ...current.questCompletions,

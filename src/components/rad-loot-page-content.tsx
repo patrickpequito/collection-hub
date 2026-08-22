@@ -1,8 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { ActivityBannerSmall } from "@/components/activity-banner-small";
 import { ActivitySectionHeader } from "@/components/activity-section-header";
+import {
+  useProfileRaidCompletions,
+  useProfileRecordInstances,
+} from "@/components/profile-progress-provider";
 import {
   DUNGEONS,
   LEGACY_RAIDS,
@@ -10,9 +14,20 @@ import {
   RAID_LAIRS,
   RAIDS,
 } from "@/data/rad-loot/activities";
+import {
+  buildSignedInActivityBannerStatsFromProfile,
+} from "@/lib/rad-loot/banner-stats-from-profile";
 import type { ActivityBannerStats } from "@/lib/rad-loot-banner-stats";
 import { useSignedIn } from "@/lib/use-signed-in";
 import type { ActivityEntry } from "@/types/activity-loot";
+
+const ALL_ENTRIES = [
+  PANTHEON,
+  ...RAIDS,
+  ...DUNGEONS,
+  ...LEGACY_RAIDS,
+  ...RAID_LAIRS,
+];
 
 type RadLootPageContentProps = {
   signedIn?: boolean;
@@ -60,31 +75,18 @@ export function RadLootPageContent({
 }: RadLootPageContentProps) {
   const signedInHook = useSignedIn();
   const signedIn = signedInProp ?? signedInHook;
-  const [bannerStats, setBannerStats] = useState(initialBannerStats);
+  const raidCompletionsBySlug = useProfileRaidCompletions();
+  const recordInstances = useProfileRecordInstances();
   const featuredSlugSet = new Set(featuredSlugs);
 
-  useEffect(() => {
-    if (!signedIn) return;
-
-    let cancelled = false;
-
-    fetch("/api/rad-loot/banner-stats", { cache: "no-store" })
-      .then(async (response) => {
-        const payload = (await response.json()) as {
-          bannerStats: Record<string, ActivityBannerStats> | null;
-          error: string | null;
-        };
-        if (cancelled || !payload.bannerStats) return;
-        setBannerStats(payload.bannerStats);
-      })
-      .catch(() => {
-        // Keep icon-only stats from the server shell.
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [signedIn]);
+  const bannerStats = useMemo(() => {
+    if (!signedIn) return initialBannerStats;
+    return buildSignedInActivityBannerStatsFromProfile(
+      ALL_ENTRIES,
+      raidCompletionsBySlug,
+      recordInstances,
+    );
+  }, [initialBannerStats, raidCompletionsBySlug, recordInstances, signedIn]);
 
   return (
     <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
