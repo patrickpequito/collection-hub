@@ -87,6 +87,16 @@ function samePair(a, b) {
   return left === right;
 }
 
+/**
+ * Community sites often lag Tuesday reset by hours and keep advertising last
+ * week's pair. Consecutive weeks never share the same featured dungeon pair.
+ */
+function isStalePriorWeekPair(weekIndex, pair) {
+  if (weekIndex <= 0 || !pair?.length) return false;
+  const prior = featuredDungeonSlugsForWeek(weekIndex - 1);
+  return prior.length > 0 && samePair(pair, prior);
+}
+
 async function resolveFeaturedDungeons(weekIndex, weekStart) {
   const fromSchedule = featuredDungeonSlugsForWeek(weekIndex);
   const candidates = [];
@@ -130,6 +140,13 @@ async function resolveFeaturedDungeons(weekIndex, weekStart) {
     }
   }
 
+  if (chosen?.pair?.length && isStalePriorWeekPair(weekIndex, chosen.pair)) {
+    console.warn(
+      `Rejecting stale ${chosen.source} pair [${chosen.pair.join(", ")}] — matches week ${weekIndex - 1}`,
+    );
+    chosen = null;
+  }
+
   if (chosen?.pair?.length) {
     if (!samePair(chosen.pair, fromSchedule)) {
       try {
@@ -153,7 +170,7 @@ async function resolveFeaturedDungeons(weekIndex, weekStart) {
   }
 
   throw new Error(
-    `No featured dungeons for week ${weekIndex}: live scrapes failed and schedule has no confirmed pair`,
+    `No featured dungeons for week ${weekIndex}: live scrapes failed/stale and schedule has no confirmed pair`,
   );
 }
 

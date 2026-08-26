@@ -9,6 +9,10 @@ on:
     - cron: "35 17 * * 2"
     - cron: "5 18 * * 2"
     - cron: "5 19 * * 2"
+    - cron: "5 21 * * 2"
+    # Wednesday morning catch-up when Kyber/Blueberries still lag Tuesday night.
+    - cron: "15 8 * * 3"
+    - cron: "15 14 * * 3"
     # Daily safety net if Tuesday jobs were skipped (inactive repo / Actions lag).
     - cron: "15 17 * * *"
   workflow_dispatch:

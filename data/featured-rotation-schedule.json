@@ -1,6 +1,6 @@
 {
   "epochUtc": "2026-06-09T17:00:00.000Z",
-  "sourceNotes": "Dungeon weeks 0–8 historically confirmed against live sources (Jul 28 Warlord+Pit, Aug 4 Prophecy+Vesper). Do NOT extrapolate beyond confirmed weeks — generate:featured-activities scrapes Kyber's Corner (primary) and Blueberries this-week cards (fallback when sources disagree) and appends. Raids always prefer Bungie public milestones (weekly challenge).\nWeek 9 confirmed 2026-08-11: sundered-doctrine + grasp-of-avarice.\nWeek 10 confirmed 2026-08-18: sundered-doctrine + grasp-of-avarice.\nWeek 10 confirmed 2026-08-19: duality + the-shattered-throne.\nWeek 11 confirmed 2026-08-25: duality + the-shattered-throne.",
+  "sourceNotes": "Dungeon weeks 0\u20138 historically confirmed against live sources (Jul 28 Warlord+Pit, Aug 4 Prophecy+Vesper). Do NOT extrapolate beyond confirmed weeks \u2014 generate:featured-activities scrapes Kyber's Corner (primary) and Blueberries this-week cards (fallback when sources disagree) and appends. Raids always prefer Bungie public milestones (weekly challenge).\nWeek 9 confirmed 2026-08-11: sundered-doctrine + grasp-of-avarice.\nWeek 10 confirmed 2026-08-18: sundered-doctrine + grasp-of-avarice.\nWeek 10 confirmed 2026-08-19: duality + the-shattered-throne.\nWeek 11 confirmed 2026-08-25: duality + the-shattered-throne.\nWeek 11 confirmed 2026-08-26: spire-of-the-watcher + pit-of-heresy.",
   "dungeonWeeks": [
     [
       "the-shattered-throne",
@@ -47,8 +47,8 @@
       "the-shattered-throne"
     ],
     [
-      "duality",
-      "the-shattered-throne"
+      "spire-of-the-watcher",
+      "pit-of-heresy"
     ]
   ],
   "raidFallbackWeeks": [

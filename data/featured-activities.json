@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-25T19:39:08.633Z",
+  "generatedAt": "2026-08-26T16:48:54.878Z",
   "weekIndex": 11,
   "weekStart": "2026-08-25T17:00:00.000Z",
   "weekEnd": "2026-09-01T17:00:00.000Z",
@@ -8,8 +8,8 @@
     "root-of-nightmares"
   ],
   "featuredDungeons": [
-    "duality",
-    "the-shattered-throne"
+    "spire-of-the-watcher",
+    "pit-of-heresy"
   ],
   "rotationWeeks": 12
 }
