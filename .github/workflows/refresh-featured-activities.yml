@@ -10,7 +10,7 @@ on:
     - cron: "5 18 * * 2"
     - cron: "5 19 * * 2"
     - cron: "5 21 * * 2"
-    # Wednesday morning catch-up when Kyber/Blueberries still lag Tuesday night.
+    # Wednesday morning catch-up when Kyber still lags Tuesday night.
     - cron: "15 8 * * 3"
     - cron: "15 14 * * 3"
     # Daily safety net if Tuesday jobs were skipped (inactive repo / Actions lag).
@@ -75,5 +75,5 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore(data): refresh featured raid and dungeon rotation" -m "Scheduled sync of featured-activities.json (Bungie raids + Kyber/Blueberries dungeons)."
+          git commit -m "chore(data): refresh featured raid and dungeon rotation" -m "Scheduled sync of featured-activities.json (Bungie raids + Kyber dungeons)."
           git push

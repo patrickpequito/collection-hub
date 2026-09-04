@@ -2,8 +2,8 @@
  * Shared featured raid/dungeon rotation helpers (Node scripts).
  *
  * Raids: Bungie public milestones (weekly challenge).
- * Dungeons: Kyber's Corner weekly reset (primary), Blueberries "Dungeon this
- * week" cards (fallback). Bungie does not expose featured dungeons publicly.
+ * Dungeons: Kyber's Corner weekly reset only. Bungie does not expose featured
+ * dungeons publicly; schedule.json stores confirmed weeks for offline fallback.
  */
 
 import { readFileSync, writeFileSync } from "node:fs";
@@ -54,8 +54,6 @@ export const DUNGEON_NAME_TO_SLUG = {
 const KYBER_HOME_URL = "https://kyberscorner.com/";
 const KYBER_FEATURED_URL =
   "https://kyberscorner.com/destiny2/weekly-featured-raids-and-dungeons/";
-const BLUEBERRIES_ROTATION_URL =
-  "https://www.blueberries.gg/leveling/destiny-2-raid-dungeon-rotation/";
 
 const FETCH_HEADERS = {
   "User-Agent": "d2-collector-featured-rotation/1.0 (+https://github.com/)",
@@ -290,33 +288,6 @@ export async function fetchFeaturedDungeonsFromKyber(weekStartIso) {
     );
   }
   return fromFeatured;
-}
-
-/**
- * Blueberries "Dungeon this week" cards (live rotator), not the long calendar.
- */
-export function parseBlueberriesDungeonThisWeek(html) {
-  const text = htmlToPlainText(html);
-  const section = text.match(
-    /Dungeon this week\s+(.+?)(?=Featured Dungeon Weapons|Weekly Dungeon rotation|Monument of Triumph calendar|$)/i,
-  );
-  if (!section) return null;
-  return extractTwoDungeonSlugs(section[1]);
-}
-
-export async function fetchFeaturedDungeonsFromBlueberries() {
-  const response = await fetch(BLUEBERRIES_ROTATION_URL, {
-    headers: FETCH_HEADERS,
-  });
-  if (!response.ok) {
-    throw new Error(`Blueberries fetch failed: ${response.status}`);
-  }
-  const html = await response.text();
-  const pair = parseBlueberriesDungeonThisWeek(html);
-  if (!pair) {
-    throw new Error('Blueberries "Dungeon this week" cards not found');
-  }
-  return pair;
 }
 
 /**

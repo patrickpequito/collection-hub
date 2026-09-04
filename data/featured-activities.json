@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-08-31T21:54:15.000Z",
-  "weekIndex": 11,
-  "weekStart": "2026-08-25T17:00:00.000Z",
-  "weekEnd": "2026-09-01T17:00:00.000Z",
+  "generatedAt": "2026-09-04T06:40:13.470Z",
+  "weekIndex": 12,
+  "weekStart": "2026-09-01T17:00:00.000Z",
+  "weekEnd": "2026-09-08T17:00:00.000Z",
   "featuredRaids": [
-    "deep-stone-crypt",
-    "root-of-nightmares"
+    "crotas-end",
+    "vault-of-glass"
   ],
   "featuredDungeons": [
-    "spire-of-the-watcher",
-    "pit-of-heresy"
+    "ghosts-of-the-deep",
+    "prophecy"
   ],
-  "rotationWeeks": 12
+  "rotationWeeks": 13
 }

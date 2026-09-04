@@ -2,8 +2,8 @@
  * Builds data/featured-activities.json for RAD Loot weekly highlights.
  *
  * Raids: Bungie public milestones (weekly challenge on any difficulty).
- * Dungeons: Kyber's Corner weekly reset (primary), Blueberries "Dungeon this
- * week" cards (fallback). Bungie does not expose featured dungeons.
+ * Dungeons: Kyber's Corner weekly reset only (Bungie does not expose featured
+ * dungeons). Schedule JSON is the offline fallback once a week is confirmed.
  *
  * Usage: node scripts/generate-featured-activities.mjs
  */
@@ -15,7 +15,6 @@ import {
   featuredDungeonSlugsForWeek,
   featuredRaidsFromMilestones,
   featuredRaidFallbackForWeek,
-  fetchFeaturedDungeonsFromBlueberries,
   fetchFeaturedDungeonsFromKyber,
   getDungeonRotationWeeks,
   reloadSchedule,
@@ -99,67 +98,35 @@ function isStalePriorWeekPair(weekIndex, pair) {
 
 async function resolveFeaturedDungeons(weekIndex, weekStart) {
   const fromSchedule = featuredDungeonSlugsForWeek(weekIndex);
-  const candidates = [];
+  let fromKyber = null;
 
   try {
-    const fromKyber = await fetchFeaturedDungeonsFromKyber(weekStart);
+    fromKyber = await fetchFeaturedDungeonsFromKyber(weekStart);
     console.log(`Kyber live dungeons: [${fromKyber.join(", ")}]`);
-    candidates.push({ source: "kyber", pair: fromKyber });
   } catch (error) {
     console.warn("Kyber dungeon scrape skipped:", error.message ?? error);
   }
 
-  try {
-    const fromBlueberries = await fetchFeaturedDungeonsFromBlueberries();
-    console.log(
-      `Blueberries this-week dungeons: [${fromBlueberries.join(", ")}]`,
-    );
-    candidates.push({ source: "blueberries", pair: fromBlueberries });
-  } catch (error) {
-    console.warn("Blueberries dungeon scrape skipped:", error.message ?? error);
-  }
-
-  // Prefer Kyber when present; Blueberries is the fast fallback.
-  // If Kyber still shows last week's pair but Blueberries already flipped,
-  // prefer Blueberries when they disagree.
-  let chosen = null;
-  if (candidates.length === 1) {
-    chosen = candidates[0];
-  } else if (candidates.length > 1) {
-    const kyber = candidates.find((entry) => entry.source === "kyber");
-    const blueberries = candidates.find(
-      (entry) => entry.source === "blueberries",
-    );
-    if (kyber && blueberries && !samePair(kyber.pair, blueberries.pair)) {
-      console.warn(
-        `Kyber/Blueberries disagree (kyber=[${kyber.pair.join(", ")}] blueberries=[${blueberries.pair.join(", ")}]); preferring Blueberries live cards`,
-      );
-      chosen = blueberries;
-    } else {
-      chosen = kyber ?? blueberries;
-    }
-  }
-
-  if (chosen?.pair?.length && isStalePriorWeekPair(weekIndex, chosen.pair)) {
+  if (fromKyber?.length && isStalePriorWeekPair(weekIndex, fromKyber)) {
     console.warn(
-      `Rejecting stale ${chosen.source} pair [${chosen.pair.join(", ")}] — matches week ${weekIndex - 1}`,
+      `Rejecting stale Kyber pair [${fromKyber.join(", ")}] — matches week ${weekIndex - 1}`,
     );
-    chosen = null;
+    fromKyber = null;
   }
 
-  if (chosen?.pair?.length) {
-    if (!samePair(chosen.pair, fromSchedule)) {
+  if (fromKyber?.length) {
+    if (!samePair(fromKyber, fromSchedule)) {
       try {
-        upsertDungeonWeek(weekIndex, chosen.pair);
+        upsertDungeonWeek(weekIndex, fromKyber);
         reloadSchedule();
         console.log(
-          `Updated schedule dungeon week ${weekIndex} from ${chosen.source} → [${chosen.pair.join(", ")}]`,
+          `Updated schedule dungeon week ${weekIndex} from Kyber → [${fromKyber.join(", ")}]`,
         );
       } catch (error) {
         console.warn("Could not upsert dungeon schedule week:", error);
       }
     }
-    return chosen.pair;
+    return fromKyber;
   }
 
   if (fromSchedule.length > 0) {
@@ -170,7 +137,7 @@ async function resolveFeaturedDungeons(weekIndex, weekStart) {
   }
 
   throw new Error(
-    `No featured dungeons for week ${weekIndex}: live scrapes failed/stale and schedule has no confirmed pair`,
+    `No featured dungeons for week ${weekIndex}: Kyber scrape failed/stale and schedule has no confirmed pair`,
   );
 }
 
