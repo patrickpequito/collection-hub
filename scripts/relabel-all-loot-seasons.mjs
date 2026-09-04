@@ -32,6 +32,8 @@ import {
   isSourceObtainable,
   isRecurringVersionSource,
   resolveItemNameSeasonOverride,
+  resolveItemHashSeasonOverride,
+  resolveLabelFromItemWatermark,
 } from "./all-loot-mappings.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -100,7 +102,9 @@ function unwrapCallToArmsSeasonLabel(entry, version, currentLabel) {
 
 function resolvePrimaryLabel(entry, dimSeasonData) {
   const source = entry.source ?? "";
+  const item = mockItem(entry.seasonIconPath);
   let label =
+    resolveLabelFromItemWatermark(item, dimSeasonData) ??
     resolveSeasonLabelFromSource(source, {}) ??
     entry.seasonLabel ??
     "Red War";
@@ -129,18 +133,20 @@ const DIM_WATERMARK_TO_SEASON_URL =
 
 function resolveVersionLabel(version, entry, dimSeasonData) {
   const source = entry.source ?? "";
-  let label = version.seasonLabel;
-  const fromSource = resolveSeasonLabelFromSource(source, {});
-  const ownSeason = resolveWatermarkSeasonNumber(
-    mockItem(version.seasonIconPath),
-    dimSeasonData,
-  );
+  const item = mockItem(version.seasonIconPath);
+  let label = resolveLabelFromItemWatermark(item, dimSeasonData);
 
-  if (fromSource && !isRecurringVersionSource(source)) {
-    label =
-      resolveActivitySourceSeasonLabel(fromSource, ownSeason) ?? fromSource;
-  } else if (ownSeason > 0) {
-    label = seasonLabelFromManifestNumber(ownSeason);
+  if (!label) {
+    const fromSource = resolveSeasonLabelFromSource(source, {});
+    const ownSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
+    if (fromSource && !isRecurringVersionSource(source)) {
+      label =
+        resolveActivitySourceSeasonLabel(fromSource, ownSeason) ?? fromSource;
+    } else if (ownSeason > 0) {
+      label = seasonLabelFromManifestNumber(ownSeason);
+    } else {
+      label = version.seasonLabel;
+    }
   }
 
   if (label === "S28 Season: Reclamation") {
@@ -175,6 +181,30 @@ function resolveVersionLabel(version, entry, dimSeasonData) {
 
 function applyVersionLabels(entry, version, dimSeasonData, source = "") {
   if (version.seasonLabel === INTO_THE_LIGHT_LABEL) return;
+
+  const hashOverride = resolveItemHashSeasonOverride(version.itemHash);
+  if (hashOverride) {
+    version.seasonLabel = hashOverride.label;
+    version.seasonNumber = displayNumberFromLabel(hashOverride.label);
+    if (hashOverride.seasonIconPath) {
+      version.seasonIconPath = hashOverride.seasonIconPath;
+    }
+    if (hashOverride.seasonDisplayIconPath) {
+      version.seasonDisplayIconPath = hashOverride.seasonDisplayIconPath;
+    }
+    if (hashOverride.seasonDisplayIconWatermark !== undefined) {
+      version.seasonDisplayIconWatermark =
+        hashOverride.seasonDisplayIconWatermark;
+    }
+    const versionEvent = resolveEventLabel(
+      source || entry.source || "",
+      version.seasonIconPath ?? entry.seasonIconPath ?? "",
+      version.seasonLabel ?? "",
+    );
+    if (versionEvent) version.eventLabel = versionEvent;
+    else delete version.eventLabel;
+    return;
+  }
 
   if (entry.type === "Armor") {
     const armorLabel = resolveArmor30SeasonLabel(
@@ -317,6 +347,12 @@ function applyItemNameSeasonOverride(entry) {
   if (override.seasonIconPath) {
     entry.seasonIconPath = override.seasonIconPath;
   }
+  if (override.seasonDisplayIconPath) {
+    entry.seasonDisplayIconPath = override.seasonDisplayIconPath;
+  }
+  if (override.seasonDisplayIconWatermark !== undefined) {
+    entry.seasonDisplayIconWatermark = override.seasonDisplayIconWatermark;
+  }
   delete entry.eventLabel;
 
   for (const version of entry.versions ?? []) {
@@ -324,6 +360,12 @@ function applyItemNameSeasonOverride(entry) {
     version.seasonNumber = displayNumberFromLabel(override.label);
     if (override.seasonIconPath) {
       version.seasonIconPath = override.seasonIconPath;
+    }
+    if (override.seasonDisplayIconPath) {
+      version.seasonDisplayIconPath = override.seasonDisplayIconPath;
+    }
+    if (override.seasonDisplayIconWatermark !== undefined) {
+      version.seasonDisplayIconWatermark = override.seasonDisplayIconWatermark;
     }
     delete version.eventLabel;
   }

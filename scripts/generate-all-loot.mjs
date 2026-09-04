@@ -1463,7 +1463,12 @@ function buildCatalog(
     dimSeasonData,
   );
   const indexCohortAnchors = buildWatermarkIndexAnchors(items, dimSeasonData);
-  const watermarkLabelMap = buildWatermarkLabelMap(items, collectibles, seasons);
+  const watermarkLabelMap = buildWatermarkLabelMap(
+    items,
+    collectibles,
+    seasons,
+    dimSeasonData,
+  );
   const salvationsEdgeS29MinIndex = buildSalvationsEdgeS29ReissueMinIndex(
     items,
     dimSeasonData,

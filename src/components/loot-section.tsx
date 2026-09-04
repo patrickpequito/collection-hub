@@ -49,6 +49,8 @@ export function LootItemGrid({
             exoticItemHashes?.has(item.itemHash) ? "green" : ownedBorder
           }
           href={hrefs?.[item.itemHash]}
+          ornamentOverlay={item.itemType === "Ornament"}
+          rarity={item.rarity}
         />
       ))}
     </div>

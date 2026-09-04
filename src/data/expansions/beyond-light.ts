@@ -42,6 +42,7 @@ export const BEYOND_LIGHT_HUB: ExpansionHub = {
   deepLootEmptyDescription:
     "No Beyond Light–era playlist loot found for the tracked activity pools.",
   indexImageFile: "deep-stone-crypt.webp",
+  trailerYoutubeId: "k6c6M0rKW7s",
   available: true,
   excludedNamePatterns: [/^Solstice\b/i],
   excludedSourcePatterns: [/solstice/i, /pale heart/i, /pantheon/i],

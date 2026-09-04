@@ -34,13 +34,13 @@ function SeasonBadgeIcon({
   const anchorRef = useRef<HTMLDivElement>(null);
   const dismissTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [iconSrc, setIconSrc] = useState(() =>
-    bungieIconUrl(localSeasonIconPath(badge.label)),
+    localSeasonIconPath(badge.label),
   );
   const [tooltipTop, setTooltipTop] = useState<number | null>(null);
   const [tooltipLeftPx, setTooltipLeftPx] = useState<number | null>(null);
 
   useEffect(() => {
-    setIconSrc(bungieIconUrl(localSeasonIconPath(badge.label)));
+    setIconSrc(localSeasonIconPath(badge.label));
   }, [badge.label, badge.iconPath]);
 
   useEffect(

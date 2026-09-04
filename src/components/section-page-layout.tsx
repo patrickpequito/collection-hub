@@ -8,6 +8,7 @@ import { SiteNav } from "@/components/site-nav";
 type SectionPageLayoutProps = {
   title?: string;
   imageUrl?: string;
+  titleIconUrl?: string;
   showHeader?: boolean;
   /** @deprecated Session is resolved client-side to keep pages cacheable. */
   session?: unknown;
@@ -37,6 +38,7 @@ const HOME_BACK_LINK = { href: "/", label: "← Home" } as const;
 export function SectionPageLayout({
   title,
   imageUrl,
+  titleIconUrl,
   showHeader = true,
   oauthConfigured,
   children,
@@ -51,7 +53,11 @@ export function SectionPageLayout({
       </Suspense>
       <main className="min-h-dvh bg-zinc-950 text-zinc-100">
         {showHeader && title && imageUrl ? (
-          <PageHeader title={title} imageUrl={imageUrl} />
+          <PageHeader
+            title={title}
+            imageUrl={imageUrl}
+            titleIconUrl={titleIconUrl}
+          />
         ) : null}
         <ClientAuthBar
           oauthConfigured={oauthConfigured}

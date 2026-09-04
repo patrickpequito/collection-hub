@@ -94,7 +94,9 @@ export type QuestCompletionTarget = {
   recordHash?: string;
   recordObjectiveHash?: string;
   fallbackRecordHashes?: string[];
+  fallbackRecordMatch?: "all" | "any";
   completionItemHash?: string;
+  completionItemHashes?: string[];
   completionObjectiveHash?: string;
   stepObjectiveHashes?: string[];
 };
@@ -532,6 +534,43 @@ function scanUninstancedQuestLineObjectives(
   }
 }
 
+function matchesFallbackRecords(
+  target: Pick<
+    QuestCompletionTarget,
+    "fallbackRecordHashes" | "fallbackRecordMatch"
+  >,
+  recordInstances: Map<string, RecordInstance>,
+): boolean {
+  if (!target.fallbackRecordHashes?.length) return false;
+  const matchAny = target.fallbackRecordMatch === "any";
+  return matchAny
+    ? target.fallbackRecordHashes.some((hash) =>
+        isQuestRecordComplete(recordInstances.get(hash)),
+      )
+    : target.fallbackRecordHashes.every((hash) =>
+        isQuestRecordComplete(recordInstances.get(hash)),
+      );
+}
+
+function ownsCompletionItem(
+  target: Pick<
+    QuestCompletionTarget,
+    "completionItemHash" | "completionItemHashes"
+  >,
+  ownedItemHashes: Set<string>,
+): boolean {
+  if (
+    target.completionItemHash &&
+    ownedItemHashes.has(target.completionItemHash)
+  ) {
+    return true;
+  }
+  return (
+    target.completionItemHashes?.some((hash) => ownedItemHashes.has(hash)) ??
+    false
+  );
+}
+
 function applyRecordAndItemCompletion(
   targets: QuestCompletionTarget[],
   completed: Record<string, boolean>,
@@ -559,20 +598,12 @@ function applyRecordAndItemCompletion(
       continue;
     }
 
-    if (
-      target.fallbackRecordHashes?.length &&
-      target.fallbackRecordHashes.every((hash) =>
-        isQuestRecordComplete(recordInstances.get(hash)),
-      )
-    ) {
+    if (matchesFallbackRecords(target, recordInstances)) {
       completed[target.questHash] = true;
       continue;
     }
 
-    if (
-      target.completionItemHash &&
-      ownedItemHashes.has(target.completionItemHash)
-    ) {
+    if (ownsCompletionItem(target, ownedItemHashes)) {
       completed[target.questHash] = true;
     }
   }
@@ -656,16 +687,34 @@ export function parseQuestCompletionTargets(
 
     const [recordHash, recordObjectiveHash] = (recordPart ?? "").split("|");
 
+    let fallbackRecordHashes: string[] | undefined;
+    let fallbackRecordMatch: "all" | "any" | undefined;
+    if (fallbackPart) {
+      if (fallbackPart.startsWith("any:")) {
+        fallbackRecordMatch = "any";
+        fallbackRecordHashes = fallbackPart
+          .slice(4)
+          .split("|")
+          .filter(Boolean);
+      } else {
+        fallbackRecordHashes = fallbackPart.split("|").filter(Boolean);
+      }
+    }
+
+    const itemHashes = completionItemHash
+      ? completionItemHash.split(",").map((hash) => hash.trim()).filter(Boolean)
+      : [];
+
     targets.push({
       questHash,
       completionStepHash,
       ...(extraSteps.length > 0 ? { stepHashes: extraSteps } : {}),
       ...(recordHash ? { recordHash } : {}),
       ...(recordObjectiveHash ? { recordObjectiveHash } : {}),
-      ...(fallbackPart
-        ? { fallbackRecordHashes: fallbackPart.split("|").filter(Boolean) }
-        : {}),
-      ...(completionItemHash ? { completionItemHash } : {}),
+      ...(fallbackRecordHashes?.length ? { fallbackRecordHashes } : {}),
+      ...(fallbackRecordMatch ? { fallbackRecordMatch } : {}),
+      ...(itemHashes.length === 1 ? { completionItemHash: itemHashes[0] } : {}),
+      ...(itemHashes.length > 1 ? { completionItemHashes: itemHashes } : {}),
       ...(completionObjectiveHash ? { completionObjectiveHash } : {}),
       ...(stepObjectivePart
         ? {
@@ -693,7 +742,9 @@ export function serializeQuestCompletionTargets(
         target.recordHash ||
           target.recordObjectiveHash ||
           target.fallbackRecordHashes?.length ||
+          target.fallbackRecordMatch === "any" ||
           target.completionItemHash ||
+          target.completionItemHashes?.length ||
           target.completionObjectiveHash ||
           target.stepObjectiveHashes?.length,
       );
@@ -703,11 +754,22 @@ export function serializeQuestCompletionTargets(
         ? `${target.recordHash ?? ""}|${target.recordObjectiveHash}`
         : (target.recordHash ?? "");
 
+      const fallbackPart = target.fallbackRecordHashes?.length
+        ? `${
+            target.fallbackRecordMatch === "any" ? "any:" : ""
+          }${target.fallbackRecordHashes.join("|")}`
+        : "";
+
+      const itemPart =
+        target.completionItemHashes?.join(",") ??
+        target.completionItemHash ??
+        "";
+
       return [
         questPart,
         recordPart,
-        target.fallbackRecordHashes?.join("|") ?? "",
-        target.completionItemHash ?? "",
+        fallbackPart,
+        itemPart,
         target.completionObjectiveHash ?? "",
         target.stepObjectiveHashes?.join("|") ?? "",
       ].join("~");

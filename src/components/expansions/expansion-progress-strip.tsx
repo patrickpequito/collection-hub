@@ -22,6 +22,7 @@ import type {
   ExpansionCampaignMission,
   ExpansionCampaignQuest,
   ExpansionDifficultyHunt,
+  ExpansionRotatingBossActivity,
 } from "@/lib/expansions/resolve-expansion-loot";
 
 type ExpansionProgressStripProps = {
@@ -33,6 +34,7 @@ type ExpansionProgressStripProps = {
   campaignLegendaryRecordHash: string;
   campaignQuests?: ExpansionCampaignQuest[];
   difficultyHunts?: ExpansionDifficultyHunt[];
+  rotatingBossActivity?: ExpansionRotatingBossActivity | null;
   lootTotal: number;
   lootOwnershipGroups: string[][];
 };
@@ -91,6 +93,7 @@ export function ExpansionProgressStrip({
   campaignLegendaryRecordHash,
   campaignQuests = [],
   difficultyHunts = [],
+  rotatingBossActivity = null,
   lootTotal,
   lootOwnershipGroups,
 }: ExpansionProgressStripProps) {
@@ -139,11 +142,13 @@ export function ExpansionProgressStrip({
     | "campaignLegendaryRecordHash"
     | "campaignQuests"
     | "difficultyHunts"
+    | "rotatingBossActivity"
   > = {
     campaignMissions,
     campaignLegendaryRecordHash,
     campaignQuests,
     difficultyHunts,
+    rotatingBossActivity,
   };
 
   const campaignProgress = useMemo(
@@ -154,7 +159,7 @@ export function ExpansionProgressStrip({
             instances,
             activityCompletions,
             completedQuestHashes,
-            showOwnership ? ownedItemHashes : undefined,
+            ownedItemHashes,
           )
         : null,
     [
@@ -162,6 +167,7 @@ export function ExpansionProgressStrip({
       campaignInputs,
       completedQuestHashes,
       instances,
+      ownedItemHashes,
       signedIn,
     ],
   );
@@ -175,6 +181,7 @@ export function ExpansionProgressStrip({
     campaignLegendaryRecordHash,
     campaignQuests,
     difficultyHunts,
+    rotatingBossActivity,
     lootTotal,
     lootOwnershipGroups,
   });

@@ -1,4 +1,4 @@
-export const CURRENT_VERSION = "0.8.0";
+export const CURRENT_VERSION = "0.8.1";
 
 export function formatReleaseDate(isoDate: string) {
   const [year, month, day] = isoDate.split("-").map(Number);
@@ -30,6 +30,25 @@ export type UpdateRelease = {
  * Newest release first. Add a new entry at the top when shipping an update.
  */
 export const UPDATE_RELEASES: UpdateRelease[] = [
+  {
+    version: "0.8.1",
+    publishedAt: "2026-09-04",
+    summary:
+      "Season hubs for Beyond Light’s four seasons join the Expansions & Seasons section, with trailers, season banners, and prev/next navigation across expansions and seasons.",
+    sections: [
+      {
+        title: "Expansions & Seasons",
+        description:
+          "Season pages and expansion polish continue the Beyond Light year layout.",
+        items: [
+          "New season pages for Season of the Hunt, Chosen, Splicer, and Lost.",
+          "Expansion pages now include the official trailer and the associated season banners.",
+          "Navigation between expansions and seasons — previous / next plus a picker to jump to any entry.",
+          "Fixed a few All Loot season-labeling issues.",
+        ],
+      },
+    ],
+  },
   {
     version: "0.8.0",
     publishedAt: "2026-08-22",

@@ -1797,17 +1797,27 @@
           "legs": {
             "itemHash": "399547095",
             "name": "Dreambane Boots",
-            "iconPath": "/common/destiny2_content/icons/d32e2313d866c96576654db4abc48344.jpg"
+            "iconPath": "/common/destiny2_content/icons/037992decb484e8e7b33c5e3f7bfcf3e.jpg"
           },
           "helmet": {
             "itemHash": "1721938300",
             "name": "Dreambane Hood",
-            "iconPath": "/common/destiny2_content/icons/18ebc19c6a9ac34f3d6ff284ee26e17b.jpg"
+            "iconPath": "/common/destiny2_content/icons/0233fbe0ec36dead004dbc53a6861456.jpg"
           },
           "gauntlets": {
             "itemHash": "3118392309",
             "name": "Dreambane Gloves",
-            "iconPath": "/common/destiny2_content/icons/b87b610e106662fd06d8d119f940922e.jpg"
+            "iconPath": "/common/destiny2_content/icons/be4c5ae7d7e4cce0dc7f48475a85644e.jpg"
+          },
+          "chest": {
+            "itemHash": "4235863403",
+            "name": "Dreambane Robes",
+            "iconPath": "/common/destiny2_content/icons/595fdf566e2f8005be1b5870dccfab82.jpg"
+          },
+          "classItem": {
+            "itemHash": "2975563522",
+            "name": "Dreambane Bond",
+            "iconPath": "/common/destiny2_content/icons/29487d3169c69cf7bc266951eda59e5f.jpg"
           }
         }
       }

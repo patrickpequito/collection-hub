@@ -64,7 +64,7 @@ Filename is the slugified set name. These sets are not tied to a single RAD acti
 | `circuit.webp`            | Circuit             | **todo** |
 | `crotas-memory.webp`      | Crota's Memory      | **todo** |
 | `cruel-electrum.webp`     | Cruel Electrum      | **todo** |
-| `crystocrene.webp`        | Crystocrene         | **todo** |
+| `crystocrene.webp`        | Crystocrene         | done |
 | `cyberserpent-null.webp`  | Cyberserpent Null   | **todo** |
 | `disaster-corps-set.webp` | Disaster Corps Set  | **todo** |
 | `dreambane.webp`          | Dreambane           | **todo** |

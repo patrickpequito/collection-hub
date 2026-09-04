@@ -5,7 +5,12 @@ import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { WeaponMetaIcons } from "@/components/weapon-meta-icons";
-import { bungieIconUrl } from "@/lib/bungie-icon";
+import {
+  bungieIconUrl,
+  bungieOrnamentOverlayUrl,
+  ornamentOverlayTierForRarity,
+  type OrnamentOverlayTier,
+} from "@/lib/bungie-icon";
 
 const ICON_SIZE = 60;
 const TOOLTIP_WIDTH = 176;
@@ -28,6 +33,12 @@ type CollectionItemIconProps = {
   classOrWeaponType?: string | null;
   damageType?: string | null;
   ammoType?: string | null;
+  /**
+   * Apply Destiny's ornament inventory plate overlay.
+   * Pass a tier explicitly, or true to pick from `rarity`.
+   */
+  ornamentOverlay?: boolean | OrnamentOverlayTier;
+  rarity?: string | null;
 };
 
 const OWNED_BORDER_STYLES = {
@@ -44,6 +55,15 @@ function tooltipLeft(
   return rect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
 }
 
+function resolveOrnamentOverlayTier(
+  ornamentOverlay: boolean | OrnamentOverlayTier | undefined,
+  rarity: string | null | undefined,
+): OrnamentOverlayTier | null {
+  if (!ornamentOverlay) return null;
+  if (ornamentOverlay === true) return ornamentOverlayTierForRarity(rarity);
+  return ornamentOverlay;
+}
+
 export function CollectionItemIcon({
   name,
   iconPath,
@@ -58,6 +78,8 @@ export function CollectionItemIcon({
   classOrWeaponType,
   damageType,
   ammoType,
+  ornamentOverlay,
+  rarity,
 }: CollectionItemIconProps) {
   const anchorRef = useRef<HTMLDivElement>(null);
   const [tooltipTop, setTooltipTop] = useState<number | null>(null);
@@ -71,11 +93,15 @@ export function CollectionItemIcon({
   const unownedStyles =
     showOwnership && !owned ? "opacity-70 brightness-90 saturate-75" : "";
 
-  const iconClass = fluid
-    ? `aspect-square w-full ${fillCell ? "" : "max-w-[3.75rem] "}rounded-md border bg-zinc-900 object-contain transition duration-200 ease-out hover:scale-105 hover:brightness-110 active:scale-95 ${ownedStyles} ${unownedStyles}`
-    : `size-[60px] shrink-0 rounded-md border bg-zinc-900 object-contain transition duration-200 ease-out hover:scale-110 hover:brightness-110 active:scale-95 ${ownedStyles} ${unownedStyles}`;
+  const sizeClass = fluid
+    ? `aspect-square w-full ${fillCell ? "" : "max-w-[3.75rem] "}`
+    : "size-[60px] shrink-0";
+
+  const frameClass = `${sizeClass} relative overflow-hidden rounded-md border bg-zinc-900 transition duration-200 ease-out hover:brightness-110 active:scale-95 ${fluid ? "hover:scale-105" : "hover:scale-110"} ${ownedStyles} ${unownedStyles}`;
 
   const wrapperClass = fluid ? "relative min-w-0 w-full" : "relative shrink-0";
+
+  const overlayTier = resolveOrnamentOverlayTier(ornamentOverlay, rarity);
 
   const showTooltip = useCallback(() => {
     const rect = anchorRef.current?.getBoundingClientRect();
@@ -124,14 +150,27 @@ export function CollectionItemIcon({
       : null;
 
   const iconBody = (
-    <Image
-      src={bungieIconUrl(iconPath)}
-      alt={name}
-      width={ICON_SIZE}
-      height={ICON_SIZE}
-      className={iconClass}
-      unoptimized
-    />
+    <div className={frameClass}>
+      <Image
+        src={bungieIconUrl(iconPath)}
+        alt={name}
+        width={ICON_SIZE}
+        height={ICON_SIZE}
+        className="size-full object-contain"
+        unoptimized
+      />
+      {overlayTier ? (
+        <Image
+          src={bungieOrnamentOverlayUrl(overlayTier)}
+          alt=""
+          width={ICON_SIZE}
+          height={ICON_SIZE}
+          aria-hidden
+          className="pointer-events-none absolute inset-0 size-full object-cover mix-blend-screen opacity-[0.38]"
+          unoptimized
+        />
+      ) : null}
+    </div>
   );
 
   return (

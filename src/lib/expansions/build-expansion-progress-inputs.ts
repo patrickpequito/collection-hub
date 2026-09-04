@@ -53,6 +53,7 @@ export function buildExpansionProgressInputs(
     campaignLegendaryRecordHash: loot.campaignLegendaryRecordHash,
     campaignQuests: loot.campaignQuests,
     difficultyHunts: loot.difficultyHunts,
+    rotatingBossActivity: loot.rotatingBossActivity,
     lootTotal: lootOwnershipGroups.length,
     lootOwnershipGroups,
   };

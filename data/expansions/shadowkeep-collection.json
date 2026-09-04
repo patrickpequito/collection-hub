@@ -674,6 +674,31 @@
       }
     ],
     "difficultyHuntsTitle": "Nightmare Hunts",
+    "sectionTitle": "Campaign & Activities",
+    "rotatingBossActivity": {
+      "title": "Altars of Sorrow",
+      "description": "Public event in Sorrow's Harbor. One Nightmare boss rotates each day at reset.",
+      "bosses": [
+        {
+          "name": "Nightmare of Taniks, the Scarred",
+          "completionItemHash": "846241149",
+          "completionItemHashes": ["846241149", "2164448701"],
+          "rewardNote": "Apostate"
+        },
+        {
+          "name": "Nightmare of Zydron, Gate Lord",
+          "completionItemHash": "2136808079",
+          "completionItemHashes": ["2136808079", "3067821200"],
+          "rewardNote": "Heretic"
+        },
+        {
+          "name": "Nightmare of Phogoth, the Untamed",
+          "completionItemHash": "2527058297",
+          "completionItemHashes": ["2527058297", "2782847179"],
+          "rewardNote": "Blasphemer"
+        }
+      ]
+    },
     "difficultyHunts": [
       {
         "name": "Nightmare Hunt: Anguish",

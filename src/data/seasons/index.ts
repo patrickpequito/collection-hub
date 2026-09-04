@@ -1,79 +1,32 @@
-/**
- * Season / Episode index cards for the Expansions & Seasons page.
- * Hubs are Coming soon until dedicated season pages exist.
- *
- * Index art: `public/images/seasons/activities/{imageFile}`
- * Page headers (later): `public/images/headers/{slug}-header.webp`
- */
+import type { SeasonHub } from "@/data/seasons/types";
+import { SEASON_OF_THE_CHOSEN_HUB } from "@/data/seasons/season-of-the-chosen";
+import { SEASON_OF_THE_HUNT_HUB } from "@/data/seasons/season-of-the-hunt";
+import { SEASON_OF_THE_LOST_HUB } from "@/data/seasons/season-of-the-lost";
+import { SEASON_OF_THE_SPLICER_HUB } from "@/data/seasons/season-of-the-splicer";
 
-export type SeasonIndexEntry = {
-  slug: string;
-  title: string;
-  available: boolean;
-  imageFile: string;
-  href?: string;
+export type { SeasonIndexEntry } from "@/data/seasons/index-entries";
+export {
+  SEASON_INDEX_ENTRIES,
+  SEASONS_BY_EXPANSION_SLUG,
+} from "@/data/seasons/index-entries";
+
+const SEASON_HUBS: Record<string, SeasonHub> = {
+  [SEASON_OF_THE_HUNT_HUB.slug]: SEASON_OF_THE_HUNT_HUB,
+  [SEASON_OF_THE_CHOSEN_HUB.slug]: SEASON_OF_THE_CHOSEN_HUB,
+  [SEASON_OF_THE_SPLICER_HUB.slug]: SEASON_OF_THE_SPLICER_HUB,
+  [SEASON_OF_THE_LOST_HUB.slug]: SEASON_OF_THE_LOST_HUB,
 };
 
-function season(slug: string, title: string): SeasonIndexEntry {
-  return {
-    slug,
-    title,
-    available: false,
-    imageFile: `${slug}.webp`,
-  };
+export const PUBLISHED_SEASON_SLUGS = new Set(
+  Object.values(SEASON_HUBS)
+    .filter((hub) => hub.available)
+    .map((hub) => hub.slug),
+);
+
+export function getSeasonHub(slug: string): SeasonHub | undefined {
+  return SEASON_HUBS[slug];
 }
 
-/**
- * Seasons paired to the expansion that ran during that year.
- * Display order within each group is chronological (reading order in the 2×2 grid).
- */
-export const SEASONS_BY_EXPANSION_SLUG: Readonly<
-  Record<string, readonly SeasonIndexEntry[]>
-> = {
-  forsaken: [
-    season("s5-season-of-the-forge", "Season of the Forge"),
-    season("s6-season-of-the-drifter", "Season of the Drifter"),
-    season("s7-season-of-opulence", "Season of Opulence"),
-  ],
-  shadowkeep: [
-    season("s8-season-of-the-undying", "Season of the Undying"),
-    season("s9-season-of-dawn", "Season of Dawn"),
-    season("s10-season-of-the-worthy", "Season of the Worthy"),
-    season("s11-season-of-arrivals", "Season of Arrivals"),
-  ],
-  "beyond-light": [
-    season("s12-season-of-the-hunt", "Season of the Hunt"),
-    season("s13-season-of-the-chosen", "Season of the Chosen"),
-    season("s14-season-of-the-splicer", "Season of the Splicer"),
-    season("s15-season-of-the-lost", "Season of the Lost"),
-  ],
-  "the-witch-queen": [
-    season("s16-season-of-the-risen", "Season of the Risen"),
-    season("s17-season-of-the-haunted", "Season of the Haunted"),
-    season("s18-season-of-plunder", "Season of Plunder"),
-    season("s19-season-of-the-seraph", "Season of the Seraph"),
-  ],
-  // Lightfall year slots: Defiance, Deep, Wish, Into the Light
-  // (Season of the Witch omitted from this index layout).
-  lightfall: [
-    season("s20-season-of-defiance", "Season of Defiance"),
-    season("s21-season-of-the-deep", "Season of the Deep"),
-    season("s23-season-of-the-wish", "Season of the Wish"),
-    season("into-the-light", "Into the Light"),
-  ],
-  "the-final-shape": [
-    season("s24-episode-echoes", "Episode: Echoes"),
-    season("s25-episode-revenant", "Episode: Revenant"),
-    season("s26-episode-heresy", "Episode: Heresy"),
-  ],
-};
-
-/** Flat list for docs / tooling (newest first). */
-export const SEASON_INDEX_ENTRIES: readonly SeasonIndexEntry[] = [
-  ...[...(SEASONS_BY_EXPANSION_SLUG["the-final-shape"] ?? [])].reverse(),
-  ...[...(SEASONS_BY_EXPANSION_SLUG.lightfall ?? [])].reverse(),
-  ...[...(SEASONS_BY_EXPANSION_SLUG["the-witch-queen"] ?? [])].reverse(),
-  ...[...(SEASONS_BY_EXPANSION_SLUG["beyond-light"] ?? [])].reverse(),
-  ...[...(SEASONS_BY_EXPANSION_SLUG.shadowkeep ?? [])].reverse(),
-  ...[...(SEASONS_BY_EXPANSION_SLUG.forsaken ?? [])].reverse(),
-];
+export function getSeasonSlugs(): string[] {
+  return Object.keys(SEASON_HUBS);
+}

@@ -37,13 +37,14 @@ export const WITCH_QUEEN_HUB: ExpansionHub = {
   deepLootEmptyDescription:
     "No Witch Queen–season playlist loot found for Vanguard, Gambit, Crucible, Iron Banner, or Trials.",
   indexImageFile: "vow-of-the-disciple.webp",
+  trailerYoutubeId: "FatJYHd1bCg",
   available: true,
   excludedNamePatterns: [/^Tusked Allegiance\b/i],
   excludedSeasonLabels: ["S16 Season of the Risen"],
   excludedSourcePatterns: [/season of the risen/i],
-  exoticQuestSourcePattern: /evidence board|of queens and worms|vox obscura/i,
-  exoticExcludedNames: ["Collective Obligation"],
-  exoticExcludedSourcePattern: /vow of the disciple/i,
+  exoticQuestSourcePattern: /evidence board|of queens and worms/i,
+  exoticExcludedNames: ["Collective Obligation", "Dead Messenger"],
+  exoticExcludedSourcePattern: /vow of the disciple|vox obscura/i,
   deepLootWeaponPoolByName: {
     "Herod-C": "gambit",
     "The Enigma": "world-loot",

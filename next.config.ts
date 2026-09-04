@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         hostname: "www.bungie.net",
         pathname: "/common/destiny2_content/screenshots/**",
       },
+      {
+        protocol: "https",
+        hostname: "www.bungie.net",
+        pathname: "/img/destiny_content/items/**",
+      },
     ],
   },
   async headers() {

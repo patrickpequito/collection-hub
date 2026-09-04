@@ -122,6 +122,11 @@ export function LegacyArmorSetsSection({
                                   tooltipAlign={tooltipAlign}
                                   fluid
                                   href={itemHrefs?.[piece.itemHash]}
+                                  ornamentOverlay={
+                                    group.kind === "ornament" ||
+                                    piece.itemType === "Ornament"
+                                  }
+                                  rarity={piece.rarity}
                                 />
                               </div>
                             );
@@ -132,11 +137,19 @@ export function LegacyArmorSetsSection({
                   </div>
 
                   <div className="min-w-0 space-y-1 lg:col-start-2 lg:row-start-1">
-                    <p className="text-xs text-zinc-500">Full armor set preview</p>
+                    <p className="text-xs text-zinc-500">
+                      {group.kind === "ornament"
+                        ? "Full ornament set preview"
+                        : "Full armor set preview"}
+                    </p>
                     <ActivityArmorSetPreview
                       imageFile={previewFile}
                       imageUrl={armorSetPreviewUrl(previewFile)}
-                      label={`${groupTitle} armor set`}
+                      label={
+                        group.kind === "ornament"
+                          ? groupTitle
+                          : `${groupTitle} armor set`
+                      }
                       missingImageVariant="contribute"
                       contributionLink={{
                         href: X_PROFILE_URL,

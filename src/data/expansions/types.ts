@@ -56,6 +56,8 @@ export type ExpansionHub = {
   deepLootEmptyDescription: string;
   indexImageFile: string;
   available: boolean;
+  /** Official expansion launch / reveal trailer (YouTube id). */
+  trailerYoutubeId?: string;
   /** Hub-specific membership exclusions (name patterns). */
   excludedNamePatterns?: readonly RegExp[];
   excludedSeasonLabels?: readonly string[];

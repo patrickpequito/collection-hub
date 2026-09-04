@@ -12,6 +12,11 @@ export function localSeasonIconPath(label: string): string {
   return `${SEASON_ICON_DIR}/${seasonLabelToIconSlug(label)}.png`;
 }
 
+/** Index banner / badge icon from hub or season slug (`public/images/seasons/{slug}.png`). */
+export function localSeasonIconPathFromSlug(slug: string): string {
+  return `${SEASON_ICON_DIR}/${slug}.png`;
+}
+
 /** Seasons/expansions with a separate compact asset in the All Loot filter dropdown. */
 const SEASON_FILTER_SMALL_ICON_LABELS = new Set([
   "30th Anniversary",

@@ -20,7 +20,7 @@ export function useExpansionProfileProgress(
   progressInputs: readonly ExpansionProgressInputs[],
 ): Map<string, ExpansionOverallProgress> {
   const signedIn = useSignedIn();
-  const { ownedItemHashes, showOwnership } = useOwnership();
+  const { ownedItemHashes } = useOwnership();
   const instances = useProfileRecordInstances();
 
   const huntActivityHashes = useMemo(
@@ -44,7 +44,7 @@ export function useExpansionProfileProgress(
 
   return useMemo(() => {
     const map = new Map<string, ExpansionOverallProgress>();
-    const ownership = showOwnership ? ownedItemHashes : null;
+    const ownership = signedIn ? ownedItemHashes : null;
 
     for (const inputs of progressInputs) {
       map.set(
@@ -66,7 +66,6 @@ export function useExpansionProfileProgress(
     instances,
     ownedItemHashes,
     progressInputs,
-    showOwnership,
     signedIn,
   ]);
 }

@@ -22,6 +22,7 @@ export function dedupeVersionsForDisplay(
     name?: string;
     seasonIconPath?: string;
     seasonDisplayIconPath?: string;
+    seasonDisplayIconWatermark?: boolean;
   },
 ): AllLootItemVersion[] {
   const versions: AllLootItemVersion[] = weapon.versions?.length
@@ -36,6 +37,7 @@ export function dedupeVersionsForDisplay(
           eventLabel: weapon.eventLabel,
           seasonIconPath: weapon.seasonIconPath,
           seasonDisplayIconPath: weapon.seasonDisplayIconPath,
+          seasonDisplayIconWatermark: weapon.seasonDisplayIconWatermark,
         },
       ];
 
@@ -63,8 +65,23 @@ export function dedupeVersionsForDisplay(
   return [...byLabel.values()];
 }
 
+function resolveBadgeIconPath(
+  version: Pick<
+    AllLootItemVersion,
+    "seasonIconPath" | "seasonDisplayIconPath" | "seasonDisplayIconWatermark"
+  >,
+): string | undefined {
+  if (
+    version.seasonDisplayIconWatermark === false &&
+    version.seasonDisplayIconPath
+  ) {
+    return version.seasonDisplayIconPath;
+  }
+  return version.seasonIconPath ?? version.seasonDisplayIconPath ?? undefined;
+}
+
 function badgeFromVersion(version: AllLootItemVersion): SeasonBadge | null {
-  const iconPath = version.seasonIconPath ?? version.seasonDisplayIconPath ?? undefined;
+  const iconPath = resolveBadgeIconPath(version);
   const label = version.eventLabel ?? version.seasonLabel;
   if (!iconPath || !label) return null;
 

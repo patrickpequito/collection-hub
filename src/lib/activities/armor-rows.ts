@@ -22,8 +22,10 @@ function toLootItem(
   name: string,
   iconPath: string,
   source: string,
+  itemType?: string,
+  rarity?: string,
 ): LootItem {
-  return { itemHash, name, iconPath, source };
+  return { itemHash, name, iconPath, source, itemType, rarity };
 }
 
 export function buildArmorRowsFromSet(set: ArmorSet): ActivityArmorRow[] {
@@ -92,6 +94,8 @@ export function buildArmorRowsFromCatalogItems(
         item.name,
         item.iconPath,
         item.source,
+        item.type,
+        item.rarity,
       );
     }
 
@@ -122,6 +126,8 @@ export function buildPartialArmorRowsFromCatalogItems(
         item.name,
         item.iconPath,
         item.source,
+        item.type,
+        item.rarity,
       );
     }
 

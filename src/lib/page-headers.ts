@@ -38,3 +38,8 @@ export function expansionHeaderUrl(slug: string): string {
   }
   return EXPANSION_HEADER_FALLBACK;
 }
+
+/** Season hub page header: `public/images/headers/{slug}-header.webp`. */
+export function seasonHeaderUrl(slug: string): string {
+  return expansionHeaderUrl(slug);
+}

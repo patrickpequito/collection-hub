@@ -26,6 +26,7 @@ import type {
   ExpansionCampaignMission,
   ExpansionCampaignQuest,
   ExpansionDifficultyHunt,
+  ExpansionRotatingBossActivity,
 } from "@/lib/expansions/resolve-expansion-loot";
 import type { RecordInstance } from "@/types/triumph";
 
@@ -35,6 +36,8 @@ type ExpansionCampaignMissionsPanelProps = {
   quests?: ExpansionCampaignQuest[];
   difficultyHunts?: ExpansionDifficultyHunt[];
   difficultyHuntsTitle?: string;
+  sectionTitleOverride?: string;
+  rotatingBossActivity?: ExpansionRotatingBossActivity | null;
 };
 
 function objectiveComplete(
@@ -75,15 +78,29 @@ function anyHashCompleted(
   return hashes.some((hash) => (completions[hash] ?? 0) > 0);
 }
 
+function rotatingBossComplete(
+  boss: { completionItemHash?: string; completionItemHashes?: string[] },
+  ownedItemHashes: Set<string>,
+): boolean {
+  const hashes = boss.completionItemHashes?.length
+    ? boss.completionItemHashes
+    : boss.completionItemHash
+      ? [boss.completionItemHash]
+      : [];
+  return hashes.some((hash) => ownedItemHashes.has(hash));
+}
+
 export function ExpansionCampaignMissionsPanel({
   missions,
   legendaryRecordHash,
   quests = [],
   difficultyHunts = [],
   difficultyHuntsTitle = "Difficulty activities",
+  sectionTitleOverride = "",
+  rotatingBossActivity = null,
 }: ExpansionCampaignMissionsPanelProps) {
   const signedIn = useSignedIn();
-  const { ownedItemHashes, showOwnership } = useOwnership();
+  const { ownedItemHashes } = useOwnership();
   const instances = useProfileRecordInstances();
   const huntActivityHashes = useMemo(
     () => collectDifficultyHuntActivityHashes(difficultyHunts),
@@ -97,6 +114,7 @@ export function ExpansionCampaignMissionsPanel({
   const completedQuestHashes = useProfileQuestCompletions(campaignQuestTargets);
 
   const usesQuestsAndHunts = quests.length > 0 || difficultyHunts.length > 0;
+  const hasRotatingBosses = Boolean(rotatingBossActivity?.bosses.length);
   const showLegendColumn = missions.some((mission) =>
     Boolean(mission.legendObjectiveHash),
   );
@@ -126,16 +144,19 @@ export function ExpansionCampaignMissionsPanel({
   if (
     missions.length === 0 &&
     quests.length === 0 &&
-    difficultyHunts.length === 0
+    difficultyHunts.length === 0 &&
+    !hasRotatingBosses
   ) {
     return null;
   }
 
-  const sectionTitle = usesQuestsAndHunts
-    ? difficultyHunts.length > 0
-      ? `Campaign & ${difficultyHuntsTitle}`
-      : "Campaign"
-    : "Campaign";
+  const sectionTitle =
+    sectionTitleOverride ||
+    (usesQuestsAndHunts
+      ? difficultyHunts.length > 0
+        ? `Campaign & ${difficultyHuntsTitle}`
+        : "Campaign"
+      : "Campaign");
 
   return (
     <section className="min-w-0 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
@@ -143,7 +164,7 @@ export function ExpansionCampaignMissionsPanel({
         {sectionTitle}
       </h2>
 
-      {usesQuestsAndHunts ? (
+      {usesQuestsAndHunts || hasRotatingBosses ? (
         <p className="mt-3 text-sm text-zinc-400">
           Expansion quests
           {difficultyHunts.length > 0
@@ -154,6 +175,9 @@ export function ExpansionCampaignMissionsPanel({
                   : " (Adept / Hero / Legend / Master)."
               }`
             : "."}
+          {hasRotatingBosses
+            ? ` ${rotatingBossActivity!.title} bosses are tracked by owning their associated weapon drops.`
+            : ""}
         </p>
       ) : (
         <p className="mt-3 text-sm text-zinc-400">
@@ -178,7 +202,7 @@ export function ExpansionCampaignMissionsPanel({
                     quest,
                     instances,
                     completedQuestHashes,
-                    showOwnership ? ownedItemHashes : undefined,
+                    signedIn ? ownedItemHashes : undefined,
                   )
                 : null;
 
@@ -254,6 +278,45 @@ export function ExpansionCampaignMissionsPanel({
                       })}
                     </div>
                   </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ) : null}
+
+      {rotatingBossActivity && rotatingBossActivity.bosses.length > 0 ? (
+        <div className="mt-4">
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">
+            {rotatingBossActivity.title}
+          </h3>
+          {rotatingBossActivity.description ? (
+            <p className="mt-2 text-xs text-zinc-500">
+              {rotatingBossActivity.description}
+            </p>
+          ) : null}
+          <ul className="mt-2 space-y-2">
+            {rotatingBossActivity.bosses.map((boss) => {
+              const complete = signedIn
+                ? rotatingBossComplete(boss, ownedItemHashes)
+                : null;
+
+              return (
+                <li
+                  key={boss.name}
+                  className="flex flex-col gap-1 rounded-lg border border-zinc-800 px-3 py-3 sm:flex-row sm:items-center sm:justify-between"
+                >
+                  <div className="min-w-0">
+                    <span className="text-sm font-medium text-zinc-100">
+                      {boss.name}
+                    </span>
+                    {boss.rewardNote ? (
+                      <span className="mt-0.5 block text-xs text-zinc-500">
+                        Drops {boss.rewardNote}
+                      </span>
+                    ) : null}
+                  </div>
+                  <CompletionMark complete={complete} label="Cleared" />
                 </li>
               );
             })}

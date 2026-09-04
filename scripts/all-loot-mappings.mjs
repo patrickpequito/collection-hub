@@ -130,13 +130,70 @@ export function resolveItemNameSeasonOverride(name) {
       seasonIconPath: `/common/destiny2_content/icons/${RISEN_WATERMARK}`,
     };
   }
+  if (/^Cuirass of the Falling Star\b/i.test(name)) {
+    return {
+      label: "S13 Season of the Chosen",
+      seasonIconPath:
+        "/common/destiny2_content/icons/7b48b09fbb50634680168d5880b16bc9.png",
+      seasonDisplayIconPath:
+        "/common/destiny2_content/icons/55b4b7eca39fe80d0a82afd49539ae8e.png",
+      seasonDisplayIconWatermark: false,
+    };
+  }
+  if (/^Trinary System\b/i.test(name)) {
+    return {
+      label: "S13 Season of the Chosen",
+      seasonIconPath:
+        "/common/destiny2_content/icons/7b48b09fbb50634680168d5880b16bc9.png",
+      seasonDisplayIconPath:
+        "/common/destiny2_content/icons/55b4b7eca39fe80d0a82afd49539ae8e.png",
+      seasonDisplayIconWatermark: false,
+    };
+  }
   return null;
+}
+
+/**
+ * Per-hash season overrides for individual reissue rows when DIM/watermark
+ * mapping is wrong (e.g. BrayTech Werewolf original FotL 2019 → Undying, not Dawn).
+ */
+export const ITEM_HASH_SEASON_OVERRIDES = {
+  "528834068": {
+    label: "S8 Season of the Undying",
+    seasonDisplayIconPath:
+      "/common/destiny2_content/icons/DestinySeasonDefinition_b45d3d6ae817684a98d69aa44fc8ce58.png",
+    seasonDisplayIconWatermark: false,
+  },
+  "4057875770": {
+    label: "S13 Season of the Chosen",
+    seasonIconPath:
+      "/common/destiny2_content/icons/7b48b09fbb50634680168d5880b16bc9.png",
+    seasonDisplayIconPath:
+      "/common/destiny2_content/icons/55b4b7eca39fe80d0a82afd49539ae8e.png",
+    seasonDisplayIconWatermark: false,
+  },
+  "3258665412": {
+    label: "S13 Season of the Chosen",
+    seasonIconPath:
+      "/common/destiny2_content/icons/7b48b09fbb50634680168d5880b16bc9.png",
+    seasonDisplayIconPath:
+      "/common/destiny2_content/icons/55b4b7eca39fe80d0a82afd49539ae8e.png",
+    seasonDisplayIconWatermark: false,
+  },
+};
+
+export function resolveItemHashSeasonOverride(itemHash) {
+  if (itemHash == null || itemHash === "") return null;
+  const entry = ITEM_HASH_SEASON_OVERRIDES[String(itemHash)];
+  if (!entry) return null;
+  return typeof entry === "string" ? { label: entry } : entry;
 }
 
 /** Watermarks whose majority vote is misleading (shared across legacy eras). */
 export const WATERMARK_LABEL_OVERRIDES = {
   "7ba9d804508dd083ec20fcdb8ba0869d.png": "Curse of Osiris",
   "a15754752f40aaf7b1b00aadb70a8f35.png": "Shadowkeep",
+  "bce51cf90464e28026140df77c4eb6ce.png": "Beyond Light",
   [LIGHTFALL_WATERMARK]: "Lightfall",
   [WITCH_QUEEN_WATERMARK]: "The Witch Queen",
   "4376a7d734583ae347acf9732aa3bb43.png": "The Edge of Fate",
@@ -764,7 +821,7 @@ export function resolveIntoTheLightSeasonLabel(item, label, source = "") {
   return label;
 }
 
-/** Item watermarks that always denote a specific event (not a season chapter). */
+/** Item watermarks that denote limited-time events, not season chapters. */
 export const WATERMARK_EVENT_LABELS = {
   "bcc26708e314306fb2fc8cb98fcbf47e.png": "30th Anniversary",
   [CALL_TO_ARMS_WATERMARK]: CALL_TO_ARMS_LABEL,
@@ -1613,44 +1670,48 @@ export function watermarkBasename(watermarkPath = "") {
 }
 
 /**
- * Majority label per iconWatermark from activity sources. Aligns text labels with
- * the season emblem shown on the icon when DIM season numbers are ambiguous.
+ * Majority label per iconWatermark from DIM season mapping and hard overrides.
+ * Icon emblems are the source of truth — not activity source text votes.
  */
-export function buildWatermarkLabelMap(items, collectibles, seasons = {}) {
-  const votes = new Map();
-
-  for (const item of Object.values(items)) {
-    const watermark = item.iconWatermark;
-    if (!watermark || !item.collectibleHash) continue;
-
-    const collectible = collectibles[String(item.collectibleHash)];
-    const source = collectible?.sourceString ?? "";
-    if (!source || isRecurringVersionSource(source)) continue;
-
-    const label = resolveSeasonLabelFromSource(source, seasons);
-    if (!label) continue;
-
-    const key = watermarkBasename(watermark);
-    if (!votes.has(key)) votes.set(key, new Map());
-    const labelVotes = votes.get(key);
-    labelVotes.set(label, (labelVotes.get(label) ?? 0) + 1);
-  }
-
+export function buildWatermarkLabelMap(
+  items,
+  collectibles,
+  seasons = {},
+  dimSeasonData = {},
+) {
   const result = new Map();
-  for (const [key, labelVotes] of votes) {
-    let bestLabel = null;
-    let bestCount = 0;
-    for (const [label, count] of labelVotes) {
-      if (count > bestCount) {
-        bestLabel = label;
-        bestCount = count;
-      }
-    }
-    if (bestLabel) result.set(key, bestLabel);
-  }
+  const { watermarkToSeason = {} } = dimSeasonData;
 
   for (const [key, label] of Object.entries(WATERMARK_LABEL_OVERRIDES)) {
     result.set(key, label);
+  }
+
+  for (const [watermarkPath, manifestSeason] of Object.entries(
+    watermarkToSeason,
+  )) {
+    const key = watermarkBasename(watermarkPath);
+    if (result.has(key)) continue;
+    const label = seasonLabelFromManifestNumber(Number(manifestSeason));
+    if (label) result.set(key, label);
+  }
+
+  for (const item of Object.values(items)) {
+    for (const watermark of [
+      item.iconWatermark,
+      item.iconWatermarkShelved,
+      item.iconWatermarkFeatured,
+    ]) {
+      if (!watermark) continue;
+      const key = watermarkBasename(watermark);
+      if (result.has(key)) continue;
+      const season = resolveWatermarkManifestSeason(
+        watermark,
+        watermarkToSeason,
+      );
+      if (season > 0) {
+        result.set(key, seasonLabelFromManifestNumber(season));
+      }
+    }
   }
 
   return result;
@@ -1813,6 +1874,52 @@ function finalizeArmor30SeasonLabel(item, label, source = "", dimSeasonData = {}
 }
 
 /**
+ * Season/expansion label from the item icon watermark. Does not consult source text.
+ */
+export function resolveLabelFromItemWatermark(
+  item,
+  dimSeasonData = {},
+  { watermarkLabelMap = new Map() } = {},
+) {
+  const basename = watermarkBasename(item.iconWatermark);
+
+  if (basename === MONUMENT_FEATURED_WATERMARK) {
+    return MONUMENT_OF_TRIUMPH_LABEL;
+  }
+  if (basename === REVENANT_EPISODE_WATERMARK) {
+    return "S25 Episode: Revenant";
+  }
+  if (basename === INTO_THE_LIGHT_WATERMARK) {
+    return INTO_THE_LIGHT_LABEL;
+  }
+
+  if (WATERMARK_EVENT_LABELS[basename]) {
+    return null;
+  }
+
+  const watermarkOverride = WATERMARK_LABEL_OVERRIDES[basename];
+  if (watermarkOverride) {
+    return watermarkOverride;
+  }
+
+  if (basename === RENEGADES_ARMOR_CHAPTER_WATERMARK) {
+    return "Renegades";
+  }
+
+  const ownSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
+  if (ownSeason > 0) {
+    return seasonLabelFromManifestNumber(ownSeason);
+  }
+
+  const mappedLabel = watermarkLabelMap.get(basename);
+  if (mappedLabel) {
+    return mappedLabel;
+  }
+
+  return null;
+}
+
+/**
  * Armor 3.0 uses chapter emblems on icons. Manifest season 28 alone maps to
  * Monument of Triumph, but Renegades sets share the Renegades or Edge-of-Fate emblems.
  */
@@ -1823,14 +1930,9 @@ export function resolveArmor30SeasonLabel(
   dimSeasonData = {},
 ) {
   const basename = watermarkBasename(item.iconWatermark);
-  const fromSource = resolveSeasonLabelFromSource(source, seasons);
 
   if (basename === MONUMENT_FEATURED_WATERMARK) {
     return MONUMENT_OF_TRIUMPH_LABEL;
-  }
-
-  if (fromSource && !isRecurringVersionSource(source)) {
-    return finalizeArmor30SeasonLabel(item, fromSource, source, dimSeasonData);
   }
 
   const watermarkOverride = WATERMARK_LABEL_OVERRIDES[basename];
@@ -1856,23 +1958,14 @@ export function resolveArmor30SeasonLabel(
     return "Renegades";
   }
 
-  if (watermarkOverride) {
-    return finalizeArmor30SeasonLabel(
-      item,
-      watermarkOverride,
-      source,
-      dimSeasonData,
-    );
+  const iconLabel = resolveLabelFromItemWatermark(item, dimSeasonData);
+  if (iconLabel) {
+    return finalizeArmor30SeasonLabel(item, iconLabel, source, dimSeasonData);
   }
 
-  const watermarkSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
-  if (watermarkSeason >= 1) {
-    return finalizeArmor30SeasonLabel(
-      item,
-      seasonLabelFromManifestNumber(watermarkSeason),
-      source,
-      dimSeasonData,
-    );
+  const fromSource = resolveSeasonLabelFromSource(source, seasons);
+  if (fromSource && !isRecurringVersionSource(source)) {
+    return finalizeArmor30SeasonLabel(item, fromSource, source, dimSeasonData);
   }
 
   return null;
@@ -1942,45 +2035,35 @@ export function resolveVersionSeasonLabel(
     salvationsEdgeS29MinIndex = null,
   } = {},
 ) {
+  const hashOverride = resolveItemHashSeasonOverride(item?.hash);
+  if (hashOverride) return hashOverride.label;
+
   const nameOverride = resolveItemNameSeasonOverride(
     item?.displayProperties?.name,
   );
   if (nameOverride) return nameOverride.label;
 
   const source = resolveCollectibleSourceString(collectible);
-  const basename = watermarkBasename(item.iconWatermark);
-
-  if (basename === MONUMENT_FEATURED_WATERMARK) {
-    return stripIncorrectMonumentLabel(
-      item,
-      MONUMENT_OF_TRIUMPH_LABEL,
-      source,
-    );
-  }
-
-  if (basename === REVENANT_EPISODE_WATERMARK) {
-    return "S25 Episode: Revenant";
-  }
-
   const fromSource = resolveSeasonLabelFromSource(source, seasons);
-  const votedLabel = watermarkLabelMap.get(basename);
   const watermarkOverride =
     WATERMARK_LABEL_OVERRIDES[watermarkBasename(item.iconWatermark)];
   const ownSeason = resolveWatermarkSeasonNumber(item, dimSeasonData);
 
-  let label = null;
+  let label = resolveLabelFromItemWatermark(item, dimSeasonData, {
+    watermarkLabelMap,
+  });
 
-  if (fromSource && !isRecurringVersionSource(source)) {
-    label = resolveActivitySourceSeasonLabel(fromSource, ownSeason, {
-      watermarkOverride,
-    });
-  } else if (watermarkOverride) {
-    label = watermarkOverride;
-  } else if (votedLabel && isExpansionLabel(votedLabel)) {
-    label = votedLabel;
-  } else if (ownSeason > 0) {
-    label = seasonLabelFromManifestNumber(ownSeason);
-  } else {
+  if (!label) {
+    if (fromSource && !isRecurringVersionSource(source)) {
+      label = resolveActivitySourceSeasonLabel(fromSource, ownSeason, {
+        watermarkOverride,
+      });
+    } else if (fromSource) {
+      label = fromSource;
+    }
+  }
+
+  if (!label) {
     const manifestSeason = resolveManifestSeasonForLabel(
       item,
       dimSeasonData,
@@ -1990,18 +2073,23 @@ export function resolveVersionSeasonLabel(
     );
     if (manifestSeason > 0) {
       label = seasonLabelFromManifestNumber(manifestSeason);
-    } else if (votedLabel) {
-      label = votedLabel;
     } else {
-      const seasonPassSeason = seasonPassItemSeason?.get(String(item.hash));
-      if (seasonPassSeason) {
-        label = seasonLabelFromManifestNumber(seasonPassSeason);
+      const votedLabel = watermarkLabelMap.get(
+        watermarkBasename(item.iconWatermark),
+      );
+      if (votedLabel) {
+        label = votedLabel;
       } else {
-        const seasonHash = item.seasonHash ?? collectible?.seasonHash ?? null;
-        if (seasonHash) {
-          const season = seasons[String(seasonHash)];
-          if (season?.seasonNumber) {
-            label = seasonLabelFromManifestNumber(season.seasonNumber);
+        const seasonPassSeason = seasonPassItemSeason?.get(String(item.hash));
+        if (seasonPassSeason) {
+          label = seasonLabelFromManifestNumber(seasonPassSeason);
+        } else {
+          const seasonHash = item.seasonHash ?? collectible?.seasonHash ?? null;
+          if (seasonHash) {
+            const season = seasons[String(seasonHash)];
+            if (season?.seasonNumber) {
+              label = seasonLabelFromManifestNumber(season.seasonNumber);
+            }
           }
         }
       }

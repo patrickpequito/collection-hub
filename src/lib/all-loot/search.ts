@@ -8,6 +8,7 @@ import type {
   AllLootSearchResult,
 } from "@/types/all-loot";
 import { isItemOwned } from "@/lib/all-loot/ownership";
+import { applySeasonCatalogOverrides } from "@/lib/all-loot/season-overrides";
 
 let catalogCache: AllLootCatalog | null = null;
 
@@ -16,7 +17,11 @@ async function readAllLootCatalogFromDisk(): Promise<AllLootCatalog> {
 
   const filePath = path.join(process.cwd(), "data/all-loot.json");
   const raw = await readFile(filePath, "utf8");
-  catalogCache = JSON.parse(raw) as AllLootCatalog;
+  const parsed = JSON.parse(raw) as AllLootCatalog;
+  catalogCache = {
+    ...parsed,
+    items: applySeasonCatalogOverrides(parsed.items),
+  };
   return catalogCache;
 }
 

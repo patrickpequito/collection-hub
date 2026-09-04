@@ -6,7 +6,9 @@ import { ExpansionCollectionPanel } from "@/components/expansions/expansion-coll
 import { ExpansionDeepLootSection } from "@/components/expansions/expansion-deep-loot-section";
 import { ExpansionDestinationPanel } from "@/components/expansions/expansion-destination-panel";
 import { ExpansionLootPanel } from "@/components/expansions/expansion-loot-panel";
+import { ExpansionNavBar } from "@/components/expansions/expansion-nav-bar";
 import { ExpansionProgressStrip } from "@/components/expansions/expansion-progress-strip";
+import { ExpansionTrailerSection } from "@/components/expansions/expansion-trailer-section";
 import { ExpansionTriumphsPanel } from "@/components/expansions/expansion-triumphs-panel";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import {
@@ -14,7 +16,13 @@ import {
   getExpansionSlugs,
   PUBLISHED_EXPANSION_SLUGS,
 } from "@/data/expansions";
+import { localSeasonIconPathFromSlug } from "@/lib/all-loot/season-icon-path";
 import { expansionHeaderUrl } from "@/lib/page-headers";
+import {
+  getExpansionNavAdjacent,
+  getExpansionNavEntries,
+  getExpansionSeasonBanners,
+} from "@/lib/expansions/expansion-nav";
 import { resolveExpansionLoot } from "@/lib/expansions/resolve-expansion-loot";
 import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { isBungieOAuthConfigured } from "@/lib/env";
@@ -93,16 +101,36 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
     ),
   ];
 
+  const { previous, next } = getExpansionNavAdjacent(hub.slug);
+  const expansionNavEntries = getExpansionNavEntries();
+  const seasonBanners = getExpansionSeasonBanners(hub.slug);
+
   return (
     <SectionPageLayout
       title={hub.title}
       imageUrl={expansionHeaderUrl(hub.slug)}
+      titleIconUrl={localSeasonIconPathFromSlug(hub.slug)}
       oauthConfigured={oauthConfigured}
       maxWidth="5xl"
       backLink={{ href: "/expansions", label: "← Expansions & Seasons" }}
     >
       <ClientOwnership>
         <div className="space-y-8">
+          <ExpansionNavBar
+            currentSlug={hub.slug}
+            currentTitle={hub.title}
+            previous={previous}
+            next={next}
+            entries={expansionNavEntries}
+          />
+
+          {hub.trailerYoutubeId ? (
+            <ExpansionTrailerSection
+              youtubeId={hub.trailerYoutubeId}
+              seasons={seasonBanners}
+            />
+          ) : null}
+
           <ExpansionProgressStrip
             collectionTotal={loot.collectionItems.length}
             collectionOwnershipGroups={collectionOwnershipGroups}
@@ -111,6 +139,7 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
             campaignLegendaryRecordHash={loot.campaignLegendaryRecordHash}
             campaignQuests={loot.campaignQuests}
             difficultyHunts={loot.difficultyHunts}
+            rotatingBossActivity={loot.rotatingBossActivity}
             lootTotal={lootOwnershipGroups.length}
             lootOwnershipGroups={lootOwnershipGroups}
           />
@@ -137,6 +166,8 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
             quests={loot.campaignQuests}
             difficultyHunts={loot.difficultyHunts}
             difficultyHuntsTitle={loot.difficultyHuntsTitle}
+            sectionTitleOverride={loot.campaignSectionTitle}
+            rotatingBossActivity={loot.rotatingBossActivity}
           />
 
           <ExpansionDestinationPanel

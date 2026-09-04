@@ -85,6 +85,22 @@ export type ExpansionWellspringBoss = {
   masterObjectiveHash: string;
 };
 
+/** Rotating public-event bosses (e.g. Altars of Sorrow). */
+export type ExpansionRotatingBoss = {
+  name: string;
+  /** Owning this item counts as having cleared this boss. */
+  completionItemHash?: string;
+  completionItemHashes?: string[];
+  /** Optional short reward hint shown beside the name. */
+  rewardNote?: string;
+};
+
+export type ExpansionRotatingBossActivity = {
+  title: string;
+  description?: string;
+  bosses: ExpansionRotatingBoss[];
+};
+
 export type ExpansionCampaignMission = {
   name: string;
   normalRecordHash: string | null;
@@ -99,8 +115,12 @@ export type ExpansionCampaignQuest = {
   recordObjectiveHash?: string;
   /** All listed records must be complete (e.g. legacy campaign missions). */
   fallbackRecordHashes?: string[];
+  /** When "any", one complete fallback record is enough (class-specific exotics). Default: all. */
+  fallbackRecordMatch?: "all" | "any";
   /** Owning this item counts as quest complete (e.g. exotic reward). */
   completionItemHash?: string;
+  /** Any owned hash counts as complete (exotic weapon variants). */
+  completionItemHashes?: string[];
   /** Root quest item hash for profile quest completion. */
   questHash?: string;
   /** Final quest step hash — used when completed quests leave the active list. */
@@ -174,6 +194,10 @@ type ExpansionCollectionFile = {
     difficultyHunts?: ExpansionDifficultyHunt[];
     /** Section heading for difficultyHunts (default: "Difficulty activities"). */
     difficultyHuntsTitle?: string;
+    /** Override for the panel heading (e.g. "Campaign & Activities"). */
+    sectionTitle?: string;
+    /** Rotating public-event bosses nested under the campaign panel. */
+    rotatingBossActivity?: ExpansionRotatingBossActivity;
     /** @deprecated Prefer difficultyHunts */
     empireHunts?: ExpansionDifficultyHunt[];
   };
@@ -199,6 +223,9 @@ export type ExpansionLoot = {
   campaignQuests: ExpansionCampaignQuest[];
   difficultyHunts: ExpansionDifficultyHunt[];
   difficultyHuntsTitle: string;
+  /** Optional override for the Campaign panel heading. */
+  campaignSectionTitle: string;
+  rotatingBossActivity: ExpansionRotatingBossActivity | null;
   lootItemCount: number;
   lootItemHashes: string[];
   collectionHashes: string[];
@@ -260,6 +287,9 @@ function isHubEraExotic(item: AllLootItem, hub: ExpansionHub): boolean {
   if (
     hub.exoticExcludedSourcePattern?.test(item.source ?? "")
   ) {
+    return false;
+  }
+  if (hub.excludedSeasonLabels?.includes(item.seasonLabel ?? "")) {
     return false;
   }
   // Season icons alone are unreliable for exotics remastered into later pools
@@ -766,6 +796,8 @@ export async function resolveExpansionLoot(
       (collectionFile.campaign?.empireHunts?.length
         ? "Empire Hunts"
         : "Difficulty activities"),
+    campaignSectionTitle: collectionFile.campaign?.sectionTitle ?? "",
+    rotatingBossActivity: collectionFile.campaign?.rotatingBossActivity ?? null,
     lootItemCount: lootHashes.size,
     lootItemHashes: [...lootHashes],
     collectionHashes,

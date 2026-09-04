@@ -5,6 +5,10 @@ export type LootItem = {
   name: string;
   iconPath: string;
   source: string;
+  /** Catalog type — used for ornament plate overlays. */
+  itemType?: string;
+  /** Catalog rarity — exotic/legendary ornament overlays. */
+  rarity?: string;
   /** Weapon metadata for hover tooltips (type, element, ammo). */
   classOrWeaponType?: string | null;
   damageType?: string | null;

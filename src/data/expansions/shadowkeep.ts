@@ -43,6 +43,7 @@ export const SHADOWKEEP_HUB: ExpansionHub = {
   deepLootEmptyDescription:
     "No Shadowkeep-era playlist loot found for the tracked activity pools.",
   indexImageFile: "garden-of-salvation.webp",
+  trailerYoutubeId: "LFYJTudJ540",
   available: true,
   excludedNamePatterns: [
     /^Khvostov\b/i,

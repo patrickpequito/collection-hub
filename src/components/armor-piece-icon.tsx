@@ -1,4 +1,5 @@
 import { CollectionItemIcon } from "@/components/collection-item-icon";
+import type { OrnamentOverlayTier } from "@/lib/bungie-icon";
 import type { ArmorPiece } from "@/types/armor-set";
 
 type ArmorPieceIconProps = {
@@ -11,6 +12,9 @@ type ArmorPieceIconProps = {
   fluid?: boolean;
   fillCell?: boolean;
   href?: string;
+  /** Destiny ornament plate overlay (armor/weapon ornaments). */
+  ornamentOverlay?: boolean | OrnamentOverlayTier;
+  rarity?: string | null;
 };
 
 export function ArmorPieceIcon({
@@ -23,6 +27,8 @@ export function ArmorPieceIcon({
   fluid = false,
   fillCell = false,
   href,
+  ornamentOverlay,
+  rarity,
 }: ArmorPieceIconProps) {
   if (!piece?.iconPath) {
     const emptyBorder = showOwnership ? "border-2" : "border";
@@ -54,6 +60,8 @@ export function ArmorPieceIcon({
       fluid={fluid}
       fillCell={fillCell}
       href={href}
+      ornamentOverlay={ornamentOverlay}
+      rarity={rarity}
     />
   );
 }

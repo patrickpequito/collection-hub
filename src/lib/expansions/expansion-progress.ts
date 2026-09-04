@@ -3,6 +3,7 @@ import type {
   ExpansionCampaignQuest,
   ExpansionDifficultyHunt,
   ExpansionHuntDifficultyTier,
+  ExpansionRotatingBossActivity,
 } from "@/lib/expansions/resolve-expansion-loot";
 import type { QuestCompletionTarget } from "@/lib/destiny-quest-progress";
 import {
@@ -20,6 +21,7 @@ export type ExpansionProgressInputs = {
   campaignLegendaryRecordHash: string;
   campaignQuests: ExpansionCampaignQuest[];
   difficultyHunts: ExpansionDifficultyHunt[];
+  rotatingBossActivity: ExpansionRotatingBossActivity | null;
   lootTotal: number;
   lootOwnershipGroups: string[][];
 };
@@ -120,13 +122,17 @@ function isHuntTierComplete(
 }
 
 export function getCampaignTotal(inputs: ExpansionProgressInputs): number {
+  const rotatingBossCount = inputs.rotatingBossActivity?.bosses.length ?? 0;
   const usesQuestsAndHunts =
-    inputs.campaignQuests.length > 0 || inputs.difficultyHunts.length > 0;
+    inputs.campaignQuests.length > 0 ||
+    inputs.difficultyHunts.length > 0 ||
+    rotatingBossCount > 0;
 
   if (usesQuestsAndHunts) {
     return (
       inputs.campaignQuests.length +
-      huntDifficultySlotCount(inputs.difficultyHunts)
+      huntDifficultySlotCount(inputs.difficultyHunts) +
+      rotatingBossCount
     );
   }
 
@@ -145,6 +151,7 @@ export function computeCampaignProgress(
     | "campaignLegendaryRecordHash"
     | "campaignQuests"
     | "difficultyHunts"
+    | "rotatingBossActivity"
   >,
   instances: Record<string, RecordInstance>,
   activityCompletions: Record<string, number>,
@@ -156,10 +163,14 @@ export function computeCampaignProgress(
     campaignLegendaryRecordHash,
     campaignQuests,
     difficultyHunts,
+    rotatingBossActivity,
   } = inputs;
 
+  const rotatingBosses = rotatingBossActivity?.bosses ?? [];
   const usesQuestsAndHunts =
-    campaignQuests.length > 0 || difficultyHunts.length > 0;
+    campaignQuests.length > 0 ||
+    difficultyHunts.length > 0 ||
+    rotatingBosses.length > 0;
 
   if (usesQuestsAndHunts) {
     let completed = 0;
@@ -186,10 +197,25 @@ export function computeCampaignProgress(
       }
     }
 
+    const bossTotal = rotatingBosses.length;
+    if (ownedItemHashes) {
+      for (const boss of rotatingBosses) {
+        const hashes = boss.completionItemHashes?.length
+          ? boss.completionItemHashes
+          : boss.completionItemHash
+            ? [boss.completionItemHash]
+            : [];
+        if (hashes.some((hash) => ownedItemHashes.has(hash))) {
+          completed += 1;
+        }
+      }
+    }
+
+    const total = questTotal + huntDiffTotal + bossTotal;
     return {
       completed,
-      total: questTotal + huntDiffTotal,
-      label: `${completed}/${questTotal + huntDiffTotal}`,
+      total,
+      label: `${completed}/${total}`,
     };
   }
 
@@ -238,22 +264,80 @@ export function collectCampaignQuestHashes(
   ];
 }
 
+export function getCampaignQuestKey(quest: ExpansionCampaignQuest): string {
+  if (quest.questHash) return quest.questHash;
+  if (quest.recordHash && !quest.recordObjectiveHash) return quest.recordHash;
+  return quest.name;
+}
+
 export function collectQuestCompletionTargets(
   quests: ExpansionCampaignQuest[],
 ): QuestCompletionTarget[] {
   return quests
-    .filter((quest) => quest.questHash && quest.completionStepHash)
-    .map((quest) => ({
-      questHash: quest.questHash!,
-      completionStepHash: quest.completionStepHash!,
-      stepHashes: quest.questStepHashes,
-      recordHash: quest.recordHash,
-      recordObjectiveHash: quest.recordObjectiveHash,
-      fallbackRecordHashes: quest.fallbackRecordHashes,
-      completionItemHash: quest.completionItemHash,
-      completionObjectiveHash: quest.completionObjectiveHash,
-      stepObjectiveHashes: quest.stepObjectiveHashes,
-    }));
+    .map((quest) => {
+      const questHash = quest.questHash ?? getCampaignQuestKey(quest);
+      const hasQuestSteps = Boolean(quest.questHash && quest.completionStepHash);
+      const hasRecordFallback = Boolean(
+        quest.recordHash ||
+          quest.fallbackRecordHashes?.length ||
+          quest.completionItemHash ||
+          quest.completionItemHashes?.length,
+      );
+      if (!hasQuestSteps && !hasRecordFallback) return null;
+
+      return {
+        questHash,
+        completionStepHash: quest.completionStepHash ?? questHash,
+        stepHashes: quest.questStepHashes,
+        recordHash: quest.recordHash,
+        recordObjectiveHash: quest.recordObjectiveHash,
+        fallbackRecordHashes: quest.fallbackRecordHashes,
+        fallbackRecordMatch: quest.fallbackRecordMatch,
+        completionItemHash: quest.completionItemHash,
+        completionItemHashes: quest.completionItemHashes,
+        completionObjectiveHash: quest.completionObjectiveHash,
+        stepObjectiveHashes: quest.stepObjectiveHashes,
+      };
+    })
+    .filter((target) => target != null) as QuestCompletionTarget[];
+}
+
+function matchesFallbackRecords(
+  quest: Pick<
+    ExpansionCampaignQuest,
+    "fallbackRecordHashes" | "fallbackRecordMatch"
+  >,
+  instances: Record<string, RecordInstance>,
+): boolean {
+  if (!quest.fallbackRecordHashes?.length) return false;
+  const matchAny = quest.fallbackRecordMatch === "any";
+  return matchAny
+    ? quest.fallbackRecordHashes.some((hash) =>
+        isQuestRecordComplete(instances[hash]),
+      )
+    : quest.fallbackRecordHashes.every((hash) =>
+        isQuestRecordComplete(instances[hash]),
+      );
+}
+
+function ownsCompletionItem(
+  quest: Pick<
+    ExpansionCampaignQuest,
+    "completionItemHash" | "completionItemHashes"
+  >,
+  ownedItemHashes?: Set<string>,
+): boolean {
+  if (!ownedItemHashes?.size) return false;
+  if (
+    quest.completionItemHash &&
+    ownedItemHashes.has(quest.completionItemHash)
+  ) {
+    return true;
+  }
+  return (
+    quest.completionItemHashes?.some((hash) => ownedItemHashes.has(hash)) ??
+    false
+  );
 }
 
 function isQuestRecordComplete(
@@ -296,32 +380,19 @@ export function isCampaignQuestComplete(
     return true;
   }
 
-  if (
-    quest.fallbackRecordHashes?.length &&
-    quest.fallbackRecordHashes.every((hash) =>
-      isQuestRecordComplete(instances[hash]),
-    )
-  ) {
+  if (matchesFallbackRecords(quest, instances)) {
     return true;
   }
 
-  if (
-    quest.completionItemHash &&
-    ownedItemHashes?.has(quest.completionItemHash)
-  ) {
+  if (ownsCompletionItem(quest, ownedItemHashes)) {
     return true;
   }
 
-  if (quest.questHash && completedQuestHashes[quest.questHash] === true) {
+  const questKey = quest.questHash ?? getCampaignQuestKey(quest);
+  if (completedQuestHashes[questKey] === true) {
     return true;
   }
   return false;
-}
-
-export function getCampaignQuestKey(quest: ExpansionCampaignQuest): string {
-  if (quest.questHash) return quest.questHash;
-  if (quest.recordHash && !quest.recordObjectiveHash) return quest.recordHash;
-  return quest.name;
 }
 
 export function collectDifficultyHuntActivityHashes(

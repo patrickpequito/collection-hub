@@ -478,6 +478,257 @@
         "normalRecordHash": "2341041476",
         "legendObjectiveHash": "2103314198"
       }
+    ],
+    "quests": [
+      {
+        "name": "Legacy: The Witch Queen",
+        "fallbackRecordHashes": [
+          "2016548463",
+          "2016548460",
+          "2016548461"
+        ],
+        "questHash": "1612715075",
+        "completionStepHash": "147850787",
+        "questStepHashes": [
+          "1612715075",
+          "239128441",
+          "3323206616",
+          "239128446",
+          "2838331549",
+          "3294953102",
+          "610104115",
+          "972929711",
+          "239128447",
+          "2147231503",
+          "2609952321",
+          "737156186",
+          "2664658118",
+          "972929708",
+          "1266353966",
+          "239128444",
+          "239128445",
+          "4192582969",
+          "147850787",
+          "1946423823",
+          "1826993016",
+          "2881823111",
+          "3247379273",
+          "2839660851"
+        ],
+        "completionObjectiveHash": "3568445528",
+        "stepObjectiveHashes": [
+          "2975148920",
+          "1732266138",
+          "689148341",
+          "571255903",
+          "842082070",
+          "1688247343",
+          "523340072",
+          "1026235980",
+          "3476822180",
+          "4086468140",
+          "1104006962",
+          "1393495619",
+          "2841836343",
+          "3097210737",
+          "2537210191",
+          "1816784513",
+          "1634823798",
+          "935121242",
+          "3568445528",
+          "4179068716",
+          "4246940117",
+          "3701397076",
+          "1395633834",
+          "4172086056"
+        ],
+        "iconPath": "/common/destiny2_content/icons/940fbc426dcd7048d31160c92d5d5708.jpg"
+      },
+      {
+        "name": "Hard Evidence",
+        "recordHash": "1869446461",
+        "recordObjectiveHash": "249352246",
+        "questHash": "3478646613",
+        "completionStepHash": "601035050",
+        "questStepHashes": [
+          "3478646613",
+          "1438667217",
+          "279735181",
+          "2852332270",
+          "601035050"
+        ],
+        "completionObjectiveHash": "3227915091",
+        "stepObjectiveHashes": [
+          "1590112308",
+          "1482918594",
+          "1805853574",
+          "530954767",
+          "3227915091"
+        ],
+        "iconPath": "/common/destiny2_content/icons/b794c4c55c9b3613a05a548d883556ba.jpg"
+      },
+      {
+        "name": "Trust Goes Both Ways",
+        "recordHash": "1047337012",
+        "recordObjectiveHash": "3840248169",
+        "questHash": "1083548813",
+        "completionStepHash": "1083548809",
+        "questStepHashes": [
+          "1083548813",
+          "1083548812",
+          "1083548815",
+          "1083548814",
+          "1083548809"
+        ],
+        "completionObjectiveHash": "2063586538",
+        "stepObjectiveHashes": [
+          "722810502",
+          "2537280465",
+          "2537280464",
+          "1631511212",
+          "1631511213",
+          "1164279343",
+          "2063586538"
+        ],
+        "iconPath": "/common/destiny2_content/icons/ee74d1314e94fae9bffa498dfeca4529.jpg"
+      },
+      {
+        "name": "The Gift of Appreciation",
+        "recordHash": "1047337012",
+        "recordObjectiveHash": "3840248168",
+        "questHash": "3010588096",
+        "completionStepHash": "3010588100",
+        "questStepHashes": [
+          "3010588096",
+          "3010588097",
+          "3010588098",
+          "3010588099",
+          "3010588100"
+        ],
+        "completionObjectiveHash": "615921465",
+        "stepObjectiveHashes": [
+          "1410503405",
+          "1652384178",
+          "1847689627",
+          "1847689626",
+          "4005753848",
+          "615921465"
+        ],
+        "iconPath": "/common/destiny2_content/icons/ee74d1314e94fae9bffa498dfeca4529.jpg"
+      },
+      {
+        "name": "Reshaping the Enigma",
+        "questHash": "658479834",
+        "completionStepHash": "1232302366",
+        "questStepHashes": [
+          "658479834",
+          "1232302363",
+          "1232302361",
+          "3099265193",
+          "1232302360",
+          "1232302367",
+          "3216708524",
+          "1232302366"
+        ],
+        "completionObjectiveHash": "3905937919",
+        "stepObjectiveHashes": [
+          "4282322371",
+          "1951572064",
+          "1953736122",
+          "3781900298",
+          "22312437",
+          "3273052732",
+          "2128552561",
+          "3905937919"
+        ],
+        "iconPath": "/common/destiny2_content/icons/cf05991b4a82c4faec17755105bda88f.png",
+        "completionItemHashes": [
+          "1485241459",
+          "1736882397",
+          "2595497736",
+          "3448423264"
+        ]
+      },
+      {
+        "name": "Vox Obscura",
+        "fallbackRecordHashes": [
+          "3444043369",
+          "3103334548",
+          "3103334551",
+          "3103334550",
+          "3103334545",
+          "3103334544",
+          "3103334547"
+        ],
+        "completionItemHashes": [
+          "46125926",
+          "2812324401",
+          "46524085"
+        ],
+        "iconPath": "/common/destiny2_content/icons/d8a986afdb448b12a18779a341123572.jpg"
+      },
+      {
+        "name": "The Evidence Board",
+        "fallbackRecordMatch": "any",
+        "fallbackRecordHashes": [
+          "1955149226",
+          "3296489718",
+          "96042291"
+        ],
+        "completionItemHashes": [
+          "2535142413",
+          "542203595",
+          "14194600"
+        ],
+        "iconPath": "/common/destiny2_content/icons/1bec7f86912cc0b39e03a6387c0d60bc.png"
+      },
+      {
+        "name": "Of Queens and Worms",
+        "recordHash": "801645632",
+        "completionItemHash": "2812324400",
+        "questHash": "472120382",
+        "completionStepHash": "1487910651",
+        "questStepHashes": [
+          "472120382",
+          "3383073000",
+          "3383073001",
+          "3383073002",
+          "3494281470",
+          "595317119",
+          "3383073003",
+          "773742346",
+          "3383073004",
+          "1921923758",
+          "3383073005",
+          "3383073006",
+          "3383073007",
+          "3338373948",
+          "3383072992",
+          "3383072993",
+          "1487910651"
+        ],
+        "completionObjectiveHash": "3416503488",
+        "stepObjectiveHashes": [
+          "1680890655",
+          "3768945733",
+          "1774192714",
+          "557956371",
+          "536067295",
+          "4209451036",
+          "520240304",
+          "2355238707",
+          "1404324017",
+          "747218895",
+          "65271654",
+          "1379961871",
+          "3066222220",
+          "1430552129",
+          "2976947597",
+          "2087531346",
+          "3416503488"
+        ],
+        "iconPath": "/common/destiny2_content/icons/49c440209cd6e62681268776d4749496.jpg"
+      }
     ]
   }
 }

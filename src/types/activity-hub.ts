@@ -24,6 +24,8 @@ export type LegacyArmorSetGroup = {
   displayName?: string;
   /** Overrides slugified set name for full-set preview images. */
   previewFile?: string;
+  /** Ornament packs use the same grid + preview as armor. */
+  kind?: "armor" | "ornament";
   seasonLabel?: string;
   seasonNumber?: number;
   rows: ActivityArmorRow[];
