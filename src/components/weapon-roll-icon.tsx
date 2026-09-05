@@ -45,7 +45,7 @@ export function WeaponRollIcon({
             alt=""
             width={44}
             height={44}
-            className={ICON_LAYER_CLASS}
+            className="pointer-events-none absolute -left-px -top-px h-[calc(100%+2px)] w-[calc(100%+2px)] max-w-none object-cover"
             decoding="async"
           />
         ) : null}

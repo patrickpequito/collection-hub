@@ -38,13 +38,52 @@ const REVENANT_EPISODE_WATERMARK = "5232219633cc4d90570bffda36caccf4.png";
 const INTO_THE_LIGHT_WATERMARK = "60d34bc853c51063b79592233c3661d4.png";
 const CALL_TO_ARMS_WATERMARK = "6eeb62a30439cecc7699c22f3e1fb3cf.png";
 
-/** Event watermarks — resolved via eventLabel, not seasonLabel. */
-const WATERMARK_EVENT_LABELS: Record<string, string> = {
+/** Event watermarks — the emblem on the icon is the display source of truth. */
+export const WATERMARK_EVENT_LABELS: Record<string, string> = {
   "bcc26708e314306fb2fc8cb98fcbf47e.png": "30th Anniversary",
   [CALL_TO_ARMS_WATERMARK]: "Call to Arms",
+  "83fbcacd223402c09af4b7ab067f8cce.png": "The Dawning",
+  "53dc0b02306726ff1517af33ac908cef.png": "Festival of the Lost",
+  "9c091ec0e22c01dacc25efb63b46eb9b.png": "Guardian Games",
+  "50c3ebe414c6946429934d79504922fa.png": "Solstice",
+  "2b89827888c5581a14af976968bcb18a.png": "Pride",
 };
 const RENEGADES_ARMOR_CHAPTER_WATERMARK =
   "4376a7d734583ae347acf9732aa3bb43.png";
+
+/**
+ * Season watermarks missing from the partial DIM map bundled in-app.
+ * Same majority mapping used by the shaders catalog.
+ */
+export const EXTRA_WATERMARK_SEASON_LABELS: Record<string, string> = {
+  "0b212b58a961f150708bca95095e0ecb.png": "S8 Season of the Undying",
+  "0d6c3365022ed3b059eac467b076978f.png": "S26 Episode: Heresy",
+  "247715dd42abef457b52ef37280c0e42.png": "S10 Season of the Worthy",
+  "2c022e452f395db7b1daec1cb44631fc.png": "S6 Season of the Drifter",
+  "2dc17f123b7449b14144e76cfbeb2309.png": "S22 Season of the Witch",
+  "3543d23d9063fbf7332c7f129a74ada2.png": "The Edge of Fate",
+  "36418dde751148bd3b95a023d491ea73.png": "S14 Season of the Splicer",
+  "41d05b7cb5cc0a384af07ee9b7d36dd2.png": "S19 Season of the Seraph",
+  "58d3ec8338cc9746a2e0cf901fbcec0e.png": "S7 Season of Opulence",
+  "661c84a377389a3b8a1fc38b44189b41.png": "S24 Episode: Echoes",
+  "6f17d323d81dd683086d88a9268f8106.png": "S23 Season of the Wish",
+  "75adde12e4e9c9fb237e492d8258eb73.png": "S17 Season of the Haunted",
+  "7d815c943977fe71bbf00caf1bd9c514.png": "S18 Season of Plunder",
+  "914322d11262322c839a5388db2a4943.png": "S15 Season of the Lost",
+  "9bfaa5536772e2f3ef1252813a21c4d1.png": "S24 Episode: Echoes",
+  "9dcae1241214f11398178375859888e6.png": "Red War",
+  "a0556509f8825756b6b89f59f90528ec.png": "S20 Season of Defiance",
+  "a5e27dc822aa72787f388bd1fc115803.png": "S12 Season of the Hunt",
+  "ae5c7f708a36f754c2f68c65c88ab9aa.png": "S21 Season of the Deep",
+  "aeb95eb1abe8e45e1fe2573d6b3ab3c5.png": "Forsaken",
+  "c1e11e70eba15abcd4e0414fa29ef714.png": "S6 Season of the Drifter",
+  "cf4ebcfce71b8ac247a4274323cd5090.png": "Red War",
+  "d105aa342f2d0c53a90a28477552f61f.png": "S11 Season of Arrivals",
+  "da5f961ef97b78293cc498978c10e178.png": "Warmind",
+  "e0c16042274fd7d9cbffc4489e340c5d.png": "S5 Season of the Forge",
+  "ede19a0e1a54564243b0e5e8a18bde84.png": "S9 Season of Dawn",
+  "fe8bcc20fbfaf4cac69dfb640bb0b84e.png": "Curse of Osiris",
+};
 
 /** Hard-coded watermark basename → label (shared with catalog scripts). */
 export const WATERMARK_LABEL_OVERRIDES: Record<string, string> = {
@@ -110,7 +149,18 @@ export function displayNumberFromLabel(label: string): number {
   return expansions[label] ?? 0;
 }
 
-/** Resolve a player-facing season label from the Bungie season watermark on an icon. */
+/** Event label from the watermark on the icon (icon-first). */
+export function resolveEventLabelFromIconPath(
+  seasonIconPath?: string | null,
+): string | null {
+  if (!seasonIconPath) return null;
+  return WATERMARK_EVENT_LABELS[watermarkBasename(seasonIconPath)] ?? null;
+}
+
+/**
+ * Resolve a player-facing season/expansion label from the Bungie watermark.
+ * Event watermarks are excluded here — use `resolveEventLabelFromIconPath`.
+ */
 export function resolveSeasonLabelFromIconPath(
   seasonIconPath?: string | null,
 ): string | null {
@@ -138,10 +188,25 @@ export function resolveSeasonLabelFromIconPath(
   const override = WATERMARK_LABEL_OVERRIDES[basename];
   if (override) return override;
 
+  const extra = EXTRA_WATERMARK_SEASON_LABELS[basename];
+  if (extra) return extra;
+
   const manifestSeason = manifestSeasonForIconPath(seasonIconPath);
   if (manifestSeason > 0) {
     return MANIFEST_CHAPTER_LABEL[manifestSeason] ?? null;
   }
 
   return null;
+}
+
+/**
+ * Display label for an icon watermark: event emblem wins, then season/expansion.
+ */
+export function resolveDisplayLabelFromIconPath(
+  seasonIconPath?: string | null,
+): string | null {
+  return (
+    resolveEventLabelFromIconPath(seasonIconPath) ||
+    resolveSeasonLabelFromIconPath(seasonIconPath)
+  );
 }

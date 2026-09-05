@@ -67,23 +67,25 @@ function ItemIconWithSeasonBadge({
       : "h-8 w-8 border border-zinc-800 bg-zinc-900 object-cover sm:h-12 sm:w-12";
 
   return (
-    <div className={`relative shrink-0 ${className}`}>
-      <Image
+    <div className={`relative shrink-0 overflow-hidden ${className}`}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src={bungieIconUrl(iconPath)}
         alt=""
         width={48}
         height={48}
         className={`${iconClass} transition-transform duration-200 group-hover:scale-105`}
-        unoptimized
+        decoding="async"
       />
       {seasonIconPath ? (
-        <Image
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img
           src={bungieIconUrl(seasonIconPath)}
           alt=""
           width={48}
           height={48}
-          className="pointer-events-none absolute left-0 top-0 size-full"
-          unoptimized
+          className="pointer-events-none absolute -left-px -top-px h-[calc(100%+2px)] w-[calc(100%+2px)] max-w-none"
+          decoding="async"
         />
       ) : null}
     </div>

@@ -40,6 +40,7 @@ export function LootItemGrid({
           name={item.name}
           iconPath={item.iconPath}
           source={item.source}
+          seasonIconPath={item.seasonIconPath}
           classOrWeaponType={item.classOrWeaponType}
           damageType={item.damageType}
           ammoType={item.ammoType}

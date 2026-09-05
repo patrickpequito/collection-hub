@@ -27,6 +27,11 @@ export const ALL_LOOT_COLLECTION_BANNERS: AllLootCollectionBanner[] = [
     imageFile: "collections.webp",
   },
   {
+    title: "Shaders",
+    href: "/shaders",
+    imageFile: "collections.webp",
+  },
+  {
     title: "Armor sets",
     href: "/sets",
     imageFile: "armor-sets.webp",

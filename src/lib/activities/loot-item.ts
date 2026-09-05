@@ -26,6 +26,7 @@ export function toLootItemFromCatalog(item: AllLootItem): LootItem {
     name: item.name,
     iconPath: item.iconPath,
     source: item.source,
+    seasonIconPath: item.seasonIconPath,
     itemType: item.type,
     rarity: item.rarity,
     ownershipHashes: collectAllLootItemHashes(item),

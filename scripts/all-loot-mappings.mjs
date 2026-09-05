@@ -825,6 +825,11 @@ export function resolveIntoTheLightSeasonLabel(item, label, source = "") {
 export const WATERMARK_EVENT_LABELS = {
   "bcc26708e314306fb2fc8cb98fcbf47e.png": "30th Anniversary",
   [CALL_TO_ARMS_WATERMARK]: CALL_TO_ARMS_LABEL,
+  "83fbcacd223402c09af4b7ab067f8cce.png": "The Dawning",
+  "53dc0b02306726ff1517af33ac908cef.png": "Festival of the Lost",
+  "9c091ec0e22c01dacc25efb63b46eb9b.png": "Guardian Games",
+  "50c3ebe414c6946429934d79504922fa.png": "Solstice",
+  "2b89827888c5581a14af976968bcb18a.png": "Pride",
 };
 
 export function resolveEventLabel(

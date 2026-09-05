@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -19,6 +18,8 @@ type CollectionItemIconProps = {
   name: string;
   iconPath: string;
   source?: string;
+  /** Season/event watermark drawn over the icon (same as All Loot). */
+  seasonIconPath?: string | null;
   owned?: boolean;
   showOwnership?: boolean;
   /** Border color when owned. Exotics use green; armor sets use gold. */
@@ -68,6 +69,7 @@ export function CollectionItemIcon({
   name,
   iconPath,
   source,
+  seasonIconPath,
   owned = false,
   showOwnership = false,
   ownedBorder = "gold",
@@ -97,7 +99,9 @@ export function CollectionItemIcon({
     ? `aspect-square w-full ${fillCell ? "" : "max-w-[3.75rem] "}`
     : "size-[60px] shrink-0";
 
-  const frameClass = `${sizeClass} relative overflow-hidden rounded-md border bg-zinc-900 transition duration-200 ease-out hover:brightness-110 active:scale-95 ${fluid ? "hover:scale-105" : "hover:scale-110"} ${ownedStyles} ${unownedStyles}`;
+  // Border sits on an outer shell; icon layers fill the inner box edge-to-edge
+  // so season watermarks (bottom stripe) sit flush like in-game / All Loot.
+  const shellClass = `${sizeClass} overflow-hidden rounded-md border bg-zinc-900 transition duration-200 ease-out hover:brightness-110 active:scale-95 ${fluid ? "hover:scale-105" : "hover:scale-110"} ${ownedStyles} ${unownedStyles}`;
 
   const wrapperClass = fluid ? "relative min-w-0 w-full" : "relative shrink-0";
 
@@ -150,26 +154,44 @@ export function CollectionItemIcon({
       : null;
 
   const iconBody = (
-    <div className={frameClass}>
-      <Image
-        src={bungieIconUrl(iconPath)}
-        alt={name}
-        width={ICON_SIZE}
-        height={ICON_SIZE}
-        className="size-full object-contain"
-        unoptimized
-      />
-      {overlayTier ? (
-        <Image
-          src={bungieOrnamentOverlayUrl(overlayTier)}
-          alt=""
+    <div className={shellClass}>
+      <div className="relative size-full overflow-hidden">
+        {/* Native img avoids Next/Image wrapper offset that leaves a 1px gap. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={bungieIconUrl(iconPath)}
+          alt={name}
           width={ICON_SIZE}
           height={ICON_SIZE}
-          aria-hidden
-          className="pointer-events-none absolute inset-0 size-full object-cover mix-blend-screen opacity-[0.38]"
-          unoptimized
+          className="pointer-events-none absolute inset-0 size-full object-cover"
+          decoding="async"
         />
-      ) : null}
+        {seasonIconPath ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={bungieIconUrl(seasonIconPath)}
+            alt=""
+            width={ICON_SIZE}
+            height={ICON_SIZE}
+            aria-hidden
+            // Bleed 1px so Bungie watermark corner banners sit flush to the frame
+            className="pointer-events-none absolute -left-px -top-px h-[calc(100%+2px)] w-[calc(100%+2px)] max-w-none object-cover"
+            decoding="async"
+          />
+        ) : null}
+        {overlayTier ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={bungieOrnamentOverlayUrl(overlayTier)}
+            alt=""
+            width={ICON_SIZE}
+            height={ICON_SIZE}
+            aria-hidden
+            className="pointer-events-none absolute inset-0 size-full object-cover mix-blend-screen opacity-[0.38]"
+            decoding="async"
+          />
+        ) : null}
+      </div>
     </div>
   );
 

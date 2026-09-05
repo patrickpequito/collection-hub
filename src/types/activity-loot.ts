@@ -5,6 +5,8 @@ export type LootItem = {
   name: string;
   iconPath: string;
   source: string;
+  /** Season/event watermark path (all-loot style overlay on the icon). */
+  seasonIconPath?: string;
   /** Catalog type — used for ornament plate overlays. */
   itemType?: string;
   /** Catalog rarity — exotic/legendary ornament overlays. */

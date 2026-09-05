@@ -5,6 +5,7 @@ import path from "node:path";
 export const PAGE_HEADERS = {
   radLoot: "/images/banners/rad-loot.webp",
   exotics: "/images/banners/exotics.webp",
+  shaders: "/images/banners/collections.webp",
   triumphs: "/images/banners/triumphs.webp",
   armorSets: "/images/banners/armor-sets.webp",
   armorSetsHeader: "/images/headers/armor-sets-header.webp",
