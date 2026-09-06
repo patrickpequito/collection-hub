@@ -203,6 +203,31 @@ export const WATERMARK_LABEL_OVERRIDES = {
 
 /** Year-8 featured gear watermark reused across chapters; DIM maps to manifest 28. */
 export const MONUMENT_FEATURED_WATERMARK = "e78fd9419f99464816ac8f628bc3c4af.png";
+export const MONUMENT_FEATURED_ICON_PATH = `/common/destiny2_content/icons/${MONUMENT_FEATURED_WATERMARK}`;
+
+/** Armor 3.0 chapter emblems that already identify a Year 8 release. */
+export function isYear8ArmorChapterLabel(label) {
+  return (
+    label === MONUMENT_OF_TRIUMPH_LABEL ||
+    label === "Renegades" ||
+    label === "The Edge of Fate"
+  );
+}
+
+/**
+ * Armor 3.0 reissues sometimes keep the original season watermark (e.g. Seventh
+ * Seraph Cowl). When a non-Armor-3.0 peer exists in the name group, map stale
+ * pre-Year-8 watermark labels to Monument of Triumph.
+ */
+export function resolveArmor30ReissueSeasonLabel(
+  label,
+  { isArmor30 = false, hasNonArmor30Peer = false } = {},
+) {
+  if (!isArmor30 || !hasNonArmor30Peer) return label ?? null;
+  if (!label) return MONUMENT_OF_TRIUMPH_LABEL;
+  if (isYear8ArmorChapterLabel(label)) return label;
+  return MONUMENT_OF_TRIUMPH_LABEL;
+}
 
 /** Monument reprised weapons that only exist as itemType 19 rows in the manifest. */
 export function isMonumentWeaponReissue(item) {

@@ -41,10 +41,12 @@ import {
   resolveSeasonDisplayIconPath,
   resolveSeasonDisplayIconWatermark,
   resolveArmor30SeasonLabel,
+  resolveArmor30ReissueSeasonLabel,
   resolveVersionSeasonLabel,
   resolveWatermarkSeasonNumber,
   seasonLabelFromManifestNumber,
   MONUMENT_OF_TRIUMPH_LABEL,
+  MONUMENT_FEATURED_WATERMARK,
   inferSeasonLabelFromIndex,
 } from "./all-loot-mappings.mjs";
 
@@ -298,8 +300,19 @@ function resolveArmorVersionSeasonLabel(
       seasons,
       dimSeasonData,
     );
-    if (armorLabel) return armorLabel;
-    return inferYear8ArmorChapterLabel(item.index ?? 0, seasonIndexAnchors);
+    const hasNonArmor30Peer = peerItems.some(
+      (peer) =>
+        String(peer.hash) !== String(item.hash) && !isArmor30Item(peer),
+    );
+    const resolved =
+      resolveArmor30ReissueSeasonLabel(armorLabel, {
+        isArmor30: true,
+        hasNonArmor30Peer,
+      }) ??
+      (hasNonArmor30Peer
+        ? MONUMENT_OF_TRIUMPH_LABEL
+        : inferYear8ArmorChapterLabel(item.index ?? 0, seasonIndexAnchors));
+    return resolved;
   }
 
   if (isOldestPeer && item.inventory?.tierTypeName === "Exotic") {
@@ -1281,7 +1294,19 @@ function buildVersionsForNameGroup(
               salvationsEdgeS29MinIndex,
             },
           );
-    const seasonIconPath = resolveSeasonIconPath(item);
+    const seasonIconPathRaw = resolveSeasonIconPath(item);
+    let seasonIconPath = seasonIconPathRaw;
+    if (
+      item.itemType === 2 &&
+      seasonLabel === MONUMENT_OF_TRIUMPH_LABEL &&
+      isArmor30Item(item) &&
+      group.some(
+        (peer) =>
+          String(peer.hash) !== String(item.hash) && !isArmor30Item(peer),
+      )
+    ) {
+      seasonIconPath = `/common/destiny2_content/icons/${MONUMENT_FEATURED_WATERMARK}`;
+    }
     const source = resolveCollectibleSourceString(collectible);
     const eventLabel = resolveEventLabel(source, seasonIconPath, seasonLabel);
     const isExotic = item.inventory?.tierTypeName === "Exotic";

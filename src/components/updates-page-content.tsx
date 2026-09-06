@@ -1,9 +1,37 @@
+import Link from "next/link";
 import { AppVersionLabel } from "@/components/app-version-label";
 import { XFollowBanner } from "@/components/x-follow-banner";
 import {
   formatReleaseDate,
   UPDATE_RELEASES,
+  type UpdateFeatureItem,
 } from "@/data/updates";
+
+const updateLinkClassName =
+  "font-medium text-zinc-200 underline decoration-zinc-600 underline-offset-2 transition hover:text-zinc-100";
+
+function UpdateFeatureItemContent({ item }: { item: UpdateFeatureItem }) {
+  if (typeof item === "string") return item;
+
+  return item.parts.map((part, index) => {
+    if (typeof part === "string") {
+      return <span key={index}>{part}</span>;
+    }
+
+    return (
+      <Link key={index} href={part.href} className={updateLinkClassName}>
+        {part.label}
+      </Link>
+    );
+  });
+}
+
+function updateFeatureItemKey(item: UpdateFeatureItem): string {
+  if (typeof item === "string") return item;
+  return item.parts
+    .map((part) => (typeof part === "string" ? part : part.label))
+    .join("");
+}
 
 export function UpdatesPageContent() {
   return (
@@ -63,10 +91,12 @@ export function UpdatesPageContent() {
                   <ul className="mt-3 space-y-2">
                     {section.items.map((item) => (
                       <li
-                        key={item}
+                        key={updateFeatureItemKey(item)}
                         className="flex gap-2 text-sm text-zinc-300 before:shrink-0 before:text-[#c9a227]/70 before:content-['•']"
                       >
-                        {item}
+                        <span>
+                          <UpdateFeatureItemContent item={item} />
+                        </span>
                       </li>
                     ))}
                   </ul>

@@ -2,6 +2,10 @@ import { collectArmorItemHashes } from "@/lib/armor/item-hashes";
 import { resolveEquipableItemSetHash } from "@/lib/armor/set-bonuses";
 import { guardianClassFromLabel } from "@/lib/armor-sets/lookup";
 import {
+  ironBannerSetForClassItem,
+  legacyIronBannerClassItemNamesForSet,
+} from "@/lib/armor-sets/legacy-iron-banner-class-items";
+import {
   BINARY_PHOENIX_CRUCIBLE_GROUP,
   WING_CRUCIBLE_GROUP,
   binaryPhoenixClassItemForUniformSet,
@@ -83,6 +87,9 @@ function resolveNamedArmorSetName(
   armor: AllLootItem,
   items: AllLootItem[],
 ): string | null {
+  const fromIronBannerClassItem = ironBannerSetForClassItem(armor.name);
+  if (fromIronBannerClassItem) return fromIronBannerClassItem.setName;
+
   const fromVanguardClassItem = uniformVanguardSetForClassItem(armor.name);
   if (fromVanguardClassItem) return fromVanguardClassItem.setName;
 
@@ -222,6 +229,24 @@ function collectArmorItemsForSetName(
   referenceArmor?: AllLootItem,
 ): AllLootItem[] {
   const collected = items.filter((item) => belongsToNamedArmorSet(item, setName));
+  const seen = new Set(collected.map((item) => item.itemHash));
+
+  const addClassItemByName = (classItemName: string, classLabel?: string | null) => {
+    const classItem = items.find(
+      (item) =>
+        item.type === "Armor" &&
+        item.name === classItemName &&
+        (!classLabel || item.classOrWeaponType === classLabel),
+    );
+    if (!classItem || seen.has(classItem.itemHash)) return;
+    seen.add(classItem.itemHash);
+    collected.push(classItem);
+  };
+
+  for (const classItemName of legacyIronBannerClassItemNamesForSet(setName)) {
+    addClassItemByName(classItemName);
+  }
+
   const guardianClass =
     guardianClassFromLabel(referenceArmor?.classOrWeaponType) ??
     guardianClassFromLabel(
@@ -231,23 +256,14 @@ function collectArmorItemsForSetName(
     binaryPhoenixClassItemForUniformSet(setName, guardianClass) ??
     vanguardClassItemForSetName(setName, guardianClass);
 
-  if (!classItemName) return collected;
-
-  const classLabel =
-    referenceArmor?.classOrWeaponType ??
-    collected.find((item) => item.classOrWeaponType)?.classOrWeaponType;
-  const classItem = items.find(
-    (item) =>
-      item.type === "Armor" &&
-      item.name === classItemName &&
-      (!classLabel || item.classOrWeaponType === classLabel),
-  );
-
-  if (!classItem || collected.some((item) => item.itemHash === classItem.itemHash)) {
-    return collected;
+  if (classItemName) {
+    const classLabel =
+      referenceArmor?.classOrWeaponType ??
+      collected.find((item) => item.classOrWeaponType)?.classOrWeaponType;
+    addClassItemByName(classItemName, classLabel);
   }
 
-  return [...collected, classItem];
+  return collected;
 }
 
 function buildSetPieceIndex(
@@ -359,10 +375,12 @@ export function resolveArmorSetForItem(
   if (armor.rarity === "Exotic") return null;
 
   const viewingHashes = new Set(collectArmorItemHashes(armor));
+  const ironBannerClassItemMatch = ironBannerSetForClassItem(armor.name);
   const vanguardClassItemMatch = uniformVanguardSetForClassItem(armor.name);
   const classItemMatch = uniformCrucibleSetForClassItem(armor.name);
   const primaryClass =
     guardianClassFromLabel(armor.classOrWeaponType) ??
+    ironBannerClassItemMatch?.guardianClass ??
     vanguardClassItemMatch?.guardianClass ??
     classItemMatch?.guardianClass ??
     null;

@@ -1,4 +1,4 @@
-export const CURRENT_VERSION = "0.8.1";
+export const CURRENT_VERSION = "0.8.2";
 
 export function formatReleaseDate(isoDate: string) {
   const [year, month, day] = isoDate.split("-").map(Number);
@@ -9,11 +9,27 @@ export function formatReleaseDate(isoDate: string) {
   });
 }
 
+export type UpdateFeatureItemPart =
+  | string
+  | {
+      href: string;
+      label: string;
+    };
+
+/**
+ * Release bullet: plain string, or rich text with inline links.
+ */
+export type UpdateFeatureItem =
+  | string
+  | {
+      parts: readonly UpdateFeatureItemPart[];
+    };
+
 export type UpdateFeatureSection = {
   title: string;
   /** How this area is organized and what it covers. */
   description: string;
-  items: string[];
+  items: readonly UpdateFeatureItem[];
 };
 
 export type UpdateRelease = {
@@ -30,6 +46,28 @@ export type UpdateRelease = {
  * Newest release first. Add a new entry at the top when shipping an update.
  */
 export const UPDATE_RELEASES: UpdateRelease[] = [
+  {
+    version: "0.8.2",
+    publishedAt: "2026-09-06",
+    summary:
+      "The Shaders catalog is live, and Shadowkeep’s four season hubs — Undying, Dawn, Worthy, and Arrivals — join Expansions & Seasons.",
+    sections: [
+      {
+        title: "Collections & Seasons",
+        description:
+          "New collection and season pages extend what’s available on the site.",
+        items: [
+          {
+            parts: [
+              { href: "/shaders", label: "New Shaders page" },
+              " — every Destiny 2 shader, with grouping by season/expansion or by activity source (raids, dungeons, destinations, events, and more).",
+            ],
+          },
+          "New season pages for Season of the Undying, Season of Dawn, Season of the Worthy, and Season of Arrivals.",
+        ],
+      },
+    ],
+  },
   {
     version: "0.8.1",
     publishedAt: "2026-09-04",

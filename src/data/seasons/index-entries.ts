@@ -49,10 +49,10 @@ export const SEASONS_BY_EXPANSION_SLUG: Readonly<
     season("s7-season-of-opulence", "Season of Opulence"),
   ],
   shadowkeep: [
-    season("s8-season-of-the-undying", "Season of the Undying"),
-    season("s9-season-of-dawn", "Season of Dawn"),
-    season("s10-season-of-the-worthy", "Season of the Worthy"),
-    season("s11-season-of-arrivals", "Season of Arrivals"),
+    publishedSeason("s8-season-of-the-undying", "Season of the Undying"),
+    publishedSeason("s9-season-of-dawn", "Season of Dawn"),
+    publishedSeason("s10-season-of-the-worthy", "Season of the Worthy"),
+    publishedSeason("s11-season-of-arrivals", "Season of Arrivals"),
   ],
   "beyond-light": [
     publishedSeason("s12-season-of-the-hunt", "Season of the Hunt"),

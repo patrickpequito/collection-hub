@@ -1,3 +1,6 @@
+import { isLegacyIronBannerClassItemForSet } from "@/lib/armor-sets/legacy-iron-banner-class-items";
+
+/** Longer / multi-word suffixes first so extraction does not stop on a shorter match. */
 const ARMOR_NAME_SUFFIXES = [
   "Chest Armor",
   "Leg Armor",
@@ -5,21 +8,32 @@ const ARMOR_NAME_SUFFIXES = [
   "Gauntlets",
   "Greaves",
   "Strides",
+  "Striders",
   "Gloves",
   "Helmet",
   "Helm",
   "Crown",
   "Cowl",
+  "Casque",
   "Mask",
+  "Visor",
+  "Hood",
   "Rig",
   "Chassis",
+  "Chestplate",
+  "Cuirass",
+  "Vestments",
   "Robe",
   "Robes",
   "Mark",
   "Cloak",
+  "Cape",
   "Bond",
+  "Grasps",
   "Grips",
   "Boots",
+  "Steps",
+  "Legs",
   "Cover",
   "Sleeves",
   "Plate",
@@ -74,6 +88,10 @@ export function itemNameBelongsToArmorSet(
   const displaySetName = canonicalArmorSetDisplayName(setName);
   const extracted = extractLegendaryArmorSetName(itemName);
   if (extracted && canonicalArmorSetDisplayName(extracted) === displaySetName) {
+    return true;
+  }
+
+  if (isLegacyIronBannerClassItemForSet(itemName, displaySetName)) {
     return true;
   }
 

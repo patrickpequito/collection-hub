@@ -44,8 +44,21 @@ export function LegacyArmorSetsSection({
 }: LegacyArmorSetsSectionProps) {
   if (!groups.length) return null;
 
-  const isOwned = (itemHash: string) =>
-    resolveItemOwned?.(itemHash) ?? ownedItemHashes.has(itemHash);
+  const isOwned = (itemHash: string) => {
+    if (resolveItemOwned) return resolveItemOwned(itemHash);
+    for (const group of groups) {
+      for (const row of group.rows) {
+        for (const piece of Object.values(row.pieces)) {
+          if (!piece || piece.itemHash !== itemHash) continue;
+          const hashes = piece.ownershipHashes?.length
+            ? piece.ownershipHashes
+            : [itemHash];
+          return hashes.some((hash) => ownedItemHashes.has(hash));
+        }
+      }
+    }
+    return ownedItemHashes.has(itemHash);
+  };
 
   const body = (
     <>

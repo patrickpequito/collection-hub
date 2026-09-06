@@ -10,6 +10,11 @@ import {
   itemNameBelongsToArmorSet,
 } from "@/lib/armor-sets/named-set-match";
 import { resolveArmorSetPreviewFile } from "@/lib/armor-sets/preview-images";
+import {
+  VANGUARD_SET_DISPLAY_NAME,
+  VANGUARD_SET_GROUP,
+  isGroupedVanguardLegacySetName,
+} from "@/lib/armor-sets/uniform-vanguard-sets";
 import type { LegacyArmorSetGroup } from "@/types/activity-hub";
 import type { LootItem } from "@/types/activity-loot";
 import type { AllLootItem } from "@/types/all-loot";
@@ -135,6 +140,51 @@ function buildWeaponPools(
   return pools;
 }
 
+function collectSeasonArmorOrOrnamentItems(
+  catalogItems: AllLootItem[],
+  setName: string,
+  itemType: "Armor" | "Ornament",
+): AllLootItem[] {
+  if (itemType === "Armor" && isGroupedVanguardLegacySetName(setName)) {
+    const matching: AllLootItem[] = [];
+    const seen = new Set<string>();
+    const add = (item: AllLootItem) => {
+      if (seen.has(item.itemHash)) return;
+      seen.add(item.itemHash);
+      matching.push(item);
+    };
+
+    for (const entry of Object.values(VANGUARD_SET_GROUP)) {
+      for (const item of catalogItems) {
+        if (
+          item.type !== "Armor" ||
+          item.rarity !== "Legendary" ||
+          !itemNameBelongsToArmorSet(item.name, entry.setName)
+        ) {
+          continue;
+        }
+        add(item);
+      }
+      const classItem = catalogItems.find(
+        (item) =>
+          item.type === "Armor" &&
+          item.rarity === "Legendary" &&
+          item.name === entry.classItem,
+      );
+      if (classItem) add(classItem);
+    }
+
+    return matching;
+  }
+
+  return catalogItems.filter(
+    (item) =>
+      item.type === itemType &&
+      item.rarity === "Legendary" &&
+      itemNameBelongsToArmorSet(item.name, setName),
+  );
+}
+
 function buildNamedSetGroup(
   catalogItems: AllLootItem[],
   catalogByHash: Map<string, AllLootItem>,
@@ -142,14 +192,18 @@ function buildNamedSetGroup(
   itemType: "Armor" | "Ornament",
   hub: SeasonHub,
 ): LegacyArmorSetGroup | null {
-  const matching = catalogItems.filter(
-    (item) =>
-      item.type === itemType &&
-      item.rarity === "Legendary" &&
-      itemNameBelongsToArmorSet(item.name, setName),
+  const matching = collectSeasonArmorOrOrnamentItems(
+    catalogItems,
+    setName,
+    itemType,
   );
   const rows = enrichArmorRowsWithOwnership(
-    buildPartialArmorRowsFromCatalogItems(matching, setName),
+    buildPartialArmorRowsFromCatalogItems(
+      matching,
+      isGroupedVanguardLegacySetName(setName)
+        ? VANGUARD_SET_DISPLAY_NAME
+        : setName,
+    ),
     catalogByHash,
   );
   if (rows.length === 0) return null;
@@ -158,13 +212,16 @@ function buildNamedSetGroup(
       .flatMap((row) => Object.values(row.pieces))
       .find((piece) => piece?.source)?.source ?? "";
   const isOrnament = itemType === "Ornament";
+  const resolvedSetName = isGroupedVanguardLegacySetName(setName)
+    ? VANGUARD_SET_DISPLAY_NAME
+    : setName;
   return {
-    setName,
-    displayName: isOrnament ? `${setName} ornaments` : undefined,
+    setName: resolvedSetName,
+    displayName: isOrnament ? `${resolvedSetName} ornaments` : undefined,
     kind: isOrnament ? "ornament" : "armor",
     seasonLabel: hub.seasonLabel,
     seasonNumber: hub.seasonNumber,
-    previewFile: resolveArmorSetPreviewFile(setName, source),
+    previewFile: resolveArmorSetPreviewFile(resolvedSetName, source),
     rows,
   };
 }

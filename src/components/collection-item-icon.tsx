@@ -187,7 +187,7 @@ export function CollectionItemIcon({
             width={ICON_SIZE}
             height={ICON_SIZE}
             aria-hidden
-            className="pointer-events-none absolute inset-0 size-full object-cover mix-blend-screen opacity-[0.38]"
+            className="pointer-events-none absolute inset-0 size-full object-cover mix-blend-screen opacity-[0.65]"
             decoding="async"
           />
         ) : null}

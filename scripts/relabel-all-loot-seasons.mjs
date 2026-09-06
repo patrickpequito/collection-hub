@@ -14,14 +14,17 @@ import {
   INTO_THE_LIGHT_LABEL,
   INTO_THE_LIGHT_WATERMARK,
   MONUMENT_OF_TRIUMPH_LABEL,
+  MONUMENT_FEATURED_WATERMARK,
+  MONUMENT_FEATURED_ICON_PATH,
   applyFeaturedWatermarkLabelCorrection,
   catalogVersionsEquivalent,
   displayNumberFromLabel,
-  MONUMENT_FEATURED_WATERMARK,
   preferCatalogVersion,
   resolveEventLabel,
   resolveIntoTheLightSeasonLabel,
   resolveArmor30SeasonLabel,
+  resolveArmor30ReissueSeasonLabel,
+  isYear8ArmorChapterLabel,
   REVENANT_EPISODE_WATERMARK,
   resolveActivitySourceSeasonLabel,
   resolveCollectibleSourceString,
@@ -207,15 +210,33 @@ function applyVersionLabels(entry, version, dimSeasonData, source = "") {
   }
 
   if (entry.type === "Armor") {
-    const armorLabel = resolveArmor30SeasonLabel(
+    const is30 = entry.isArmor30ByItemHash?.[version.itemHash];
+    const hasNonArmor30Peer = Object.values(
+      entry.isArmor30ByItemHash ?? {},
+    ).some((value) => value === false);
+    let armorLabel = resolveArmor30SeasonLabel(
       mockItem(version.seasonIconPath),
       source || entry.source || "",
       {},
       dimSeasonData,
     );
+    armorLabel = resolveArmor30ReissueSeasonLabel(armorLabel, {
+      isArmor30: is30 === true,
+      hasNonArmor30Peer,
+    });
+    if (is30 === true && hasNonArmor30Peer && !armorLabel) {
+      armorLabel = MONUMENT_OF_TRIUMPH_LABEL;
+    }
     if (armorLabel) {
       version.seasonLabel = normalizeMonumentLabel(armorLabel);
       version.seasonNumber = displayNumberFromLabel(version.seasonLabel);
+      if (
+        version.seasonLabel === MONUMENT_OF_TRIUMPH_LABEL &&
+        is30 === true &&
+        hasNonArmor30Peer
+      ) {
+        version.seasonIconPath = MONUMENT_FEATURED_ICON_PATH;
+      }
 
       const versionEvent = resolveEventLabel(
         source,
@@ -270,9 +291,11 @@ function syncEntryFromVersion(entry, version) {
 function collapseItemVersions(entry) {
   if (!entry.versions?.length) return;
 
+  const armor30ByHash = entry.isArmor30ByItemHash ?? {};
   const compareContext = {
     fallbackPerkColumns: entry.perkColumns,
     fallbackStats: entry.stats,
+    isArmor30ForHash: (hash) => armor30ByHash[hash],
   };
 
   const merged = [];
@@ -303,15 +326,15 @@ function collapseItemVersions(entry) {
 
   if (droppedHashes.length) {
     const alternates = new Set(entry.alternateItemHashes ?? []);
-    const merged = new Set(entry.mergedVersionHashes ?? []);
+    const mergedHashes = new Set(entry.mergedVersionHashes ?? []);
     alternates.add(entry.itemHash);
     for (const hash of droppedHashes) {
       alternates.add(hash);
-      merged.add(hash);
+      mergedHashes.add(hash);
     }
     for (const version of collapsed) alternates.delete(version.itemHash);
     entry.alternateItemHashes = [...alternates];
-    entry.mergedVersionHashes = [...merged];
+    entry.mergedVersionHashes = [...mergedHashes];
   }
 
   if (collapsed.length <= 1) {
@@ -322,6 +345,142 @@ function collapseItemVersions(entry) {
 
   entry.versions = collapsed;
   syncEntryFromVersion(entry, collapsed[0]);
+}
+
+/**
+ * Restore Armor 3.0 / legacy pairs that collapseItemVersions previously merged
+ * when both shared a stale pre-Year-8 watermark (e.g. Seventh Seraph).
+ */
+function repairCollapsedArmor30Versions(entry) {
+  if (entry.type !== "Armor") return;
+
+  const byHash = entry.isArmor30ByItemHash;
+  if (!byHash) return;
+
+  const armor30Hashes = Object.entries(byHash)
+    .filter(([, is30]) => is30)
+    .map(([hash]) => hash);
+  const legacyHashes = Object.entries(byHash)
+    .filter(([, is30]) => !is30)
+    .map(([hash]) => hash);
+  if (!armor30Hashes.length || !legacyHashes.length) return;
+
+  const known = new Map();
+  const remember = (version) => {
+    if (!version?.itemHash) return;
+    known.set(version.itemHash, { ...version });
+  };
+  remember({
+    itemHash: entry.itemHash,
+    name: entry.name,
+    iconPath: entry.iconPath,
+    seasonIconPath: entry.seasonIconPath,
+    seasonDisplayIconPath: entry.seasonDisplayIconPath,
+    seasonDisplayIconWatermark: entry.seasonDisplayIconWatermark,
+    seasonLabel: entry.seasonLabel,
+    seasonNumber: entry.seasonNumber,
+    eventLabel: entry.eventLabel,
+    screenshotPath: entry.screenshotPath,
+  });
+  for (const version of entry.versions ?? []) remember(version);
+
+  const present = new Set([
+    entry.itemHash,
+    ...(entry.versions ?? []).map((version) => version.itemHash),
+  ]);
+  const allHashes = [...new Set([...armor30Hashes, ...legacyHashes])];
+  const needsRebuild =
+    allHashes.some((hash) => !present.has(hash)) ||
+    (entry.versions?.length ?? 0) <= 1;
+  if (!needsRebuild) return;
+
+  const legacySeed =
+    legacyHashes.map((hash) => known.get(hash)).find(Boolean) ??
+    [...known.values()].find((version) => byHash[version.itemHash] === false) ??
+    null;
+
+  const watermarkLegacyLabel = resolveLabelFromItemWatermark(
+    mockItem(legacySeed?.seasonIconPath ?? entry.seasonIconPath),
+    {},
+  );
+  const legacyLabelCandidates = [
+    legacySeed?.seasonLabel,
+    watermarkLegacyLabel,
+    entry.seasonLabel,
+  ].filter(
+    (label) => typeof label === "string" && !isYear8ArmorChapterLabel(label),
+  );
+  const legacyLabel = legacyLabelCandidates[0] ?? "S10 Season of the Worthy";
+
+  const versions = [];
+  for (const hash of allHashes) {
+    const existing = known.get(hash);
+    const is30 = byHash[hash] === true;
+    if (is30) {
+      versions.push({
+        itemHash: hash,
+        name: existing?.name ?? entry.name,
+        iconPath: existing?.iconPath ?? entry.iconPath,
+        seasonIconPath: MONUMENT_FEATURED_ICON_PATH,
+        seasonDisplayIconPath: existing?.seasonDisplayIconPath,
+        seasonDisplayIconWatermark: existing?.seasonDisplayIconWatermark,
+        seasonLabel: MONUMENT_OF_TRIUMPH_LABEL,
+        seasonNumber: displayNumberFromLabel(MONUMENT_OF_TRIUMPH_LABEL),
+        ...(existing?.screenshotPath
+          ? { screenshotPath: existing.screenshotPath }
+          : {}),
+      });
+      continue;
+    }
+
+    const seasonIconPath =
+      existing?.seasonIconPath &&
+      !String(existing.seasonIconPath).endsWith(MONUMENT_FEATURED_WATERMARK)
+        ? existing.seasonIconPath
+        : entry.seasonIconPath &&
+            !String(entry.seasonIconPath).endsWith(MONUMENT_FEATURED_WATERMARK)
+          ? entry.seasonIconPath
+          : (existing?.seasonIconPath ?? entry.seasonIconPath);
+
+    versions.push({
+      itemHash: hash,
+      name: existing?.name ?? entry.name,
+      iconPath: existing?.iconPath ?? entry.iconPath,
+      seasonIconPath,
+      seasonDisplayIconPath: existing?.seasonDisplayIconPath,
+      seasonDisplayIconWatermark: existing?.seasonDisplayIconWatermark,
+      seasonLabel: legacyLabel,
+      seasonNumber: displayNumberFromLabel(legacyLabel),
+      ...(existing?.eventLabel ? { eventLabel: existing.eventLabel } : {}),
+      ...(existing?.screenshotPath
+        ? { screenshotPath: existing.screenshotPath }
+        : {}),
+    });
+  }
+
+  versions.sort(
+    (a, b) =>
+      b.seasonNumber - a.seasonNumber ||
+      Number(b.itemHash) - Number(a.itemHash),
+  );
+
+  entry.versions = versions;
+  syncEntryFromVersion(entry, versions[0]);
+  entry.isArmor30 = byHash[entry.itemHash] === true;
+
+  if (entry.mergedVersionHashes?.length) {
+    entry.mergedVersionHashes = entry.mergedVersionHashes.filter(
+      (hash) => !(hash in byHash),
+    );
+    if (!entry.mergedVersionHashes.length) delete entry.mergedVersionHashes;
+  }
+  if (entry.alternateItemHashes?.length) {
+    const keep = new Set(versions.map((version) => version.itemHash));
+    entry.alternateItemHashes = entry.alternateItemHashes.filter(
+      (hash) => !keep.has(hash),
+    );
+    if (!entry.alternateItemHashes.length) delete entry.alternateItemHashes;
+  }
 }
 
 function normalizeMonumentLabel(label) {
@@ -375,6 +534,8 @@ function applyEntryLabels(entry, dimSeasonData) {
   entry.source = correctEntrySource(entry);
   entry.seasonLabel = normalizeMonumentLabel(entry.seasonLabel);
   applyIntoTheLightLabel(entry);
+
+  repairCollapsedArmor30Versions(entry);
 
   for (const version of entry.versions ?? []) {
     applyVersionLabels(entry, version, dimSeasonData);
