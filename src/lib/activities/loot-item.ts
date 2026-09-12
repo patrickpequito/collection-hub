@@ -41,7 +41,12 @@ export function toLootItemFromCatalogVersion(
   item: AllLootItem,
   version: Pick<
     AllLootItemVersion,
-    "itemHash" | "name" | "iconPath" | "seasonIconPath"
+    | "itemHash"
+    | "name"
+    | "iconPath"
+    | "seasonIconPath"
+    | "seasonLabel"
+    | "seasonNumber"
   >,
 ): LootItem {
   return {
