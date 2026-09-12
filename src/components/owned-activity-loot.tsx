@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import {
   ActivityCosmeticLootPanel,
   ActivityCurrentLootPanel,
@@ -10,6 +11,7 @@ import { LegacyArmorSetsSection } from "@/components/legacy-armor-sets-section";
 import { LootSection } from "@/components/loot-section";
 import { ActivityArmorSection } from "@/components/activity-armor-section";
 import { TrialsWeaponsBySeasonSection } from "@/components/trials-weapons-by-season-section";
+import { compareTrialsReleaseOrder } from "@/lib/activities/trials-release-order";
 import type {
   ActivityHubLootSection,
   ActivityWeaponPool,
@@ -53,18 +55,77 @@ export function OwnedActivityWeaponsLootPanel(props: WeaponsProps) {
   );
 }
 
+function mergeCosmeticSections(
+  current: ActivityHubLootSection[],
+  legacy: ActivityHubLootSection[],
+): ActivityHubLootSection[] {
+  const byTitle = new Map<string, LootItem[]>();
+
+  for (const section of [...current, ...legacy]) {
+    const bucket = byTitle.get(section.title) ?? [];
+    for (const item of section.items) {
+      if (bucket.some((existing) => existing.itemHash === item.itemHash)) {
+        continue;
+      }
+      bucket.push(item);
+    }
+    byTitle.set(section.title, bucket);
+  }
+
+  const order = ["Emblems", "Shaders", "Ghost Shells", "Ships", "Sparrows"];
+  return order
+    .filter((title) => byTitle.has(title))
+    .map((title) => ({
+      title,
+      items: (byTitle.get(title) ?? []).sort(compareTrialsReleaseOrder),
+    }));
+}
+
 type CosmeticProps = {
   sections: ActivityHubLootSection[];
+  legacySections?: ActivityHubLootSection[];
   itemHrefs?: Record<string, string>;
 };
 
-export function OwnedActivityCosmeticLootPanel(props: CosmeticProps) {
+export function OwnedActivityCosmeticLootPanel({
+  sections,
+  legacySections,
+  itemHrefs,
+}: CosmeticProps) {
   const { ownedItemHashes, showOwnership } = useOwnership();
+  const [showLegacy, setShowLegacy] = useState(false);
+  const hasLegacy = (legacySections?.length ?? 0) > 0;
+
+  const visibleSections = useMemo(() => {
+    if (!showLegacy || !legacySections?.length) return sections;
+    return mergeCosmeticSections(sections, legacySections);
+  }, [sections, legacySections, showLegacy]);
+
+  const toolbar = hasLegacy ? (
+    <div className="flex items-center justify-end">
+      <label className="inline-flex cursor-pointer items-center gap-2 text-xs text-zinc-400">
+        <span>Include legacy</span>
+        <span className="relative inline-flex h-5 w-9 items-center">
+          <input
+            type="checkbox"
+            className="peer sr-only"
+            checked={showLegacy}
+            onChange={(event) => setShowLegacy(event.target.checked)}
+          />
+          <span className="absolute inset-0 rounded-full bg-zinc-700 transition peer-checked:bg-[#c9a227]/80 peer-focus-visible:ring-2 peer-focus-visible:ring-[#c9a227]/60" />
+          <span className="absolute left-0.5 size-4 rounded-full bg-zinc-100 transition peer-checked:translate-x-4" />
+        </span>
+      </label>
+    </div>
+  ) : null;
+
   return (
     <ActivityCosmeticLootPanel
-      {...props}
+      sections={visibleSections}
+      toolbar={toolbar}
       ownedItemHashes={ownedItemHashes}
       showOwnership={showOwnership}
+      itemHrefs={itemHrefs}
     />
   );
 }

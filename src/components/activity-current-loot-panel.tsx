@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import {
   ARMOR_SLOTS,
   CLASS_LABELS,
@@ -53,6 +54,8 @@ type ActivityCurrentLootPanelProps = ActivityLootPanelBaseProps & {
 
 type ActivityCosmeticLootPanelProps = ActivityLootPanelBaseProps & {
   sections: ActivityHubLootSection[];
+  /** Optional heading row (e.g. legacy toggle) rendered above the sections. */
+  toolbar?: ReactNode;
 };
 
 type ActivityWeaponsLootPanelProps = ActivityLootPanelBaseProps & {
@@ -224,6 +227,7 @@ export function ActivityCurrentLootPanel({
 
 export function ActivityCosmeticLootPanel({
   sections,
+  toolbar,
   ownedItemHashes,
   showOwnership,
   resolveItemOwned,
@@ -233,6 +237,7 @@ export function ActivityCosmeticLootPanel({
 
   return (
     <section className={LOOT_PANEL_CLASS}>
+      {toolbar ? <div className="mb-4">{toolbar}</div> : null}
       <div className="space-y-6">
         {sections.map((section) => (
           <div key={section.title}>

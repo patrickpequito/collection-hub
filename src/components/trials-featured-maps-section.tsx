@@ -11,7 +11,29 @@ type TrialsFeaturedMapsSectionProps = {
 export function TrialsFeaturedMapsSection({
   featuredMaps,
 }: TrialsFeaturedMapsSectionProps) {
-  if (featuredMaps.maps.length === 0) return null;
+  if (featuredMaps.maps.length === 0) {
+    if (featuredMaps.source !== "iron-banner") return null;
+
+    return (
+      <section className={ACTIVITY_LOOT_PANEL_CLASS}>
+        <div className="space-y-1">
+          <h3 className="text-sm font-medium text-zinc-300">
+            Featured maps this weekend
+          </h3>
+          <p className="text-xs text-zinc-500">
+            {formatTrialsWeekRange(
+              featuredMaps.weekStart,
+              featuredMaps.weekEnd,
+            )}
+          </p>
+          <p className="pt-2 text-sm text-zinc-400">
+            Trials of Osiris is paused during Iron Banner. Featured maps return
+            on the next eligible Friday.
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className={ACTIVITY_LOOT_PANEL_CLASS}>

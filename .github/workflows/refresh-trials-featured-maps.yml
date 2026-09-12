@@ -2,10 +2,18 @@ name: Refresh Trials featured maps
 
 on:
   schedule:
-    # Friday 17:05 UTC — Trials weekend start (19:05 Madrid summer).
+    # Friday Trials start (17:00 UTC) — several retries; Bungie often lags.
     - cron: "5 17 * * 5"
-    # Retry if Bungie milestones are slow to publish featured maps.
+    - cron: "20 17 * * 5"
     - cron: "35 17 * * 5"
+    - cron: "5 18 * * 5"
+    - cron: "5 19 * * 5"
+    - cron: "5 21 * * 5"
+    # Saturday morning catch-up when Friday jobs missed maps.
+    - cron: "15 8 * * 6"
+    - cron: "15 14 * * 6"
+    # Monday safety net during the Trials weekend window.
+    - cron: "15 17 * * 1"
   workflow_dispatch:
 
 concurrency:
@@ -39,11 +47,35 @@ jobs:
           BUNGIE_API_KEY: ${{ secrets.BUNGIE_API_KEY }}
         run: npm run generate:trials-featured-maps
 
+      - name: Verify Trials featured maps snapshot week
+        run: |
+          node --input-type=module -e "
+          import { readFileSync } from 'node:fs';
+          const TRIALS_EPOCH_MS = Date.UTC(2026, 5, 12, 17, 0, 0);
+          const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
+          const nowMs = Date.now();
+          let weekIndex = Math.floor((nowMs - TRIALS_EPOCH_MS) / MS_PER_WEEK);
+          let startMs = TRIALS_EPOCH_MS + weekIndex * MS_PER_WEEK;
+          if (nowMs < startMs) {
+            weekIndex -= 1;
+          }
+          const data = JSON.parse(readFileSync('data/trials-featured-maps.json', 'utf8'));
+          if (data.weekIndex !== weekIndex) {
+            throw new Error(\`trials-featured-maps.json weekIndex \${data.weekIndex} != current \${weekIndex}\`);
+          }
+          console.log(
+            'Verified week',
+            data.weekIndex + 1,
+            'maps',
+            data.maps?.length ? data.maps : '(none — Trials inactive or not published)',
+          );
+          "
+
       - name: Commit and push if changed
         run: |
           if [ ! -f data/trials-featured-maps.json ]; then
-            echo "No Trials featured maps snapshot yet (Bungie may not have published maps)."
-            exit 0
+            echo "No Trials featured maps snapshot on disk."
+            exit 1
           fi
 
           git add data/trials-featured-maps.json

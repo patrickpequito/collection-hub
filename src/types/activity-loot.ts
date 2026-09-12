@@ -20,6 +20,9 @@ export type LootItem = {
    * collectible-linked variants). When omitted, only `itemHash` is checked.
    */
   ownershipHashes?: string[];
+  /** Catalog season/expansion label for sorting and badges. */
+  seasonLabel?: string;
+  seasonNumber?: number;
 };
 
 export type ActivityArmorRow = {

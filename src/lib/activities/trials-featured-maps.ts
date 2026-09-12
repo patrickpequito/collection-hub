@@ -13,16 +13,15 @@ import {
   TRIALS_RETURNS_MILESTONE_HASH,
   type TrialsMapEntry,
 } from "@/data/activities/trials-maps";
-
-const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
-/** Trials runs Friday 17:00 UTC through Tuesday 17:00 UTC. */
-const MS_TRIALS_WINDOW = 4 * 24 * 60 * 60 * 1000;
+import {
+  shouldShowTrialsFeaturedMaps,
+} from "@/lib/activities/trials-schedule";
 
 export type TrialsFeaturedMapsResult = {
   maps: TrialsMapEntry[];
   weekStart: string;
   weekEnd: string;
-  source: "bungie" | "snapshot" | "rotation";
+  source: "bungie" | "snapshot" | "rotation" | "unavailable" | "iron-banner";
 };
 
 type TrialsFeaturedMapsSnapshot = {
@@ -40,28 +39,7 @@ type LiveMilestone = {
 function trialsWeekIndex(nowMs = Date.now()): number {
   const elapsed = nowMs - TRIALS_BONUS_POOL_EPOCH_MS;
   if (elapsed < 0) return 0;
-  return Math.floor(elapsed / MS_PER_WEEK);
-}
-
-/** Friday 17:00 UTC → Tuesday 17:00 UTC for the active Trials weekend. */
-function trialsWeekendBounds(nowMs = Date.now()): {
-  weekStart: string;
-  weekEnd: string;
-  weekIndex: number;
-} {
-  let weekIndex = trialsWeekIndex(nowMs);
-  let startMs = TRIALS_BONUS_POOL_EPOCH_MS + weekIndex * MS_PER_WEEK;
-
-  if (nowMs < startMs) {
-    weekIndex -= 1;
-    startMs = TRIALS_BONUS_POOL_EPOCH_MS + weekIndex * MS_PER_WEEK;
-  }
-
-  return {
-    weekIndex,
-    weekStart: new Date(startMs).toISOString(),
-    weekEnd: new Date(startMs + MS_TRIALS_WINDOW).toISOString(),
-  };
+  return Math.floor(elapsed / (7 * 24 * 60 * 60 * 1000));
 }
 
 function mulberry32(seed: number): () => number {
@@ -126,8 +104,7 @@ async function loadLatestSnapshot(): Promise<TrialsFeaturedMapsSnapshot | null> 
     if (
       !snapshot.weekStart ||
       !snapshot.weekEnd ||
-      !Array.isArray(snapshot.maps) ||
-      snapshot.maps.length === 0
+      !Array.isArray(snapshot.maps)
     ) {
       return null;
     }
@@ -135,6 +112,18 @@ async function loadLatestSnapshot(): Promise<TrialsFeaturedMapsSnapshot | null> 
   } catch {
     return null;
   }
+}
+
+/** Snapshot is only usable during its Trials weekend window (Fri→Tue UTC). */
+function isSnapshotCurrent(
+  snapshot: TrialsFeaturedMapsSnapshot,
+  nowMs: number,
+): boolean {
+  const startMs = Date.parse(snapshot.weekStart);
+  const endMs = Date.parse(snapshot.weekEnd);
+  if (!Number.isFinite(startMs) || !Number.isFinite(endMs)) return false;
+  // One hour early so Friday cron can serve maps before 17:00 UTC.
+  return nowMs >= startMs - 60 * 60 * 1000 && nowMs <= endMs;
 }
 
 async function fetchMapsFromBungieMilestones(): Promise<{
@@ -145,10 +134,13 @@ async function fetchMapsFromBungieMilestones(): Promise<{
   const apiKey = process.env.BUNGIE_API_KEY?.trim();
   if (!apiKey) return null;
 
-  const response = await fetch("https://www.bungie.net/Platform/Destiny2/Milestones/", {
-    headers: { "X-API-Key": apiKey },
-    next: { revalidate: 3600 },
-  });
+  const response = await fetch(
+    "https://www.bungie.net/Platform/Destiny2/Milestones/",
+    {
+      headers: { "X-API-Key": apiKey },
+      next: { revalidate: 3600 },
+    },
+  );
 
   if (!response.ok) return null;
 
@@ -196,8 +188,26 @@ async function fetchMapsFromBungieMilestones(): Promise<{
 export async function resolveTrialsFeaturedMaps(
   nowMs = Date.now(),
 ): Promise<TrialsFeaturedMapsResult> {
+  const { active, ironBanner, bounds } = shouldShowTrialsFeaturedMaps(
+    TRIALS_BONUS_POOL_EPOCH_MS,
+    nowMs,
+  );
+
+  if (ironBanner) {
+    return {
+      maps: [],
+      weekStart: bounds.weekStart,
+      weekEnd: bounds.weekEnd,
+      source: "iron-banner",
+    };
+  }
+
   const snapshot = await loadLatestSnapshot();
-  if (snapshot) {
+  if (
+    snapshot &&
+    isSnapshotCurrent(snapshot, nowMs) &&
+    snapshot.maps.length > 0
+  ) {
     return {
       maps: resolveMapNames(snapshot.maps),
       weekStart: snapshot.weekStart,
@@ -208,7 +218,6 @@ export async function resolveTrialsFeaturedMaps(
 
   const fromBungie = await fetchMapsFromBungieMilestones();
   if (fromBungie && fromBungie.maps.length > 0) {
-    const bounds = trialsWeekendBounds(nowMs);
     return {
       maps: fromBungie.maps,
       weekStart: fromBungie.weekStart ?? bounds.weekStart,
@@ -217,16 +226,29 @@ export async function resolveTrialsFeaturedMaps(
     };
   }
 
-  const { weekIndex, weekStart, weekEnd } = trialsWeekendBounds(nowMs);
+  // Bungie often omits Trials Returns activities from public milestones now.
+  // During an eligible Trials weekend, fall back to the deterministic pool pick.
+  if (active) {
+    return {
+      maps: resolveMapNames(selectTrialsFeaturedMapNames(bounds.weekIndex)),
+      weekStart: bounds.weekStart,
+      weekEnd: bounds.weekEnd,
+      source: "rotation",
+    };
+  }
+
   return {
-    maps: resolveMapNames(selectTrialsFeaturedMapNames(weekIndex)),
-    weekStart,
-    weekEnd,
-    source: "rotation",
+    maps: [],
+    weekStart: bounds.weekStart,
+    weekEnd: bounds.weekEnd,
+    source: "unavailable",
   };
 }
 
-export function formatTrialsWeekRange(weekStart: string, weekEnd: string): string {
+export function formatTrialsWeekRange(
+  weekStart: string,
+  weekEnd: string,
+): string {
   const start = new Date(weekStart);
   const end = new Date(weekEnd);
   const dateFormatter = new Intl.DateTimeFormat("en-GB", {

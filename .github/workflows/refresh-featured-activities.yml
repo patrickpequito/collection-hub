@@ -10,16 +10,20 @@ on:
     - cron: "5 18 * * 2"
     - cron: "5 19 * * 2"
     - cron: "5 21 * * 2"
-    # Wednesday morning catch-up when Kyber still lags Tuesday night.
+    # Wednesday–Thursday catch-up when Kyber still lags Tuesday night.
     - cron: "15 8 * * 3"
     - cron: "15 14 * * 3"
+    - cron: "15 8 * * 4"
+    - cron: "15 14 * * 4"
     # Daily safety net if Tuesday jobs were skipped (inactive repo / Actions lag).
+    - cron: "15 9 * * *"
     - cron: "15 17 * * *"
   workflow_dispatch:
 
 concurrency:
   group: refresh-featured-activities
-  cancel-in-progress: true
+  # Do not cancel a mid-run refresh when the next cron overlaps — commits need to finish.
+  cancel-in-progress: false
 
 permissions:
   contents: write

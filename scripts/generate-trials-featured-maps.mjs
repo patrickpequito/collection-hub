@@ -1,8 +1,9 @@
 /**
  * Builds data/trials-featured-maps.json for the Trials of Osiris hub.
  *
- * Fetches featured Crucible maps from Bungie public milestones when Trials is
- * active. Intended to run every Friday after weekly reset (Trials start).
+ * Prefers Bungie public milestones when Trials activities are published.
+ * Falls back to a deterministic one-from-each-pool pick when Trials is
+ * eligible but Bungie omits map activities (common after Mot).
  *
  * Usage: node scripts/generate-trials-featured-maps.mjs
  */
@@ -16,11 +17,52 @@ const root = resolve(__dirname, "..");
 
 /** First Trials weekend after Monument of Triumph (Friday 17:00 UTC). */
 const TRIALS_EPOCH_MS = Date.UTC(2026, 5, 12, 17, 0, 0);
-const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+const MS_PER_WEEK = 7 * MS_PER_DAY;
 /** Trials runs Friday 17:00 UTC through Tuesday 17:00 UTC. */
-const MS_TRIALS_WINDOW = 4 * 24 * 60 * 60 * 1000;
+const MS_TRIALS_WINDOW = 4 * MS_PER_DAY;
+/** First IB blackout week after Mot (Tue 17:00 UTC), every four weeks. */
+const IB_ANCHOR_MS = Date.parse("2026-08-25T17:00:00Z");
+const MS_FOUR_WEEKS = 28 * MS_PER_DAY;
 
 const TRIALS_RETURNS_MILESTONE_HASH = "2311040624";
+
+/** Keep in sync with src/data/activities/trials-maps.ts */
+const TRIALS_MAP_POOL_1 = ["Burnout", "Javelin-4", "Endless Vale"];
+const TRIALS_MAP_POOL_2 = [
+  ...TRIALS_MAP_POOL_1,
+  "Altar of Flame",
+  "Pacifica",
+  "Cirrus Plaza",
+  "Eventide Labs",
+  "The Dead Cliffs",
+  "Meltdown",
+  "Solitude",
+  "Radiant Cliffs",
+  "Wormhaven",
+];
+const TRIALS_MAP_POOL_3 = [
+  "Bannerfall",
+  "Cathedral of Dusk",
+  "Disjunction",
+  "Distant Shore",
+  "Dissonance",
+  "Emperor's Respite",
+  "Equinox",
+  "Eternity",
+  "Firebase Echo",
+  "Fragment",
+  "Gambler's Ruin",
+  "Legion's Gulch",
+  "Midtown",
+  "Retribution",
+  "The Anomaly",
+  "The Cauldron",
+  "The Fortress",
+  "Twilight Gap",
+  "Vostok",
+  "Widow's Court",
+];
 
 /** activityHash → map name (synced with src/data/activities/trials-maps.ts). */
 const TRIALS_MAP_ACTIVITY_HASH_TO_NAME = {
@@ -87,9 +129,59 @@ function trialsWeekendBounds(at = new Date()) {
 
   return {
     weekIndex,
+    weekStartMs: startMs,
     weekStart: new Date(startMs).toISOString(),
     weekEnd: new Date(startMs + MS_TRIALS_WINDOW).toISOString(),
   };
+}
+
+function ironBannerWindowFor(ms) {
+  let n = Math.floor((ms - IB_ANCHOR_MS) / MS_FOUR_WEEKS);
+  let startMs = IB_ANCHOR_MS + n * MS_FOUR_WEEKS;
+  if (startMs > ms) startMs -= MS_FOUR_WEEKS;
+  return { startMs, endMs: startMs + MS_PER_WEEK };
+}
+
+function isIronBannerBlackoutFriday(fridayMs) {
+  const { startMs, endMs } = ironBannerWindowFor(fridayMs);
+  return fridayMs >= startMs && fridayMs < endMs;
+}
+
+function mulberry32(seed) {
+  let state = seed >>> 0;
+  return () => {
+    state = (state + 0x6d2b79f5) >>> 0;
+    let t = Math.imul(state ^ (state >>> 15), 1 | state);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function pickMapName(pool, rng) {
+  return pool[Math.floor(rng() * pool.length)] ?? pool[0];
+}
+
+function selectRotationMapNames(weekIndex) {
+  const rng = mulberry32(weekIndex + 1_409_731);
+  const picks = [
+    pickMapName(TRIALS_MAP_POOL_1, rng),
+    pickMapName(TRIALS_MAP_POOL_2, rng),
+    pickMapName(TRIALS_MAP_POOL_3, rng),
+  ];
+  const unique = [];
+  for (const name of picks) {
+    if (!unique.includes(name)) unique.push(name);
+  }
+  const fallback = [
+    ...TRIALS_MAP_POOL_1,
+    ...TRIALS_MAP_POOL_2,
+    ...TRIALS_MAP_POOL_3,
+  ];
+  while (unique.length < 3) {
+    const candidate = pickMapName(fallback, rng);
+    if (!unique.includes(candidate)) unique.push(candidate);
+  }
+  return unique.slice(0, 3);
 }
 
 function extractMapNamesFromMilestones(milestones) {
@@ -142,27 +234,27 @@ async function fetchJson(path) {
 
 async function main() {
   const now = new Date();
-  const milestones = await fetchJson("/Platform/Destiny2/Milestones/");
-  const mapNames = extractMapNamesFromMilestones(milestones);
+  const nowMs = now.getTime();
+  const computedBounds = trialsWeekendBounds(now);
+  const inTrialsWindow =
+    nowMs >= computedBounds.weekStartMs &&
+    nowMs <= computedBounds.weekStartMs + MS_TRIALS_WINDOW;
+  const ibBlackout = isIronBannerBlackoutFriday(computedBounds.weekStartMs);
 
-  if (mapNames.length === 0) {
-    const existingPath = resolve(root, "data", "trials-featured-maps.json");
-    try {
-      readFileSync(existingPath, "utf8");
-      console.log(
-        "Trials featured maps not available in live milestones — keeping existing snapshot",
-      );
-    } catch {
-      console.log(
-        "Trials featured maps not available in live milestones — no snapshot on disk yet (retry later)",
-      );
-    }
-    // Soft success so scheduled retries / later Friday runs can pick maps up.
-    process.exit(0);
+  const milestones = await fetchJson("/Platform/Destiny2/Milestones/");
+  let mapNames = extractMapNamesFromMilestones(milestones);
+  let source = "bungie";
+
+  if (mapNames.length === 0 && ibBlackout) {
+    source = "iron-banner";
+  } else if (mapNames.length === 0 && inTrialsWindow && !ibBlackout) {
+    mapNames = selectRotationMapNames(computedBounds.weekIndex);
+    source = "rotation";
+  } else if (mapNames.length === 0) {
+    source = "unavailable";
   }
 
   const trialsMilestone = milestones[TRIALS_RETURNS_MILESTONE_HASH];
-  const computedBounds = trialsWeekendBounds(now);
   const weekStart = trialsMilestone?.startDate ?? computedBounds.weekStart;
   const weekEnd = trialsMilestone?.endDate ?? computedBounds.weekEnd;
 
@@ -172,6 +264,7 @@ async function main() {
     weekStart,
     weekEnd,
     maps: mapNames,
+    source,
   };
 
   const outDir = resolve(root, "data");
@@ -179,9 +272,15 @@ async function main() {
   const outPath = resolve(outDir, "trials-featured-maps.json");
   writeFileSync(outPath, `${JSON.stringify(payload, null, 2)}\n`);
 
-  console.log(
-    `Wrote Trials featured maps (week ${computedBounds.weekIndex + 1}): [${mapNames.join(", ")}]`,
-  );
+  if (mapNames.length === 0) {
+    console.log(
+      `Wrote empty Trials featured maps for week ${computedBounds.weekIndex + 1} (${source}).`,
+    );
+  } else {
+    console.log(
+      `Wrote Trials featured maps (week ${computedBounds.weekIndex + 1}, ${source}): [${mapNames.join(", ")}]`,
+    );
+  }
   console.log(`  ${weekStart} → ${weekEnd}`);
   console.log(`  ${outPath}`);
 }

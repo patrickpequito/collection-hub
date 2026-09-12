@@ -82,6 +82,7 @@ export default async function TrialsOfOsirisActivityPage() {
 
           <OwnedActivityCosmeticLootPanel
             sections={loot.currentOtherSections}
+            legacySections={loot.legacyOtherSections}
             itemHrefs={itemHrefs}
           />
 

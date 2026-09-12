@@ -96,6 +96,11 @@ function isStalePriorWeekPair(weekIndex, pair) {
   return prior.length > 0 && samePair(pair, prior);
 }
 
+/**
+ * Prefer live sources; if both fail for dungeons on a brand-new week, keep the
+ * previous snapshot's raids/dungeons out of the write path (throw) so CI retries
+ * instead of publishing an empty dungeon list.
+ */
 async function resolveFeaturedDungeons(weekIndex, weekStart) {
   const fromSchedule = featuredDungeonSlugsForWeek(weekIndex);
   let fromKyber = null;

@@ -1,5 +1,5 @@
 import type { LootItem } from "@/types/activity-loot";
-import type { AllLootItem } from "@/types/all-loot";
+import type { AllLootItem, AllLootItemVersion } from "@/types/all-loot";
 import { collectAllLootItemHashes } from "@/lib/all-loot/item-hashes";
 
 export function weaponMetaFromCatalogItem(
@@ -27,6 +27,31 @@ export function toLootItemFromCatalog(item: AllLootItem): LootItem {
     iconPath: item.iconPath,
     source: item.source,
     seasonIconPath: item.seasonIconPath,
+    seasonLabel: item.seasonLabel,
+    seasonNumber: item.seasonNumber,
+    itemType: item.type,
+    rarity: item.rarity,
+    ownershipHashes: collectAllLootItemHashes(item),
+    ...weaponMetaFromCatalogItem(item),
+  };
+}
+
+/** Build a grid item from a specific catalog version (season watermark / hash). */
+export function toLootItemFromCatalogVersion(
+  item: AllLootItem,
+  version: Pick<
+    AllLootItemVersion,
+    "itemHash" | "name" | "iconPath" | "seasonIconPath"
+  >,
+): LootItem {
+  return {
+    itemHash: version.itemHash,
+    name: version.name || item.name,
+    iconPath: version.iconPath || item.iconPath,
+    source: item.source,
+    seasonIconPath: version.seasonIconPath ?? item.seasonIconPath,
+    seasonLabel: version.seasonLabel ?? item.seasonLabel,
+    seasonNumber: version.seasonNumber ?? item.seasonNumber,
     itemType: item.type,
     rarity: item.rarity,
     ownershipHashes: collectAllLootItemHashes(item),

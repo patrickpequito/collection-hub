@@ -69,6 +69,8 @@ export type ResolvedActivityHubLoot = {
   currentWeaponPools?: ActivityWeaponPool[];
   weaponSeasonGroups?: TrialsWeaponSeasonGroup[];
   currentOtherSections: ActivityHubLootSection[];
+  /** Older Trials cosmetics (ticket / Nine era, etc.) shown via the legacy toggle. */
+  legacyOtherSections?: ActivityHubLootSection[];
   legacyArmorGroups: LegacyArmorSetGroup[];
   yearOfProphecyArmorGroups?: LegacyArmorSetGroup[];
 };

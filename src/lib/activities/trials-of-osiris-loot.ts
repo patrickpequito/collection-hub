@@ -33,6 +33,52 @@ function isTrialsSource(source = ""): boolean {
   return /trials of osiris|saint-14 rank|lighthouse chest/i.test(source);
 }
 
+/** Y1 Trials of the Nine — not Trials of Osiris. */
+function isTrialsOfTheNineSource(source = ""): boolean {
+  return /emissary of the nine/i.test(source);
+}
+
+/**
+ * Trials of Osiris cosmetics history (modern Trials + Saint-14).
+ * Excludes Trials of the Nine (Emissary) and Y1 ticket rewards.
+ */
+function isTrialsCosmeticSource(item: AllLootItem): boolean {
+  const source = item.source ?? "";
+  if (/bright engram|eververse/i.test(source)) return false;
+  if (isTrialsOfTheNineSource(source)) return false;
+  if (
+    /trials of osiris|saint-14|lighthouse (?:chest|passage)|flight of the pigeon/i.test(
+      source,
+    )
+  ) {
+    return true;
+  }
+  // Shared "Trials ticket" wording: Osiris from Worthy (S10) onward only.
+  if (/trials ticket/i.test(source)) {
+    return (item.seasonNumber ?? 0) >= 10;
+  }
+  return false;
+}
+
+function isTrialsCosmeticItem(item: AllLootItem): boolean {
+  return (
+    item.type !== "Weapon" &&
+    item.type !== "Armor" &&
+    item.type !== "Mod" &&
+    isTrialsCosmeticSource(item)
+  );
+}
+
+function isCurrentTrialsCosmeticItem(item: AllLootItem): boolean {
+  return (
+    item.obtainable &&
+    item.type !== "Weapon" &&
+    item.type !== "Armor" &&
+    item.type !== "Mod" &&
+    isTrialsSource(item.source)
+  );
+}
+
 function toLootItem(item: AllLootItem): LootItem {
   return toLootItemFromCatalog(item);
 }
@@ -377,11 +423,20 @@ export async function resolveTrialsOfOsirisLoot(): Promise<ResolvedActivityHubLo
   const currentWeaponPools = resolveTrialsWeaponPools(lootCatalog.items);
 
   const currentOtherSections = groupActivityCosmeticLoot(
-    trialsItems.filter(
+    trialsItems.filter(isCurrentTrialsCosmeticItem),
+    toLootItem,
+  );
+
+  const currentCosmeticHashes = new Set(
+    currentOtherSections.flatMap((section) =>
+      section.items.map((item) => item.itemHash),
+    ),
+  );
+
+  const legacyOtherSections = groupActivityCosmeticLoot(
+    lootCatalog.items.filter(
       (item) =>
-        item.obtainable &&
-        item.type !== "Weapon" &&
-        item.type !== "Armor",
+        isTrialsCosmeticItem(item) && !currentCosmeticHashes.has(item.itemHash),
     ),
     toLootItem,
   );
@@ -391,6 +446,7 @@ export async function resolveTrialsOfOsirisLoot(): Promise<ResolvedActivityHubLo
     currentWeaponPools,
     weaponSeasonGroups: groupTrialsWeaponsByReleaseSeason(lootCatalog.items),
     currentOtherSections,
+    legacyOtherSections,
     legacyArmorGroups,
   };
 }

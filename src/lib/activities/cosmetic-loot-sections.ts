@@ -1,6 +1,7 @@
 import type { ActivityHubLootSection } from "@/types/activity-hub";
 import type { LootItem } from "@/types/activity-loot";
 import type { AllLootItem } from "@/types/all-loot";
+import { compareTrialsReleaseOrder } from "@/lib/activities/trials-release-order";
 
 const COSMETIC_LOOT_SECTIONS = [
   { type: "Emblem", title: "Emblems" },
@@ -24,6 +25,6 @@ export function groupActivityCosmeticLoot(
 
   return COSMETIC_LOOT_SECTIONS.map(({ type, title }) => ({
     title,
-    items: (byType.get(type) ?? []).sort((a, b) => a.name.localeCompare(b.name)),
+    items: (byType.get(type) ?? []).sort(compareTrialsReleaseOrder),
   })).filter((section) => section.items.length > 0);
 }

@@ -12,7 +12,9 @@ import {
   DUNGEON_ROTATION_WEEKS,
   featuredDungeonSlugsForWeek,
   featuredRaidFallbackForWeek,
+  fetchFeaturedDungeonsFromKyber,
   fetchFeaturedRaidsFromBungie,
+  isStalePriorDungeonPair,
   rotationWeekIndex,
   weekBounds,
 } from "@/lib/rad-loot/featured-rotation";
@@ -50,8 +52,9 @@ function readFeaturedActivitiesJson(): FeaturedActivitiesData | null {
  * Featured raids/dungeons for the current weekly reset.
  *
  * Raids prefer live Bungie milestones (cached ~30m) so a missed CI run cannot
- * strand the site on last week's pair. Dungeons use the weekly snapshot when
- * current, otherwise the confirmed schedule (no invented extrapolation).
+ * strand the site on last week's pair. Dungeons prefer the weekly snapshot when
+ * current; otherwise live Kyber scrape (also ~30m cache), then confirmed
+ * schedule. Never invent pairs past the schedule table.
  */
 export async function loadFeaturedActivities(): Promise<FeaturedActivitiesData> {
   const now = new Date();
@@ -83,7 +86,20 @@ export async function loadFeaturedActivities(): Promise<FeaturedActivitiesData> 
   if (snapshotIsCurrent) {
     featuredDungeons = snapshot!.featuredDungeons;
   } else {
-    featuredDungeons = featuredDungeonSlugsForWeek(weekIndex);
+    try {
+      const fromKyber = await fetchFeaturedDungeonsFromKyber(weekStart);
+      if (
+        fromKyber.length &&
+        !isStalePriorDungeonPair(weekIndex, fromKyber)
+      ) {
+        featuredDungeons = fromKyber;
+      }
+    } catch {
+      // Fall through to confirmed schedule.
+    }
+    if (!featuredDungeons.length) {
+      featuredDungeons = featuredDungeonSlugsForWeek(weekIndex);
+    }
   }
 
   return {
