@@ -1,12 +1,8 @@
 {
-  "generatedAt": "2026-09-21T21:02:15.365Z",
-  "weekIndex": 14,
-  "weekStart": "2026-09-18T17:00:00.000Z",
-  "weekEnd": "2026-09-22T17:00:00.000Z",
-  "maps": [
-    "Burnout",
-    "Altar of Flame",
-    "Eternity"
-  ],
-  "source": "rotation"
+  "generatedAt": "2026-09-25T20:17:35.860Z",
+  "weekIndex": 15,
+  "weekStart": "2026-09-25T17:00:00.000Z",
+  "weekEnd": "2026-09-29T17:00:00.000Z",
+  "maps": [],
+  "source": "iron-banner"
 }
