@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-09-29T15:55:19.887Z",
-  "weekIndex": 15,
-  "weekStart": "2026-09-22T17:00:00.000Z",
-  "weekEnd": "2026-09-29T17:00:00.000Z",
+  "generatedAt": "2026-09-29T21:21:56.244Z",
+  "weekIndex": 16,
+  "weekStart": "2026-09-29T17:00:00.000Z",
+  "weekEnd": "2026-10-06T17:00:00.000Z",
   "featuredRaids": [
-    "garden-of-salvation",
-    "root-of-nightmares"
+    "crotas-end",
+    "deep-stone-crypt"
   ],
   "featuredDungeons": [
-    "sundered-doctrine",
-    "spire-of-the-watcher"
+    "ghosts-of-the-deep",
+    "the-shattered-throne"
   ],
-  "rotationWeeks": 16
+  "rotationWeeks": 17
 }
