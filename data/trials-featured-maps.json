@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-12T23:36:41.349Z",
-  "weekIndex": 17,
-  "weekStart": "2026-10-09T17:00:00.000Z",
-  "weekEnd": "2026-10-13T17:00:00.000Z",
+  "generatedAt": "2026-10-16T19:48:43.170Z",
+  "weekIndex": 18,
+  "weekStart": "2026-10-16T17:00:00.000Z",
+  "weekEnd": "2026-10-20T17:00:00.000Z",
   "maps": [
     "Endless Vale",
-    "Cirrus Plaza",
-    "Gambler's Ruin"
+    "Eventide Labs",
+    "Distant Shore"
   ],
   "source": "rotation"
 }
