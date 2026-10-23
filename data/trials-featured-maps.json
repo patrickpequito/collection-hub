@@ -1,12 +1,8 @@
 {
-  "generatedAt": "2026-10-19T21:30:47.745Z",
-  "weekIndex": 18,
-  "weekStart": "2026-10-16T17:00:00.000Z",
-  "weekEnd": "2026-10-20T17:00:00.000Z",
-  "maps": [
-    "Endless Vale",
-    "Eventide Labs",
-    "Distant Shore"
-  ],
-  "source": "rotation"
+  "generatedAt": "2026-10-23T20:12:38.846Z",
+  "weekIndex": 19,
+  "weekStart": "2026-10-23T17:00:00.000Z",
+  "weekEnd": "2026-10-27T17:00:00.000Z",
+  "maps": [],
+  "source": "iron-banner"
 }
