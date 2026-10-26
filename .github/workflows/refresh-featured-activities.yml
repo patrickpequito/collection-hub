@@ -77,6 +77,11 @@ jobs:
             exit 0
           fi
 
+          # A refresh that only bumps `generatedAt` would still trigger a Vercel deploy.
+          if ! node scripts/data-changed.mjs data/featured-activities.json data/featured-rotation-schedule.json; then
+            exit 0
+          fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "chore(data): refresh featured raid and dungeon rotation" -m "Scheduled sync of featured-activities.json (Bungie raids + Kyber dungeons)."

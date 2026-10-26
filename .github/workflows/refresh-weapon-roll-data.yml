@@ -40,6 +40,11 @@ jobs:
             exit 0
           fi
 
+          # A refresh that only bumps `generatedAt` would still trigger a Vercel deploy.
+          if ! node scripts/data-changed.mjs data/weapon-god-rolls.json data/weapon-aegis-rolls.json; then
+            exit 0
+          fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "chore(data): refresh weapon god rolls and Aegis data" -m "Scheduled sync of data/weapon-god-rolls.json and data/weapon-aegis-rolls.json."
