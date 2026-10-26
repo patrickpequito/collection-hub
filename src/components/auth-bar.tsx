@@ -17,6 +17,7 @@ type BackLinkConfig =
       label: string;
       useHistory: true;
       fallbackHref: string;
+      fromQuery?: boolean;
     };
 
 type AuthBarProps = {
@@ -40,6 +41,7 @@ export function AuthBar({ session, oauthConfigured, backLink }: AuthBarProps) {
                 <HistoryBackButton
                   label={backLink.label}
                   fallbackHref={backLink.fallbackHref}
+                  fromQuery={backLink.fromQuery}
                 />
               </Suspense>
             ) : (

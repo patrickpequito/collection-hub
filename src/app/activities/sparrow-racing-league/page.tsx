@@ -12,17 +12,20 @@ import { resolveSparrowRacingLeagueLoot } from "@/lib/activities/sparrow-racing-
 import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { getTriumphSectionRecords, loadTriumphCatalog } from "@/lib/triumphs/load";
+import { pickReferenced } from "@/lib/pick-referenced";
 
 export const revalidate = 3600;
 
 export default async function SparrowRacingLeaguePage() {
   const hub = SPARROW_RACING_LEAGUE_HUB;
 
-  const [loot, catalog, itemHrefs] = await Promise.all([
+  const [loot, catalog, allItemHrefs] = await Promise.all([
     resolveSparrowRacingLeagueLoot(),
     loadTriumphCatalog(),
     buildCollectibleHrefByItemHash(`/activities/${hub.slug}`),
   ]);
+  // Only the links this page renders (the full map is ~0.5 MB).
+  const itemHrefs = pickReferenced(allItemHrefs, [loot]);
   const triumphs = getTriumphSectionRecords(catalog, hub.triumphGroup, [...hub.triumphSectionPath]);
   const cosmetics = loot.cosmetics.flatMap((section) => section.items);
 

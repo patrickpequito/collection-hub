@@ -11,14 +11,18 @@ import {
   resolveEquipableItemSetHash,
 } from "@/lib/armor/set-bonuses";
 import { isBungieOAuthConfigured } from "@/lib/env";
-import { parseArmorReturnPath } from "@/lib/armor/paths";
 import { backLabelForPath } from "@/lib/weapons/paths";
 import { originCrumbs, resolveItemOrigin } from "@/lib/items/origin";
+import { pickReferenced } from "@/lib/pick-referenced";
 
 type ArmorPageProps = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ from?: string }>;
 };
+
+// Rendered on first visit, then cached until the next deploy (see the weapon page).
+export function generateStaticParams() {
+  return [];
+}
 
 export async function generateMetadata({
   params,
@@ -39,12 +43,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function ArmorPage({
-  params,
-  searchParams,
-}: ArmorPageProps) {
+export default async function ArmorPage({ params }: ArmorPageProps) {
   const { slug } = await params;
-  const { from } = await searchParams;
   const [catalog, setBonusCatalog] = await Promise.all([
     loadAllLootCatalog(),
     loadArmorSetBonusCatalog(),
@@ -54,11 +54,8 @@ export default async function ArmorPage({
   );
   if (!armor) notFound();
 
-  const fallbackHref = parseArmorReturnPath(from);
-  const currentPath = from
-    ? `/armor/${slug}?from=${encodeURIComponent(from)}`
-    : `/armor/${slug}`;
-  const itemHrefs = await buildCollectibleHrefByItemHash(currentPath);
+  const fallbackHref = "/all-loot";
+  const allItemHrefs = await buildCollectibleHrefByItemHash(`/armor/${slug}`);
 
   const { setName, twoPiece, fourPiece } = resolveArmorSetBonuses(
     setBonusCatalog,
@@ -136,6 +133,7 @@ export default async function ArmorPage({
         useHistory: true,
         label: backLabelForPath(fallbackHref),
         fallbackHref,
+        fromQuery: true,
       }}
     >
       <ArmorDetailContent
@@ -145,7 +143,7 @@ export default async function ArmorPage({
         fourPieceBonus={fourPiece}
         armorSet={armorSetMatch?.set ?? null}
         primaryGuardianClass={armorSetMatch?.primaryClass ?? null}
-        itemHrefs={itemHrefs}
+        itemHrefs={pickReferenced(allItemHrefs, [armorSetMatch?.set])}
         origin={origin}
       />
     </SectionPageLayout>

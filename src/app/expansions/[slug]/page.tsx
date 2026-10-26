@@ -31,6 +31,7 @@ import {
   getTriumphGroup,
   loadTriumphCatalog,
 } from "@/lib/triumphs/load";
+import { pickReferenced } from "@/lib/pick-referenced";
 
 export const revalidate = 3600;
 
@@ -51,11 +52,13 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
 
   const oauthConfigured = isBungieOAuthConfigured();
 
-  const [loot, catalog, itemHrefs] = await Promise.all([
+  const [loot, catalog, allItemHrefs] = await Promise.all([
     resolveExpansionLoot(hub),
     loadTriumphCatalog(),
     buildCollectibleHrefByItemHash(`/expansions/${hub.slug}`),
   ]);
+  // Only the links this page renders (the full map is ~0.5 MB).
+  const itemHrefs = pickReferenced(allItemHrefs, [loot]);
 
   const title = hub.titleSlug
     ? (getTitleEntry(catalog, hub.titleSlug) ?? null)

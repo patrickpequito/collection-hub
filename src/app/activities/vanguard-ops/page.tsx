@@ -21,6 +21,7 @@ import { resolveVanguardOpsLoot, resolveVanguardOpsWeaponPools } from "@/lib/act
 import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { getTriumphSectionRecords, loadTriumphCatalog } from "@/lib/triumphs/load";
+import { pickReferenced } from "@/lib/pick-referenced";
 
 export const revalidate = 3600;
 
@@ -28,12 +29,14 @@ export default async function VanguardOpsActivityPage() {
   const hub = VANGUARD_OPS_HUB;
   const oauthConfigured = isBungieOAuthConfigured();
 
-  const [loot, weaponPools, catalog, itemHrefs] = await Promise.all([
+  const [loot, weaponPools, catalog, allItemHrefs] = await Promise.all([
     resolveVanguardOpsLoot(),
     resolveVanguardOpsWeaponPools(),
     loadTriumphCatalog(),
     buildCollectibleHrefByItemHash(`/activities/${hub.slug}`),
   ]);
+  // Only the links this page renders (the full map is ~0.5 MB).
+  const itemHrefs = pickReferenced(allItemHrefs, [loot, weaponPools]);
 
   const triumphColumns = VANGUARD_OPS_TRIUMPH_COLUMNS.map((column) => ({
     heading: column.heading,

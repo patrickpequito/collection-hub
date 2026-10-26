@@ -20,6 +20,7 @@ import { isBungieOAuthConfigured } from "@/lib/env";
 import { loadHomeThisWeek } from "@/lib/home/this-week";
 import { getTitleEntry, loadTriumphCatalog } from "@/lib/triumphs/load";
 import type { LootItem } from "@/types/activity-loot";
+import { pickReferenced } from "@/lib/pick-referenced";
 
 export const revalidate = 3600;
 
@@ -30,12 +31,14 @@ export default async function IronBannerActivityPage() {
   const poolSchedule = poolScheduleNow(ironBannerPoolOccurrences, ["pool-1", "pool-2"] as const);
   const oauthConfigured = isBungieOAuthConfigured();
 
-  const [loot, catalog, itemHrefs, week] = await Promise.all([
+  const [loot, catalog, allItemHrefs, week] = await Promise.all([
     resolveIronBannerLoot(),
     loadTriumphCatalog(),
     buildCollectibleHrefByItemHash(`/activities/${hub.slug}`),
     loadHomeThisWeek(),
   ]);
+  // Only the links this page renders (the full map is ~0.5 MB).
+  const itemHrefs = pickReferenced(allItemHrefs, [loot]);
 
   const titleEntry = getTitleEntry(catalog, hub.titleSlug);
   if (!titleEntry) {

@@ -12,6 +12,11 @@ type TitlePageProps = {
 
 export const revalidate = 3600;
 
+// Render each page on its first visit, then serve it from the cache.
+export function generateStaticParams() {
+  return [];
+}
+
 export default async function TitlePage({ params }: TitlePageProps) {
   const { slug } = await params;
   const catalog = await loadTriumphCatalog();

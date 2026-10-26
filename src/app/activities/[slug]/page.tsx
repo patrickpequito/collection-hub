@@ -44,6 +44,7 @@ import {
   resolveActivityTriumphRecords,
 } from "@/lib/triumphs/load";
 import type { TriumphRecord } from "@/types/triumph";
+import { pickReferenced } from "@/lib/pick-referenced";
 
 const ALL_RAIDS = [...RAIDS, ...LEGACY_RAIDS, ...RAID_LAIRS];
 
@@ -107,6 +108,11 @@ const ACTIVITY_EXOTIC_HASHES: Record<string, Set<string>> = {
 
 export const revalidate = 3600;
 
+// Render each page on its first visit, then serve it from the cache.
+export function generateStaticParams() {
+  return [];
+}
+
 export default async function ActivityLootPage({ params }: ActivityPageProps) {
   const { slug } = await params;
   const rawActivity = getActivityLootPage(slug);
@@ -117,11 +123,13 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
 
   const activity = filterExpiredActivityLoot(rawActivity);
   const oauthConfigured = isBungieOAuthConfigured();
-  const [catalog, itemHrefs, catalogByHash] = await Promise.all([
+  const [catalog, allItemHrefs, catalogByHash] = await Promise.all([
     loadTriumphCatalog(),
     buildCollectibleHrefByItemHash(`/activities/${slug}`),
     loadCatalogHashIndex(),
   ]);
+  // Only the links this page renders (the full map is ~0.5 MB).
+  const itemHrefs = pickReferenced(allItemHrefs, [activity]);
   const title = getTitleEntry(catalog, slug);
   const triumphRecords = filterExpiredTriumphRecords(
     slug,

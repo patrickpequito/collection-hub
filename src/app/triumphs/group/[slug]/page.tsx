@@ -12,6 +12,11 @@ type TriumphGroupPageProps = {
 
 export const revalidate = 3600;
 
+// Render each page on its first visit, then serve it from the cache.
+export function generateStaticParams() {
+  return [];
+}
+
 export default async function TriumphGroupPage({ params }: TriumphGroupPageProps) {
   const { slug } = await params;
   const catalog = await loadTriumphCatalog();

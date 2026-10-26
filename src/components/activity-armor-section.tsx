@@ -19,6 +19,7 @@ type ActivityArmorSectionProps = {
 /** Raid / dungeon "Armor sets": one shared armor set block per set. */
 export function ActivityArmorSection({
   activitySlug,
+  activityTitle,
   rows,
   previewFiles,
   ownedItemHashes,
@@ -27,10 +28,24 @@ export function ActivityArmorSection({
   itemHrefs,
 }: ActivityArmorSectionProps) {
   const resolvedPreviewFiles = resolveArmorSetPreviewFiles(activitySlug, previewFiles);
-  const sets = [...new Set(rows.map((row) => row.setName))].map((setName) => ({
-    setName,
-    rows: rows.filter((row) => row.setName === setName),
-  }));
+  // Many raids name each class's set differently (Trepidation / Agony / Detestation):
+  // set names are merged into one block until a class would repeat.
+  const sets: { setName: string; rows: ActivityArmorRow[] }[] = [];
+  for (const setName of new Set(rows.map((row) => row.setName))) {
+    const setRows = rows.filter((row) => row.setName === setName);
+    const last = sets.at(-1);
+    const classesTaken = new Set(last?.rows.map((row) => row.guardianClass));
+    if (last && setRows.every((row) => !classesTaken.has(row.guardianClass))) {
+      last.rows.push(...setRows);
+    } else {
+      sets.push({ setName, rows: [...setRows] });
+    }
+  }
+  // A merged block is named after the raid, or after its sets when the raid has several.
+  for (const set of sets) {
+    const names = [...new Set(set.rows.map((row) => row.setName))];
+    if (names.length > 1) set.setName = sets.length === 1 ? activityTitle : names.join(" / ");
+  }
   // Previews pair with sets when the counts match; otherwise the first set shows the first one.
   const previewsFor = (index: number) =>
     resolvedPreviewFiles.length === sets.length

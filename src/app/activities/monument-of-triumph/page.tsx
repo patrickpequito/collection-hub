@@ -22,18 +22,21 @@ import { PAGE_HEADERS } from "@/lib/page-headers";
 import { summarizeSeal } from "@/lib/triumphs/hub";
 import { getTitleEntry, getTriumphGroup, loadTriumphCatalog } from "@/lib/triumphs/load";
 import { collectLeafSections, leafSectionId } from "@/lib/triumphs/sections";
+import { pickReferenced } from "@/lib/pick-referenced";
 
 export const revalidate = 3600;
 
 export default async function MonumentOfTriumphPage() {
   const hub = MONUMENT_OF_TRIUMPH_HUB;
 
-  const [data, catalog, bonusSets, itemHrefs] = await Promise.all([
+  const [data, catalog, bonusSets, allItemHrefs] = await Promise.all([
     resolveMonumentOfTriumph(),
     loadTriumphCatalog(),
     loadBonusGuideSets(),
     buildCollectibleHrefByItemHash(`/activities/${hub.slug}`),
   ]);
+  // Only the links this page renders (the full map is ~0.5 MB).
+  const itemHrefs = pickReferenced(allItemHrefs, [data]);
 
   const group = getTriumphGroup(catalog, hub.triumphGroup);
   const title = getTitleEntry(catalog, hub.titleSlug);

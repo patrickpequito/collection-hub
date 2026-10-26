@@ -6,6 +6,7 @@ import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { loadCollections } from "@/lib/collections/load";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { PAGE_HEADERS } from "@/lib/page-headers";
+import { pickReferenced } from "@/lib/pick-referenced";
 
 export const revalidate = 3600;
 
@@ -15,7 +16,9 @@ export const metadata: Metadata = {
 };
 
 export default async function CollectionsPage() {
-  const [groups, itemHrefs] = await Promise.all([loadCollections(), buildCollectibleHrefByItemHash("/collections")]);
+  const [groups, allItemHrefs] = await Promise.all([loadCollections(), buildCollectibleHrefByItemHash("/collections")]);
+  // Only the links this page renders (the full map is ~0.5 MB).
+  const itemHrefs = pickReferenced(allItemHrefs, [groups]);
 
   return (
     <SectionPageLayout

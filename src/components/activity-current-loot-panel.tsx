@@ -122,6 +122,8 @@ export function ActivityArmorGrid({
     }
     return ownedItemHashes.has(itemHash);
   };
+  // One set with a different name per class (raids): name it next to the class.
+  const mixedSetNames = new Set(armorRows.map((row) => row.setName)).size > 1;
 
   return (
     <div className="space-y-4">
@@ -132,6 +134,7 @@ export function ActivityArmorGrid({
         >
           <p className="text-xs text-zinc-500">
             {CLASS_LABELS[row.guardianClass]}
+            {mixedSetNames ? ` · ${row.setName}` : null}
           </p>
           <div className="grid grid-cols-[repeat(5,minmax(0,3.75rem))] gap-1.5">
             {ARMOR_SLOTS.map((slot, slotIndex) => {

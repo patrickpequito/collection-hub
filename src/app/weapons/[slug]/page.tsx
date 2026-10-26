@@ -11,24 +11,20 @@ import {
 import { getWeaponBySlug } from "@/lib/weapons/lookup";
 import { aegisRecommendedPerks, loadWeaponAegisRollIndex } from "@/lib/weapons/aegis-rolls";
 import { collectWeaponItemHashes } from "@/lib/weapons/item-hashes";
+import { pickReferenced } from "@/lib/pick-referenced";
 import { loadCatalystsForWeapon } from "@/lib/exotics/page-data";
 import { originCrumbs, resolveItemOrigin } from "@/lib/items/origin";
-import {
-  backLabelForPath,
-  parseWeaponReturnPath,
-} from "@/lib/weapons/paths";
+import { backLabelForPath } from "@/lib/weapons/paths";
 
 type WeaponPageProps = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ from?: string }>;
 };
 
-export async function generateStaticParams() {
-  const catalog = await loadAllLootCatalog();
-
-  return catalog.items
-    .filter((item) => item.type === "Weapon" && item.slug)
-    .map((item) => ({ slug: item.slug! }));
+// Each weapon page is rendered on its first visit, then served from the cache until
+// the next deploy (catalog data only changes with a deploy). `?from=` is read on the
+// client by the back button so it doesn't make the page dynamic.
+export function generateStaticParams() {
+  return [];
 }
 
 export async function generateMetadata({
@@ -47,12 +43,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function WeaponPage({
-  params,
-  searchParams,
-}: WeaponPageProps) {
+export default async function WeaponPage({ params }: WeaponPageProps) {
   const { slug } = await params;
-  const { from } = await searchParams;
   const [catalog, godRollIndex, aegisIndex] = await Promise.all([
     loadAllLootCatalog(),
     loadWeaponGodRollIndex(),
@@ -66,7 +58,7 @@ export default async function WeaponPage({
   const godRollsByHash = resolveGodRollsForWeapon(weapon, godRollIndex);
 
   const oauthConfigured = isBungieOAuthConfigured();
-  const fallbackHref = parseWeaponReturnPath(from);
+  const fallbackHref = "/all-loot";
   const isExotic = weapon.rarity === "Exotic";
 
   // Recommendations are per exact version: never borrow another version's rolls.
@@ -121,11 +113,12 @@ export default async function WeaponPage({
         useHistory: true,
         label: backLabelForPath(fallbackHref),
         fallbackHref,
+        fromQuery: true,
       }}
     >
       <WeaponDetailContent
         weapon={weapon}
-        plugIndex={catalog.plugIndex ?? {}}
+        plugIndex={pickReferenced(catalog.plugIndex ?? {}, [weapon, godRollsByHash, aegisPerksByHash])}
         godRollsByHash={godRollsByHash}
         origin={origin}
         aegisPerksByHash={aegisPerksByHash}

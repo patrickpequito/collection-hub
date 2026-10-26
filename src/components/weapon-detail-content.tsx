@@ -118,7 +118,7 @@ function CatalystCard({ catalyst, status }: { catalyst: ExoticCatalystEntry; sta
 
 export function WeaponDetailContent({
   weapon,
-  plugIndex = {},
+  plugIndex: pagePlugIndex = {},
   godRollsByHash = {},
   origin = null,
   aegisPerksByHash = {},
@@ -144,6 +144,12 @@ export function WeaponDetailContent({
   const { rolls, characters, loading, error, refetch } = useWeaponRolls(
     weaponSlug,
     isSignedIn,
+  );
+
+  // The page ships only this weapon's plugs; owned copies bring their own definitions.
+  const plugIndex = useMemo(
+    () => Object.assign({}, pagePlugIndex, ...rolls.map((roll) => roll.plugs ?? {})),
+    [pagePlugIndex, rolls],
   );
 
   const activeRollId = pinnedRollId ?? hoveredRollId;

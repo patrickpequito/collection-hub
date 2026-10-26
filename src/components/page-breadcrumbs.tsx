@@ -14,7 +14,7 @@ export type SiblingLinks = {
 
 type BackLinkConfig =
   | { href: string; label: string; useHistory?: false }
-  | { label: string; useHistory: true; fallbackHref: string };
+  | { label: string; useHistory: true; fallbackHref: string; fromQuery?: boolean };
 
 type PageBreadcrumbsProps = {
   /** Current page name (last crumb). */
@@ -173,6 +173,7 @@ export function PageBreadcrumbs({
             <HistoryBackButton
               label={backLink.label}
               fallbackHref={backLink.fallbackHref}
+              fromQuery={backLink.fromQuery}
             />
           </Suspense>
         ) : null}

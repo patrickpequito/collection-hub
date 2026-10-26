@@ -1,3 +1,4 @@
+import { pickReferenced } from "@/lib/pick-referenced";
 import { NextResponse } from "next/server";
 import { loadAllLootCatalog } from "@/lib/all-loot/search";
 import { fetchWeaponRollInstances } from "@/lib/destiny-inventory";
@@ -100,6 +101,10 @@ export async function GET(_request: Request, context: RouteContext) {
 
       return {
         ...instance,
+        plugs: pickReferenced(plugIndex, [
+          instance.equippedPlugHashes,
+          instance.socketPlugHashesByIndex,
+        ]),
         equippedWeaponPerkHashes,
         version,
         gearTier,

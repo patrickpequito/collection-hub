@@ -39,13 +39,13 @@ export const kingsFallLoot: ActivityLootPage = {
           KF_SOURCE,
         ),
         legs: item(
-          "716885299",
+          "2725249086",
           "Darkhollow Treads",
           "/common/destiny2_content/icons/614589979057cca209a09bbc5a01c339.jpg",
           KF_SOURCE,
         ),
         classItem: item(
-          "1479604326",
+          "2868448385",
           "Darkhollow Mantle",
           "/common/destiny2_content/icons/7afce71ac5b24be097fc3b367eae78b2.jpg",
           KF_SOURCE,
@@ -99,19 +99,19 @@ export const kingsFallLoot: ActivityLootPage = {
           KF_SOURCE,
         ),
         gauntlets: item(
-          "884969196",
+          "3398467185",
           "Grasp of Eir",
           "/common/destiny2_content/icons/4f5b8762c1faedbfcfc9c1fe9ec23c08.jpg",
           KF_SOURCE,
         ),
         chest: item(
-          "2939738676",
+          "3921733799",
           "Chasm of Yul",
           "/common/destiny2_content/icons/3dbe92ce844d91b4e7915d356c63041e.jpg",
           KF_SOURCE,
         ),
         legs: item(
-          "1530701334",
+          "3229616835",
           "Path of Xol",
           "/common/destiny2_content/icons/0a8728d9b478e690122b96285cc8599c.jpg",
           KF_SOURCE,
@@ -127,7 +127,7 @@ export const kingsFallLoot: ActivityLootPage = {
   ],
   weapons: [
     item(
-      "694218974",
+      "2221264583",
       "Smite of Merain",
       "/common/destiny2_content/icons/e47393574637ea49389e500ab365b311.jpg",
       KF_SOURCE,
@@ -151,13 +151,13 @@ export const kingsFallLoot: ActivityLootPage = {
       KF_SOURCE,
     ),
     item(
-      "479338636",
+      "1937552980",
       "Doom of Chelchis",
       "/common/destiny2_content/icons/d439b1b560e696b8214362b12364da6d.jpg",
       KF_SOURCE,
     ),
     item(
-      "1058857259",
+      "1321506184",
       "Qullim's Terminus",
       "/common/destiny2_content/icons/7e045bc7b88d478a54913ddc6bd7f373.jpg",
       KF_SOURCE,
@@ -202,7 +202,7 @@ export const kingsFallLoot: ActivityLootPage = {
       KF_SOURCE,
     ),
     item(
-      "2811165950",
+      "3248429089",
       "Qullim's Terminus (Harrowed)",
       "/common/destiny2_content/icons/c449217d255f5b210037d069bde484b2.jpg",
       KF_SOURCE,

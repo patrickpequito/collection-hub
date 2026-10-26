@@ -25,6 +25,7 @@ import { seasonHeaderUrl } from "@/lib/page-headers";
 import { getSeasonNavAdjacent } from "@/lib/seasons/season-nav";
 import { findTimelineEntry, formatTimelineMonth } from "@/lib/home/timeline";
 import { resolveSeasonLoot } from "@/lib/seasons/resolve-season-loot";
+import { pickReferenced } from "@/lib/pick-referenced";
 
 export const revalidate = 3600;
 
@@ -45,10 +46,12 @@ export default async function SeasonHubPage({ params }: SeasonPageProps) {
 
   const oauthConfigured = isBungieOAuthConfigured();
 
-  const [loot, itemHrefs] = await Promise.all([
+  const [loot, allItemHrefs] = await Promise.all([
     resolveSeasonLoot(hub),
     buildCollectibleHrefByItemHash(`/seasons/${hub.slug}`),
   ]);
+  // Only the links this page renders (the full map is ~0.5 MB).
+  const itemHrefs = pickReferenced(allItemHrefs, [loot]);
 
   const trailerVideo = hub.videos.find((video) => video.id === "trailer");
   const cutsceneVideo = hub.videos.find(

@@ -1,3 +1,5 @@
+import type { WeaponPlugDefinition } from "@/types/all-loot";
+
 export type WeaponRollLocation = "vault" | "inventory" | "equipped";
 
 export type WeaponVersionDisplay = {
@@ -42,4 +44,6 @@ export type WeaponRollInstance = {
   scores: WeaponRollScores;
   isBest: boolean;
   isShardCandidate: boolean;
+  /** Definitions of this copy's plugs, so the page can name perks outside its own pools. */
+  plugs?: Record<string, WeaponPlugDefinition>;
 };

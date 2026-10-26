@@ -20,6 +20,7 @@ import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { getTitleEntry, loadTriumphCatalog } from "@/lib/triumphs/load";
 import { poolScheduleNow, trialsPoolOccurrences } from "@/lib/activities/pool-rotation";
+import { pickReferenced } from "@/lib/pick-referenced";
 
 export const revalidate = 3600;
 
@@ -28,12 +29,14 @@ export default async function TrialsOfOsirisActivityPage() {
   const poolSchedule = poolScheduleNow(trialsPoolOccurrences, ["pool-1", "pool-2", "pool-3"] as const);
   const oauthConfigured = isBungieOAuthConfigured();
 
-  const [loot, catalog, itemHrefs, featuredMaps] = await Promise.all([
+  const [loot, catalog, allItemHrefs, featuredMaps] = await Promise.all([
     resolveTrialsOfOsirisLoot(),
     loadTriumphCatalog(),
     buildCollectibleHrefByItemHash(`/activities/${hub.slug}`),
     resolveTrialsFeaturedMaps(),
   ]);
+  // Only the links this page renders (the full map is ~0.5 MB).
+  const itemHrefs = pickReferenced(allItemHrefs, [loot]);
 
   const titleEntry = getTitleEntry(catalog, hub.titleSlug);
   if (!titleEntry) {

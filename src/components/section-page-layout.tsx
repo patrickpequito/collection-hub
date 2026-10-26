@@ -44,6 +44,7 @@ type SectionPageLayoutProps = {
         label: string;
         useHistory: true;
         fallbackHref: string;
+        fromQuery?: boolean;
       };
 };
 

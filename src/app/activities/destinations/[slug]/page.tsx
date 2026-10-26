@@ -24,6 +24,7 @@ import {
 import { loadDestinationCurse, loadDestinationWeekly } from "@/lib/destinations/weekly";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { loadTriumphCatalog } from "@/lib/triumphs/load";
+import { pickReferenced } from "@/lib/pick-referenced";
 
 type DestinationPageProps = {
   params: Promise<{ slug: string }>;
@@ -42,11 +43,13 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
   const destination = BUILT.find((entry) => entry.slug === slug);
   if (!destination) notFound();
 
-  const [loot, triumphCatalog, itemHrefs] = await Promise.all([
+  const [loot, triumphCatalog, allItemHrefs] = await Promise.all([
     loadDestinationLoot(destination),
     loadTriumphCatalog(),
     buildCollectibleHrefByItemHash(`/activities/destinations/${destination.slug}`),
   ]);
+  // Only the links this page renders (the full map is ~0.5 MB).
+  const itemHrefs = pickReferenced(allItemHrefs, [loot]);
   const sections = destinationTriumphSections(triumphCatalog, destination);
   const seal = destinationSeal(triumphCatalog, destination);
   const weekly = await loadDestinationWeekly(destination);

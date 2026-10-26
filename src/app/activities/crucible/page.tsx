@@ -17,6 +17,7 @@ import { playlistEyebrow, playlistSiblings } from "@/lib/activities/playlists";
 import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { getTitleEntry, loadTriumphCatalog } from "@/lib/triumphs/load";
+import { pickReferenced } from "@/lib/pick-referenced";
 
 export const revalidate = 3600;
 
@@ -24,11 +25,13 @@ export default async function CrucibleActivityPage() {
   const hub = CRUCIBLE_HUB;
   const oauthConfigured = isBungieOAuthConfigured();
 
-  const [loot, catalog, itemHrefs] = await Promise.all([
+  const [loot, catalog, allItemHrefs] = await Promise.all([
     resolveCrucibleLoot(),
     loadTriumphCatalog(),
     buildCollectibleHrefByItemHash(`/activities/${hub.slug}`),
   ]);
+  // Only the links this page renders (the full map is ~0.5 MB).
+  const itemHrefs = pickReferenced(allItemHrefs, [loot]);
 
   const titleEntry = getTitleEntry(catalog, hub.titleSlug);
   if (!titleEntry) {
