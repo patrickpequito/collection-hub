@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { transferItemToDestination } from "@/lib/destiny-transfer";
-import { getSession } from "@/lib/session";
+import { getFreshSession } from "@/lib/session-access";
 import type { TransferDestinationId } from "@/types/destiny-characters";
 import { GUARDIAN_CLASSES } from "@/lib/armor-sets/constants";
 
@@ -10,7 +10,7 @@ const VALID_DESTINATIONS = new Set<TransferDestinationId>([
 ]);
 
 export async function POST(request: Request) {
-  const session = await getSession();
+  const session = await getFreshSession();
   if (!session) {
     return NextResponse.json({ error: "Not signed in" }, { status: 401 });
   }

@@ -1,15 +1,16 @@
 import { buildArmorRowsFromCatalogItems } from "@/lib/activities/armor-rows";
 import { resolveIntroductionSeasonFromItems } from "@/lib/activities/legacy-armor-season";
-import { YEAR_OF_PROPHECY_ARMOR_SETS } from "@/data/activities/year-of-prophecy-armor";
+import { YEAR_OF_PROPHECY_ARMOR_SETS, type YearOfProphecyPlaylist } from "@/data/activities/year-of-prophecy-armor";
 import type { LegacyArmorSetGroup } from "@/types/activity-hub";
 import type { AllLootItem } from "@/types/all-loot";
 
 export function resolveYearOfProphecyArmorGroups(
   armorItems: AllLootItem[],
+  playlist: YearOfProphecyPlaylist,
 ): LegacyArmorSetGroup[] {
   const groups: LegacyArmorSetGroup[] = [];
 
-  for (const entry of YEAR_OF_PROPHECY_ARMOR_SETS) {
+  for (const entry of YEAR_OF_PROPHECY_ARMOR_SETS.filter((set) => set.playlists.includes(playlist))) {
     const items = armorItems.filter(
       (item) =>
         item.type === "Armor" &&

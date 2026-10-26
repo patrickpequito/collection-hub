@@ -23,8 +23,10 @@ export function HomeTriumphScores({
 
   useEffect(() => {
     if (!signedIn) {
-      setScores(null);
-      setError(null);
+      void Promise.resolve().then(() => {
+        setScores(null);
+        setError(null);
+      });
       return;
     }
 
@@ -58,7 +60,7 @@ export function HomeTriumphScores({
   const lifetimeScore = signedIn && scores ? scores.lifetimeScore : null;
 
   return (
-    <div className="w-full rounded-xl border border-zinc-800 bg-zinc-900/40 p-4 sm:w-auto sm:min-w-[220px] sm:max-w-xs">
+    <div className="w-full border border-hairline bg-panel/85 p-4 sm:w-auto sm:min-w-[220px] sm:max-w-xs">
       <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
         Triumph Score
       </p>

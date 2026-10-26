@@ -3,7 +3,9 @@ import type { AllLootItemVersion } from "@/types/all-loot";
 /** Seasons where Bungie gear tier (1–5) applies to weapons. */
 export const GEAR_TIER_WEAPON_SEASON_LABELS = new Set([
   "The Edge of Fate",
+  "S27 Season: Reclamation",
   "Renegades",
+  "S28 Season: Lawless",
   "Monument of Triumph",
 ]);
 

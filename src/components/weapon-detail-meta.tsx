@@ -8,22 +8,24 @@ import {
 } from "@/lib/weapon-slot-icon";
 import type { AllLootItem } from "@/types/all-loot";
 
-function MetaDivider() {
-  return <span className="h-4 w-px shrink-0 bg-zinc-700" aria-hidden />;
+function MetaDivider({ dark }: { dark: boolean }) {
+  return <span className={`h-4 w-px shrink-0 ${dark ? "bg-black/30" : "bg-zinc-700"}`} aria-hidden />;
 }
 
 type WeaponDetailMetaProps = {
   weapon: AllLootItem;
+  /** Light background (exotic header): dark text and icons. */
+  dark?: boolean;
 };
 
-export function WeaponDetailMeta({ weapon }: WeaponDetailMetaProps) {
+export function WeaponDetailMeta({ weapon, dark = false }: WeaponDetailMetaProps) {
   const weaponTypeIcon = classOrWeaponTypeIconPath(weapon.classOrWeaponType);
   const damageIcon = damageTypeIconPath(weapon.damageType);
   const ammoIcon = weaponAmmoIconPath(weapon.ammoType);
   const ammoLabel = weaponAmmoLabel(weapon.ammoType);
 
   return (
-    <div className="flex flex-wrap items-center gap-3 text-sm text-zinc-300">
+    <div className={`flex flex-wrap items-center gap-3 text-sm ${dark ? "text-[#4a3d05]" : "text-zinc-300"}`}>
       {weapon.classOrWeaponType ? (
         <span className="inline-flex items-center gap-2">
           {weaponTypeIcon ? (
@@ -32,7 +34,7 @@ export function WeaponDetailMeta({ weapon }: WeaponDetailMetaProps) {
               src={weaponTypeIcon}
               alt=""
               aria-hidden
-              className="h-4 w-6 shrink-0 object-contain brightness-0 invert opacity-[0.85]"
+              className={`h-4 w-6 shrink-0 object-contain brightness-0 ${dark ? "opacity-70" : "invert opacity-[0.85]"}`}
             />
           ) : null}
           <span>{weapon.classOrWeaponType}</span>
@@ -41,14 +43,14 @@ export function WeaponDetailMeta({ weapon }: WeaponDetailMetaProps) {
 
       {weapon.slot ? (
         <>
-          <MetaDivider />
+          <MetaDivider dark={dark} />
           <span>{weapon.slot}</span>
         </>
       ) : null}
 
       {damageIcon ? (
         <>
-          <MetaDivider />
+          <MetaDivider dark={dark} />
           <span
             className="inline-flex items-center"
             role="img"
@@ -69,7 +71,7 @@ export function WeaponDetailMeta({ weapon }: WeaponDetailMetaProps) {
 
       {ammoIcon ? (
         <>
-          <MetaDivider />
+          <MetaDivider dark={dark} />
           <span
             className="inline-flex items-center"
             role="img"
@@ -81,7 +83,7 @@ export function WeaponDetailMeta({ weapon }: WeaponDetailMetaProps) {
               src={ammoIcon}
               alt=""
               aria-hidden
-              className="h-4 w-4 object-contain"
+              className={`h-4 w-4 object-contain ${dark ? "brightness-0 opacity-70" : ""}`}
             />
           </span>
         </>

@@ -11,6 +11,7 @@ export const SEASON_OF_ARRIVALS_HUB: SeasonHub = {
   seasonNumber: 11,
   titleIconPath:
     "/common/destiny2_content/icons/2fb6a08f5bd02095acab19f0e566e3c4.png",
+  seal: { title: "Forerunner", completionRecordHash: "3169895614" },
   videos: [
     {
       id: "trailer",
@@ -74,16 +75,17 @@ export const SEASON_OF_ARRIVALS_HUB: SeasonHub = {
     {
       id: "prophecy",
       title: "Prophecy",
-      description:
-        "Dungeon introduced this season. Still playable from the Director — rewards IKELOS weapons and Moonfang-X7 armor.",
+      description: "Dungeon set inside the Nine's realm, a shifting dimension between Light and Darkness.",
+      location: "Dungeon",
       pgcrImagePath: "/img/destiny_content/pgcr/dungeon_prophecy.jpg",
-      href: "/rad-loot/prophecy",
+      href: "/activities/prophecy",
     },
   ],
   exoticPanelDescription:
     "Exotic weapons from Season of Arrivals — Witherhoard from the Season Pass, Ruinous Effigy from its exotic quest, and Traveler's Chosen from the Exotic Archive.",
   cosmeticPanelDescription:
     "Season Pass cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  showEververseCosmetics: true,
   cosmeticRewards: [
     "Last Bastion Shell",
     "Warden's Wailer",

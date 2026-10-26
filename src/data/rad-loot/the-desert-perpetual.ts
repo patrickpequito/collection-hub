@@ -9,8 +9,6 @@ function item(
   return { itemHash, name, iconPath, source };
 }
 
-const TDP_SOURCE = 'Source: "The Desert Perpetual" Raid';
-
 export const theDesertPerpetualLoot: ActivityLootPage = {
   slug: "the-desert-perpetual",
   title: "The Desert Perpetual",

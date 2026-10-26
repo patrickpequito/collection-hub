@@ -5,7 +5,7 @@ type YouTubeEmbedProps = {
 
 export function YouTubeEmbed({ youtubeId, title }: YouTubeEmbedProps) {
   return (
-    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900">
+    <div className="relative aspect-video w-full overflow-hidden border border-hairline bg-panel">
       <iframe
         src={`https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0`}
         title={title}

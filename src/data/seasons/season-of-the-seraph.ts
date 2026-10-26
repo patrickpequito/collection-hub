@@ -1,0 +1,150 @@
+import {
+  DEFAULT_SEASON_WEAPON_POOLS,
+  type SeasonHub,
+} from "@/data/seasons/types";
+
+export const SEASON_OF_THE_SERAPH_HUB: SeasonHub = {
+  slug: "s19-season-of-the-seraph",
+  title: "Season of the Seraph",
+  seasonLabel: "S19 Season of the Seraph",
+  parentExpansionSlug: "the-witch-queen",
+  seasonNumber: 19,
+  titleIconPath:
+    "/common/destiny2_content/icons/7e6bd0ea84003ebadca59acfbf345e8c.png",
+  seal: { title: "Seraph", completionRecordHash: "4250626982" },
+  videos: [
+    {
+      id: "trailer",
+      label: "Season trailer",
+      youtubeId: "a1OrQIg-7ao",
+    },
+    {
+      id: "cutscene-archive",
+      label: "Cutscene archive",
+      youtubeId: "Bf72Fazd3Ck",
+    },
+  ],
+  armorSetNames: ["Warmind's Avatar", "Iron Companion"],
+  ornamentSets: [
+    { setName: "Hardened Basilisk", armorSetName: "Warmind's Avatar" },
+  ],
+  // Most Seraph weapons were reissued later (Monument, Year 8), so the
+  // primary catalog label is not S19 — list them explicitly.
+  matchWeaponVersions: false,
+  extraWeaponNames: [
+    "Disparity",
+    "Fire and Forget",
+    "Path of Least Resistance",
+    "Tripwire Canary",
+    "IKELOS_HC_v1.0.3",
+    "IKELOS_SG_v1.0.3",
+    "IKELOS_SMG_v1.0.3",
+    "IKELOS_SR_v1.0.3",
+    "Seventh Seraph Carbine",
+    "Seventh Seraph Officer Revolver",
+    "Judgment of Kelgorath",
+    "Retrofit Escapade",
+    "Liminal Vigil",
+    "Long Arm",
+    "Terminus Horizon",
+    "Wilderflight",
+    "Hung Jury SR4",
+    "Wendigo GL3",
+    "Exalted Truth",
+    "Unwavering Duty",
+    "Dark Decider",
+    "Aurvandil FR6",
+    "Gunnora's Axe",
+    "Prolonged Engagement",
+    "Rose",
+    "Veles-X",
+  ],
+  exoticItemNames: ["The Manticore", "Revision Zero", "Hierarchy of Needs"],
+  weaponPools: [
+    {
+      id: "seraph-activities",
+      title: "Heist Battlegrounds & Warsats",
+      sourcePattern: /season of the seraph activities/i,
+    },
+    {
+      id: "seraphs-shield",
+      title: "Operation: Seraph's Shield",
+      sourcePattern: /seraph's shield/i,
+    },
+    {
+      id: "spire-of-the-watcher",
+      title: "Spire of the Watcher",
+      sourcePattern: /spire of the watcher/i,
+    },
+    ...DEFAULT_SEASON_WEAPON_POOLS,
+  ],
+  weaponPoolByName: {
+    "IKELOS_HC_v1.0.3": "seraphs-shield",
+    "IKELOS_SG_v1.0.3": "seraphs-shield",
+    "IKELOS_SMG_v1.0.3": "seraphs-shield",
+    "IKELOS_SR_v1.0.3": "seraphs-shield",
+    "Seventh Seraph Officer Revolver": "seraphs-shield",
+    "Seventh Seraph Carbine": "spire-of-the-watcher",
+    Rose: "crucible",
+    "Gunnora's Axe": "iron-banner",
+    "Judgment of Kelgorath": "season-pass",
+    "Retrofit Escapade": "season-pass",
+    "Hung Jury SR4": "vanguard-ops",
+    "Wendigo GL3": "vanguard-ops",
+    "Exalted Truth": "trials-of-osiris",
+    "Unwavering Duty": "trials-of-osiris",
+    "Dark Decider": "iron-banner",
+  },
+  playableActivities: [
+    {
+      id: "heist-battlegrounds",
+      title: "Heist Battlegrounds",
+      description: "Three-player heists on Mars and the Moon to recover Rasputin's subminds.",
+      location: "Vanguard Fireteam Ops",
+      pgcrImagePath:
+        "/img/destiny_content/pgcr/season_19_battleground_polaris.jpg",
+    },
+    {
+      id: "operation-seraphs-shield",
+      title: "Operation: Seraph's Shield",
+      description: "Exotic mission aboard Seraph Station.",
+      location: "Vanguard Pinnacle Ops",
+      pgcrImagePath: "/img/destiny_content/pgcr/season_19_exotic_mission.jpg",
+    },
+    {
+      id: "spire-of-the-watcher",
+      title: "Spire of the Watcher",
+      description: "Dungeon inside a Vex-infested Warmind spire on Mars.",
+      location: "Dungeon",
+      pgcrImagePath:
+        "/img/destiny_content/pgcr/dungeon_spire_of_the_watcher.jpg",
+      href: "/activities/spire-of-the-watcher",
+    },
+  ],
+  exoticPanelDescription:
+    "Exotic weapons from Season of the Seraph — The Manticore from the Season Pass, Revision Zero from Operation: Seraph's Shield, and Hierarchy of Needs from Spire of the Watcher.",
+  cosmeticPanelDescription:
+    "Season Pass and seasonal triumph cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  cosmeticRewards: [
+    "Infiltrator Shell",
+    "Intercepted Transmission",
+    "Seraph Reboot Entrance",
+    "Mechanica Projection",
+    "Stylish Draw",
+    "Scorpionflight",
+    "Seraphim Cloak",
+    "Carrhae Black",
+    "Warsat Shell",
+    "Archangel's Refit",
+    "Spirit of the Warmind",
+    "Orbital Step",
+    "Knight of the Old Guard",
+  ],
+  showEververseCosmetics: true,
+  eververseOrnamentSetGroups: [
+    ["Dynamo Current", "Thunderous Impact", "Arclight"],
+    // Assassin's Creed collaboration.
+    ["Misthios", "Wolf-Kissed", "Eagle's"],
+  ],
+  available: true,
+};

@@ -1,9 +1,10 @@
 import {
+  toLootItemFromCatalog,
   toLootItemFromCatalogVersion,
 } from "@/lib/activities/loot-item";
 import { compareTrialsReleaseOrder } from "@/lib/activities/trials-release-order";
 import { dedupeVersionsForDisplay } from "@/lib/all-loot/season-badges";
-import { TRIALS_WEAPON_POOLS } from "@/data/activities/trials-of-osiris";
+import { TRIALS_VENDOR_EXCLUSIVE_WEAPONS, TRIALS_WEAPON_POOLS } from "@/data/activities/trials-of-osiris";
 import type { TrialsWeaponSeasonGroup } from "@/types/activity-hub";
 import type { AllLootItem, AllLootItemVersion } from "@/types/all-loot";
 import type { LootItem } from "@/types/activity-loot";
@@ -107,4 +108,42 @@ export function groupTrialsWeaponsByReleaseSeason(
       items: items.sort(sortLootItems),
     }))
     .sort(compareTrialsReleaseOrder);
+}
+
+/**
+ * Trials weapons outside the bonus / Lighthouse pools, grouped by how you get them,
+ * one entry per weapon (its newest version):
+ * - vendorExclusive: sold only by Saint-14 (Focused Decoding → Vendor Exclusive Gear),
+ * - adept: every Adept version (flawless rewards), pool weapons included,
+ * - legacy: older Trials weapons still in the catalog.
+ */
+export function groupTrialsWeaponsByAcquisition(catalogItems: AllLootItem[]): {
+  vendorExclusive: LootItem[];
+  adept: LootItem[];
+  legacy: LootItem[];
+} {
+  const poolBaseNames = allTrialsPoolWeaponBaseNames();
+  const relatedBaseNames = new Set<string>(poolBaseNames);
+  for (const item of catalogItems) {
+    if (isTrialsWeaponItem(item, poolBaseNames)) relatedBaseNames.add(baseWeaponName(item.name));
+  }
+  for (const name of TRIALS_VENDOR_EXCLUSIVE_WEAPONS) relatedBaseNames.add(name);
+
+  const newestByName = new Map<string, AllLootItem>();
+  for (const item of catalogItems) {
+    if (item.type !== "Weapon" || !item.obtainable || !relatedBaseNames.has(baseWeaponName(item.name))) continue;
+    if (!newestByName.has(item.name)) newestByName.set(item.name, item);
+  }
+
+  const vendorNames = new Set<string>(TRIALS_VENDOR_EXCLUSIVE_WEAPONS);
+  const groups = { vendorExclusive: [] as LootItem[], adept: [] as LootItem[], legacy: [] as LootItem[] };
+  for (const item of newestByName.values()) {
+    const lootItem = toLootItemFromCatalog(item);
+    if (item.name.endsWith("(Adept)")) groups.adept.push(lootItem);
+    else if (poolBaseNames.has(item.name)) continue;
+    else if (vendorNames.has(item.name)) groups.vendorExclusive.push(lootItem);
+    else groups.legacy.push(lootItem);
+  }
+  for (const list of Object.values(groups)) list.sort(sortLootItems);
+  return groups;
 }

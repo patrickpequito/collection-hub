@@ -9,8 +9,6 @@ function item(
   return { itemHash, name, iconPath, source };
 }
 
-const SE_SOURCE = 'Source: "Salvation\'s Edge" Raid';
-
 export const salvationsEdgeLoot: ActivityLootPage = {
   slug: "salvations-edge",
   title: "Salvation's Edge",

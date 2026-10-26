@@ -8,10 +8,11 @@ import {
 } from "@/components/activity-current-loot-panel";
 import { useOwnership } from "@/components/client-ownership";
 import { LegacyArmorSetsSection } from "@/components/legacy-armor-sets-section";
-import { LootSection } from "@/components/loot-section";
+import { LootBox, LootSection } from "@/components/loot-section";
 import { ActivityArmorSection } from "@/components/activity-armor-section";
 import { TrialsWeaponsBySeasonSection } from "@/components/trials-weapons-by-season-section";
 import { compareTrialsReleaseOrder } from "@/lib/activities/trials-release-order";
+import type { PoolOccurrence } from "@/lib/activities/pool-rotation";
 import type {
   ActivityHubLootSection,
   ActivityWeaponPool,
@@ -26,6 +27,8 @@ type CurrentArmorProps = {
   armorRows: ActivityArmorRow[];
   previewFiles?: string[];
   itemHrefs?: Record<string, string>;
+  heading?: string;
+  headingNote?: string;
 };
 
 export function OwnedActivityCurrentLootPanel(props: CurrentArmorProps) {
@@ -85,12 +88,14 @@ type CosmeticProps = {
   sections: ActivityHubLootSection[];
   legacySections?: ActivityHubLootSection[];
   itemHrefs?: Record<string, string>;
+  heading?: string;
 };
 
 export function OwnedActivityCosmeticLootPanel({
   sections,
   legacySections,
   itemHrefs,
+  heading,
 }: CosmeticProps) {
   const { ownedItemHashes, showOwnership } = useOwnership();
   const [showLegacy, setShowLegacy] = useState(false);
@@ -101,21 +106,27 @@ export function OwnedActivityCosmeticLootPanel({
     return mergeCosmeticSections(sections, legacySections);
   }, [sections, legacySections, showLegacy]);
 
+  // Current / Include legacy, same square segmented buttons as the other page toggles.
   const toolbar = hasLegacy ? (
-    <div className="flex items-center justify-end">
-      <label className="inline-flex cursor-pointer items-center gap-2 text-xs text-zinc-400">
-        <span>Include legacy</span>
-        <span className="relative inline-flex h-5 w-9 items-center">
-          <input
-            type="checkbox"
-            className="peer sr-only"
-            checked={showLegacy}
-            onChange={(event) => setShowLegacy(event.target.checked)}
-          />
-          <span className="absolute inset-0 rounded-full bg-zinc-700 transition peer-checked:bg-[#c9a227]/80 peer-focus-visible:ring-2 peer-focus-visible:ring-[#c9a227]/60" />
-          <span className="absolute left-0.5 size-4 rounded-full bg-zinc-100 transition peer-checked:translate-x-4" />
-        </span>
-      </label>
+    <div className="flex justify-end gap-1" role="group" aria-label="Cosmetics shown">
+      {[
+        { value: false, label: "Current" },
+        { value: true, label: "Include legacy" },
+      ].map((option) => (
+        <button
+          key={option.label}
+          type="button"
+          aria-pressed={showLegacy === option.value}
+          onClick={() => setShowLegacy(option.value)}
+          className={`inline-flex min-h-7 items-center border px-2.5 font-display text-xs uppercase tracking-[0.12em] transition ${
+            showLegacy === option.value
+              ? "border-bone bg-white/[0.06] text-white"
+              : "border-white/[0.22] text-[#c7cad0] hover:border-bone"
+          }`}
+        >
+          {option.label}
+        </button>
+      ))}
     </div>
   ) : null;
 
@@ -123,6 +134,7 @@ export function OwnedActivityCosmeticLootPanel({
     <ActivityCosmeticLootPanel
       sections={visibleSections}
       toolbar={toolbar}
+      heading={heading}
       ownedItemHashes={ownedItemHashes}
       showOwnership={showOwnership}
       itemHrefs={itemHrefs}
@@ -155,7 +167,13 @@ type WeaponPoolsProps = {
   previewFiles?: string[];
   weapons?: LootItem[];
   weaponPools?: ActivityWeaponPool[];
+  weaponSubgroups?: { title: string; items: LootItem[] }[];
+  poolOccurrences?: PoolOccurrence[];
+  poolsNowMs?: number;
+  armorNote?: string;
   itemHrefs?: Record<string, string>;
+  heading?: string;
+  headingNote?: string;
 };
 
 export function OwnedActivityCurrentLootPanelFull(props: WeaponPoolsProps) {
@@ -175,6 +193,7 @@ type ArmorSectionProps = {
   rows: ActivityArmorRow[];
   previewFiles?: string[];
   itemHrefs?: Record<string, string>;
+  layout?: "column" | "wide";
 };
 
 export function OwnedActivityArmorSection(props: ArmorSectionProps) {
@@ -209,9 +228,15 @@ export function OwnedLootSection(props: LootSectionProps) {
 type TrialsWeaponsProps = {
   groups: TrialsWeaponSeasonGroup[];
   weaponPools?: ActivityWeaponPool[];
+  poolOccurrences?: PoolOccurrence[];
+  poolsNowMs?: number;
+  boxTitle?: string;
+  weaponSubgroups?: { title: string; items: LootItem[] }[];
   activityTitle?: string;
   footerNote?: string;
   itemHrefs?: Record<string, string>;
+  heading?: string;
+  headingNote?: string;
 };
 
 export function OwnedTrialsWeaponsBySeasonSection(props: TrialsWeaponsProps) {
@@ -224,3 +249,9 @@ export function OwnedTrialsWeaponsBySeasonSection(props: TrialsWeaponsProps) {
     />
   );
 }
+
+export function OwnedLootBox(props: Omit<Parameters<typeof LootBox>[0], "ownedItemHashes" | "showOwnership">) {
+  const { ownedItemHashes, showOwnership } = useOwnership();
+  return <LootBox {...props} ownedItemHashes={ownedItemHashes} showOwnership={showOwnership} />;
+}
+

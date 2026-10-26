@@ -24,7 +24,7 @@ function SetBonusCard({
   }
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
+    <div className="border border-hairline bg-panel/85 p-4">
       <div className="flex gap-3">
         {bonus.iconPath ? (
           <Image
@@ -69,7 +69,7 @@ export function ArmorSetBonusesPanel({
   return (
     <div className="space-y-3">
       {setName ? (
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">
+        <h2 className="ui-label">
           {setName} Set Bonuses
         </h2>
       ) : null}

@@ -55,9 +55,9 @@ export function WeaponStatsPanel({ stats }: WeaponStatsPanelProps) {
       {barStats.map((stat) => (
         <div key={stat.name}>
           <StatRow stat={stat} />
-          <div className="mt-0.5 h-1 overflow-hidden rounded-full bg-zinc-800">
+          <div className="mt-0.5 h-1 overflow-hidden bg-white/10">
             <div
-              className="h-full rounded-full bg-zinc-100"
+              className="h-full bg-zinc-100"
               style={{ width: `${statBarWidth(stat)}%` }}
             />
           </div>

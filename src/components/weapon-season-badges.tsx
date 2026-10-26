@@ -40,7 +40,7 @@ function SeasonBadgeIcon({
   const [tooltipLeftPx, setTooltipLeftPx] = useState<number | null>(null);
 
   useEffect(() => {
-    setIconSrc(localSeasonIconPath(badge.label));
+    void Promise.resolve().then(() => setIconSrc(localSeasonIconPath(badge.label)));
   }, [badge.label, badge.iconPath]);
 
   useEffect(
@@ -91,7 +91,7 @@ function SeasonBadgeIcon({
     tooltipTop !== null && tooltipLeftPx !== null
       ? createPortal(
           <div
-            className="pointer-events-none fixed z-[100] w-[12.5rem] rounded-lg border border-zinc-700 bg-zinc-950/95 px-2.5 py-2 text-center shadow-lg"
+            className="pointer-events-none fixed z-[100] w-[12.5rem] border border-white/30 bg-[#12161c] px-2.5 py-2 text-center shadow-lg"
             style={{ top: tooltipTop, left: tooltipLeftPx }}
             role="tooltip"
           >
@@ -106,21 +106,13 @@ function SeasonBadgeIcon({
         )
       : null;
 
-  const ringClass = selected
-    ? "ring-2 ring-amber-400/70 ring-offset-1 ring-offset-zinc-950"
-    : selectable
-      ? "hover:ring-1 hover:ring-amber-400/50"
-      : "";
-
+  // No frame (icon shapes vary): dimmed until hovered, selected gets a gold bar underneath.
   const containerClass = [
-    `relative shrink-0 overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900 ${BADGE_SIZE_CLASS}`,
-    selectable
-      ? "cursor-pointer transition-[transform,background-color,border-color,box-shadow] duration-200 hover:bg-zinc-800/90 hover:border-zinc-600 active:scale-95 active:duration-75"
+    `relative shrink-0 ${BADGE_SIZE_CLASS} transition duration-200`,
+    selectable && !selected ? "cursor-pointer opacity-45 hover:opacity-100" : "opacity-100",
+    selectable && selected
+      ? "after:absolute after:inset-x-1 after:-bottom-2 after:h-0.5 after:bg-owned after:content-['']"
       : "",
-    selectable && !selected
-      ? "hover:scale-105 hover:shadow-lg hover:shadow-black/25"
-      : "",
-    ringClass,
   ]
     .filter(Boolean)
     .join(" ");
@@ -131,7 +123,7 @@ function SeasonBadgeIcon({
       alt=""
       width={48}
       height={48}
-      className="pointer-events-none absolute left-0 top-0 size-full object-cover"
+      className="pointer-events-none absolute left-0 top-0 size-full object-contain drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]"
       aria-hidden
       unoptimized
       onError={() => {
@@ -152,7 +144,7 @@ function SeasonBadgeIcon({
         {selectable && onSelect ? (
           <button
             type="button"
-            className="absolute inset-0 z-10 rounded-sm"
+            className="absolute inset-0 z-10"
             onFocus={showTooltip}
             onBlur={hideTooltip}
             onClick={() => {

@@ -2,8 +2,12 @@ import type { SeasonHub } from "@/data/seasons/types";
 import { SEASON_OF_ARRIVALS_HUB } from "@/data/seasons/season-of-arrivals";
 import { SEASON_OF_THE_CHOSEN_HUB } from "@/data/seasons/season-of-the-chosen";
 import { SEASON_OF_DAWN_HUB } from "@/data/seasons/season-of-dawn";
+import { SEASON_OF_THE_HAUNTED_HUB } from "@/data/seasons/season-of-the-haunted";
 import { SEASON_OF_THE_HUNT_HUB } from "@/data/seasons/season-of-the-hunt";
 import { SEASON_OF_THE_LOST_HUB } from "@/data/seasons/season-of-the-lost";
+import { SEASON_OF_PLUNDER_HUB } from "@/data/seasons/season-of-plunder";
+import { SEASON_OF_THE_RISEN_HUB } from "@/data/seasons/season-of-the-risen";
+import { SEASON_OF_THE_SERAPH_HUB } from "@/data/seasons/season-of-the-seraph";
 import { SEASON_OF_THE_SPLICER_HUB } from "@/data/seasons/season-of-the-splicer";
 import { SEASON_OF_THE_UNDYING_HUB } from "@/data/seasons/season-of-the-undying";
 import { SEASON_OF_THE_WORTHY_HUB } from "@/data/seasons/season-of-the-worthy";
@@ -23,6 +27,10 @@ const SEASON_HUBS: Record<string, SeasonHub> = {
   [SEASON_OF_THE_CHOSEN_HUB.slug]: SEASON_OF_THE_CHOSEN_HUB,
   [SEASON_OF_THE_SPLICER_HUB.slug]: SEASON_OF_THE_SPLICER_HUB,
   [SEASON_OF_THE_LOST_HUB.slug]: SEASON_OF_THE_LOST_HUB,
+  [SEASON_OF_THE_RISEN_HUB.slug]: SEASON_OF_THE_RISEN_HUB,
+  [SEASON_OF_THE_HAUNTED_HUB.slug]: SEASON_OF_THE_HAUNTED_HUB,
+  [SEASON_OF_PLUNDER_HUB.slug]: SEASON_OF_PLUNDER_HUB,
+  [SEASON_OF_THE_SERAPH_HUB.slug]: SEASON_OF_THE_SERAPH_HUB,
 };
 
 export const PUBLISHED_SEASON_SLUGS = new Set(

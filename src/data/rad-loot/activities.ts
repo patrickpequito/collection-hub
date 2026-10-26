@@ -173,5 +173,5 @@ export const DUNGEONS: ActivityEntry[] = [
 
 export function getActivityHref(entry: ActivityEntry): string | null {
   if (!entry.available || entry.placeholder) return null;
-  return `/rad-loot/${entry.slug}`;
+  return `/activities/${entry.slug}`;
 }

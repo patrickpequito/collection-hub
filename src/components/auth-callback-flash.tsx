@@ -16,11 +16,11 @@ export function AuthCallbackFlash() {
 
   useEffect(() => {
     if (!error && !loginSuccess && !logoutSuccess) {
-      setVisible(false);
+      void Promise.resolve().then(() => setVisible(false));
       return;
     }
 
-    setVisible(true);
+    void Promise.resolve().then(() => setVisible(true));
     const timer = window.setTimeout(() => {
       setVisible(false);
       const next = new URLSearchParams(searchParams.toString());

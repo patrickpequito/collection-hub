@@ -19,7 +19,7 @@ async function readArmorSetBonusCatalog(): Promise<ArmorSetBonusCatalog> {
 
 export const loadArmorSetBonusCatalog = unstable_cache(
   readArmorSetBonusCatalog,
-  ["armor-set-bonus-catalog"],
+  ["armor-set-bonus-catalog-v2"],
   { revalidate: 60 * 60 },
 );
 

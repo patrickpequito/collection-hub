@@ -12,6 +12,8 @@ type ActivityArmorSetPreviewProps = {
     href: string;
     handle: string;
   };
+  /** From lg up, take the parent's height and keep the whole image, right-aligned. */
+  fill?: boolean;
 };
 
 async function imageExists(url: string): Promise<boolean> {
@@ -29,6 +31,7 @@ export function ActivityArmorSetPreview({
   label,
   missingImageVariant = "file-hint",
   contributionLink,
+  fill = false,
 }: ActivityArmorSetPreviewProps) {
   const [imageStatus, setImageStatus] = useState<"loading" | "loaded" | "error">(
     "loading",
@@ -38,8 +41,11 @@ export function ActivityArmorSetPreview({
 
   useEffect(() => {
     let cancelled = false;
-    setImageStatus("loading");
-    setExpanded(false);
+    void Promise.resolve().then(() => {
+      if (cancelled) return;
+      setImageStatus("loading");
+      setExpanded(false);
+    });
 
     void imageExists(imageUrl).then((exists) => {
       if (!cancelled) {
@@ -113,7 +119,15 @@ export function ActivityArmorSetPreview({
 
   return (
     <>
-      <div className="min-w-0 max-w-full overflow-hidden rounded-lg border border-zinc-800 bg-zinc-950/50">
+      <div
+        className={`min-w-0 max-w-full overflow-hidden border border-zinc-800 bg-zinc-950/50 ${
+          fill
+            ? imageStatus === "error"
+              ? "lg:flex lg:h-full lg:items-center"
+              : "lg:relative lg:h-full lg:border-0 lg:bg-transparent"
+            : ""
+        }`}
+      >
         {imageStatus === "loading" ? (
           <div className="min-h-36 w-full" aria-hidden />
         ) : null}
@@ -122,14 +136,16 @@ export function ActivityArmorSetPreview({
           <button
             type="button"
             onClick={() => setExpanded(true)}
-            className="block min-w-0 w-full max-w-full cursor-zoom-in transition hover:opacity-90"
+            className={`block min-w-0 w-full max-w-full cursor-zoom-in transition hover:opacity-90 ${
+              fill ? "lg:absolute lg:inset-0 lg:flex lg:h-full lg:justify-end" : ""
+            }`}
             aria-label={`Expand ${label} preview`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={imageUrl}
               alt={label}
-              className="block h-auto max-w-full w-full"
+              className={`block h-auto max-w-full w-full ${fill ? "lg:h-full lg:w-auto lg:border lg:border-zinc-800 lg:object-contain" : ""}`}
             />
           </button>
         ) : null}
@@ -148,7 +164,7 @@ export function ActivityArmorSetPreview({
           <button
             type="button"
             onClick={closeLightbox}
-            className="absolute right-4 top-4 rounded-md border border-zinc-600 bg-zinc-900/90 px-3 py-1.5 text-xs uppercase tracking-wide text-zinc-300 transition hover:border-zinc-400 hover:text-zinc-100"
+            className="absolute right-4 top-4 border border-zinc-600 bg-zinc-900/90 px-3 py-1.5 text-xs uppercase tracking-wide text-zinc-300 transition hover:border-zinc-400 hover:text-zinc-100"
           >
             Close
           </button>

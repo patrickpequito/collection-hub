@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local-only working files (never published)
+/.claude/
+/docs/
+/public/featured-icon-picker.html
+/public/vault-icon-picker.html
+/public/images/rad-loot/featured-icon-candidates/
+/public/images/vault-icon-candidates/
+/data/featured-icon-candidates.json
+/data/vault-icon-candidates.json

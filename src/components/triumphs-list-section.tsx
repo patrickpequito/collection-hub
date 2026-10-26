@@ -15,8 +15,26 @@ import type {
 } from "@/types/triumph";
 import { EMPTY_TRIUMPH_STRING_VARIABLES } from "@/types/triumph";
 
-const TOGGLE_BUTTON_CLASS =
-  "shrink-0 rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-1.5 text-xs font-medium text-zinc-500 transition hover:border-zinc-700 hover:bg-zinc-900 hover:text-zinc-300";
+/** Square check + label, same as the seal page's "Hide completed". */
+function CheckToggle({ label, checked, onToggle }: { label: string; checked: boolean; onToggle: () => void }) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      onClick={onToggle}
+      className="group flex items-center gap-2.5 font-display text-sm uppercase tracking-[0.12em] text-[#c7cad0] transition hover:text-bone"
+    >
+      <span
+        aria-hidden
+        className={`size-4 border transition ${
+          checked ? "border-owned bg-owned bg-clip-content p-[3px]" : "border-white/45 bg-[#1d2026] group-hover:border-bone/70"
+        }`}
+      />
+      {label}
+    </button>
+  );
+}
 
 type TriumphsListSectionProps = {
   records: TriumphRecord[];
@@ -25,7 +43,12 @@ type TriumphsListSectionProps = {
   showProgress?: boolean;
   signInMessage?: string;
   stringVariables?: TriumphStringVariables;
-  heading?: string;
+  /** Small label above the list; null when the page shows a SectionHeading instead. */
+  heading?: string | null;
+  /** Records that count toward the title; enables the "Title only" filter. */
+  titleRecordHashes?: string[];
+  /** Tile columns: 2 for full-width lists, 1 next to a side panel. */
+  columns?: 1 | 2;
 };
 
 export function TriumphsListSection({
@@ -35,9 +58,12 @@ export function TriumphsListSection({
   signInMessage = "Sign in to see triumph progress.",
   stringVariables: stringVariablesProp,
   heading = "Triumphs",
+  titleRecordHashes,
+  columns = 1,
 }: TriumphsListSectionProps) {
   const signedIn = useSignedIn();
   const [hideCompleted, setHideCompleted] = useState(false);
+  const [titleOnly, setTitleOnly] = useState(false);
   const profileInstances = useProfileRecordInstances();
   const profileVariables = useProfileStringVariables();
 
@@ -55,10 +81,21 @@ export function TriumphsListSection({
     [recordInstances],
   );
 
-  const visibleRecords = useMemo(() => {
-    if (!hideCompleted || !showProgress) return records;
+  const titleHashes = useMemo(
+    () => (titleRecordHashes ? new Set(titleRecordHashes) : null),
+    [titleRecordHashes],
+  );
+  const showTitleToggle =
+    titleHashes !== null && records.some((record) => !titleHashes.has(record.recordHash));
 
-    return records.filter(
+  const visibleRecords = useMemo(() => {
+    const scoped =
+      titleOnly && titleHashes
+        ? records.filter((record) => titleHashes.has(record.recordHash))
+        : records;
+    if (!hideCompleted || !showProgress) return scoped;
+
+    return scoped.filter(
       (record) =>
         !isTriumphRecordDisplayComplete(
           record,
@@ -66,24 +103,26 @@ export function TriumphsListSection({
           { strictCompletion: true, showProgress: true },
         ),
     );
-  }, [hideCompleted, instances, records, showProgress]);
+  }, [hideCompleted, instances, records, showProgress, titleHashes, titleOnly]);
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between gap-3">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">
-          {heading}
-        </h2>
+      <div className={`flex items-center gap-3 ${heading ? "justify-between" : "justify-end"}`}>
+        {heading ? <h3 className="ui-label">{heading}</h3> : null}
 
-        {showProgress ? (
-          <button
-            type="button"
-            className={TOGGLE_BUTTON_CLASS}
-            aria-pressed={hideCompleted}
-            onClick={() => setHideCompleted((value) => !value)}
-          >
-            {hideCompleted ? "Show completed" : "Hide completed"}
-          </button>
+        {showProgress || showTitleToggle ? (
+          <div className="flex flex-wrap justify-end gap-x-5 gap-y-2">
+            {showTitleToggle ? (
+              <CheckToggle label="Title only" checked={titleOnly} onToggle={() => setTitleOnly((value) => !value)} />
+            ) : null}
+            {showProgress ? (
+              <CheckToggle
+                label="Hide completed"
+                checked={hideCompleted}
+                onToggle={() => setHideCompleted((value) => !value)}
+              />
+            ) : null}
+          </div>
         ) : null}
       </div>
 
@@ -100,8 +139,8 @@ export function TriumphsListSection({
         recordInstances={instances}
         showProgress={Boolean(showProgress)}
         strictCompletion
-        variant="title"
         stringVariables={stringVariables}
+        columns={columns}
       />
     </div>
   );

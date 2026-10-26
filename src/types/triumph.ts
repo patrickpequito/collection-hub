@@ -58,6 +58,8 @@ export type TitleEntry = {
   completionRecordHash: string | null;
   /** Gilding seal record — redeemed when the title is gilded. */
   gildingTrackingRecordHash: string | null;
+  /** Vaulted season / expansion seal — no longer obtainable. */
+  isLegacy?: boolean;
   records: TriumphRecord[];
 };
 
@@ -65,6 +67,7 @@ export type TriumphCatalog = {
   generatedAt: string;
   groups: TriumphGroup[];
   titles: TitleEntry[];
+  legacyTitles?: TitleEntry[];
 };
 
 export type TriumphProgress = {
@@ -84,6 +87,8 @@ export type RecordObjectiveProgress = {
 export type RecordInstance = {
   state: number;
   objectives: RecordObjectiveProgress[];
+  /** Times completed — gilding tracking records count gilds here. */
+  completedCount?: number;
 };
 
 /** Bungie profile StringVariables — resolves {var:hash} in objective text. */

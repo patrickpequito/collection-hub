@@ -14,6 +14,7 @@ export const WITCH_QUEEN_HUB: ExpansionHub = {
   seasonLabels: ["The Witch Queen"],
   seasonIconHashes: ["0b441021fbc328e6d0e2abc895f5c96e"],
   seasonNumber: 16,
+  showEververseCosmetics: true,
   destinationArmorSetNames: ["Veritas"],
   destinationArmorPreviewFiles: ["veritas.webp"],
   destinationTitle: "Destination // Savathûn's Throne World",
@@ -21,16 +22,13 @@ export const WITCH_QUEEN_HUB: ExpansionHub = {
   destinationActivitySlug: "throne-world",
   destinationWeaponSourcePattern: /throne world|wellspring/i,
   destinationWeaponExtraNames: ["Forensic Nightmare"],
-  relatedRadSlugs: [
-    "vow-of-the-disciple",
-    "duality",
-    "spire-of-the-watcher",
-  ],
+  // Duality (S17) and Spire of the Watcher (S18) are season dungeons, not expansion.
+  relatedRadSlugs: ["vow-of-the-disciple"],
   deepLootActivities: DEFAULT_DEEP_LOOT_ACTIVITIES,
   deepLootExcludedSourcePattern:
     /throne world|wellspring|vow of the disciple|duality|spire of the watcher|eververse|bright engram/i,
   raidsDungeonsBlurb:
-    "Raid and dungeons from The Witch Queen year — open the full loot hubs.",
+    "Raid from The Witch Queen — open the full loot hub.",
   triumphsGroupTitle: "Throne World // All triumphs",
   exoticPanelDescription:
     "Exotics introduced with The Witch Queen — including raid and exotic quests. Season watermark takes priority over catalog season labels.",

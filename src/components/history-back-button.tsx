@@ -4,7 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getBackNavigationTarget } from "@/lib/app-navigation-stack";
 
 const GREY_BUTTON_CLASS =
-  "rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-1.5 text-xs font-medium text-zinc-500 transition hover:border-zinc-700 hover:bg-zinc-900 hover:text-zinc-300";
+  "inline-flex h-9 items-center border border-white/20 px-3 font-display text-xs uppercase tracking-[0.14em] text-ash transition hover:border-bone hover:text-bone";
 
 type HistoryBackButtonProps = {
   label: string;

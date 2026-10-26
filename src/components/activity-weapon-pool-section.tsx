@@ -41,7 +41,7 @@ export function ActivityWeaponPoolSection({
           <h3 className="text-sm font-medium text-zinc-300">{heading}</h3>
         ) : null}
         <div
-          className="inline-flex rounded-lg border border-zinc-800 bg-zinc-900/60 p-0.5"
+          className="inline-flex border border-hairline bg-panel p-0.5"
           role="tablist"
           aria-label="Weapon pools"
         >

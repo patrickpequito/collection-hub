@@ -7,7 +7,8 @@ import { getSessionSecret } from "@/lib/env";
 const SESSION_COOKIE = "d2_session";
 const OAUTH_STATE_COOKIE = "bungie_oauth_state";
 const OAUTH_RETURN_TO_COOKIE = "bungie_oauth_return_to";
-const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
+/** Matches Bungie's refresh token lifetime (90 days). */
+const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 90;
 
 function sign(value: string): string {
   return createHmac("sha256", getSessionSecret()).update(value).digest("base64url");
@@ -45,8 +46,13 @@ function decodeSession(value: string): BungieUserSession | null {
       return null;
     }
 
+    // An expired access token is fine while the refresh token is still valid:
+    // getFreshSession() renews it. Only drop sessions that can't be renewed.
     if (session.expiresAt <= Date.now()) {
-      return null;
+      const canRefresh =
+        Boolean(session.refreshToken) &&
+        (session.refreshExpiresAt ?? Infinity) > Date.now();
+      if (!canRefresh) return null;
     }
 
     return session;

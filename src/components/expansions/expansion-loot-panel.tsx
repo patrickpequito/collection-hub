@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionHeading } from "@/components/detail-page-parts";
 import { useOwnership } from "@/components/client-ownership";
 import { LootItemGrid } from "@/components/loot-section";
 import type { LootItem } from "@/types/activity-loot";
@@ -22,14 +23,13 @@ export function ExpansionLootPanel({
   const { ownedItemHashes, showOwnership } = useOwnership();
 
   return (
-    <section className="min-w-0 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
-      <h2 className="border-b border-zinc-800 pb-3 text-lg font-semibold text-zinc-100">
-        {title}
-      </h2>
+    <section className="min-w-0">
+      <SectionHeading title={title} />
+      <div className="min-w-0 overflow-hidden border border-hairline bg-panel/85 p-3 sm:p-4">
       {description ? (
-        <p className="mt-3 text-sm text-zinc-400">{description}</p>
+        <p className="mb-4 text-sm text-zinc-400">{description}</p>
       ) : null}
-      <div className="mt-4">
+      <div>
         {items.length === 0 ? (
           <p className="text-xs text-zinc-500">No items in this section yet.</p>
         ) : (
@@ -46,6 +46,7 @@ export function ExpansionLootPanel({
             itemHrefs={itemHrefs}
           />
         )}
+      </div>
       </div>
     </section>
   );

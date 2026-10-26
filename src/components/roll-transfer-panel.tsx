@@ -90,14 +90,16 @@ export function RollTransferPanel({
 
   useEffect(() => {
     if (!open) {
-      setTransferPhase("idle");
-      setError(null);
-      setHighlightedDestination(null);
+      void Promise.resolve().then(() => {
+        setTransferPhase("idle");
+        setError(null);
+        setHighlightedDestination(null);
+      });
       return;
     }
 
     if (transferPhase !== "idle" || !currentDestination) return;
-    setHighlightedDestination(currentDestination);
+    void Promise.resolve().then(() => setHighlightedDestination(currentDestination));
   }, [open, currentDestination, transferPhase]);
 
   const handleTransfer = useCallback(

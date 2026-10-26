@@ -23,3 +23,18 @@ export function resolveAegisEntryForItemHash(
 ) {
   return index.weapons[itemHash] ?? null;
 }
+
+/**
+ * Perks Aegis favours for one weapon version: any perk that shows up in at
+ * least a fifth of its recommended roll lines.
+ */
+export function aegisRecommendedPerks(itemHash: string, index: WeaponAegisRollIndex): string[] {
+  const lines = index.weapons[itemHash]?.lines ?? [];
+  if (lines.length === 0) return [];
+  const counts = new Map<string, number>();
+  for (const line of lines) {
+    for (const hash of new Set(line)) counts.set(hash, (counts.get(hash) ?? 0) + 1);
+  }
+  const threshold = Math.max(1, Math.ceil(lines.length / 5));
+  return [...counts.entries()].filter(([, count]) => count >= threshold).map(([hash]) => hash);
+}

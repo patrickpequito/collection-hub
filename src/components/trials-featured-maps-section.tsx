@@ -1,34 +1,29 @@
 import Image from "next/image";
-import { ACTIVITY_LOOT_PANEL_CLASS } from "@/components/activity-current-loot-panel";
+import { ACTIVITY_LOOT_PANEL_CLASS, PanelHeading } from "@/components/activity-current-loot-panel";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 import type { TrialsFeaturedMapsResult } from "@/lib/activities/trials-featured-maps";
 import { formatTrialsWeekRange } from "@/lib/activities/trials-featured-maps";
 
 type TrialsFeaturedMapsSectionProps = {
   featuredMaps: TrialsFeaturedMapsResult;
+  heading?: string;
 };
 
 export function TrialsFeaturedMapsSection({
   featuredMaps,
+  heading = "Featured maps",
 }: TrialsFeaturedMapsSectionProps) {
+  const range = formatTrialsWeekRange(featuredMaps.weekStart, featuredMaps.weekEnd);
+
   if (featuredMaps.maps.length === 0) {
     if (featuredMaps.source !== "iron-banner") return null;
 
     return (
-      <section className={ACTIVITY_LOOT_PANEL_CLASS}>
-        <div className="space-y-1">
-          <h3 className="text-sm font-medium text-zinc-300">
-            Featured maps this weekend
-          </h3>
-          <p className="text-xs text-zinc-500">
-            {formatTrialsWeekRange(
-              featuredMaps.weekStart,
-              featuredMaps.weekEnd,
-            )}
-          </p>
-          <p className="pt-2 text-sm text-zinc-400">
-            Trials of Osiris is paused during Iron Banner. Featured maps return
-            on the next eligible Friday.
+      <section>
+        <PanelHeading title={heading} note={range} />
+        <div className={ACTIVITY_LOOT_PANEL_CLASS}>
+          <p className="text-sm text-ash">
+            Trials of Osiris is paused during Iron Banner. Featured maps return on the next eligible Friday.
           </p>
         </div>
       </section>
@@ -36,24 +31,12 @@ export function TrialsFeaturedMapsSection({
   }
 
   return (
-    <section className={ACTIVITY_LOOT_PANEL_CLASS}>
-      <div className="mb-4 space-y-1">
-        <h3 className="text-sm font-medium text-zinc-300">
-          Featured maps this weekend
-        </h3>
-        <p className="text-xs text-zinc-500">
-          {formatTrialsWeekRange(
-            featuredMaps.weekStart,
-            featuredMaps.weekEnd,
-          )}
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <section>
+      <PanelHeading title={heading} note={range} />
+      <div className={`${ACTIVITY_LOOT_PANEL_CLASS} grid grid-cols-1 gap-4 sm:grid-cols-3`}>
         {featuredMaps.maps.map((map) => (
-          <div key={map.name} className="min-w-0 text-center">
-            <p className="text-sm font-medium text-zinc-100">{map.name}</p>
-            <div className="relative mt-3 aspect-[21/9] overflow-hidden rounded-lg border border-zinc-800 bg-zinc-950">
+          <div key={map.name} className="min-w-0 space-y-2">
+            <div className="relative aspect-[21/9] overflow-hidden border border-hairline bg-void">
               <Image
                 src={bungieIconUrl(map.imagePath)}
                 alt={map.name}
@@ -63,6 +46,7 @@ export function TrialsFeaturedMapsSection({
                 unoptimized
               />
             </div>
+            <p className="font-display text-sm uppercase tracking-[0.1em] text-bone">{map.name}</p>
           </div>
         ))}
       </div>

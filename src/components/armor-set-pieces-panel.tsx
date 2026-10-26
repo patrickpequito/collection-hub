@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionHeading } from "@/components/detail-page-parts";
 import { useMemo } from "react";
 import { ArmorPieceIcon } from "@/components/armor-piece-icon";
 import { GuardianClassIcon } from "@/components/guardian-class-icon";
@@ -13,14 +14,11 @@ import { resolveArmorPieceForSeason } from "@/lib/armor/version-for-hash";
 import { useOwnedItemHashes } from "@/lib/use-owned-item-hashes";
 import type { ArmorPiece, ArmorSet, GuardianClass } from "@/types/armor-set";
 
-/**
- * Icon (1.5rem) + gap-1.5 + the same trailing slack used between capped piece
- * columns: max(0, columnWidth - 3.75rem) where columnWidth = (100% - 4 gaps) / 5.
- */
-const CLASS_ICON_GUTTER_CLASS =
-  "pl-[calc(1.5rem+0.375rem+max(0px,(100%-1.5rem)/5-3.75rem))]";
+
 
 type ArmorSetPiecesPanelProps = {
+  /** Full set preview shown beside the pieces. */
+  preview?: React.ReactNode;
   set: ArmorSet;
   primaryClass: GuardianClass | null;
   selectedSeasonKey?: string | null;
@@ -58,12 +56,17 @@ function ArmorSetClassRow({
 }) {
   const pieces = set.classes[guardianClass];
 
+  const ownedCount = Object.values(pieces ?? {}).filter((piece) => isArmorPieceOwned(piece, ownedItemHashes)).length;
+  const total = Object.values(pieces ?? {}).filter(Boolean).length;
+
   return (
-    <div className={`relative w-full ${CLASS_ICON_GUTTER_CLASS}`}>
-      <div className="pointer-events-none absolute left-0 top-1/2 w-6 -translate-y-1/2">
-        <GuardianClassIcon guardianClass={guardianClass} size="md" />
-      </div>
-      <div className="grid grid-cols-5 gap-1.5">
+    <div className="space-y-1.5">
+      <p className="ui-label flex items-center gap-2 text-bone!">
+        <GuardianClassIcon guardianClass={guardianClass} size="sm" />
+        {guardianClass[0].toUpperCase() + guardianClass.slice(1)}
+        {showOwnership ? <span className="text-ash">· {ownedCount} / {total}</span> : null}
+      </p>
+      <div className="flex flex-wrap gap-1.5">
         {ARMOR_SLOTS.map((slot, slotIndex) => {
           const piece = pieces?.[slot];
           const display = piece
@@ -89,7 +92,8 @@ function ArmorSetClassRow({
               owned={isArmorPieceOwned(piece, ownedItemHashes)}
               showOwnership={showOwnership}
               tooltipAlign={tooltipAlign}
-              fluid
+              rarity={piece ? "Legendary" : undefined}
+              classOrWeaponType={guardianClass[0].toUpperCase() + guardianClass.slice(1)}
               href={
                 piece && display
                   ? resolvePieceHref(piece, display.itemHash, itemHrefs)
@@ -109,6 +113,7 @@ export function ArmorSetPiecesPanel({
   selectedSeasonKey = null,
   isSignedIn = false,
   itemHrefs,
+  preview = null,
 }: ArmorSetPiecesPanelProps) {
   const { itemHashes: ownedItemHashes, error: inventoryError } =
     useOwnedItemHashes(isSignedIn);
@@ -126,43 +131,27 @@ export function ArmorSetPiecesPanel({
   const [primaryGuardianClass, ...otherClasses] = classOrder;
 
   return (
-    <div className="space-y-3">
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">
-        {set.name} Set Pieces
-      </h2>
-
+    <section className="min-w-0 space-y-3">
+      <SectionHeading title="Set pieces" note={set.name} />
       {inventoryError ? (
-        <p className="text-xs text-amber-200/80">
-          Collection unavailable: {inventoryError}
-        </p>
+        <p className="text-xs text-amber-200/80">Collection unavailable: {inventoryError}</p>
       ) : null}
-
-      <div className="space-y-3">
-        <ArmorSetClassRow
-          guardianClass={primaryGuardianClass}
-          set={set}
-          selectedSeasonKey={selectedSeasonKey}
-          ownedItemHashes={ownedSet}
-          showOwnership={showOwnership}
-          itemHrefs={itemHrefs}
-        />
-
-        {otherClasses.length > 0 ? (
-          <div className="space-y-3 border-t border-zinc-700/80 pt-4">
-            {otherClasses.map((guardianClass) => (
-              <ArmorSetClassRow
-                key={guardianClass}
-                guardianClass={guardianClass}
-                set={set}
-                selectedSeasonKey={selectedSeasonKey}
-                ownedItemHashes={ownedSet}
-                showOwnership={showOwnership}
-                itemHrefs={itemHrefs}
-              />
-            ))}
-          </div>
-        ) : null}
+      <div className="ui-panel grid gap-5 p-4 lg:grid-cols-[auto_minmax(0,1fr)]">
+        <div className="space-y-4">
+          {[primaryGuardianClass, ...otherClasses].map((guardianClass) => (
+            <ArmorSetClassRow
+              key={guardianClass}
+              guardianClass={guardianClass}
+              set={set}
+              selectedSeasonKey={selectedSeasonKey}
+              ownedItemHashes={ownedSet}
+              showOwnership={showOwnership}
+              itemHrefs={itemHrefs}
+            />
+          ))}
+        </div>
+        {preview}
       </div>
-    </div>
+    </section>
   );
 }

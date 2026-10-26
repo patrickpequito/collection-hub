@@ -48,3 +48,24 @@ export const IRON_BANNER_WEAPON_POOLS = [
 ] as const;
 
 export const IRON_BANNER_ACTIVE_WEAPON_POOL_ID = "pool-1";
+
+/**
+ * Saladin's "Focused Decoding → Weapons → Vendor Exclusive Gear" (manifest vendor 3013461870):
+ * weapons only he sells. Finite Impactor and Reghusk's Pledge are left out (already in a pool).
+ */
+export const IRON_BANNER_VENDOR_EXCLUSIVE_WEAPONS = [
+  "Allied Demand",
+  "Archon's Thunder",
+  "Bite of the Fox",
+  "Claws of the Wolf",
+  "Frontier's Cry",
+  "Jorum's Claw",
+  "Peacebond",
+  "Riiswalker",
+  "The Hero's Burden",
+  "Tinasha's Mastery",
+  "Tusk of the Boar",
+] as const;
+
+/** Saladin's "Legacy Gear → Weapons" entries without an Iron Banner source in the catalog. */
+export const IRON_BANNER_EXTRA_LEGACY_WEAPONS = ["Warlord's Spear"] as const;

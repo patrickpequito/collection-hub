@@ -20,6 +20,32 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Director UI redesign: PvE / PvP index pages merged into the Activities hub,
+  // and the raids & dungeons hub moved from /rad-loot to /activities.
+  async redirects() {
+    return [
+      {
+        source: "/pve-activities",
+        destination: "/activities#playlists",
+        permanent: true,
+      },
+      {
+        source: "/pvp-activities",
+        destination: "/activities#playlists",
+        permanent: true,
+      },
+      {
+        source: "/rad-loot",
+        destination: "/activities",
+        permanent: true,
+      },
+      {
+        source: "/rad-loot/:slug",
+        destination: "/activities/:slug",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { loadAllLootCatalog } from "@/lib/all-loot/search";
 import { fetchWeaponRollInstances } from "@/lib/destiny-inventory";
-import { getSession } from "@/lib/session";
+import { getFreshSession } from "@/lib/session-access";
 import {
   mergeAegisEntriesForWeaponPage,
   scoreAegisRoll,
@@ -43,7 +43,7 @@ export async function GET(_request: Request, context: RouteContext) {
     );
   }
 
-  const session = await getSession();
+  const session = await getFreshSession();
   if (!session) {
     return NextResponse.json({ rolls: [], characters: [], error: "Not signed in" });
   }

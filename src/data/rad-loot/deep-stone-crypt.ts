@@ -9,8 +9,6 @@ function item(
   return { itemHash, name, iconPath, source };
 }
 
-const DSC_SOURCE = 'Source: "Deep Stone Crypt" Raid';
-
 export const deepStoneCryptLoot: ActivityLootPage = {
   slug: "deep-stone-crypt",
   title: "Deep Stone Crypt",

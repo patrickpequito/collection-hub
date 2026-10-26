@@ -1,6 +1,6 @@
 "use client";
 
-import { TriumphRecordRow } from "@/components/triumph-record-row";
+import { TriumphTile } from "@/components/triumph-tile";
 import type {
   RecordInstance,
   TriumphRecord,
@@ -13,46 +13,29 @@ type TriumphRecordListProps = {
   recordInstances: Map<string, RecordInstance>;
   showProgress: boolean;
   strictCompletion?: boolean;
-  variant?: "group" | "title";
   stringVariables?: TriumphStringVariables;
+  /** Two columns from md up (full-width lists); one column next to a side panel. */
+  columns?: 1 | 2;
 };
 
+/** Triumphs as in-game tiles, the same as the Triumphs pages. */
 export function TriumphRecordList({
   records,
   recordInstances,
   showProgress,
   strictCompletion = false,
-  variant = "group",
   stringVariables = EMPTY_TRIUMPH_STRING_VARIABLES,
+  columns = 1,
 }: TriumphRecordListProps) {
-  if (variant === "title") {
-    return (
-      <div className="space-y-2">
-        {records.map((record) => (
-          <TriumphRecordRow
-            key={record.recordHash}
-            record={record}
-            instance={recordInstances.get(record.recordHash)}
-            showProgress={showProgress}
-            strictCompletion={strictCompletion}
-            variant="title"
-            stringVariables={stringVariables}
-          />
-        ))}
-      </div>
-    );
-  }
-
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/30 px-1 py-1">
+    <div className={`grid gap-2.5 ${columns === 2 ? "md:grid-cols-2" : ""}`}>
       {records.map((record) => (
-        <TriumphRecordRow
+        <TriumphTile
           key={record.recordHash}
           record={record}
           instance={recordInstances.get(record.recordHash)}
           showProgress={showProgress}
           strictCompletion={strictCompletion}
-          variant="group"
           stringVariables={stringVariables}
         />
       ))}

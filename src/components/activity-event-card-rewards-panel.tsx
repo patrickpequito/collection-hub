@@ -1,6 +1,6 @@
+import { SectionHeading } from "@/components/detail-page-parts";
 import Image from "next/image";
 import Link from "next/link";
-import { ACTIVITY_LOOT_PANEL_CLASS } from "@/components/activity-current-loot-panel";
 import { HorizontalScrollHint } from "@/components/horizontal-scroll-hint";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 import type {
@@ -12,10 +12,10 @@ const REWARD_ICON_SIZE = 60;
 
 const CLAIM_STATUS_CARD_CLASS: Record<EventCardRewardClaimStatus, string> = {
   claimed:
-    "border-2 border-[rgb(255,188,0)] bg-zinc-950/40 shadow-[0_0_6px_rgba(255,188,0,0.8)]",
+    "border-2 border-owned bg-zinc-950/40",
   claimable:
-    "border-2 border-emerald-400/90 bg-emerald-950/20 shadow-[0_0_6px_rgba(52,211,153,0.55)]",
-  locked: "border border-zinc-800 bg-zinc-950/40",
+    "border-2 border-emerald-400/90 bg-emerald-950/20",
+  locked: "border border-hairline bg-panel/85",
 };
 
 type ActivityEventCardRewardsPanelProps = {
@@ -38,7 +38,7 @@ function EventCardRewardCard({
 }) {
   const status = showClaimStatus ? claimStatus : "locked";
   const icon = (
-    <div className="relative my-2 size-[60px] shrink-0 overflow-hidden rounded-md bg-zinc-900">
+    <div className="relative my-2 size-[60px] shrink-0 overflow-hidden border border-white/20 bg-zinc-900">
       <Image
         src={bungieIconUrl(reward.iconPath)}
         alt=""
@@ -52,13 +52,13 @@ function EventCardRewardCard({
 
   return (
     <article
-      className={`flex w-[7.75rem] shrink-0 snap-start flex-col items-center rounded-lg p-3 text-center ${CLAIM_STATUS_CARD_CLASS[status]}`}
+      className={`flex w-[7.75rem] shrink-0 snap-start flex-col items-center p-3 text-center ${CLAIM_STATUS_CARD_CLASS[status]}`}
     >
-      <p className="text-xs font-semibold text-zinc-300">Rank {reward.rank}</p>
+      <p className="ui-label text-[11px]!">Rank {reward.rank}</p>
       {href ? (
         <Link
           href={href}
-          className="rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60"
+          className="focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60"
         >
           {icon}
         </Link>
@@ -84,18 +84,21 @@ export function ActivityEventCardRewardsPanel({
   if (rewards.length === 0) return null;
 
   return (
-    <section className={ACTIVITY_LOOT_PANEL_CLASS}>
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
-        <h3 className="text-sm font-medium text-zinc-300">
-          Event Card — reward track
-        </h3>
-        {showClaimStatus ? (
-          <p className="text-[10px] text-zinc-500">
-            <span className="text-amber-300">Gold</span> claimed ·{" "}
-            <span className="text-emerald-300">Green</span> ready to claim
-          </p>
-        ) : null}
-      </div>
+    <section>
+      <SectionHeading
+        title="Event card"
+        note={
+          showClaimStatus ? (
+            <>
+              <span className="text-amber-300">Gold</span> claimed · <span className="text-emerald-300">Green</span>{" "}
+              ready to claim
+            </>
+          ) : (
+            "Reward track"
+          )
+        }
+      />
+      <div className="min-w-0">
       <HorizontalScrollHint hintLabel="Scroll for more ranks">
         <div className="flex w-max min-w-full gap-3">
           {rewards.map((reward) => (
@@ -111,6 +114,7 @@ export function ActivityEventCardRewardsPanel({
           ))}
         </div>
       </HorizontalScrollHint>
+      </div>
     </section>
   );
 }

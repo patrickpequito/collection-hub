@@ -81,6 +81,8 @@ export type AllLootItem = {
   seasonNumber: number;
   eventLabel?: string;
   type: string;
+  /** Emotes only: finishers and combat flair are listed as "Emote" too. */
+  emoteKind?: "Finisher" | "Combat Flair";
   rarity: string;
   classOrWeaponType: string | null;
   damageType: string | null;
@@ -127,6 +129,8 @@ export type AllLootSearchFilters = {
   damageTypes: string[];
   weaponSlots: string[];
   gearSlots: string[];
+  /** Source keywords, any match (e.g. ["raid", "dungeon"] for a quick search). */
+  sources?: string[];
   obtainable: "all" | "yes" | "no";
   collected: "all" | "yes" | "no";
 };

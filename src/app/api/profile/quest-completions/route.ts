@@ -3,11 +3,11 @@ import {
   fetchCompletedQuestHashes,
   parseQuestCompletionTargets,
 } from "@/lib/destiny-quest-progress";
-import { getSession } from "@/lib/session";
+import { getFreshSession } from "@/lib/session-access";
 
 /** Quest-line completion keyed by canonical quest item hash. */
 export async function GET(request: NextRequest) {
-  const session = await getSession();
+  const session = await getFreshSession();
   if (!session) {
     return NextResponse.json(
       { completed: {}, error: null },

@@ -11,6 +11,7 @@ export const SEASON_OF_THE_SPLICER_HUB: SeasonHub = {
   seasonNumber: 14,
   titleIconPath:
     "/common/destiny2_content/icons/84ec4bb049181bc59b45daf71e262b5d.png",
+  seal: { title: "Splicer", completionRecordHash: "2796658869" },
   videos: [
     {
       id: "trailer",
@@ -94,32 +95,32 @@ export const SEASON_OF_THE_SPLICER_HUB: SeasonHub = {
     {
       id: "override-europa",
       title: "Override: Europa",
-      description:
-        "Six-player Override on Europa. One destination rotates active each week in the Director Override playlist.",
+      description: "Six-player Override on Europa.",
+      location: "Vanguard Arena Ops",
       pgcrImagePath:
         "/img/destiny_content/pgcr/season_14_override_europa.jpg",
     },
     {
       id: "override-moon",
       title: "Override: The Moon",
-      description:
-        "Six-player Override on the Moon. One destination rotates active each week in the Director Override playlist.",
+      description: "Six-player Override on the Moon.",
+      location: "Vanguard Arena Ops",
       pgcrImagePath:
         "/img/destiny_content/pgcr/season_14_override_moon.jpg",
     },
     {
       id: "override-tangled-shore",
       title: "Override: Tangled Shore",
-      description:
-        "Six-player Override on the Tangled Shore. One destination rotates active each week in the Director Override playlist.",
+      description: "Six-player Override on the Tangled Shore.",
+      location: "Vanguard Arena Ops",
       pgcrImagePath:
         "/img/destiny_content/pgcr/season_14_override_tangled_shore.jpg",
     },
     {
       id: "override-last-city",
       title: "Override: Last City",
-      description:
-        "Six-player Override in the Last City. One destination rotates active each week in the Director Override playlist.",
+      description: "Six-player Override in the Last City.",
+      location: "Vanguard Arena Ops",
       pgcrImagePath:
         "/img/destiny_content/pgcr/season_14_override_last_city.jpg",
     },
@@ -128,6 +129,7 @@ export const SEASON_OF_THE_SPLICER_HUB: SeasonHub = {
     "Exotic gear from Season of the Splicer — Cryosthesia 77K from the Season Pass, and the season's new Hunter, Titan, and Warlock exotic armor.",
   cosmeticPanelDescription:
     "Season Pass cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  showEververseCosmetics: true,
   cosmeticRewards: [
     "Riis Racer",
     "Deletion Protocol",

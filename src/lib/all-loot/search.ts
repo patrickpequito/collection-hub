@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import type {
   AllLootCatalog,
@@ -11,11 +11,15 @@ import { isItemOwned } from "@/lib/all-loot/ownership";
 import { applySeasonCatalogOverrides } from "@/lib/all-loot/season-overrides";
 
 let catalogCache: AllLootCatalog | null = null;
+/** File mtime of the cached catalog, so a regenerated data/all-loot.json is picked up without a restart. */
+let catalogMtimeMs = 0;
 
 async function readAllLootCatalogFromDisk(): Promise<AllLootCatalog> {
-  if (catalogCache) return catalogCache;
-
   const filePath = path.join(process.cwd(), "data/all-loot.json");
+  const { mtimeMs } = await stat(filePath);
+  if (catalogCache && mtimeMs === catalogMtimeMs) return catalogCache;
+
+  catalogMtimeMs = mtimeMs;
   const raw = await readFile(filePath, "utf8");
   const parsed = JSON.parse(raw) as AllLootCatalog;
   catalogCache = {
@@ -65,6 +69,12 @@ export function searchAllLootItems(
 ): AllLootItem[] {
   return items.filter((item) => {
     if (!matchesQuery(item, filters.query)) return false;
+    if (filters.sources?.length) {
+      const source = item.source.toLowerCase();
+      if (!filters.sources.some((keyword) => source.includes(keyword.toLowerCase()))) {
+        return false;
+      }
+    }
     if (!matchesMultiFilter(filters.types, item.type)) return false;
     if (!matchesMultiFilter(filters.seasons, itemSeasonLabels(item))) return false;
     if (!matchesMultiFilter(filters.rarities, item.rarity)) return false;
@@ -170,6 +180,7 @@ export function parseAllLootSearchFilters(
     damageTypes: readList("damageTypes"),
     weaponSlots: readList("weaponSlots"),
     gearSlots: readList("gearSlots"),
+    sources: readList("sources"),
     obtainable,
     collected,
   };

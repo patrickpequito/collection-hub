@@ -87,3 +87,17 @@ export function countSectionProgress(
     total: childProgress.total + directProgress.total,
   };
 }
+
+const sectionSlug = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/['’]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+/** Anchor of a subcategory on its group page, e.g. "raids-vault-of-glass". */
+export function leafSectionId(topSectionName: string, leafName: string): string {
+  return leafName === topSectionName
+    ? sectionSlug(leafName)
+    : `${sectionSlug(topSectionName)}-${sectionSlug(leafName)}`;
+}

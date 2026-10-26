@@ -11,6 +11,7 @@ export const SEASON_OF_THE_WORTHY_HUB: SeasonHub = {
   seasonNumber: 10,
   titleIconPath:
     "/common/destiny2_content/icons/727afea7b30642ef77fc1bbbf1a5452f.png",
+  seal: { title: "Almighty", completionRecordHash: "2499679097" },
   videos: [
     {
       id: "trailer",
@@ -72,6 +73,7 @@ export const SEASON_OF_THE_WORTHY_HUB: SeasonHub = {
     "Exotic gear from Season of the Worthy — The Fourth Horseman and Tommy's Matchbook from Exotic Archive quests, Heir Apparent from Guardian Games, plus the season's Hunter, Titan, and Warlock exotic armor.",
   cosmeticPanelDescription:
     "Season Pass cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  showEververseCosmetics: true,
   cosmeticRewards: [
     "Hardlink Shell",
     "Valkyrian Impaler",

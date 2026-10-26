@@ -11,6 +11,7 @@ export const SEASON_OF_THE_UNDYING_HUB: SeasonHub = {
   seasonNumber: 8,
   titleIconPath:
     "/common/destiny2_content/icons/00364cdc6a352f251b1e46244176d0a6.png",
+  seal: { title: "Undying", completionRecordHash: "1866578144" },
   videos: [
     {
       id: "trailer",
@@ -58,6 +59,7 @@ export const SEASON_OF_THE_UNDYING_HUB: SeasonHub = {
     "Exotic weapons from Season of the Undying — Eriana's Vow and Leviathan's Breath from the Exotic Archive / Season Pass quests, and Monte Carlo from exotic engrams.",
   cosmeticPanelDescription:
     "Season Pass cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  showEververseCosmetics: true,
   cosmeticRewards: [
     "Never Live It Down",
     "Belgian Flying Kick",

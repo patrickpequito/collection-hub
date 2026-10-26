@@ -60,7 +60,8 @@ export function middleware(request: NextRequest) {
     return new NextResponse("Forbidden", { status: 403 });
   }
 
-  if (rateLimited(clientIp(request))) {
+  // Local dev has no client IP: every request (browser, HMR, tests) would share one bucket.
+  if (process.env.NODE_ENV !== "development" && rateLimited(clientIp(request))) {
     return new NextResponse("Too Many Requests", {
       status: 429,
       headers: { "Retry-After": "60" },

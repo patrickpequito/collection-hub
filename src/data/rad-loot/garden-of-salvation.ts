@@ -9,8 +9,6 @@ function item(
   return { itemHash, name, iconPath, source };
 }
 
-const GOG_SOURCE = 'Source: "Garden of Salvation" Raid';
-
 export const gardenOfSalvationLoot: ActivityLootPage = {
   slug: "garden-of-salvation",
   title: "Garden of Salvation",

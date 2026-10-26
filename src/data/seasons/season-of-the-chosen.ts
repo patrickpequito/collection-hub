@@ -11,6 +11,7 @@ export const SEASON_OF_THE_CHOSEN_HUB: SeasonHub = {
   seasonNumber: 13,
   titleIconPath:
     "/common/destiny2_content/icons/937fd284fc16c3521d19e92a1f884bf5.png",
+  seal: { title: "Chosen", completionRecordHash: "1087927672" },
   videos: [
     {
       id: "trailer",
@@ -68,38 +69,38 @@ export const SEASON_OF_THE_CHOSEN_HUB: SeasonHub = {
     {
       id: "battleground-behemoth",
       title: "Battleground: Behemoth",
-      description:
-        "Cabal battleground on Nessus. Available from the Director battlegrounds playlist.",
+      description: "Cabal battleground on Nessus.",
+      location: "Vanguard Fireteam Ops",
       pgcrImagePath:
         "/img/destiny_content/pgcr/nessus_battleground_behemoth.jpg",
     },
     {
       id: "battleground-foothold",
       title: "Battleground: Foothold",
-      description:
-        "Cabal battleground in the Cosmodrome. Available from the Director battlegrounds playlist.",
+      description: "Cabal battleground in the Cosmodrome.",
+      location: "Vanguard Fireteam Ops",
       pgcrImagePath:
         "/img/destiny_content/pgcr/cosmodrome_battleground_foothold.jpg",
     },
     {
       id: "battleground-oracle",
       title: "Battleground: Oracle",
-      description:
-        "Cabal battleground on Nessus. Available from the Director battlegrounds playlist.",
+      description: "Cabal battleground on Nessus.",
+      location: "Vanguard Fireteam Ops",
       pgcrImagePath: "/img/destiny_content/pgcr/nessus_battleground_oracle.jpg",
     },
     {
       id: "proving-grounds",
       title: "Proving Grounds",
-      description:
-        "Strike against Valus Galg, introduced this season. Still available in the Vanguard strike playlist.",
+      description: "Strike against Valus Galg aboard the Land Tank Halphas Electus.",
+      location: "Vanguard Fireteam Ops",
       pgcrImagePath: "/img/destiny_content/pgcr/nessus_proving_grounds.jpg",
     },
     {
       id: "presage",
       title: "Presage",
-      description:
-        "Exotic mission aboard the Glykon Volatus. Still playable from the Director — rewards Dead Man's Tale.",
+      description: "Exotic mission aboard the derelict Glykon Volatus.",
+      location: "Vanguard Pinnacle Ops",
       pgcrImagePath: "/img/destiny_content/pgcr/exotic_quest_presage.jpg",
     },
   ],
@@ -107,6 +108,15 @@ export const SEASON_OF_THE_CHOSEN_HUB: SeasonHub = {
     "Exotic gear from Season of the Chosen — Presage, the Exotic Archive quest line, and the season exotic armor.",
   cosmeticPanelDescription:
     "Season Pass cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  showEververseCosmetics: true,
+  // Guardian Games 2021 set — event content, kept for a future events section.
+  excludedEververseNames: [
+    "Contender Cover",
+    "Contender Gloves",
+    "Contender Robes",
+    "Contender Boots",
+    "Contender Bond",
+  ],
   cosmeticRewards: [
     "Challenger Shell",
     "Blade Breaker",

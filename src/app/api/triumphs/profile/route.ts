@@ -3,12 +3,12 @@ import {
   fetchRecordInstances,
   serializeTriumphProfileData,
 } from "@/lib/destiny-records";
-import { getSession } from "@/lib/session";
+import { getFreshSession } from "@/lib/session-access";
 import { EMPTY_TRIUMPH_STRING_VARIABLES } from "@/types/triumph";
 
 /** Signed-in triumph progress for client hydration (no SSR session). */
 export async function GET() {
-  const session = await getSession();
+  const session = await getFreshSession();
   if (!session) {
     return NextResponse.json(
       {

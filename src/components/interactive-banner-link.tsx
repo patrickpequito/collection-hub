@@ -36,7 +36,7 @@ export function InteractiveBannerLink({
   const [isPressed, setIsPressed] = useState(false);
 
   useEffect(() => {
-    setIsPressed(false);
+    void Promise.resolve().then(() => setIsPressed(false));
   }, [pathname]);
 
   const pressedClass = isPressed

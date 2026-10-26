@@ -1,27 +1,26 @@
-import { TriumphsIndex } from "@/components/triumphs-index";
 import { SectionPageLayout } from "@/components/section-page-layout";
+import { TriumphsHub } from "@/components/triumphs/triumphs-hub";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { PAGE_HEADERS } from "@/lib/page-headers";
+import { loadTriumphHubData } from "@/lib/triumphs/hub";
 import { loadTriumphCatalog } from "@/lib/triumphs/load";
 
 export const revalidate = 3600;
 
 export default async function TriumphsPage() {
   const catalog = await loadTriumphCatalog();
-  const oauthConfigured = isBungieOAuthConfigured();
+  const { seals, legacySeals, groups } = loadTriumphHubData(catalog);
 
   return (
     <SectionPageLayout
       title="Triumphs"
       imageUrl={PAGE_HEADERS.triumphs}
-      oauthConfigured={oauthConfigured}
-      maxWidth="5xl"
+      oauthConfigured={isBungieOAuthConfigured()}
+      maxWidth="wide"
+      headerEyebrow="Collections"
+      breadcrumbs={[{ label: "Seals" }]}
     >
-      <p className="text-sm text-zinc-400">
-        Triumph groups and titles. Sign in to track your progress.
-      </p>
-
-      <TriumphsIndex catalog={catalog} />
+      <TriumphsHub seals={seals} legacySeals={legacySeals} groups={groups} />
     </SectionPageLayout>
   );
 }

@@ -4,6 +4,8 @@
  * Raids: Bungie public milestones (weekly challenge on any difficulty).
  * Dungeons: Kyber's Corner weekly reset only (Bungie does not expose featured
  * dungeons). Schedule JSON is the offline fallback once a week is confirmed.
+ * Nightmare Hunts (Moon page): the three hunts a public profile can launch this
+ * week (no milestone exposes them). Optional — a failure leaves them empty.
  *
  * Usage: node scripts/generate-featured-activities.mjs
  */
@@ -146,6 +148,29 @@ async function resolveFeaturedDungeons(weekIndex, weekStart) {
   );
 }
 
+/** Public profile used to read this week's launchable Nightmare Hunts (any active account works). */
+const NIGHTMARE_HUNT_PROBE = { membershipType: 3, membershipId: "4611686018473121985" };
+
+async function resolveFeaturedNightmareHunts() {
+  const { membershipType, membershipId } = NIGHTMARE_HUNT_PROBE;
+  const profile = await fetchJson(`/Platform/Destiny2/${membershipType}/Profile/${membershipId}/?components=204`);
+  const characters = Object.values(profile.characterActivities?.data ?? {});
+  const hashes = [...new Set(characters.flatMap((c) => c.availableActivities.map((a) => a.activityHash)))];
+  const hunts = new Map();
+  for (const hash of hashes) {
+    const definition = (await fetchJson(`/Platform/Destiny2/Manifest/DestinyActivityDefinition/${hash}/`));
+    const match = /^Nightmare Hunt: ([^:]+)/.exec(definition?.displayProperties?.name ?? "");
+    if (!match || hunts.has(match[1])) continue;
+    hunts.set(match[1], {
+      name: match[1],
+      // "Defeat the Nightmare of Omnigul." → "Nightmare of Omnigul"
+      boss: (definition.displayProperties.description ?? "").replace(/^Defeat the /, "").replace(/\.$/, ""),
+      image: definition.pgcrImage ?? null,
+    });
+  }
+  return [...hunts.values()];
+}
+
 async function main() {
   reloadSchedule();
   const now = new Date();
@@ -155,6 +180,13 @@ async function main() {
     resolveFeaturedRaids(weekIndex),
     resolveFeaturedDungeons(weekIndex, weekStart),
   ]);
+
+  let featuredNightmareHunts = [];
+  try {
+    featuredNightmareHunts = await resolveFeaturedNightmareHunts();
+  } catch (error) {
+    console.warn(`Nightmare Hunts skipped: ${error.message}`);
+  }
 
   if (featuredRaids.length === 0) {
     throw new Error("Could not resolve featured raids for this week");
@@ -171,6 +203,7 @@ async function main() {
     weekEnd,
     featuredRaids,
     featuredDungeons,
+    featuredNightmareHunts,
     rotationWeeks: getDungeonRotationWeeks().length,
   };
 
@@ -180,7 +213,7 @@ async function main() {
   writeFileSync(outPath, `${JSON.stringify(payload, null, 2)}\n`);
 
   console.log(
-    `Wrote featured activities (week ${weekIndex + 1}): raids=[${featuredRaids.join(", ")}] dungeons=[${featuredDungeons.join(", ")}]`,
+    `Wrote featured activities (week ${weekIndex + 1}): raids=[${featuredRaids.join(", ")}] dungeons=[${featuredDungeons.join(", ")}] nightmare hunts=[${featuredNightmareHunts.map((hunt) => hunt.name).join(", ")}]`,
   );
   console.log(`  ${weekStart} → ${weekEnd}`);
   console.log(`  ${outPath}`);

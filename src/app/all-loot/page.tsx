@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { AllLootPageContent } from "@/components/all-loot-page-content";
+import { CollectionSummaryBlocks } from "@/components/collection-summary-blocks";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { PAGE_HEADERS } from "@/lib/page-headers";
@@ -23,14 +25,16 @@ export default async function AllLootPage() {
       title="Loot Collector"
       imageUrl={PAGE_HEADERS.lootCollectorHeader}
       oauthConfigured={oauthConfigured}
-      maxWidth="5xl"
+      maxWidth="wide"
     >
-      <p className="text-sm text-zinc-400">
-        Search the full collectible catalog. Duplicate names show only the most
-        recent version.
-      </p>
+      <div className="space-y-9">
+        <CollectionSummaryBlocks />
 
-      <AllLootPageContent />
+        {/* Suspense: the content reads ?q= from the address (useSearchParams). */}
+        <Suspense fallback={null}>
+          <AllLootPageContent />
+        </Suspense>
+      </div>
     </SectionPageLayout>
   );
 }

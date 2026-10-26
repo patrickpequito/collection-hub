@@ -9,8 +9,6 @@ function item(
   return { itemHash, name, iconPath, source };
 }
 
-const VOD_SOURCE = 'Source: "Vow of the Disciple" Raid';
-
 export const vowOfTheDiscipleLoot: ActivityLootPage = {
   slug: "vow-of-the-disciple",
   title: "Vow of the Disciple",

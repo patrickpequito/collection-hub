@@ -2,85 +2,47 @@
 
 import { useMemo } from "react";
 import { useOwnership } from "@/components/client-ownership";
+import { StatBlock, StatBlockGrid, StatCount } from "@/components/detail-page-parts";
 import { countOwnedGroups } from "@/lib/expansions/expansion-progress";
 
 type SeasonProgressStripProps = {
   total: number;
   ownershipGroups: string[][];
+  exoticOwnershipGroups: string[][];
+  cosmeticOwnershipGroups: string[][];
 };
 
-function StatCard({
-  label,
-  value,
-  progress,
-}: {
-  label: string;
-  value: string;
-  progress: number | null;
-}) {
-  const widthPercent =
-    progress == null ? 0 : Math.max(0, Math.min(1, progress)) * 100;
-
-  return (
-    <div
-      className={`overflow-hidden rounded-xl border bg-zinc-900/40 ${
-        progress != null && progress >= 1
-          ? "border-[#c9a227]/50"
-          : "border-zinc-800"
-      }`}
-    >
-      <div className="px-3 py-3">
-        <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
-          {label}
-        </p>
-        <p className="mt-1 text-lg font-semibold tabular-nums text-zinc-100">
-          {value}
-        </p>
-      </div>
-      <div
-        className="h-1 w-full bg-zinc-800"
-        role="progressbar"
-        aria-label={`${label} progress`}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={progress == null ? undefined : Math.round(widthPercent)}
-      >
-        <div
-          className="h-full bg-[#c9a227] transition-[width] duration-300 ease-out"
-          style={{ width: `${widthPercent}%` }}
-        />
-      </div>
-    </div>
-  );
-}
-
+/** Season loot, exotics and Season Pass cosmetics. */
 export function SeasonProgressStrip({
   total,
   ownershipGroups,
+  exoticOwnershipGroups,
+  cosmeticOwnershipGroups,
 }: SeasonProgressStripProps) {
   const { ownedItemHashes, showOwnership } = useOwnership();
-
-  const owned = useMemo(
-    () =>
-      showOwnership
-        ? countOwnedGroups(ownershipGroups, ownedItemHashes)
-        : null,
-    [ownershipGroups, ownedItemHashes, showOwnership],
+  const count = useMemo(
+    () => (groups: string[][]) =>
+      showOwnership ? countOwnedGroups(groups, ownedItemHashes) : null,
+    [ownedItemHashes, showOwnership],
   );
 
+  const blocks = [
+    { label: "Season loot", groups: ownershipGroups, total, gold: true },
+    { label: "Exotics", groups: exoticOwnershipGroups, total: exoticOwnershipGroups.length },
+    {
+      label: "Season pass cosmetics",
+      groups: cosmeticOwnershipGroups,
+      total: cosmeticOwnershipGroups.length,
+    },
+  ].filter((block) => block.total > 0);
+
   return (
-    <section>
-      <StatCard
-        label="Collection progress"
-        value={owned === null ? `— / ${total}` : `${owned}/${total}`}
-        progress={
-          owned == null || total === 0 ? null : owned / total
-        }
-      />
-      <p className="mt-2 text-xs text-zinc-500">
-        Counts obtainable season loot only — no triumphs, titles, or
-        unobtainable legacy rewards.
-      </p>
-    </section>
+    <StatBlockGrid count={blocks.length}>
+      {blocks.map((block) => (
+        <StatBlock key={block.label} label={block.label}>
+          <StatCount owned={count(block.groups)} total={block.total} gold={block.gold} />
+        </StatBlock>
+      ))}
+    </StatBlockGrid>
   );
 }

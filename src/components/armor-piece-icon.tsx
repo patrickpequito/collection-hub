@@ -15,6 +15,8 @@ type ArmorPieceIconProps = {
   /** Destiny ornament plate overlay (armor/weapon ornaments). */
   ornamentOverlay?: boolean | OrnamentOverlayTier;
   rarity?: string | null;
+  /** Class name (Titan / Hunter / Warlock) for the tooltip subtitle. */
+  classOrWeaponType?: string | null;
 };
 
 export function ArmorPieceIcon({
@@ -29,6 +31,7 @@ export function ArmorPieceIcon({
   href,
   ornamentOverlay,
   rarity,
+  classOrWeaponType,
 }: ArmorPieceIconProps) {
   if (!piece?.iconPath) {
     const emptyBorder = showOwnership ? "border-2" : "border";
@@ -39,8 +42,8 @@ export function ArmorPieceIcon({
       <div
         className={
           fluid
-            ? `flex ${fluidSize} items-center justify-center rounded-md ${emptyBorder} border-dashed border-zinc-700 bg-zinc-900/60 text-[10px] text-zinc-500`
-            : `flex h-[60px] w-[60px] items-center justify-center rounded-md ${emptyBorder} border-dashed border-zinc-700 bg-zinc-900/60 text-[10px] text-zinc-500`
+            ? `flex ${fluidSize} items-center justify-center ${emptyBorder} border-dashed border-zinc-700 bg-zinc-900/60 text-[10px] text-zinc-500`
+            : `flex h-[60px] w-[60px] items-center justify-center ${emptyBorder} border-dashed border-zinc-700 bg-zinc-900/60 text-[10px] text-zinc-500`
         }
         title={`Missing ${slotLabel}`}
       >
@@ -61,7 +64,10 @@ export function ArmorPieceIcon({
       fillCell={fillCell}
       href={href}
       ornamentOverlay={ornamentOverlay}
-      rarity={rarity}
+      // Armor set grids are legendary unless the piece says otherwise.
+      rarity={rarity ?? ("rarity" in piece ? (piece.rarity as string | undefined) : undefined) ?? "Legendary"}
+      classOrWeaponType={classOrWeaponType}
+      itemType="Armor"
     />
   );
 }

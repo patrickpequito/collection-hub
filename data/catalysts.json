@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-30T14:40:58.186Z",
+  "generatedAt": "2026-10-20T15:13:33.730Z",
   "items": [
     {
       "itemHash": "3708505013",
@@ -10,23 +10,21 @@
       "weaponName": "Ace of Spades",
       "weaponHash": "347366834",
       "recordHash": "836516980",
+      "objectives": [
+        {
+          "objectiveHash": "943151358",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Funeral Pyre",
+        "description": "Firefly deals more damage while Memento Mori is active.",
+        "iconPath": "/common/destiny2_content/icons/5cd388676d9be296e0cbc9541ff625cf.png"
+      },
       "alternateItemHashes": [
         "3708505013"
-      ]
-    },
-    {
-      "itemHash": "456628588",
-      "name": "Acrius Catalyst",
-      "iconPath": "/common/destiny2_content/icons/3b4c1694f52b85f9fc1c57cb963dc36c.jpg",
-      "source": "Catalyst for Legend of Acrius. Source: Exotic Archive at the Tower",
-      "weaponSlot": "heavy",
-      "weaponName": "Legend of Acrius",
-      "weaponHash": "3580904580",
-      "recordHash": "206322165",
-      "alternateItemHashes": [
-        "456628588",
-        "2988259322",
-        "4233905577"
       ]
     },
     {
@@ -38,6 +36,19 @@
       "weaponName": "Ager's Scepter",
       "weaponHash": "1833195496",
       "recordHash": "478443982",
+      "objectives": [
+        {
+          "objectiveHash": "1999051750",
+          "description": "Targets defeated",
+          "completionValue": 1000
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat combatants while using this weapon to unlock this upgrade.\n\nDefeating combatants with precision damage will unlock this objective faster.\n\nDefeating combatants in the Shattered Realm and Astral Alignment grants bonus progress.",
+      "effect": {
+        "name": "Will Given Form",
+        "description": "[Alternate Weapon Action]  : Drain Super energy, overflowing the magazine and empowering the beam with bonus damage and the ability to slow and freeze targets until the magazine or Super energy runs out, or the weapon is stowed. Can only be activated when Super energy is full.",
+        "iconPath": "/common/destiny2_content/icons/3440cdb456c14cc7dd0b6ac8121489a3.png"
+      },
       "alternateItemHashes": [
         "970163821"
       ]
@@ -51,6 +62,19 @@
       "weaponName": "Alethonym",
       "weaponHash": "2350354266",
       "recordHash": "2744508352",
+      "objectives": [
+        {
+          "objectiveHash": "2845611313",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "One for All",
+        "description": "Hitting three separate targets increases damage for a moderate duration.",
+        "iconPath": "/common/destiny2_content/icons/b1bce269c3cd21393131b4f5cffae692.png"
+      },
       "alternateItemHashes": [
         "3941269100"
       ]
@@ -58,11 +82,25 @@
     {
       "itemHash": "1178660677",
       "name": "Anarchy Catalyst",
-      "iconPath": "/common/destiny2_content/icons/46ebd791f692b682691416beea7ac4c5.jpg",
+      "iconPath": "/common/destiny2_content/icons/7dc9402e8ba43c0d50351a943b8c240f.jpg",
       "source": "Catalyst for Anarchy. Source: Exotic Archive at the Tower",
       "weaponSlot": "heavy",
       "weaponName": "Anarchy",
       "weaponHash": "2376481550",
+      "recordHash": "1956344781",
+      "objectives": [
+        {
+          "objectiveHash": "2018595790",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Jolting Feedback",
+        "description": "Dealing repeated damage with this weapon inflicts Jolt. \n\nWhile amplified, Jolt is applied faster.",
+        "iconPath": "/common/destiny2_content/icons/27270b6f5da035b05fa797c82bb6a10d.png"
+      },
       "alternateItemHashes": [
         "1178660677"
       ]
@@ -76,6 +114,19 @@
       "weaponName": "Arbalest",
       "weaponHash": "2130065553",
       "recordHash": "3835718947",
+      "objectives": [
+        {
+          "objectiveHash": "343315179",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Genesis",
+        "description": "Breaking a combatant's shield with this weapon fills its magazine from reserves. Energy weapons regenerate ammo on hit when matching the damage type to the combatant's shield.",
+        "iconPath": "/common/destiny2_content/icons/087a911353a3586f5346a1cf88d8de05.png"
+      },
       "alternateItemHashes": [
         "1880379474"
       ]
@@ -89,19 +140,118 @@
       "weaponName": "Bad Juju",
       "weaponHash": "2816212794",
       "recordHash": "748675128",
+      "objectives": [
+        {
+          "objectiveHash": "2623179169",
+          "description": "Enemies defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain an additional perk.\n\nDefeat targets using Bad Juju to unlock this upgrade.",
+      "effect": {
+        "name": "Unending Curse",
+        "description": "Extends the duration of String of Curses.",
+        "iconPath": "/common/destiny2_content/icons/f8b19531b31701e181def84c9eb7db98.png"
+      },
       "alternateItemHashes": [
         "1324340508"
       ]
     },
     {
+      "itemHash": "4204405034",
+      "name": "Hatchling Refit",
+      "iconPath": "/common/destiny2_content/icons/2f7e898e2231900ac968ffb2080fc02b.png",
+      "source": "Catalyst for Barrow-Dyad. Source: Episode: Heresy Activities",
+      "weaponSlot": "primary",
+      "weaponName": "Barrow-Dyad",
+      "weaponHash": "1481594633",
+      "description": "Precision final blows or rapidly defeating targets with this weapon spawns a Threadling at the target's location.",
+      "effect": {
+        "name": "Hatchling",
+        "description": "Precision final blows or rapidly defeating targets with this weapon spawns a Threadling at the target's location.",
+        "iconPath": "/common/destiny2_content/icons/2f7e898e2231900ac968ffb2080fc02b.png"
+      },
+      "alternateItemHashes": [
+        "372672211",
+        "4204405034"
+      ]
+    },
+    {
+      "itemHash": "4204405035",
+      "name": "High-Impact Reserves Refit",
+      "iconPath": "/common/destiny2_content/icons/33ed859a08f2ccf643a1ac3c7f201966.png",
+      "source": "Catalyst for Barrow-Dyad. Source: Episode: Heresy Activities",
+      "weaponSlot": "primary",
+      "weaponName": "Barrow-Dyad",
+      "weaponHash": "1481594633",
+      "description": "Rounds at the end of the magazine deal more damage.",
+      "effect": {
+        "name": "High-Impact Reserves",
+        "description": "Rounds at the end of the magazine deal more damage.",
+        "iconPath": "/common/destiny2_content/icons/33ed859a08f2ccf643a1ac3c7f201966.png"
+      },
+      "alternateItemHashes": [
+        "4204405035"
+      ]
+    },
+    {
+      "itemHash": "4204405033",
+      "name": "One for All Refit",
+      "iconPath": "/common/destiny2_content/icons/b1bce269c3cd21393131b4f5cffae692.png",
+      "source": "Catalyst for Barrow-Dyad. Source: Episode: Heresy Activities",
+      "weaponSlot": "primary",
+      "weaponName": "Barrow-Dyad",
+      "weaponHash": "1481594633",
+      "description": "Hitting three separate targets increases damage for a moderate duration.",
+      "effect": {
+        "name": "One for All",
+        "description": "Hitting three separate targets increases damage for a moderate duration.",
+        "iconPath": "/common/destiny2_content/icons/b1bce269c3cd21393131b4f5cffae692.png"
+      },
+      "alternateItemHashes": [
+        "4204405033"
+      ]
+    },
+    {
+      "itemHash": "4204405032",
+      "name": "Target Lock Refit",
+      "iconPath": "/common/destiny2_content/icons/72be46e05195a95ae1307a684f68456b.png",
+      "source": "Catalyst for Barrow-Dyad. Source: Episode: Heresy Activities",
+      "weaponSlot": "primary",
+      "weaponName": "Barrow-Dyad",
+      "weaponHash": "1481594633",
+      "description": "Damage increases the longer this weapon remains on a target.",
+      "effect": {
+        "name": "Target Lock",
+        "description": "Damage increases the longer this weapon remains on a target.",
+        "iconPath": "/common/destiny2_content/icons/72be46e05195a95ae1307a684f68456b.png"
+      },
+      "alternateItemHashes": [
+        "4204405032"
+      ]
+    },
+    {
       "itemHash": "4273298922",
       "name": "Bastion Catalyst",
-      "iconPath": "/common/destiny2_content/icons/a63424a854dc41aa4f4e7d8c7e57ea5a.jpg",
+      "iconPath": "/common/destiny2_content/icons/59af9aac2bcf273a7dba4de18932e478.jpg",
       "source": "Catalyst for Bastion. Source: Exotic Archive at the Tower",
       "weaponSlot": "primary",
       "weaponName": "Bastion",
       "weaponHash": "2415517654",
       "recordHash": "2660706768",
+      "objectives": [
+        {
+          "objectiveHash": "3678360595",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Cast No Shadows",
+        "description": "Dealing melee damage increases this weapon's handling and loads a small amount of ammo from reserves.",
+        "iconPath": "/common/destiny2_content/icons/b1be736ff0e8d1d3554bb5c0e02df7a3.png"
+      },
       "alternateItemHashes": [
         "4273298922"
       ]
@@ -115,12 +265,25 @@
       "weaponName": "Black Talon",
       "weaponHash": "3766045777",
       "recordHash": "252263460",
+      "objectives": [
+        {
+          "objectiveHash": "1641139575",
+          "description": "Targets defeated",
+          "completionValue": 350
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Reversal",
+        "description": "Dealing damage to Void debuffed targets increases this weapon's damage for a short time per each type of Void debuff affecting the target.",
+        "iconPath": "/common/destiny2_content/icons/81a960edb615892ed0b9bb58098b9258.png"
+      },
       "alternateItemHashes": [
         "3810173190"
       ]
     },
     {
-      "itemHash": "702668825",
+      "itemHash": "2282260620",
       "name": "Borealis Catalyst",
       "iconPath": "/common/destiny2_content/icons/0e4aaccfad36ae9179375de5477bfd13.jpg",
       "source": "Catalyst for Borealis. Source: Exotic engrams; extremely rare world drops.",
@@ -128,6 +291,29 @@
       "weaponName": "Borealis",
       "weaponHash": "3141979347",
       "recordHash": "663317912",
+      "objectives": [
+        {
+          "objectiveHash": "3648707228",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "2153432957",
+          "description": "Arc Mode Kills",
+          "completionValue": 150
+        },
+        {
+          "objectiveHash": "2153432956",
+          "description": "Solar Mode Kills",
+          "completionValue": 150
+        },
+        {
+          "objectiveHash": "2153432959",
+          "description": "Void Mode Kills",
+          "completionValue": 150
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "702668825",
         "2085058763",
@@ -143,6 +329,19 @@
       "weaponName": "Buried Bloodline",
       "weaponHash": "3886719505",
       "recordHash": "3891168900",
+      "objectives": [
+        {
+          "objectiveHash": "1532523027",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Splitvein Lineage",
+        "description": "While Devour is active, this weapon weakens on hit.",
+        "iconPath": "/common/destiny2_content/icons/5ebddb7e1552b6efb1f8e0cfecf13fb7.png"
+      },
       "alternateItemHashes": [
         "2199828458"
       ]
@@ -156,6 +355,19 @@
       "weaponName": "Centrifuse",
       "weaponHash": "1912669214",
       "recordHash": "1048178161",
+      "objectives": [
+        {
+          "objectiveHash": "1162177078",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Static Buildup",
+        "description": "While amplified, this weapon gradually gains overcharge.",
+        "iconPath": "/common/destiny2_content/icons/eef183880e138769692ef9afafeafbc3.png"
+      },
       "alternateItemHashes": [
         "1547782973"
       ]
@@ -169,8 +381,76 @@
       "weaponName": "Cerberus+1",
       "weaponHash": "1541131350",
       "recordHash": "2761319400",
+      "objectives": [
+        {
+          "objectiveHash": "1367155432",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Focused Fire",
+        "description": "After a final blow with this weapon, [Alternate Weapon Action]  to return ammo to the magazine and swap to a tighter spread that deals increased damage.",
+        "iconPath": "/common/destiny2_content/icons/408cc86c335c4bd9272df8c570780d89.png"
+      },
       "alternateItemHashes": [
         "1380383475"
+      ]
+    },
+    {
+      "itemHash": "1931951169",
+      "name": "Destabilizing Rounds Refit",
+      "iconPath": "/common/destiny2_content/icons/30edf77113d7d1d996fcc37b7ef2050b.png",
+      "source": "Catalyst for Choir of One. Source: Exotic Mission Encore",
+      "weaponSlot": "special",
+      "weaponName": "Choir of One",
+      "weaponHash": "3698448090",
+      "description": "Defeating a target creates a Void burst; hitting other targets with this burst makes them volatile and grants you Volatile Rounds for a short duration.",
+      "effect": {
+        "name": "Destabilizing Rounds",
+        "description": "Defeating a target creates a Void burst; hitting other targets with this burst makes them volatile and grants you Volatile Rounds for a short duration.",
+        "iconPath": "/common/destiny2_content/icons/30edf77113d7d1d996fcc37b7ef2050b.png"
+      },
+      "alternateItemHashes": [
+        "1931951169"
+      ]
+    },
+    {
+      "itemHash": "1931951170",
+      "name": "Onslaught Refit",
+      "iconPath": "/common/destiny2_content/icons/7e07db21ba2b35751507256e46230616.png",
+      "source": "Catalyst for Choir of One. Source: Exotic Mission Encore",
+      "weaponSlot": "special",
+      "weaponName": "Choir of One",
+      "weaponHash": "3698448090",
+      "description": "Final blows with this weapon increase its rate of fire.",
+      "effect": {
+        "name": "Onslaught",
+        "description": "Final blows with this weapon increase its rate of fire.",
+        "iconPath": "/common/destiny2_content/icons/7e07db21ba2b35751507256e46230616.png"
+      },
+      "alternateItemHashes": [
+        "1931951170"
+      ]
+    },
+    {
+      "itemHash": "1931951168",
+      "name": "Subsistence Refit",
+      "iconPath": "/common/destiny2_content/icons/eaa8f4295a71bf47df7ffd8599f7af4d.png",
+      "source": "Catalyst for Choir of One. Source: Exotic Mission Encore",
+      "weaponSlot": "special",
+      "weaponName": "Choir of One",
+      "weaponHash": "3698448090",
+      "description": "Defeating targets partially reloads the magazine from reserves.",
+      "effect": {
+        "name": "Subsistence",
+        "description": "Defeating targets partially reloads the magazine from reserves.",
+        "iconPath": "/common/destiny2_content/icons/eaa8f4295a71bf47df7ffd8599f7af4d.png"
+      },
+      "alternateItemHashes": [
+        "282266466",
+        "1931951168"
       ]
     },
     {
@@ -182,6 +462,19 @@
       "weaponName": "Cloudstrike",
       "weaponHash": "2603483885",
       "recordHash": "1226048594",
+      "objectives": [
+        {
+          "objectiveHash": "1423193982",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Triple Tap",
+        "description": "Rapidly landing precision hits will return one round to the magazine.",
+        "iconPath": "/common/destiny2_content/icons/0795f44c0c3611b15428742c67918cd1.png"
+      },
       "alternateItemHashes": [
         "1409312565"
       ]
@@ -195,6 +488,19 @@
       "weaponName": "Coldheart",
       "weaponHash": "1345867571",
       "recordHash": "3802151748",
+      "objectives": [
+        {
+          "objectiveHash": "4082913104",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "4048413169",
+          "description": "Enemies Defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "544137184",
         "1249968539",
@@ -204,44 +510,57 @@
     {
       "itemHash": "2234507197",
       "name": "Collective Obligation Catalyst",
-      "iconPath": "/common/destiny2_content/icons/62890cb9e33bbed6a3587a1064dc860e.png",
+      "iconPath": "/common/destiny2_content/icons/f0153e3441db4943e75cd962fca091fa.jpg",
       "source": "Catalyst for Collective Obligation. Source: \"Vow of the Disciple\" Raid",
       "weaponSlot": "special",
       "weaponName": "Collective Obligation",
       "weaponHash": "3505113722",
+      "recordHash": "1483034863",
+      "objectives": [
+        {
+          "objectiveHash": "1315904438",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Repulsor Brace",
+        "description": "Defeating a Void-debuffed target grants an overshield.",
+        "iconPath": "/common/destiny2_content/icons/cfcbde3872d34c5258fd8227640a020e.png"
+      },
       "alternateItemHashes": [
         "2234507197"
       ]
     },
     {
-      "itemHash": "396328063",
-      "name": "Colony Catalyst",
-      "iconPath": "/common/destiny2_content/icons/b22e5ede50882e552212533397f2443b.jpg",
-      "source": "Catalyst for The Colony. Source: Exotic engrams; extremely rare world drops.",
-      "weaponSlot": "heavy",
-      "weaponName": "The Colony",
-      "weaponHash": "3899270607",
-      "recordHash": "299659704",
-      "alternateItemHashes": [
-        "396328063",
-        "769440797",
-        "854868710"
-      ]
-    },
-    {
       "itemHash": "3616546635",
       "name": "Conditional Finality Catalyst",
-      "iconPath": "/common/destiny2_content/icons/62890cb9e33bbed6a3587a1064dc860e.png",
+      "iconPath": "/common/destiny2_content/icons/e17dda89444d39c2616fe83557ecaa16.jpg",
       "source": "Catalyst for Conditional Finality. Source: \"Root of Nightmares\" Raid",
       "weaponSlot": "primary",
       "weaponName": "Conditional Finality",
       "weaponHash": "3371017761",
+      "recordHash": "3548810755",
+      "objectives": [
+        {
+          "objectiveHash": "2156648720",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Heal Clip",
+        "description": "Reloading shortly after dealing a final blow grants Cure to you and your nearby allies.",
+        "iconPath": "/common/destiny2_content/icons/3d0f2eb4c1e4f66f2bd897ec4d5ce4f1.png"
+      },
       "alternateItemHashes": [
         "3616546635"
       ]
     },
     {
-      "itemHash": "1152053821",
+      "itemHash": "2790377728",
       "name": "Crimson Catalyst",
       "iconPath": "/common/destiny2_content/icons/66fbe54a24d5a2b9978c909eb15ab62d.jpg",
       "source": "Catalyst for Crimson. Source: Exotic engrams; extremely rare world drops.",
@@ -249,6 +568,19 @@
       "weaponName": "Crimson",
       "weaponHash": "3437746471",
       "recordHash": "1345348453",
+      "objectives": [
+        {
+          "objectiveHash": "2911263280",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "2583905145",
+          "description": "Precision Kills",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "1152053821",
         "1783582993",
@@ -264,12 +596,97 @@
       "weaponName": "Cryosthesia 77K",
       "weaponHash": "603721696",
       "recordHash": "250211794",
+      "objectives": [
+        {
+          "objectiveHash": "2922921987",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Cold Efficiency",
+        "description": "Shattering a frozen target refills this weapon's magazine from reserves.",
+        "iconPath": "/common/destiny2_content/icons/bb5170bef48ae6bf7574852306facbf8.png"
+      },
       "alternateItemHashes": [
         "1023764762"
       ]
     },
     {
-      "itemHash": "2085058762",
+      "itemHash": "1523111794",
+      "name": "Soulfire Rancor",
+      "iconPath": "/common/destiny2_content/icons/df8577b0bbb11fd4fdf3e59aadeae9cd.jpg",
+      "source": "Catalyst for Cull's Shadow.",
+      "weaponSlot": "primary",
+      "weaponName": "Cull's Shadow",
+      "weaponHash": "2200470033",
+      "description": "Soulfire crystals expel potent corruption when destroyed and automatically detonate when a target is within close proximity.",
+      "effect": {
+        "name": "Soulfire Rancor",
+        "description": "Soulfire crystals expel potent corruption when destroyed and automatically detonate when a target is within close proximity.",
+        "iconPath": "/common/destiny2_content/icons/df8577b0bbb11fd4fdf3e59aadeae9cd.jpg"
+      },
+      "alternateItemHashes": [
+        "1523111794"
+      ]
+    },
+    {
+      "itemHash": "1523111792",
+      "name": "Soulfire Skewer",
+      "iconPath": "/common/destiny2_content/icons/a5ed0bbfbaa3c47b17591b9abce03cde.jpg",
+      "source": "Catalyst for Cull's Shadow.",
+      "weaponSlot": "primary",
+      "weaponName": "Cull's Shadow",
+      "weaponHash": "2200470033",
+      "description": "Nearby soulfire crystal detonations cause this weapon's frontal blades to inflict corruption.",
+      "effect": {
+        "name": "Soulfire Skewer",
+        "description": "Nearby soulfire crystal detonations cause this weapon's frontal blades to inflict corruption.",
+        "iconPath": "/common/destiny2_content/icons/a5ed0bbfbaa3c47b17591b9abce03cde.jpg"
+      },
+      "alternateItemHashes": [
+        "1523111792"
+      ]
+    },
+    {
+      "itemHash": "1523111795",
+      "name": "Soulfire Succor",
+      "iconPath": "/common/destiny2_content/icons/5901f83d9a454ab671837288b7a31528.jpg",
+      "source": "Catalyst for Cull's Shadow.",
+      "weaponSlot": "primary",
+      "weaponName": "Cull's Shadow",
+      "weaponHash": "2200470033",
+      "description": "Destroying soulfire crystals with this weapon's frontal blades provides Soulfire Charges and partially reloads the magazine from reserves.",
+      "effect": {
+        "name": "Soulfire Succor",
+        "description": "Destroying soulfire crystals with this weapon's frontal blades provides Soulfire Charges and partially reloads the magazine from reserves.",
+        "iconPath": "/common/destiny2_content/icons/5901f83d9a454ab671837288b7a31528.jpg"
+      },
+      "alternateItemHashes": [
+        "1523111795"
+      ]
+    },
+    {
+      "itemHash": "1523111793",
+      "name": "Soulfire Zeal",
+      "iconPath": "/common/destiny2_content/icons/b07d5494d08fab673b76ff2343e1283a.jpg",
+      "source": "Catalyst for Cull's Shadow.",
+      "weaponSlot": "primary",
+      "weaponName": "Cull's Shadow",
+      "weaponHash": "2200470033",
+      "description": "Nearby soulfire crystal detonations increase your damage resistance and movement speed while this weapon is equipped.",
+      "effect": {
+        "name": "Soulfire Zeal",
+        "description": "Nearby soulfire crystal detonations increase your damage resistance and movement speed while this weapon is equipped.",
+        "iconPath": "/common/destiny2_content/icons/b07d5494d08fab673b76ff2343e1283a.jpg"
+      },
+      "alternateItemHashes": [
+        "1523111793"
+      ]
+    },
+    {
+      "itemHash": "2282260621",
       "name": "D.A.R.C.I. Catalyst",
       "iconPath": "/common/destiny2_content/icons/a6d9a19ac7f14078210b91b59d3955bb.jpg",
       "source": "Catalyst for D.A.R.C.I.. Source: Exotic engrams; extremely rare world drops.",
@@ -277,6 +694,19 @@
       "weaponName": "D.A.R.C.I.",
       "weaponHash": "3141979346",
       "recordHash": "3589295049",
+      "objectives": [
+        {
+          "objectiveHash": "3648707229",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "2888200258",
+          "description": "Precision Kills",
+          "completionValue": 150
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "2085058762",
         "2282260621",
@@ -284,7 +714,25 @@
       ]
     },
     {
-      "itemHash": "1084016082",
+      "itemHash": "499501121",
+      "name": "Dark-Forged Trigger",
+      "iconPath": "/common/destiny2_content/icons/041974d03e7be809ab82f65587010ee2.png",
+      "source": "Catalyst for Dead Man's Tale. Source: \"Presage\" Exotic Quest",
+      "weaponSlot": "primary",
+      "weaponName": "Dead Man's Tale",
+      "weaponHash": "2188764214",
+      "description": "Removes hipfire accuracy penalties while increasing rate of fire. At maximum stacks of Cranial Spike, hipfiring deals increased damage.",
+      "effect": {
+        "name": "Dark-Forged Trigger",
+        "description": "Removes hipfire accuracy penalties while increasing rate of fire. At maximum stacks of Cranial Spike, hipfiring deals increased damage.",
+        "iconPath": "/common/destiny2_content/icons/041974d03e7be809ab82f65587010ee2.png"
+      },
+      "alternateItemHashes": [
+        "499501121"
+      ]
+    },
+    {
+      "itemHash": "1301843770",
       "name": "Dead Man's Tale Catalyst",
       "iconPath": "/common/destiny2_content/icons/a1fddbd287f5c9259914e4082417726e.jpg",
       "source": "Catalyst for Dead Man's Tale. Source: \"Presage\" Exotic Quest",
@@ -292,13 +740,25 @@
       "weaponName": "Dead Man's Tale",
       "weaponHash": "3654674561",
       "recordHash": "15917031",
+      "objectives": [
+        {
+          "objectiveHash": "3122496419",
+          "description": "Targets defeated",
+          "completionValue": 800
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.\n\nOpening Hidden Caches during Exotic quest \"Presage\" will unlock this objective faster.",
+      "effect": {
+        "name": "Dark-Forged Trigger",
+        "description": "Removes hipfire accuracy penalties while increasing rate of fire. At maximum stacks of Cranial Spike, hipfiring deals increased damage.",
+        "iconPath": "/common/destiny2_content/icons/041974d03e7be809ab82f65587010ee2.png"
+      },
       "alternateItemHashes": [
-        "1084016082",
         "1301843770"
       ]
     },
     {
-      "itemHash": "3088105031",
+      "itemHash": "4259872956",
       "name": "Dead Messenger Catalyst",
       "iconPath": "/common/destiny2_content/icons/44652f6aba6ec54e0782480679fe043b.jpg",
       "source": "Catalyst for Dead Messenger. Source: \"Vox Obscura\" Exotic Quest",
@@ -306,9 +766,68 @@
       "weaponName": "Dead Messenger",
       "weaponHash": "2812324401",
       "recordHash": "1163649614",
+      "objectives": [
+        {
+          "objectiveHash": "3769236161",
+          "description": "Arc Mode Kills",
+          "completionValue": 200
+        },
+        {
+          "objectiveHash": "3769236160",
+          "description": "Solar Mode Kills",
+          "completionValue": 200
+        },
+        {
+          "objectiveHash": "3769236163",
+          "description": "Void Mode Kills",
+          "completionValue": 200
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities such as increased stats and/or additional perks.\n\nDefeat combatants while using this weapon in Arc, Solar, and Void modes to unlock this upgrade.\n\nDefeating combatants in the Throne World or Battlegrounds will unlock these objectives faster. Defeating Champions provides bonus progress to all 3 objectives.",
+      "effect": {
+        "name": "Turnabout",
+        "description": "Using this weapon to break the shield of a combatant or a Guardian using their Super will grant you an overshield.",
+        "iconPath": "/common/destiny2_content/icons/02786692ea8de976f059b01b4450a67e.png"
+      },
       "alternateItemHashes": [
-        "3088105031",
         "4259872956"
+      ]
+    },
+    {
+      "itemHash": "3189860891",
+      "name": "Turnabout",
+      "iconPath": "/common/destiny2_content/icons/02786692ea8de976f059b01b4450a67e.png",
+      "source": "Catalyst for Dead Messenger. Source: \"Vox Obscura\" Exotic Quest",
+      "weaponSlot": "special",
+      "weaponName": "Dead Messenger",
+      "weaponHash": "46125926",
+      "objectives": [
+        {
+          "objectiveHash": "3769236161",
+          "description": "Arc Mode Kills",
+          "completionValue": 200
+        },
+        {
+          "objectiveHash": "3769236160",
+          "description": "Solar Mode Kills",
+          "completionValue": 200
+        },
+        {
+          "objectiveHash": "3769236163",
+          "description": "Void Mode Kills",
+          "completionValue": 200
+        }
+      ],
+      "description": "Using this weapon to break the shield of a combatant or a Guardian using their Super will grant you an overshield.",
+      "effect": {
+        "name": "Turnabout",
+        "description": "Using this weapon to break the shield of a combatant or a Guardian using their Super will grant you an overshield.",
+        "iconPath": "/common/destiny2_content/icons/02786692ea8de976f059b01b4450a67e.png"
+      },
+      "alternateItemHashes": [
+        "2000295559",
+        "2209918983",
+        "3189860891"
       ]
     },
     {
@@ -320,6 +839,19 @@
       "weaponName": "Deathbringer",
       "weaponHash": "2232171099",
       "recordHash": "2254190310",
+      "objectives": [
+        {
+          "objectiveHash": "765488993",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Dead Weight",
+        "description": "Increases how quickly Dark Descent reaches its full potential.",
+        "iconPath": "/common/destiny2_content/icons/983cf5fc18a3a76adc14f2d6548a867a.png"
+      },
       "alternateItemHashes": [
         "1298151900"
       ]
@@ -333,6 +865,19 @@
       "weaponName": "Delicate Tomb",
       "weaponHash": "374573733",
       "recordHash": "3318895306",
+      "objectives": [
+        {
+          "objectiveHash": "2098681787",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Ionic Interment",
+        "description": "Collecting an Ionic Trace partially reloads the magazine from reserves.",
+        "iconPath": "/common/destiny2_content/icons/693078266299130a893cc94054cf10c1.png"
+      },
       "alternateItemHashes": [
         "1719307618"
       ]
@@ -340,11 +885,25 @@
     {
       "itemHash": "3638234982",
       "name": "Deterministic Chaos Catalyst",
-      "iconPath": "/common/destiny2_content/icons/62890cb9e33bbed6a3587a1064dc860e.png",
+      "iconPath": "/common/destiny2_content/icons/208dc7786a27c4979a8a88b90cb8b85b.jpg",
       "source": "Catalyst for Deterministic Chaos. Source: \"What Remains\" Exotic Quest",
       "weaponSlot": "heavy",
       "weaponName": "Deterministic Chaos",
       "weaponHash": "449318888",
+      "recordHash": "973174495",
+      "objectives": [
+        {
+          "objectiveHash": "1417824983",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Target Lock",
+        "description": "Damage increases the longer this weapon remains on a target.",
+        "iconPath": "/common/destiny2_content/icons/72be46e05195a95ae1307a684f68456b.png"
+      },
       "alternateItemHashes": [
         "3638234982"
       ]
@@ -352,14 +911,53 @@
     {
       "itemHash": "2732252706",
       "name": "Devil's Ruin Catalyst",
-      "iconPath": "/common/destiny2_content/icons/62fdfc32cbde5f2d99e8d9e1ef0bf030.jpg",
+      "iconPath": "/common/destiny2_content/icons/0131a0551d2193229619e753d3541575.jpg",
       "source": "Catalyst for Devil's Ruin. Source: Exotic Archive at the Tower",
       "weaponSlot": "special",
       "weaponName": "Devil's Ruin",
       "weaponHash": "3824106094",
       "recordHash": "3068761227",
+      "objectives": [
+        {
+          "objectiveHash": "4012502907",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Collective Action",
+        "description": "Collecting an Elemental pickup or destroying a Tangle grants this weapon a stacking period of increased damage. Throwing a Tangle provides additional time.\n\nElemental pickups include [Solar]Firesprites, [Void]Void Breaches, [Arc]Ionic Traces, [Stasis]Stasis Shards, and [Strand]Strand Tangles.",
+        "iconPath": "/common/destiny2_content/icons/901c6420954a4e60fc8a521960f556a8.png"
+      },
       "alternateItemHashes": [
         "2732252706"
+      ]
+    },
+    {
+      "itemHash": "1517802577",
+      "name": "Divinity Catalyst",
+      "iconPath": "/common/destiny2_content/icons/d3437049d3b7ad8f17ee272bdfd801e9.jpg",
+      "source": "Catalyst for Divinity. Source: An Exotic quest or challenge.",
+      "weaponSlot": "special",
+      "weaponName": "Divinity",
+      "weaponHash": "4103414242",
+      "recordHash": "2118520207",
+      "objectives": [
+        {
+          "objectiveHash": "4174526018",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Jolting Feedback",
+        "description": "Dealing repeated damage with this weapon inflicts Jolt. \n\nWhile amplified, Jolt is applied faster.",
+        "iconPath": "/common/destiny2_content/icons/27270b6f5da035b05fa797c82bb6a10d.png"
+      },
+      "alternateItemHashes": [
+        "1517802577"
       ]
     },
     {
@@ -371,6 +969,19 @@
       "weaponName": "Dragon's Breath",
       "weaponHash": "17096506",
       "recordHash": "3465971755",
+      "objectives": [
+        {
+          "objectiveHash": "4283361562",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Pyromancer",
+        "description": "This weapon replenishes its fuel faster. Defeating targets with this weapon causes them to periodically drop Firesprites.",
+        "iconPath": "/common/destiny2_content/icons/40bdf10ef7b4fca75227980d5ad936bc.png"
+      },
       "alternateItemHashes": [
         "2924294393"
       ]
@@ -384,8 +995,94 @@
       "weaponName": "Duality",
       "weaponHash": "3460576091",
       "recordHash": "2135780490",
+      "objectives": [
+        {
+          "objectiveHash": "3033168168",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
       "alternateItemHashes": [
         "3591914291"
+      ]
+    },
+    {
+      "itemHash": "1134515006",
+      "name": "Edge of Action Catalyst",
+      "iconPath": "/common/destiny2_content/icons/cfcbde3872d34c5258fd8227640a020e.png",
+      "source": "Catalyst for Edge of Action. Source: \"The Evidence Board\" Exotic Quest",
+      "weaponSlot": "special",
+      "weaponName": "Edge of Action",
+      "weaponHash": "2535142413",
+      "recordHash": "888259608",
+      "objectives": [
+        {
+          "objectiveHash": "2960816159",
+          "description": "Targets defeated",
+          "completionValue": 1
+        }
+      ],
+      "description": "Defeating a Void-debuffed target grants an overshield.",
+      "effect": {
+        "name": "Repulsor Brace",
+        "description": "Defeating a Void-debuffed target grants an overshield.",
+        "iconPath": "/common/destiny2_content/icons/cfcbde3872d34c5258fd8227640a020e.png"
+      },
+      "alternateItemHashes": [
+        "1134515006"
+      ]
+    },
+    {
+      "itemHash": "1731191722",
+      "name": "Edge of Concurrence Catalyst",
+      "iconPath": "/common/destiny2_content/icons/e0f3c00a8b2cbccb8f1f1b318026aeee.png",
+      "source": "Catalyst for Edge of Concurrence. Source: \"The Evidence Board\" Exotic Quest",
+      "weaponSlot": "special",
+      "weaponName": "Edge of Concurrence",
+      "weaponHash": "542203595",
+      "recordHash": "2145973004",
+      "objectives": [
+        {
+          "objectiveHash": "3650170579",
+          "description": "Targets defeated",
+          "completionValue": 1
+        }
+      ],
+      "description": "Temporarily increases reload speed and handling after sprinting or while amplified. This effect is improved when you are amplified.",
+      "effect": {
+        "name": "Eddy Current",
+        "description": "Temporarily increases reload speed and handling after sprinting or while amplified. This effect is improved when you are amplified.",
+        "iconPath": "/common/destiny2_content/icons/e0f3c00a8b2cbccb8f1f1b318026aeee.png"
+      },
+      "alternateItemHashes": [
+        "1731191722"
+      ]
+    },
+    {
+      "itemHash": "2038196759",
+      "name": "Edge of Intent Catalyst",
+      "iconPath": "/common/destiny2_content/icons/3d0f2eb4c1e4f66f2bd897ec4d5ce4f1.png",
+      "source": "Catalyst for Edge of Intent. Source: \"The Evidence Board\" Exotic Quest",
+      "weaponSlot": "special",
+      "weaponName": "Edge of Intent",
+      "weaponHash": "14194600",
+      "recordHash": "1359628777",
+      "objectives": [
+        {
+          "objectiveHash": "4066813156",
+          "description": "Targets defeated",
+          "completionValue": 1
+        }
+      ],
+      "description": "Reloading shortly after dealing a final blow grants Cure to you and your nearby allies.",
+      "effect": {
+        "name": "Heal Clip",
+        "description": "Reloading shortly after dealing a final blow grants Cure to you and your nearby allies.",
+        "iconPath": "/common/destiny2_content/icons/3d0f2eb4c1e4f66f2bd897ec4d5ce4f1.png"
+      },
+      "alternateItemHashes": [
+        "2038196759"
       ]
     },
     {
@@ -397,6 +1094,19 @@
       "weaponName": "Ergo Sum",
       "weaponHash": "1681583613",
       "recordHash": "3025950752",
+      "objectives": [
+        {
+          "objectiveHash": "1831169133",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Transcendent Steel",
+        "description": "Dealing damage with a Transcendent grenade grants Ergo Sum ammo.",
+        "iconPath": "/common/destiny2_content/icons/a7f701182ff3668126dea8ea22d9ec29.png"
+      },
       "alternateItemHashes": [
         "1497627200"
       ]
@@ -410,6 +1120,19 @@
       "weaponName": "Eriana's Vow",
       "weaponHash": "3524313097",
       "recordHash": "1107018752",
+      "objectives": [
+        {
+          "objectiveHash": "357407083",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "More to Give",
+        "description": "Increases magazine size. Holstering this weapon automatically reloads it after a short period of time.",
+        "iconPath": "/common/destiny2_content/icons/e32dc00889cffb72517de32c6a80164f.png"
+      },
       "alternateItemHashes": [
         "2984240082"
       ]
@@ -417,11 +1140,25 @@
     {
       "itemHash": "3703325290",
       "name": "Euphony Catalyst",
-      "iconPath": "/common/destiny2_content/icons/62890cb9e33bbed6a3587a1064dc860e.png",
+      "iconPath": "/common/destiny2_content/icons/1e4600e2e12e0c1fcf2085fadf25cf39.jpg",
       "source": "Catalyst for Euphony. Source: \"Salvation's Edge\" Raid",
       "weaponSlot": "primary",
       "weaponName": "Euphony",
       "weaponHash": "3284383335",
+      "recordHash": "590601685",
+      "objectives": [
+        {
+          "objectiveHash": "3203822995",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Enlightened Action",
+        "description": "Dealing damage improves reload speed and handling.",
+        "iconPath": "/common/destiny2_content/icons/cee13d00e65346dacc05562c80f537da.png"
+      },
       "alternateItemHashes": [
         "3703325290"
       ]
@@ -435,6 +1172,19 @@
       "weaponName": "Ex Diris",
       "weaponHash": "3821409356",
       "recordHash": "1605993075",
+      "objectives": [
+        {
+          "objectiveHash": "2822971585",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Berserk Rush",
+        "description": "Weapon enrages faster while amplified. Final blows with this weapon make you amplified.",
+        "iconPath": "/common/destiny2_content/icons/ee8e2a91e1706362adb14aac6111fa95.png"
+      },
       "alternateItemHashes": [
         "1826222780"
       ]
@@ -442,17 +1192,56 @@
     {
       "itemHash": "2835258088",
       "name": "Eyes of Tomorrow Catalyst",
-      "iconPath": "/common/destiny2_content/icons/62890cb9e33bbed6a3587a1064dc860e.png",
+      "iconPath": "/common/destiny2_content/icons/9c7394072c7744f91a3f52418b590d9e.jpg",
       "source": "Catalyst for Eyes of Tomorrow. Source: \"Deep Stone Crypt\" Raid",
       "weaponSlot": "heavy",
       "weaponName": "Eyes of Tomorrow",
       "weaponHash": "2399110176",
+      "recordHash": "3159084201",
+      "objectives": [
+        {
+          "objectiveHash": "1006363205",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Demolitionist",
+        "description": "Kills with this weapon generate grenade energy. Activating your grenade ability reloads this weapon from reserves.",
+        "iconPath": "/common/destiny2_content/icons/da009697110e06b65d6f827b3b6d5f70.png"
+      },
       "alternateItemHashes": [
         "2835258088"
       ]
     },
     {
-      "itemHash": "924149234",
+      "itemHash": "2981089390",
+      "name": "Fafnir Catalyst",
+      "iconPath": "/common/destiny2_content/icons/d7e34db70d3bd57dd6b9a69f82f85e0c.jpg",
+      "source": "Catalyst for Fafnir. Source: Monument of Triumph",
+      "weaponSlot": "heavy",
+      "weaponName": "Fafnir",
+      "weaponHash": "2197778303",
+      "objectives": [
+        {
+          "objectiveHash": "391323279",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "No Distractions",
+        "description": "Aiming this weapon for a short period reduces flinch.",
+        "iconPath": "/common/destiny2_content/icons/3f6534e7fd934e0ecfeb1cac9da9c97f.png"
+      },
+      "alternateItemHashes": [
+        "2981089390"
+      ]
+    },
+    {
+      "itemHash": "2858348497",
       "name": "Fighting Lion Catalyst",
       "iconPath": "/common/destiny2_content/icons/5106f4624da0a5ff26b97702547fc282.jpg",
       "source": "Catalyst for Fighting Lion. Source: Exotic engrams; extremely rare world drops.",
@@ -460,6 +1249,24 @@
       "weaponName": "Fighting Lion",
       "weaponHash": "3549153978",
       "recordHash": "3968841949",
+      "objectives": [
+        {
+          "objectiveHash": "3187256318",
+          "description": "Enemies Defeated",
+          "completionValue": 500
+        },
+        {
+          "objectiveHash": "3187256319",
+          "description": "Bounties completed",
+          "completionValue": 50
+        },
+        {
+          "objectiveHash": "1082937089",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "924149234",
         "2858348497",
@@ -475,6 +1282,19 @@
       "weaponName": "Final Warning",
       "weaponHash": "3121540812",
       "recordHash": "1450844310",
+      "objectives": [
+        {
+          "objectiveHash": "209572367",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "String Theory",
+        "description": "Hits against marked targets deal increased damage and have a chance to refund ammo to the magazine.",
+        "iconPath": "/common/destiny2_content/icons/69144416733c3dc21fcadfdbb9fcb0a2.jpg"
+      },
       "alternateItemHashes": [
         "77818606"
       ]
@@ -488,6 +1308,19 @@
       "weaponName": "Finality's Auger",
       "weaponHash": "331231237",
       "recordHash": "3396973108",
+      "objectives": [
+        {
+          "objectiveHash": "1114834835",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Bait and Switch",
+        "description": "Deal damage with all equipped weapons within a short time to give this weapon a damage boost.",
+        "iconPath": "/common/destiny2_content/icons/bc91e95edfbc9163dd88339a93b66913.png"
+      },
       "alternateItemHashes": [
         "818149482"
       ]
@@ -501,6 +1334,19 @@
       "weaponName": "Forerunner",
       "weaponHash": "2179048386",
       "recordHash": "3574136388",
+      "objectives": [
+        {
+          "objectiveHash": "3753505647",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "The Rock",
+        "description": "For several seconds after a final blow, [Alternate Weapon Action]  to consume part of your ammo reserves, converting your next thrown grenade into a fragmentation grenade.",
+        "iconPath": "/common/destiny2_content/icons/8b70bd45b5e0a8bc747b00fdce81b26b.png"
+      },
       "alternateItemHashes": [
         "674410190"
       ]
@@ -514,6 +1360,19 @@
       "weaponName": "Gjallarhorn",
       "weaponHash": "1363886209",
       "recordHash": "1855685192",
+      "objectives": [
+        {
+          "objectiveHash": "56878078",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "More Wolves",
+        "description": "Increases magazine size. Final blows with Wolfpack Rounds spawn a faster, more powerful micro-missile at the target's location.",
+        "iconPath": "/common/destiny2_content/icons/056d763213c2f2ceb68cfb697c8f7917.png"
+      },
       "alternateItemHashes": [
         "2526801077"
       ]
@@ -527,12 +1386,25 @@
       "weaponName": "Grand Overture",
       "weaponHash": "1763584999",
       "recordHash": "263158944",
+      "objectives": [
+        {
+          "objectiveHash": "2696185611",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Grand Overture Catalyst",
+        "description": "Omega Strike hits blind combatants. Defeating combatants with Omega Strike causes them to explode.",
+        "iconPath": "/common/destiny2_content/icons/462be2094cee5624f612f9dfd6917a10.png"
+      },
       "alternateItemHashes": [
         "2094761202"
       ]
     },
     {
-      "itemHash": "615063266",
+      "itemHash": "1620506139",
       "name": "Graviton Lance Catalyst",
       "iconPath": "/common/destiny2_content/icons/5bcea1f9a52fb82286a26dca952c9259.jpg",
       "source": "Catalyst for Graviton Lance. Source: Exotic engrams; extremely rare world drops.",
@@ -540,10 +1412,101 @@
       "weaponName": "Graviton Lance",
       "weaponHash": "3628991658",
       "recordHash": "4147054663",
+      "objectives": [
+        {
+          "objectiveHash": "212304523",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "3301780284",
+          "description": "Enemies Defeated",
+          "completionValue": 500
+        },
+        {
+          "objectiveHash": "3301780285",
+          "description": "Cosmology Kills",
+          "completionValue": 100
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "615063266",
         "1620506139",
         "2381230784"
+      ]
+    },
+    {
+      "itemHash": "282266467",
+      "name": "Rapid Hit Refit",
+      "iconPath": "/common/destiny2_content/icons/de22847fa94634a487758041887bcdaa.png",
+      "source": "Catalyst for Graviton Spike. Source: Exploring Kepler",
+      "weaponSlot": "special",
+      "weaponName": "Graviton Spike",
+      "weaponHash": "648595258",
+      "description": "Rapid precision hits temporarily increase stability and reload speed.",
+      "effect": {
+        "name": "Rapid Hit",
+        "description": "Rapid precision hits temporarily increase stability and reload speed.",
+        "iconPath": "/common/destiny2_content/icons/de22847fa94634a487758041887bcdaa.png"
+      },
+      "alternateItemHashes": [
+        "282266467"
+      ]
+    },
+    {
+      "itemHash": "282266466",
+      "name": "Subsistence Refit",
+      "iconPath": "/common/destiny2_content/icons/eaa8f4295a71bf47df7ffd8599f7af4d.png",
+      "source": "Catalyst for Graviton Spike. Source: Exploring Kepler",
+      "weaponSlot": "special",
+      "weaponName": "Graviton Spike",
+      "weaponHash": "648595258",
+      "description": "Subsistence",
+      "effect": {
+        "name": "Subsistence",
+        "description": "Defeating targets partially reloads the magazine from reserves.",
+        "iconPath": "/common/destiny2_content/icons/eaa8f4295a71bf47df7ffd8599f7af4d.png"
+      },
+      "alternateItemHashes": [
+        "282266466",
+        "1931951168"
+      ]
+    },
+    {
+      "itemHash": "282266464",
+      "name": "Temporal Alignment Refit",
+      "iconPath": "/common/destiny2_content/icons/db9dfc488e305a3bad2ae105f36cd444.png",
+      "source": "Catalyst for Graviton Spike. Source: Exploring Kepler",
+      "weaponSlot": "special",
+      "weaponName": "Graviton Spike",
+      "weaponHash": "648595258",
+      "description": "Overcharging both Arc and Stasis modes grants a period of increased damage.",
+      "effect": {
+        "name": "Temporal Alignment Refit",
+        "description": "Overcharging both Arc and Stasis modes grants a period of increased damage.",
+        "iconPath": "/common/destiny2_content/icons/db9dfc488e305a3bad2ae105f36cd444.png"
+      },
+      "alternateItemHashes": [
+        "282266464"
+      ]
+    },
+    {
+      "itemHash": "282266465",
+      "name": "Transcendent Zen Refit",
+      "iconPath": "/common/destiny2_content/icons/1de4345604751861c03bee4ccd5efa6b.png",
+      "source": "Catalyst for Graviton Spike. Source: Exploring Kepler",
+      "weaponSlot": "special",
+      "weaponName": "Graviton Spike",
+      "weaponHash": "648595258",
+      "description": "Final blows grant bonus stats based on the weapon's damage type alignment. Light elements grant stability and handling. Dark elements grant range and aim assist. While Transcendent, this weapon gets both bonuses.",
+      "effect": {
+        "name": "Transcendent Moment",
+        "description": "Final blows grant bonus stats based on the weapon's damage type alignment. Light elements grant stability and handling. Dark elements grant range and aim assist. While Transcendent, this weapon gets both bonuses.",
+        "iconPath": "/common/destiny2_content/icons/1de4345604751861c03bee4ccd5efa6b.png"
+      },
+      "alternateItemHashes": [
+        "282266465"
       ]
     },
     {
@@ -555,6 +1518,19 @@
       "weaponName": "Hard Light",
       "weaponHash": "4124984448",
       "recordHash": "3784038415",
+      "objectives": [
+        {
+          "objectiveHash": "3063448123",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "667579812",
+          "description": "Enemies Defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "390807531",
         "545660112",
@@ -570,6 +1546,19 @@
       "weaponName": "Hawkmoon",
       "weaponHash": "3856705927",
       "recordHash": "1107121513",
+      "objectives": [
+        {
+          "objectiveHash": "72062876",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Hunter's Trance",
+        "description": "Increased magazine size. Grants increased handling, reload speed, and weapon range based on the number of stacks of Paracausal Charge.",
+        "iconPath": "/common/destiny2_content/icons/375832643326841e4ecd21158c2ce794.png"
+      },
       "alternateItemHashes": [
         "383825919"
       ]
@@ -583,6 +1572,19 @@
       "weaponName": "Heartshadow",
       "weaponHash": "3664831848",
       "recordHash": "1629497825",
+      "objectives": [
+        {
+          "objectiveHash": "2496161433",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Wraithwalk",
+        "description": "Faster movement while invisible.",
+        "iconPath": "/common/destiny2_content/icons/4c068d4b047219f4f0b246941f541c3c.png"
+      },
       "alternateItemHashes": [
         "3072857252"
       ]
@@ -596,6 +1598,19 @@
       "weaponName": "Heir Apparent",
       "weaponHash": "2084878005",
       "recordHash": "1514331782",
+      "objectives": [
+        {
+          "objectiveHash": "1754613579",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Legion's Bulwark",
+        "description": "Increases the Arc shield's durability and partially reloads the magazine if it is destroyed.",
+        "iconPath": "/common/destiny2_content/icons/7fa5222c025a19d0ef67f6e8bbf0bd84.png"
+      },
       "alternateItemHashes": [
         "1324556594"
       ]
@@ -609,6 +1624,19 @@
       "weaponName": "Heirloom",
       "weaponHash": "1685137410",
       "recordHash": "1932245887",
+      "objectives": [
+        {
+          "objectiveHash": "2798598522",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Heirloom Catalyst",
+        "description": "Direct hits with charged shots scorch the target. This weapon deals more damage against scorched targets.",
+        "iconPath": "/common/destiny2_content/icons/eb803275b1ceea69c1f0e07e3f55a1f6.png"
+      },
       "alternateItemHashes": [
         "1040380121"
       ]
@@ -622,23 +1650,47 @@
       "weaponName": "Hierarchy of Needs",
       "weaponHash": "4174431791",
       "recordHash": "185032465",
+      "objectives": [
+        {
+          "objectiveHash": "1057827158",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Panoptic Tessellation",
+        "description": "Deploying a Guidance Ring or striking a target with a seeking projectile improves draw time, hip-fire accuracy, and reload speed for a moderate duration.",
+        "iconPath": "/common/destiny2_content/icons/4d3c5d54427ef858b69e6a0288f6e3dc.png"
+      },
       "alternateItemHashes": [
         "122307549"
       ]
     },
     {
-      "itemHash": "917657364",
-      "name": "Huckleberry Catalyst",
-      "iconPath": "/common/destiny2_content/icons/28355e0adda864289165854e376f86ee.jpg",
-      "source": "Catalyst for The Huckleberry. Source: Exotic engrams; extremely rare world drops.",
-      "weaponSlot": "primary",
-      "weaponName": "The Huckleberry",
-      "weaponHash": "2286143274",
-      "recordHash": "2856496392",
+      "itemHash": "4045752130",
+      "name": "Ice Breaker",
+      "iconPath": "/common/destiny2_content/icons/8c97cfcc1a6837141d63f267de15180e.jpg",
+      "source": "Catalyst for Ice Breaker. Source: Vesper's Host",
+      "weaponSlot": "special",
+      "weaponName": "Ice Breaker",
+      "weaponHash": "1111334348",
+      "objectives": [
+        {
+          "objectiveHash": "70240795",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Icing-Breaker",
+        "description": "Landing a hit on a slowed or frozen target has a chance to return the round to the magazine.",
+        "iconPath": "/common/destiny2_content/icons/cf3595a309f6170f011183622d705f17.png"
+      },
       "alternateItemHashes": [
-        "917657364",
-        "2101754671",
-        "3459475454"
+        "2848175214",
+        "4045752130"
       ]
     },
     {
@@ -650,23 +1702,21 @@
       "weaponName": "Izanagi's Burden",
       "weaponHash": "3211806999",
       "recordHash": "1233471745",
+      "objectives": [
+        {
+          "objectiveHash": "485787117",
+          "description": "Enemies defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Peerless Edge",
+        "description": "Increases the damage bonus of Honed Edge when four bullets are consumed.",
+        "iconPath": "/common/destiny2_content/icons/83e5bab47b90a640e020124dd0caf2d4.png"
+      },
       "alternateItemHashes": [
         "529188544"
-      ]
-    },
-    {
-      "itemHash": "1447921738",
-      "name": "Jade Rabbit Catalyst",
-      "iconPath": "/common/destiny2_content/icons/e444e97b9d2c368006272fc90eb1e022.jpg",
-      "source": "Catalyst for The Jade Rabbit. Source: Exotic engrams; extremely rare world drops.",
-      "weaponSlot": "primary",
-      "weaponName": "The Jade Rabbit",
-      "weaponHash": "3844694310",
-      "recordHash": "3368860448",
-      "alternateItemHashes": [
-        "1447921738",
-        "1496699324",
-        "1772382457"
       ]
     },
     {
@@ -678,6 +1728,19 @@
       "weaponName": "Jötunn",
       "weaponHash": "417164956",
       "recordHash": "1060652297",
+      "objectives": [
+        {
+          "objectiveHash": "2669220546",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Cornered",
+        "description": "Faster charge time or draw time when surrounded by combatants.",
+        "iconPath": "/common/destiny2_content/icons/4155ec85e6c1e11b24d9986f21528d34.png"
+      },
       "alternateItemHashes": [
         "862513617"
       ]
@@ -685,11 +1748,25 @@
     {
       "itemHash": "3111271686",
       "name": "Khvostov Catalyst",
-      "iconPath": "/common/destiny2_content/icons/62890cb9e33bbed6a3587a1064dc860e.png",
+      "iconPath": "/common/destiny2_content/icons/5d71229a854336fb72bf81df5a2a8ed2.jpg",
       "source": "Catalyst for Khvostov 7G-0X. Source: Exploring the Pale Heart",
       "weaponSlot": "primary",
       "weaponName": "Khvostov 7G-0X",
       "weaponHash": "4129629253",
+      "recordHash": "1122225175",
+      "objectives": [
+        {
+          "objectiveHash": "1211302263",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Attrition Orbs",
+        "description": "Dealing sustained damage creates an Orb of Power.",
+        "iconPath": "/common/destiny2_content/icons/c2092fae6ae58ca77a7f9b4434e688ef.png"
+      },
       "alternateItemHashes": [
         "3111271686"
       ]
@@ -703,8 +1780,49 @@
       "weaponName": "Le Monarque",
       "weaponHash": "3588934839",
       "recordHash": "3628100770",
+      "objectives": [
+        {
+          "objectiveHash": "1283476835",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Unrelenting",
+        "description": "Rapidly defeating targets triggers health regeneration. Guardians and powerful combatants count as more than one kill.",
+        "iconPath": "/common/destiny2_content/icons/1e5843177c71ae3f2a4770d01a2f3813.png"
+      },
       "alternateItemHashes": [
         "466834938"
+      ]
+    },
+    {
+      "itemHash": "4233905577",
+      "name": "Acrius Catalyst",
+      "iconPath": "/common/destiny2_content/icons/3b4c1694f52b85f9fc1c57cb963dc36c.jpg",
+      "source": "Catalyst for Legend of Acrius. Source: Exotic Archive at the Tower",
+      "weaponSlot": "heavy",
+      "weaponName": "Legend of Acrius",
+      "weaponHash": "3580904580",
+      "recordHash": "206322165",
+      "objectives": [
+        {
+          "objectiveHash": "3712289369",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "2132182086",
+          "description": "Enemies Defeated",
+          "completionValue": 300
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
+      "alternateItemHashes": [
+        "456628588",
+        "2988259322",
+        "4233905577"
       ]
     },
     {
@@ -716,6 +1834,19 @@
       "weaponName": "Leviathan's Breath",
       "weaponHash": "2591746970",
       "recordHash": "3740374319",
+      "objectives": [
+        {
+          "objectiveHash": "1149582218",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat combatants while using this weapon to unlock this upgrade.\n\nDefeating high-tier Wrathborn with any weapon or ability will unlock this objective significantly faster.",
+      "effect": {
+        "name": "Colossal Quiver",
+        "description": "Maximizes quiver size.",
+        "iconPath": "/common/destiny2_content/icons/69b98e21d1763931cda59af4dd064a36.png"
+      },
       "alternateItemHashes": [
         "2362217257"
       ]
@@ -729,6 +1860,19 @@
       "weaponName": "Lodestar",
       "weaponHash": "3725585710",
       "recordHash": "3393121279",
+      "objectives": [
+        {
+          "objectiveHash": "655664270",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Supercharged Matrix",
+        "description": "While amplified, this weapon gains greatly increased reload speed, aim assist, and movement while aiming down sights.",
+        "iconPath": "/common/destiny2_content/icons/18637447ecad82d4b41b624a51d65c2f.png"
+      },
       "alternateItemHashes": [
         "2018366981"
       ]
@@ -742,8 +1886,46 @@
       "weaponName": "Lord of Wolves",
       "weaponHash": "3413860063",
       "recordHash": "3531533350",
+      "objectives": [
+        {
+          "objectiveHash": "1193459749",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Fang and Claw",
+        "description": "Increases reload speed and stability. While Release the Wolves is active, damaging targets with this weapon applies Scorch. When aiming down sights, defeating a target spreads Scorch to those nearby.",
+        "iconPath": "/common/destiny2_content/icons/7e1f133c28124c9fe6d586c8cd8d412b.png"
+      },
       "alternateItemHashes": [
         "431220296"
+      ]
+    },
+    {
+      "itemHash": "550118262",
+      "name": "Lorentz Driver",
+      "iconPath": "/common/destiny2_content/icons/f655ec9343e18cb811f69930d9cb426a.jpg",
+      "source": "Catalyst for Lorentz Driver. Source: Exotic Archive at the Tower",
+      "weaponSlot": "special",
+      "weaponName": "Lorentz Driver",
+      "weaponHash": "3761898871",
+      "objectives": [
+        {
+          "objectiveHash": "3771544487",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Jump Driver",
+        "description": "Lorentz Driver gains an enhanced radar. Additionally, while this weapon has 3 telemetry patterns, EM Anomaly detonations no longer require a precision final blow.",
+        "iconPath": "/common/destiny2_content/icons/5aaacd2dc8354ac408a0ef0848197f2b.png"
+      },
+      "alternateItemHashes": [
+        "550118262"
       ]
     },
     {
@@ -755,6 +1937,19 @@
       "weaponName": "Lumina",
       "weaponHash": "3512014804",
       "recordHash": "3663964046",
+      "objectives": [
+        {
+          "objectiveHash": "3282778059",
+          "description": "Noble Round heals",
+          "completionValue": 250
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain an additional perk.\n\nHeal allies with Noble Rounds to unlock this upgrade.",
+      "effect": {
+        "name": "Resonant Virtue",
+        "description": "Gain two Remnants per final blow instead of one.",
+        "iconPath": "/common/destiny2_content/icons/2ac2dd304a0a64ecfebb73932772c523.png"
+      },
       "alternateItemHashes": [
         "2271572658"
       ]
@@ -768,12 +1963,25 @@
       "weaponName": "Malfeasance",
       "weaponHash": "204878059",
       "recordHash": "2538406461",
+      "objectives": [
+        {
+          "objectiveHash": "3693592137",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Vorpal Weapon",
+        "description": "Increased damage against bosses, vehicles, and Guardians with their Super active.",
+        "iconPath": "/common/destiny2_content/icons/bc5130b227ee577f2678ec2d2c97bf4a.png"
+      },
       "alternateItemHashes": [
         "1234111636"
       ]
     },
     {
-      "itemHash": "1149703256",
+      "itemHash": "3804992459",
       "name": "Merciless Catalyst",
       "iconPath": "/common/destiny2_content/icons/68df199792e5e6ab67de1befba7e0595.jpg",
       "source": "Catalyst for Merciless. Source: Exotic engrams; extremely rare world drops.",
@@ -781,6 +1989,19 @@
       "weaponName": "Merciless",
       "weaponHash": "4190156464",
       "recordHash": "4178028503",
+      "objectives": [
+        {
+          "objectiveHash": "532400699",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "4285451500",
+          "description": "Enemies Defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "1149703256",
         "1156021168",
@@ -790,17 +2011,31 @@
     {
       "itemHash": "2292872001",
       "name": "Microcosm Catalyst",
-      "iconPath": "/common/destiny2_content/icons/62890cb9e33bbed6a3587a1064dc860e.png",
+      "iconPath": "/common/destiny2_content/icons/fe7020b215de24e757f4ad5d979c4dda.jpg",
       "source": "Catalyst for Microcosm. Source: Exploring the Pale Heart",
       "weaponSlot": "heavy",
       "weaponName": "Microcosm",
       "weaponHash": "4207066264",
+      "recordHash": "953650385",
+      "objectives": [
+        {
+          "objectiveHash": "3438022194",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Thresh",
+        "description": "Killing combatants with this weapon generates a small amount of Super energy.",
+        "iconPath": "/common/destiny2_content/icons/7f9dcf3bd4a8a4e0d2d0922827f038c9.png"
+      },
       "alternateItemHashes": [
         "2292872001"
       ]
     },
     {
-      "itemHash": "545668653",
+      "itemHash": "800074992",
       "name": "MIDA Multi-Tool Catalyst",
       "iconPath": "/common/destiny2_content/icons/2164d8411d065abce0442fe597b06a21.jpg",
       "source": "Catalyst for MIDA Multi-Tool. Source: Exotic Archive at the Tower",
@@ -808,6 +2043,19 @@
       "weaponName": "MIDA Multi-Tool",
       "weaponHash": "1331482397",
       "recordHash": "1071947311",
+      "objectives": [
+        {
+          "objectiveHash": "1289597760",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "698203561",
+          "description": "Precision Kills",
+          "completionValue": 200
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "545668653",
         "800074992",
@@ -823,6 +2071,19 @@
       "weaponName": "Monte Carlo",
       "weaponHash": "4068264807",
       "recordHash": "639604165",
+      "objectives": [
+        {
+          "objectiveHash": "2408556935",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Stochastic Vengeance",
+        "description": "At 5 stacks of Markov Chain, [Alternate Weapon Action]  - switches between your melee attack and Monte Carlo's bayonet. Landing a bayonet melee hit grants melee energy.",
+        "iconPath": "/common/destiny2_content/icons/6250321aa7c13ebbd3531df11c8e0980.png"
+      },
       "alternateItemHashes": [
         "2816578262"
       ]
@@ -836,6 +2097,19 @@
       "weaponName": "Necrochasm",
       "weaponHash": "1034055198",
       "recordHash": "503301272",
+      "objectives": [
+        {
+          "objectiveHash": "2543080271",
+          "description": "Essence of the Oversoul collected",
+          "completionValue": 35
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork.\n\nThe weapon will gain a tracker that displays the number of combatants defeated with it. The Masterworked weapon will also receive additional capabilities.\n\nCollect Essence of the Oversoul to unlock this upgrade.",
+      "effect": {
+        "name": "One for Thrall",
+        "description": "Hitting three separate targets increases damage, range, handling, and aim assist for a moderate duration.",
+        "iconPath": "/common/destiny2_content/icons/0d23330a42b682cdec7ec72c1d024900.jpg"
+      },
       "alternateItemHashes": [
         "1931066670"
       ]
@@ -849,6 +2123,19 @@
       "weaponName": "New Land Beyond",
       "weaponHash": "2581676735",
       "recordHash": "2629249101",
+      "objectives": [
+        {
+          "objectiveHash": "821187715",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Top Tier Mastery",
+        "description": "While this weapon is at high stacks of Master, new rounds are continually loaded into the magazine, and the benefits from Bullseye Bolster last longer.",
+        "iconPath": "/common/destiny2_content/icons/40a7f1ebe2202f5bf522a5f3fd72ce86.png"
+      },
       "alternateItemHashes": [
         "2861049498"
       ]
@@ -862,6 +2149,19 @@
       "weaponName": "New Malpais",
       "weaponHash": "1736135946",
       "recordHash": "1648672968",
+      "objectives": [
+        {
+          "objectiveHash": "3014392878",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Unraveling Blast",
+        "description": "This weapon's explosions unravel nearby targets.",
+        "iconPath": "/common/destiny2_content/icons/3191c54b27c1b38159c5515b26798f0c.png"
+      },
       "alternateItemHashes": [
         "3466807461"
       ]
@@ -875,6 +2175,19 @@
       "weaponName": "No Time to Explain",
       "weaponHash": "1594120904",
       "recordHash": "2708727662",
+      "objectives": [
+        {
+          "objectiveHash": "3173858845",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Blast from the Side",
+        "description": "Projectiles from the time portal shoot more frequently.",
+        "iconPath": "/common/destiny2_content/icons/6b1002e08920b6083d46586e793372dd.png"
+      },
       "alternateItemHashes": [
         "2145198832"
       ]
@@ -882,11 +2195,24 @@
     {
       "itemHash": "82994288",
       "name": "One Thousand Voices Catalyst",
-      "iconPath": "/common/destiny2_content/icons/46ebd791f692b682691416beea7ac4c5.jpg",
+      "iconPath": "/common/destiny2_content/icons/b048d49bbe3e8d9d95d752a145275243.jpg",
       "source": "Catalyst for One Thousand Voices. Source: Last Wish raid.",
       "weaponSlot": "heavy",
       "weaponName": "One Thousand Voices",
       "weaponHash": "2069224589",
+      "objectives": [
+        {
+          "objectiveHash": "2903080605",
+          "description": "Targets defeated",
+          "completionValue": 350
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Fall from Grace",
+        "description": "The weapon has become partially Taken. Detonations produce Taken energy that aggressively seeks out nearby targets and Blights them.",
+        "iconPath": "/common/destiny2_content/icons/cc54da8de4420479d9b554003569402a.png"
+      },
       "alternateItemHashes": [
         "82994288"
       ]
@@ -900,9 +2226,47 @@
       "weaponName": "Osteo Striga",
       "weaponHash": "46524085",
       "recordHash": "494981303",
+      "objectives": [
+        {
+          "objectiveHash": "783046999",
+          "description": "Reshape Osteo Striga with the catalyst",
+          "completionValue": 1
+        }
+      ],
+      "description": "Final blows with corruption return ammo to the magazine.",
+      "effect": {
+        "name": "Osteo Striga Catalyst",
+        "description": "Final blows with corruption return ammo to the magazine.",
+        "iconPath": "/common/destiny2_content/icons/78f8cdd72e124dc1faaf7801085e4d5b.png"
+      },
       "alternateItemHashes": [
         "229096166",
         "2132353550"
+      ]
+    },
+    {
+      "itemHash": "4135406211",
+      "name": "Disease Vector",
+      "iconPath": "/common/destiny2_content/icons/e7d3286f9aa6bce587e8be4c7c0ac0fc.png",
+      "source": "Catalyst for Outbreak Perfected. Source: Exotic Archive at the Tower",
+      "weaponSlot": "primary",
+      "weaponName": "Outbreak Perfected",
+      "weaponHash": "3824673936",
+      "objectives": [
+        {
+          "objectiveHash": "1520039721",
+          "description": "Precision final blows",
+          "completionValue": 500
+        }
+      ],
+      "description": "Increases nanite damage. Enemies that die with nanites attached to them generate additional nanites.",
+      "effect": {
+        "name": "Disease Vector",
+        "description": "Increases nanite damage. Enemies that die with nanites attached to them generate additional nanites.",
+        "iconPath": "/common/destiny2_content/icons/e7d3286f9aa6bce587e8be4c7c0ac0fc.png"
+      },
+      "alternateItemHashes": [
+        "4135406211"
       ]
     },
     {
@@ -914,6 +2278,19 @@
       "weaponName": "Outbreak Perfected",
       "weaponHash": "400096939",
       "recordHash": "591600693",
+      "objectives": [
+        {
+          "objectiveHash": "1520039721",
+          "description": "Precision final blows",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Disease Vector",
+        "description": "Increases nanite damage. Enemies that die with nanites attached to them generate additional nanites.",
+        "iconPath": "/common/destiny2_content/icons/e7d3286f9aa6bce587e8be4c7c0ac0fc.png"
+      },
       "alternateItemHashes": [
         "3352275956"
       ]
@@ -921,17 +2298,31 @@
     {
       "itemHash": "4259872957",
       "name": "Parasite Catalyst",
-      "iconPath": "/common/destiny2_content/icons/62890cb9e33bbed6a3587a1064dc860e.png",
+      "iconPath": "/common/destiny2_content/icons/252bdef5225cf87f3cf8d21fafffad82.jpg",
       "source": "Catalyst for Parasite. Source: \"Of Queens and Worms\" Exotic Quest",
       "weaponSlot": "heavy",
       "weaponName": "Parasite",
       "weaponHash": "2812324400",
+      "recordHash": "3391166559",
+      "objectives": [
+        {
+          "objectiveHash": "1901307574",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Envious Arsenal",
+        "description": "Dealing damage with both other weapons before readying this weapon refills it from reserves.",
+        "iconPath": "/common/destiny2_content/icons/234bcd9dc9f5e3ec850a8eac748afbde.png"
+      },
       "alternateItemHashes": [
         "4259872957"
       ]
     },
     {
-      "itemHash": "669988236",
+      "itemHash": "2408641879",
       "name": "Polaris Lance Catalyst",
       "iconPath": "/common/destiny2_content/icons/27fdad9f07de0dc4b97bf8574e6e5242.jpg",
       "source": "Catalyst for Polaris Lance. Source: Exotic Archive at the Tower",
@@ -939,6 +2330,19 @@
       "weaponName": "Polaris Lance",
       "weaponHash": "3413074534",
       "recordHash": "1390549867",
+      "objectives": [
+        {
+          "objectiveHash": "1315388871",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "2557507168",
+          "description": "Enemies Defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "669988236",
         "2408641879",
@@ -946,7 +2350,79 @@
       ]
     },
     {
-      "itemHash": "1684153732",
+      "itemHash": "1808259049",
+      "name": "Echoing Blade",
+      "iconPath": "/common/destiny2_content/icons/2c4f6466ba7de74ec14e68395b71f2b3.jpg",
+      "source": "Catalyst for Praxic Blade. Source: Renegades",
+      "weaponSlot": "primary",
+      "weaponName": "Praxic Blade",
+      "weaponHash": "3049715579",
+      "description": "Increases the number of targets that the thrown Sword can hit.",
+      "effect": {
+        "name": "Echoing Blade",
+        "description": "Increases the number of targets that the thrown Sword can hit.",
+        "iconPath": "/common/destiny2_content/icons/2c4f6466ba7de74ec14e68395b71f2b3.jpg"
+      },
+      "alternateItemHashes": [
+        "1808259049"
+      ]
+    },
+    {
+      "itemHash": "1808259050",
+      "name": "Energy Conduit",
+      "iconPath": "/common/destiny2_content/icons/1e5fd633e76a0acbc81fa789766ff8d1.jpg",
+      "source": "Catalyst for Praxic Blade. Source: Renegades",
+      "weaponSlot": "primary",
+      "weaponName": "Praxic Blade",
+      "weaponHash": "3049715579",
+      "description": "Grants health regeneration based on the number of targets hit by the thrown Sword.",
+      "effect": {
+        "name": "Energy Conduit",
+        "description": "Grants health regeneration based on the number of targets hit by the thrown Sword.",
+        "iconPath": "/common/destiny2_content/icons/1e5fd633e76a0acbc81fa789766ff8d1.jpg"
+      },
+      "alternateItemHashes": [
+        "1808259050"
+      ]
+    },
+    {
+      "itemHash": "1808259051",
+      "name": "Hyperblade",
+      "iconPath": "/common/destiny2_content/icons/8709d34751bad6a2093a397ba32dceef.jpg",
+      "source": "Catalyst for Praxic Blade. Source: Renegades",
+      "weaponSlot": "primary",
+      "weaponName": "Praxic Blade",
+      "weaponHash": "3049715579",
+      "description": "Reflecting shots causes you to become amplified and grants this Sword increased lunge distance for a single swing.",
+      "effect": {
+        "name": "Hyperblade",
+        "description": "Reflecting shots causes you to become amplified and grants this Sword increased lunge distance for a single swing.",
+        "iconPath": "/common/destiny2_content/icons/8709d34751bad6a2093a397ba32dceef.jpg"
+      },
+      "alternateItemHashes": [
+        "1808259051"
+      ]
+    },
+    {
+      "itemHash": "1808259048",
+      "name": "Upper Hand",
+      "iconPath": "/common/destiny2_content/icons/2d94925245da8f58386d855fd7dc727f.jpg",
+      "source": "Catalyst for Praxic Blade. Source: Renegades",
+      "weaponSlot": "primary",
+      "weaponName": "Praxic Blade",
+      "weaponHash": "3049715579",
+      "description": "Increases the damage of the thrown Sword and reflected shots while on higher ground than the target.",
+      "effect": {
+        "name": "Upper Hand",
+        "description": "Increases the damage of the thrown Sword and reflected shots while on higher ground than the target.",
+        "iconPath": "/common/destiny2_content/icons/2d94925245da8f58386d855fd7dc727f.jpg"
+      },
+      "alternateItemHashes": [
+        "1808259048"
+      ]
+    },
+    {
+      "itemHash": "3867277431",
       "name": "Prometheus Catalyst",
       "iconPath": "/common/destiny2_content/icons/3e864b06fb9266cac7b4ab89835d2e6f.jpg",
       "source": "Catalyst for Prometheus Lens. Source: Exotic engrams; extremely rare world drops.",
@@ -954,25 +2430,23 @@
       "weaponName": "Prometheus Lens",
       "weaponHash": "19024058",
       "recordHash": "1182982189",
+      "objectives": [
+        {
+          "objectiveHash": "2402977063",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "1970405144",
+          "description": "Enemies Defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "1684153732",
         "2250482732",
         "3867277431"
-      ]
-    },
-    {
-      "itemHash": "924149235",
-      "name": "Prospector Catalyst",
-      "iconPath": "/common/destiny2_content/icons/e68a5dba35f4b96f7230e88666e416e6.jpg",
-      "source": "Catalyst for The Prospector. Source: Exotic engrams; extremely rare world drops.",
-      "weaponSlot": "heavy",
-      "weaponName": "The Prospector",
-      "weaponHash": "3549153979",
-      "recordHash": "3371896300",
-      "alternateItemHashes": [
-        "924149235",
-        "2858348496",
-        "3866441869"
       ]
     },
     {
@@ -984,12 +2458,25 @@
       "weaponName": "Quicksilver Storm",
       "weaponHash": "4293613902",
       "recordHash": "2618920720",
+      "objectives": [
+        {
+          "objectiveHash": "1140934458",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Nano-entanglement",
+        "description": "This weapon's damage type becomes Strand. Final blows with grenades from this weapon create Tangles.",
+        "iconPath": "/common/destiny2_content/icons/8a657d3309ad4900362879d7fdd13cb0.png"
+      },
       "alternateItemHashes": [
         "25023897"
       ]
     },
     {
-      "itemHash": "1758592809",
+      "itemHash": "3384861888",
       "name": "Rat King Catalyst",
       "iconPath": "/common/destiny2_content/icons/7dcb41a8e98004a1af64df680784b24d.jpg",
       "source": "Catalyst for Rat King. Source: Exotic Archive at the Tower",
@@ -997,6 +2484,19 @@
       "weaponName": "Rat King",
       "weaponHash": "2362471601",
       "recordHash": "209320411",
+      "objectives": [
+        {
+          "objectiveHash": "1212757712",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "567017609",
+          "description": "Fireteam Rat King Kills",
+          "completionValue": 1000
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "1758592809",
         "2673643645",
@@ -1012,12 +2512,97 @@
       "weaponName": "Red Death Reformed",
       "weaponHash": "427899681",
       "recordHash": "2960086668",
+      "objectives": [
+        {
+          "objectiveHash": "2006547249",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Helping Hand",
+        "description": "Final blows charge this weapon. When the weapon is charged, the next final blow creates a healing burst at your location and leaves a remnant behind that provides restoration to allies.",
+        "iconPath": "/common/destiny2_content/icons/84dd24ab44b146facb95d057ad61bdab.png"
+      },
       "alternateItemHashes": [
         "818393196"
       ]
     },
     {
-      "itemHash": "484491717",
+      "itemHash": "1266037486",
+      "name": "4-Timer Refit",
+      "iconPath": "/common/destiny2_content/icons/a5edd4e751e1aa34bf8328a63b121e71.png",
+      "source": "Catalyst for Revision Zero. Source: \"Operation Seraph's Shield\" Mission",
+      "weaponSlot": "primary",
+      "weaponName": "Revision Zero",
+      "weaponHash": "1473821207",
+      "description": "Rapidly landing precision hits will return two rounds to the magazine.",
+      "effect": {
+        "name": "Fourth Time's the Charm",
+        "description": "Rapidly landing precision hits will return two rounds to the magazine.",
+        "iconPath": "/common/destiny2_content/icons/a5edd4e751e1aa34bf8328a63b121e71.png"
+      },
+      "alternateItemHashes": [
+        "1266037486"
+      ]
+    },
+    {
+      "itemHash": "1266037485",
+      "name": "Frenzy Refit",
+      "iconPath": "/common/destiny2_content/icons/89d7e65f5ebe8d291ea96f128765921d.png",
+      "source": "Catalyst for Revision Zero. Source: \"Operation Seraph's Shield\" Mission",
+      "weaponSlot": "primary",
+      "weaponName": "Revision Zero",
+      "weaponHash": "1473821207",
+      "description": "Each rapid kill with this weapon progressively increases reload speed for a short time.",
+      "effect": {
+        "name": "Feeding Frenzy",
+        "description": "Each rapid kill with this weapon progressively increases reload speed for a short time.",
+        "iconPath": "/common/destiny2_content/icons/89d7e65f5ebe8d291ea96f128765921d.png"
+      },
+      "alternateItemHashes": [
+        "1266037485"
+      ]
+    },
+    {
+      "itemHash": "1266037487",
+      "name": "Outlaw Refit",
+      "iconPath": "/common/destiny2_content/icons/382df469a091c33e190ee583b64923e8.png",
+      "source": "Catalyst for Revision Zero. Source: \"Operation Seraph's Shield\" Mission",
+      "weaponSlot": "primary",
+      "weaponName": "Revision Zero",
+      "weaponHash": "1473821207",
+      "description": "Precision kills greatly decrease reload time.",
+      "effect": {
+        "name": "Outlaw",
+        "description": "Precision kills greatly decrease reload time.",
+        "iconPath": "/common/destiny2_content/icons/382df469a091c33e190ee583b64923e8.png"
+      },
+      "alternateItemHashes": [
+        "1266037487"
+      ]
+    },
+    {
+      "itemHash": "1266037484",
+      "name": "Pressurized Refit",
+      "iconPath": "/common/destiny2_content/icons/ac8ec81cd8139434a4b19e459bd9b8ff.png",
+      "source": "Catalyst for Revision Zero. Source: \"Operation Seraph's Shield\" Mission",
+      "weaponSlot": "primary",
+      "weaponName": "Revision Zero",
+      "weaponHash": "1473821207",
+      "description": "Improved stability and accuracy as the magazine gets lower.",
+      "effect": {
+        "name": "Under Pressure",
+        "description": "Improved stability and accuracy as the magazine gets lower.",
+        "iconPath": "/common/destiny2_content/icons/ac8ec81cd8139434a4b19e459bd9b8ff.png"
+      },
+      "alternateItemHashes": [
+        "1266037484"
+      ]
+    },
+    {
+      "itemHash": "3815768596",
       "name": "Riskrunner Catalyst",
       "iconPath": "/common/destiny2_content/icons/92577b2999d98670c8a6a98a9646eff8.jpg",
       "source": "Catalyst for Riskrunner. Source: Exotic engrams; extremely rare world drops.",
@@ -1025,6 +2610,24 @@
       "weaponName": "Riskrunner",
       "weaponHash": "3089417789",
       "recordHash": "373671280",
+      "objectives": [
+        {
+          "objectiveHash": "3387451012",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "3725354261",
+          "description": "Enemies Defeated",
+          "completionValue": 500
+        },
+        {
+          "objectiveHash": "3725354260",
+          "description": "Superconductor Kills",
+          "completionValue": 50
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "484491717",
         "2617688849",
@@ -1040,6 +2643,19 @@
       "weaponName": "Ruinous Effigy",
       "weaponHash": "1363238943",
       "recordHash": "3567687058",
+      "objectives": [
+        {
+          "objectiveHash": "3283293754",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat combatants using this weapon or with Transmutation spheres, or destroy Eyes of Savathûn to unlock this upgrade.",
+      "effect": {
+        "name": "Deconstruction",
+        "description": "This weapon gains increased damage after using a Transmutation sphere to damage powerful combatants or deal final blows.",
+        "iconPath": "/common/destiny2_content/icons/8756a23db381147ed401312d3c687ca5.png"
+      },
       "alternateItemHashes": [
         "1206010521"
       ]
@@ -1053,6 +2669,19 @@
       "weaponName": "Salvation's Grip",
       "weaponHash": "370712896",
       "recordHash": "3381077691",
+      "objectives": [
+        {
+          "objectiveHash": "1534403845",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Rimestealer",
+        "description": "Destroying a Stasis crystal or defeating a frozen target with this weapon grants you Frost Armor.",
+        "iconPath": "/common/destiny2_content/icons/b88380f8b364c2743d53f12d4d98e273.png"
+      },
       "alternateItemHashes": [
         "2359854504"
       ]
@@ -1066,12 +2695,25 @@
       "weaponName": "Service of Luzaku",
       "weaponHash": "4284533075",
       "recordHash": "1094735064",
+      "objectives": [
+        {
+          "objectiveHash": "2911423267",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Disorganized Attachment",
+        "description": "Nests now mature over time. Fully mature nests can be harvested with [###DestinyNamedSubstitutions.ui_player_action_interact_button###] [###DestinyNamedSubstitutions.ui_player_action_interact_verb###] to grant yourself a held Tangle.",
+        "iconPath": "/common/destiny2_content/icons/e50626b9d0366ae28229a9d847481039.png"
+      },
       "alternateItemHashes": [
         "232908218"
       ]
     },
     {
-      "itemHash": "332630382",
+      "itemHash": "680163197",
       "name": "Skyburner Catalyst",
       "iconPath": "/common/destiny2_content/icons/fc8734628c47ba0add073aef57f8e860.jpg",
       "source": "Catalyst for Skyburner's Oath. Source: Exotic engrams; extremely rare world drops.",
@@ -1079,6 +2721,19 @@
       "weaponName": "Skyburner's Oath",
       "weaponHash": "4255268456",
       "recordHash": "3746741161",
+      "objectives": [
+        {
+          "objectiveHash": "4099822893",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "2177945522",
+          "description": "Cabal Enemies Defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "332630382",
         "658317088",
@@ -1086,7 +2741,79 @@
       ]
     },
     {
-      "itemHash": "136852797",
+      "itemHash": "2883096193",
+      "name": "Cascade Point Refit",
+      "iconPath": "/common/destiny2_content/icons/fd17b30233d244fc7115315633906f6a.png",
+      "source": "Catalyst for Slayer's Fang. Source: Revenant Fortress",
+      "weaponSlot": "special",
+      "weaponName": "Slayer's Fang",
+      "weaponHash": "1047932517",
+      "description": "Final blows or sustained precision hits with another weapon increase this weapon's rate of fire for a short duration.",
+      "effect": {
+        "name": "Cascade Point",
+        "description": "Final blows or sustained precision hits with another weapon increase this weapon's rate of fire for a short duration.",
+        "iconPath": "/common/destiny2_content/icons/fd17b30233d244fc7115315633906f6a.png"
+      },
+      "alternateItemHashes": [
+        "2883096193"
+      ]
+    },
+    {
+      "itemHash": "2883096195",
+      "name": "Loose Change Refit",
+      "iconPath": "/common/destiny2_content/icons/27411cde4538bb1fdc2d70088233eb2c.png",
+      "source": "Catalyst for Slayer's Fang. Source: Revenant Fortress",
+      "weaponSlot": "special",
+      "weaponName": "Slayer's Fang",
+      "weaponHash": "1047932517",
+      "description": "Applying an elemental debuff to a target increases this weapon's reload speed, aim assist, and movement while aiming down sights for a short duration.",
+      "effect": {
+        "name": "Loose Change",
+        "description": "Applying an elemental debuff to a target increases this weapon's reload speed, aim assist, and movement while aiming down sights for a short duration.",
+        "iconPath": "/common/destiny2_content/icons/27411cde4538bb1fdc2d70088233eb2c.png"
+      },
+      "alternateItemHashes": [
+        "2883096195"
+      ]
+    },
+    {
+      "itemHash": "2883096194",
+      "name": "Repulsor Brace Refit",
+      "iconPath": "/common/destiny2_content/icons/cfcbde3872d34c5258fd8227640a020e.png",
+      "source": "Catalyst for Slayer's Fang. Source: Revenant Fortress",
+      "weaponSlot": "special",
+      "weaponName": "Slayer's Fang",
+      "weaponHash": "1047932517",
+      "description": "Defeating a Void-debuffed target grants an overshield.",
+      "effect": {
+        "name": "Repulsor Brace",
+        "description": "Defeating a Void-debuffed target grants an overshield.",
+        "iconPath": "/common/destiny2_content/icons/cfcbde3872d34c5258fd8227640a020e.png"
+      },
+      "alternateItemHashes": [
+        "2883096194"
+      ]
+    },
+    {
+      "itemHash": "2883096192",
+      "name": "Stats for All Refit",
+      "iconPath": "/common/destiny2_content/icons/8aadd7fd25c2b1e9f3fc7f4411a97ea4.png",
+      "source": "Catalyst for Slayer's Fang. Source: Revenant Fortress",
+      "weaponSlot": "special",
+      "weaponName": "Slayer's Fang",
+      "weaponHash": "1047932517",
+      "description": "Hitting three separate targets increases weapon handling, stability, reload, and range for a moderate duration.",
+      "effect": {
+        "name": "Stats for All",
+        "description": "Hitting three separate targets increases weapon handling, stability, reload, and range for a moderate duration.",
+        "iconPath": "/common/destiny2_content/icons/8aadd7fd25c2b1e9f3fc7f4411a97ea4.png"
+      },
+      "alternateItemHashes": [
+        "2883096192"
+      ]
+    },
+    {
+      "itemHash": "2142466730",
       "name": "Sleeper Simulant Catalyst",
       "iconPath": "/common/destiny2_content/icons/013403d109a9563ee881830044177193.jpg",
       "source": "Catalyst for Sleeper Simulant. Source: Exotic Archive at the Tower",
@@ -1094,6 +2821,19 @@
       "weaponName": "Sleeper Simulant",
       "weaponHash": "4036115577",
       "recordHash": "1547246830",
+      "objectives": [
+        {
+          "objectiveHash": "1762039354",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "1985587375",
+          "description": "Combatants defeated",
+          "completionValue": 300
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "136852797",
         "2142466730",
@@ -1103,11 +2843,25 @@
     {
       "itemHash": "2993090545",
       "name": "Still Hunt Catalyst",
-      "iconPath": "/common/destiny2_content/icons/62890cb9e33bbed6a3587a1064dc860e.png",
+      "iconPath": "/common/destiny2_content/icons/8b7ff4654876175c2018669acf1e9ddd.jpg",
       "source": "Catalyst for Still Hunt. Source: Wild Card Exotic Quest",
       "weaponSlot": "special",
       "weaponName": "Still Hunt",
       "weaponHash": "2905188646",
+      "recordHash": "3786958609",
+      "objectives": [
+        {
+          "objectiveHash": "1823213538",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Lucky Shot",
+        "description": "Reloading after a precision final blow causes precision hits to refill a round from reserves.",
+        "iconPath": "/common/destiny2_content/icons/05ff3c3914a333ff12abdea5782ceed9.png"
+      },
       "alternateItemHashes": [
         "2993090545"
       ]
@@ -1121,6 +2875,24 @@
       "weaponName": "Sturm",
       "weaponHash": "2907129556",
       "recordHash": "2524364954",
+      "objectives": [
+        {
+          "objectiveHash": "3499974533",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "180115744",
+          "description": "Sturm Kills",
+          "completionValue": 500
+        },
+        {
+          "objectiveHash": "274461127",
+          "description": "Drang Kills",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "354293077",
         "1824496860",
@@ -1136,6 +2908,24 @@
       "weaponName": "Sunshot",
       "weaponHash": "2907129557",
       "recordHash": "2940589008",
+      "objectives": [
+        {
+          "objectiveHash": "3499974532",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "3107076149",
+          "description": "Enemies Defeated",
+          "completionValue": 500
+        },
+        {
+          "objectiveHash": "3107076148",
+          "description": "Sun Blast Kills",
+          "completionValue": 100
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "354293076",
         "1824496861",
@@ -1143,7 +2933,7 @@
       ]
     },
     {
-      "itemHash": "279743042",
+      "itemHash": "2626423393",
       "name": "SUROS Regime Catalyst",
       "iconPath": "/common/destiny2_content/icons/060d820c7307f8cc9bc303965092214e.jpg",
       "source": "Catalyst for SUROS Regime. Source: Exotic engrams; extremely rare world drops.",
@@ -1151,6 +2941,19 @@
       "weaponName": "SUROS Regime",
       "weaponHash": "2856683562",
       "recordHash": "4137195476",
+      "objectives": [
+        {
+          "objectiveHash": "1372602801",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "1104649782",
+          "description": "Crucible Enemies Defeated",
+          "completionValue": 300
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "279743042",
         "1733620422",
@@ -1166,6 +2969,19 @@
       "weaponName": "Sweet Business",
       "weaponHash": "1345867570",
       "recordHash": "1385469960",
+      "objectives": [
+        {
+          "objectiveHash": "4082913105",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "361016998",
+          "description": "Multikills",
+          "completionValue": 250
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "544137185",
         "1249968538",
@@ -1181,12 +2997,51 @@
       "weaponName": "Symmetry",
       "weaponHash": "4017959782",
       "recordHash": "3644944303",
+      "objectives": [
+        {
+          "objectiveHash": "3672980419",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Eddy Current",
+        "description": "Temporarily increases reload speed and handling after sprinting or while amplified. This effect is improved when you are amplified.",
+        "iconPath": "/common/destiny2_content/icons/e0f3c00a8b2cbccb8f1f1b318026aeee.png"
+      },
       "alternateItemHashes": [
         "4218954970"
       ]
     },
     {
-      "itemHash": "640058316",
+      "itemHash": "3759764174",
+      "name": "Tarrabah Catalyst",
+      "iconPath": "/common/destiny2_content/icons/a52433e572ffd0ac75cd6e30ff3b5bed.jpg",
+      "source": "Catalyst for Tarrabah. Source: Exotic Archive at the Tower",
+      "weaponSlot": "special",
+      "weaponName": "Tarrabah",
+      "weaponHash": "3110698812",
+      "recordHash": "2139231909",
+      "objectives": [
+        {
+          "objectiveHash": "3043155823",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Ambitious Assassin",
+        "description": "Overflows the magazine based on the number of rapid kills before reloading.",
+        "iconPath": "/common/destiny2_content/icons/1f93b49c7f10b1be70083f913a3c5d63.png"
+      },
+      "alternateItemHashes": [
+        "3759764174"
+      ]
+    },
+    {
+      "itemHash": "1891148055",
       "name": "Telesto Catalyst",
       "iconPath": "/common/destiny2_content/icons/3b8175fb92ee774d15d25fed58dca619.jpg",
       "source": "Catalyst for Telesto. Source: Exotic engrams; extremely rare world drops.",
@@ -1194,6 +3049,19 @@
       "weaponName": "Telesto",
       "weaponHash": "2208405142",
       "recordHash": "3518287681",
+      "objectives": [
+        {
+          "objectiveHash": "3257562471",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "2201742336",
+          "description": "Combatants defeated",
+          "completionValue": 300
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "640058316",
         "920755188",
@@ -1209,6 +3077,19 @@
       "weaponName": "Tessellation",
       "weaponHash": "3561203890",
       "recordHash": "3095531901",
+      "objectives": [
+        {
+          "objectiveHash": "1378541691",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Property: Unavoidable",
+        "description": "Targets near the blast of Property: Irreducible are [afflicted|burdened|cursed] with an elemental effect matching your equipped grenade's damage type.",
+        "iconPath": "/common/destiny2_content/icons/d1e003b3f904b54ae5f1da16a2b52e34.png"
+      },
       "alternateItemHashes": [
         "2538516770"
       ]
@@ -1216,13 +3097,55 @@
     {
       "itemHash": "431220297",
       "name": "The Chaperone Catalyst",
-      "iconPath": "/common/destiny2_content/icons/46ebd791f692b682691416beea7ac4c5.jpg",
+      "iconPath": "/common/destiny2_content/icons/2ee88243bc41b88a458f30b5b7aa78fb.jpg",
       "source": "Catalyst for The Chaperone. Source: An Exotic quest or challenge.",
       "weaponSlot": "primary",
       "weaponName": "The Chaperone",
       "weaponHash": "3413860062",
+      "recordHash": "4286234468",
+      "objectives": [
+        {
+          "objectiveHash": "4000030634",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Triple Tap",
+        "description": "Rapidly landing precision hits will return one round to the magazine.",
+        "iconPath": "/common/destiny2_content/icons/0795f44c0c3611b15428742c67918cd1.png"
+      },
       "alternateItemHashes": [
         "431220297"
+      ]
+    },
+    {
+      "itemHash": "854868710",
+      "name": "Colony Catalyst",
+      "iconPath": "/common/destiny2_content/icons/b22e5ede50882e552212533397f2443b.jpg",
+      "source": "Catalyst for The Colony. Source: Exotic engrams; extremely rare world drops.",
+      "weaponSlot": "heavy",
+      "weaponName": "The Colony",
+      "weaponHash": "3899270607",
+      "recordHash": "299659704",
+      "objectives": [
+        {
+          "objectiveHash": "4097155222",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "2904426195",
+          "description": "Enemies Defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
+      "alternateItemHashes": [
+        "396328063",
+        "769440797",
+        "854868710"
       ]
     },
     {
@@ -1234,18 +3157,101 @@
       "weaponName": "The Fourth Horseman",
       "weaponHash": "1665952087",
       "recordHash": "1940645774",
+      "objectives": [
+        {
+          "objectiveHash": "3494556467",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "And Its Name Was Death",
+        "description": "Adds an additional round to the magazine and increases reload speed.",
+        "iconPath": "/common/destiny2_content/icons/2fd8033960ff17796b622a88d09f0b57.png"
+      },
       "alternateItemHashes": [
         "2826187530"
       ]
     },
     {
+      "itemHash": "2101754671",
+      "name": "Huckleberry Catalyst",
+      "iconPath": "/common/destiny2_content/icons/28355e0adda864289165854e376f86ee.jpg",
+      "source": "Catalyst for The Huckleberry. Source: Exotic engrams; extremely rare world drops.",
+      "weaponSlot": "primary",
+      "weaponName": "The Huckleberry",
+      "weaponHash": "2286143274",
+      "recordHash": "2856496392",
+      "objectives": [
+        {
+          "objectiveHash": "681553759",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "3829149640",
+          "description": "Enemies Defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
+      "alternateItemHashes": [
+        "917657364",
+        "2101754671",
+        "3459475454"
+      ]
+    },
+    {
+      "itemHash": "1772382457",
+      "name": "Jade Rabbit Catalyst",
+      "iconPath": "/common/destiny2_content/icons/e444e97b9d2c368006272fc90eb1e022.jpg",
+      "source": "Catalyst for The Jade Rabbit. Source: Exotic engrams; extremely rare world drops.",
+      "weaponSlot": "primary",
+      "weaponName": "The Jade Rabbit",
+      "weaponHash": "3844694310",
+      "recordHash": "3368860448",
+      "objectives": [
+        {
+          "objectiveHash": "2407713417",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "152347302",
+          "description": "Crucible Enemies Defeated",
+          "completionValue": 250
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
+      "alternateItemHashes": [
+        "1447921738",
+        "1496699324",
+        "1772382457"
+      ]
+    },
+    {
       "itemHash": "1218164788",
       "name": "The Lament Catalyst",
-      "iconPath": "/common/destiny2_content/icons/62890cb9e33bbed6a3587a1064dc860e.png",
+      "iconPath": "/common/destiny2_content/icons/e1b22c5abde048b49abcb61e307c3dc4.jpg",
       "source": "Catalyst for The Lament. Source: \"Lost Lament\" Exotic Quest",
       "weaponSlot": "heavy",
       "weaponName": "The Lament",
       "weaponHash": "3487253372",
+      "recordHash": "1312984121",
+      "objectives": [
+        {
+          "objectiveHash": "2527750505",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Burning Ambition",
+        "description": "Dealing sustained damage scorches the target. Dealing damage to a scorched target inflicts scorch.",
+        "iconPath": "/common/destiny2_content/icons/f7a2484668486f64020a612bd3dd5ab9.png"
+      },
       "alternateItemHashes": [
         "1218164788"
       ]
@@ -1253,11 +3259,25 @@
     {
       "itemHash": "3274907024",
       "name": "The Last Word Catalyst",
-      "iconPath": "/common/destiny2_content/icons/46ebd791f692b682691416beea7ac4c5.jpg",
+      "iconPath": "/common/destiny2_content/icons/ecea4f635e07a8a887b1808442efe80b.jpg",
       "source": "Catalyst for The Last Word. Source: Exotic Archive at the Tower",
       "weaponSlot": "primary",
       "weaponName": "The Last Word",
       "weaponHash": "1364093401",
+      "recordHash": "281511019",
+      "objectives": [
+        {
+          "objectiveHash": "2527921341",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Killing Wind",
+        "description": "Final blows grant increased mobility, weapon range, and handling for a short duration.",
+        "iconPath": "/common/destiny2_content/icons/db2aa71ff6d808929bb0e668dcf0822e.png"
+      },
       "alternateItemHashes": [
         "3274907024"
       ]
@@ -1271,6 +3291,19 @@
       "weaponName": "The Manticore",
       "weaponHash": "219145368",
       "recordHash": "1144463862",
+      "objectives": [
+        {
+          "objectiveHash": "3191369747",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Flying Monster",
+        "description": "While you are airborne, sustained damage and final blows with this weapon to difficult combatants grant a Void overshield, reduce combatant accuracy, and return ammo to the magazine.",
+        "iconPath": "/common/destiny2_content/icons/840e57ef3667435ba4be1f44aa8f4c9b.png"
+      },
       "alternateItemHashes": [
         "2797384170"
       ]
@@ -1284,8 +3317,49 @@
       "weaponName": "The Navigator",
       "weaponHash": "1441805468",
       "recordHash": "1169793114",
+      "objectives": [
+        {
+          "objectiveHash": "1813597254",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Gordian Knot",
+        "description": "Special reload and then fire to create a Grapple Tangle at the targeted point.",
+        "iconPath": "/common/destiny2_content/icons/f8c8dc6270e116a8677c0edd9d330aa7.png"
+      },
       "alternateItemHashes": [
         "3116569677"
+      ]
+    },
+    {
+      "itemHash": "2858348496",
+      "name": "Prospector Catalyst",
+      "iconPath": "/common/destiny2_content/icons/e68a5dba35f4b96f7230e88666e416e6.jpg",
+      "source": "Catalyst for The Prospector. Source: Exotic engrams; extremely rare world drops.",
+      "weaponSlot": "heavy",
+      "weaponName": "The Prospector",
+      "weaponHash": "3549153979",
+      "recordHash": "3371896300",
+      "objectives": [
+        {
+          "objectiveHash": "1082937088",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "3033514729",
+          "description": "Enemies Defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
+      "alternateItemHashes": [
+        "924149235",
+        "2858348496",
+        "3866441869"
       ]
     },
     {
@@ -1297,8 +3371,49 @@
       "weaponName": "The Queenbreaker",
       "weaponHash": "2044500762",
       "recordHash": "2880917375",
+      "objectives": [
+        {
+          "objectiveHash": "225529338",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Rewind Rounds",
+        "description": "When this weapon's magazine is empty, it refills from reserves based on the number of hits.",
+        "iconPath": "/common/destiny2_content/icons/a201fd61905b802867b677cf927e6e04.png"
+      },
       "alternateItemHashes": [
         "1061006937"
+      ]
+    },
+    {
+      "itemHash": "1678902463",
+      "name": "Wardcliff Coil Catalyst",
+      "iconPath": "/common/destiny2_content/icons/a0ca8e1fddf00d1e2fa16357cabbd7f4.jpg",
+      "source": "Catalyst for The Wardcliff Coil. Source: Exotic engrams; extremely rare world drops.",
+      "weaponSlot": "heavy",
+      "weaponName": "The Wardcliff Coil",
+      "weaponHash": "1508896098",
+      "recordHash": "2387948227",
+      "objectives": [
+        {
+          "objectiveHash": "965042863",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "2898305584",
+          "description": "Enemies Defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
+      "alternateItemHashes": [
+        "1678902463",
+        "1728120036",
+        "2409031770"
       ]
     },
     {
@@ -1310,6 +3425,19 @@
       "weaponName": "Third Iteration",
       "weaponHash": "2973900274",
       "recordHash": "1068904235",
+      "objectives": [
+        {
+          "objectiveHash": "690289615",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Aberrant Combustion",
+        "description": "Precision final blows with Amalgamation Rounds cause the target to detonate into a weakening blast.",
+        "iconPath": "/common/destiny2_content/icons/087319c46da52fe1159e57c424fdb68a.png"
+      },
       "alternateItemHashes": [
         "364132014"
       ]
@@ -1323,6 +3451,19 @@
       "weaponName": "Thorn",
       "weaponHash": "3973202132",
       "recordHash": "1461305554",
+      "objectives": [
+        {
+          "objectiveHash": "152151720",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Refined Soul",
+        "description": "Grants bonus range and stability. Dealing a final blow or absorbing a Remnant grants additional increased weapon range, as well as increased mobility and handling for a short time.",
+        "iconPath": "/common/destiny2_content/icons/d43b1ed91cb6373718810d614ada1f44.jpg"
+      },
       "alternateItemHashes": [
         "4091235251"
       ]
@@ -1336,6 +3477,19 @@
       "weaponName": "Thunderlord",
       "weaponHash": "3325463374",
       "recordHash": "2571854597",
+      "objectives": [
+        {
+          "objectiveHash": "1746343880",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Return Stroke",
+        "description": "Causing a lightning strike with this weapon partially reloads the magazine from reserves.",
+        "iconPath": "/common/destiny2_content/icons/c577890c4a2d81e3c4ce1c803cdb9a3b.png"
+      },
       "alternateItemHashes": [
         "1550063955"
       ]
@@ -1349,6 +3503,19 @@
       "weaponName": "Ticuu's Divination",
       "weaponHash": "3260753130",
       "recordHash": "1833569807",
+      "objectives": [
+        {
+          "objectiveHash": "3684196202",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Causality Quiver",
+        "description": "Perfectly drawn arrows that detonate Sacred Flames increase arrow damage.\n\nStriking targets unaffected by Sacred Flame instead refreshes Causality Arrows' duration.",
+        "iconPath": "/common/destiny2_content/icons/954463daf7fb23ed0afeffdc64ae9300.png"
+      },
       "alternateItemHashes": [
         "3978937353"
       ]
@@ -1362,6 +3529,19 @@
       "weaponName": "Tommy's Matchbook",
       "weaponHash": "776191470",
       "recordHash": "1586771061",
+      "objectives": [
+        {
+          "objectiveHash": "3510116410",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Heat of the Moment",
+        "description": "While Ignition Trigger is active, final blows with this weapon cure you and sustained fire scorches your target.",
+        "iconPath": "/common/destiny2_content/icons/b12c87b06407676957545de8a46d8c38.png"
+      },
       "alternateItemHashes": [
         "4001063065"
       ]
@@ -1375,12 +3555,25 @@
       "weaponName": "Touch of Malice",
       "weaponHash": "1802135586",
       "recordHash": "773758208",
+      "objectives": [
+        {
+          "objectiveHash": "638891836",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Precision Instrument",
+        "description": "Dealing sustained damage increases precision damage.",
+        "iconPath": "/common/destiny2_content/icons/e6a4ebc1a8a73e4c7fcfc21c69000ce2.png"
+      },
       "alternateItemHashes": [
         "1557274655"
       ]
     },
     {
-      "itemHash": "456628589",
+      "itemHash": "4233905576",
       "name": "Tractor Cannon Catalyst",
       "iconPath": "/common/destiny2_content/icons/1bd8b5b8a2287f37ba549f09f46bd905.jpg",
       "source": "Catalyst for Tractor Cannon. Source: Exotic engrams; extremely rare world drops.",
@@ -1388,6 +3581,19 @@
       "weaponName": "Tractor Cannon",
       "weaponHash": "3580904581",
       "recordHash": "206322164",
+      "objectives": [
+        {
+          "objectiveHash": "3712289368",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "778472337",
+          "description": "Enemies Defeated",
+          "completionValue": 300
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "456628589",
         "1229065205",
@@ -1403,6 +3609,19 @@
       "weaponName": "Traveler's Chosen",
       "weaponHash": "1853180924",
       "recordHash": "571025162",
+      "objectives": [
+        {
+          "objectiveHash": "3807106435",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Osmosis",
+        "description": "Using your grenade ability partially refills the magazine and changes this weapon's damage type to match your grenade until you stow it.",
+        "iconPath": "/common/destiny2_content/icons/22ca6e872824561b12e91517e1bde608.png"
+      },
       "alternateItemHashes": [
         "3967134106"
       ]
@@ -1416,6 +3635,19 @@
       "weaponName": "Trespasser",
       "weaponHash": "1234150730",
       "recordHash": "3022631571",
+      "objectives": [
+        {
+          "objectiveHash": "2420315815",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Tunnel Vision",
+        "description": "Reloading after defeating a target greatly increases target acquisition and aim down sight speed for a short duration.",
+        "iconPath": "/common/destiny2_content/icons/ab0837be56c8d5cfc474acd4f3f9c7ac.png"
+      },
       "alternateItemHashes": [
         "2895039606"
       ]
@@ -1429,8 +3661,97 @@
       "weaponName": "Trinity Ghoul",
       "weaponHash": "814876685",
       "recordHash": "436556889",
+      "objectives": [
+        {
+          "objectiveHash": "3226868771",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Forked Lightning",
+        "description": "Lightning Rod now triggers from any Arc damage final blow.",
+        "iconPath": "/common/destiny2_content/icons/a5cf4faefd62b438573ad2c25de33046.png"
+      },
       "alternateItemHashes": [
         "3457865914"
+      ]
+    },
+    {
+      "itemHash": "726894353",
+      "name": "Truth Catalyst",
+      "iconPath": "/common/destiny2_content/icons/34a19c5180913b7a2f2ec93cf5a45788.jpg",
+      "source": "Catalyst for Truth. Source: Exotic Archive at the Tower",
+      "weaponSlot": "heavy",
+      "weaponName": "Truth",
+      "weaponHash": "1201830623",
+      "recordHash": "3865040202",
+      "objectives": [
+        {
+          "objectiveHash": "735466242",
+          "description": "Targets defeated",
+          "completionValue": 300
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Reaper's Tithe",
+        "description": "Multiple simultaneous final blows queue up a stacking damage buff. Timer starts on next weapon fire; final blows extend this timer.",
+        "iconPath": "/common/destiny2_content/icons/47bf1334aab994af4ebe63cbc45b7d67.png"
+      },
+      "alternateItemHashes": [
+        "726894353"
+      ]
+    },
+    {
+      "itemHash": "4170056386",
+      "name": "Turncoat Catalyst",
+      "iconPath": "/common/destiny2_content/icons/ab708fd48be27631d697ebbe775005b0.jpg",
+      "source": "Catalyst for Turncoat. Source: Rewards Pass",
+      "weaponSlot": "special",
+      "weaponName": "Turncoat",
+      "weaponHash": "253843484",
+      "objectives": [
+        {
+          "objectiveHash": "2007533723",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Void Mastery",
+        "description": "When empowerment ends, you gain a Void Overshield, the strength of which depends on how long you were empowered.",
+        "iconPath": "/common/destiny2_content/icons/b85a5d36f6c7c9d93fa43dc3170f1e00.png"
+      },
+      "alternateItemHashes": [
+        "4170056386"
+      ]
+    },
+    {
+      "itemHash": "4079681314",
+      "name": "Third Tail",
+      "iconPath": "/common/destiny2_content/icons/4aed2e5da8425b24df7a4db16e035c54.jpg",
+      "source": "Catalyst for Two-Tailed Fox. Source: Exotic engrams; extremely rare world drops.",
+      "weaponSlot": "heavy",
+      "weaponName": "Two-Tailed Fox",
+      "weaponHash": "2694576561",
+      "objectives": [
+        {
+          "objectiveHash": "3015768699",
+          "description": "Targets defeated",
+          "completionValue": 350
+        }
+      ],
+      "description": "Adds another rocket to the volley that deals Arc damage and jolts combatants.",
+      "effect": {
+        "name": "Third Tail",
+        "description": "Adds another rocket to the volley that deals Arc damage and jolts combatants.",
+        "iconPath": "/common/destiny2_content/icons/4aed2e5da8425b24df7a4db16e035c54.jpg"
+      },
+      "alternateItemHashes": [
+        "4079681314"
       ]
     },
     {
@@ -1442,6 +3763,19 @@
       "weaponName": "Verglas Curve",
       "weaponHash": "3659414143",
       "recordHash": "788492661",
+      "objectives": [
+        {
+          "objectiveHash": "2207004438",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Shiver Quiver",
+        "description": "Freezing or slowing a target grants this weapon faster draw speed for a short period of time.",
+        "iconPath": "/common/destiny2_content/icons/f81462c7d5aac3dfa37c0757de8e0bac.jpg"
+      },
       "alternateItemHashes": [
         "2689511581"
       ]
@@ -1455,12 +3789,79 @@
       "weaponName": "Vex Mythoclast",
       "weaponHash": "4289226715",
       "recordHash": "507778024",
+      "objectives": [
+        {
+          "objectiveHash": "2929711646",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Calculated Balance",
+        "description": "While in full auto mode, final blows or rapid hits with this weapon grant bonus damage, accuracy, and stability for a short duration.",
+        "iconPath": "/common/destiny2_content/icons/351ff460d828bce7019e6405d8cb82a9.png"
+      },
       "alternateItemHashes": [
         "838219733"
       ]
     },
     {
-      "itemHash": "615063267",
+      "itemHash": "3146691103",
+      "name": "Feedback Refit",
+      "iconPath": "/common/destiny2_content/icons/707a6279b07106593d3869b808005ac9.png",
+      "source": "Catalyst for Vexcalibur. Source: //node.ovrd.AVALON// Exotic Quest",
+      "weaponSlot": "special",
+      "weaponName": "Vexcalibur",
+      "weaponHash": "3118061005",
+      "description": "Blocking damage partially reloads this weapon from reserves.",
+      "effect": {
+        "name": "Replenishing Aegis",
+        "description": "Blocking damage partially reloads this weapon from reserves.",
+        "iconPath": "/common/destiny2_content/icons/707a6279b07106593d3869b808005ac9.png"
+      },
+      "alternateItemHashes": [
+        "3146691103"
+      ]
+    },
+    {
+      "itemHash": "3146691101",
+      "name": "Immovable Refit",
+      "iconPath": "/common/destiny2_content/icons/9de1b9b8ef6587649e18482d1d1ca6ea.png",
+      "source": "Catalyst for Vexcalibur. Source: //node.ovrd.AVALON// Exotic Quest",
+      "weaponSlot": "special",
+      "weaponName": "Vexcalibur",
+      "weaponHash": "3118061005",
+      "description": "Dealing ranged damage grants increased weapon energy while you're stationary with your shield raised.",
+      "effect": {
+        "name": "Immovable Object",
+        "description": "Dealing ranged damage grants increased weapon energy while you're stationary with your shield raised.",
+        "iconPath": "/common/destiny2_content/icons/9de1b9b8ef6587649e18482d1d1ca6ea.png"
+      },
+      "alternateItemHashes": [
+        "3146691101"
+      ]
+    },
+    {
+      "itemHash": "3146691100",
+      "name": "Robber Refit",
+      "iconPath": "/common/destiny2_content/icons/043d100167af67d6041719044a033221.png",
+      "source": "Catalyst for Vexcalibur. Source: //node.ovrd.AVALON// Exotic Quest",
+      "weaponSlot": "special",
+      "weaponName": "Vexcalibur",
+      "weaponHash": "3118061005",
+      "description": "Melee final blows or dealing damage with a charged melee reloads this weapon's magazine from reserves.",
+      "effect": {
+        "name": "Grave Robber",
+        "description": "Melee final blows or dealing damage with a charged melee reloads this weapon's magazine from reserves.",
+        "iconPath": "/common/destiny2_content/icons/043d100167af67d6041719044a033221.png"
+      },
+      "alternateItemHashes": [
+        "3146691100"
+      ]
+    },
+    {
+      "itemHash": "1620506138",
       "name": "Vigilance Wing Catalyst",
       "iconPath": "/common/destiny2_content/icons/1d38c8d82f1bd1d22bf76314fe8764f9.jpg",
       "source": "Catalyst for Vigilance Wing. Source: Exotic engrams; extremely rare world drops.",
@@ -1468,6 +3869,24 @@
       "weaponName": "Vigilance Wing",
       "weaponHash": "3628991659",
       "recordHash": "2383994221",
+      "objectives": [
+        {
+          "objectiveHash": "212304522",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "3934665471",
+          "description": "Crucible Enemies Defeated",
+          "completionValue": 250
+        },
+        {
+          "objectiveHash": "3934665470",
+          "description": "Blood for Blood Medals",
+          "completionValue": 5
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "615063267",
         "1620506138",
@@ -1475,28 +3894,27 @@
       ]
     },
     {
-      "itemHash": "1678902463",
-      "name": "Wardcliff Coil Catalyst",
-      "iconPath": "/common/destiny2_content/icons/a0ca8e1fddf00d1e2fa16357cabbd7f4.jpg",
-      "source": "Catalyst for The Wardcliff Coil. Source: Exotic engrams; extremely rare world drops.",
-      "weaponSlot": "heavy",
-      "weaponName": "The Wardcliff Coil",
-      "weaponHash": "1508896098",
-      "recordHash": "2387948227",
-      "alternateItemHashes": [
-        "1678902463",
-        "1728120036",
-        "2409031770"
-      ]
-    },
-    {
       "itemHash": "3156882011",
       "name": "Wavesplitter Catalyst",
-      "iconPath": "/common/destiny2_content/icons/46ebd791f692b682691416beea7ac4c5.jpg",
+      "iconPath": "/common/destiny2_content/icons/4332915dda3b5c0e69a3e241e4afc176.jpg",
       "source": "Catalyst for Wavesplitter. Source: Exotic engrams; extremely rare world drops.",
       "weaponSlot": "special",
       "weaponName": "Wavesplitter",
       "weaponHash": "1852863732",
+      "recordHash": "642042685",
+      "objectives": [
+        {
+          "objectiveHash": "1966398624",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Detonator Beam",
+        "description": "Dealing sustained damage creates an explosion around the target.",
+        "iconPath": "/common/destiny2_content/icons/d29eb0cfbd44fd360cf3d5f2341bd7ea.png"
+      },
       "alternateItemHashes": [
         "3156882011"
       ]
@@ -1509,6 +3927,19 @@
       "weaponSlot": "heavy",
       "weaponName": "Whirling Ovation",
       "weaponHash": "1202007252",
+      "objectives": [
+        {
+          "objectiveHash": "3355916789",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat combatants while using this weapon and assist other players with solving the mysteries of \"The Desert Perpetual\" to unlock this upgrade.",
+      "effect": {
+        "name": "Filled Determination",
+        "description": "Fully charged shots over-penetrate weaker combatants and cause a delayed Solar detonation with a brief scorching field.",
+        "iconPath": "/common/destiny2_content/icons/09db15897255853ebdac056e91531fb0.png"
+      },
       "alternateItemHashes": [
         "4199529752"
       ]
@@ -1522,10 +3953,41 @@
       "weaponName": "Whisper of the Worm",
       "weaponHash": "1891561814",
       "recordHash": "173502661",
+      "objectives": [
+        {
+          "objectiveHash": "146047473",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "2776779630",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "1340292993",
         "2732814938",
         "3373365218"
+      ]
+    },
+    {
+      "itemHash": "3732232161",
+      "name": "Whispered Breathing",
+      "iconPath": "/common/destiny2_content/icons/ef9c0dbddcb4c51fe5d3768e26b73746.png",
+      "source": "Catalyst for Whisper of the Worm. Source: Exotic Archive at the Tower",
+      "weaponSlot": "heavy",
+      "weaponName": "Whisper of the Worm",
+      "weaponHash": "1983149589",
+      "description": "Aiming this weapon without firing for a brief moment grants bonus range and precision damage while it remains zoomed.",
+      "effect": {
+        "name": "Whispered Breathing",
+        "description": "Aiming this weapon without firing for a brief moment grants bonus range and precision damage while it remains zoomed.",
+        "iconPath": "/common/destiny2_content/icons/ef9c0dbddcb4c51fe5d3768e26b73746.png"
+      },
+      "alternateItemHashes": [
+        "3732232161"
       ]
     },
     {
@@ -1537,6 +3999,19 @@
       "weaponName": "Wicked Implement",
       "weaponHash": "940371471",
       "recordHash": "2479567609",
+      "objectives": [
+        {
+          "objectiveHash": "1679665647",
+          "description": "Targets defeated",
+          "completionValue": 700
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Hadopelagic Tribute",
+        "description": "Collecting Stasis shards gradually overflows the magazine.",
+        "iconPath": "/common/destiny2_content/icons/d1ac74abf0db537a57355d83f93c475c.png"
+      },
       "alternateItemHashes": [
         "961827406"
       ]
@@ -1544,11 +4019,25 @@
     {
       "itemHash": "580005458",
       "name": "Winterbite Catalyst",
-      "iconPath": "/common/destiny2_content/icons/62890cb9e33bbed6a3587a1064dc860e.png",
+      "iconPath": "/common/destiny2_content/icons/105aec46c2c63eed8e1a347bfca4f184.jpg",
       "source": "Catalyst for Winterbite. Source: Strider Exotic Quest",
       "weaponSlot": "heavy",
       "weaponName": "Winterbite",
       "weaponHash": "3118061004",
+      "recordHash": "3241341815",
+      "objectives": [
+        {
+          "objectiveHash": "1820843243",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Rimestealer",
+        "description": "Destroying a Stasis crystal or defeating a frozen target with this weapon grants you Frost Armor.",
+        "iconPath": "/common/destiny2_content/icons/b88380f8b364c2743d53f12d4d98e273.png"
+      },
       "alternateItemHashes": [
         "580005458"
       ]
@@ -1556,13 +4045,100 @@
     {
       "itemHash": "3457865915",
       "name": "Wish-Ender Catalyst",
-      "iconPath": "/common/destiny2_content/icons/46ebd791f692b682691416beea7ac4c5.jpg",
+      "iconPath": "/common/destiny2_content/icons/e235e8679965675905ffb5a73c5995aa.jpg",
       "source": "Catalyst for Wish-Ender. Source: An Exotic quest or challenge.",
       "weaponSlot": "primary",
       "weaponName": "Wish-Ender",
       "weaponHash": "814876684",
+      "recordHash": "3176275318",
+      "objectives": [
+        {
+          "objectiveHash": "861147776",
+          "description": "Targets defeated",
+          "completionValue": 500
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "One for All",
+        "description": "Hitting three separate targets increases damage for a moderate duration.",
+        "iconPath": "/common/destiny2_content/icons/b1bce269c3cd21393131b4f5cffae692.png"
+      },
       "alternateItemHashes": [
         "3457865915"
+      ]
+    },
+    {
+      "itemHash": "372672208",
+      "name": "Enduring Snare Refit",
+      "iconPath": "/common/destiny2_content/icons/b1b1c79eb24883beb74e7d2d3e42fdf0.png",
+      "source": "Catalyst for Wish-Keeper. Source: \"Starcrossed\" Mission",
+      "weaponSlot": "primary",
+      "weaponName": "Wish-Keeper",
+      "weaponHash": "2910326942",
+      "description": "Snareweaver traps last longer.",
+      "effect": {
+        "name": "Enduring Snare",
+        "description": "Snareweaver traps last longer.",
+        "iconPath": "/common/destiny2_content/icons/b1b1c79eb24883beb74e7d2d3e42fdf0.png"
+      },
+      "alternateItemHashes": [
+        "372672208"
+      ]
+    },
+    {
+      "itemHash": "372672211",
+      "name": "Hatchling Refit",
+      "iconPath": "/common/destiny2_content/icons/2f7e898e2231900ac968ffb2080fc02b.png",
+      "source": "Catalyst for Wish-Keeper. Source: \"Starcrossed\" Mission",
+      "weaponSlot": "primary",
+      "weaponName": "Wish-Keeper",
+      "weaponHash": "2910326942",
+      "description": "Precision final blows or rapidly defeating targets with this weapon spawns a Threadling at the target's location.",
+      "effect": {
+        "name": "Hatchling",
+        "description": "Precision final blows or rapidly defeating targets with this weapon spawns a Threadling at the target's location.",
+        "iconPath": "/common/destiny2_content/icons/2f7e898e2231900ac968ffb2080fc02b.png"
+      },
+      "alternateItemHashes": [
+        "372672211",
+        "4204405034"
+      ]
+    },
+    {
+      "itemHash": "372672209",
+      "name": "Multi-Threaded Snare Refit",
+      "iconPath": "/common/destiny2_content/icons/eddbb369c8904e1ab56ec42eb8b1d71f.png",
+      "source": "Catalyst for Wish-Keeper. Source: \"Starcrossed\" Mission",
+      "weaponSlot": "primary",
+      "weaponName": "Wish-Keeper",
+      "weaponHash": "2910326942",
+      "description": "Snareweaver traps can suspend more targets.",
+      "effect": {
+        "name": "Multi-Threaded Snare",
+        "description": "Snareweaver traps can suspend more targets.",
+        "iconPath": "/common/destiny2_content/icons/eddbb369c8904e1ab56ec42eb8b1d71f.png"
+      },
+      "alternateItemHashes": [
+        "372672209"
+      ]
+    },
+    {
+      "itemHash": "372672210",
+      "name": "Vorpal Weapon Refit",
+      "iconPath": "/common/destiny2_content/icons/bc5130b227ee577f2678ec2d2c97bf4a.png",
+      "source": "Catalyst for Wish-Keeper. Source: \"Starcrossed\" Mission",
+      "weaponSlot": "primary",
+      "weaponName": "Wish-Keeper",
+      "weaponHash": "2910326942",
+      "description": "Increased damage against bosses, vehicles, and Guardians with their Super active.",
+      "effect": {
+        "name": "Vorpal Weapon",
+        "description": "Increased damage against bosses, vehicles, and Guardians with their Super active.",
+        "iconPath": "/common/destiny2_content/icons/bc5130b227ee577f2678ec2d2c97bf4a.png"
+      },
+      "alternateItemHashes": [
+        "372672210"
       ]
     },
     {
@@ -1574,8 +4150,93 @@
       "weaponName": "Witherhoard",
       "weaponHash": "2357297366",
       "recordHash": "2744473468",
+      "objectives": [
+        {
+          "objectiveHash": "3008607089",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Silent Alarm",
+        "description": "Increases handling. Holstering this weapon automatically reloads it after a short period of time.",
+        "iconPath": "/common/destiny2_content/icons/b6ad608a21593604444d0735065cc745.png"
+      },
       "alternateItemHashes": [
         "2888418988"
+      ]
+    },
+    {
+      "itemHash": "3865920553",
+      "name": "Attrition Orbs Refit",
+      "iconPath": "/common/destiny2_content/icons/c2092fae6ae58ca77a7f9b4434e688ef.png",
+      "source": "Catalyst for Wolfsbane.",
+      "weaponSlot": "heavy",
+      "weaponName": "Wolfsbane",
+      "weaponHash": "1753923263",
+      "description": "Dealing sustained damage creates an Orb of Power.",
+      "effect": {
+        "name": "Attrition Orbs",
+        "description": "Dealing sustained damage creates an Orb of Power.",
+        "iconPath": "/common/destiny2_content/icons/c2092fae6ae58ca77a7f9b4434e688ef.png"
+      },
+      "alternateItemHashes": [
+        "3865920553"
+      ]
+    },
+    {
+      "itemHash": "3865920555",
+      "name": "Burning Ambition Refit",
+      "iconPath": "/common/destiny2_content/icons/f7a2484668486f64020a612bd3dd5ab9.png",
+      "source": "Catalyst for Wolfsbane.",
+      "weaponSlot": "heavy",
+      "weaponName": "Wolfsbane",
+      "weaponHash": "1753923263",
+      "description": "Dealing sustained damage scorches the target. Dealing damage to a scorched target inflicts scorch.",
+      "effect": {
+        "name": "Burning Ambition",
+        "description": "Dealing sustained damage scorches the target. Dealing damage to a scorched target inflicts scorch.",
+        "iconPath": "/common/destiny2_content/icons/f7a2484668486f64020a612bd3dd5ab9.png"
+      },
+      "alternateItemHashes": [
+        "3865920555"
+      ]
+    },
+    {
+      "itemHash": "3865920552",
+      "name": "Relentless Strikes Refit",
+      "iconPath": "/common/destiny2_content/icons/ad4bb4c9e36674ca879310b733a6e6a3.png",
+      "source": "Catalyst for Wolfsbane.",
+      "weaponSlot": "heavy",
+      "weaponName": "Wolfsbane",
+      "weaponHash": "1753923263",
+      "description": "[Light Attack]  : Landing three light-attack hits within a short time grants Sword ammo.",
+      "effect": {
+        "name": "Relentless Strikes",
+        "description": "[Light Attack]  : Landing three light-attack hits within a short time grants Sword ammo.",
+        "iconPath": "/common/destiny2_content/icons/ad4bb4c9e36674ca879310b733a6e6a3.png"
+      },
+      "alternateItemHashes": [
+        "3865920552"
+      ]
+    },
+    {
+      "itemHash": "3865920554",
+      "name": "SUBROUTINE: ~RECURSION",
+      "iconPath": "/common/destiny2_content/icons/9b4b30e45ef11b735e551dbfbbdc2af8.png",
+      "source": "Catalyst for Wolfsbane.",
+      "weaponSlot": "heavy",
+      "weaponName": "Wolfsbane",
+      "weaponHash": "1753923263",
+      "description": "Quicksilver nanites grant more health the greater your stacks of Nano-Assault are. Taking damage while Nano-Assault is active has the chance to generate nanites nearby.",
+      "effect": {
+        "name": "SUBROUTINE: ~RECURSION",
+        "description": "Quicksilver nanites grant more health the greater your stacks of Nano-Assault are. Taking damage while Nano-Assault is active has the chance to generate nanites nearby.",
+        "iconPath": "/common/destiny2_content/icons/9b4b30e45ef11b735e551dbfbbdc2af8.png"
+      },
+      "alternateItemHashes": [
+        "3865920554"
       ]
     },
     {
@@ -1587,10 +4248,49 @@
       "weaponName": "Worldline Zero",
       "weaponHash": "1864563948",
       "recordHash": "3468043157",
+      "objectives": [
+        {
+          "objectiveHash": "2696363297",
+          "description": "Insert the Catalyst",
+          "completionValue": 2
+        },
+        {
+          "objectiveHash": "3340083262",
+          "description": "Combatants defeated",
+          "completionValue": 300
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.",
       "alternateItemHashes": [
         "1637046321",
         "2603105938",
         "2674202880"
+      ]
+    },
+    {
+      "itemHash": "2113691818",
+      "name": "Xenophage Catalyst",
+      "iconPath": "/common/destiny2_content/icons/45cbc6ac7c8caf987d9e5071e10a1b4f.jpg",
+      "source": "Catalyst for Xenophage. Source: An Exotic quest or challenge.",
+      "weaponSlot": "heavy",
+      "weaponName": "Xenophage",
+      "weaponHash": "1395261499",
+      "recordHash": "245022904",
+      "objectives": [
+        {
+          "objectiveHash": "2245373395",
+          "description": "Targets defeated",
+          "completionValue": 400
+        }
+      ],
+      "description": "Upgrades this weapon to a Masterwork. Once upgraded, the weapon will obtain enhanced capabilities, such as increased stats and/or additional perks.\n\nDefeat targets using this weapon to unlock this upgrade.",
+      "effect": {
+        "name": "Chain Reaction",
+        "description": "Each final blow with this weapon creates an elemental damage explosion.",
+        "iconPath": "/common/destiny2_content/icons/d17a60978288581d13a4aab6b9fc2b0e.png"
+      },
+      "alternateItemHashes": [
+        "2113691818"
       ]
     }
   ]

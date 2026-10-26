@@ -1,24 +1,22 @@
 import { ClientOwnership } from "@/components/client-ownership";
+import { SectionJumpNav } from "@/components/detail-page-parts";
+import { ExpansionTriumphsPanel } from "@/components/expansions/expansion-triumphs-panel";
 import {
   OwnedActivityCosmeticLootPanel,
-  OwnedActivityCurrentLootPanel,
-  OwnedActivityWeaponsLootPanel,
+  OwnedActivityCurrentLootPanelFull,
   OwnedLegacyArmorSetsSection,
 } from "@/components/owned-activity-loot";
+import { OwnershipStatBlocks } from "@/components/ownership-stat-blocks";
 import { SectionPageLayout } from "@/components/section-page-layout";
-import { TitleDetailPanel } from "@/components/title-detail-panel";
-import { TriumphsListSection } from "@/components/triumphs-list-section";
 import { CRUCIBLE_HUB } from "@/data/activities/crucible";
+import { YEAR_OF_PROPHECY_ARMOR_SECTION_TITLE } from "@/data/activities/year-of-prophecy-armor";
 import { filterExpiredTriumphRecords } from "@/lib/activity-expired-content";
 import { resolveCrucibleLoot } from "@/lib/activities/crucible-loot";
+import { armorPieces, ownershipGroups } from "@/lib/activities/playlist-page";
+import { playlistEyebrow, playlistSiblings } from "@/lib/activities/playlists";
 import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { isBungieOAuthConfigured } from "@/lib/env";
-import {
-  countTitleProgress,
-  splitTitleRecords,
-} from "@/lib/triumphs/record-progress";
 import { getTitleEntry, loadTriumphCatalog } from "@/lib/triumphs/load";
-import { resolveTriumphIcon } from "@/lib/triumphs/icons";
 
 export const revalidate = 3600;
 
@@ -32,22 +30,31 @@ export default async function CrucibleActivityPage() {
     buildCollectibleHrefByItemHash(`/activities/${hub.slug}`),
   ]);
 
-  const title = getTitleEntry(catalog, hub.titleSlug);
-  if (!title) {
+  const titleEntry = getTitleEntry(catalog, hub.titleSlug);
+  if (!titleEntry) {
     throw new Error(`Missing triumph title catalog entry: ${hub.titleSlug}`);
   }
+  const title = {
+    ...titleEntry,
+    records: filterExpiredTriumphRecords(hub.titleSlug, titleEntry.records),
+  };
 
-  const triumphRecords = filterExpiredTriumphRecords(
-    hub.titleSlug,
-    title.records,
-  );
-  const emptyInstances = new Map();
-  const { base, all } = countTitleProgress(
-    { ...title, records: triumphRecords },
-    emptyInstances,
-  );
-  const { gildingRecords } = splitTitleRecords(triumphRecords);
-  const iconPath = resolveTriumphIcon(title.iconPath, triumphRecords);
+  const armorPanels = loot.currentArmorPanels ?? [
+    { armorRows: loot.currentArmorRows, previewFiles: hub.armorSetPreviewFiles },
+  ];
+  const weapons = loot.currentWeapons ?? [];
+  const currentLoot = [...armorPanels.flatMap((panel) => armorPieces(panel.armorRows)), ...weapons];
+  const yopGroups = loot.yearOfProphecyArmorGroups ?? [];
+  const legacyArmor = [...yopGroups, ...loot.legacyArmorGroups].flatMap((group) => armorPieces(group.rows));
+  const cosmetics = loot.currentOtherSections.flatMap((section) => section.items);
+
+  const sectionLinks = [
+    { id: "current-loot", label: "Current loot" },
+    { id: "cosmetics", label: "Cosmetics" },
+    ...(yopGroups.length ? [{ id: "year-of-prophecy", label: "Year of Prophecy" }] : []),
+    { id: "legacy-armor", label: "Legacy armor" },
+    { id: "triumphs", label: "Triumphs" },
+  ];
 
   return (
     <SectionPageLayout
@@ -55,59 +62,68 @@ export default async function CrucibleActivityPage() {
       imageUrl={hub.headerImageUrl}
       oauthConfigured={oauthConfigured}
       maxWidth="5xl"
-      backLink={{ href: "/pvp-activities", label: "← PvP Activities" }}
+      backLink={{ href: "/activities#playlists", label: "← Playlists" }}
+      headerEyebrow={playlistEyebrow(hub.slug)}
+      siblings={playlistSiblings(hub.slug)}
     >
       <ClientOwnership>
-<div className="space-y-8">
-        {(loot.currentArmorPanels ?? [
-          {
-            armorRows: loot.currentArmorRows,
-            previewFiles: hub.armorSetPreviewFiles,
-          },
-        ]).map((panel, index) => (
-          <OwnedActivityCurrentLootPanel
-            key={hub.currentArmorSetHashes[index] ?? index}
-            activitySlug={hub.slug}
-            activityTitle={hub.title}
-            armorRows={panel.armorRows}
-            previewFiles={panel.previewFiles}
-            itemHrefs={itemHrefs}
-          />
-        ))}
-
-        <OwnedActivityWeaponsLootPanel
-          weapons={loot.currentWeapons ?? []}
-          itemHrefs={itemHrefs}
-        />
-
-        <OwnedActivityCosmeticLootPanel
-          sections={loot.currentOtherSections}
-          itemHrefs={itemHrefs}
-        />
-
-        <div className="grid min-w-0 gap-8 lg:grid-cols-2">
-          <TriumphsListSection
-            heading="Crucible // Triumphs"
-            records={triumphRecords}
+        <div className="space-y-9">
+          <OwnershipStatBlocks
+            title={title}
+            blocks={[
+              { label: "Current loot", groups: ownershipGroups(currentLoot), gold: true },
+              { label: "Legacy armor", groups: ownershipGroups(legacyArmor) },
+              { label: "Cosmetics", groups: ownershipGroups(cosmetics) },
+            ]}
           />
 
-          <TitleDetailPanel
-            name={title.name}
-            guardianTitle={title.guardianTitle}
-            description={title.description}
-            iconPath={iconPath}
-            baseProgress={base}
-            overallProgress={all}
-            hasGilding={gildingRecords.length > 0}
-            titleTier="none"
-          />
+          <SectionJumpNav links={sectionLinks} />
+
+          <div id="current-loot" className="scroll-mt-20 space-y-3">
+            {armorPanels.map((panel, index) => (
+              <OwnedActivityCurrentLootPanelFull
+                key={hub.currentArmorSetHashes[index] ?? index}
+                activitySlug={hub.slug}
+                activityTitle={hub.title}
+                armorRows={panel.armorRows}
+                previewFiles={panel.previewFiles}
+                weapons={index === armorPanels.length - 1 ? weapons : undefined}
+                itemHrefs={itemHrefs}
+                heading={index === 0 ? "Current loot" : undefined}
+              />
+            ))}
+          </div>
+
+          <div id="cosmetics" className="scroll-mt-20">
+            <OwnedActivityCosmeticLootPanel
+              sections={loot.currentOtherSections}
+              itemHrefs={itemHrefs}
+              heading="Cosmetics"
+            />
+          </div>
+
+          {yopGroups.length ? (
+            <div id="year-of-prophecy" className="scroll-mt-20">
+              <OwnedLegacyArmorSetsSection
+                heading={YEAR_OF_PROPHECY_ARMOR_SECTION_TITLE}
+                groups={yopGroups}
+                itemHrefs={itemHrefs}
+              />
+            </div>
+          ) : null}
+
+          <div id="legacy-armor" className="scroll-mt-20">
+            <OwnedLegacyArmorSetsSection
+              groups={loot.legacyArmorGroups}
+              itemHrefs={itemHrefs}
+              heading="Legacy armor"
+            />
+          </div>
+
+          <div id="triumphs" className="scroll-mt-20">
+            <ExpansionTriumphsPanel title={title} triumphGroup={null} triumphsGroupTitle="" />
+          </div>
         </div>
-
-        <OwnedLegacyArmorSetsSection
-          groups={loot.legacyArmorGroups}
-          itemHrefs={itemHrefs}
-        />
-      </div>
       </ClientOwnership>
     </SectionPageLayout>
   );

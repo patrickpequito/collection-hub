@@ -27,53 +27,6 @@ function plugName(
   return plugIndex[plugHash]?.name ?? null;
 }
 
-function equippedPlugNames(
-  equippedPlugHashes: readonly string[],
-  plugIndex: Record<string, WeaponPlugDefinition>,
-): Set<string> {
-  const names = new Set<string>();
-  for (const hash of equippedPlugHashes) {
-    const name = plugName(hash, plugIndex);
-    if (name) names.add(name);
-  }
-  return names;
-}
-
-function lineMatchesEquipped(
-  line: readonly string[],
-  equippedNames: ReadonlySet<string>,
-  plugIndex: Record<string, WeaponPlugDefinition>,
-): number {
-  return line.filter((hash) => {
-    const name = plugName(hash, plugIndex);
-    return Boolean(name && equippedNames.has(name));
-  }).length;
-}
-
-function scoreBestLineMatch(
-  equippedPlugHashes: readonly string[],
-  lines: readonly string[][],
-  plugIndex: Record<string, WeaponPlugDefinition>,
-  perkColumnsTotal: number,
-): number {
-  const equippedNames = equippedPlugNames(equippedPlugHashes, plugIndex);
-  let bestMatches = 0;
-
-  for (const line of lines) {
-    bestMatches = Math.max(
-      bestMatches,
-      lineMatchesEquipped(line, equippedNames, plugIndex),
-    );
-  }
-
-  const denominator = Math.max(
-    perkColumnsTotal,
-    Math.max(...lines.map((line) => line.length), 1),
-  );
-
-  return Math.round((bestMatches / denominator) * 100);
-}
-
 function traitComboColumnIndices(
   columns: readonly WeaponPerkColumn[],
   perkColumnIndices: readonly number[],
@@ -179,12 +132,6 @@ export function scoreAegisRoll(
     perkColumnsTotal > 0
       ? Math.round((perkColumnsHit / perkColumnsTotal) * 100)
       : 0;
-  const linePercent = scoreBestLineMatch(
-    equippedPlugHashes,
-    entry.lines,
-    plugIndex,
-    perkColumnsTotal,
-  );
 
   let traitComboMatch = false;
   const traitComboIndices = traitComboColumnIndices(

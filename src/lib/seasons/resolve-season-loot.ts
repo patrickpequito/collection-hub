@@ -11,6 +11,10 @@ import {
 } from "@/lib/armor-sets/named-set-match";
 import { resolveArmorSetPreviewFile } from "@/lib/armor-sets/preview-images";
 import {
+  resolveSeasonEververse,
+  type EververseLoot,
+} from "@/lib/eververse/resolve-eververse";
+import {
   VANGUARD_SET_DISPLAY_NAME,
   VANGUARD_SET_GROUP,
   isGroupedVanguardLegacySetName,
@@ -34,6 +38,8 @@ export type SeasonLoot = {
   exoticItems: LootItem[];
   /** Season Pass cosmetics reclaimable from the Season Archive. */
   cosmeticItems: LootItem[];
+  /** Eververse cosmetics with this season's watermark (own counter). */
+  eververse: EververseLoot | null;
   /**
    * Progress bar groups — obtainable gear plus curated Season Archive cosmetics.
    */
@@ -327,6 +333,7 @@ export async function resolveSeasonLoot(hub: SeasonHub): Promise<SeasonLoot> {
     weaponPools,
     exoticItems,
     cosmeticItems,
+    eververse: resolveSeasonEververse(catalogItems, hub),
     progressOwnershipGroups,
     progressTotal: progressOwnershipGroups.length,
   };

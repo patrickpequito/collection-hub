@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { fetchActivityHashCompletions } from "@/lib/destiny-activity-stats";
-import { getSession } from "@/lib/session";
+import { getFreshSession } from "@/lib/session-access";
 
 /** Completions for arbitrary activity hashes (Empire Hunts, etc.). */
 export async function GET(request: NextRequest) {
-  const session = await getSession();
+  const session = await getFreshSession();
   if (!session) {
     return NextResponse.json(
       { completions: {}, error: null },

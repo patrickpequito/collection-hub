@@ -1,5 +1,5 @@
 import { ClientOwnership } from "@/components/client-ownership";
-import { ExpansionsIndexContent } from "@/components/expansions/expansions-index-content";
+import { SeasonsTimeline } from "@/components/expansions/seasons-timeline";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import {
   getExpansionHub,
@@ -53,7 +53,7 @@ export default async function ExpansionsPage() {
       maxWidth="5xl"
     >
       <ClientOwnership showSignInHint={false}>
-        <ExpansionsIndexContent
+        <SeasonsTimeline
           progressInputs={progressInputs}
           seasonProgressInputs={seasonProgressInputs}
         />

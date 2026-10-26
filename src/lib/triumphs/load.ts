@@ -1,6 +1,5 @@
 import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
-import { unstable_cache } from "next/cache";
 import type {
   TriumphCatalog,
   TriumphGroup,
@@ -49,6 +48,7 @@ function normalizeTriumphCatalog(catalog: TriumphCatalog): TriumphCatalog {
   return {
     ...catalog,
     groups: catalog.groups.map(normalizeTriumphGroup),
+    legacyTitles: catalog.legacyTitles ?? [],
   };
 }
 
@@ -66,14 +66,12 @@ async function readTriumphCatalogFromDisk(): Promise<TriumphCatalog> {
   return catalog;
 }
 
-const loadTriumphCatalogCached = unstable_cache(
-  readTriumphCatalogFromDisk,
-  ["triumph-catalog"],
-  { revalidate: false },
-);
-
+/**
+ * Cached in memory per server instance (re-read when the file changes).
+ * Not wrapped in unstable_cache: the catalog is over its 2 MB item limit.
+ */
 export async function loadTriumphCatalog(): Promise<TriumphCatalog> {
-  return loadTriumphCatalogCached();
+  return readTriumphCatalogFromDisk();
 }
 
 export function getTriumphGroup(
@@ -87,7 +85,10 @@ export function getTitleEntry(
   catalog: TriumphCatalog,
   slug: string,
 ): TitleEntry | undefined {
-  return catalog.titles.find((title) => title.slug === slug);
+  return (
+    catalog.titles.find((title) => title.slug === slug) ??
+    catalog.legacyTitles?.find((title) => title.slug === slug)
+  );
 }
 
 export function getTriumphSectionRecords(
@@ -134,4 +135,38 @@ export function resolveActivityTriumphRecords(
   return recordHashes
     .map((hash) => findTriumphRecordByHash(catalog, hash))
     .filter((record): record is TriumphRecord => record !== undefined);
+}
+
+function normalizeActivityName(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/^the /, "")
+    .replace(/[^a-z0-9]/g, "");
+}
+
+/**
+ * Full triumph list for a raid / dungeon (e.g. "Dreaming City > Activities >
+ * Last Wish" or "Legends > Raids > Vault of Glass"), found by activity name.
+ */
+export function findActivityTriumphSectionRecords(
+  catalog: TriumphCatalog,
+  activityName: string,
+): TriumphRecord[] {
+  const target = normalizeActivityName(activityName);
+  const search = (sections: TriumphSection[]): TriumphSection | undefined => {
+    for (const section of sections) {
+      if (normalizeActivityName(section.name) === target && section.records.length > 0) {
+        return section;
+      }
+      const nested = search(section.children ?? []);
+      if (nested) return nested;
+    }
+    return undefined;
+  };
+
+  for (const group of catalog.groups) {
+    const section = search(group.sections ?? []);
+    if (section) return section.records;
+  }
+  return [];
 }

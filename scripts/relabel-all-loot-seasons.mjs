@@ -10,7 +10,6 @@ import { fileURLToPath } from "node:url";
 import {
   CANONICAL_SEASON_ORDER,
   CALL_TO_ARMS_LABEL,
-  CALL_TO_ARMS_WATERMARK,
   INTO_THE_LIGHT_LABEL,
   INTO_THE_LIGHT_WATERMARK,
   MONUMENT_OF_TRIUMPH_LABEL,
@@ -25,9 +24,10 @@ import {
   resolveArmor30SeasonLabel,
   resolveArmor30ReissueSeasonLabel,
   isYear8ArmorChapterLabel,
+  preferRaidExpansionOverSeasonWatermark,
+  expansionWatermarkPathForLabel,
   REVENANT_EPISODE_WATERMARK,
   resolveActivitySourceSeasonLabel,
-  resolveCollectibleSourceString,
   resolveWatermarkSeasonNumber,
   seasonLabelFromManifestNumber,
   stripIncorrectMonumentLabel,
@@ -37,6 +37,11 @@ import {
   resolveItemNameSeasonOverride,
   resolveItemHashSeasonOverride,
   resolveLabelFromItemWatermark,
+  applyYear8ChapterSplit,
+  applyMonumentEventCorrection,
+  DIM_ITEM_SEASONS_URL,
+  RECLAMATION_LABEL,
+  LAWLESS_LABEL,
 } from "./all-loot-mappings.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -46,7 +51,7 @@ const catalogPath =
 const DIM_WATERMARK_TO_SEASON = {
   "/common/destiny2_content/icons/249813e647271a8227bae0d8a39ed505.png": 27,
   "/common/destiny2_content/icons/6129365b4fad6754f2b8c4478fc3c4ac.png": 27,
-  "/common/destiny2_content/icons/4376a7d734583ae347acf9732aa3bb43.png": 27,
+  "/common/destiny2_content/icons/4376a7d734583ae347acf9732aa3bb43.png": 28,
   "/common/destiny2_content/icons/95f7754d52d6016fdc445fb62aa7a31e.png": 28,
   "/common/destiny2_content/icons/e78fd9419f99464816ac8f628bc3c4af.png": 28,
   "/common/destiny2_content/icons/5232219633cc4d90570bffda36caccf4.png": 25,
@@ -170,6 +175,8 @@ function resolveVersionLabel(version, entry, dimSeasonData) {
     return "S26 Episode: Heresy";
   }
 
+  label = preferRaidExpansionOverSeasonWatermark(label, source);
+
   return stripIncorrectMonumentLabel(
     mockItem(version.seasonIconPath),
     applyFeaturedWatermarkLabelCorrection(
@@ -214,6 +221,7 @@ function applyVersionLabels(entry, version, dimSeasonData, source = "") {
     const hasNonArmor30Peer = Object.values(
       entry.isArmor30ByItemHash ?? {},
     ).some((value) => value === false);
+    const isExotic = entry.rarity === "Exotic";
     let armorLabel = resolveArmor30SeasonLabel(
       mockItem(version.seasonIconPath),
       source || entry.source || "",
@@ -223,19 +231,62 @@ function applyVersionLabels(entry, version, dimSeasonData, source = "") {
     armorLabel = resolveArmor30ReissueSeasonLabel(armorLabel, {
       isArmor30: is30 === true,
       hasNonArmor30Peer,
+      isExotic,
     });
-    if (is30 === true && hasNonArmor30Peer && !armorLabel) {
+
+    // Exotic Armor 3.0 remasters: Mot watermark is not a remaster identity.
+    if (isExotic && is30 === true && hasNonArmor30Peer && !armorLabel) {
+      const peerVersion = (entry.versions ?? []).find(
+        (candidate) =>
+          entry.isArmor30ByItemHash?.[candidate.itemHash] === false,
+      );
+      armorLabel =
+        peerVersion?.seasonLabel &&
+        !isYear8ArmorChapterLabel(peerVersion.seasonLabel)
+          ? peerVersion.seasonLabel
+          : null;
+      if (peerVersion?.seasonIconPath) {
+        version.seasonIconPath = peerVersion.seasonIconPath;
+      }
+      if (peerVersion?.seasonDisplayIconPath) {
+        version.seasonDisplayIconPath = peerVersion.seasonDisplayIconPath;
+      }
+      if (peerVersion?.seasonDisplayIconWatermark !== undefined) {
+        version.seasonDisplayIconWatermark =
+          peerVersion.seasonDisplayIconWatermark;
+      }
+    }
+
+    if (is30 === true && hasNonArmor30Peer && !armorLabel && !isExotic) {
       armorLabel = MONUMENT_OF_TRIUMPH_LABEL;
     }
     if (armorLabel) {
+      armorLabel = preferRaidExpansionOverSeasonWatermark(
+        armorLabel,
+        source || entry.source || "",
+      );
       version.seasonLabel = normalizeMonumentLabel(armorLabel);
       version.seasonNumber = displayNumberFromLabel(version.seasonLabel);
       if (
         version.seasonLabel === MONUMENT_OF_TRIUMPH_LABEL &&
         is30 === true &&
-        hasNonArmor30Peer
+        hasNonArmor30Peer &&
+        !isExotic
       ) {
         version.seasonIconPath = MONUMENT_FEATURED_ICON_PATH;
+      }
+      const expansionIcon = expansionWatermarkPathForLabel(version.seasonLabel);
+      if (
+        expansionIcon &&
+        version.seasonIconPath &&
+        !String(version.seasonIconPath).endsWith(MONUMENT_FEATURED_WATERMARK) &&
+        version.seasonLabel !==
+          resolveLabelFromItemWatermark(
+            mockItem(version.seasonIconPath),
+            dimSeasonData,
+          )
+      ) {
+        version.seasonIconPath = expansionIcon;
       }
 
       const versionEvent = resolveEventLabel(
@@ -296,6 +347,7 @@ function collapseItemVersions(entry) {
     fallbackPerkColumns: entry.perkColumns,
     fallbackStats: entry.stats,
     isArmor30ForHash: (hash) => armor30ByHash[hash],
+    collapseExoticArmor30Peers: entry.rarity === "Exotic",
   };
 
   const merged = [];
@@ -311,18 +363,25 @@ function collapseItemVersions(entry) {
       continue;
     }
 
-    const kept = preferCatalogVersion(merged[matchIndex], version);
+    const kept = preferCatalogVersion(
+      merged[matchIndex],
+      version,
+      compareContext,
+    );
     const dropped =
       kept.itemHash === merged[matchIndex].itemHash ? version : merged[matchIndex];
     droppedHashes.push(dropped.itemHash);
     merged[matchIndex] = kept;
   }
 
-  const collapsed = merged.sort(
-    (a, b) =>
-      b.seasonNumber - a.seasonNumber ||
-      Number(b.itemHash) - Number(a.itemHash),
-  );
+  const collapsed = merged.sort((a, b) => {
+    const seasonDiff = b.seasonNumber - a.seasonNumber;
+    if (seasonDiff !== 0) return seasonDiff;
+    const a30 = armor30ByHash[a.itemHash] === true ? 1 : 0;
+    const b30 = armor30ByHash[b.itemHash] === true ? 1 : 0;
+    if (a30 !== b30) return b30 - a30;
+    return Number(b.itemHash) - Number(a.itemHash);
+  });
 
   if (droppedHashes.length) {
     const alternates = new Set(entry.alternateItemHashes ?? []);
@@ -417,6 +476,33 @@ function repairCollapsedArmor30Versions(entry) {
     const existing = known.get(hash);
     const is30 = byHash[hash] === true;
     if (is30) {
+      if (entry.rarity === "Exotic") {
+        // Exotic Armor 3.0 remasters keep debut season identity, not Mot.
+        versions.push({
+          itemHash: hash,
+          name: existing?.name ?? entry.name,
+          iconPath: existing?.iconPath ?? entry.iconPath,
+          seasonIconPath:
+            legacySeed?.seasonIconPath &&
+            !String(legacySeed.seasonIconPath).endsWith(
+              MONUMENT_FEATURED_WATERMARK,
+            )
+              ? legacySeed.seasonIconPath
+              : (existing?.seasonIconPath ?? entry.seasonIconPath),
+          seasonDisplayIconPath:
+            legacySeed?.seasonDisplayIconPath ??
+            existing?.seasonDisplayIconPath,
+          seasonDisplayIconWatermark:
+            legacySeed?.seasonDisplayIconWatermark ??
+            existing?.seasonDisplayIconWatermark,
+          seasonLabel: legacyLabel,
+          seasonNumber: displayNumberFromLabel(legacyLabel),
+          ...(existing?.screenshotPath
+            ? { screenshotPath: existing.screenshotPath }
+            : {}),
+        });
+        continue;
+      }
       versions.push({
         itemHash: hash,
         name: existing?.name ?? entry.name,
@@ -530,6 +616,149 @@ function applyItemNameSeasonOverride(entry) {
   }
 }
 
+/**
+ * Exotic Armor 3.0 remasters share debut identity with the legacy peer.
+ * Force a single debut-season row (keep Armor 3.0 hash when known).
+ */
+function collapseExoticArmorRemasters(entry) {
+  if (entry.type !== "Armor" || entry.rarity !== "Exotic") return;
+
+  const byHash = entry.isArmor30ByItemHash ?? {};
+  const versionRows = entry.versions?.length
+    ? [...entry.versions]
+    : [
+        {
+          itemHash: entry.itemHash,
+          name: entry.name,
+          iconPath: entry.iconPath,
+          seasonIconPath: entry.seasonIconPath,
+          seasonDisplayIconPath: entry.seasonDisplayIconPath,
+          seasonDisplayIconWatermark: entry.seasonDisplayIconWatermark,
+          seasonLabel: entry.seasonLabel,
+          seasonNumber: entry.seasonNumber,
+          ...(entry.eventLabel ? { eventLabel: entry.eventLabel } : {}),
+          ...(entry.screenshotPath
+            ? { screenshotPath: entry.screenshotPath }
+            : {}),
+        },
+      ];
+
+  const debut = versionRows.find(
+    (version) =>
+      version.seasonLabel && !isYear8ArmorChapterLabel(version.seasonLabel),
+  );
+  if (!debut?.seasonLabel) return;
+
+  const hasMotOrYear8 = versionRows.some((version) =>
+    isYear8ArmorChapterLabel(version.seasonLabel),
+  );
+  const hasArmor30Peer =
+    Object.values(byHash).some((value) => value === true) &&
+    Object.values(byHash).some((value) => value === false);
+  if (!hasMotOrYear8 && !hasArmor30Peer && versionRows.length <= 1) {
+    return;
+  }
+
+  const armor30Hash =
+    Object.entries(byHash).find(([, is30]) => is30 === true)?.[0] ?? null;
+  const armor30Version =
+    (armor30Hash
+      ? versionRows.find((version) => version.itemHash === armor30Hash)
+      : null) ??
+    versionRows.find((version) => byHash[version.itemHash] === true) ??
+    null;
+
+  const primary = {
+    ...(armor30Version ?? debut),
+    seasonLabel: debut.seasonLabel,
+    seasonNumber: displayNumberFromLabel(debut.seasonLabel),
+    seasonIconPath: debut.seasonIconPath ?? armor30Version?.seasonIconPath,
+    seasonDisplayIconPath:
+      debut.seasonDisplayIconPath ?? armor30Version?.seasonDisplayIconPath,
+    seasonDisplayIconWatermark:
+      debut.seasonDisplayIconWatermark ??
+      armor30Version?.seasonDisplayIconWatermark,
+  };
+  delete primary.eventLabel;
+
+  const knownHashes = new Set([
+    entry.itemHash,
+    ...versionRows.map((version) => version.itemHash),
+    ...Object.keys(byHash),
+  ]);
+  const alternates = [...knownHashes].filter(
+    (hash) => hash !== primary.itemHash,
+  );
+
+  delete entry.versions;
+  syncEntryFromVersion(entry, primary);
+  entry.isArmor30 = byHash[primary.itemHash] === true;
+  if (alternates.length) {
+    entry.alternateItemHashes = [
+      ...new Set([...(entry.alternateItemHashes ?? []), ...alternates]),
+    ];
+  }
+}
+
+/**
+ * Non-Armor-3.0 rows sometimes inherit a Mot label/icon from remaster peers.
+ * Rebrand them to the true debut season so Mot stays on the Armor 3.0 hash only.
+ */
+function demoteFakeMotArmorVersions(entry) {
+  if (entry.type !== "Armor" || !entry.versions?.length) return;
+
+  const byHash = entry.isArmor30ByItemHash ?? {};
+  const debut = entry.versions.find(
+    (version) =>
+      byHash[version.itemHash] === false &&
+      version.seasonLabel &&
+      !isYear8ArmorChapterLabel(version.seasonLabel),
+  );
+  if (!debut?.seasonLabel) return;
+
+  for (const version of entry.versions) {
+    if (byHash[version.itemHash] === true) continue;
+    if (version.seasonLabel !== MONUMENT_OF_TRIUMPH_LABEL) continue;
+
+    version.seasonLabel = debut.seasonLabel;
+    version.seasonNumber = displayNumberFromLabel(debut.seasonLabel);
+    if (debut.seasonIconPath) version.seasonIconPath = debut.seasonIconPath;
+    if (debut.seasonDisplayIconPath) {
+      version.seasonDisplayIconPath = debut.seasonDisplayIconPath;
+    }
+    if (debut.seasonDisplayIconWatermark !== undefined) {
+      version.seasonDisplayIconWatermark = debut.seasonDisplayIconWatermark;
+    }
+    delete version.eventLabel;
+  }
+}
+
+/** Keep the live Armor 3.0 hash as the catalog primary when a remaster exists. */
+function preferArmor30Primary(entry) {
+  if (entry.type !== "Armor") return;
+
+  const byHash = entry.isArmor30ByItemHash ?? {};
+  const armor30Hash =
+    Object.entries(byHash).find(([, is30]) => is30 === true)?.[0] ?? null;
+  if (!armor30Hash) return;
+
+  if (entry.versions?.length) {
+    const armor30Version = entry.versions.find(
+      (version) => version.itemHash === armor30Hash,
+    );
+    if (!armor30Version) return;
+    entry.versions = [
+      armor30Version,
+      ...entry.versions.filter((version) => version.itemHash !== armor30Hash),
+    ];
+    syncEntryFromVersion(entry, armor30Version);
+  } else if (entry.itemHash !== armor30Hash) {
+    return;
+  }
+
+  entry.isArmor30 = true;
+}
+
 function applyEntryLabels(entry, dimSeasonData) {
   entry.source = correctEntrySource(entry);
   entry.seasonLabel = normalizeMonumentLabel(entry.seasonLabel);
@@ -541,7 +770,10 @@ function applyEntryLabels(entry, dimSeasonData) {
     applyVersionLabels(entry, version, dimSeasonData);
   }
 
+  demoteFakeMotArmorVersions(entry);
+  collapseExoticArmorRemasters(entry);
   collapseItemVersions(entry);
+  preferArmor30Primary(entry);
 
   if (entry.seasonLabel === CALL_TO_ARMS_LABEL) {
     entry.seasonLabel = unwrapCallToArmsSeasonLabel(
@@ -558,6 +790,9 @@ function applyEntryLabels(entry, dimSeasonData) {
       entry.seasonNumber = latest.seasonNumber;
       if (latest.eventLabel) entry.eventLabel = latest.eventLabel;
       else delete entry.eventLabel;
+    } else if (entry.type === "Armor" && entry.rarity === "Exotic") {
+      // Keep debut branding from collapseExoticArmorRemasters / syncEntryFromVersion.
+      entry.seasonNumber = displayNumberFromLabel(entry.seasonLabel);
     } else if (entry.type === "Armor") {
       const armorLabel = resolveArmor30SeasonLabel(
         mockItem(entry.seasonIconPath),
@@ -667,8 +902,18 @@ try {
 
 const relabelDimSeasonData = { watermarkToSeason };
 
+let dimItemSeasons = {};
+try {
+  const response = await fetch(DIM_ITEM_SEASONS_URL);
+  if (response.ok) dimItemSeasons = await response.json();
+} catch {
+  console.warn("DIM item seasons unavailable — event items stay as labelled.");
+}
+
 for (const item of loot.items) {
   applyEntryLabels(item, relabelDimSeasonData);
+  applyYear8ChapterSplit(item);
+  applyMonumentEventCorrection(item, dimItemSeasons);
   item.searchText = buildSearchText(item);
 }
 
@@ -697,7 +942,9 @@ console.log(
       i.versions?.some((v) => v.seasonLabel === CALL_TO_ARMS_LABEL),
   ).length,
 );
-console.log(
-  "S28 Reclamation left:",
-  loot.items.filter((i) => i.seasonLabel === "S28 Season: Reclamation").length,
-);
+for (const label of [RECLAMATION_LABEL, "Renegades", LAWLESS_LABEL]) {
+  console.log(
+    `${label}:`,
+    loot.items.filter((i) => i.seasonLabel === label).length,
+  );
+}

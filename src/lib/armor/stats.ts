@@ -1,6 +1,5 @@
 import type { AllLootItem, WeaponStat } from "@/types/all-loot";
 import {
-  ARMOR_STAT_HASHES,
   ARMOR_STAT_HASHES_BY_NAME,
   ARMOR_STAT_ORDER,
   type ArmorStatName,

@@ -34,7 +34,7 @@ export function WeaponGodRollControls({
     <div className={`flex flex-wrap ${GOD_ROLL_CONTROLS_BAR_CLASS}`}>
       <span className="text-xs text-zinc-400">Show God Roll</span>
       <div
-        className="inline-flex rounded-lg border border-zinc-800 bg-zinc-900/60 p-0.5"
+        className="inline-flex border border-hairline bg-panel p-0.5"
         role="group"
         aria-label="God roll highlight"
       >

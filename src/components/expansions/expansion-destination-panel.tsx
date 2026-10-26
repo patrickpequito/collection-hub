@@ -1,5 +1,6 @@
 "use client";
 
+import { BoxHeading, SectionHeading } from "@/components/detail-page-parts";
 import { useMemo } from "react";
 import { useOwnership } from "@/components/client-ownership";
 import {
@@ -13,7 +14,6 @@ import { isRecordRedeemed } from "@/lib/triumphs/record-progress";
 import type {
   ExpansionLostSector,
   ExpansionRegionChest,
-  ExpansionWellspringBoss,
 } from "@/lib/expansions/resolve-expansion-loot";
 import type { ActivityArmorRow, LootItem } from "@/types/activity-loot";
 import type { RecordInstance } from "@/types/triumph";
@@ -32,9 +32,6 @@ type ExpansionDestinationPanelProps = {
   lostSectorsDiscoveryRecordHash: string;
   lostSectors: ExpansionLostSector[];
   featuredLostSectorName: string | null;
-  wellspringNormalRecordHash: string;
-  wellspringMasterRecordHash: string;
-  wellspringBosses: ExpansionWellspringBoss[];
 };
 
 function objectiveComplete(
@@ -81,23 +78,17 @@ export function ExpansionDestinationPanel({
   lostSectorsDiscoveryRecordHash,
   lostSectors,
   featuredLostSectorName,
-  wellspringNormalRecordHash,
-  wellspringMasterRecordHash,
-  wellspringBosses,
 }: ExpansionDestinationPanelProps) {
   const { ownedItemHashes, showOwnership } = useOwnership();
   const signedIn = useSignedIn();
   const hasLoot = armorRows.length > 0 || weapons.length > 0;
   const hasRegionChests = regionChests.length > 0;
   const hasLostSectors = lostSectors.length > 0;
-  const hasWellspring = wellspringBosses.length > 0;
   const instances = useProfileRecordInstances();
   const checklists = useProfileChecklists(hasRegionChests);
 
   const regionChecklist = checklists[regionChestsChecklistHash] ?? {};
   const discoveryInstance = instances[lostSectorsDiscoveryRecordHash];
-  const normalWellspring = instances[wellspringNormalRecordHash];
-  const masterWellspring = instances[wellspringMasterRecordHash];
 
   const lostSectorRows = useMemo(
     () =>
@@ -124,14 +115,12 @@ export function ExpansionDestinationPanel({
     ],
   );
 
-  if (!hasLoot && !hasRegionChests && !hasLostSectors && !hasWellspring) {
+  if (!hasLoot && !hasRegionChests && !hasLostSectors) {
     return (
       <section className="min-w-0 space-y-3">
         <div>
-          <h2 className="text-lg font-semibold text-zinc-100">
-            {destinationTitle}
-          </h2>
-          <p className="mt-1 text-sm text-zinc-400">
+          <SectionHeading title={destinationTitle.replace(" // ", " · ")} />
+          <p className="text-sm text-zinc-400">
             Destination loot and checklists will appear here as they are
             curated for this expansion.
           </p>
@@ -140,23 +129,10 @@ export function ExpansionDestinationPanel({
     );
   }
 
-  const checklistParts = [
-    hasLoot ? "Destination loot" : null,
-    hasRegionChests ? "region chests" : null,
-    hasLostSectors ? "lost sectors" : null,
-    hasWellspring ? "Wellspring encounters" : null,
-  ].filter(Boolean);
 
   return (
-    <section className="min-w-0 space-y-6">
-      <div>
-        <h2 className="text-lg font-semibold text-zinc-100">
-          {destinationTitle}
-        </h2>
-        <p className="mt-1 text-sm text-zinc-400">
-          {checklistParts.join(", ").replace(/^./, (c) => c.toUpperCase())}.
-        </p>
-      </div>
+    <section className="min-w-0 space-y-3">
+      <SectionHeading title={destinationTitle.replace(" // ", " · ")} />
 
       {hasLoot ? (
         <ActivityCurrentLootPanel
@@ -171,12 +147,19 @@ export function ExpansionDestinationPanel({
         />
       ) : null}
 
+      {hasRegionChests || hasLostSectors ? (
+      <div className={`grid items-start gap-3 ${hasRegionChests && hasLostSectors ? "lg:grid-cols-3" : ""}`}>
       {hasRegionChests ? (
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">
-            Region chests
-          </h3>
-          <ul className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="space-y-3 border border-hairline bg-panel/85 p-3 sm:p-4">
+          <BoxHeading
+            title="Region chests"
+            note={
+              signedIn
+                ? `${regionChests.filter((chest) => regionChecklist[chest.entryHash]).length} / ${regionChests.length}`
+                : regionChests.length
+            }
+          />
+          <ul>
             {regionChests.map((chest) => {
               const done = signedIn
                 ? Boolean(regionChecklist[chest.entryHash])
@@ -184,7 +167,7 @@ export function ExpansionDestinationPanel({
               return (
                 <li
                   key={chest.entryHash}
-                  className="flex items-center justify-between rounded-lg border border-zinc-800 px-3 py-2"
+                  className="flex items-center justify-between gap-3 border-b border-white/[0.08] py-2.5 last:border-0"
                 >
                   <span className="text-sm text-zinc-200">{chest.label}</span>
                   <CompletionMark complete={done} />
@@ -193,7 +176,7 @@ export function ExpansionDestinationPanel({
             })}
           </ul>
           {!signedIn ? (
-            <p className="mt-2 text-xs text-zinc-500">
+            <p className="text-xs text-zinc-500">
               Sign in to track region chests.
             </p>
           ) : null}
@@ -201,16 +184,9 @@ export function ExpansionDestinationPanel({
       ) : null}
 
       {hasLostSectors ? (
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">
-            Lost sectors
-          </h3>
-          <p className="mt-2 text-xs text-zinc-500">
-            Normal = discovered/cleared. Expert / Master from Solo triumphs. GM
-            column uses Flawless Solo Mastery (no dedicated Grandmaster
-            triumph).
-          </p>
-          <ul className="mt-3 space-y-2">
+        <div className={`space-y-3 border border-hairline bg-panel/85 p-3 sm:p-4 ${hasRegionChests ? "lg:col-span-2" : ""}`}>
+          <BoxHeading title="Lost sectors" note={lostSectors.length} />
+          <ul>
             {lostSectorRows.map(
               ({
                 sector,
@@ -222,10 +198,10 @@ export function ExpansionDestinationPanel({
               }) => (
                 <li
                   key={sector.name}
-                  className={`rounded-lg border px-3 py-3 ${
+                  className={`border-b py-2.5 last:border-0 ${
                     featured
-                      ? "border-[#24b4b3] bg-[#24b4b3]/10"
-                      : "border-zinc-800"
+                      ? "border-seasonal/60 bg-seasonal/10 px-2"
+                      : "border-white/[0.08]"
                   }`}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
@@ -234,7 +210,7 @@ export function ExpansionDestinationPanel({
                         {sector.name}
                       </span>
                       {featured ? (
-                        <span className="rounded border border-[#24b4b3]/50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#7fe0df]">
+                        <span className="border border-seasonal/50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#7fe0df]">
                           Daily featured
                         </span>
                       ) : null}
@@ -243,7 +219,7 @@ export function ExpansionDestinationPanel({
                       <CompletionMark complete={normal} label="Normal" />
                       <CompletionMark complete={expert} label="Expert" />
                       <CompletionMark complete={master} label="Master" />
-                      <CompletionMark complete={grandmaster} label="GM" />
+                      <CompletionMark complete={grandmaster} label="Flawless Solo Mastery" />
                     </div>
                   </div>
                 </li>
@@ -253,51 +229,7 @@ export function ExpansionDestinationPanel({
         </div>
       ) : null}
 
-      {hasWellspring ? (
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">
-            The Wellspring
-          </h3>
-          <p className="mt-2 text-xs text-zinc-500">
-            Four boss encounters — Normal (Defend/Attack) and Master clears.
-          </p>
-          <ul className="mt-3 space-y-2">
-            {wellspringBosses.map((boss) => (
-              <li
-                key={boss.name}
-                className="flex flex-col gap-1 rounded-lg border border-zinc-800 px-3 py-3 sm:flex-row sm:items-center sm:justify-between"
-              >
-                <span className="text-sm font-medium text-zinc-100">
-                  {boss.name}
-                </span>
-                <div className="flex flex-wrap gap-3">
-                  <CompletionMark
-                    complete={
-                      signedIn
-                        ? objectiveComplete(
-                            normalWellspring,
-                            boss.normalObjectiveHash,
-                          )
-                        : null
-                    }
-                    label="Normal"
-                  />
-                  <CompletionMark
-                    complete={
-                      signedIn
-                        ? objectiveComplete(
-                            masterWellspring,
-                            boss.masterObjectiveHash,
-                          )
-                        : null
-                    }
-                    label="Master"
-                  />
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+      </div>
       ) : null}
     </section>
   );

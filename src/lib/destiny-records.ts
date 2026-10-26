@@ -29,6 +29,7 @@ type ApiObjectiveProgress = {
 
 type ApiRecordInstance = {
   state: number;
+  completedCount?: number;
   objectives?: ApiObjectiveProgress[];
   /** Stepped triumphs (e.g. 3/10/20) — progress lives here, not in objectives. */
   intervalObjectives?: ApiObjectiveProgress[];
@@ -73,7 +74,7 @@ function bungieHeaders(accessToken: string) {
   };
 }
 
-async function bungieGet<T>(path: string, accessToken: string): Promise<T> {
+export async function bungieGet<T>(path: string, accessToken: string): Promise<T> {
   const response = await fetch(`${BUNGIE_ORIGIN}${path}`, {
     headers: bungieHeaders(accessToken),
     cache: "no-store",
@@ -114,7 +115,7 @@ function apiRecordObjectives(
   ]);
 }
 
-function mergeRecordInstances(
+export function mergeRecordInstances(
   target: Map<string, RecordInstance>,
   records: Record<string, ApiRecordInstance> | undefined,
 ) {
@@ -124,6 +125,7 @@ function mergeRecordInstances(
       target.set(recordHash, {
         state: record.state,
         objectives: apiRecordObjectives(record),
+        ...(record.completedCount ? { completedCount: record.completedCount } : {}),
       });
       continue;
     }
@@ -134,6 +136,9 @@ function mergeRecordInstances(
         existing.objectives,
         apiRecordObjectives(record),
       ),
+      ...(record.completedCount || existing.completedCount
+        ? { completedCount: Math.max(record.completedCount ?? 0, existing.completedCount ?? 0) }
+        : {}),
     });
   }
 }

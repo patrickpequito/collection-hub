@@ -11,6 +11,7 @@ export const SEASON_OF_THE_HUNT_HUB: SeasonHub = {
   seasonNumber: 12,
   titleIconPath:
     "/common/destiny2_content/icons/5ea0af3a7d0aa5717e65f9b65472ba67.png",
+  seal: { title: "Warden", completionRecordHash: "1561715947" },
   videos: [
     {
       id: "trailer",
@@ -58,6 +59,7 @@ export const SEASON_OF_THE_HUNT_HUB: SeasonHub = {
     "Exotic weapons from Season of the Hunt — Duality from the Season Pass / Monument, and Hawkmoon from the Crow quest line.",
   cosmeticPanelDescription:
     "Season Pass cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  showEververseCosmetics: true,
   cosmeticRewards: [
     "Digital Cortex",
     "Little Bird",

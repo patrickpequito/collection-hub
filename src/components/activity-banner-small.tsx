@@ -67,7 +67,6 @@ export function ActivityBannerSmall({
   const content = (
     <div className={`relative ${BANNER_HEIGHT_CLASS} overflow-hidden bg-zinc-900`}>
       {showImage ? (
-        // eslint-disable-next-line @next/next/no-img-element
         <picture className="absolute inset-0 block h-full w-full">
           {wideImageUrl ? (
             <source media="(min-width: 768px)" srcSet={wideImageUrl} />

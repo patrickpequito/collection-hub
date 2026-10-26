@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { localSeasonFilterIconPath } from "@/lib/all-loot/season-icon-path";
 import { armorSlotIconPath } from "@/lib/armor-slot-icon";
 import { bungieIconUrl } from "@/lib/bungie-icon";
@@ -16,17 +16,6 @@ import {
   buildTypeFilterGroups,
   type AllLootTypeFilterGroup,
 } from "@/lib/all-loot/type-groups";
-
-type FilterDropdownProps = {
-  label: string;
-  options?: string[];
-  groups?: AllLootTypeFilterGroup[];
-  selected: string[];
-  onChange: (values: string[]) => void;
-  renderOption?: (option: string) => ReactNode;
-  renderSummaryItem?: (value: string) => ReactNode;
-  menuClassName?: string;
-};
 
 function SeasonFilterLabel({ season }: { season: string }) {
   return (
@@ -120,291 +109,165 @@ function ClassOrWeaponTypeFilterLabel({ value }: { value: string }) {
   );
 }
 
-function FilterDropdown({
+
+type FilterGroupProps = {
+  label: string;
+  options?: string[];
+  groups?: AllLootTypeFilterGroup[];
+  selected: string[];
+  onChange: (values: string[]) => void;
+  renderOption?: (option: string) => ReactNode;
+  /** Shows a filter box inside long lists (Season, Weapon type). */
+  searchable?: boolean;
+};
+
+/** Collapsed filter row; opens to a checkbox list with icons. */
+function FilterGroup({
   label,
   options = [],
   groups,
   selected,
   onChange,
   renderOption,
-  renderSummaryItem,
-  menuClassName,
-}: FilterDropdownProps) {
+  searchable = false,
+}: FilterGroupProps) {
   const [open, setOpen] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
-  const active = selected.length > 0;
-
-  useEffect(() => {
-    if (!open) return;
-
-    const onPointerDown = (event: MouseEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", onPointerDown);
-    return () => document.removeEventListener("mousedown", onPointerDown);
-  }, [open]);
-
-  const toggleValue = (value: string) => {
-    if (selected.includes(value)) {
-      onChange(selected.filter((entry) => entry !== value));
-      return;
-    }
-    onChange([...selected, value]);
-  };
+  const [find, setFind] = useState("");
+  const toggleValue = (value: string) =>
+    onChange(
+      selected.includes(value)
+        ? selected.filter((entry) => entry !== value)
+        : [...selected, value],
+    );
+  const needle = find.trim().toLowerCase();
+  const visibleGroups = (groups ?? [{ types: options }])
+    .map((group) => ({
+      ...group,
+      types: needle
+        ? group.types.filter((option) => option.toLowerCase().includes(needle))
+        : group.types,
+    }))
+    .filter((group) => group.types.length > 0);
 
   const summary =
-    selected.length === 0
-      ? null
-      : selected.length === 1
-        ? renderSummaryItem
-          ? renderSummaryItem(selected[0])
-          : selected[0]
-        : `${selected.length}`;
-
-  const summaryIsCustom = selected.length === 1 && Boolean(renderSummaryItem);
-  const optionCount = groups
-    ? groups.reduce((count, group) => count + group.types.length, 0)
-    : options.length;
+    selected.length === 0 ? "Any" : selected.length === 1 ? selected[0] : `${selected.length} selected`;
 
   return (
-    <div ref={rootRef} className="relative">
+    <div className="border-b border-white/[0.08]">
       <button
         type="button"
-        onClick={() => setOpen((current) => !current)}
+        onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
-        className={`inline-flex max-w-[12rem] items-center gap-1 rounded-md border px-2 py-1 text-xs transition ${
-          active
-            ? "border-zinc-500 bg-zinc-800 text-zinc-50"
-            : "border-zinc-600 bg-zinc-900/90 text-zinc-200 hover:border-zinc-500 hover:bg-zinc-800/90"
-        }`}
+        className="flex w-full items-center gap-2.5 py-2.5 text-left"
       >
-        <span className="shrink-0 text-zinc-400">{label}</span>
-        {summary ? (
-          <span
-            className={
-              summaryIsCustom
-                ? "flex min-w-0 items-center truncate font-medium"
-                : "truncate font-medium"
-            }
-          >
-            {summary}
-          </span>
-        ) : null}
-        <span className="shrink-0 text-[10px] text-zinc-500" aria-hidden>
-          ▾
-        </span>
-      </button>
-
-      {open ? (
-        <div
-          className={`absolute left-0 z-30 mt-1 max-h-56 overflow-y-auto rounded-lg border border-zinc-700 bg-zinc-900 p-1.5 shadow-xl ${
-            menuClassName ?? "min-w-[10rem]"
+        <ActiveBox active={selected.length > 0} />
+        <span className="ui-label flex-1 text-bone!">{label}</span>
+        <span
+          className={`max-w-[7.5rem] truncate text-xs ${
+            selected.length > 0 ? "text-owned" : "text-ash"
           }`}
         >
-          {optionCount === 0 ? (
-            <p className="px-2 py-1 text-xs text-zinc-500">No options</p>
-          ) : groups ? (
-            groups.map((group, groupIndex) => (
-              <div key={group.label ?? `group-${groupIndex}`}>
-                {group.label ? (
-                  <p className="px-2 pb-0.5 pt-1.5 text-[10px] font-semibold uppercase tracking-wide text-zinc-500 first:pt-0.5">
-                    {group.label}
-                  </p>
-                ) : null}
-                {group.types.map((option) => (
-                  <label
-                    key={option}
-                    className="flex cursor-pointer items-center gap-2 rounded px-2 py-1 text-xs text-zinc-300 hover:bg-zinc-900"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={selected.includes(option)}
-                      onChange={() => toggleValue(option)}
-                      className="rounded border-zinc-700 bg-zinc-900"
-                    />
-                    <span className="min-w-0 truncate">
-                      {renderOption ? renderOption(option) : option}
-                    </span>
-                  </label>
-                ))}
-              </div>
-            ))
-          ) : (
-            options.map((option) => (
-              <label
-                key={option}
-                className="flex cursor-pointer items-center gap-2 rounded px-2 py-1 text-xs text-zinc-300 hover:bg-zinc-900"
-              >
-                <input
-                  type="checkbox"
-                  checked={selected.includes(option)}
-                  onChange={() => toggleValue(option)}
-                  className="rounded border-zinc-700 bg-zinc-900"
-                />
-                <span className="min-w-0 truncate">
-                  {renderOption ? renderOption(option) : option}
-                </span>
-              </label>
-            ))
-          )}
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
-type ObtainableFilterProps = {
-  value: "all" | "yes" | "no";
-  onChange: (value: "all" | "yes" | "no") => void;
-};
-
-function ObtainableFilter({ value, onChange }: ObtainableFilterProps) {
-  const [open, setOpen] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
-  const active = value !== "all";
-
-  useEffect(() => {
-    if (!open) return;
-
-    const onPointerDown = (event: MouseEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", onPointerDown);
-    return () => document.removeEventListener("mousedown", onPointerDown);
-  }, [open]);
-
-  const labels = { all: "Any", yes: "Yes", no: "No" } as const;
-
-  return (
-    <div ref={rootRef} className="relative">
-      <button
-        type="button"
-        onClick={() => setOpen((current) => !current)}
-        aria-expanded={open}
-        className={`inline-flex items-center gap-1 rounded-md border px-2 py-1 text-xs transition ${
-          active
-            ? "border-zinc-500 bg-zinc-800 text-zinc-50"
-            : "border-zinc-600 bg-zinc-900/90 text-zinc-200 hover:border-zinc-500 hover:bg-zinc-800/90"
-        }`}
-      >
-        <span className="text-zinc-400">Obtainable</span>
-        {active ? (
-          <span className="font-medium">{labels[value]}</span>
-        ) : null}
-        <span className="text-[10px] text-zinc-500" aria-hidden>
-          ▾
+          {summary}
+        </span>
+        <span className={`text-[10px] text-ash transition ${open ? "rotate-90" : ""}`} aria-hidden>
+          ▸
         </span>
       </button>
-
       {open ? (
-        <div className="absolute left-0 z-30 mt-1 min-w-[7rem] rounded-lg border border-zinc-700 bg-zinc-900 p-1 shadow-xl">
-          {(["all", "yes", "no"] as const).map((option) => (
-            <button
-              key={option}
-              type="button"
-              onClick={() => {
-                onChange(option);
-                setOpen(false);
-              }}
-              className={`block w-full rounded px-2 py-1 text-left text-xs transition ${
-                value === option
-                  ? "bg-zinc-800 text-zinc-100"
-                  : "text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200"
-              }`}
-            >
-              {labels[option]}
-            </button>
+        <div className="max-h-72 overflow-y-auto pb-2.5 pl-[1.875rem]">
+          {searchable ? (
+            <input
+              type="search"
+              value={find}
+              onChange={(event) => setFind(event.target.value)}
+              placeholder={`Find ${label.toLowerCase()}…`}
+              className="mb-1.5 h-8 w-full border border-white/20 bg-transparent px-2.5 text-xs text-bone placeholder:text-ash focus:border-bone focus:outline-none"
+            />
+          ) : null}
+          {visibleGroups.map((group, index) => (
+            <div key={group.label ?? `group-${index}`}>
+              {group.label ? (
+                <p className="ui-label pb-0.5 pt-2 text-[10px]!">{group.label}</p>
+              ) : null}
+              {group.types.map((option) => (
+                <label
+                  key={option}
+                  className="flex cursor-pointer items-center gap-2 py-1 text-sm text-bone/85 hover:text-bone"
+                >
+                  <input
+                    type="checkbox"
+                    checked={selected.includes(option)}
+                    onChange={() => toggleValue(option)}
+                    className="size-3 shrink-0 cursor-pointer appearance-none border border-white/40 bg-transparent transition checked:border-owned checked:bg-owned focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-bone"
+                  />
+                  <span className="min-w-0 truncate">
+                    {renderOption ? renderOption(option) : option}
+                  </span>
+                </label>
+              ))}
+            </div>
           ))}
+          {visibleGroups.length === 0 ? <p className="py-1 text-xs text-ash">No matches</p> : null}
         </div>
       ) : null}
     </div>
   );
 }
 
-type CollectedFilterProps = {
-  value: "all" | "yes" | "no";
-  onChange: (value: "all" | "yes" | "no") => void;
+type TriState = "all" | "yes" | "no";
+
+/** Any / Yes / No switch for the boolean filters (no dropdown needed). */
+function TriStateFilter({
+  label,
+  value,
+  onChange,
+  disabled = false,
+}: {
+  label: string;
+  value: TriState;
+  onChange: (value: TriState) => void;
   disabled?: boolean;
-};
-
-function CollectedFilter({ value, onChange, disabled }: CollectedFilterProps) {
-  const [open, setOpen] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
-  const active = value !== "all";
-
-  useEffect(() => {
-    if (!open) return;
-
-    const onPointerDown = (event: MouseEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", onPointerDown);
-    return () => document.removeEventListener("mousedown", onPointerDown);
-  }, [open]);
-
-  const labels = { all: "Any", yes: "Yes", no: "No" } as const;
-
+}) {
+  const options: { value: TriState; label: string }[] = [
+    { value: "all", label: "Any" },
+    { value: "yes", label: "Yes" },
+    { value: "no", label: "No" },
+  ];
   return (
-    <div ref={rootRef} className="relative">
-      <button
-        type="button"
-        onClick={() => {
-          if (disabled) return;
-          setOpen((current) => !current);
-        }}
-        disabled={disabled}
-        title={disabled ? "Sign in to filter by collection" : undefined}
-        aria-expanded={open}
-        className={`inline-flex items-center gap-1 rounded-md border px-2 py-1 text-xs transition ${
-          disabled
-            ? "cursor-not-allowed border-zinc-700/80 bg-zinc-900/50 text-zinc-500"
-            : active
-              ? "border-zinc-500 bg-zinc-800 text-zinc-50"
-              : "border-zinc-600 bg-zinc-900/90 text-zinc-200 hover:border-zinc-500 hover:bg-zinc-800/90"
-        }`}
-      >
-        <span className={disabled ? "text-zinc-600" : "text-zinc-400"}>
-          Collected
-        </span>
-        {active ? (
-          <span className="font-medium">{labels[value]}</span>
-        ) : null}
-        <span className="text-[10px] text-zinc-500" aria-hidden>
-          ▾
-        </span>
-      </button>
-
-      {open && !disabled ? (
-        <div className="absolute left-0 z-30 mt-1 min-w-[7rem] rounded-lg border border-zinc-700 bg-zinc-900 p-1 shadow-xl">
-          {(["all", "yes", "no"] as const).map((option) => (
-            <button
-              key={option}
-              type="button"
-              onClick={() => {
-                onChange(option);
-                setOpen(false);
-              }}
-              className={`block w-full rounded px-2 py-1 text-left text-xs transition ${
-                value === option
-                  ? "bg-zinc-800 text-zinc-100"
-                  : "text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200"
-              }`}
-            >
-              {labels[option]}
-            </button>
-          ))}
-        </div>
-      ) : null}
+    <div
+      className="flex items-center gap-2.5 border-b border-white/[0.08] py-2.5 last:border-0"
+      title={disabled ? "Sign in to filter by collection" : undefined}
+    >
+      <ActiveBox active={value !== "all"} />
+      <span className={`ui-label flex-1 ${disabled ? "" : "text-bone!"}`}>{label}</span>
+      <span role="radiogroup" aria-label={label} className="inline-flex border border-white/[0.22]">
+        {options.map((option) => (
+          <button
+            key={option.value}
+            type="button"
+            role="radio"
+            aria-checked={value === option.value}
+            disabled={disabled}
+            onClick={() => onChange(option.value)}
+            className={`px-2 py-0.5 font-display text-[11px] uppercase tracking-[0.1em] transition disabled:cursor-not-allowed disabled:opacity-40 ${
+              value === option.value ? "bg-bone text-void" : "text-ash hover:text-bone"
+            }`}
+          >
+            {option.label}
+          </button>
+        ))}
+      </span>
     </div>
+  );
+}
+
+/** Square before each filter name; filled while that filter has a selection. */
+function ActiveBox({ active }: { active: boolean }) {
+  return (
+    <span
+      aria-hidden
+      className={`size-3 shrink-0 border ${active ? "border-owned bg-owned" : "border-white/40"}`}
+    />
   );
 }
 
@@ -419,6 +282,7 @@ function hasAnyFilters(filters: AllLootFilterState) {
     filters.damageTypes.length > 0 ||
     filters.weaponSlots.length > 0 ||
     filters.gearSlots.length > 0 ||
+    filters.sources.length > 0 ||
     filters.obtainable !== "all" ||
     filters.collected !== "all"
   );
@@ -434,6 +298,7 @@ export type AllLootFilterState = {
   damageTypes: string[];
   weaponSlots: string[];
   gearSlots: string[];
+  sources: string[];
   obtainable: "all" | "yes" | "no";
   collected: "all" | "yes" | "no";
 };
@@ -460,6 +325,7 @@ export function buildAllLootSearchParams(
   appendList("damageTypes", filters.damageTypes);
   appendList("weaponSlots", filters.weaponSlots);
   appendList("gearSlots", filters.gearSlots);
+  appendList("sources", filters.sources);
 
   return params;
 }
@@ -475,163 +341,153 @@ export function emptyAllLootFilterState(): AllLootFilterState {
     damageTypes: [],
     weaponSlots: [],
     gearSlots: [],
+    sources: [],
     obtainable: "all",
     collected: "all",
   };
 }
 
-export type AllLootFiltersPanelProps = {
+/** Label for one active filter value, for the chips above the results. */
+export type ActiveFilterChip = { key: string; label: string; clear: (filters: AllLootFilterState) => AllLootFilterState };
+
+const LIST_KEYS = [
+  "types",
+  "seasons",
+  "rarities",
+  "weaponTypes",
+  "classes",
+  "damageTypes",
+  "weaponSlots",
+  "gearSlots",
+] as const;
+
+export function activeFilterChips(filters: AllLootFilterState): ActiveFilterChip[] {
+  const chips: ActiveFilterChip[] = [];
+  if (filters.sources.length > 0) {
+    chips.push({
+      key: "sources",
+      label: filters.sources.map((source) => source.replace(/^./, (c) => c.toUpperCase())).join(" & "),
+      clear: (current) => ({ ...current, sources: [] }),
+    });
+  }
+  for (const key of LIST_KEYS) {
+    for (const value of filters[key]) {
+      chips.push({
+        key: `${key}:${value}`,
+        label: value,
+        clear: (current) => ({ ...current, [key]: current[key].filter((entry) => entry !== value) }),
+      });
+    }
+  }
+  if (filters.obtainable !== "all") {
+    chips.push({
+      key: "obtainable",
+      label: filters.obtainable === "yes" ? "Obtainable" : "Not obtainable",
+      clear: (current) => ({ ...current, obtainable: "all" }),
+    });
+  }
+  if (filters.collected !== "all") {
+    chips.push({
+      key: "collected",
+      label: filters.collected === "yes" ? "Collected" : "Not collected",
+      clear: (current) => ({ ...current, collected: "all" }),
+    });
+  }
+  return chips;
+}
+
+export { hasAnyFilters };
+
+type AllLootFilterSidebarProps = {
   facets: AllLootFacets | null;
   filters: AllLootFilterState;
   onFiltersChange: (filters: AllLootFilterState) => void;
-  onSearch: () => void;
-  searching: boolean;
   ownershipFilterEnabled?: boolean;
 };
 
-export function AllLootFiltersPanel({
+/** Collapsed filter groups (Type → Armor slot) plus the two Any / Yes / No switches. */
+export function AllLootFilterSidebar({
   facets,
   filters,
   onFiltersChange,
-  onSearch,
-  searching,
   ownershipFilterEnabled = false,
-}: AllLootFiltersPanelProps) {
-  const showClear = hasAnyFilters(filters);
-
-  const update = (partial: Partial<AllLootFilterState>) => {
+}: AllLootFilterSidebarProps) {
+  const update = (partial: Partial<AllLootFilterState>) =>
     onFiltersChange({ ...filters, ...partial });
-  };
 
-  const clearAll = () => {
-    onFiltersChange(emptyAllLootFilterState());
-  };
+  if (!facets) {
+    return <p className="ui-panel p-4 text-xs text-ash">Loading filters…</p>;
+  }
 
   return (
-    <div className="space-y-2 border-b border-zinc-700/80 pb-4">
-      <div className="flex gap-2">
-        <input
-          type="search"
-          value={filters.query}
-          onChange={(event) => update({ query: event.target.value })}
-          onKeyDown={(event) => {
-            if (event.key === "Enter") onSearch();
-          }}
-          placeholder="Search name, type, source…"
-          className="h-9 min-w-0 flex-1 rounded-md border border-zinc-600 bg-zinc-900 px-3 text-sm text-zinc-50 placeholder:text-zinc-500 focus:border-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-500/50"
-        />
-        <button
-          type="button"
-          onClick={onSearch}
-          disabled={searching || !facets}
-          className="h-9 shrink-0 rounded-md bg-zinc-100 px-4 text-sm font-medium text-zinc-950 transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {searching ? "…" : "Search"}
-        </button>
-      </div>
-
-      {facets ? (
-        <div className="flex flex-wrap items-center gap-1.5">
-          <FilterDropdown
-            label="Type"
-            groups={buildTypeFilterGroups(facets.types)}
-            selected={filters.types}
-            onChange={(types) => update({ types })}
-          />
-          <FilterDropdown
-            label="Season"
-            options={facets.seasons}
-            selected={filters.seasons}
-            onChange={(seasons) => update({ seasons })}
-            menuClassName="min-w-[14rem]"
-            renderOption={(season) => <SeasonFilterLabel season={season} />}
-            renderSummaryItem={(season) => <SeasonFilterLabel season={season} />}
-          />
-          <FilterDropdown
-            label="Rarity"
-            options={facets.rarities}
-            selected={filters.rarities}
-            onChange={(rarities) => update({ rarities })}
-            renderOption={(rarity) => <RarityFilterLabel rarity={rarity} />}
-            renderSummaryItem={(rarity) => <RarityFilterLabel rarity={rarity} />}
-          />
-          <FilterDropdown
-            label="Class"
-            options={facets.classes}
-            selected={filters.classes}
-            onChange={(classes) => update({ classes })}
-            renderOption={(value) => (
-              <ClassOrWeaponTypeFilterLabel value={value} />
-            )}
-            renderSummaryItem={(value) => (
-              <ClassOrWeaponTypeFilterLabel value={value} />
-            )}
-          />
-          <FilterDropdown
-            label="Weapon type"
-            options={facets.weaponTypes}
-            selected={filters.weaponTypes}
-            onChange={(weaponTypes) => update({ weaponTypes })}
-            renderOption={(value) => (
-              <ClassOrWeaponTypeFilterLabel value={value} />
-            )}
-            renderSummaryItem={(value) => (
-              <ClassOrWeaponTypeFilterLabel value={value} />
-            )}
-          />
-          <FilterDropdown
-            label="Damage"
-            options={facets.damageTypes}
-            selected={filters.damageTypes}
-            onChange={(damageTypes) => update({ damageTypes })}
-            renderOption={(damageType) => (
-              <DamageTypeFilterLabel damageType={damageType} />
-            )}
-            renderSummaryItem={(damageType) => (
-              <DamageTypeFilterLabel damageType={damageType} />
-            )}
-          />
-          <FilterDropdown
-            label="Weapon slot"
-            options={facets.weaponSlots}
-            selected={filters.weaponSlots}
-            onChange={(weaponSlots) => update({ weaponSlots })}
-          />
-          <FilterDropdown
-            label="Armor slot"
-            options={facets.gearSlots}
-            selected={filters.gearSlots}
-            onChange={(gearSlots) => update({ gearSlots })}
-            renderOption={(slot) => <ArmorSlotFilterLabel slot={slot} />}
-            renderSummaryItem={(slot) => <ArmorSlotFilterLabel slot={slot} />}
-          />
-          <ObtainableFilter
-            value={filters.obtainable}
-            onChange={(obtainable) => update({ obtainable })}
-          />
-          <CollectedFilter
-            value={filters.collected}
-            onChange={(collected) => update({ collected })}
-            disabled={!ownershipFilterEnabled}
-          />
-
-          {showClear ? (
-            <button
-              type="button"
-              onClick={clearAll}
-              className="px-1 text-xs text-zinc-400 transition hover:text-zinc-200"
-            >
-              Clear
-            </button>
-          ) : null}
-        </div>
-      ) : (
-        <p className="text-xs text-zinc-500">Loading filters…</p>
-      )}
-    </div>
+    <aside aria-label="Filters" className="ui-panel px-3.5 py-0.5">
+      <FilterGroup
+        label="Type"
+        groups={buildTypeFilterGroups(facets.types)}
+        selected={filters.types}
+        onChange={(types) => update({ types })}
+      />
+      <FilterGroup
+        label="Season"
+        options={facets.seasons}
+        selected={filters.seasons}
+        onChange={(seasons) => update({ seasons })}
+        renderOption={(season) => <SeasonFilterLabel season={season} />}
+        searchable
+      />
+      <FilterGroup
+        label="Rarity"
+        options={facets.rarities}
+        selected={filters.rarities}
+        onChange={(rarities) => update({ rarities })}
+        renderOption={(rarity) => <RarityFilterLabel rarity={rarity} />}
+      />
+      <FilterGroup
+        label="Weapon type"
+        options={facets.weaponTypes}
+        selected={filters.weaponTypes}
+        onChange={(weaponTypes) => update({ weaponTypes })}
+        renderOption={(value) => <ClassOrWeaponTypeFilterLabel value={value} />}
+        searchable
+      />
+      <FilterGroup
+        label="Class"
+        options={facets.classes}
+        selected={filters.classes}
+        onChange={(classes) => update({ classes })}
+        renderOption={(value) => <ClassOrWeaponTypeFilterLabel value={value} />}
+      />
+      <FilterGroup
+        label="Damage"
+        options={facets.damageTypes}
+        selected={filters.damageTypes}
+        onChange={(damageTypes) => update({ damageTypes })}
+        renderOption={(damageType) => <DamageTypeFilterLabel damageType={damageType} />}
+      />
+      <FilterGroup
+        label="Weapon slot"
+        options={facets.weaponSlots}
+        selected={filters.weaponSlots}
+        onChange={(weaponSlots) => update({ weaponSlots })}
+      />
+      <FilterGroup
+        label="Armor slot"
+        options={facets.gearSlots}
+        selected={filters.gearSlots}
+        onChange={(gearSlots) => update({ gearSlots })}
+        renderOption={(slot) => <ArmorSlotFilterLabel slot={slot} />}
+      />
+      <TriStateFilter
+        label="Obtainable"
+        value={filters.obtainable}
+        onChange={(obtainable) => update({ obtainable })}
+      />
+      <TriStateFilter
+        label="Collected"
+        value={filters.collected}
+        onChange={(collected) => update({ collected })}
+        disabled={!ownershipFilterEnabled}
+      />
+    </aside>
   );
 }
-
-// Re-export for any external usage
-export { FilterDropdown as MultiFilterDropdown };
-export { FilterDropdown as GroupedMultiFilterDropdown };

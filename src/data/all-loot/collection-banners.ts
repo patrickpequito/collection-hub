@@ -13,7 +13,7 @@ export const ALL_LOOT_COLLECTION_BANNERS: AllLootCollectionBanner[] = [
   },
   {
     title: "RAD Loot",
-    href: "/rad-loot",
+    href: "/activities",
     imageFile: "rad-loot.webp",
   },
   {
@@ -43,12 +43,12 @@ export const ALL_LOOT_COLLECTION_BANNERS: AllLootCollectionBanner[] = [
   },
   {
     title: "PvE Activities",
-    href: "/pve-activities",
+    href: "/activities#playlists",
     imageFile: "pve-activities.webp",
   },
   {
     title: "PvP Activities",
-    href: "/pvp-activities",
+    href: "/activities#playlists",
     imageFile: "pvp-activities.webp",
   },
   {

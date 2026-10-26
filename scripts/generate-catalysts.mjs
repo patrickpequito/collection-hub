@@ -68,14 +68,15 @@ async function loadManifestTables() {
     await fetchJson("/Platform/Destiny2/Manifest/")
   ).Response.jsonWorldComponentContentPaths.en;
 
-  const [items, plugSets, collectibles, records] = await Promise.all([
+  const [items, plugSets, collectibles, records, objectives] = await Promise.all([
     fetchJson(manifest.DestinyInventoryItemDefinition),
     fetchJson(manifest.DestinyPlugSetDefinition),
     fetchJson(manifest.DestinyCollectibleDefinition),
     fetchJson(manifest.DestinyRecordDefinition),
+    fetchJson(manifest.DestinyObjectiveDefinition),
   ]);
 
-  return { items, plugSets, collectibles, records };
+  return { items, plugSets, collectibles, records, objectives };
 }
 
 function collectSocketPlugHashes(socket, plugSets) {
@@ -151,14 +152,6 @@ function pickCatalystIcon(socketPlug, defs, weaponItem) {
   return GENERIC_CATALYST_ICON;
 }
 
-function pickCanonicalHash(defs) {
-  return String(
-    defs.reduce(
-      (min, d) => (d.hash < min ? d.hash : min),
-      defs[0]?.hash ?? 0,
-    ),
-  );
-}
 
 function findRecordHash(records, catalystName) {
   const record = Object.values(records).find(
@@ -167,43 +160,118 @@ function findRecordHash(records, catalystName) {
   return record ? String(record.hash) : undefined;
 }
 
-function buildCatalystCatalog(items, plugSets, collectibles, records) {
-  const byName = new Map();
+/** Objectives on the catalyst record (e.g. "Targets defeated" × 500). */
+function recordObjectives(records, objectives, recordHash) {
+  const record = recordHash ? records[recordHash] : null;
+  return (record?.objectiveHashes ?? [])
+    .map((hash) => objectives[String(hash)])
+    .filter(Boolean)
+    .map((objective) => ({
+      objectiveHash: String(objective.hash),
+      description: objective.progressDescription || "",
+      completionValue: objective.completionValue ?? 1,
+    }));
+}
+
+/** What the catalyst does — the plug's own text, else its first perk's. */
+function catalystDescription(plug, items) {
+  const own = plug?.displayProperties?.description?.trim();
+  if (own) return own;
+  for (const perk of plug?.perks ?? []) {
+    const perkItem = items[String(perk.perkHash)];
+    const text = perkItem?.displayProperties?.description?.trim();
+    if (text) return text;
+  }
+  return "";
+}
+
+/** The catalyst socket holds an "Empty Catalyst Socket" plug (empty exotic masterwork). */
+function isEmptyCatalystPlug(plug) {
+  const id = plug?.plug?.plugCategoryIdentifier ?? "";
+  return id.includes("empty.exotic.masterwork") || plug?.displayProperties?.name === "Empty Catalyst Socket";
+}
+
+function isCatalystOption(plug) {
+  if (!plug?.plug || isEmptyCatalystPlug(plug)) return false;
+  const id = plug.plug.plugCategoryIdentifier ?? "";
+  if (id.includes("trackers") || id.includes("skins")) return false;
+  const name = plug.displayProperties?.name ?? "";
+  return Boolean(name) && !name.startsWith("Empty");
+}
+
+/**
+ * Every catalyst for every exotic weapon. Since Monument of Triumph names vary
+ * ("X Catalyst", the weapon's own name, perk names, "… Refit") and some
+ * weapons offer several, so we read the weapon's catalyst socket directly.
+ */
+function buildCatalystCatalog(items, plugSets, collectibles, records, objectives, perks) {
+  const byKey = new Map();
 
   for (const item of Object.values(items)) {
-    if (item.inventory?.tierTypeName !== "Exotic" || item.itemType !== 3) {
-      continue;
-    }
-
+    if (item.inventory?.tierTypeName !== "Exotic" || item.itemType !== 3) continue;
     const weaponSlot = WEAPON_BUCKET_TO_SLOT[item.inventory?.bucketTypeHash];
     if (!weaponSlot) continue;
 
     const weaponName = item.displayProperties?.name ?? "Unknown";
-    const weaponSource =
-      collectibles[String(item.collectibleHash)]?.sourceString ?? "";
+    const weaponSource = collectibles[String(item.collectibleHash)]?.sourceString ?? "";
 
     for (const socket of item.sockets?.socketEntries ?? []) {
-      for (const plugHash of collectSocketPlugHashes(socket, plugSets)) {
-        const plug = items[String(plugHash)];
-        const catalystName = plug?.displayProperties?.name ?? "";
-        if (!catalystName.endsWith(" Catalyst")) continue;
+      const plugHashes = collectSocketPlugHashes(socket, plugSets);
+      if (socket.singleInitialItemHash) plugHashes.add(socket.singleInitialItemHash);
+      const plugs = [...plugHashes].map((hash) => items[String(hash)]).filter(Boolean);
+      // Newer weapons: socket with an empty catalyst plug → every option in it.
+      // Older weapons: only plugs literally named "… Catalyst".
+      const options = plugs.some(isEmptyCatalystPlug)
+        ? plugs.filter(isCatalystOption)
+        : plugs.filter((plug) => plug.displayProperties?.name?.endsWith(" Catalyst"));
 
-        const defs = getAllCatalystDefs(items, catalystName);
-        const alternateItemHashes = [
-          ...new Set(defs.map((d) => String(d.hash))),
-        ].sort((a, b) => Number(a) - Number(b));
-
+      for (const plug of options) {
+        const catalystName = plug.displayProperties.name;
+        const key = `${weaponName}::${catalystName}`;
+        const defs = getAllCatalystDefs(items, catalystName).filter((def) => def.plug);
+        const alternateItemHashes = [...new Set([String(plug.hash), ...defs.map((d) => String(d.hash))])].sort(
+          (x, y) => Number(x) - Number(y),
+        );
         const coll = collectibles[String(plug.collectibleHash)];
         const source =
           coll?.sourceString ??
-          (weaponSource
-            ? `Catalyst for ${weaponName}. ${weaponSource}`
-            : `Catalyst for ${weaponName}.`);
-
-        const recordHash = findRecordHash(records, catalystName);
+          (weaponSource ? `Catalyst for ${weaponName}. ${weaponSource}` : `Catalyst for ${weaponName}.`);
+        // Records only exist for classic "<Weapon> Catalyst" catalysts.
+        const recordHash = catalystName.endsWith(" Catalyst")
+          ? findRecordHash(records, catalystName)
+          : undefined;
+        const plugObjectives = (plug.objectives?.objectiveHashes ?? [])
+          .map((hash) => objectives[String(hash)])
+          .filter(Boolean)
+          .map((objective) => ({
+            objectiveHash: String(objective.hash),
+            description: objective.progressDescription || "",
+            completionValue: objective.completionValue ?? 1,
+          }));
+        // The plug carries the live kill counter; fall back to the record's objective text.
+        const objectiveList = plugObjectives.length
+          ? plugObjectives
+          : recordObjectives(records, objectives, recordHash);
+        // What the catalyst does: its displayable perk (name + icon + text), else
+        // the plug's own text when it isn't Bungie's generic masterwork blurb.
+        const perkDef = (plug.perks ?? [])
+          .map((perk) => perks?.[String(perk.perkHash)])
+          .find((perk) => perk?.isDisplayable && perk.displayProperties?.description?.trim());
+        const ownText = catalystDescription(plug, items);
+        const generic = /^Upgrades this weapon to a Masterwork/i.test(ownText);
+        const effect = perkDef
+          ? {
+              name: perkDef.displayProperties.name || catalystName,
+              description: perkDef.displayProperties.description.trim(),
+              iconPath: perkDef.displayProperties.icon || plug.displayProperties?.icon || "",
+            }
+          : ownText && !generic
+            ? { name: catalystName, description: ownText, iconPath: plug.displayProperties?.icon || "" }
+            : null;
+        const description = ownText;
 
         const entry = {
-          itemHash: pickCanonicalHash(defs),
+          itemHash: String(plug.hash),
           name: catalystName,
           iconPath: pickCatalystIcon(plug, defs, item),
           source,
@@ -211,27 +279,37 @@ function buildCatalystCatalog(items, plugSets, collectibles, records) {
           weaponName,
           weaponHash: String(item.hash),
           ...(recordHash ? { recordHash } : {}),
+          ...(objectiveList.length ? { objectives: objectiveList } : {}),
+          ...(description ? { description } : {}),
+          ...(effect ? { effect } : {}),
           alternateItemHashes,
         };
 
-        const existing = byName.get(catalystName);
-        if (
-          !existing ||
-          Number(entry.itemHash) < Number(existing.itemHash)
-        ) {
-          byName.set(catalystName, entry);
+        const existing = byKey.get(key);
+        if (existing) {
+          existing.alternateItemHashes = [
+            ...new Set([...existing.alternateItemHashes, ...alternateItemHashes]),
+          ].sort((x, y) => Number(x) - Number(y));
+          if (Number(item.hash) < Number(existing.weaponHash)) existing.weaponHash = String(item.hash);
+        } else {
+          byKey.set(key, entry);
         }
       }
     }
   }
 
-  return [...byName.values()].sort((a, b) => a.name.localeCompare(b.name));
+  return [...byKey.values()].sort(
+    (x, y) => x.weaponName.localeCompare(y.weaponName) || x.name.localeCompare(y.name),
+  );
 }
 
 async function main() {
   console.log("Loading Bungie manifest…");
-  const { items, plugSets, collectibles, records } = await loadManifestTables();
-  const itemsList = buildCatalystCatalog(items, plugSets, collectibles, records);
+  const { items, plugSets, collectibles, records, objectives } = await loadManifestTables();
+  const manifest = (await fetchJson("/Platform/Destiny2/Manifest/")).Response
+    .jsonWorldComponentContentPaths.en;
+  const perks = await fetchJson(manifest.DestinySandboxPerkDefinition);
+  const itemsList = buildCatalystCatalog(items, plugSets, collectibles, records, objectives, perks);
 
   const outDir = resolve(root, "data");
   mkdirSync(outDir, { recursive: true });

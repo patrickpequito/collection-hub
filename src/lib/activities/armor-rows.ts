@@ -1,3 +1,4 @@
+import { collectAllLootItemHashes } from "@/lib/all-loot/item-hashes";
 import { ARMOR_SLOTS, GUARDIAN_CLASSES } from "@/lib/armor-sets/constants";
 import type { ActivityArmorRow, LootItem } from "@/types/activity-loot";
 import type { AllLootItem } from "@/types/all-loot";
@@ -89,14 +90,11 @@ export function buildArmorRowsFromCatalogItems(
         complete = false;
         break;
       }
-      pieces[slot] = toLootItem(
-        item.itemHash,
-        item.name,
-        item.iconPath,
-        item.source,
-        item.type,
-        item.rarity,
-      );
+      // Reissued armor (e.g. Dreambane) keeps older hashes: any version counts as owned.
+      pieces[slot] = {
+        ...toLootItem(item.itemHash, item.name, item.iconPath, item.source, item.type, item.rarity),
+        ownershipHashes: collectAllLootItemHashes(item),
+      };
     }
 
     if (complete) {
@@ -121,14 +119,11 @@ export function buildPartialArmorRowsFromCatalogItems(
     for (const slot of ARMOR_SLOTS) {
       const item = byClassSlot.get(`${guardianClass}::${slot}`);
       if (!item) continue;
-      pieces[slot] = toLootItem(
-        item.itemHash,
-        item.name,
-        item.iconPath,
-        item.source,
-        item.type,
-        item.rarity,
-      );
+      // Reissued armor (e.g. Dreambane) keeps older hashes: any version counts as owned.
+      pieces[slot] = {
+        ...toLootItem(item.itemHash, item.name, item.iconPath, item.source, item.type, item.rarity),
+        ownershipHashes: collectAllLootItemHashes(item),
+      };
     }
 
     if (Object.keys(pieces).length > 0) {

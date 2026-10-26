@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSession } from "@/lib/session";
+import { getFreshSession } from "@/lib/session-access";
 import { resolveDestinyMembership } from "@/lib/destiny-membership";
 import { getBungieApiKey } from "@/lib/env";
 
@@ -12,7 +12,7 @@ type ChecklistMap = Record<string, Record<string, boolean>>;
  * then entry hash. Used for Throne World region chests / lost-sector discovery.
  */
 export async function GET() {
-  const session = await getSession();
+  const session = await getFreshSession();
   if (!session) {
     return NextResponse.json({ checklists: {}, error: "Not signed in" });
   }

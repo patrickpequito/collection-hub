@@ -16,6 +16,7 @@ import {
   VANGUARD_OPS_CURRENT_ARMOR_SETS,
   LEGACY_VANGUARD_CLASS_ITEMS,
   LEGACY_VANGUARD_CROSS_CLASS_SETS,
+  VANGUARD_OPS_WEAPON_POOLS,
 } from "@/data/activities/vanguard-ops";
 import type {
   ActivityCurrentArmorPanel,
@@ -292,6 +293,22 @@ function buildCurrentArmorPanel(
   };
 }
 
+/** Weapons per Vanguard Ops playlist (Solo, Fireteam, Arena, Pinnacle), sorted by name. */
+export async function resolveVanguardOpsWeaponPools(): Promise<{ title: string; items: LootItem[] }[]> {
+  const catalog = await loadAllLootCatalog();
+  const byHash = new Map(catalog.items.map((item) => [item.itemHash, item]));
+  return VANGUARD_OPS_WEAPON_POOLS.map((pool) => ({
+    title: pool.title,
+    items: pool.hashes
+      .flatMap((hash) => {
+        const item = byHash.get(hash);
+        return item ? [item] : [];
+      })
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map(toLootItem),
+  }));
+}
+
 export async function resolveVanguardOpsLoot(): Promise<ResolvedActivityHubLoot> {
   const [lootCatalog, armorCatalog, bonusNames] = await Promise.all([
     loadAllLootCatalog(),
@@ -381,6 +398,7 @@ export async function resolveVanguardOpsLoot(): Promise<ResolvedActivityHubLoot>
 
   const yearOfProphecyArmorGroups = resolveYearOfProphecyArmorGroups(
     lootCatalog.items.filter((item) => item.type === "Armor"),
+    "vanguard-ops",
   );
 
   return {

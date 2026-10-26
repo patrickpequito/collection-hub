@@ -6,6 +6,7 @@ export const PAGE_HEADERS = {
   radLoot: "/images/banners/rad-loot.webp",
   exotics: "/images/banners/exotics.webp",
   shaders: "/images/banners/collections.webp",
+  collections: "/images/banners/collections.webp",
   triumphs: "/images/banners/triumphs.webp",
   armorSets: "/images/banners/armor-sets.webp",
   armorSetsHeader: "/images/headers/armor-sets-header.webp",
@@ -13,6 +14,7 @@ export const PAGE_HEADERS = {
   lootCollectorHeader: "/images/headers/loot-collector-header.webp",
   pvpActivities: "/images/banners/pvp-activities.webp",
   pveActivities: "/images/banners/pve-activities.webp",
+  destinations: "/images/banners/destinations.webp",
 } as const;
 
 export function sectionHeaderUrl(imageFile: string): string {

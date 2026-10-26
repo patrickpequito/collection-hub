@@ -17,7 +17,9 @@ The filename is the **season label slug**: lowercase, no apostrophes, non-alphan
 | File | Season / expansion label |
 |------|--------------------------|
 | `monument-of-triumph.png` | Monument of Triumph |
+| `s28-season-lawless.png` | S28 Season: Lawless |
 | `renegades.png` | Renegades |
+| `s27-season-reclamation.png` | S27 Season: Reclamation |
 | `the-edge-of-fate.png` | The Edge of Fate |
 | `s26-episode-heresy.png` | S26 Episode: Heresy |
 | `s25-episode-revenant.png` | S25 Episode: Revenant |

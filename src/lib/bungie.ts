@@ -14,7 +14,12 @@ export type BungieUserSession = {
   displayName: string;
   accessToken: string;
   refreshToken?: string;
+  /** Access token expiry (Bungie: ~1 hour). */
   expiresAt: number;
+  /** Refresh token expiry (Bungie: ~90 days); the session lives this long. */
+  refreshExpiresAt?: number;
+  /** Bungie.net profile picture path (shown in the navigation). */
+  avatarPath?: string;
 };
 
 type BungieResponse<T> = {
@@ -31,6 +36,7 @@ type CurrentUserResponse = {
     membershipId: number;
     uniqueName: string;
     displayName: string;
+    profilePicturePath?: string;
   };
 };
 
@@ -105,7 +111,7 @@ export async function refreshAccessToken(input: {
 export async function fetchCurrentBungieUser(
   apiKey: string,
   accessToken: string,
-): Promise<{ membershipId: string; displayName: string }> {
+): Promise<{ membershipId: string; displayName: string; avatarPath?: string }> {
   const response = await fetch(
     `${BUNGIE_ORIGIN}/Platform/User/GetMembershipsForCurrentUser/`,
     {
@@ -131,6 +137,7 @@ export async function fetchCurrentBungieUser(
   return {
     membershipId: String(user.membershipId),
     displayName: user.displayName || user.uniqueName,
+    avatarPath: user.profilePicturePath,
   };
 }
 
@@ -144,5 +151,8 @@ export function tokenResponseToSession(
     accessToken: tokens.access_token,
     refreshToken: tokens.refresh_token,
     expiresAt: Date.now() + tokens.expires_in * 1000,
+    refreshExpiresAt: tokens.refresh_expires_in
+      ? Date.now() + tokens.refresh_expires_in * 1000
+      : undefined,
   };
 }

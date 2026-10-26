@@ -8,7 +8,7 @@ import {
 import { groupActivityCosmeticLoot } from "@/lib/activities/cosmetic-loot-sections";
 import { resolveIntroductionSeasonFromItems } from "@/lib/activities/legacy-armor-season";
 import { toLootItemFromCatalog } from "@/lib/activities/loot-item";
-import { groupTrialsWeaponsByReleaseSeason } from "@/lib/activities/trials-weapons-by-season";
+import { groupTrialsWeaponsByAcquisition } from "@/lib/activities/trials-weapons-by-season";
 import { loadAllLootCatalog } from "@/lib/all-loot/search";
 import { loadArmorSetCatalog } from "@/lib/armor-sets/load";
 import {
@@ -441,10 +441,14 @@ export async function resolveTrialsOfOsirisLoot(): Promise<ResolvedActivityHubLo
     toLootItem,
   );
 
+  const weaponsByAcquisition = groupTrialsWeaponsByAcquisition(lootCatalog.items);
+
   return {
     currentArmorRows,
     currentWeaponPools,
-    weaponSeasonGroups: groupTrialsWeaponsByReleaseSeason(lootCatalog.items),
+    vendorExclusiveWeapons: weaponsByAcquisition.vendorExclusive,
+    adeptWeapons: weaponsByAcquisition.adept,
+    currentWeapons: weaponsByAcquisition.legacy,
     currentOtherSections,
     legacyOtherSections,
     legacyArmorGroups,

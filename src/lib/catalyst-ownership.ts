@@ -81,6 +81,12 @@ export async function collectOwnedCatalystHashes(input: {
     input.masterworkWeaponHashes ?? [],
   );
   const owned = new Set<string>();
+  // A masterworked exotic proves its catalyst only when the weapon has just one
+  // (Monument of Triumph weapons offer several options).
+  const catalystsPerWeapon = new Map<string, number>();
+  for (const catalyst of catalog.items) {
+    catalystsPerWeapon.set(catalyst.weaponName, (catalystsPerWeapon.get(catalyst.weaponName) ?? 0) + 1);
+  }
 
   for (const catalyst of catalog.items) {
     const fromRecord =
@@ -88,7 +94,8 @@ export async function collectOwnedCatalystHashes(input: {
     const fromPlug = catalyst.alternateItemHashes.some((hash) =>
       unlockedPlugs.has(hash),
     );
-    const fromMasterwork = masterworkWeapons.has(catalyst.weaponHash);
+    const fromMasterwork =
+      catalystsPerWeapon.get(catalyst.weaponName) === 1 && masterworkWeapons.has(catalyst.weaponHash);
 
     if (!fromRecord && !fromPlug && !fromMasterwork) continue;
 

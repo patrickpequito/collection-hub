@@ -81,11 +81,15 @@ async function main() {
   }
 
   const itemHashToSetHash = {};
+  // Reissued tiered armor gets new hashes; names let older data match too.
+  const itemNameToSetHash = {};
   for (const item of Object.values(items)) {
     if (item.itemType !== 2) continue;
     const setHash = item.equippingBlock?.equipableItemSetHash;
     if (!setHash) continue;
     itemHashToSetHash[String(item.hash)] = String(setHash);
+    const name = item.displayProperties?.name;
+    if (name) itemNameToSetHash[name] = String(setHash);
   }
 
   const outDir = resolve(root, "data");
@@ -94,6 +98,7 @@ async function main() {
     generatedAt: new Date().toISOString(),
     setCount: Object.keys(sets).length,
     itemHashToSetHash,
+    itemNameToSetHash,
     sets,
   };
   writeFileSync(

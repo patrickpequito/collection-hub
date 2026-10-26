@@ -491,15 +491,26 @@ function collectProfileCollectibles(
 export async function fetchOwnedItemHashes(
   session: BungieUserSession,
 ): Promise<Set<string>> {
+  return (await fetchOwnedAndInventoryHashes(session)).owned;
+}
+
+/**
+ * owned = ever acquired (inventory + Collections, expanded to sibling versions);
+ * inventory = exact item hashes on your characters and in the vault right now.
+ */
+export async function fetchOwnedAndInventoryHashes(
+  session: BungieUserSession,
+): Promise<{ owned: Set<string>; inventory: Set<string> }> {
   const membership = await resolveDestinyMembership(session);
 
   if (!membership) {
-    return new Set();
+    return { owned: new Set(), inventory: new Set() };
   }
 
   const profile = await fetchDestinyProfile(session, membership);
 
   const inventoryHashes = collectInventoryHashes(profile);
+  const inventory = new Set(inventoryHashes);
   const collectibles = collectProfileCollectibles(profile);
   const plugHashes = collectUnlockedPlugHashes(profile);
   const catalystHashes = await collectOwnedCatalystHashes({
@@ -513,9 +524,10 @@ export async function fetchOwnedItemHashes(
     inventoryHashes.add(hash);
   }
 
-  return await expandAcquiredItemHashes({
+  const owned = await expandAcquiredItemHashes({
     inventoryHashes,
     collectibles,
     plugHashes,
   });
+  return { owned, inventory };
 }

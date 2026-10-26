@@ -1,3 +1,4 @@
+import { BoxHeading, SectionHeading } from "@/components/detail-page-parts";
 import { CollectionItemIcon } from "@/components/collection-item-icon";
 import type { LootItem } from "@/types/activity-loot";
 
@@ -11,6 +12,11 @@ type LootItemGridProps = {
   exoticItemHashes?: Set<string>;
   weaponHrefs?: Record<string, string>;
   itemHrefs?: Record<string, string>;
+  /**
+   * Icons stretch slightly (52–62px) so each row fills the box edge to edge
+   * instead of leaving a gap where a whole column does not fit.
+   */
+  fill?: boolean;
 };
 
 export function LootItemGrid({
@@ -22,6 +28,7 @@ export function LootItemGrid({
   exoticItemHashes,
   weaponHrefs,
   itemHrefs,
+  fill = false,
 }: LootItemGridProps) {
   const hrefs = itemHrefs ?? weaponHrefs;
   const isOwned = (itemHash: string) => {
@@ -33,9 +40,15 @@ export function LootItemGrid({
     return hashes.some((hash) => ownedItemHashes.has(hash));
   };
   return (
-    <div className="flex flex-wrap gap-1.5">
+    <div
+      className={
+        fill ? "grid grid-cols-[repeat(auto-fill,minmax(3.25rem,1fr))] gap-1.5" : "flex flex-wrap gap-1.5"
+      }
+    >
       {items.map((item) => (
         <CollectionItemIcon
+          fluid={fill}
+          fillCell={fill}
           key={item.itemHash}
           name={item.name}
           iconPath={item.iconPath}
@@ -52,6 +65,7 @@ export function LootItemGrid({
           href={hrefs?.[item.itemHash]}
           ornamentOverlay={item.itemType === "Ornament"}
           rarity={item.rarity}
+          itemType={item.itemType}
         />
       ))}
     </div>
@@ -82,19 +96,49 @@ export function LootSection({
   itemHrefs,
 }: LootSectionProps) {
   return (
-    <section className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
-      <h2 className="mb-4 border-b border-zinc-800 pb-3 text-lg font-semibold text-zinc-100">
-        {title}
-      </h2>
+    <section>
+      <SectionHeading title={title} />
+      <div className="border border-hairline bg-panel/85 p-4">
+        <LootItemGrid
+          items={items}
+          ownedItemHashes={ownedItemHashes}
+          showOwnership={showOwnership}
+          resolveItemOwned={resolveItemOwned}
+          ownedBorder={ownedBorder}
+          exoticItemHashes={exoticItemHashes}
+          itemHrefs={itemHrefs ?? weaponHrefs}
+        />
+      </div>
+    </section>
+  );
+}
+
+/** One block inside a section (like Emblems / Weapons): title, owned count and icons. */
+export function LootBox({
+  title,
+  items,
+  ownedItemHashes,
+  showOwnership,
+  itemHrefs,
+  fill = false,
+}: Pick<LootSectionProps, "items" | "ownedItemHashes" | "showOwnership" | "itemHrefs"> & {
+  title: string;
+  /** Icons stretch so rows fill the box (see LootItemGrid). */
+  fill?: boolean;
+}) {
+  const owned = items.filter((item) =>
+    (item.ownershipHashes?.length ? item.ownershipHashes : [item.itemHash]).some((hash) => ownedItemHashes.has(hash)),
+  ).length;
+  return (
+    <div className="min-w-0 space-y-3 overflow-hidden border border-hairline bg-panel/85 p-3 sm:p-4">
+      <BoxHeading title={title} note={showOwnership ? `${owned} / ${items.length}` : items.length} />
       <LootItemGrid
         items={items}
         ownedItemHashes={ownedItemHashes}
         showOwnership={showOwnership}
-        resolveItemOwned={resolveItemOwned}
-        ownedBorder={ownedBorder}
-        exoticItemHashes={exoticItemHashes}
-        itemHrefs={itemHrefs ?? weaponHrefs}
+        itemHrefs={itemHrefs}
+        fill={fill}
       />
-    </section>
+    </div>
   );
 }

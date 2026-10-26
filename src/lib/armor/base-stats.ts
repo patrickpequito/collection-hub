@@ -40,6 +40,25 @@ export function resolveIsArmor30ForHash(
   );
 }
 
+/** Prefer the Armor 3.0 remaster hash when present (set bonuses / default version). */
+export function resolvePreferredArmorItemHash(armor: AllLootItem): string {
+  const byHash = armor.isArmor30ByItemHash;
+  if (byHash) {
+    const armor30Hash = Object.entries(byHash).find(
+      ([, is30]) => is30 === true,
+    )?.[0];
+    if (armor30Hash) {
+      if (armor.itemHash === armor30Hash) return armor30Hash;
+      if (armor.versions?.some((version) => version.itemHash === armor30Hash)) {
+        return armor30Hash;
+      }
+      return armor30Hash;
+    }
+  }
+  if (armor.isArmor30) return armor.itemHash;
+  return armor.itemHash;
+}
+
 export function resolveManifestInvestmentStats(
   armor: AllLootItem,
   itemHash: string,

@@ -23,7 +23,7 @@ export type IronBannerWindow = {
 };
 
 export function ironBannerWindowFor(nowMs: number): IronBannerWindow {
-  let n = Math.floor(
+  const n = Math.floor(
     (nowMs - IRON_BANNER_BLACKOUT_ANCHOR_MS) / MS_FOUR_WEEKS,
   );
   let startMs = IRON_BANNER_BLACKOUT_ANCHOR_MS + n * MS_FOUR_WEEKS;

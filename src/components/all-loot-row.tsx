@@ -14,6 +14,7 @@ import {
   weaponAmmoLabel,
 } from "@/lib/weapon-slot-icon";
 import { weaponPageHref } from "@/lib/weapons/paths";
+import { armorSlotIconPath } from "@/lib/armor-slot-icon";
 import { armorPageHref } from "@/lib/armor/paths";
 import type { AllLootItem, AllLootItemVersion } from "@/types/all-loot";
 import { resolveVersionDisplayLabel, dedupeVersionsForDisplay } from "@/lib/all-loot/season-badges";
@@ -327,20 +328,20 @@ export function AllLootRow({ item, owned, showOwnership }: AllLootRowProps) {
 
   const ownedStyles =
     showOwnership && owned
-      ? "ring-1 ring-[rgb(255,188,0)] shadow-[0_0_4px_rgba(255,188,0,0.35)]"
+      ? "outline outline-2 outline-owned"
       : showOwnership && !owned
         ? "opacity-75 saturate-75"
         : "";
 
   const rowClass = isItemLink
-    ? "group -mx-2 cursor-pointer rounded-md px-2 transition-[background-color,box-shadow] duration-200 hover:bg-zinc-800/90 hover:shadow-[inset_3px_0_0_0_rgba(251,191,36,0.55)]"
+    ? "group -mx-2 cursor-pointer px-2 transition-[background-color,box-shadow] duration-200 hover:bg-white/[0.04] hover:shadow-[inset_3px_0_0_0_rgba(233,231,226,0.7)]"
     : "";
 
   const nameClass = [
     "truncate text-xs font-semibold text-zinc-100 sm:text-sm",
     hasVersions &&
       "underline decoration-zinc-700 decoration-dotted underline-offset-2",
-    isItemLink && "transition-colors duration-200 group-hover:text-amber-200",
+    isItemLink && "transition-colors duration-200 group-hover:text-white",
   ]
     .filter(Boolean)
     .join(" ");
@@ -429,6 +430,111 @@ export function AllLootResultsHeader() {
       >
         Obt.
       </span>
+    </div>
+  );
+}
+
+function MetaIcon({ src, label, invert = true, className = "h-3.5 w-5" }: {
+  src: string | null;
+  label: string;
+  invert?: boolean;
+  className?: string;
+}) {
+  return (
+    <span className="inline-flex min-w-0 items-center gap-1.5">
+      {src ? (
+        // eslint-disable-next-line @next/next/no-img-element -- local SVG icons
+        <img
+          src={src}
+          alt=""
+          aria-hidden
+          className={`shrink-0 object-contain ${invert ? "brightness-0 invert opacity-85" : ""} ${className}`}
+        />
+      ) : null}
+      <span className="truncate">{label}</span>
+    </span>
+  );
+}
+
+/** Grid view card: icon, name, source and the weapon / armor meta as icons. */
+export function AllLootGridCard({ item, owned, showOwnership }: AllLootRowProps) {
+  const pathname = usePathname();
+  const href =
+    item.type === "Weapon" && item.slug
+      ? weaponPageHref(item.slug, pathname)
+      : item.type === "Armor" && item.slug
+        ? armorPageHref(item.slug, pathname)
+        : null;
+  const damageIcon = damageTypeIconPath(item.damageType);
+
+  let meta: React.ReactNode;
+  if (item.type === "Weapon") {
+    meta = (
+      <>
+        {item.classOrWeaponType ? (
+          <MetaIcon src={classOrWeaponTypeIconPath(item.classOrWeaponType)} label={item.classOrWeaponType} />
+        ) : null}
+        {damageIcon ? (
+          <Image
+            src={bungieIconUrl(damageIcon)}
+            alt={item.damageType ?? ""}
+            title={item.damageType ?? undefined}
+            width={14}
+            height={14}
+            className="size-3.5 shrink-0 object-contain"
+            unoptimized
+          />
+        ) : null}
+        {item.slot ? (
+          <MetaIcon src={weaponAmmoIconPath(item.ammoType)} label={item.slot} invert={false} className="size-3.5" />
+        ) : null}
+      </>
+    );
+  } else if (item.type === "Armor") {
+    meta = (
+      <>
+        {item.classOrWeaponType ? (
+          <MetaIcon
+            src={classOrWeaponTypeIconPath(item.classOrWeaponType)}
+            label={item.classOrWeaponType}
+            className="size-3.5"
+          />
+        ) : null}
+        {item.slot ? <MetaIcon src={armorSlotIconPath(item.slot)} label={item.slot} invert={false} className="size-3.5" /> : null}
+      </>
+    );
+  } else {
+    meta = <span>{item.classOrWeaponType ? `${item.type} · ${item.classOrWeaponType}` : item.type}</span>;
+  }
+
+  const body = (
+    <>
+      <span
+        className={`shrink-0 ${
+          showOwnership && owned ? "outline outline-2 outline-owned" : showOwnership ? "opacity-75 saturate-75" : ""
+        }`}
+      >
+        <ItemIconWithSeasonBadge iconPath={item.iconPath} seasonIconPath={item.seasonIconPath} className="[&_img:first-child]:size-16!" />
+      </span>
+      <span className="flex min-w-0 flex-col gap-1">
+        <span className="truncate text-[15px] font-medium text-bone">{item.name}</span>
+        <span className="truncate text-xs text-ash">{item.seasonLabel}</span>
+        <span className="mt-1 flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-bone/75">
+          {meta}
+        </span>
+      </span>
+    </>
+  );
+
+  const className = "flex min-w-0 gap-3 border border-l-[3px] border-hairline bg-panel/85 p-2.5 transition";
+  const style = { borderLeftColor: itemRarityColor(item.rarity) };
+  return href ? (
+    <Link href={href} className={`${className} hover:border-bone`} style={style}>
+      {body}
+    </Link>
+  ) : (
+    <div className={className} style={style}>
+      {body}
     </div>
   );
 }

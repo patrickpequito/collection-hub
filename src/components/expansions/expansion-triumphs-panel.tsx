@@ -5,6 +5,7 @@ import {
   useProfileRecordInstances,
   useProfileStringVariables,
 } from "@/components/profile-progress-provider";
+import { SectionHeading } from "@/components/detail-page-parts";
 import { TitleDetailPanel } from "@/components/title-detail-panel";
 import { TriumphGroupView } from "@/components/triumph-group-view";
 import { TriumphsListSection } from "@/components/triumphs-list-section";
@@ -24,6 +25,8 @@ type ExpansionTriumphsPanelProps = {
   title: TitleEntry | null;
   triumphGroup: TriumphGroup | null;
   triumphsGroupTitle: string;
+  /** Tile columns next to the title panel (2 on narrower pages that want a denser list). */
+  titleColumns?: 1 | 2;
 };
 
 function CollapsibleBlock({
@@ -38,19 +41,21 @@ function CollapsibleBlock({
   const [open, setOpen] = useState(defaultOpen);
 
   return (
-    <section className="min-w-0 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/40">
-      <button
-        type="button"
-        className="flex w-full items-center justify-between gap-3 px-3 py-3 text-left sm:px-4"
-        onClick={() => setOpen((value) => !value)}
-        aria-expanded={open}
-      >
-        <h2 className="text-lg font-semibold text-zinc-100">{title}</h2>
-        <span className="text-xs font-medium uppercase tracking-wide text-zinc-500">
-          {open ? "Hide" : "Show"}
-        </span>
-      </button>
-      {open ? <div className="border-t border-zinc-800 p-3 sm:p-4">{children}</div> : null}
+    <section className="min-w-0">
+      <SectionHeading
+        title={title}
+        note={
+          <button
+            type="button"
+            className="transition hover:text-bone"
+            onClick={() => setOpen((value) => !value)}
+            aria-expanded={open}
+          >
+            {open ? "Hide" : "Show"}
+          </button>
+        }
+      />
+      {open ? <div className="min-w-0 overflow-hidden border border-hairline bg-panel/85 p-3 sm:p-4">{children}</div> : null}
     </section>
   );
 }
@@ -59,6 +64,7 @@ export function ExpansionTriumphsPanel({
   title,
   triumphGroup,
   triumphsGroupTitle,
+  titleColumns = 1,
 }: ExpansionTriumphsPanelProps) {
   const signedIn = useSignedIn();
   const hydratedInstances = useProfileRecordInstances();
@@ -94,21 +100,14 @@ export function ExpansionTriumphsPanel({
   return (
     <div className="space-y-6">
       {title ? (
-        <CollapsibleBlock
-          title={
-            title.guardianTitle
-              ? `Title // ${title.guardianTitle}`
-              : "Title"
-          }
-          defaultOpen
-        >
-          <div className="grid min-w-0 gap-8 lg:grid-cols-2">
-            <TriumphsListSection
-              heading="Title triumphs"
-              records={title.records}
-              recordInstances={signedIn ? hydratedInstances : undefined}
-              stringVariables={signedIn ? hydratedVariables : undefined}
-            />
+        <section className="min-w-0">
+        <SectionHeading
+          title={title.guardianTitle ? `Triumphs · ${title.guardianTitle}` : "Triumphs"}
+          note={signedIn ? `${titleProgress.base.completed} / ${titleProgress.base.total}` : `${titleProgress.base.total} triumphs`}
+          noteGold={signedIn && titleProgress.base.total > 0 && titleProgress.base.completed >= titleProgress.base.total}
+        />
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:items-start">
+          <div className="ui-panel p-5 lg:sticky lg:top-20">
             <TitleDetailPanel
               name={title.name}
               guardianTitle={title.guardianTitle}
@@ -120,7 +119,20 @@ export function ExpansionTriumphsPanel({
               titleTier={titleTier}
             />
           </div>
-        </CollapsibleBlock>
+          <TriumphsListSection
+            heading={null}
+            columns={titleColumns}
+            records={title.records}
+            titleRecordHashes={
+              gildingRecords.length > 0
+                ? splitTitleRecords(title.records).baseRecords.map((record) => record.recordHash)
+                : undefined
+            }
+            recordInstances={signedIn ? hydratedInstances : undefined}
+            stringVariables={signedIn ? hydratedVariables : undefined}
+          />
+        </div>
+        </section>
       ) : null}
 
       {triumphGroup ? (

@@ -9,6 +9,8 @@ export type ProfileCacheSnapshot = {
   membershipId: string;
   syncedAt: number;
   ownedItemHashes: string[];
+  /** Exact hashes on characters / in the vault (no Collections). */
+  inventoryItemHashes?: string[];
   recordInstances: Record<string, RecordInstance>;
   stringVariables: TriumphStringVariables;
   activityCompletions: Record<string, number>;
@@ -78,6 +80,7 @@ export function emptyProfileCacheSnapshot(
     membershipId,
     syncedAt: 0,
     ownedItemHashes: [],
+    inventoryItemHashes: [],
     recordInstances: {},
     stringVariables: EMPTY_TRIUMPH_STRING_VARIABLES,
     activityCompletions: {},
@@ -112,6 +115,7 @@ export function mergeProfileCache(
     recordInstances: patch.recordInstances ?? current.recordInstances,
     stringVariables: patch.stringVariables ?? current.stringVariables,
     ownedItemHashes: patch.ownedItemHashes ?? current.ownedItemHashes,
+    inventoryItemHashes: patch.inventoryItemHashes ?? current.inventoryItemHashes,
     syncedAt: Date.now(),
   };
 }

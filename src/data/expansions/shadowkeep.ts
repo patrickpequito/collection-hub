@@ -14,6 +14,7 @@ export const SHADOWKEEP_HUB: ExpansionHub = {
   seasonLabels: ["Shadowkeep"],
   seasonIconHashes: ["a15754752f40aaf7b1b00aadb70a8f35"],
   seasonNumber: 8,
+  showEververseCosmetics: true,
   destinationArmorSetNames: ["Dreambane"],
   destinationArmorPreviewFiles: ["dreambane.webp"],
   destinationTitle: "Destination // The Moon",

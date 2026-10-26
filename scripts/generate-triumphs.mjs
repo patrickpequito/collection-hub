@@ -17,6 +17,9 @@ const TRIUMPH_ROOT_HASH = "1866538467";
 /** Current playable titles (not legacy). */
 const TITLE_ROOT_HASH = "616318467";
 
+/** Legacy titles — vaulted seasons / expansions, no longer obtainable. */
+const LEGACY_TITLE_ROOT_HASH = "1881970629";
+
 function loadEnv() {
   try {
     const raw = readFileSync(resolve(root, ".env.local"), "utf8");
@@ -349,10 +352,33 @@ const titles = collectTitles(
   items,
 );
 
+// Legacy seals: skip seasonal copies of titles that are still current (Conqueror, Flawless).
+const currentTitleNames = new Set(titles.map((title) => title.guardianTitle));
+const seenLegacy = new Set();
+const legacyTitles = collectTitles(
+  LEGACY_TITLE_ROOT_HASH,
+  presentationNodes,
+  records,
+  objectives,
+  items,
+)
+  .filter((title) => {
+    const key = title.guardianTitle ?? title.name;
+    if (currentTitleNames.has(key) || seenLegacy.has(key)) return false;
+    seenLegacy.add(key);
+    return true;
+  })
+  .map((title) => ({
+    ...title,
+    slug: `legacy-${slugify(title.guardianTitle ?? title.name)}`,
+    isLegacy: true,
+  }));
+
 const output = {
   generatedAt: new Date().toISOString(),
   groups,
   titles,
+  legacyTitles,
 };
 
 mkdirSync(resolve(root, "data"), { recursive: true });
@@ -362,5 +388,5 @@ writeFileSync(
 );
 
 console.log(
-  `Wrote ${groups.length} triumph groups and ${titles.length} titles to data/triumphs.json`,
+  `Wrote ${groups.length} triumph groups, ${titles.length} titles and ${legacyTitles.length} legacy titles to data/triumphs.json`,
 );

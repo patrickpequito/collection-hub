@@ -19,6 +19,8 @@ export type ShaderCatalogItem = LootItem & {
   acquisitionLabel: string;
   /** Specific raid / dungeon when acquisitionLabel is Raids or Dungeons. */
   acquisitionDetail?: string;
+  /** Still earnable in the game today. */
+  obtainable: boolean;
 };
 
 export type ShaderSubgroup = {
@@ -93,6 +95,7 @@ export function buildShaderCatalogItems(
       seasonLabel: resolveShaderSectionLabel(shader),
       acquisitionLabel: acquisition.category,
       acquisitionDetail: acquisition.detail,
+      obtainable: shader.obtainable,
     };
   });
 }
@@ -102,6 +105,7 @@ function toLootItem(item: ShaderCatalogItem): LootItem {
     seasonLabel: _seasonLabel,
     acquisitionLabel: _acquisitionLabel,
     acquisitionDetail: _acquisitionDetail,
+    obtainable: _obtainable,
     ...loot
   } = item;
   return loot;

@@ -61,10 +61,10 @@ export const SEASONS_BY_EXPANSION_SLUG: Readonly<
     publishedSeason("s15-season-of-the-lost", "Season of the Lost"),
   ],
   "the-witch-queen": [
-    season("s16-season-of-the-risen", "Season of the Risen"),
-    season("s17-season-of-the-haunted", "Season of the Haunted"),
-    season("s18-season-of-plunder", "Season of Plunder"),
-    season("s19-season-of-the-seraph", "Season of the Seraph"),
+    publishedSeason("s16-season-of-the-risen", "Season of the Risen"),
+    publishedSeason("s17-season-of-the-haunted", "Season of the Haunted"),
+    publishedSeason("s18-season-of-plunder", "Season of Plunder"),
+    publishedSeason("s19-season-of-the-seraph", "Season of the Seraph"),
   ],
   // Lightfall year slots: Defiance, Deep, Wish, Into the Light
   // (Season of the Witch omitted from this index layout).

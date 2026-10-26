@@ -159,6 +159,7 @@ for (const item of Object.values(items)) {
   if (hasItem) withItemSeason++;
   if (hasCol || hasItem) withEither++;
 }
+console.log("SEASON_HASH_COVERAGE", { withColSeason, withItemSeason, withEither });
 console.log("ARCHIVE_JSON", JSON.stringify(archiveItems));
 
 for (const target of ["Jötunn", "Dream Breaker", "Witherhoard", "Izanagi's Burden"]) {

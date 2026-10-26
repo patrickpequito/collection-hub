@@ -9,8 +9,6 @@ function item(
   return { itemHash, name, iconPath, source };
 }
 
-const RON_SOURCE = 'Source: "Root of Nightmares" Raid';
-
 export const rootOfNightmaresLoot: ActivityLootPage = {
   slug: "root-of-nightmares",
   title: "Root of Nightmares",

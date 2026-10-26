@@ -1,6 +1,8 @@
 /** Mirrors scripts/all-loot-mappings.mjs — icon watermark is the season label source of truth. */
 
 export const MONUMENT_OF_TRIUMPH_LABEL = "Monument of Triumph";
+export const RECLAMATION_LABEL = "S27 Season: Reclamation";
+export const LAWLESS_LABEL = "S28 Season: Lawless";
 
 export const MANIFEST_CHAPTER_LABEL: Record<number, string> = {
   1: "Red War",
@@ -48,8 +50,6 @@ export const WATERMARK_EVENT_LABELS: Record<string, string> = {
   "50c3ebe414c6946429934d79504922fa.png": "Solstice",
   "2b89827888c5581a14af976968bcb18a.png": "Pride",
 };
-const RENEGADES_ARMOR_CHAPTER_WATERMARK =
-  "4376a7d734583ae347acf9732aa3bb43.png";
 
 /**
  * Season watermarks missing from the partial DIM map bundled in-app.
@@ -61,7 +61,7 @@ export const EXTRA_WATERMARK_SEASON_LABELS: Record<string, string> = {
   "247715dd42abef457b52ef37280c0e42.png": "S10 Season of the Worthy",
   "2c022e452f395db7b1daec1cb44631fc.png": "S6 Season of the Drifter",
   "2dc17f123b7449b14144e76cfbeb2309.png": "S22 Season of the Witch",
-  "3543d23d9063fbf7332c7f129a74ada2.png": "The Edge of Fate",
+  "3543d23d9063fbf7332c7f129a74ada2.png": LAWLESS_LABEL,
   "36418dde751148bd3b95a023d491ea73.png": "S14 Season of the Splicer",
   "41d05b7cb5cc0a384af07ee9b7d36dd2.png": "S19 Season of the Seraph",
   "58d3ec8338cc9746a2e0cf901fbcec0e.png": "S7 Season of Opulence",
@@ -92,8 +92,10 @@ export const WATERMARK_LABEL_OVERRIDES: Record<string, string> = {
   "bce51cf90464e28026140df77c4eb6ce.png": "Beyond Light",
   "fc02418ad2002351a3f88faa5b14eb88.png": "Lightfall",
   "0b441021fbc328e6d0e2abc895f5c96e.png": "The Witch Queen",
-  "4376a7d734583ae347acf9732aa3bb43.png": "The Edge of Fate",
+  "6129365b4fad6754f2b8c4478fc3c4ac.png": "The Edge of Fate",
+  "249813e647271a8227bae0d8a39ed505.png": RECLAMATION_LABEL,
   "95f7754d52d6016fdc445fb62aa7a31e.png": "Renegades",
+  "4376a7d734583ae347acf9732aa3bb43.png": LAWLESS_LABEL,
   "0ac354c1c326441716ddb15d2c158c59.png": "S26 Episode: Heresy",
 };
 
@@ -101,7 +103,7 @@ export const WATERMARK_LABEL_OVERRIDES: Record<string, string> = {
 export const DIM_WATERMARK_TO_SEASON: Record<string, number> = {
   "/common/destiny2_content/icons/249813e647271a8227bae0d8a39ed505.png": 27,
   "/common/destiny2_content/icons/6129365b4fad6754f2b8c4478fc3c4ac.png": 27,
-  "/common/destiny2_content/icons/4376a7d734583ae347acf9732aa3bb43.png": 27,
+  "/common/destiny2_content/icons/4376a7d734583ae347acf9732aa3bb43.png": 28,
   "/common/destiny2_content/icons/95f7754d52d6016fdc445fb62aa7a31e.png": 28,
   "/common/destiny2_content/icons/e78fd9419f99464816ac8f628bc3c4af.png": 28,
   "/common/destiny2_content/icons/5232219633cc4d90570bffda36caccf4.png": 25,
@@ -133,8 +135,8 @@ export function displayNumberFromLabel(label: string): number {
   if (match) return Number(match[1]);
   const expansions: Record<string, number> = {
     [MONUMENT_OF_TRIUMPH_LABEL]: 29,
-    Renegades: 29,
-    "The Edge of Fate": 28,
+    Renegades: 28,
+    "The Edge of Fate": 27,
     "The Final Shape": 23,
     "Into the Light": 23,
     Lightfall: 20,
@@ -181,10 +183,6 @@ export function resolveSeasonLabelFromIconPath(
   if (WATERMARK_EVENT_LABELS[basename]) {
     return null;
   }
-  if (basename === RENEGADES_ARMOR_CHAPTER_WATERMARK) {
-    return "Renegades";
-  }
-
   const override = WATERMARK_LABEL_OVERRIDES[basename];
   if (override) return override;
 

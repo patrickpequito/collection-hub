@@ -13,6 +13,8 @@ import { loadArmorSetCatalog } from "@/lib/armor-sets/load";
 import {
   IRON_BANNER_ACTIVE_WEAPON_POOL_ID,
   IRON_BANNER_HUB,
+  IRON_BANNER_EXTRA_LEGACY_WEAPONS,
+  IRON_BANNER_VENDOR_EXCLUSIVE_WEAPONS,
   IRON_BANNER_WEAPON_POOLS,
   LEGACY_IRON_BANNER_CLASS_ITEMS,
 } from "@/data/activities/iron-banner";
@@ -336,6 +338,30 @@ export async function resolveIronBannerLoot(): Promise<ResolvedActivityHubLoot> 
 
   const currentWeaponPools = resolveIronBannerWeaponPools(lootCatalog.items);
 
+  // Saladin's vendor-exclusive weapons, then Iron Banner weapons outside the two focus
+  // pools (older releases still tagged with an Iron Banner source, plus Saladin's legacy
+  // gear); both shown as subgroups under the pools.
+  const poolNames = new Set(currentWeaponPools.flatMap((pool) => pool.items.map((item) => item.name)));
+  const vendorExclusiveWeapons = resolveWeaponsByName(
+    [...IRON_BANNER_VENDOR_EXCLUSIVE_WEAPONS].filter((name) => !poolNames.has(name)),
+    lootCatalog.items,
+  ).sort((a, b) => a.name.localeCompare(b.name));
+  const legacyWeapons = [
+    ...new Map(
+      [
+        ...ironBannerItems.filter((item) => item.type === "Weapon" && item.obtainable),
+        ...lootCatalog.items.filter(
+          (item) =>
+            item.type === "Weapon" && (IRON_BANNER_EXTRA_LEGACY_WEAPONS as readonly string[]).includes(item.name),
+        ),
+      ]
+        .filter((item) => !poolNames.has(item.name))
+        .map((item) => [item.name, item]),
+    ).values(),
+  ]
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map(toLootItem);
+
   const currentOtherSections = groupActivityCosmeticLoot(
     ironBannerItems.filter(
       (item) =>
@@ -349,6 +375,8 @@ export async function resolveIronBannerLoot(): Promise<ResolvedActivityHubLoot> 
   return {
     currentArmorRows,
     currentWeaponPools,
+    currentWeapons: legacyWeapons,
+    vendorExclusiveWeapons,
     currentOtherSections,
     legacyArmorGroups,
   };

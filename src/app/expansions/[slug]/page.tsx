@@ -1,15 +1,16 @@
 import { notFound } from "next/navigation";
 import { ClientOwnership } from "@/components/client-ownership";
+import { EververseSection } from "@/components/eververse-section";
 import { ExpansionActivityShortcuts } from "@/components/expansions/expansion-activity-shortcuts";
 import { ExpansionCampaignMissionsPanel } from "@/components/expansions/expansion-campaign-missions-panel";
 import { ExpansionCollectionPanel } from "@/components/expansions/expansion-collection-panel";
 import { ExpansionDeepLootSection } from "@/components/expansions/expansion-deep-loot-section";
 import { ExpansionDestinationPanel } from "@/components/expansions/expansion-destination-panel";
 import { ExpansionLootPanel } from "@/components/expansions/expansion-loot-panel";
-import { ExpansionNavBar } from "@/components/expansions/expansion-nav-bar";
 import { ExpansionProgressStrip } from "@/components/expansions/expansion-progress-strip";
 import { ExpansionTrailerSection } from "@/components/expansions/expansion-trailer-section";
 import { ExpansionTriumphsPanel } from "@/components/expansions/expansion-triumphs-panel";
+import { SectionJumpNav } from "@/components/detail-page-parts";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import {
   getExpansionHub,
@@ -18,11 +19,10 @@ import {
 } from "@/data/expansions";
 import { localSeasonIconPathFromSlug } from "@/lib/all-loot/season-icon-path";
 import { expansionHeaderUrl } from "@/lib/page-headers";
-import {
-  getExpansionNavAdjacent,
-  getExpansionNavEntries,
-  getExpansionSeasonBanners,
-} from "@/lib/expansions/expansion-nav";
+import { getExpansionNavAdjacent } from "@/lib/expansions/expansion-nav";
+import { findTimelineEntry, formatTimelineMonth } from "@/lib/home/timeline";
+import { buildSeasonProgressInputs } from "@/lib/seasons/build-season-progress-inputs";
+import { PUBLISHED_SEASON_SLUGS } from "@/data/seasons";
 import { resolveExpansionLoot } from "@/lib/expansions/resolve-expansion-loot";
 import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { isBungieOAuthConfigured } from "@/lib/env";
@@ -102,8 +102,36 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
   ];
 
   const { previous, next } = getExpansionNavAdjacent(hub.slug);
-  const expansionNavEntries = getExpansionNavEntries();
-  const seasonBanners = getExpansionSeasonBanners(hub.slug);
+  const timeline = findTimelineEntry(hub.slug);
+  const yearSeasons = timeline
+    ? timeline.year.entries.filter((entry) => entry.kind === "season")
+    : [];
+  const seasonProgressInputs = await Promise.all(
+    yearSeasons
+      .filter((entry) => PUBLISHED_SEASON_SLUGS.has(entry.slug))
+      .map((entry) => buildSeasonProgressInputs(entry.slug)),
+  );
+  const eyebrow = [
+    "Expansion",
+    timeline?.year.label,
+    timeline ? formatTimelineMonth(timeline.entry.date) : null,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
+  const hasTriumphs = Boolean(title || triumphGroup);
+  const hasActivities = hub.relatedRadSlugs.length > 0;
+  const sectionLinks = [
+    { id: "overview", label: "Overview", show: Boolean(hub.trailerYoutubeId) || yearSeasons.length > 0 },
+    { id: "collection", label: "Collection", show: true },
+    { id: "exotics", label: "Exotics", show: loot.exoticItems.length > 0 },
+    { id: "destination", label: "Destination", show: true },
+    { id: "campaign", label: "Campaign & Activities", show: true },
+    { id: "eververse", label: "Eververse", show: Boolean(loot.eververse) },
+    { id: "raids-dungeons", label: "Raids & dungeons", show: hasActivities },
+    { id: "triumphs", label: "Triumphs", show: hasTriumphs },
+    { id: "deep-loot", label: "Deep loot", show: true },
+  ].filter((link) => link.show);
 
   return (
     <SectionPageLayout
@@ -113,24 +141,14 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
       oauthConfigured={oauthConfigured}
       maxWidth="5xl"
       backLink={{ href: "/expansions", label: "← Expansions & Seasons" }}
+      headerEyebrow={eyebrow}
+      siblings={{
+        previous: previous ? { href: previous.href, label: previous.title } : undefined,
+        next: next ? { href: next.href, label: next.title } : undefined,
+      }}
     >
       <ClientOwnership>
-        <div className="space-y-8">
-          <ExpansionNavBar
-            currentSlug={hub.slug}
-            currentTitle={hub.title}
-            previous={previous}
-            next={next}
-            entries={expansionNavEntries}
-          />
-
-          {hub.trailerYoutubeId ? (
-            <ExpansionTrailerSection
-              youtubeId={hub.trailerYoutubeId}
-              seasons={seasonBanners}
-            />
-          ) : null}
-
+        <div className="space-y-9">
           <ExpansionProgressStrip
             collectionTotal={loot.collectionItems.length}
             collectionOwnershipGroups={collectionOwnershipGroups}
@@ -144,73 +162,106 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
             lootOwnershipGroups={lootOwnershipGroups}
           />
 
-          <ExpansionCollectionPanel
-            badgeName={loot.collectionMeta.badgeName}
-            iconPath={loot.collectionMeta.iconPath}
-            bannerIconPath={loot.collectionMeta.bannerIconPath}
-            items={loot.collectionItems}
-            itemHrefs={itemHrefs}
-          />
+          <SectionJumpNav links={sectionLinks} />
 
-          <ExpansionLootPanel
-            title="Exotic weapons & armor"
-            description={hub.exoticPanelDescription}
-            items={loot.exoticItems}
-            ownedBorder="green"
-            itemHrefs={itemHrefs}
-          />
+          <div id="overview" className="scroll-mt-20">
+            <ExpansionTrailerSection
+              youtubeId={hub.trailerYoutubeId}
+              seasons={yearSeasons}
+              seasonProgressInputs={seasonProgressInputs}
+            />
+          </div>
 
-          <ExpansionCampaignMissionsPanel
-            missions={loot.campaignMissions}
-            legendaryRecordHash={loot.campaignLegendaryRecordHash}
-            quests={loot.campaignQuests}
-            difficultyHunts={loot.difficultyHunts}
-            difficultyHuntsTitle={loot.difficultyHuntsTitle}
-            sectionTitleOverride={loot.campaignSectionTitle}
-            rotatingBossActivity={loot.rotatingBossActivity}
-          />
+          <div id="collection" className="scroll-mt-20">
+            <ExpansionCollectionPanel
+              badgeName={loot.collectionMeta.badgeName}
+              iconPath={loot.collectionMeta.iconPath}
+              bannerIconPath={loot.collectionMeta.bannerIconPath}
+              items={loot.collectionItems}
+              itemHrefs={itemHrefs}
+            />
+          </div>
 
-          <ExpansionDestinationPanel
-            destinationTitle={hub.destinationTitle}
-            destinationActivityTitle={hub.destinationActivityTitle}
-            destinationActivitySlug={hub.destinationActivitySlug}
-            armorRows={loot.destinationArmorRows}
-            weapons={loot.destinationWeapons}
-            previewFiles={
-              hub.destinationArmorPreviewFiles
-                ? [...hub.destinationArmorPreviewFiles]
-                : undefined
-            }
-            itemHrefs={itemHrefs}
-            regionChestsChecklistHash={loot.regionChestsChecklistHash}
-            regionChests={loot.regionChests}
-            lostSectorsChecklistHash={loot.lostSectorsChecklistHash}
-            lostSectorsDiscoveryRecordHash={
-              loot.lostSectorsDiscoveryRecordHash
-            }
-            lostSectors={loot.lostSectors}
-            featuredLostSectorName={null}
-            wellspringNormalRecordHash={loot.wellspringNormalRecordHash}
-            wellspringMasterRecordHash={loot.wellspringMasterRecordHash}
-            wellspringBosses={loot.wellspringBosses}
-          />
+          <div id="exotics" className="scroll-mt-20">
+            <ExpansionLootPanel
+              title="Exotic weapons & armor"
+              items={loot.exoticItems}
+              ownedBorder="green"
+              itemHrefs={itemHrefs}
+            />
+          </div>
 
-          <ExpansionActivityShortcuts
-            slugs={hub.relatedRadSlugs}
-            blurb={hub.raidsDungeonsBlurb}
-          />
+          <div id="destination" className="scroll-mt-20">
+            <ExpansionDestinationPanel
+              destinationTitle={hub.destinationTitle}
+              destinationActivityTitle={hub.destinationActivityTitle}
+              destinationActivitySlug={hub.destinationActivitySlug}
+              armorRows={loot.destinationArmorRows}
+              weapons={loot.destinationWeapons}
+              previewFiles={
+                hub.destinationArmorPreviewFiles
+                  ? [...hub.destinationArmorPreviewFiles]
+                  : undefined
+              }
+              itemHrefs={itemHrefs}
+              regionChestsChecklistHash={loot.regionChestsChecklistHash}
+              regionChests={loot.regionChests}
+              lostSectorsChecklistHash={loot.lostSectorsChecklistHash}
+              lostSectorsDiscoveryRecordHash={loot.lostSectorsDiscoveryRecordHash}
+              lostSectors={loot.lostSectors}
+              featuredLostSectorName={null}
+            />
+          </div>
 
-          <ExpansionTriumphsPanel
-            title={title}
-            triumphGroup={triumphGroup ?? null}
-            triumphsGroupTitle={hub.triumphsGroupTitle}
-          />
+          <div id="campaign" className="scroll-mt-20">
+            <ExpansionCampaignMissionsPanel
+              missions={loot.campaignMissions}
+              legendaryRecordHash={loot.campaignLegendaryRecordHash}
+              quests={loot.campaignQuests}
+              difficultyHunts={loot.difficultyHunts}
+              difficultyHuntsTitle={loot.difficultyHuntsTitle}
+              rotatingBossActivity={loot.rotatingBossActivity}
+              wellspringNormalRecordHash={loot.wellspringNormalRecordHash}
+              wellspringMasterRecordHash={loot.wellspringMasterRecordHash}
+              wellspringBosses={loot.wellspringBosses}
+            />
+          </div>
 
-          <ExpansionDeepLootSection
-            pools={loot.deepLootPools}
-            itemHrefs={itemHrefs}
-            emptyDescription={hub.deepLootEmptyDescription}
-          />
+          {loot.eververse ? (
+            <div id="eververse" className="scroll-mt-20">
+              <EververseSection
+                eververse={loot.eververse}
+                itemHrefs={itemHrefs}
+                description={null}
+              />
+            </div>
+          ) : null}
+
+          {hasActivities ? (
+            <div id="raids-dungeons" className="scroll-mt-20">
+              <ExpansionActivityShortcuts
+                slugs={hub.relatedRadSlugs}
+              />
+            </div>
+          ) : null}
+
+          {hasTriumphs ? (
+            <div id="triumphs" className="scroll-mt-20">
+              <ExpansionTriumphsPanel
+                title={title}
+                triumphGroup={triumphGroup ?? null}
+                triumphsGroupTitle={hub.triumphsGroupTitle}
+              />
+            </div>
+          ) : null}
+
+          <div id="deep-loot" className="scroll-mt-20">
+            <ExpansionDeepLootSection
+              pools={loot.deepLootPools}
+              itemHrefs={itemHrefs}
+              emptyDescription={hub.deepLootEmptyDescription}
+            />
+          </div>
         </div>
       </ClientOwnership>
     </SectionPageLayout>

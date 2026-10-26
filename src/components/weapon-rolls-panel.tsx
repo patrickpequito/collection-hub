@@ -29,6 +29,8 @@ type WeaponRollsPanelProps = {
   plugIndex?: Record<string, WeaponPlugDefinition>;
   godRollsByHash?: Record<string, ResolvedWeaponGodRoll>;
   signedIn?: boolean;
+  /** Always-open list (weapon page): no Show / Hide button. */
+  hideToggle?: boolean;
 };
 
 function formatPercent(value: number | null) {
@@ -258,9 +260,11 @@ export function WeaponRollsPanel({
   plugIndex = {},
   godRollsByHash = {},
   signedIn = true,
+  hideToggle = false,
 }: WeaponRollsPanelProps) {
   return (
     <div className="space-y-2">
+      {hideToggle ? null : (
       <button
         type="button"
         disabled={!signedIn}
@@ -279,6 +283,7 @@ export function WeaponRollsPanel({
       >
         Show your rolls
       </button>
+      )}
 
       {!signedIn ? (
         <p className="text-center text-[10px] text-zinc-500 sm:text-xs">

@@ -67,6 +67,10 @@ export type ResolvedActivityHubLoot = {
   currentArmorPanels?: ActivityCurrentArmorPanel[];
   currentWeapons?: LootItem[];
   currentWeaponPools?: ActivityWeaponPool[];
+  /** Weapons only sold by the playlist vendor (Iron Banner: Saladin, Trials: Saint-14). */
+  vendorExclusiveWeapons?: LootItem[];
+  /** Adept weapon versions (Trials flawless rewards). */
+  adeptWeapons?: LootItem[];
   weaponSeasonGroups?: TrialsWeaponSeasonGroup[];
   currentOtherSections: ActivityHubLootSection[];
   /** Older Trials cosmetics (ticket / Nine era, etc.) shown via the legacy toggle. */

@@ -7,8 +7,10 @@ import type {
   TriumphStringVariables,
   TitleCompletionTier,
 } from "@/types/triumph";
+import descriptionVariables from "../../../data/description-variables.json";
 
 const STRING_VAR_PLACEHOLDER = /\{var:(\d+)\}/g;
+const DESCRIPTION_VARIABLES = descriptionVariables as Record<string, number>;
 
 export function resolveStringVariable(
   hash: string,
@@ -25,6 +27,18 @@ export function resolveStringVariable(
   }
 
   return undefined;
+}
+
+/**
+ * Replaces {var:hash} in a triumph description: the player's value when signed in,
+ * otherwise the game constant from data/description-variables.json.
+ */
+export function formatRecordDescription(text: string, stringVariables?: TriumphStringVariables): string {
+  if (!text.includes("{var:")) return text;
+  return text.replace(STRING_VAR_PLACEHOLDER, (_, hash: string) => {
+    const value = resolveStringVariable(hash, stringVariables) ?? DESCRIPTION_VARIABLES[hash];
+    return value !== undefined ? String(value) : "—";
+  });
 }
 
 /** Replaces Bungie {var:hash} placeholders in objective progress text. */

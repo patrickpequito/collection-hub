@@ -10,8 +10,8 @@ export function backLabelForPath(path: string) {
   if (path === "/exotics") return "← Exotics";
   if (path === "/pve-activities") return "← PvE Activities";
   if (path === "/pvp-activities") return "← PvP Activities";
-  if (path === "/rad-loot") return "← RAD Loot";
-  if (path.startsWith("/rad-loot/")) return "← Activity";
+  if (path === "/activities") return "← RAD Loot";
+  if (path.startsWith("/activities/")) return "← Activity";
   return "← Back";
 }
 

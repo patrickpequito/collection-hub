@@ -7,10 +7,10 @@ import {
   RAIDS,
 } from "@/data/rad-loot/activities";
 import { loadSignedInActivityBannerStats } from "@/lib/rad-loot-banner-stats";
-import { getSession } from "@/lib/session";
+import { getFreshSession } from "@/lib/session-access";
 
 export async function GET() {
-  const session = await getSession();
+  const session = await getFreshSession();
   if (!session) {
     return NextResponse.json({ bannerStats: null, error: "Not signed in" });
   }

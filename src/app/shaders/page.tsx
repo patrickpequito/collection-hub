@@ -28,14 +28,9 @@ export default async function ShadersPage() {
       title="Shaders"
       imageUrl={PAGE_HEADERS.shaders}
       oauthConfigured={oauthConfigured}
-      maxWidth="5xl"
+      maxWidth="wide"
       backLink={{ href: "/all-loot", label: "← Loot Collector" }}
     >
-      <p className="text-sm text-zinc-400">
-        All {shaders.length} shaders in the game. Switch how they are grouped
-        and toggle subgroups per section.
-      </p>
-
       <ShadersCatalog
         items={items}
         facetSeasons={catalog.facets.seasons}

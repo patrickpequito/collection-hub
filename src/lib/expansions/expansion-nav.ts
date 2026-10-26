@@ -3,7 +3,6 @@ import {
   PUBLISHED_EXPANSION_SLUGS,
 } from "@/data/expansions";
 import type { ExpansionIndexEntry } from "@/data/expansions/types";
-import { SEASONS_BY_EXPANSION_SLUG, type SeasonIndexEntry } from "@/data/seasons";
 
 export type ExpansionNavLink = {
   slug: string;
@@ -43,17 +42,4 @@ export function getExpansionNavAdjacent(slug: string): {
     previous: published[index - 1] ?? null,
     next: published[index + 1] ?? null,
   };
-}
-
-/** All expansions for the picker — newest first (index order). */
-export function getExpansionNavEntries(): readonly ExpansionIndexEntry[] {
-  return EXPANSION_INDEX_ENTRIES;
-}
-
-/** Seasons paired to an expansion year — newest → oldest for the trailer 2×2. */
-export function getExpansionSeasonBanners(
-  expansionSlug: string,
-): readonly SeasonIndexEntry[] {
-  const seasons = SEASONS_BY_EXPANSION_SLUG[expansionSlug] ?? [];
-  return [...seasons].reverse();
 }

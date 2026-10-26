@@ -21,10 +21,10 @@ export function ExoticPerkPanel({
 
   return (
     <div className="space-y-3">
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">
+      <h2 className="ui-label">
         Exotic Perk
       </h2>
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
+      <div className="border border-hairline bg-panel/85 p-4">
         <div className="flex gap-3">
           {perk.iconPath ? (
             <Image

@@ -8,6 +8,10 @@ import { toLootItemFromCatalog } from "@/lib/activities/loot-item";
 import type { ExpansionHub } from "@/data/expansions/types";
 import { collectAllLootItemHashes } from "@/lib/all-loot/item-hashes";
 import { loadAllLootCatalog } from "@/lib/all-loot/search";
+import {
+  resolveExpansionEververse,
+  type EververseLoot,
+} from "@/lib/eververse/resolve-eververse";
 import { loadArmorSetCatalog } from "@/lib/armor-sets/load";
 import {
   extractLegendaryArmorSetName,
@@ -207,6 +211,8 @@ export type ExpansionLoot = {
   collectionMeta: ExpansionCollectionMeta;
   collectionItems: ExpansionCollectionItem[];
   exoticItems: LootItem[];
+  /** Eververse cosmetics with the expansion watermark (own counter). */
+  eververse: EververseLoot | null;
   destinationArmorRows: ActivityArmorRow[];
   destinationWeapons: LootItem[];
   deepLootPools: ExpansionDeepLootPool[];
@@ -752,6 +758,7 @@ export async function resolveExpansionLoot(
   }
 
   return {
+    eververse: resolveExpansionEververse(items, hub),
     collectionMeta: {
       badgeName: collectionFile.badgeName ?? "",
       iconPath: collectionFile.iconPath ?? "",

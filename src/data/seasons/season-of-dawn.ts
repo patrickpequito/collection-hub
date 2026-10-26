@@ -11,6 +11,7 @@ export const SEASON_OF_DAWN_HUB: SeasonHub = {
   seasonNumber: 9,
   titleIconPath:
     "/common/destiny2_content/icons/df8549cf24eb5b90b92a15d11599d88f.png",
+  seal: { title: "Savior", completionRecordHash: "1185680627" },
   videos: [
     {
       id: "trailer",
@@ -71,6 +72,7 @@ export const SEASON_OF_DAWN_HUB: SeasonHub = {
     "Exotic gear from Season of Dawn — Bastion, Devil's Ruin, and Symmetry from Exotic Archive quests, plus the season's Hunter, Titan, and Warlock exotic armor.",
   cosmeticPanelDescription:
     "Season Pass cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  showEververseCosmetics: true,
   cosmeticRewards: [
     "Saintly Shell",
     "The Kellbreaker",

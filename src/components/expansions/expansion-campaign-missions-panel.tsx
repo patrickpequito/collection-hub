@@ -1,5 +1,6 @@
 "use client";
 
+import { BoxHeading, SectionHeading } from "@/components/detail-page-parts";
 import Image from "next/image";
 import { useMemo } from "react";
 import { useOwnership } from "@/components/client-ownership";
@@ -27,6 +28,7 @@ import type {
   ExpansionCampaignQuest,
   ExpansionDifficultyHunt,
   ExpansionRotatingBossActivity,
+  ExpansionWellspringBoss,
 } from "@/lib/expansions/resolve-expansion-loot";
 import type { RecordInstance } from "@/types/triumph";
 
@@ -36,8 +38,10 @@ type ExpansionCampaignMissionsPanelProps = {
   quests?: ExpansionCampaignQuest[];
   difficultyHunts?: ExpansionDifficultyHunt[];
   difficultyHuntsTitle?: string;
-  sectionTitleOverride?: string;
   rotatingBossActivity?: ExpansionRotatingBossActivity | null;
+  wellspringNormalRecordHash?: string;
+  wellspringMasterRecordHash?: string;
+  wellspringBosses?: ExpansionWellspringBoss[];
 };
 
 function objectiveComplete(
@@ -96,8 +100,10 @@ export function ExpansionCampaignMissionsPanel({
   quests = [],
   difficultyHunts = [],
   difficultyHuntsTitle = "Difficulty activities",
-  sectionTitleOverride = "",
   rotatingBossActivity = null,
+  wellspringNormalRecordHash = "",
+  wellspringMasterRecordHash = "",
+  wellspringBosses = [],
 }: ExpansionCampaignMissionsPanelProps) {
   const signedIn = useSignedIn();
   const { ownedItemHashes } = useOwnership();
@@ -113,7 +119,6 @@ export function ExpansionCampaignMissionsPanel({
   const activityCompletions = useProfileActivityCompletions(huntActivityHashes);
   const completedQuestHashes = useProfileQuestCompletions(campaignQuestTargets);
 
-  const usesQuestsAndHunts = quests.length > 0 || difficultyHunts.length > 0;
   const hasRotatingBosses = Boolean(rotatingBossActivity?.bosses.length);
   const showLegendColumn = missions.some((mission) =>
     Boolean(mission.legendObjectiveHash),
@@ -145,72 +150,59 @@ export function ExpansionCampaignMissionsPanel({
     missions.length === 0 &&
     quests.length === 0 &&
     difficultyHunts.length === 0 &&
-    !hasRotatingBosses
+    !hasRotatingBosses &&
+    wellspringBosses.length === 0
   ) {
     return null;
   }
 
-  const sectionTitle =
-    sectionTitleOverride ||
-    (usesQuestsAndHunts
-      ? difficultyHunts.length > 0
-        ? `Campaign & ${difficultyHuntsTitle}`
-        : "Campaign"
-      : "Campaign");
+  const huntTierComplete = (tier: ReturnType<typeof getHuntDifficultyTiers>[number]) =>
+    anyHashCompleted(tier.activityHashes, activityCompletions) ||
+    (tier.higherRecordHash ? recordComplete(tier.higherRecordHash, instances, signedIn) === true : false);
+
+  const questComplete = (quest: ExpansionCampaignQuest) =>
+    isCampaignQuestComplete(quest, instances, completedQuestHashes, ownedItemHashes);
+
+  const normalWellspring = instances[wellspringNormalRecordHash];
+  const masterWellspring = instances[wellspringMasterRecordHash];
+
+  // "done / total" when signed in, otherwise just the total.
+  const countNote = (done: number, total: number) => (signedIn ? `${done} / ${total}` : total);
+
+  const blockClass = "space-y-3 border border-hairline bg-panel/85 p-3 sm:p-4";
 
   return (
-    <section className="min-w-0 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
-      <h2 className="border-b border-zinc-800 pb-3 text-lg font-semibold text-zinc-100">
-        {sectionTitle}
-      </h2>
-
-      {usesQuestsAndHunts || hasRotatingBosses ? (
-        <p className="mt-3 text-sm text-zinc-400">
-          Expansion quests
-          {difficultyHunts.length > 0
-            ? ` and ${difficultyHuntsTitle}. Hunt difficulties use playlist clears${
-                difficultyHuntsTitle === "Nightmare Hunts" ||
-                difficultyHuntsTitle === "Empire Hunts"
-                  ? " (Advanced / Expert / Master)."
-                  : " (Adept / Hero / Legend / Master)."
-              }`
-            : "."}
-          {hasRotatingBosses
-            ? ` ${rotatingBossActivity!.title} bosses are tracked by owning their associated weapon drops.`
-            : ""}
-        </p>
-      ) : (
-        <p className="mt-3 text-sm text-zinc-400">
-          {showLegendColumn
-            ? "Story missions with Normal and Legend completion. Normal is inferred from Legend when a mission has no dedicated Normal triumph (Investigation, Mirror)."
-            : "Story mission completion (Normal). This expansion has no Legend campaign."}
-        </p>
-      )}
+    <section className="min-w-0">
+      <SectionHeading title="Campaign & Activities" />
+      <div className="grid items-start gap-3 lg:grid-cols-3">
+      {missions.length > 0 ? (
+        <div className={blockClass}>
+          <BoxHeading
+            title="Missions"
+            note={countNote(missionRows.filter((row) => row.normal === true).length, missionRows.length)}
+          />
+          <ul className="divide-y divide-zinc-800">
+            {missionRows.map(({ mission, normal, legend }) => (
+              <li key={mission.name} className="flex flex-wrap items-center justify-between gap-2 py-2.5">
+                <span className="text-sm font-medium text-zinc-100">{mission.name}</span>
+                <div className="flex flex-wrap gap-3">
+                  <CompletionMark complete={normal} label="Normal" />
+                  {showLegendColumn ? <CompletionMark complete={legend} label="Legend" /> : null}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
 
       {quests.length > 0 ? (
-        <div className="mt-4">
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">
-            Expansion quests
-          </h3>
-          <ul className="mt-2 divide-y divide-zinc-800">
+        <div className={blockClass}>
+          <BoxHeading title="Expansion quests" note={countNote(quests.filter(questComplete).length, quests.length)} />
+          <ul className="divide-y divide-zinc-800">
             {quests.map((quest) => {
-              const iconUrl = quest.iconPath
-                ? bungieIconUrl(quest.iconPath)
-                : null;
-              const complete = signedIn
-                ? isCampaignQuestComplete(
-                    quest,
-                    instances,
-                    completedQuestHashes,
-                    signedIn ? ownedItemHashes : undefined,
-                  )
-                : null;
-
+              const iconUrl = quest.iconPath ? bungieIconUrl(quest.iconPath) : null;
               return (
-                <li
-                  key={getCampaignQuestKey(quest)}
-                  className="flex flex-col gap-1 py-3 sm:flex-row sm:items-center sm:justify-between"
-                >
+                <li key={getCampaignQuestKey(quest)} className="flex items-center justify-between gap-2 py-2.5">
                   <div className="flex min-w-0 items-center gap-2.5">
                     {iconUrl ? (
                       <Image
@@ -218,15 +210,13 @@ export function ExpansionCampaignMissionsPanel({
                         alt=""
                         width={32}
                         height={32}
-                        className="h-8 w-8 shrink-0 rounded-sm border border-zinc-800 bg-zinc-900 object-cover"
+                        className="h-8 w-8 shrink-0 border border-zinc-800 bg-zinc-900 object-cover"
                         unoptimized
                       />
                     ) : null}
-                    <span className="text-sm font-medium text-zinc-100">
-                      {quest.name}
-                    </span>
+                    <span className="text-sm font-medium text-zinc-100">{quest.name}</span>
                   </div>
-                  <CompletionMark complete={complete} label="Complete" />
+                  <CompletionMark complete={signedIn ? questComplete(quest) : null} label="Complete" />
                 </li>
               );
             })}
@@ -235,122 +225,87 @@ export function ExpansionCampaignMissionsPanel({
       ) : null}
 
       {difficultyHunts.length > 0 ? (
-        <div className="mt-4">
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">
-            {difficultyHuntsTitle}
-          </h3>
-          <ul className="mt-2 space-y-2">
-            {difficultyHunts.map((hunt) => {
-              const tiers = getHuntDifficultyTiers(hunt);
-
-              return (
-                <li
-                  key={hunt.name}
-                  className="rounded-lg border border-zinc-800 px-3 py-3"
-                >
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="text-sm font-medium text-zinc-100">
-                      {hunt.name}
-                    </span>
-                    <div className="flex flex-wrap gap-3">
-                      {tiers.map((tier) => {
-                        const complete = signedIn
-                          ? anyHashCompleted(
-                              tier.activityHashes,
-                              activityCompletions,
-                            ) ||
-                            (tier.higherRecordHash
-                              ? recordComplete(
-                                  tier.higherRecordHash,
-                                  instances,
-                                  signedIn,
-                                ) === true
-                              : false)
-                          : null;
-
-                        return (
-                          <CompletionMark
-                            key={tier.label}
-                            complete={complete}
-                            label={tier.label}
-                          />
-                        );
-                      })}
-                    </div>
-                  </div>
-                </li>
-              );
-            })}
+        <div className={blockClass}>
+          <BoxHeading
+            title={difficultyHuntsTitle}
+            note={countNote(
+              difficultyHunts.filter((hunt) => getHuntDifficultyTiers(hunt).every(huntTierComplete)).length,
+              difficultyHunts.length,
+            )}
+          />
+          <ul>
+            {difficultyHunts.map((hunt) => (
+              <li key={hunt.name} className="flex flex-col gap-1.5 border-b border-white/[0.08] py-2.5 last:border-0">
+                <span className="text-sm font-medium text-zinc-100">{hunt.name}</span>
+                <div className="flex flex-wrap gap-3">
+                  {getHuntDifficultyTiers(hunt).map((tier) => (
+                    <CompletionMark
+                      key={tier.label}
+                      complete={signedIn ? huntTierComplete(tier) : null}
+                      label={tier.label}
+                    />
+                  ))}
+                </div>
+              </li>
+            ))}
           </ul>
         </div>
       ) : null}
 
       {rotatingBossActivity && rotatingBossActivity.bosses.length > 0 ? (
-        <div className="mt-4">
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">
-            {rotatingBossActivity.title}
-          </h3>
-          {rotatingBossActivity.description ? (
-            <p className="mt-2 text-xs text-zinc-500">
-              {rotatingBossActivity.description}
-            </p>
-          ) : null}
-          <ul className="mt-2 space-y-2">
-            {rotatingBossActivity.bosses.map((boss) => {
-              const complete = signedIn
-                ? rotatingBossComplete(boss, ownedItemHashes)
-                : null;
-
-              return (
-                <li
-                  key={boss.name}
-                  className="flex flex-col gap-1 rounded-lg border border-zinc-800 px-3 py-3 sm:flex-row sm:items-center sm:justify-between"
-                >
-                  <div className="min-w-0">
-                    <span className="text-sm font-medium text-zinc-100">
-                      {boss.name}
-                    </span>
-                    {boss.rewardNote ? (
-                      <span className="mt-0.5 block text-xs text-zinc-500">
-                        Drops {boss.rewardNote}
-                      </span>
-                    ) : null}
-                  </div>
-                  <CompletionMark complete={complete} label="Cleared" />
-                </li>
-              );
-            })}
+        <div className={blockClass}>
+          <BoxHeading
+            title={rotatingBossActivity.title}
+            note={countNote(
+              rotatingBossActivity.bosses.filter((boss) => rotatingBossComplete(boss, ownedItemHashes)).length,
+              rotatingBossActivity.bosses.length,
+            )}
+          />
+          <ul>
+            {rotatingBossActivity.bosses.map((boss) => (
+              <li
+                key={boss.name}
+                className="flex items-center justify-between gap-2 border-b border-white/[0.08] py-2.5 last:border-0"
+              >
+                <div className="min-w-0">
+                  <span className="text-sm font-medium text-zinc-100">{boss.name}</span>
+                  {boss.rewardNote ? (
+                    <span className="mt-0.5 block text-xs text-zinc-500">Drops {boss.rewardNote}</span>
+                  ) : null}
+                </div>
+                <CompletionMark complete={signedIn ? rotatingBossComplete(boss, ownedItemHashes) : null} label="Cleared" />
+              </li>
+            ))}
           </ul>
         </div>
       ) : null}
 
-      {missions.length > 0 ? (
-        <ul
-          className={`divide-y divide-zinc-800 ${usesQuestsAndHunts ? "mt-4 border-t border-zinc-800" : "mt-4"}`}
-        >
-          {missionRows.map(({ mission, normal, legend }) => (
-            <li
-              key={mission.name}
-              className="flex flex-col gap-1 py-3 sm:flex-row sm:items-center sm:justify-between"
-            >
-              <span className="text-sm font-medium text-zinc-100">
-                {mission.name}
-              </span>
-              <div className="flex flex-wrap gap-3">
-                <CompletionMark complete={normal} label="Normal" />
-                {showLegendColumn ? (
-                  <CompletionMark complete={legend} label="Legend" />
-                ) : null}
-              </div>
-            </li>
-          ))}
-        </ul>
+      {wellspringBosses.length > 0 ? (
+        <div className={blockClass}>
+          <BoxHeading title="The Wellspring" note={wellspringBosses.length} />
+          <ul>
+            {wellspringBosses.map((boss) => (
+              <li key={boss.name} className="flex flex-col gap-1.5 border-b border-white/[0.08] py-2.5 last:border-0">
+                <span className="text-sm font-medium text-zinc-100">{boss.name}</span>
+                <div className="flex flex-wrap gap-3">
+                  <CompletionMark
+                    complete={signedIn ? objectiveComplete(normalWellspring, boss.normalObjectiveHash) : null}
+                    label="Normal"
+                  />
+                  <CompletionMark
+                    complete={signedIn ? objectiveComplete(masterWellspring, boss.masterObjectiveHash) : null}
+                    label="Master"
+                  />
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       ) : null}
+      </div>
 
       {!signedIn ? (
-        <p className="mt-2 text-xs text-zinc-500">
-          Sign in to see campaign completion.
-        </p>
+        <p className="mt-2 text-xs text-zinc-500">Sign in to see campaign completion.</p>
       ) : null}
     </section>
   );

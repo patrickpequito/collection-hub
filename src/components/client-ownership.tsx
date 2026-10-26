@@ -7,9 +7,12 @@ import {
   type ReactNode,
 } from "react";
 import { useProfileInventory } from "@/components/profile-progress-provider";
+import { useHydrated } from "@/lib/use-hydrated";
 
 type OwnershipContextValue = {
   ownedItemHashes: Set<string>;
+  /** Only what is on your characters / in the vault right now. */
+  inventoryItemHashes: Set<string>;
   showOwnership: boolean;
   inventoryError: string | null;
   signedIn: boolean;
@@ -17,6 +20,7 @@ type OwnershipContextValue = {
 
 const OwnershipContext = createContext<OwnershipContextValue>({
   ownedItemHashes: new Set(),
+  inventoryItemHashes: new Set(),
   showOwnership: false,
   inventoryError: null,
   signedIn: false,
@@ -36,27 +40,31 @@ export function ClientOwnership({
   children,
   showSignInHint = true,
 }: ClientOwnershipProps) {
-  const { ownedItemHashes, showOwnership, inventoryError, signedIn } =
+  const { ownedItemHashes, inventoryItemHashes, showOwnership, inventoryError, signedIn } =
     useProfileInventory();
+  // Page content hydrates after the root layout has restored the session, so
+  // render the hint as the server did (signed out) until hydration finishes.
+  const hydrated = useHydrated();
 
   const value = useMemo(
     () => ({
       ownedItemHashes,
+      inventoryItemHashes,
       showOwnership,
       inventoryError,
       signedIn,
     }),
-    [ownedItemHashes, showOwnership, inventoryError, signedIn],
+    [ownedItemHashes, inventoryItemHashes, showOwnership, inventoryError, signedIn],
   );
 
   return (
     <OwnershipContext.Provider value={value}>
       {showSignInHint ? (
-        inventoryError ? (
+        hydrated && inventoryError ? (
           <p className="mb-4 text-xs text-zinc-500">
             Collection unavailable: {inventoryError}
           </p>
-        ) : !signedIn ? (
+        ) : !(hydrated && signedIn) ? (
           <p className="mb-4 text-xs text-amber-200/80">
             Sign in to highlight items you own.
           </p>

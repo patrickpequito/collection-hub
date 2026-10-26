@@ -25,7 +25,7 @@ export const RAD_LOOT: ActivityEntry = {
 export const PVE_ACTIVITIES = [VANGUARD_OPS, GAMBIT, RAD_LOOT] as const;
 
 const PVE_ACTIVITY_HREFS: Partial<Record<string, string>> = {
-  "rad-loot": `/rad-loot?from=${encodeURIComponent("/pve-activities")}`,
+  "rad-loot": `/activities?from=${encodeURIComponent("/pve-activities")}`,
 };
 
 export function getPveActivityHref(entry: ActivityEntry): string | null {

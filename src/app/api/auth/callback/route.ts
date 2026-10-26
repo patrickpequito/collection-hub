@@ -79,6 +79,7 @@ export async function GET(request: Request) {
     const user = await fetchCurrentBungieUser(apiKey, tokens.access_token);
     const session = tokenResponseToSession(tokens, user.displayName);
     session.membershipId = user.membershipId;
+    session.avatarPath = user.avatarPath;
 
     await setSession(session);
 

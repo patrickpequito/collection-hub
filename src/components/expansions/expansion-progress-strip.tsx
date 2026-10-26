@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { useOwnership } from "@/components/client-ownership";
+import { StatBlock, StatBlockGrid, StatCount } from "@/components/detail-page-parts";
 import {
   useProfileActivityCompletions,
   useProfileQuestCompletions,
@@ -38,52 +39,6 @@ type ExpansionProgressStripProps = {
   lootTotal: number;
   lootOwnershipGroups: string[][];
 };
-
-function StatCard({
-  label,
-  value,
-  progress,
-}: {
-  label: string;
-  value: string;
-  /** 0–1 when known; null shows an empty track. */
-  progress: number | null;
-}) {
-  const widthPercent =
-    progress == null ? 0 : Math.max(0, Math.min(1, progress)) * 100;
-
-  return (
-    <div
-      className={`overflow-hidden rounded-xl border bg-zinc-900/40 ${
-        progress != null && progress >= 1
-          ? "border-[#c9a227]/50"
-          : "border-zinc-800"
-      }`}
-    >
-      <div className="px-3 py-3">
-        <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
-          {label}
-        </p>
-        <p className="mt-1 text-lg font-semibold tabular-nums text-zinc-100">
-          {value}
-        </p>
-      </div>
-      <div
-        className="h-1 w-full bg-zinc-800"
-        role="progressbar"
-        aria-label={`${label} progress`}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={progress == null ? undefined : Math.round(widthPercent)}
-      >
-        <div
-          className="h-full bg-[#c9a227] transition-[width] duration-300 ease-out"
-          style={{ width: `${widthPercent}%` }}
-        />
-      </div>
-    </div>
-  );
-}
 
 export function ExpansionProgressStrip({
   collectionTotal,
@@ -143,13 +98,16 @@ export function ExpansionProgressStrip({
     | "campaignQuests"
     | "difficultyHunts"
     | "rotatingBossActivity"
-  > = {
-    campaignMissions,
-    campaignLegendaryRecordHash,
-    campaignQuests,
-    difficultyHunts,
-    rotatingBossActivity,
-  };
+  > = useMemo(
+    () => ({
+      campaignMissions,
+      campaignLegendaryRecordHash,
+      campaignQuests,
+      difficultyHunts,
+      rotatingBossActivity,
+    }),
+    [campaignMissions, campaignLegendaryRecordHash, campaignQuests, difficultyHunts, rotatingBossActivity],
+  );
 
   const campaignProgress = useMemo(
     () =>
@@ -187,55 +145,22 @@ export function ExpansionProgressStrip({
   });
 
   return (
-    <section className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-      <StatCard
-        label="Collection"
-        value={
-          collectionOwned === null
-            ? `— / ${collectionTotal}`
-            : `${collectionOwned}/${collectionTotal}`
-        }
-        progress={
-          collectionOwned == null || collectionTotal === 0
-            ? null
-            : collectionOwned / collectionTotal
-        }
-      />
-      <StatCard
-        label="Title"
-        value={
-          titleDone === null
-            ? `— / ${titleTotal}`
-            : `${titleDone}/${titleTotal}`
-        }
-        progress={
-          titleDone == null || titleTotal === 0
-            ? null
-            : titleDone / titleTotal
-        }
-      />
-      <StatCard
-        label="Campaign"
-        value={
-          campaignProgress == null
-            ? `— / ${campaignTotal}`
-            : campaignProgress.label
-        }
-        progress={
-          campaignProgress == null || campaignProgress.total === 0
-            ? null
-            : campaignProgress.completed / campaignProgress.total
-        }
-      />
-      <StatCard
-        label="Loot owned"
-        value={
-          lootOwned === null ? `— / ${lootTotal}` : `${lootOwned}/${lootTotal}`
-        }
-        progress={
-          lootOwned == null || lootTotal === 0 ? null : lootOwned / lootTotal
-        }
-      />
-    </section>
+    <StatBlockGrid count={4}>
+      <StatBlock label="Collection">
+        <StatCount owned={collectionOwned} total={collectionTotal} gold />
+      </StatBlock>
+      <StatBlock label={title?.guardianTitle ? `Title · ${title.guardianTitle}` : "Title"}>
+        <StatCount owned={titleDone} total={titleTotal} />
+      </StatBlock>
+      <StatBlock label="Campaign">
+        <StatCount
+          owned={campaignProgress?.completed ?? null}
+          total={campaignProgress?.total ?? campaignTotal}
+        />
+      </StatBlock>
+      <StatBlock label="Loot">
+        <StatCount owned={lootOwned} total={lootTotal} gold />
+      </StatBlock>
+    </StatBlockGrid>
   );
 }

@@ -1,0 +1,189 @@
+{
+  "description": "Event items with no source, season or year (not in DIM seasons.json). correctLabel overrides the provisional placement when set. Edit via /undated-event-items.html (npm run dev).",
+  "items": [
+    {
+      "itemHash": "2363716910",
+      "name": "Feathered Projection",
+      "event": "Guardian Games",
+      "iconPath": "/common/destiny2_content/icons/89fdc8b1475fbf6f6a99b525c1f13b58.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "1357354098",
+      "name": "Fervent Fan Projection",
+      "event": "Guardian Games",
+      "iconPath": "/common/destiny2_content/icons/2a5b51e75ba0bda8fab8cdbf20384bad.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "3216960487",
+      "name": "Gold Medal Projection",
+      "event": "Guardian Games",
+      "iconPath": "/common/destiny2_content/icons/64290dd28489ecb30f80296d7f12442b.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "3216960486",
+      "name": "Guardian Games Projection",
+      "event": "Guardian Games",
+      "iconPath": "/common/destiny2_content/icons/ae76ea2d43af0a1084b2d48ba51567a7.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "1673238725",
+      "name": "Hunter Projection",
+      "event": "Guardian Games",
+      "iconPath": "/common/destiny2_content/icons/68a10d0e2e3e4eca3c080c9ec538f97e.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "2934252067",
+      "name": "Laurel Wreath Projection",
+      "event": "Guardian Games",
+      "iconPath": "/common/destiny2_content/icons/74586d2bd141955671c94048c0f6f5c7.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "247604608",
+      "name": "Medal Collector Projection",
+      "event": "Guardian Games",
+      "iconPath": "/common/destiny2_content/icons/5591dd8eaafcf5f3ae4126d503ebb661.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "2186595190",
+      "name": "Microscopic Projection",
+      "event": "Guardian Games",
+      "iconPath": "/common/destiny2_content/icons/95023274d027f86f1447d1a9aca3ae0f.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "247604609",
+      "name": "Pumping Iron Projection",
+      "event": "Guardian Games",
+      "iconPath": "/common/destiny2_content/icons/12c99e2d9caaaa010fa2f252318a8a32.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "1673238724",
+      "name": "Titan Projection",
+      "event": "Guardian Games",
+      "iconPath": "/common/destiny2_content/icons/f42103ba9fba1a88344878b9f1313d37.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "1357354099",
+      "name": "Titled Projection",
+      "event": "Guardian Games",
+      "iconPath": "/common/destiny2_content/icons/efc237c4c3e3692c1344d8e5311bac08.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "2934252066",
+      "name": "Trophy Projection",
+      "event": "Guardian Games",
+      "iconPath": "/common/destiny2_content/icons/f0c685219b8cd2967c3cdd5471809396.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "1673238727",
+      "name": "Warlock Projection",
+      "event": "Guardian Games",
+      "iconPath": "/common/destiny2_content/icons/03df49901f34af16c761e01965b95674.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "4127241662",
+      "name": "Astral Stasis Drake",
+      "event": "The Dawning",
+      "iconPath": "/common/destiny2_content/icons/6391f985eea622dd24e8b8b9518fcc77.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "413766122",
+      "name": "Baking Projection",
+      "event": "The Dawning",
+      "iconPath": "/common/destiny2_content/icons/8827576493ab766f9d619d5a1b1c3c09.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "3766589202",
+      "name": "Mistletoe Projection",
+      "event": "The Dawning",
+      "iconPath": "/common/destiny2_content/icons/7fdfd7c08b95903792cd9219aebb7c9a.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "1929721158",
+      "name": "Portable Warmth Projection",
+      "event": "The Dawning",
+      "iconPath": "/common/destiny2_content/icons/17fc1e925f4b80049e39385d9a34f766.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "1929721159",
+      "name": "Tundra Guide Projection",
+      "event": "The Dawning",
+      "iconPath": "/common/destiny2_content/icons/34f5f9b3bdd0e08eaeddd60a4a7345e3.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "413766123",
+      "name": "Warm Hat Projection",
+      "event": "The Dawning",
+      "iconPath": "/common/destiny2_content/icons/f6531fe823f516b428f14e38532d5260.jpg",
+      "provisionalLabel": "S28 Season: Lawless",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "1219457027",
+      "name": "Cobwebbed Projection",
+      "event": "Festival of the Lost",
+      "iconPath": "/common/destiny2_content/icons/23124c91e088514b45f66731b382a898.jpg",
+      "provisionalLabel": "S27 Season: Reclamation",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "1662794280",
+      "name": "Moonrise Projection",
+      "event": "Festival of the Lost",
+      "iconPath": "/common/destiny2_content/icons/1af6e581f2d33ad1e855bdb442cf21a7.jpg",
+      "provisionalLabel": "S27 Season: Reclamation",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "1219457026",
+      "name": "Ominous Projection",
+      "event": "Festival of the Lost",
+      "iconPath": "/common/destiny2_content/icons/c9f7d40dea2755a912477bb7f92b19c4.jpg",
+      "provisionalLabel": "S27 Season: Reclamation",
+      "correctLabel": null
+    },
+    {
+      "itemHash": "1662794281",
+      "name": "Sweet Treat Projection",
+      "event": "Festival of the Lost",
+      "iconPath": "/common/destiny2_content/icons/9fb8aa7a3f3cb9b33793733a9a654881.jpg",
+      "provisionalLabel": "S27 Season: Reclamation",
+      "correctLabel": null
+    }
+  ]
+}

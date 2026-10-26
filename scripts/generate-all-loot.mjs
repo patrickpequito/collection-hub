@@ -23,7 +23,6 @@ import {
   buildWatermarkLabelMap,
   buildSalvationsEdgeS29ReissueMinIndex,
   buildSeasonDisplayIconLookup,
-  catalogArmorGroupName,
   catalogArmorPieceGroupKey,
   catalogEntryGroupKey,
   displayNumberFromLabel,
@@ -31,7 +30,6 @@ import {
   isDebutRelevantVariant,
   isMonumentWeaponReissue,
   isSourceObtainable,
-  normalizeItemName,
   orderFacetValues,
   resolveCollectibleForVariant,
   resolveCollectibleSourceString,
@@ -42,12 +40,15 @@ import {
   resolveSeasonDisplayIconWatermark,
   resolveArmor30SeasonLabel,
   resolveArmor30ReissueSeasonLabel,
+  resolveLabelFromItemWatermark,
   resolveVersionSeasonLabel,
-  resolveWatermarkSeasonNumber,
-  seasonLabelFromManifestNumber,
+  isYear8ArmorChapterLabel,
+  expansionWatermarkPathForLabel,
   MONUMENT_OF_TRIUMPH_LABEL,
   MONUMENT_FEATURED_WATERMARK,
   inferSeasonLabelFromIndex,
+  applyYear8ChapterSplit,
+  applyMonumentEventCorrection,
 } from "./all-loot-mappings.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -304,10 +305,42 @@ function resolveArmorVersionSeasonLabel(
       (peer) =>
         String(peer.hash) !== String(item.hash) && !isArmor30Item(peer),
     );
+    const isExotic = item.inventory?.tierTypeName === "Exotic";
+
+    // Exotic Armor 3.0 remasters keep the Mot featured watermark in the API, but
+    // they are not playlist remasters — brand with the debut peer's season.
+    if (isExotic && hasNonArmor30Peer) {
+      const peer = peerItems.find(
+        (candidate) =>
+          String(candidate.hash) !== String(item.hash) &&
+          !isArmor30Item(candidate),
+      );
+      if (peer) {
+        const peerLabel =
+          resolveLabelFromItemWatermark(peer, dimSeasonData, {
+            watermarkLabelMap: context.watermarkLabelMap,
+          }) ??
+          resolveVersionSeasonLabel(
+            peer,
+            null,
+            seasons,
+            seasonPassItemSeason,
+            seasonIndexAnchors,
+            dimSeasonData,
+            context,
+          );
+        if (peerLabel && !isYear8ArmorChapterLabel(peerLabel)) {
+          return peerLabel;
+        }
+        if (peerLabel) return peerLabel;
+      }
+    }
+
     const resolved =
       resolveArmor30ReissueSeasonLabel(armorLabel, {
         isArmor30: true,
         hasNonArmor30Peer,
+        isExotic,
       }) ??
       (hasNonArmor30Peer
         ? MONUMENT_OF_TRIUMPH_LABEL
@@ -445,7 +478,8 @@ function catalogItemGroupKey(item) {
   const name = item.displayProperties?.name;
   const type = resolveCatalogTypeLabel(item);
   if (!name?.trim() || !type) return null;
-  if (type === "Armor") {
+  // Armor and armor ornaments share names across classes ("Racing Suit" ×3): key by class + slot.
+  if (isClassPieceType(type)) {
     const slot = resolveSlotLabel(item, type);
     const guardianClass = resolveClassOrWeaponType(item, type);
     if (slot && guardianClass) {
@@ -453,6 +487,10 @@ function catalogItemGroupKey(item) {
     }
   }
   return catalogEntryGroupKey(name, type);
+}
+
+function isClassPieceType(type) {
+  return type === "Armor" || type === "Ornament";
 }
 
 function buildItemsByName(items) {
@@ -927,6 +965,13 @@ function isFinisherItem(item) {
   return /finisher$/i.test(item.itemTypeDisplayName ?? "");
 }
 
+/** Finishers and combat flair share the "Emote" type; this keeps them apart for display. */
+function resolveEmoteKind(item) {
+  if (isFinisherItem(item)) return "Finisher";
+  if (item.itemTypeDisplayName === "Combat Flair") return "Combat Flair";
+  return null;
+}
+
 function isEmoteTypeItem(item) {
   if (!item?.hash || item.redacted || item.blacklisted) return false;
 
@@ -1298,6 +1343,7 @@ function buildVersionsForNameGroup(
     let seasonIconPath = seasonIconPathRaw;
     if (
       item.itemType === 2 &&
+      item.inventory?.tierTypeName !== "Exotic" &&
       seasonLabel === MONUMENT_OF_TRIUMPH_LABEL &&
       isArmor30Item(item) &&
       group.some(
@@ -1306,6 +1352,36 @@ function buildVersionsForNameGroup(
       )
     ) {
       seasonIconPath = `/common/destiny2_content/icons/${MONUMENT_FEATURED_WATERMARK}`;
+    }
+    if (
+      item.itemType === 2 &&
+      item.inventory?.tierTypeName === "Exotic" &&
+      isArmor30Item(item)
+    ) {
+      const peer = group.find(
+        (candidate) =>
+          String(candidate.hash) !== String(item.hash) &&
+          !isArmor30Item(candidate),
+      );
+      const peerIcon = resolveSeasonIconPath(peer);
+      if (peerIcon) seasonIconPath = peerIcon;
+    }
+    {
+      const expansionIcon = expansionWatermarkPathForLabel(seasonLabel);
+      if (
+        expansionIcon &&
+        seasonIconPath &&
+        !String(seasonIconPath).endsWith(MONUMENT_FEATURED_WATERMARK)
+      ) {
+        const currentLabel = resolveLabelFromItemWatermark(
+          { iconWatermark: seasonIconPath },
+          dimSeasonData,
+          { watermarkLabelMap },
+        );
+        if (currentLabel && currentLabel !== seasonLabel) {
+          seasonIconPath = expansionIcon;
+        }
+      }
     }
     const source = resolveCollectibleSourceString(collectible);
     const eventLabel = resolveEventLabel(source, seasonIconPath, seasonLabel);
@@ -1368,6 +1444,7 @@ function buildVersionsForNameGroup(
     const compareContext = {
       perkColumnsForHash: (hash) => perkColumnsByHash.get(hash),
       isArmor30ForHash,
+      collapseExoticArmor30Peers: isExotic,
     };
 
     const mergeKey = [...bySeason.keys()].find((key) =>
@@ -1385,15 +1462,19 @@ function buildVersionsForNameGroup(
 
     bySeason.set(
       mergeKey,
-      preferCatalogVersion(bySeason.get(mergeKey), candidate),
+      preferCatalogVersion(bySeason.get(mergeKey), candidate, compareContext),
     );
   }
 
   return [...bySeason.values()]
-    .sort(
-      (a, b) =>
-        b.seasonNumber - a.seasonNumber || b._manifestIndex - a._manifestIndex,
-    )
+    .sort((a, b) => {
+      const seasonDiff = b.seasonNumber - a.seasonNumber;
+      if (seasonDiff !== 0) return seasonDiff;
+      const a30 = isArmor30ForHash(a.itemHash) === true ? 1 : 0;
+      const b30 = isArmor30ForHash(b.itemHash) === true ? 1 : 0;
+      if (a30 !== b30) return b30 - a30;
+      return b._manifestIndex - a._manifestIndex;
+    })
     .map(({ _manifestIndex, ...version }) => version);
 }
 
@@ -1579,6 +1660,7 @@ function buildCatalog(
       seasonNumber,
       ...(eventLabel ? { eventLabel } : {}),
       type,
+      ...(type === "Emote" && resolveEmoteKind(displayItem) ? { emoteKind: resolveEmoteKind(displayItem) } : {}),
       rarity,
       classOrWeaponType,
       damageType,
@@ -1636,7 +1718,7 @@ function buildCatalog(
     entry.searchText = buildSearchText(entry);
 
     const key =
-      type === "Armor" && classOrWeaponType && slot
+      isClassPieceType(type) && classOrWeaponType && slot
         ? catalogArmorPieceGroupKey(name, classOrWeaponType, slot)
         : catalogEntryGroupKey(name, type);
     const existing = byName.get(key);
@@ -1669,7 +1751,7 @@ function buildCatalog(
 
   for (const entry of catalog) {
     const nameKey =
-      entry.type === "Armor" && entry.classOrWeaponType && entry.slot
+      isClassPieceType(entry.type) && entry.classOrWeaponType && entry.slot
         ? catalogArmorPieceGroupKey(
             entry.name,
             entry.classOrWeaponType,
@@ -1867,6 +1949,8 @@ function buildCatalog(
       }
     }
 
+    applyYear8ChapterSplit(entry);
+    applyMonumentEventCorrection(entry, dimSeasonData?.dimSeasons ?? {});
     entry.searchText = buildSearchText(entry);
     const alternates = group
       .map((item) => String(item.hash))

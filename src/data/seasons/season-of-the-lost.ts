@@ -11,6 +11,7 @@ export const SEASON_OF_THE_LOST_HUB: SeasonHub = {
   seasonNumber: 15,
   titleIconPath:
     "/common/destiny2_content/icons/2826e18d1517c238cc9460aedd68df38.png",
+  seal: { title: "Realmwalker", completionRecordHash: "2991743002" },
   videos: [
     {
       id: "trailer",
@@ -137,8 +138,8 @@ export const SEASON_OF_THE_LOST_HUB: SeasonHub = {
     {
       id: "astral-alignment",
       title: "Astral Alignment",
-      description:
-        "Six-player matchmade activity in the Dreaming City ley lines. Available from the Director.",
+      description: "Six-player activity in the Dreaming City ley lines.",
+      location: "Vanguard Arena Ops",
       pgcrImagePath:
         "/img/destiny_content/pgcr/season_15_astral_alignment.jpg",
     },
@@ -147,6 +148,7 @@ export const SEASON_OF_THE_LOST_HUB: SeasonHub = {
     "Exotic gear from Season of the Lost — Lorentz Driver from the Season Pass, Ager's Scepter from its exotic quest, and the season's new exotic armor.",
   cosmeticPanelDescription:
     "Season Pass cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  showEververseCosmetics: true,
   cosmeticRewards: [
     "Wayfinder's Shell",
     "Stable Prototype",

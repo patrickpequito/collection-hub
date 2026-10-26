@@ -49,7 +49,9 @@ export function useArmorRolls(slug: string, enabled: boolean): ArmorRollsState {
   });
   const refetchResolveRef = useRef<(() => void) | null>(null);
   const charactersRef = useRef(characters);
-  charactersRef.current = characters;
+  useEffect(() => {
+    charactersRef.current = characters;
+  }, [characters]);
 
   const refetch = useCallback((options?: RefetchOptions) => {
     return new Promise<void>((resolve) => {
@@ -64,10 +66,12 @@ export function useArmorRolls(slug: string, enabled: boolean): ArmorRollsState {
 
   useEffect(() => {
     if (!enabled) {
-      setRolls([]);
-      setCharacters([]);
-      setLoading(false);
-      setError(null);
+      void Promise.resolve().then(() => {
+        setRolls([]);
+        setCharacters([]);
+        setLoading(false);
+        setError(null);
+      });
       refetchResolveRef.current?.();
       refetchResolveRef.current = null;
       return;

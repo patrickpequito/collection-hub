@@ -7,6 +7,7 @@ import {
 } from "@/lib/activities/armor-rows";
 import { groupActivityCosmeticLoot } from "@/lib/activities/cosmetic-loot-sections";
 import { resolveIntroductionSeasonFromItems } from "@/lib/activities/legacy-armor-season";
+import { resolveYearOfProphecyArmorGroups } from "@/lib/activities/year-of-prophecy-armor-loot";
 import { toLootItemFromCatalog } from "@/lib/activities/loot-item";
 import { loadAllLootCatalog } from "@/lib/all-loot/search";
 import { loadArmorSetCatalog } from "@/lib/armor-sets/load";
@@ -378,11 +379,17 @@ export async function resolveCrucibleLoot(): Promise<ResolvedActivityHubLoot> {
 
   const currentWeapons = resolveCrucibleWeapons(crucibleItems);
 
+  const yearOfProphecyArmorGroups = resolveYearOfProphecyArmorGroups(
+    lootCatalog.items.filter((item) => item.type === "Armor"),
+    "crucible",
+  );
+
   return {
     currentArmorRows,
     currentArmorPanels,
     currentWeapons,
     currentOtherSections,
     legacyArmorGroups,
+    yearOfProphecyArmorGroups,
   };
 }

@@ -1,16 +1,9 @@
-import {
-  ARMOR_SLOTS,
-  CLASS_LABELS,
-  SLOT_LABELS,
-} from "@/lib/armor-sets/constants";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { ArmorSetBlock } from "@/components/activity-current-loot-panel";
 import { countOwnedArmorPieces } from "@/lib/activities/armor-rows";
-import { ActivityArmorSetPreview } from "@/components/activity-armor-set-preview";
-import { ArmorPieceIcon } from "@/components/armor-piece-icon";
-import {
-  armorSetPreviewUrl,
-  resolveArmorSetPreviewFile,
-} from "@/lib/armor-sets/preview-images";
-import { X_PROFILE_HANDLE, X_PROFILE_URL } from "@/lib/social";
+import { armorSetPreviewUrl, resolveArmorSetPreviewFile } from "@/lib/armor-sets/preview-images";
 import type { LegacyArmorSetGroup } from "@/types/activity-hub";
 
 type LegacyArmorSetsSectionProps = {
@@ -20,7 +13,7 @@ type LegacyArmorSetsSectionProps = {
   resolveItemOwned?: (itemHash: string) => boolean;
   itemHrefs?: Record<string, string>;
   heading?: string;
-  /** Skip the outer bordered section (e.g. nested inside another panel). */
+  /** Skip the section heading (e.g. nested inside another panel). */
   bare?: boolean;
 };
 
@@ -33,6 +26,41 @@ function legacySetSource(group: LegacyArmorSetGroup): string {
   return "";
 }
 
+/** Small preview in a closed row; only shown once the image has loaded (none when missing). */
+function PreviewThumb({ file }: { file: string }) {
+  const [state, setState] = useState<"loading" | "loaded" | "missing">("loading");
+  const ref = useRef<HTMLImageElement>(null);
+  // The image may finish loading before React attaches onLoad (server-rendered page).
+  useEffect(() => {
+    const img = ref.current;
+    if (!img?.complete) return;
+    void Promise.resolve().then(() => setState(img.naturalWidth > 0 ? "loaded" : "missing"));
+  }, []);
+  if (state === "missing") return null;
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      ref={ref}
+      src={armorSetPreviewUrl(file)}
+      alt=""
+      aria-hidden
+      onLoad={() => setState("loaded")}
+      onError={() => setState("missing")}
+      className={`hidden h-11 w-auto shrink-0 sm:block ${
+        state === "loaded" ? "border border-white/[0.14]" : "invisible w-0"
+      }`}
+    />
+  );
+}
+
+const TOGGLE =
+  "inline-flex min-h-7 items-center border px-2.5 font-display text-xs uppercase tracking-[0.12em] transition";
+
+/**
+ * Older armor (and ornament) sets as expandable rows. A closed row shows the set name,
+ * its release season, a preview thumbnail and the owned count; an open row shows the
+ * shared armor set block (classes above each row, uncropped preview on the right).
+ */
 export function LegacyArmorSetsSection({
   groups,
   ownedItemHashes,
@@ -42,6 +70,7 @@ export function LegacyArmorSetsSection({
   heading = "Legacy armor sets",
   bare = false,
 }: LegacyArmorSetsSectionProps) {
+  const [openSets, setOpenSets] = useState<Set<string>>(() => new Set());
   if (!groups.length) return null;
 
   const isOwned = (itemHash: string) => {
@@ -50,142 +79,103 @@ export function LegacyArmorSetsSection({
       for (const row of group.rows) {
         for (const piece of Object.values(row.pieces)) {
           if (!piece || piece.itemHash !== itemHash) continue;
-          const hashes = piece.ownershipHashes?.length
-            ? piece.ownershipHashes
-            : [itemHash];
+          const hashes = piece.ownershipHashes?.length ? piece.ownershipHashes : [itemHash];
           return hashes.some((hash) => ownedItemHashes.has(hash));
         }
       }
     }
     return ownedItemHashes.has(itemHash);
   };
-
-  const body = (
-    <>
-      {bare ? (
-        <h4 className="mb-3 text-sm font-medium text-zinc-300">{heading}</h4>
-      ) : (
-        <h2 className="mb-4 border-b border-zinc-800 pb-3 text-lg font-semibold text-zinc-100">
-          {heading}
-        </h2>
-      )}
-
-      <div className="divide-y divide-zinc-800">
-        {groups.map((group) => {
-          const progress = countOwnedArmorPieces(group.rows, isOwned);
-          const groupTitle = group.displayName ?? group.setName;
-          const previewFile =
-            group.previewFile ??
-            resolveArmorSetPreviewFile(group.setName, legacySetSource(group));
-
-          return (
-            <details key={group.setName} className="group py-1" open={bare}>
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-lg px-2 py-3 transition hover:bg-zinc-800/40 [&::-webkit-details-marker]:hidden">
-                <div className="min-w-0">
-                  <p className="font-medium text-zinc-100">{groupTitle}</p>
-                  {group.seasonLabel ? (
-                    <p className="text-xs text-zinc-500">{group.seasonLabel}</p>
-                  ) : null}
-                </div>
-                <p className="shrink-0 text-sm text-zinc-400">
-                  {progress.owned}/{progress.total}
-                </p>
-              </summary>
-
-              <div className="px-2 pb-4 pt-1">
-                <div className="flex flex-col gap-4 lg:grid lg:grid-cols-[minmax(0,1fr)_min(52%,28rem)] lg:items-start lg:gap-4">
-                  <div className="min-w-0 space-y-3">
-                    {group.rows.map((row) => (
-                      <div
-                        key={`${group.setName}-${row.guardianClass}`}
-                        className="space-y-1"
-                      >
-                        <p className="text-xs text-zinc-500">
-                          {CLASS_LABELS[row.guardianClass]}
-                        </p>
-                        <div className="grid grid-cols-5 gap-1">
-                          {ARMOR_SLOTS.map((slot, slotIndex) => {
-                            const piece = row.pieces[slot];
-                            if (!piece) {
-                              return (
-                                <div
-                                  key={`${group.setName}-${row.guardianClass}-${slot}`}
-                                  className="min-w-0"
-                                  aria-hidden
-                                />
-                              );
-                            }
-                            const tooltipAlign =
-                              slotIndex === 0
-                                ? "start"
-                                : slotIndex === ARMOR_SLOTS.length - 1
-                                  ? "end"
-                                  : "center";
-                            return (
-                              <div
-                                key={`${group.setName}-${row.guardianClass}-${slot}`}
-                                className="min-w-0"
-                              >
-                                <ArmorPieceIcon
-                                  piece={piece}
-                                  slotLabel={SLOT_LABELS[slot]}
-                                  sourceLabel={piece.source}
-                                  owned={isOwned(piece.itemHash)}
-                                  showOwnership={showOwnership}
-                                  tooltipAlign={tooltipAlign}
-                                  fluid
-                                  href={itemHrefs?.[piece.itemHash]}
-                                  ornamentOverlay={
-                                    group.kind === "ornament" ||
-                                    piece.itemType === "Ornament"
-                                  }
-                                  rarity={piece.rarity}
-                                />
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="min-w-0 space-y-1 lg:col-start-2 lg:row-start-1">
-                    <p className="text-xs text-zinc-500">
-                      {group.kind === "ornament"
-                        ? "Full ornament set preview"
-                        : "Full armor set preview"}
-                    </p>
-                    <ActivityArmorSetPreview
-                      imageFile={previewFile}
-                      imageUrl={armorSetPreviewUrl(previewFile)}
-                      label={
-                        group.kind === "ornament"
-                          ? groupTitle
-                          : `${groupTitle} armor set`
-                      }
-                      missingImageVariant="contribute"
-                      contributionLink={{
-                        href: X_PROFILE_URL,
-                        handle: X_PROFILE_HANDLE,
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-            </details>
-          );
-        })}
-      </div>
-    </>
+  const toggle = (setName: string) =>
+    setOpenSets((current) => {
+      const next = new Set(current);
+      if (next.has(setName)) next.delete(setName);
+      else next.add(setName);
+      return next;
+    });
+  const allOpen = openSets.size === groups.length;
+  const expandControls = (
+    <div className="flex gap-1">
+      {[
+        { label: "Expand all", active: allOpen, onClick: () => setOpenSets(new Set(groups.map((group) => group.setName))) },
+        { label: "Collapse all", active: openSets.size === 0, onClick: () => setOpenSets(new Set()) },
+      ].map((button) => (
+        <button
+          key={button.label}
+          type="button"
+          onClick={button.onClick}
+          className={`${TOGGLE} ${
+            button.active ? "border-bone bg-white/[0.06] text-white" : "border-white/[0.22] text-[#c7cad0] hover:border-bone"
+          }`}
+        >
+          {button.label}
+        </button>
+      ))}
+    </div>
   );
 
-  if (bare) {
-    return <div className="min-w-0">{body}</div>;
-  }
-
   return (
-    <section className="min-w-0 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
-      {body}
+    <section className="min-w-0 space-y-2">
+      {bare ? null : (
+        <div className="mb-3.5 flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.14] pb-2.5">
+          <h2 className="min-w-0 text-2xl font-semibold uppercase tracking-[0.06em] text-bone">{heading}</h2>
+          {expandControls}
+        </div>
+      )}
+
+      {groups.map((group) => {
+        const progress = countOwnedArmorPieces(group.rows, isOwned);
+        const name = group.displayName ?? group.setName;
+        const title = group.kind === "ornament" ? `Ornaments · ${name.replace(/ ornaments$/i, "")}` : `Armor · ${name}`;
+        const previewFile = group.previewFile ?? resolveArmorSetPreviewFile(group.setName, legacySetSource(group));
+        const open = openSets.has(group.setName);
+        return (
+          <div
+            key={group.setName}
+            className={`min-w-0 border bg-panel/85 ${open ? "border-white/30" : "border-hairline"}`}
+          >
+            <button
+              type="button"
+              aria-expanded={open}
+              onClick={() => toggle(group.setName)}
+              className={`flex w-full items-center gap-4 px-4 py-2.5 text-left transition hover:bg-white/[0.03] ${
+                open ? "border-b border-white/[0.08]" : ""
+              }`}
+            >
+              <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                <span className="truncate font-display text-[15px] font-semibold uppercase tracking-[0.08em] text-bone">
+                  {title}
+                </span>
+                {group.seasonLabel ? <span className="ui-label text-[11px]!">{group.seasonLabel}</span> : null}
+              </span>
+              {open ? null : <PreviewThumb file={previewFile} />}
+              <span
+                className={`w-14 shrink-0 text-right text-xs tabular-nums ${
+                  showOwnership && progress.owned >= progress.total ? "text-owned" : "text-ash"
+                }`}
+              >
+                {showOwnership ? `${progress.owned} / ${progress.total}` : progress.total}
+              </span>
+              <span aria-hidden className={`text-[11px] text-ash transition ${open ? "rotate-90 text-bone" : ""}`}>
+                ▸
+              </span>
+            </button>
+            {open ? (
+              <ArmorSetBlock
+                bare
+                setName={name}
+                rows={group.rows}
+                previewFiles={[previewFile]}
+                missingImageVariant="contribute"
+                ownedItemHashes={ownedItemHashes}
+                showOwnership={showOwnership}
+                resolveItemOwned={resolveItemOwned}
+                itemHrefs={itemHrefs}
+              />
+            ) : null}
+          </div>
+        );
+      })}
     </section>
   );
 }

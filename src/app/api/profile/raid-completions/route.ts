@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { fetchAllActivityCompletions } from "@/lib/destiny-activity-stats";
-import { getSession } from "@/lib/session";
+import { getFreshSession } from "@/lib/session-access";
 
 /** Normal/master completions for all tracked raid and dungeon activity pages. */
 export async function GET() {
-  const session = await getSession();
+  const session = await getFreshSession();
   if (!session) {
     return NextResponse.json(
       { completions: {}, error: null },

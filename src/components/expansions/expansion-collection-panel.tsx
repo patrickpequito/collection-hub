@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionHeading } from "@/components/detail-page-parts";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { useOwnership } from "@/components/client-ownership";
@@ -122,34 +123,38 @@ export function ExpansionCollectionPanel({
     [classFilter, items],
   );
 
+  const ownedCount = showOwnership
+    ? items.filter((item) =>
+        (item.ownershipHashes ?? [item.itemHash]).some((hash) => ownedItemHashes.has(hash)),
+      ).length
+    : null;
+
   return (
-    <section className="min-w-0 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+    <section className="min-w-0">
+      <SectionHeading
+        title={`Collection${badgeName ? ` · ${badgeName}` : ""}`}
+        note={ownedCount === null ? `${items.length} items` : `${ownedCount} / ${items.length} owned`}
+      />
+      <div className="min-w-0 overflow-hidden border border-hairline bg-panel/85 p-3 sm:p-4">
+
+      <div className="grid gap-5 md:grid-cols-[13rem_minmax(0,1fr)]">
+      <div className="flex flex-col gap-3">
         {badgeUrl ? (
           <Image
             src={badgeUrl}
             alt={`${badgeName} badge`}
             width={208}
             height={126}
-            className="h-24 w-auto shrink-0 sm:h-28"
+            className="h-auto w-full max-w-[13rem]"
             unoptimized
           />
         ) : null}
-        <div className="min-w-0">
-          <h2 className="text-lg font-semibold text-zinc-100">
-            Expansion collection
-          </h2>
-          <p className="mt-1 text-sm text-zinc-400">
-            {badgeName
-              ? `Destiny Collections badge: ${badgeName}`
-              : "Collection badge items will appear here when this expansion’s collector record is wired."}
-          </p>
-        </div>
-      </div>
-
-      <div className="my-4 flex items-center gap-3">
-        <div className="h-px flex-1 bg-zinc-800" aria-hidden />
-        <div className="flex shrink-0 items-center gap-2">
+        <p className="text-xs text-ash">
+          {badgeName
+            ? "Destiny Collections badge"
+            : "Collection badge items will appear here when this expansion’s collector record is wired."}
+        </p>
+        <div className="flex flex-wrap gap-1.5">
           {GUARDIAN_CLASSES.map((guardianClass) => {
             const selected = classFilter === guardianClass;
             return (
@@ -167,10 +172,11 @@ export function ExpansionCollectionPanel({
                     ? `Clear ${CLASS_LABELS[guardianClass]} filter`
                     : `Filter collection by ${CLASS_LABELS[guardianClass]}`
                 }
-                className={`flex h-9 w-9 items-center justify-center rounded-full border transition ${
+                title={CLASS_LABELS[guardianClass]}
+                className={`inline-flex size-8 items-center justify-center border transition ${
                   selected
-                    ? "border-[#c9a227]/70 bg-[#c9a227]/15 text-zinc-100"
-                    : "border-zinc-600 bg-zinc-950/80 text-zinc-300 hover:border-zinc-400 hover:text-zinc-100"
+                    ? "border-bone text-bone"
+                    : "border-white/[0.22] text-bone/70 hover:border-bone hover:text-bone"
                 }`}
               >
                 <GuardianClassIcon guardianClass={guardianClass} size="sm" />
@@ -178,7 +184,6 @@ export function ExpansionCollectionPanel({
             );
           })}
         </div>
-        <div className="h-px flex-1 bg-zinc-800" aria-hidden />
       </div>
 
       <div className="space-y-6">
@@ -194,7 +199,7 @@ export function ExpansionCollectionPanel({
               : [...GUARDIAN_CLASSES];
             return (
               <div key={section.id}>
-                <h3 className="mb-3 text-sm font-medium text-zinc-300">
+                <h3 className="ui-label mb-2.5">
                   {section.title}
                 </h3>
                 <div className="space-y-4">
@@ -220,7 +225,7 @@ export function ExpansionCollectionPanel({
 
           return (
             <div key={section.id}>
-              <h3 className="mb-3 text-sm font-medium text-zinc-300">
+              <h3 className="ui-label mb-2.5">
                 {section.title}
               </h3>
               <LootItemGrid
@@ -236,6 +241,8 @@ export function ExpansionCollectionPanel({
             </div>
           );
         })}
+      </div>
+      </div>
       </div>
     </section>
   );

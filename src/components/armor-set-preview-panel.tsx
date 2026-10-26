@@ -19,14 +19,12 @@ export function ArmorSetPreviewPanel({
   const imageFile = resolveArmorSetPreviewFile(setName, source);
 
   return (
-    <div className="space-y-3">
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">
-        {setName} Full Set Preview
-      </h2>
+    <div className="min-w-0 lg:h-full">
       <ActivityArmorSetPreview
         imageFile={imageFile}
         imageUrl={armorSetPreviewUrl(imageFile)}
         label={`${setName} full set`}
+        fill
         missingImageVariant="contribute"
         contributionLink={{
           href: X_PROFILE_URL,

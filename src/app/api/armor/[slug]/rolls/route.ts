@@ -18,7 +18,7 @@ import {
 import { resolveArmorVersionForHash } from "@/lib/armor/version-for-hash";
 import { fetchArmorRollInstances } from "@/lib/destiny-inventory";
 import { compareRollInstancesByRecency } from "@/lib/roll-instance-sort";
-import { getSession } from "@/lib/session";
+import { getFreshSession } from "@/lib/session-access";
 import type { ArmorRollInstance } from "@/types/armor-rolls";
 
 type RouteContext = {
@@ -36,7 +36,7 @@ export async function GET(_request: Request, context: RouteContext) {
     );
   }
 
-  const session = await getSession();
+  const session = await getFreshSession();
   if (!session) {
     return NextResponse.json({ rolls: [], characters: [], error: "Not signed in" });
   }

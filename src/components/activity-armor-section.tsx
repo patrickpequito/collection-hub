@@ -1,14 +1,6 @@
-import {
-  ARMOR_SLOTS,
-  CLASS_LABELS,
-  SLOT_LABELS,
-} from "@/lib/armor-sets/constants";
-import {
-  activityArmorSetPreviewUrl,
-  resolveArmorSetPreviewFiles,
-} from "@/lib/activity-armor-set-image";
-import { ActivityArmorSetPreview } from "@/components/activity-armor-set-preview";
-import { ArmorPieceIcon } from "@/components/armor-piece-icon";
+import { ArmorSetBlock } from "@/components/activity-current-loot-panel";
+import { SectionHeading } from "@/components/detail-page-parts";
+import { resolveArmorSetPreviewFiles } from "@/lib/activity-armor-set-image";
 import type { ActivityArmorRow } from "@/types/activity-loot";
 
 type ActivityArmorSectionProps = {
@@ -20,11 +12,13 @@ type ActivityArmorSectionProps = {
   showOwnership: boolean;
   resolveItemOwned?: (itemHash: string) => boolean;
   itemHrefs?: Record<string, string>;
+  /** Kept for callers; every layout now uses the shared armor set block. */
+  layout?: "column" | "wide";
 };
 
+/** Raid / dungeon "Armor sets": one shared armor set block per set. */
 export function ActivityArmorSection({
   activitySlug,
-  activityTitle,
   rows,
   previewFiles,
   ownedItemHashes,
@@ -32,78 +26,34 @@ export function ActivityArmorSection({
   resolveItemOwned,
   itemHrefs,
 }: ActivityArmorSectionProps) {
-  const isOwned = (itemHash: string) =>
-    resolveItemOwned?.(itemHash) ?? ownedItemHashes.has(itemHash);
-  const resolvedPreviewFiles = resolveArmorSetPreviewFiles(
-    activitySlug,
-    previewFiles,
-  );
+  const resolvedPreviewFiles = resolveArmorSetPreviewFiles(activitySlug, previewFiles);
+  const sets = [...new Set(rows.map((row) => row.setName))].map((setName) => ({
+    setName,
+    rows: rows.filter((row) => row.setName === setName),
+  }));
+  // Previews pair with sets when the counts match; otherwise the first set shows the first one.
+  const previewsFor = (index: number) =>
+    resolvedPreviewFiles.length === sets.length
+      ? [resolvedPreviewFiles[index]]
+      : index === 0
+        ? resolvedPreviewFiles
+        : [];
 
   return (
-    <section className="min-w-0 max-w-full overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
-      <h2 className="mb-4 border-b border-zinc-800 pb-3 text-lg font-semibold text-zinc-100">
-        Armor sets
-      </h2>
-      <div className="space-y-4">
-        {rows.map((row) => (
-          <div
-            key={`${row.setName}-${row.guardianClass}`}
-            className="space-y-1"
-          >
-            <p className="text-xs text-zinc-500">
-              {CLASS_LABELS[row.guardianClass]} — {row.setName}
-            </p>
-            <div className="grid grid-cols-5 gap-1.5">
-              {ARMOR_SLOTS.map((slot, slotIndex) => {
-                const piece = row.pieces[slot];
-                if (!piece) {
-                  return (
-                    <div
-                      key={`${row.setName}-${row.guardianClass}-${slot}`}
-                      className="min-w-0"
-                      aria-hidden
-                    />
-                  );
-                }
-                const tooltipAlign =
-                  slotIndex === 0
-                    ? "start"
-                    : slotIndex === ARMOR_SLOTS.length - 1
-                      ? "end"
-                      : "center";
-                return (
-                  <div
-                    key={`${row.setName}-${row.guardianClass}-${slot}`}
-                    className="min-w-0"
-                  >
-                    <ArmorPieceIcon
-                      piece={piece}
-                      slotLabel={SLOT_LABELS[slot]}
-                      sourceLabel={piece.source}
-                      owned={isOwned(piece.itemHash)}
-                      showOwnership={showOwnership}
-                      tooltipAlign={tooltipAlign}
-                      fluid
-                      href={itemHrefs?.[piece.itemHash]}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="my-4 border-b border-zinc-800" aria-hidden />
-      <div className="min-w-0 max-w-full space-y-4">
-        {resolvedPreviewFiles.map((imageFile) => (
-          <ActivityArmorSetPreview
-            key={imageFile}
-            imageFile={imageFile}
-            imageUrl={activityArmorSetPreviewUrl(imageFile)}
-            label={`${activityTitle} armor sets`}
-          />
-        ))}
-      </div>
+    <section className="min-w-0 max-w-full space-y-3">
+      <SectionHeading title="Armor sets" />
+      {sets.map((set, index) => (
+        <ArmorSetBlock
+          key={set.setName}
+          setName={set.setName}
+          rows={set.rows}
+          previewFiles={previewsFor(index)}
+          ownedItemHashes={ownedItemHashes}
+          showOwnership={showOwnership}
+          resolveItemOwned={resolveItemOwned}
+          itemHrefs={itemHrefs}
+        />
+      ))}
     </section>
   );
 }

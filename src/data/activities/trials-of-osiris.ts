@@ -116,6 +116,12 @@ export const TRIALS_WEAPON_POOLS = [
   },
 ] as const;
 
+/**
+ * Saint-14's "Focused Decoding → Weapons → Vendor Exclusive Gear" (manifest vendor 142095858)
+ * entries that are not in a bonus pool: weapons only he sells.
+ */
+export const TRIALS_VENDOR_EXCLUSIVE_WEAPONS = ["Reed's Regret", "Yesterday's Question"] as const;
+
 export function getActiveTrialsBonusPoolId(
   nowMs = Date.now(),
 ): (typeof TRIALS_WEAPON_POOLS)[number]["id"] {

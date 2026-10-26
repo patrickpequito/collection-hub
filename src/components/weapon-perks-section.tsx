@@ -56,8 +56,8 @@ export function WeaponPerksSection({
 
   useEffect(() => {
     if (!hasRollHighlight || mode !== null) return;
-    if (godRoll?.pve?.length) setMode("pve");
-    else if (godRoll?.pvp?.length) setMode("pvp");
+    const initialMode = godRoll?.pve?.length ? "pve" : godRoll?.pvp?.length ? "pvp" : null;
+    if (initialMode) void Promise.resolve().then(() => setMode(initialMode));
   }, [godRoll, hasRollHighlight, mode]);
 
   const godRollMode: WeaponGodRollMode | null = hasRollHighlight

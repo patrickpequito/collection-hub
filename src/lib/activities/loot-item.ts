@@ -29,7 +29,8 @@ export function toLootItemFromCatalog(item: AllLootItem): LootItem {
     seasonIconPath: item.seasonIconPath,
     seasonLabel: item.seasonLabel,
     seasonNumber: item.seasonNumber,
-    itemType: item.type,
+    // Finishers and combat flair are catalog "Emote"s; show their real kind in tooltips.
+    itemType: item.emoteKind ?? item.type,
     rarity: item.rarity,
     ownershipHashes: collectAllLootItemHashes(item),
     ...weaponMetaFromCatalogItem(item),
@@ -69,12 +70,12 @@ export function enrichLootItemFromCatalog(
   catalogByHash: ReadonlyMap<string, AllLootItem>,
 ): LootItem {
   const catalogItem = catalogByHash.get(item.itemHash);
-  if (!catalogItem || catalogItem.type !== "Weapon") {
-    return item;
-  }
+  if (!catalogItem) return item;
 
   return {
     ...item,
+    rarity: item.rarity ?? catalogItem.rarity,
+    itemType: item.itemType ?? catalogItem.type,
     ...weaponMetaFromCatalogItem(catalogItem),
   };
 }

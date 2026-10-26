@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { fetchTriumphScores } from "@/lib/destiny-records";
-import { getSession } from "@/lib/session";
+import { getFreshSession } from "@/lib/session-access";
 
 export async function GET() {
-  const session = await getSession();
+  const session = await getFreshSession();
   if (!session) {
     return NextResponse.json({ scores: null, error: "Not signed in" });
   }

@@ -1,5 +1,6 @@
 import {
   ARMOR_SLOTS,
+  CLASS_LABELS,
   GUARDIAN_CLASSES,
   SLOT_LABELS,
 } from "@/lib/armor-sets/constants";
@@ -20,9 +21,9 @@ export function ArmorSetCard({
   itemHrefs,
 }: ArmorSetCardProps) {
   return (
-    <article className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3 sm:p-4">
+    <article className="border border-hairline bg-panel/85 p-3 sm:p-4">
       <header className="mb-3 border-b border-zinc-800 pb-3">
-        <h2 className="text-lg font-semibold text-zinc-100">{set.name}</h2>
+        <h2 className="text-xl font-semibold uppercase tracking-[0.06em] text-bone">{set.name}</h2>
       </header>
 
       <div className="space-y-3">
@@ -43,6 +44,7 @@ export function ArmorSetCard({
                   owned={owned}
                   showOwnership={showOwnership}
                   href={piece ? itemHrefs?.[piece.itemHash] : undefined}
+                  classOrWeaponType={CLASS_LABELS[guardianClass]}
                 />
               );
             })}

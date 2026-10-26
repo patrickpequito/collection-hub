@@ -13,6 +13,7 @@ import {
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { parseArmorReturnPath } from "@/lib/armor/paths";
 import { backLabelForPath } from "@/lib/weapons/paths";
+import { originCrumbs, resolveItemOrigin } from "@/lib/items/origin";
 
 type ArmorPageProps = {
   params: Promise<{ slug: string }>;
@@ -71,12 +72,66 @@ export default async function ArmorPage({
   );
 
   const oauthConfigured = isBungieOAuthConfigured();
+  const matchedOrigin = resolveItemOrigin(armor);
+  // Exotics come from their own source (focusing, quests…), not their season's expansion.
+  const origin =
+    armor.rarity === "Exotic" && matchedOrigin && (matchedOrigin.section === "season" || matchedOrigin.section === "expansion")
+      ? null
+      : matchedOrigin;
+
+  // Z / C: other pieces of the same set (same class), or other exotics of the class.
+  const slotOrder = ["helmet", "gauntlets", "chest", "legs", "classItem"] as const;
+  const siblingItems =
+    armor.rarity === "Exotic"
+      ? catalog.items
+          .filter(
+            (item) =>
+              item.type === "Armor" &&
+              item.rarity === "Exotic" &&
+              item.slug &&
+              item.classOrWeaponType === armor.classOrWeaponType,
+          )
+          .sort((a, b) => a.name.localeCompare(b.name))
+      : armorSetMatch?.primaryClass
+        ? slotOrder
+            .map((slot) => armorSetMatch.set.classes[armorSetMatch.primaryClass!]?.[slot])
+            .map((piece) =>
+              piece
+                ? catalog.items.find(
+                    (item) =>
+                      item.type === "Armor" &&
+                      item.slug &&
+                      [piece.itemHash, ...(piece.itemHashes ?? [])].includes(item.itemHash),
+                  )
+                : undefined,
+            )
+            .filter((item): item is NonNullable<typeof item> => Boolean(item))
+        : [];
+  const siblingIndex = siblingItems.findIndex((item) => item.slug === slug);
+  const siblingLink = (item: (typeof siblingItems)[number] | undefined) =>
+    item?.slug ? { href: `/armor/${item.slug}`, label: item.name } : undefined;
+  const siblings =
+    siblingIndex >= 0
+      ? { previous: siblingLink(siblingItems[siblingIndex - 1]), next: siblingLink(siblingItems[siblingIndex + 1]) }
+      : undefined;
+  const trail =
+    armor.rarity === "Exotic"
+      ? [{ label: "Collections", href: "/all-loot" }, { label: "Exotics", href: "/exotics" }]
+      : originCrumbs(origin);
 
   return (
     <SectionPageLayout
       showHeader={false}
       oauthConfigured={oauthConfigured}
+      recentVisit={{
+        title: armor.name,
+        imageUrl: `https://www.bungie.net${armor.iconPath}`,
+      }}
       maxWidth="5xl"
+      title={armor.name}
+      breadcrumbs={trail}
+      hideSectionCrumb={trail.length > 0}
+      siblings={siblings}
       backLink={{
         useHistory: true,
         label: backLabelForPath(fallbackHref),
@@ -91,6 +146,7 @@ export default async function ArmorPage({
         armorSet={armorSetMatch?.set ?? null}
         primaryGuardianClass={armorSetMatch?.primaryClass ?? null}
         itemHrefs={itemHrefs}
+        origin={origin}
       />
     </SectionPageLayout>
   );

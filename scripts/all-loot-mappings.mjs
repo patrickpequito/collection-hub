@@ -1,8 +1,12 @@
+import { readFileSync } from "node:fs";
 /**
  * Player-facing chapters S1–S29. Bungie manifest seasons are 1–28; manifest 27–28
  * map to display chapters (27 → The Edge of Fate half-year, 28 → Monument of Triumph).
  */
 export const MONUMENT_OF_TRIUMPH_LABEL = "Monument of Triumph";
+/** Year 8 seasons: manifest 27 (with The Edge of Fate) and 28 (with Renegades). */
+export const RECLAMATION_LABEL = "S27 Season: Reclamation";
+export const LAWLESS_LABEL = "S28 Season: Lawless";
 
 export const MANIFEST_CHAPTER_LABEL = {
   1: "Red War",
@@ -38,7 +42,9 @@ export const MANIFEST_CHAPTER_LABEL = {
 /** Facet order (newest first). Expansion before season when S numbers match. */
 export const CANONICAL_SEASON_ORDER = [
   MONUMENT_OF_TRIUMPH_LABEL,
+  LAWLESS_LABEL,
   "Renegades",
+  RECLAMATION_LABEL,
   "The Edge of Fate",
   "S26 Episode: Heresy",
   "S25 Episode: Revenant",
@@ -85,8 +91,8 @@ export const CALL_TO_ARMS_WATERMARK =
 /** Expansion labels keyed by display season number (no S prefix in UI). */
 export const EXPANSION_DISPLAY_NUMBER = {
   [MONUMENT_OF_TRIUMPH_LABEL]: 29,
-  Renegades: 29,
-  "The Edge of Fate": 28,
+  Renegades: 28,
+  "The Edge of Fate": 27,
   "The Final Shape": 23,
   "Into the Light": 23,
   Lightfall: 20,
@@ -196,8 +202,10 @@ export const WATERMARK_LABEL_OVERRIDES = {
   "bce51cf90464e28026140df77c4eb6ce.png": "Beyond Light",
   [LIGHTFALL_WATERMARK]: "Lightfall",
   [WITCH_QUEEN_WATERMARK]: "The Witch Queen",
-  "4376a7d734583ae347acf9732aa3bb43.png": "The Edge of Fate",
+  "6129365b4fad6754f2b8c4478fc3c4ac.png": "The Edge of Fate",
+  "249813e647271a8227bae0d8a39ed505.png": RECLAMATION_LABEL,
   "95f7754d52d6016fdc445fb62aa7a31e.png": "Renegades",
+  "4376a7d734583ae347acf9732aa3bb43.png": LAWLESS_LABEL,
   "0ac354c1c326441716ddb15d2c158c59.png": "S26 Episode: Heresy",
 };
 
@@ -218,12 +226,19 @@ export function isYear8ArmorChapterLabel(label) {
  * Armor 3.0 reissues sometimes keep the original season watermark (e.g. Seventh
  * Seraph Cowl). When a non-Armor-3.0 peer exists in the name group, map stale
  * pre-Year-8 watermark labels to Monument of Triumph.
+ *
+ * Exotic armor is different: Armor 3.0 remasters keep the Mot featured watermark
+ * in the API, but they are not playlist remasters — keep the debut season identity.
  */
 export function resolveArmor30ReissueSeasonLabel(
   label,
-  { isArmor30 = false, hasNonArmor30Peer = false } = {},
+  { isArmor30 = false, hasNonArmor30Peer = false, isExotic = false } = {},
 ) {
   if (!isArmor30 || !hasNonArmor30Peer) return label ?? null;
+  if (isExotic) {
+    if (label && !isYear8ArmorChapterLabel(label)) return label;
+    return null;
+  }
   if (!label) return MONUMENT_OF_TRIUMPH_LABEL;
   if (isYear8ArmorChapterLabel(label)) return label;
   return MONUMENT_OF_TRIUMPH_LABEL;
@@ -242,9 +257,7 @@ export function isMonumentWeaponReissue(item) {
 export const REVENANT_EPISODE_WATERMARK = "5232219633cc4d90570bffda36caccf4.png";
 
 /** DIM watermark-to-season mistakes or cross-era reuse. Values are manifest season numbers. */
-export const WATERMARK_MANIFEST_SEASON_OVERRIDES = {
-  "4376a7d734583ae347acf9732aa3bb43.png": 27,
-};
+export const WATERMARK_MANIFEST_SEASON_OVERRIDES = {};
 
 function resolveWatermarkManifestSeason(watermark, watermarkToSeason = {}) {
   const basename = watermarkBasename(watermark);
@@ -860,7 +873,7 @@ export const WATERMARK_EVENT_LABELS = {
 export function resolveEventLabel(
   source = "",
   seasonIconPath = "",
-  seasonLabel = "",
+  _seasonLabel = "",
 ) {
   for (const [pattern, label] of EVENT_SOURCE_PATTERNS) {
     if (pattern.test(source)) return label;
@@ -950,6 +963,9 @@ export function catalogVersionsEquivalent(current, candidate, context = {}) {
         candidateIsArmor30 !== undefined &&
         currentIsArmor30 !== candidateIsArmor30
       ) {
+        // Exotic Armor 3.0 remasters share debut identity with the legacy peer —
+        // collapse into one display version. Legendary Mot remasters stay split.
+        if (context.collapseExoticArmor30Peers) return true;
         return false;
       }
     }
@@ -959,12 +975,20 @@ export function catalogVersionsEquivalent(current, candidate, context = {}) {
   return false;
 }
 
-export function preferCatalogVersion(current, candidate) {
+export function preferCatalogVersion(current, candidate, context = {}) {
   if (!candidate) return current;
   if (!current) return candidate;
 
   if (current.seasonLabel !== candidate.seasonLabel) {
     return current.seasonNumber > candidate.seasonNumber ? current : candidate;
+  }
+
+  const isArmor30ForHash = context.isArmor30ForHash;
+  if (isArmor30ForHash) {
+    const currentIs30 = isArmor30ForHash(current.itemHash);
+    const candidateIs30 = isArmor30ForHash(candidate.itemHash);
+    if (currentIs30 === true && candidateIs30 !== true) return current;
+    if (candidateIs30 === true && currentIs30 !== true) return candidate;
   }
 
   if (current.eventLabel && !candidate.eventLabel) return candidate;
@@ -1679,7 +1703,7 @@ export function isRecurringVersionSource(source = "") {
   );
 }
 
-export function resolveExpansionLabelForGroup(group, collectibles, seasons = {}) {
+export function resolveExpansionLabelForGroup(group, collectibles, _seasons = {}) {
   const sorted = [...group].sort((a, b) => (a.index ?? 0) - (b.index ?? 0));
 
   for (const item of sorted) {
@@ -1706,7 +1730,7 @@ export function watermarkBasename(watermarkPath = "") {
 export function buildWatermarkLabelMap(
   items,
   collectibles,
-  seasons = {},
+  _seasons = {},
   dimSeasonData = {},
 ) {
   const result = new Map();
@@ -1852,6 +1876,45 @@ export function resolveActivitySourceSeasonLabel(
   ) {
     return ownLabel;
   }
+
+  return fromSource;
+}
+
+/** Forsaken expansion emblem — used when remapping stale Arrivals watermarks on Last Wish armor. */
+export const FORSAKEN_WATERMARK = "aeb95eb1abe8e45e1fe2573d6b3ab3c5.png";
+
+const EXPANSION_WATERMARK_BY_LABEL = {
+  Forsaken: FORSAKEN_WATERMARK,
+};
+
+export function expansionWatermarkPathForLabel(label) {
+  const basename = EXPANSION_WATERMARK_BY_LABEL[label];
+  return basename
+    ? `/common/destiny2_content/icons/${basename}`
+    : null;
+}
+
+export function isRaidActivitySource(source = "") {
+  return (
+    /\braid\b/i.test(source) ||
+    /last wish|scourge of the past|crown of sorrow|garden of salvation|deep stone crypt|vault of glass|vow of the disciple|king'?s fall|root of nightmares|salvation'?s edge|crota'?s end|leviathan|eater of worlds|spire of stars/i.test(
+      source,
+    )
+  );
+}
+
+/**
+ * Expansion raid armor sometimes carries a later numbered-season watermark from
+ * the armor 2.0 / sunsetting reissue wave (e.g. Last Wish Great Hunt pieces with
+ * Arrivals emblems). Keep the raid's expansion as the debut identity.
+ */
+export function preferRaidExpansionOverSeasonWatermark(label, source = "") {
+  if (!label || !source) return label;
+  if (isYear8ArmorChapterLabel(label) || isExpansionLabel(label)) return label;
+
+  const fromSource = resolveSeasonLabelFromSource(source, {});
+  if (!fromSource || !isExpansionLabel(fromSource)) return label;
+  if (!isRaidActivitySource(source)) return label;
 
   return fromSource;
 }
@@ -2059,7 +2122,7 @@ export function resolveVersionSeasonLabel(
   seasonIndexAnchors,
   dimSeasonData = {},
   {
-    peerItems = [],
+    peerItems: _peerItems = [],
     indexCohortAnchors = [],
     watermarkLabelMap = new Map(),
     salvationsEdgeS29MinIndex = null,
@@ -2129,6 +2192,8 @@ export function resolveVersionSeasonLabel(
   if (!label) {
     label = inferSeasonLabelFromIndex(item.index ?? 0, seasonIndexAnchors);
   }
+
+  label = preferRaidExpansionOverSeasonWatermark(label, source);
 
   return stripIncorrectMonumentLabel(
     item,
@@ -2218,7 +2283,7 @@ export function resolveSeasonLabelFromSource(source = "", seasons = {}) {
 export function isSourceObtainable(
   source = "",
   collectible = null,
-  seasonNumber = 0,
+  _seasonNumber = 0,
   { recentSeasonPass = false } = {},
 ) {
   if (collectible?.redacted) return false;
@@ -2252,4 +2317,193 @@ export function isSourceObtainable(
   }
 
   return true;
+}
+
+/**
+ * Year 8 split by icon watermark. The season definitions confirm the emblems:
+ * manifest 27 (Reclamation) and 28 (Lawless) icons match 249813 / 4376.
+ */
+const YEAR8_WATERMARK_LABELS = {
+  "6129365b4fad6754f2b8c4478fc3c4ac.png": "The Edge of Fate",
+  "249813e647271a8227bae0d8a39ed505.png": RECLAMATION_LABEL,
+  "95f7754d52d6016fdc445fb62aa7a31e.png": "Renegades",
+  "4376a7d734583ae347acf9732aa3bb43.png": LAWLESS_LABEL,
+};
+
+/** Season badge icon for the new Year 8 season labels. */
+const YEAR8_DISPLAY_ICONS = {
+  [RECLAMATION_LABEL]:
+    "/common/destiny2_content/icons/DestinySeasonDefinition_a16e9585a24eaccc9ef3021a1769e50d.png",
+  [LAWLESS_LABEL]:
+    "/common/destiny2_content/icons/DestinySeasonDefinition_e26d26718aa8cdda042e116085bd3473.png",
+};
+
+/** Events held during each Year 8 season (Reclamation: Jul–Dec 2025). */
+const YEAR8_EVENT_SEASON = {
+  "Festival of the Lost": RECLAMATION_LABEL,
+  Solstice: RECLAMATION_LABEL,
+  "The Dawning": LAWLESS_LABEL,
+  [CALL_TO_ARMS_LABEL]: LAWLESS_LABEL,
+  Pride: LAWLESS_LABEL,
+  "Crimson Days": LAWLESS_LABEL,
+};
+
+const YEAR8_SPLIT_LABELS = new Set([
+  "The Edge of Fate",
+  "Renegades",
+  RECLAMATION_LABEL,
+  LAWLESS_LABEL,
+]);
+
+/** Watermark-less Year 8 items placed by source text. */
+const YEAR8_SOURCE_SEASON = [
+  [/\breclaim\b|season 27|implement of curiosity/i, RECLAMATION_LABEL],
+  [/encrypted data disk/i, LAWLESS_LABEL],
+];
+
+function resolveYear8Label(record, entry) {
+  const basename = watermarkBasename(record.seasonIconPath ?? "");
+  const byWatermark = YEAR8_WATERMARK_LABELS[basename];
+  if (byWatermark) return byWatermark;
+  if (!YEAR8_SPLIT_LABELS.has(record.seasonLabel)) return null;
+
+  const eventLabel =
+    record.eventLabel ??
+    entry.eventLabel ??
+    resolveEventLabel(entry.source ?? "", record.seasonIconPath ?? "");
+  if (eventLabel && YEAR8_EVENT_SEASON[eventLabel]) {
+    return YEAR8_EVENT_SEASON[eventLabel];
+  }
+  // Unlisted event emblem on Year 8 store items (after Reclamation ended).
+  if (basename === "3543d23d9063fbf7332c7f129a74ada2.png") return LAWLESS_LABEL;
+
+  const text = `${entry.name ?? ""} ${entry.source ?? ""}`;
+  for (const [pattern, label] of YEAR8_SOURCE_SEASON) {
+    if (pattern.test(text)) return label;
+  }
+  return null;
+}
+
+function applyYear8Record(record, entry) {
+  const label = resolveYear8Label(record, entry);
+  if (!label || label === record.seasonLabel) return;
+  record.seasonLabel = label;
+  record.seasonNumber = displayNumberFromLabel(label);
+  const displayIcon = YEAR8_DISPLAY_ICONS[label];
+  if (displayIcon) {
+    record.seasonDisplayIconPath = displayIcon;
+    record.seasonDisplayIconWatermark = false;
+  }
+}
+
+/**
+ * Final pass: split The Edge of Fate / Renegades into expansion + season by
+ * watermark. Runs after every other season rule in generate and relabel.
+ */
+export function applyYear8ChapterSplit(entry) {
+  for (const version of entry.versions ?? []) {
+    applyYear8Record(version, entry);
+  }
+  // Entry mirrors its newest version, same as the relabel script.
+  const latest = entry.versions?.[0];
+  if (!latest) {
+    applyYear8Record(entry, entry);
+    return;
+  }
+  if (!YEAR8_SPLIT_LABELS.has(latest.seasonLabel)) return;
+  entry.seasonLabel = latest.seasonLabel;
+  entry.seasonNumber = latest.seasonNumber;
+  if (latest.seasonDisplayIconPath) {
+    entry.seasonDisplayIconPath = latest.seasonDisplayIconPath;
+    entry.seasonDisplayIconWatermark = latest.seasonDisplayIconWatermark;
+  }
+}
+
+/** DIM export: item hash → manifest season the item was introduced in. */
+export const DIM_ITEM_SEASONS_URL =
+  "https://raw.githubusercontent.com/DestinyItemManager/d2-additional-info/master/output/seasons.json";
+
+/** Event editions named in source text, for items DIM does not date. */
+const EVENT_EDITION_SEASON = [
+  [/season 13 guardian games|guardian games 2021/i, "S13 Season of the Chosen"],
+  [/guardian games 2022/i, "S16 Season of the Risen"],
+  [/guardian games 2023/i, "S20 Season of Defiance"],
+  [/guardian games 2024/i, "S23 Season of the Wish"],
+  [/guardian games 2025/i, "S26 Episode: Heresy"],
+  [/dawning 2021/i, "S15 Season of the Lost"],
+  [/festival of the lost 2024/i, "S25 Episode: Revenant"],
+];
+
+/** Owner-picked seasons for undated event items (public/undated-event-items.html). */
+function loadUndatedEventOverrides() {
+  try {
+    const file = JSON.parse(
+      readFileSync(new URL("../data/undated-event-items.json", import.meta.url), "utf8"),
+    );
+    return Object.fromEntries(
+      file.items
+        .filter((item) => item.correctLabel)
+        .map((item) => [item.itemHash, item.correctLabel]),
+    );
+  } catch {
+    return {};
+  }
+}
+
+const UNDATED_EVENT_OVERRIDES = loadUndatedEventOverrides();
+
+const LAST_EVENT_EDITION_SEASON = {
+  "Guardian Games": LAWLESS_LABEL,
+  "The Dawning": LAWLESS_LABEL,
+  "Festival of the Lost": RECLAMATION_LABEL,
+};
+
+function seasonLabelForEventManifest(manifestSeason) {
+  // No events have run since Monument of Triumph launched, so manifest 28
+  // event content belongs to Lawless.
+  if (manifestSeason === 28) return LAWLESS_LABEL;
+  if (manifestSeason === 27) return RECLAMATION_LABEL;
+  return MANIFEST_CHAPTER_LABEL[manifestSeason] ?? null;
+}
+
+function applyMonumentEventRecord(record, entry, dimItemSeasons) {
+  if (record.seasonLabel !== MONUMENT_OF_TRIUMPH_LABEL) return;
+  const isEvent =
+    record.eventLabel ??
+    entry.eventLabel ??
+    WATERMARK_EVENT_LABELS[watermarkBasename(record.seasonIconPath ?? "")];
+  if (!isEvent) return;
+
+  let label =
+    UNDATED_EVENT_OVERRIDES[record.itemHash] ??
+    seasonLabelForEventManifest(dimItemSeasons[record.itemHash]);
+  if (!label) {
+    const source = entry.source ?? "";
+    label = EVENT_EDITION_SEASON.find(([pattern]) => pattern.test(source))?.[1];
+  }
+  if (!label) {
+    // Undated (no source, not in DIM): last edition before Monument of Triumph.
+    // Owner reviews these in public/undated-event-items.html.
+    label = LAST_EVENT_EDITION_SEASON[isEvent];
+  }
+  if (!label) return;
+  record.seasonLabel = label;
+  record.seasonNumber = displayNumberFromLabel(label);
+}
+
+/**
+ * Event items never belong to Monument of Triumph (no events since it
+ * launched). Re-home them to the season they were introduced in.
+ */
+export function applyMonumentEventCorrection(entry, dimItemSeasons = {}) {
+  for (const version of entry.versions ?? []) {
+    applyMonumentEventRecord(version, entry, dimItemSeasons);
+  }
+  const latest = entry.versions?.[0];
+  if (!latest) {
+    applyMonumentEventRecord(entry, entry, dimItemSeasons);
+    return;
+  }
+  entry.seasonLabel = latest.seasonLabel;
+  entry.seasonNumber = latest.seasonNumber;
 }

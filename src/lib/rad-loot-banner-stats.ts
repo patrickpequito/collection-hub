@@ -5,10 +5,7 @@ import {
   type RaidCompletions,
 } from "@/lib/destiny-activity-stats";
 import { fetchRecordInstances } from "@/lib/destiny-records";
-import {
-  getActivityBannerMeta,
-  getStaticActivityBannerMeta,
-} from "@/lib/rad-loot-banner-meta";
+import { getStaticActivityBannerMeta } from "@/lib/rad-loot-banner-meta";
 import { isRecordRedeemed } from "@/lib/triumphs/record-progress";
 import type { ActivityEntry } from "@/types/activity-loot";
 import type { RecordInstance } from "@/types/triumph";

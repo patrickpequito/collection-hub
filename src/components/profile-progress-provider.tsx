@@ -27,6 +27,7 @@ type ProfileProgressContextValue = {
   membershipId: string | null;
   syncedAt: number | null;
   ownedItemHashes: Set<string>;
+  inventoryItemHashes: Set<string>;
   inventoryError: string | null;
   recordInstances: Record<string, RecordInstance>;
   stringVariables: TriumphStringVariables;
@@ -99,8 +100,10 @@ export function ProfileProgressProvider({
 
   useEffect(() => {
     if (!signedIn || !membershipId) {
-      setSnapshot(null);
-      setInventoryError(null);
+      void Promise.resolve().then(() => {
+        setSnapshot(null);
+        setInventoryError(null);
+      });
       activityHashRegistryRef.current.clear();
       questTargetRegistryRef.current.clear();
       checklistsRequestedRef.current = false;
@@ -108,8 +111,10 @@ export function ProfileProgressProvider({
     }
 
     const cached = readProfileCache(membershipId);
-    setSnapshot(cached ?? emptyProfileCacheSnapshot(membershipId));
-    setInventoryError(null);
+    void Promise.resolve().then(() => {
+      setSnapshot(cached ?? emptyProfileCacheSnapshot(membershipId));
+      setInventoryError(null);
+    });
   }, [membershipId, signedIn]);
 
   useEffect(() => {
@@ -121,12 +126,13 @@ export function ProfileProgressProvider({
       .then(async (response) => {
         const payload = (await response.json()) as {
           itemHashes: string[];
+          inventoryItemHashes?: string[];
           error: string | null;
         };
         if (cancelled) return;
         setInventoryError(payload.error);
         if (!payload.error) {
-          patchSnapshot({ ownedItemHashes: payload.itemHashes });
+          patchSnapshot({ ownedItemHashes: payload.itemHashes, inventoryItemHashes: payload.inventoryItemHashes ?? [] });
         }
       })
       .catch((error) => {
@@ -172,6 +178,10 @@ export function ProfileProgressProvider({
     };
   }, [membershipId, patchSnapshot, signedIn]);
 
+  // Refs let a finished fetch re-run its own flush (a callback can't reference itself).
+  const flushActivityCompletionsRef = useRef<() => void>(() => {});
+  const flushQuestCompletionsRef = useRef<() => void>(() => {});
+
   const flushActivityCompletions = useCallback(() => {
     if (!signedIn || !membershipId || activityFetchInFlightRef.current) return;
 
@@ -194,10 +204,14 @@ export function ProfileProgressProvider({
       .finally(() => {
         activityFetchInFlightRef.current = false;
         if (activityHashRegistryRef.current.size > hashes.length) {
-          flushActivityCompletions();
+          flushActivityCompletionsRef.current();
         }
       });
   }, [membershipId, patchSnapshot, signedIn]);
+
+  useEffect(() => {
+    flushActivityCompletionsRef.current = flushActivityCompletions;
+  }, [flushActivityCompletions]);
 
   const scheduleActivityCompletions = useCallback(() => {
     if (activityFetchTimerRef.current != null) {
@@ -233,10 +247,14 @@ export function ProfileProgressProvider({
       .finally(() => {
         questFetchInFlightRef.current = false;
         if (questTargetRegistryRef.current.size > targets.length) {
-          flushQuestCompletions();
+          flushQuestCompletionsRef.current();
         }
       });
   }, [membershipId, patchSnapshot, signedIn]);
+
+  useEffect(() => {
+    flushQuestCompletionsRef.current = flushQuestCompletions;
+  }, [flushQuestCompletions]);
 
   const scheduleQuestCompletions = useCallback(() => {
     if (questFetchTimerRef.current != null) {
@@ -291,12 +309,17 @@ export function ProfileProgressProvider({
     () => new Set(snapshot?.ownedItemHashes ?? []),
     [snapshot?.ownedItemHashes],
   );
+  const inventoryItemHashes = useMemo(
+    () => new Set(snapshot?.inventoryItemHashes ?? []),
+    [snapshot?.inventoryItemHashes],
+  );
 
   const value = useMemo<ProfileProgressContextValue>(
     () => ({
       membershipId,
       syncedAt: snapshot?.syncedAt ?? null,
       ownedItemHashes,
+      inventoryItemHashes,
       inventoryError,
       recordInstances: snapshot?.recordInstances ?? {},
       stringVariables: snapshot?.stringVariables ?? EMPTY_TRIUMPH_STRING_VARIABLES,
@@ -318,6 +341,7 @@ export function ProfileProgressProvider({
       snapshot?.questCompletions,
       snapshot?.checklists,
       ownedItemHashes,
+      inventoryItemHashes,
       inventoryError,
       registerActivityHashes,
       registerQuestTargets,
@@ -333,10 +357,11 @@ export function ProfileProgressProvider({
 }
 
 export function useProfileInventory() {
-  const { ownedItemHashes, inventoryError, membershipId } =
+  const { ownedItemHashes, inventoryItemHashes, inventoryError, membershipId } =
     useProfileProgressContext();
   return {
     ownedItemHashes,
+    inventoryItemHashes,
     inventoryError,
     showOwnership: Boolean(membershipId) && !inventoryError,
     signedIn: Boolean(membershipId),

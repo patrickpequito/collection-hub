@@ -18,6 +18,8 @@ export type SeasonPlayableActivity = {
   id: string;
   title: string;
   description: string;
+  /** Where it is launched today (tag on the card), e.g. "Dungeon", "Vanguard Fireteam Ops". */
+  location: string;
   /** Bungie manifest `pgcrImage` path for the Director-style activity art. */
   pgcrImagePath: string;
   href?: string;
@@ -54,6 +56,18 @@ export type SeasonHub = {
   cosmeticRewards?: readonly string[];
   /** Optional blurb under the Cosmetic rewards heading. */
   cosmeticPanelDescription?: string;
+  /**
+   * Show the Eververse subsection (Silver / Bright Dust cosmetics with this
+   * season's watermark) inside Cosmetic rewards. Has its own counter.
+   */
+  showEververseCosmetics?: boolean;
+  /** Season-watermarked cosmetics that were not sold in the Eververse. */
+  excludedEververseNames?: readonly string[];
+  /**
+   * Eververse armor ornament sets shown together (one per class), for seasons
+   * with several sets per class. Otherwise one-set-per-class merges on its own.
+   */
+  eververseOrnamentSetGroups?: readonly (readonly string[])[];
   weaponPools: readonly SeasonWeaponPoolDefinition[];
   /** Force specific weapons into a pool when source text is unreliable. */
   weaponPoolByName?: Readonly<Record<string, string>>;
@@ -65,6 +79,8 @@ export type SeasonHub = {
   matchWeaponVersions?: boolean;
   /** Bungie icon path for the season title seal (decorative + future title panel). */
   titleIconPath: string;
+  /** Season seal title and its completion record (from the Bungie manifest). */
+  seal?: { title: string; completionRecordHash: string };
   playableActivities: readonly SeasonPlayableActivity[];
   exoticPanelDescription: string;
   available: boolean;

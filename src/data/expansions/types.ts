@@ -53,6 +53,13 @@ export type ExpansionHub = {
   /** Collapsible triumphs block title, e.g. "Throne World // All triumphs". */
   triumphsGroupTitle: string;
   exoticPanelDescription: string;
+  /**
+   * Show the Eververse block (cosmetics with the expansion watermark) under
+   * Exotic weapons & armor. Has its own counter, outside expansion totals.
+   */
+  showEververseCosmetics?: boolean;
+  /** Expansion-watermarked cosmetics that were not sold in the Eververse. */
+  excludedEververseNames?: readonly string[];
   deepLootEmptyDescription: string;
   indexImageFile: string;
   available: boolean;
