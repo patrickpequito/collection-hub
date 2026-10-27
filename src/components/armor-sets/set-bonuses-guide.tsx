@@ -60,6 +60,37 @@ function Bonus({ bonus, pieces }: { bonus: ArmorSetBonus | null; pieces: 2 | 4 }
   );
 }
 
+/** Teal effect tags derived from the bonus text (Orbs, Survival, Melee…). */
+function EffectTags({ tags }: { tags: string[] }) {
+  if (!tags.length) return null;
+  return (
+    <span className="flex flex-wrap gap-1">
+      {tags.map((tag) => (
+        <span
+          key={tag}
+          className="bg-seasonal/15 px-1.5 py-px font-display text-[10px] uppercase tracking-[0.12em] text-[#7fe0df]"
+        >
+          {tag}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+function BonusIcon({ bonus }: { bonus: ArmorSetBonus | null }) {
+  if (!bonus) return null;
+  return (
+    <Image
+      src={bungieIconUrl(bonus.iconPath)}
+      alt=""
+      width={26}
+      height={26}
+      className="size-[26px] shrink-0 border border-white/[0.14] bg-[#14181e]"
+      unoptimized
+    />
+  );
+}
+
 /** Searchable guide to every armor set bonus, with what you can wear today. */
 export function SetBonusesGuide({ sets }: { sets: BonusGuideSet[] }) {
   const { ownedItemHashes, inventoryItemHashes, showOwnership } = useOwnership();
@@ -87,15 +118,25 @@ export function SetBonusesGuide({ sets }: { sets: BonusGuideSet[] }) {
 
   const owned = (set: BonusGuideSet, cls: GuardianClass) => ownedCounts.get(set.hash)?.[cls] ?? 0;
 
-  const visible = sets.filter((set) => {
+  // Every filter but the effect tags: also used for the per-effect counts on phones.
+  const matchesBase = (set: BonusGuideSet) => {
     const text = `${set.name} ${set.twoPiece?.name} ${set.twoPiece?.description} ${set.fourPiece?.name} ${set.fourPiece?.description}`.toLowerCase();
     if (query.trim() && !query.trim().toLowerCase().split(/\s+/).every((word) => text.includes(word))) return false;
     if (source !== "all" && set.origin.group !== source) return false;
-    if (effects.length && !effects.every((tag) => set.tags.includes(tag))) return false;
     if (monumentOnly && !set.monumentReissue) return false;
     if (wearableOnly && showOwnership && owned(set, guardianClass) < 2) return false;
     return true;
-  });
+  };
+  const visible = sets.filter(
+    (set) => matchesBase(set) && (!effects.length || effects.every((tag) => set.tags.includes(tag))),
+  );
+  const effectCounts = BONUS_EFFECT_TAGS.map((tag) => ({
+    tag,
+    count: sets.filter((set) => matchesBase(set) && set.tags.includes(tag)).length,
+  }));
+  const toggleEffect = (tag: string) =>
+    setEffects((current) => (current.includes(tag) ? current.filter((entry) => entry !== tag) : [...current, tag]));
+  const sourceValue = monumentOnly ? "monument" : source;
 
   const fourReady = sets.filter((set) => owned(set, guardianClass) >= 4);
   const twoReady = sets.filter((set) => owned(set, guardianClass) >= 2 && owned(set, guardianClass) < 4);
@@ -107,15 +148,15 @@ export function SetBonusesGuide({ sets }: { sets: BonusGuideSet[] }) {
     <div className="space-y-9">
       <StatBlockGrid count={4}>
         <StatBlock label="Sets with bonuses">
-          <span className="font-display text-3xl leading-none text-bone">{sets.length}</span>
+          <span className="font-display text-[22px] leading-none sm:text-3xl text-bone">{sets.length}</span>
           <span className="text-xs text-ash">{sets.filter((set) => set.monumentReissue).length} reissued with Monument of Triumph</span>
         </StatBlock>
         <StatBlock label={`4-piece ready · ${className}`}>
-          <span className="font-display text-3xl leading-none text-owned">{showOwnership ? fourReady.length : "—"}</span>
+          <span className="font-display text-[22px] leading-none sm:text-3xl text-owned">{showOwnership ? fourReady.length : "—"}</span>
           <span className="text-xs text-ash">Sets you can wear in full</span>
         </StatBlock>
         <StatBlock label={`2-piece ready · ${className}`}>
-          <span className="font-display text-3xl leading-none text-bone">{showOwnership ? twoReady.length : "—"}</span>
+          <span className="font-display text-[22px] leading-none sm:text-3xl text-bone">{showOwnership ? twoReady.length : "—"}</span>
           <span className="text-xs text-ash">Two or three pieces owned</span>
         </StatBlock>
         <StatBlock label="Armor 3.0 pieces">
@@ -156,9 +197,56 @@ export function SetBonusesGuide({ sets }: { sets: BonusGuideSet[] }) {
               Wearable only
             </button>
           ) : null}
+          {/* Phones: the source chips collapse into one dropdown. */}
+          <label className="relative ml-auto md:hidden">
+            <span className="sr-only">Source</span>
+            <select
+              value={sourceValue}
+              onChange={(event) => {
+                const value = event.target.value;
+                setMonumentOnly(value === "monument");
+                setSource(value === "monument" ? "all" : value);
+              }}
+              className="h-10 appearance-none border border-white/[0.22] bg-void/60 pl-3 pr-8 font-display text-xs uppercase tracking-[0.12em] text-bone focus:border-bone focus:outline-none"
+            >
+              {SOURCE_FILTERS.map((filter) => (
+                <option key={filter.id} value={filter.id}>
+                  Source: {filter.label}
+                </option>
+              ))}
+              <option value="monument">Source: Monument reissue</option>
+            </select>
+            <span aria-hidden className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-ash">
+              ▾
+            </span>
+          </label>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        {/* Phones: pick an effect from a 3-column grid with the number of matching sets. */}
+        <div className="space-y-1.5 md:hidden">
+          <span className="ui-label text-[10px]!">Pick an effect</span>
+          <div className="grid grid-cols-3 gap-1.5">
+            {effectCounts.map(({ tag, count }) => {
+              const on = effects.includes(tag);
+              return (
+                <button
+                  key={tag}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => toggleEffect(tag)}
+                  className={`flex min-w-0 items-center justify-between gap-1 border px-2 py-1.5 font-display text-[11px] uppercase tracking-[0.1em] transition ${
+                    on ? "border-bone bg-white/[0.06] text-white" : "border-white/[0.18] text-[#c7cad0]"
+                  }`}
+                >
+                  <span className="truncate">{tag === "Class ability" ? "Class" : tag}</span>
+                  <span className="text-ash">{count}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="hidden flex-wrap items-center gap-2 md:flex">
           <span className="ui-label w-16 text-[11px]!">Source</span>
           {SOURCE_FILTERS.map((filter) => (
             <button key={filter.id} type="button" className={chipClass(source === filter.id)} onClick={() => setSource(filter.id)}>
@@ -170,16 +258,14 @@ export function SetBonusesGuide({ sets }: { sets: BonusGuideSet[] }) {
           </button>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="hidden flex-wrap items-center gap-2 md:flex">
           <span className="ui-label w-16 text-[11px]!">Effect</span>
           {BONUS_EFFECT_TAGS.map((tag) => (
             <button
               key={tag}
               type="button"
               className={chipClass(effects.includes(tag))}
-              onClick={() =>
-                setEffects((current) => (current.includes(tag) ? current.filter((entry) => entry !== tag) : [...current, tag]))
-              }
+              onClick={() => toggleEffect(tag)}
             >
               {tag}
             </button>
@@ -198,13 +284,80 @@ export function SetBonusesGuide({ sets }: { sets: BonusGuideSet[] }) {
           {visible.length === 0 ? <p className="px-4 py-6 text-sm text-ash">No sets match.</p> : null}
           {visible.map((set) => {
             const expanded = open === set.hash;
+            const count = owned(set, guardianClass);
             return (
               <Fragment key={set.hash}>
+                {/* Phones: one compact row (bonus icons, name, bonus names, effect tags, your count). */}
                 <button
                   type="button"
                   onClick={() => setOpen(expanded ? null : set.hash)}
                   aria-expanded={expanded}
-                  className={`grid w-full gap-3 border-b border-white/[0.08] px-4 py-3 text-left transition hover:bg-white/[0.03] md:grid-cols-[180px_minmax(0,1fr)_minmax(0,1fr)_140px] md:gap-4 ${
+                  className={`flex w-full items-center gap-2.5 border-b border-white/[0.08] px-3 py-2.5 text-left md:hidden ${
+                    expanded ? "border-b-0 bg-white/[0.035]" : ""
+                  }`}
+                >
+                  <span className="flex shrink-0 gap-1">
+                    <BonusIcon bonus={set.twoPiece} />
+                    <BonusIcon bonus={set.fourPiece} />
+                  </span>
+                  <span className="flex min-w-0 flex-1 flex-col gap-1">
+                    <span className="truncate text-sm font-medium text-bone">
+                      {set.name}
+                      {set.monumentReissue ? (
+                        <span className="ml-1.5 font-display text-[10px] uppercase tracking-[0.12em] text-owned">Monument</span>
+                      ) : null}
+                    </span>
+                    <span className="truncate text-[11.5px] text-ash">
+                      {[set.twoPiece?.name, set.fourPiece?.name].filter(Boolean).join(" · ")}
+                    </span>
+                    <EffectTags tags={set.tags} />
+                  </span>
+                  <span
+                    className={`flex shrink-0 items-center gap-1 text-xs ${
+                      showOwnership && count >= 4 ? "text-owned" : "text-[#c7cad0]"
+                    }`}
+                  >
+                    <GuardianClassIcon guardianClass={guardianClass} size="xs" />
+                    {showOwnership ? `${count}/${set.wearHashes[guardianClass].length}` : set.wearHashes[guardianClass].length}
+                  </span>
+                  <span aria-hidden className={`text-[11px] transition ${expanded ? "rotate-90 text-bone" : "text-ash"}`}>
+                    ▸
+                  </span>
+                </button>
+                {expanded ? (
+                  <div className="space-y-3 border-b border-white/[0.08] bg-white/[0.035] px-3 pb-3 md:hidden">
+                    <span className="block text-xs text-ash">{set.origin.label}</span>
+                    <Bonus bonus={set.twoPiece} pieces={2} />
+                    <Bonus bonus={set.fourPiece} pieces={4} />
+                    <ActivityArmorGrid
+                      armorRows={set.rows.filter((row) => row.guardianClass === guardianClass)}
+                      ownedItemHashes={ownedItemHashes}
+                      showOwnership={showOwnership}
+                    />
+                    <span className="flex flex-wrap items-center justify-between gap-2">
+                      {set.origin.href ? (
+                        <Link href={set.origin.href} className="font-display text-xs uppercase tracking-[0.14em] text-bone">
+                          Open {set.origin.label.split(" · ")[0]} →
+                        </Link>
+                      ) : (
+                        <span />
+                      )}
+                      {showOwnership ? (
+                        <span className="text-[11.5px] text-ash">
+                          {GUARDIAN_CLASSES.filter((cls) => cls !== guardianClass)
+                            .map((cls) => `${CLASS_LABELS[cls]} ${owned(set, cls)}/${set.wearHashes[cls].length}`)
+                            .join(" · ")}
+                        </span>
+                      ) : null}
+                    </span>
+                  </div>
+                ) : null}
+
+                <button
+                  type="button"
+                  onClick={() => setOpen(expanded ? null : set.hash)}
+                  aria-expanded={expanded}
+                  className={`hidden w-full gap-4 border-b border-white/[0.08] px-4 py-3 text-left transition hover:bg-white/[0.03] md:grid md:grid-cols-[180px_minmax(0,1fr)_minmax(0,1fr)_140px] ${
                     expanded ? "bg-white/[0.035]" : ""
                   }`}
                 >
@@ -223,6 +376,7 @@ export function SetBonusesGuide({ sets }: { sets: BonusGuideSet[] }) {
                       ) : null}
                     </span>
                     <span className="text-xs text-ash">{set.origin.label}</span>
+                    <EffectTags tags={set.tags} />
                   </div>
                   <Bonus bonus={set.twoPiece} pieces={2} />
                   <Bonus bonus={set.fourPiece} pieces={4} />
@@ -248,7 +402,7 @@ export function SetBonusesGuide({ sets }: { sets: BonusGuideSet[] }) {
                   </div>
                 </button>
                 {expanded ? (
-                  <div className="grid gap-5 border-b border-white/[0.08] bg-white/[0.035] px-4 pb-4 pt-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:pl-[212px]">
+                  <div className="hidden gap-5 border-b border-white/[0.08] bg-white/[0.035] px-4 pb-4 pt-1 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:pl-[212px]">
                     <div className="min-w-0 space-y-3">
                       <ActivityArmorGrid armorRows={set.rows} ownedItemHashes={ownedItemHashes} showOwnership={showOwnership} />
                       {set.origin.href ? (
