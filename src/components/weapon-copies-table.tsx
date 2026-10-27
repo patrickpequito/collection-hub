@@ -106,7 +106,7 @@ export function WeaponCopiesTable({
                     alt={plug!.name}
                     width={24}
                     height={24}
-                    className={`${small ? "size-5" : "size-6"} rounded-full border border-white/40 bg-panel ${ring}`}
+                    className={`${small ? "size-5" : "size-6"} rounded-full border border-white/40 ${highlight ? "bg-seasonal/40" : "bg-panel"} ${ring}`}
                   />
                   <span
                     role="tooltip"

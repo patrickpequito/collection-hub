@@ -25,9 +25,10 @@ function columnTitles(columns: ResolvedWeaponPerkColumn[]): string[] {
   });
 }
 
-/** Gold ring for god roll perks, thin white ring for other recommendations. */
+/** Background and ring of a perk icon: recommended perks get a teal fill, god rolls also a gold ring. */
 function perkRing(tags: { label: string }[]): string {
-  return tags.find((tag) => tag.label === "God roll") ? "ring-2 ring-owned" : tags.length > 0 ? "ring-1 ring-white/60" : "";
+  if (tags.length === 0) return "bg-panel";
+  return tags.find((tag) => tag.label === "God roll") ? "bg-seasonal/40 ring-2 ring-owned" : "bg-seasonal/40";
 }
 
 function PerkTags({ tags }: { tags: { label: string; className: string }[] }) {
@@ -64,7 +65,7 @@ function PerkRow({
         alt=""
         width={30}
         height={30}
-        className={`size-[30px] shrink-0 rounded-full border border-white/40 bg-panel ${ring}`}
+        className={`size-[30px] shrink-0 rounded-full border border-white/40 ${ring}`}
       />
       <span className="min-w-0 flex-1 truncate text-[13px] text-bone/90">{perk.name}</span>
       {tags.length > 0 ? <PerkTags tags={tags} /> : null}
@@ -169,7 +170,7 @@ export function WeaponPerksGrid({
                   alt=""
                   width={34}
                   height={34}
-                  className={`size-[34px] rounded-full border border-white/40 bg-panel ${perkRing(tagsFor(perk.plugHash))}`}
+                  className={`size-[34px] rounded-full border border-white/40 ${perkRing(tagsFor(perk.plugHash))}`}
                 />
               </button>
             ))}
@@ -184,7 +185,7 @@ export function WeaponPerksGrid({
             alt=""
             width={40}
             height={40}
-            className={`size-10 shrink-0 rounded-full border border-white/40 bg-panel ${perkRing(tagsFor(tapped.plugHash))}`}
+            className={`size-10 shrink-0 rounded-full border border-white/40 ${perkRing(tagsFor(tapped.plugHash))}`}
           />
           <span className="flex min-w-0 flex-col gap-1">
             <span className="flex flex-wrap items-center gap-2">
@@ -249,10 +250,10 @@ export function WeaponPerksGrid({
           {hasRecommendations ? (
             <span className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-ash">
               <span className="inline-flex items-center gap-1.5">
-                <span className="size-3 rounded-full ring-2 ring-owned" /> God roll · all sources agree
+                <span className="size-3 rounded-full bg-seasonal/40 ring-2 ring-owned" /> God roll · all sources agree
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <span className="size-3 rounded-full ring-1 ring-white/60" /> Recommended
+                <span className="size-3 rounded-full border border-white/40 bg-seasonal/40" /> Recommended
               </span>
               {rollHighlightPerks.size > 0 ? (
                 <span className="inline-flex items-center gap-1.5">
