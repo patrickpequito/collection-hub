@@ -225,7 +225,7 @@ export function WeaponPerksGrid({
   return (
     <section className="min-w-0 space-y-3">
       <SectionHeading title="Perks" note={showRecommendations ? "Recommended rolls" : undefined} />
-      <div className="ui-panel space-y-4 p-4">
+      <div className={`ui-panel space-y-4 p-4 ${showRecommendations ? "" : "max-sm:p-3"}`}>
         {showRecommendations ? (
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
           {hasRecommendations ? (
@@ -265,9 +265,49 @@ export function WeaponPerksGrid({
         </div>
         ) : null}
 
-        {showRecommendations ? iconGrid : null}
+        {showRecommendations ? iconGrid : (
+          // Phones, fixed (exotic) perks: compact rows; tapping one opens its description.
+          <div className="space-y-3 sm:hidden">
+            {perkColumns.map(({ column, title }) => (
+              <div key={title} className="min-w-0">
+                <h3 className="ui-label mb-1 border-b border-white/10 pb-1 text-[10px]! text-bone!">{title}</h3>
+                {column.perks.map((perk) => {
+                  const open = tappedHash === perk.plugHash;
+                  return (
+                    <div key={perk.plugHash} className={open ? "bg-white/[0.04]" : ""}>
+                      <button
+                        type="button"
+                        aria-expanded={open}
+                        onClick={() => toggleTapped(perk.plugHash)}
+                        className="flex w-full items-center gap-2.5 px-1.5 py-1 text-left"
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={bungieIconUrl(perk.iconPath)}
+                          alt=""
+                          width={26}
+                          height={26}
+                          className="size-[26px] shrink-0 rounded-full border border-white/40 bg-panel"
+                        />
+                        <span className="min-w-0 flex-1 truncate text-[13px] text-bone/90">{perk.name}</span>
+                        {perk.description ? (
+                          <span aria-hidden className={`text-[11px] transition ${open ? "rotate-90 text-bone" : "text-ash"}`}>
+                            ▸
+                          </span>
+                        ) : null}
+                      </button>
+                      {open && perk.description ? (
+                        <p className="px-1.5 pb-2 pl-[2.6rem] text-xs leading-snug text-bone/70">{perk.description}</p>
+                      ) : null}
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        )}
 
-        <div className={`grid gap-4 lg:grid-cols-[minmax(0,1fr)_13rem] ${showRecommendations ? "max-sm:hidden" : ""}`}>
+        <div className="grid gap-4 max-sm:hidden lg:grid-cols-[minmax(0,1fr)_13rem]">
           <div className="grid gap-x-3 gap-y-4 sm:grid-cols-2 xl:grid-cols-4">
             {main.map(({ column, title }) => (
               <div key={title} className="min-w-0">
