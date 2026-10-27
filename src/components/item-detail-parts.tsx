@@ -30,12 +30,17 @@ const NEUTRAL_BAND = { band: "bg-panel", title: "text-bone", subtitle: "text-ash
 
 export type ItemTag = { label: string; tone?: "gold" | "green" | "plain" };
 
-/** Coloured item header: icon, name, type line, tags and an optional right slot (versions). */
+/**
+ * Coloured item header: icon, name, type line, tags and an optional right slot (versions).
+ * Phones get a compact band (icon, name, one meta line) with tags and versions in a darker
+ * footer strip; from sm up it is the wide header.
+ */
 export function ItemHeader({
   name,
   iconPath,
   rarity,
   typeLine,
+  mobileTypeLine,
   tags,
   right,
 }: {
@@ -44,6 +49,8 @@ export function ItemHeader({
   rarity?: string | null;
   /** Rendered with `dark` = true on light (exotic) bands, so icons can flip. */
   typeLine: ReactNode | ((dark: boolean) => ReactNode);
+  /** Single-line meta for phones; falls back to `typeLine`. */
+  mobileTypeLine?: ReactNode | ((dark: boolean) => ReactNode);
   tags: ItemTag[];
   right?: ReactNode;
 }) {
@@ -54,41 +61,74 @@ export function ItemHeader({
     if (tone === "green") return "border-emerald-400/50 text-emerald-200";
     return "border-white/40 text-bone";
   };
+  const render = (line: ReactNode | ((dark: boolean) => ReactNode)) =>
+    typeof line === "function" ? line(style.dark) : line;
+  const icon = (sizeClass: string) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={bungieIconUrl(iconPath)}
+      alt=""
+      width={96}
+      height={96}
+      className={`${sizeClass} shrink-0 border-2 border-white/50`}
+    />
+  );
+  const tagList = (className: string) =>
+    tags.length > 0 ? (
+      <div className={`flex flex-wrap gap-2 ${className}`}>
+        {tags.map((tag) => (
+          <span
+            key={tag.label}
+            className={`border px-2 py-0.5 font-display text-[11px] uppercase tracking-[0.14em] ${tagClass(tag.tone)}`}
+          >
+            {tag.label}
+          </span>
+        ))}
+      </div>
+    ) : null;
 
   return (
     <section className={`border border-hairline ${style.band}`}>
-      <div className="flex flex-wrap items-center gap-5 px-5 py-6 sm:px-7">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={bungieIconUrl(iconPath)}
-          alt=""
-          width={96}
-          height={96}
-          className="size-20 shrink-0 border-2 border-white/50 sm:size-24"
-        />
+      <div className="sm:hidden">
+        <div className="flex items-center gap-3.5 p-4">
+          {icon("size-[60px]")}
+          <div className="flex min-w-0 flex-col gap-2">
+            <h1 className={`font-display text-2xl font-semibold uppercase leading-none tracking-[0.05em] ${style.title}`}>
+              {name}
+            </h1>
+            <div
+              className={`flex min-w-0 flex-wrap items-center gap-2 font-display text-[13px] uppercase tracking-[0.12em] ${style.subtitle}`}
+            >
+              {render(mobileTypeLine ?? typeLine)}
+            </div>
+          </div>
+        </div>
+        {tags.length > 0 || right ? (
+          <div
+            className={`flex items-center justify-between gap-2 border-t px-4 py-2.5 ${
+              style.dark ? "border-black/15 bg-black/10" : "border-white/[0.12] bg-void/45"
+            }`}
+          >
+            {tagList("min-w-0")}
+            {right ? <div className="shrink-0 [&_.size-10]:size-8">{right}</div> : null}
+          </div>
+        ) : null}
+      </div>
+
+      <div className="hidden flex-wrap items-center gap-5 px-7 py-6 sm:flex">
+        {icon("size-24")}
         <div className="flex min-w-0 flex-1 flex-col gap-2">
           <h1
-            className={`font-display text-3xl font-semibold uppercase leading-none tracking-[0.05em] sm:text-[42px] ${style.title}`}
+            className={`font-display text-[42px] font-semibold uppercase leading-none tracking-[0.05em] ${style.title}`}
           >
             {name}
           </h1>
           <div
             className={`flex flex-wrap items-center gap-2 font-display text-sm uppercase tracking-[0.14em] ${style.subtitle}`}
           >
-            {typeof typeLine === "function" ? typeLine(style.dark) : typeLine}
+            {render(typeLine)}
           </div>
-          {tags.length > 0 ? (
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag) => (
-                <span
-                  key={tag.label}
-                  className={`border px-2 py-0.5 font-display text-[11px] uppercase tracking-[0.14em] ${tagClass(tag.tone)}`}
-                >
-                  {tag.label}
-                </span>
-              ))}
-            </div>
-          ) : null}
+          {tagList("")}
         </div>
         {right ? <div className="shrink-0">{right}</div> : null}
       </div>

@@ -162,6 +162,34 @@ function AccountControl({ oauthConfigured }: { oauthConfigured: boolean }) {
   );
 }
 
+/** Phones: avatar shortcut to the profile, left of the menu button (signed in only). */
+function MobileProfileLink() {
+  const session = useSession();
+  if (!session.signedIn) return null;
+  return (
+    <Link
+      href="/profile"
+      aria-label="My profile"
+      className="flex h-10 w-10 items-center justify-center border border-white/20 transition hover:border-bone"
+    >
+      {session.avatarPath ? (
+        // eslint-disable-next-line @next/next/no-img-element -- Bungie.net avatar
+        <img
+          src={`https://www.bungie.net${session.avatarPath}`}
+          alt=""
+          aria-hidden
+          className="h-8 w-8 border border-owned/70 object-cover"
+        />
+      ) : (
+        <svg viewBox="0 0 24 24" className="h-5 w-5 text-bone" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
+          <circle cx="12" cy="8.5" r="3.5" />
+          <path d="M5 20c1.2-3.6 3.8-5.5 7-5.5s5.8 1.9 7 5.5" />
+        </svg>
+      )}
+    </Link>
+  );
+}
+
 function MenuPanel({
   tab,
   activeHref,
@@ -352,17 +380,20 @@ export function SiteNav({ oauthConfigured = true }: SiteNavProps) {
           <AccountControl oauthConfigured={oauthConfigured} />
         </div>
 
-        <button
-          type="button"
-          className="ml-auto flex h-10 w-10 items-center justify-center border border-white/20 text-bone lg:hidden"
-          aria-expanded={mobileOpen}
-          aria-label={mobileOpen ? "Close menu" : "Open menu"}
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
-            <path d="M4 7h16M4 12h16M4 17h16" />
-          </svg>
-        </button>
+        <div className="ml-auto flex items-center gap-2 lg:hidden">
+          <MobileProfileLink />
+          <button
+            type="button"
+            className="flex h-10 w-10 items-center justify-center border border-white/20 text-bone"
+            aria-expanded={mobileOpen}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       {openTab ? (

@@ -4,8 +4,9 @@ import { ProgressBar } from "@/components/home/progress-bar";
 /** One of the summary blocks at the top of a raid / expansion / season page. */
 export function StatBlock({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="ui-panel flex min-w-0 flex-col gap-2.5 p-4">
-      <span className="ui-label truncate">{label}</span>
+    // Phones: two blocks per row, so label, numbers and notes shrink a step.
+    <div className="ui-panel flex min-w-0 flex-col gap-2 p-3 sm:gap-2.5 sm:p-4 [&_.text-\[13px\]]:text-xs sm:[&_.text-\[13px\]]:text-[13px]">
+      <span className="ui-label truncate text-[11px]! tracking-[0.14em]! sm:text-[0.8125rem]! sm:tracking-[0.18em]!">{label}</span>
       {children}
     </div>
   );
@@ -24,7 +25,7 @@ export function StatCount({
   return (
     <>
       <span
-        className={`font-display text-[30px] leading-none ${
+        className={`font-display text-[22px] leading-none sm:text-[30px] ${
           gold && owned !== null ? "text-owned" : "text-bone"
         }`}
       >
@@ -38,9 +39,9 @@ export function StatCount({
 /** Grid for 1–5 stat blocks. */
 export function StatBlockGrid({ count, children }: { count: number; children: ReactNode }) {
   const columns =
-    { 1: "", 2: "sm:grid-cols-2", 3: "sm:grid-cols-3", 4: "sm:grid-cols-2 lg:grid-cols-4", 5: "sm:grid-cols-3 lg:grid-cols-5" }[
+    { 1: "", 2: "grid-cols-2", 3: "grid-cols-2 sm:grid-cols-3", 4: "grid-cols-2 lg:grid-cols-4", 5: "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5" }[
       count
-    ] ?? "sm:grid-cols-2 lg:grid-cols-4";
+    ] ?? "grid-cols-2 lg:grid-cols-4";
   return <section className={`grid gap-3 ${columns}`}>{children}</section>;
 }
 
@@ -52,7 +53,7 @@ export function SectionJumpNav({ links }: { links: { id: string; label: string }
         <a
           key={link.id}
           href={`#${link.id}`}
-          className="inline-flex h-10 items-center border border-white/[0.22] px-4 font-display text-sm uppercase tracking-[0.12em] text-bone/80 transition hover:border-bone hover:text-white"
+          className="inline-flex h-8 items-center border border-white/[0.22] px-3 font-display text-xs uppercase tracking-[0.12em] text-bone/80 transition hover:border-bone hover:text-white"
         >
           {link.label}
         </a>

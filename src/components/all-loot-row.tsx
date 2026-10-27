@@ -22,10 +22,13 @@ import { isItemOwned } from "@/lib/all-loot/ownership";
 
 export { isItemOwned };
 
-/** Shared grid layout for header + rows. Rarity hides below sm (640px). */
+/**
+ * Shared grid layout for header + rows. Below sm (640px) rarity hides and
+ * class / weapon type and slot shrink to icons, leaving room for the item.
+ */
 export const ALL_LOOT_ROW_LAYOUT = [
   "grid items-center gap-x-2 border-b border-zinc-800/80 py-2 sm:gap-x-4 sm:py-3",
-  "grid-cols-[2rem_minmax(0,1.3fr)_minmax(0,1.15fr)_1.375rem_3.75rem_1.375rem]",
+  "grid-cols-[2.5rem_minmax(0,1fr)_1.75rem_1.375rem_2.25rem_1.375rem]",
   "sm:grid-cols-[3rem_minmax(0,1.75fr)_repeat(4,minmax(0,1fr))_2.5rem]",
 ].join(" ");
 
@@ -65,7 +68,7 @@ function ItemIconWithSeasonBadge({
   const iconClass =
     size === "popover"
       ? "h-8 w-8 border border-zinc-800 bg-zinc-900 object-cover sm:h-9 sm:w-9"
-      : "h-8 w-8 border border-zinc-800 bg-zinc-900 object-cover sm:h-12 sm:w-12";
+      : "h-10 w-10 border border-zinc-800 bg-zinc-900 object-cover sm:h-12 sm:w-12";
 
   return (
     <div className={`relative shrink-0 overflow-hidden ${className}`}>
@@ -106,7 +109,7 @@ function ItemMetaLine({
 
   return (
     <p
-      className="truncate text-[10px] sm:text-xs"
+      className="truncate text-[11px] sm:text-xs"
       onMouseEnter={() => onHover?.(true)}
       onMouseLeave={() => onHover?.(false)}
     >
@@ -258,7 +261,7 @@ function ClassOrWeaponTypeCell({
   return (
     <div className={COL_CLASS_WEAPON}>
       {value ? (
-        <p className="flex min-w-0 items-center gap-1 truncate text-xs text-zinc-300 sm:gap-2 sm:text-sm">
+        <p className="flex min-w-0 items-center gap-1 truncate text-xs text-zinc-300 max-sm:justify-center sm:gap-2 sm:text-sm" title={value}>
           {iconPath ? (
             // eslint-disable-next-line @next/next/no-img-element -- local SVG icons
             <img
@@ -270,7 +273,7 @@ function ClassOrWeaponTypeCell({
               }`}
             />
           ) : null}
-          <span className="truncate">{value}</span>
+          <span className="hidden truncate sm:inline">{value}</span>
         </p>
       ) : (
         <p className="text-xs text-zinc-300 sm:text-sm">—</p>
@@ -290,11 +293,22 @@ function SlotCell({
 }) {
   const ammoIconPath = type === "Weapon" ? weaponAmmoIconPath(ammoType) : null;
   const ammoLabel = type === "Weapon" ? weaponAmmoLabel(ammoType) : null;
+  // Phones: armor slot icon, or the weapon slot's first letter (P / E / H).
+  const slotIconPath = armorSlotIconPath(slot);
+  const compact = slotIconPath ? (
+    // eslint-disable-next-line @next/next/no-img-element -- local slot icons
+    <img src={slotIconPath} alt="" aria-hidden className="h-4 w-4 shrink-0 object-contain" />
+  ) : type === "Weapon" && slot ? (
+    <span className="font-display text-sm text-bone/85">{slot.charAt(0)}</span>
+  ) : null;
 
   return (
     <div className={COL_SLOT}>
       {slot ? (
-        <p className="flex min-w-0 items-center justify-center gap-1 truncate text-xs text-zinc-300 max-sm:text-center sm:justify-start sm:gap-1.5 sm:text-sm">
+        <p
+          className="flex min-w-0 items-center justify-center gap-1 truncate text-xs text-zinc-300 max-sm:text-center sm:justify-start sm:gap-1.5 sm:text-sm"
+          title={slot}
+        >
           {ammoIconPath ? (
             // eslint-disable-next-line @next/next/no-img-element -- local SVG icons
             <img
@@ -305,7 +319,8 @@ function SlotCell({
               className="h-3.5 w-3.5 shrink-0 object-contain sm:h-4 sm:w-4"
             />
           ) : null}
-          <span className="truncate">{slot}</span>
+          {compact ? <span className="flex items-center sm:hidden">{compact}</span> : null}
+          <span className={`truncate ${compact ? "hidden sm:inline" : ""}`}>{slot}</span>
         </p>
       ) : (
         <p className="text-xs text-zinc-300 max-sm:text-center sm:text-sm">—</p>
@@ -338,7 +353,7 @@ export function AllLootRow({ item, owned, showOwnership }: AllLootRowProps) {
     : "";
 
   const nameClass = [
-    "truncate text-xs font-semibold text-zinc-100 sm:text-sm",
+    "truncate text-[13px] font-semibold text-zinc-100 sm:text-sm",
     hasVersions &&
       "underline decoration-zinc-700 decoration-dotted underline-offset-2",
     isItemLink && "transition-colors duration-200 group-hover:text-white",
@@ -415,14 +430,17 @@ export function AllLootResultsHeader() {
     <div
       className={`${ALL_LOOT_ROW_LAYOUT} border-b border-zinc-800 pb-2 text-[10px] font-medium uppercase tracking-wide text-zinc-500`}
     >
-      <span className={`${COL_ICON} block h-8 w-8 sm:h-12 sm:w-12`} aria-hidden />
+      <span className={`${COL_ICON} block h-10 w-10 sm:h-12 sm:w-12`} aria-hidden />
       <span className={COL_ITEM}>Item</span>
       <span className={COL_RARITY}>Rarity</span>
-      <span className={COL_CLASS_WEAPON}>Class / Weapon</span>
+      <span className={`${COL_CLASS_WEAPON} max-sm:text-center max-sm:text-[9px] max-sm:leading-tight`}>
+        <span className="sm:hidden">Type</span>
+        <span className="hidden sm:inline">Class / Weapon</span>
+      </span>
       <span className={`${COL_DAMAGE} text-center max-sm:text-[9px] max-sm:leading-tight`}>
         Dmg
       </span>
-      <span className={`${COL_SLOT} max-sm:justify-self-center max-sm:text-center`}>
+      <span className={`${COL_SLOT} max-sm:justify-self-center max-sm:text-center max-sm:text-[9px] max-sm:leading-tight`}>
         Slot
       </span>
       <span

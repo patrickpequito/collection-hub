@@ -58,7 +58,7 @@ export function ActivityStatBlocks({
   const clears = signedIn ? raidCompletionsBySlug[slug] : undefined;
   const showTitle = titleProgress.total > 0;
   const blocks = 1 + (showTitle ? 1 : 0) + (showClears ? 1 : 0) + (exotics.length > 0 ? 1 : 0);
-  const columns = { 1: "", 2: "sm:grid-cols-2", 3: "sm:grid-cols-3", 4: "sm:grid-cols-2 lg:grid-cols-4" }[
+  const columns = { 1: "", 2: "grid-cols-2", 3: "grid-cols-2 sm:grid-cols-3", 4: "grid-cols-2 lg:grid-cols-4" }[
     blocks
   ];
 
@@ -67,14 +67,14 @@ export function ActivityStatBlocks({
       <StatBlock label="Loot">
         {loot ? (
           <>
-            <span className="font-display text-[30px] leading-none text-owned">
+            <span className="font-display text-[22px] leading-none sm:text-[30px] text-owned">
               {loot.owned} / {loot.total}
             </span>
             <ProgressBar owned={loot.owned} total={loot.total} />
           </>
         ) : (
           <>
-            <span className="font-display text-[30px] leading-none text-ash">—</span>
+            <span className="font-display text-[22px] leading-none sm:text-[30px] text-ash">—</span>
             <Muted>{signedIn ? "Loading your collection…" : "Sign in to track"}</Muted>
           </>
         )}
@@ -82,7 +82,7 @@ export function ActivityStatBlocks({
 
       {showTitle ? (
         <StatBlock label={titleLabel}>
-          <span className="font-display text-[30px] leading-none text-bone">
+          <span className="font-display text-[22px] leading-none sm:text-[30px] text-bone">
             {signedIn ? titleProgress.completed : "—"} / {titleProgress.total}
           </span>
           <ProgressBar
@@ -97,7 +97,7 @@ export function ActivityStatBlocks({
           {hasMasterTier ? (
             <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col gap-1.5">
-                <span className="font-display text-[30px] leading-none text-bone">
+                <span className="font-display text-[22px] leading-none sm:text-[30px] text-bone">
                   {clears ? clears.normal.toLocaleString() : "—"}
                 </span>
                 <span className="font-display text-xs uppercase tracking-[0.16em] text-ash">
@@ -105,7 +105,7 @@ export function ActivityStatBlocks({
                 </span>
               </div>
               <div className="flex flex-col gap-1.5 border-l border-hairline pl-3">
-                <span className="font-display text-[30px] leading-none text-owned">
+                <span className="font-display text-[22px] leading-none sm:text-[30px] text-owned">
                   {clears ? clears.master.toLocaleString() : "—"}
                 </span>
                 <span className="font-display text-xs uppercase tracking-[0.16em] text-owned/80">
@@ -115,7 +115,7 @@ export function ActivityStatBlocks({
             </div>
           ) : (
             <>
-              <span className="font-display text-[30px] leading-none text-bone">
+              <span className="font-display text-[22px] leading-none sm:text-[30px] text-bone">
                 {clears ? clears.normal.toLocaleString() : "—"}
               </span>
               <Muted>Full completions</Muted>

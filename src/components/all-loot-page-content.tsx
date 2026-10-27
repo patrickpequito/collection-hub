@@ -261,7 +261,7 @@ export function AllLootPageContent() {
               className="ui-panel flex flex-col gap-1 p-3.5 text-left transition hover:border-bone disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-hairline"
             >
               <span className="text-sm font-medium text-bone">{quick.label}</span>
-              <span className="text-xs text-ash">
+              <span className="hidden text-xs text-ash sm:block">
                 {ownershipFilterEnabled
                   ? quick.description
                   : signedIn

@@ -134,7 +134,7 @@ export function WeaponPerksGrid({
 
   return (
     <section className="min-w-0 space-y-3">
-      <SectionHeading title="Perks" note={showRecommendations ? "Recommended rolls · community sources" : undefined} />
+      <SectionHeading title="Perks" note={showRecommendations ? "Recommended rolls" : undefined} />
       <div className="ui-panel space-y-4 p-4">
         {showRecommendations ? (
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">

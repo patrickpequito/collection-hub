@@ -44,7 +44,7 @@ export function CollectionSummaryBlocks() {
             {entry ? (
               <StatCount owned={entry.owned} total={entry.total} gold={block.gold} />
             ) : (
-              <span className="font-display text-[30px] leading-none text-ash">—</span>
+              <span className="font-display text-[22px] leading-none sm:text-[30px] text-ash">—</span>
             )}
           </StatBlock>
         );

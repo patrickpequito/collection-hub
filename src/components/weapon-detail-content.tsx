@@ -242,6 +242,7 @@ export function WeaponDetailContent({
         iconPath={weapon.iconPath}
         rarity={weapon.rarity}
         typeLine={(dark) => <WeaponDetailMeta weapon={weapon} dark={dark} />}
+        mobileTypeLine={(dark) => <WeaponDetailMeta weapon={weapon} dark={dark} compact />}
         tags={[
           ...(isExotic ? [] : [{ label: weapon.obtainable ? "Obtainable" : "Not obtainable", tone: weapon.obtainable ? ("green" as const) : ("plain" as const) }]),
           { label: weapon.rarity ?? "Weapon" },
@@ -259,7 +260,7 @@ export function WeaponDetailContent({
 
       <StatBlockGrid count={4}>
         <StatBlock label="Your copies">
-          <span className="font-display text-[30px] leading-none text-bone">
+          <span className="font-display text-[22px] leading-none sm:text-[30px] text-bone">
             {isSignedIn ? (loading ? "…" : rolls.length) : "—"}
           </span>
           <span className="text-[13px] text-ash">
@@ -270,7 +271,7 @@ export function WeaponDetailContent({
           <StatBlock label={catalysts.length > 1 ? "Catalysts" : "Catalyst"}>
             {singleStatus?.kind === "progress" ? (
               <>
-                <span className="font-display text-[30px] leading-none text-owned">
+                <span className="font-display text-[22px] leading-none sm:text-[30px] text-owned">
                   {Math.floor(progressShare(singleStatus) * 100)}%
                 </span>
                 <span className="text-[13px] text-ash">
@@ -281,7 +282,7 @@ export function WeaponDetailContent({
               </>
             ) : singleStatus ? (
               <>
-                <span className={`font-display text-[30px] leading-none ${singleStatus.kind === "unlocked" ? "text-owned" : "text-bone"}`}>
+                <span className={`font-display text-[22px] leading-none sm:text-[30px] ${singleStatus.kind === "unlocked" ? "text-owned" : "text-bone"}`}>
                   {singleStatus.kind === "unlocked" ? "Unlocked" : singleStatus.kind === "missing" ? "Not found" : "—"}
                 </span>
                 <span className="text-[13px] text-ash">{singleStatus.kind === "unknown" ? "Sign in to track" : catalysts[0].name}</span>
@@ -292,7 +293,7 @@ export function WeaponDetailContent({
           </StatBlock>
         ) : (
           <StatBlock label="Best match">
-            <span className={`font-display text-[30px] leading-none ${bestScore ? "text-owned" : "text-ash"}`}>
+            <span className={`font-display text-[22px] leading-none sm:text-[30px] ${bestScore ? "text-owned" : "text-ash"}`}>
               {bestScore ? `${Math.round(bestScore)}%` : "—"}
             </span>
             <span className="text-[13px] text-ash">Closest copy to the recommended rolls</span>

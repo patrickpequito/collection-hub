@@ -115,7 +115,7 @@ export default async function ActivitiesPage() {
               <a
                 key={section.id}
                 href={`#${section.id}`}
-                className="inline-flex h-10 items-center border border-white/[0.22] px-4 font-display text-sm uppercase tracking-[0.12em] text-bone/80 transition hover:border-bone hover:text-white"
+                className="inline-flex h-8 items-center border border-white/[0.22] px-3 font-display text-xs uppercase tracking-[0.12em] text-bone/80 transition hover:border-bone hover:text-white"
               >
                 {section.label}
               </a>

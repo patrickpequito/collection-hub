@@ -18,6 +18,27 @@ import type {
 /** Hunter, Titan, Warlock, then Vault — same order as the sketch. */
 const DESTINATIONS: TransferDestinationId[] = [...GUARDIAN_CLASSES, "vault"];
 
+/** Current location of a copy as a small icon square (collapsed phone rows). */
+export function RollLocationIcon({ roll, characters }: { roll: RollItemLocation; characters: ProfileCharacter[] }) {
+  const destination = resolveRollTransferDestination(roll, characters);
+  if (!destination) return null;
+  return (
+    <span
+      className="flex size-[1.625rem] shrink-0 items-center justify-center border border-white/[0.18]"
+      title={transferDestinationLabel(destination)}
+    >
+      {destination === "vault" ? (
+        // eslint-disable-next-line @next/next/no-img-element -- local SVG icon
+        <img src={VAULT_ICON_PATH} alt="" aria-hidden className="size-3.5 object-contain brightness-0 invert opacity-80" />
+      ) : (
+        <span className="flex opacity-80 [&>img]:size-3.5">
+          <GuardianClassIcon guardianClass={destination} size="sm" tone="light" />
+        </span>
+      )}
+    </span>
+  );
+}
+
 /** Width of the inline move cell, shared with the table header. */
 export const ROLL_TRANSFER_CELL_CLASS = "w-[8.25rem] shrink-0";
 
@@ -29,9 +50,12 @@ export function RollTransferButtons({
   roll,
   characters,
   onTransferComplete,
+  labelled = false,
 }: {
   roll: RollItemLocation;
   characters: ProfileCharacter[];
+  /** Full-width buttons with the destination name (phones). */
+  labelled?: boolean;
   onTransferComplete?: (
     itemInstanceId: string,
     destination: TransferDestinationId,
@@ -72,7 +96,7 @@ export function RollTransferButtons({
   }
 
   return (
-    <div className={`${ROLL_TRANSFER_CELL_CLASS} relative`}>
+    <div className={`${labelled ? "w-full" : ROLL_TRANSFER_CELL_CLASS} relative`}>
       <div className="flex gap-1" role="group" aria-label="Move this copy">
         {DESTINATIONS.map((destination) => {
           const here = destination === shown;
@@ -95,7 +119,9 @@ export function RollTransferButtons({
               aria-label={here ? `${label}, current location` : `Move to ${label}`}
               aria-current={here ? "true" : undefined}
               aria-busy={isPending}
-              className={`relative flex size-[1.875rem] items-center justify-center border transition ${
+              className={`relative flex h-[1.875rem] items-center justify-center gap-1.5 border transition ${
+                labelled ? "flex-1" : "w-[1.875rem]"
+              } ${
                 here
                   ? "cursor-default border-bone bg-bone"
                   : disabled
@@ -116,6 +142,13 @@ export function RollTransferButtons({
                   <GuardianClassIcon guardianClass={destination} size="sm" tone={here ? "dark" : "light"} />
                 </span>
               )}
+              {labelled ? (
+                <span
+                  className={`font-display text-[10.5px] uppercase tracking-[0.12em] ${here ? "text-void" : "text-[#c7cad0]"}`}
+                >
+                  {label}
+                </span>
+              ) : null}
               {here && equipped ? (
                 <span className="absolute -bottom-[3px] left-1/2 h-[3px] w-3 -translate-x-1/2 bg-owned" aria-hidden />
               ) : null}

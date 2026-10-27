@@ -6,7 +6,7 @@ import { ArmorArchetypeIcon } from "@/components/armor-archetype-icon";
 import { StatBlock, StatBlockGrid, StatCount, SectionJumpNav, SectionHeading } from "@/components/detail-page-parts";
 import { ExoticPerkPanel } from "@/components/exotic-perk-panel";
 import { ItemHeader, WhereToGetIt } from "@/components/item-detail-parts";
-import { ROLL_TRANSFER_CELL_CLASS, RollTransferButtons } from "@/components/roll-transfer-buttons";
+import { ROLL_TRANSFER_CELL_CLASS, RollLocationIcon, RollTransferButtons } from "@/components/roll-transfer-buttons";
 import { WeaponRollIcon } from "@/components/weapon-roll-icon";
 import { ArmorSetBonusesPanel } from "@/components/armor-set-bonuses-panel";
 import { ArmorSetPiecesPanel } from "@/components/armor-set-pieces-panel";
@@ -113,13 +113,7 @@ const STAT_SHORT: Record<string, string> = {
 /** All six stats as short labels; the three highest (Armor 3.0 primary / secondary / tertiary) stay bright. */
 function CopyStats({ roll }: { roll: ArmorRollInstance }) {
   const byName = new Map(roll.stats.map((stat) => [stat.name, stat.value]));
-  const top = new Set(
-    [...roll.stats]
-      .filter((stat) => stat.value > 0)
-      .sort((a, b) => b.value - a.value)
-      .slice(0, 3)
-      .map((stat) => stat.name),
-  );
+  const top = topStatNames(roll);
   return (
     <span className="grid grid-cols-[repeat(6,2.125rem)] gap-1">
       {ARMOR_STAT_ORDER.map((name) => {
@@ -132,6 +126,43 @@ function CopyStats({ roll }: { roll: ArmorRollInstance }) {
         );
       })}
     </span>
+  );
+}
+
+/** Phones (open copy): the six stats in equal cells with a small bar; the top three stay bright. */
+function CopyStatBars({ roll }: { roll: ArmorRollInstance }) {
+  const byName = new Map(roll.stats.map((stat) => [stat.name, stat]));
+  const top = topStatNames(roll);
+  return (
+    <span className="grid grid-cols-6 gap-1.5">
+      {ARMOR_STAT_ORDER.map((name) => {
+        const stat = byName.get(name);
+        const value = stat?.value ?? 0;
+        const bright = top.has(name);
+        return (
+          <span key={name} className="flex flex-col items-center gap-1">
+            <span className="font-display text-[9.5px] tracking-[0.1em] text-ash">{STAT_SHORT[name]}</span>
+            <span className={`text-[13px] tabular-nums ${bright ? "text-bone" : "text-bone/35"}`}>{value}</span>
+            <span className="block h-[3px] w-full bg-white/10">
+              <span
+                className={`block h-full ${bright ? "bg-bone" : "bg-bone/35"}`}
+                style={{ width: `${Math.min(100, (value / (stat?.max || 30)) * 100)}%` }}
+              />
+            </span>
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
+function topStatNames(roll: ArmorRollInstance): Set<string> {
+  return new Set(
+    [...roll.stats]
+      .filter((stat) => stat.value > 0)
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 3)
+      .map((stat) => stat.name),
   );
 }
 
@@ -162,8 +193,9 @@ function CopiesTable({
     : "grid-cols-[3rem_13.5rem_2.75rem]";
   const headers = ["", ...(showArchetype ? ["Archetype"] : []), "Stats", "Total"];
   return (
-    <div className="ui-panel overflow-x-auto">
-      <div className="flex min-w-[37rem] items-center gap-3 border-b border-white/[0.14] pb-2 pl-4 pr-4 pt-3">
+    // Phones: icon, archetype and total on one line, then stats and move buttons.
+    <div className="ui-panel sm:overflow-x-auto">
+      <div className="hidden min-w-[37rem] items-center gap-3 border-b border-white/[0.14] pb-2 pl-4 pr-4 pt-3 sm:flex">
         <div className={`grid flex-1 ${columns} gap-3`}>
           {headers.map((label, index) => (
             <span key={`${label}-${index}`} className="ui-label text-[11px]!">
@@ -180,33 +212,75 @@ function CopiesTable({
             key={roll.itemInstanceId}
             onMouseEnter={() => onHover(roll.itemInstanceId)}
             onMouseLeave={() => onHover(null)}
-            className={`flex min-w-[37rem] items-center gap-3 border-b border-white/[0.08] pr-4 transition last:border-0 ${
+            className={`border-b border-white/[0.08] transition last:border-0 ${
               active ? "bg-owned/10 shadow-[inset_3px_0_0_0_#c9a227]" : "hover:bg-white/[0.03]"
             }`}
           >
-            <button
-              type="button"
-              aria-pressed={pinnedRollId === roll.itemInstanceId}
-              onClick={() => onPin(roll.itemInstanceId)}
-              className={`grid flex-1 ${columns} items-center gap-3 py-2.5 pl-4 text-left`}
-            >
-              <WeaponRollIcon version={roll.version} gearTier={isExotic ? null : roll.tier} />
-              {showArchetype ? (
-                <span className="flex min-w-0 items-center gap-2 text-sm text-bone">
-                  {roll.archetype ? (
-                    <ArmorArchetypeIcon name={roll.archetype} iconPath={roll.archetypeIconPath} variant="roll" />
-                  ) : null}
-                  <span className="truncate">{roll.archetype ?? "—"}</span>
-                </span>
-              ) : null}
-              <CopyStats roll={roll} />
-              <span
-                className={`text-[15px] tabular-nums ${roll.totalStats === bestTotal ? "text-owned" : "text-bone"}`}
+            <div className="sm:hidden">
+              <button
+                type="button"
+                aria-expanded={pinnedRollId === roll.itemInstanceId}
+                onClick={() => onPin(roll.itemInstanceId)}
+                className="flex w-full items-center gap-2.5 px-3 py-2.5 text-left"
               >
-                {roll.totalStats}
-              </span>
-            </button>
-            <RollTransferButtons roll={roll} characters={characters} onTransferComplete={onTransferComplete} />
+                <WeaponRollIcon version={roll.version} gearTier={isExotic ? null : roll.tier} />
+                <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                  <span className="flex min-w-0 items-center gap-1.5 text-sm text-bone">
+                    {roll.archetype ? (
+                      <ArmorArchetypeIcon name={roll.archetype} iconPath={roll.archetypeIconPath} variant="roll" />
+                    ) : null}
+                    <span className="truncate">{roll.archetype ?? "Armor"}</span>
+                  </span>
+                  <span className="truncate text-[11.5px] text-ash">
+                    {ARMOR_STAT_ORDER.filter((name) => topStatNames(roll).has(name))
+                      .map((name) => `${STAT_SHORT[name]} ${roll.stats.find((stat) => stat.name === name)?.value ?? 0}`)
+                      .join(" · ")}
+                  </span>
+                </span>
+                <span className={`font-display text-[17px] tabular-nums ${roll.totalStats === bestTotal ? "text-owned" : "text-bone"}`}>
+                  {roll.totalStats}
+                </span>
+                <RollLocationIcon roll={roll} characters={characters} />
+                <span
+                  aria-hidden
+                  className={`text-[11px] transition ${pinnedRollId === roll.itemInstanceId ? "rotate-90 text-bone" : "text-ash"}`}
+                >
+                  ▸
+                </span>
+              </button>
+              {pinnedRollId === roll.itemInstanceId ? (
+                <div className="space-y-2.5 px-3 pb-3">
+                  <CopyStatBars roll={roll} />
+                  <p className="ui-label text-[10px]!">Move to</p>
+                  <RollTransferButtons roll={roll} characters={characters} onTransferComplete={onTransferComplete} labelled />
+                </div>
+              ) : null}
+            </div>
+            <div className="hidden min-w-[37rem] items-center gap-3 pr-4 sm:flex">
+              <button
+                type="button"
+                aria-pressed={pinnedRollId === roll.itemInstanceId}
+                onClick={() => onPin(roll.itemInstanceId)}
+                className={`grid flex-1 ${columns} items-center gap-3 py-2.5 pl-4 text-left`}
+              >
+                <WeaponRollIcon version={roll.version} gearTier={isExotic ? null : roll.tier} />
+                {showArchetype ? (
+                  <span className="flex min-w-0 items-center gap-2 text-sm text-bone">
+                    {roll.archetype ? (
+                      <ArmorArchetypeIcon name={roll.archetype} iconPath={roll.archetypeIconPath} variant="roll" />
+                    ) : null}
+                    <span className="truncate">{roll.archetype ?? "—"}</span>
+                  </span>
+                ) : null}
+                <CopyStats roll={roll} />
+                <span
+                  className={`text-[15px] tabular-nums ${roll.totalStats === bestTotal ? "text-owned" : "text-bone"}`}
+                >
+                  {roll.totalStats}
+                </span>
+              </button>
+              <RollTransferButtons roll={roll} characters={characters} onTransferComplete={onTransferComplete} />
+            </div>
           </div>
         );
       })}
@@ -339,7 +413,7 @@ export function ArmorDetailContent({
 
       <StatBlockGrid count={isExotic || !armorSet ? 3 : 4}>
         <StatBlock label="Your copies">
-          <span className="font-display text-[30px] leading-none text-bone">
+          <span className="font-display text-[22px] leading-none sm:text-[30px] text-bone">
             {isSignedIn ? (loading ? "…" : ownedCopies) : "—"}
           </span>
           <span className="text-[13px] text-ash">
@@ -347,7 +421,7 @@ export function ArmorDetailContent({
           </span>
         </StatBlock>
         <StatBlock label="Best copy">
-          <span className={`font-display text-[30px] leading-none ${bestRoll ? "text-owned" : "text-ash"}`}>
+          <span className={`font-display text-[22px] leading-none sm:text-[30px] ${bestRoll ? "text-owned" : "text-ash"}`}>
             {bestRoll ? bestRoll.totalStats : "—"}
           </span>
           <span className="text-[13px] text-ash">
@@ -403,7 +477,14 @@ export function ArmorDetailContent({
       </div>
 
       <section id="your-copies" className="min-w-0 scroll-mt-20 space-y-3">
-        <SectionHeading title="Your copies" note={rolls.length > 1 ? "Sorted by total · gold = best" : undefined} />
+        <SectionHeading title="Your copies" note={
+            rolls.length > 1 ? (
+              <>
+                <span className="sm:hidden">Sorted by total</span>
+                <span className="hidden sm:inline">Sorted by total · gold = best</span>
+              </>
+            ) : undefined
+          } />
         {!isSignedIn ? (
           <p className="border border-dashed border-white/[0.14] px-4 py-3.5 text-[13px] text-ash">
             {showArmor30SetBonuses
@@ -450,7 +531,14 @@ export function ArmorDetailContent({
       ) : (
         <>
       <section id="your-copies" className="min-w-0 scroll-mt-20 space-y-3">
-        <SectionHeading title="Your copies" note={rolls.length > 1 ? "Sorted by total · gold = best" : undefined} />
+        <SectionHeading title="Your copies" note={
+            rolls.length > 1 ? (
+              <>
+                <span className="sm:hidden">Sorted by total</span>
+                <span className="hidden sm:inline">Sorted by total · gold = best</span>
+              </>
+            ) : undefined
+          } />
         {!isSignedIn ? (
           <p className="border border-dashed border-white/[0.14] px-4 py-3.5 text-[13px] text-ash">
             {showArmor30SetBonuses

@@ -201,7 +201,7 @@ export function ShadersCatalog({
           </StatBlock>
         ) : null}
         <StatBlock label="Missing obtainable">
-          <span className="font-display text-[30px] leading-none text-bone">
+          <span className="font-display text-[22px] leading-none sm:text-[30px] text-bone">
             {missingObtainable?.toLocaleString("en-US") ?? "—"}
           </span>
           <span className="text-[13px] text-ash">

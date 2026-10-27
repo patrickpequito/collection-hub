@@ -132,7 +132,7 @@ export function TriumphGroupBrowser({ group }: { group: TriumphGroup }) {
           <StatCount owned={scoreEarned} total={scoreTotal} />
         </StatBlock>
         <StatBlock label="Ready to claim">
-          <span className="font-display text-[30px] leading-none text-bone">{readyToClaim ?? "—"}</span>
+          <span className="font-display text-[22px] leading-none sm:text-[30px] text-bone">{readyToClaim ?? "—"}</span>
         </StatBlock>
       </StatBlockGrid>
 

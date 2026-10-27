@@ -43,7 +43,7 @@ export function MonumentSpotlightProgress({
     <div className="relative mt-2 grid max-w-[520px] grid-cols-3 gap-4">
       <ProgressItem label="Armor" owned={countOwnedGroups(armorGroups, ownedItemHashes)} total={armorGroups.length} />
       <ProgressItem
-        label="Monument rewards"
+        label="Rewards"
         owned={countOwnedGroups(rewardGroups, ownedItemHashes)}
         total={rewardGroups.length}
       />

@@ -149,13 +149,13 @@ function HeadlineStats({ profile }: { profile: GuardianProfile }) {
   return (
     <StatBlockGrid count={5}>
       <StatBlock label="Time played">
-        <span className="font-display text-[30px] leading-none text-bone">{number(totals.minutesPlayed / 60)} h</span>
+        <span className="font-display text-[22px] leading-none sm:text-[30px] text-bone">{number(totals.minutesPlayed / 60)} h</span>
         <span className="text-[12.5px] text-ash">
           ≈ {number(days)} days across {profile.characters.length} characters
         </span>
       </StatBlock>
       <StatBlock label="Active triumph score">
-        <span className="font-display text-[30px] leading-none text-owned">
+        <span className="font-display text-[22px] leading-none sm:text-[30px] text-owned">
           {totals.triumphs.active !== null ? number(totals.triumphs.active) : "—"}
         </span>
         <span className="text-[12.5px] text-ash">
@@ -172,7 +172,7 @@ function HeadlineStats({ profile }: { profile: GuardianProfile }) {
         <span className="text-[12.5px] text-ash">{totals.collections.gilded} gilded (all 3 classes)</span>
       </StatBlock>
       <StatBlock label="Raid clears">
-        <span className="font-display text-[30px] leading-none text-bone">{number(totals.raidClears)}</span>
+        <span className="font-display text-[22px] leading-none sm:text-[30px] text-bone">{number(totals.raidClears)}</span>
         <span className="text-[12.5px] text-ash">+ {number(totals.dungeonClears)} dungeon clears</span>
       </StatBlock>
     </StatBlockGrid>
@@ -869,7 +869,7 @@ export function GuardianProfileBody() {
           <a
             key={section.id}
             href={`#${section.id}`}
-            className="inline-flex h-10 items-center border border-white/[0.22] px-4 font-display text-sm uppercase tracking-[0.12em] text-bone/80 transition hover:border-bone hover:text-white"
+            className="inline-flex h-8 items-center border border-white/[0.22] px-3 font-display text-xs uppercase tracking-[0.12em] text-bone/80 transition hover:border-bone hover:text-white"
           >
             {section.label}
           </a>

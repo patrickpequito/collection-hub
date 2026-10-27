@@ -481,7 +481,7 @@ export function ExoticsPage({ data }: { data: ExoticsPageData }) {
           />
         </StatBlock>
         <StatBlock label="Catalysts in progress">
-          <span className="font-display text-[30px] leading-none text-bone">
+          <span className="font-display text-[22px] leading-none sm:text-[30px] text-bone">
             {catalystsLoaded ? inProgress.length : "—"}
           </span>
           <span className="text-[13px] text-ash">

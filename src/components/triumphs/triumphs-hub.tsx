@@ -176,12 +176,12 @@ export function TriumphsHub({
     <div className="space-y-5">
       <StatBlockGrid count={4}>
         <StatBlock label="Active triumph score">
-          <span className={`font-display text-[30px] leading-none ${scores ? "text-owned" : "text-bone"}`}>
+          <span className={`font-display text-[22px] leading-none sm:text-[30px] ${scores ? "text-owned" : "text-bone"}`}>
             {scores ? scores.activeScore.toLocaleString("en-US") : "—"}
           </span>
         </StatBlock>
         <StatBlock label="Lifetime score">
-          <span className="font-display text-[30px] leading-none text-bone">
+          <span className="font-display text-[22px] leading-none sm:text-[30px] text-bone">
             {scores ? scores.lifetimeScore.toLocaleString("en-US") : "—"}
           </span>
         </StatBlock>
@@ -189,7 +189,7 @@ export function TriumphsHub({
           <StatCount owned={earnedTitles} total={seals.length} />
         </StatBlock>
         <StatBlock label="Gilded this season">
-          <span className="font-display text-[30px] leading-none text-bone">
+          <span className="font-display text-[22px] leading-none sm:text-[30px] text-bone">
             {gildedNow ?? "—"}
             {progressBySlug ? <span className="ml-2 text-base text-ash">· {gildsTotal} gilds total</span> : null}
           </span>
