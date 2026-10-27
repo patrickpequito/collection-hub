@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/app-link";
 import type { ReactNode } from "react";
 import { WeeklyLootBar } from "@/components/home/home-progress";
 import { loadHomeThisWeek, type DestinationWeek } from "@/lib/home/this-week";

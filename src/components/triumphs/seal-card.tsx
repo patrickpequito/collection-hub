@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { PinIcon } from "@/components/pin-icon";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 import type { SealSummary } from "@/lib/triumphs/hub";

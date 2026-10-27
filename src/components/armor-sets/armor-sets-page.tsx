@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { useEffect, useMemo, useState } from "react";
 import { useOwnership } from "@/components/client-ownership";
 import { CollectionItemIcon } from "@/components/collection-item-icon";

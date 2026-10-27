@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { useEffect, useState } from "react";
 import { SectionHeading } from "@/components/detail-page-parts";
 import { GuardianClassIcon } from "@/components/guardian-class-icon";

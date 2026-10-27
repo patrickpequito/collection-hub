@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { useMemo, useState } from "react";
 import { StatBlock, StatBlockGrid, StatCount } from "@/components/detail-page-parts";
 import { useProfileRecordInstances } from "@/components/profile-progress-provider";

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { ProgressBar } from "@/components/home/progress-bar";
 import {
   DESTINY_1_TIMELINE,

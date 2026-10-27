@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { usePathname, useRouter } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import { HistoryBackButton } from "@/components/history-back-button";

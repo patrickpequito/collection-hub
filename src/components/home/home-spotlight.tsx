@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { HomeSearchLoot, MonumentSpotlightProgress } from "@/components/home/home-spotlight-parts";
 import { MONUMENT_OF_TRIUMPH_HUB } from "@/data/activities/monument-of-triumph";
 import { resolveMonumentOfTriumph } from "@/lib/activities/monument-of-triumph";

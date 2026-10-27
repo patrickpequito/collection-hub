@@ -1,6 +1,6 @@
 import { SectionHeading } from "@/components/detail-page-parts";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { SeasonSealTitle } from "@/components/seasons/season-seal-title";
 import { YouTubeEmbed } from "@/components/seasons/youtube-embed";
 import { bungieIconUrl } from "@/lib/bungie-icon";

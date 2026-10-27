@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { PUBLISHED_EXPANSION_SLUGS } from "@/data/expansions";
 
 type Card = { title: string; meta: string; image: string; href: string | null; now?: boolean };

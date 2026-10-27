@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { useHomeSummary } from "@/components/home/home-summary-provider";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 import { markOAuthPending } from "@/lib/app-navigation-stack";

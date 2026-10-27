@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { useMemo, useState } from "react";
 import { ExpandableImage, DETAIL_PREVIEW_FRAME_CLASS } from "@/components/expandable-image";
 import { ExoticPerkPanel } from "@/components/exotic-perk-panel";

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { Fragment, useEffect, useMemo, useState, type ReactNode } from "react";
 import { ClassToggle } from "@/components/class-toggle";
 import { useOwnership } from "@/components/client-ownership";

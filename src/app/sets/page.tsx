@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { ArmorSetsPage } from "@/components/armor-sets/armor-sets-page";
 import { ClientOwnership } from "@/components/client-ownership";
 import { SectionPageLayout } from "@/components/section-page-layout";

@@ -1,7 +1,7 @@
 "use client";
 
 import { SectionHeading } from "@/components/detail-page-parts";
-import Link from "next/link";
+import Link from "@/components/app-link";
 import type { ReactNode } from "react";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 

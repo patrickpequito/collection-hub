@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useOwnership } from "@/components/client-ownership";
 import { CollectionItemIcon } from "@/components/collection-item-icon";
@@ -695,8 +695,8 @@ export function ExoticsPage({ data }: { data: ExoticsPageData }) {
                     <SubHeading right={showOwnership ? `${countOwned(all)} / ${all.length}` : all.length}>
                       {entry.label}
                     </SubHeading>
-                    {/* Icons stretch to fill their column: five per row, three in the five-column desktop layout. */}
-                    <div className="grid grid-cols-5 gap-1.5 lg:grid-cols-3">
+                    {/* Icons stretch to fill their column: five per row, four in the five-column desktop layout. */}
+                    <div className="grid grid-cols-5 gap-1.5 lg:grid-cols-4">
                       {pieces.map((piece) => (
                         <CollectionItemIcon
                           key={piece.itemHash}

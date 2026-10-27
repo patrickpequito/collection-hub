@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/app-link";
 import type { ReactNode } from "react";
 import { ExploreClosestTitles, ExploreMeta, type ExploreMetaKey } from "@/components/home/home-explore-meta";
 import { DESTINATIONS } from "@/data/destinations";

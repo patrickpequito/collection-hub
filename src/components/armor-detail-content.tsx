@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { useMemo, useState } from "react";
 import { ArmorArchetypeIcon } from "@/components/armor-archetype-icon";
 import { StatBlock, StatBlockGrid, StatCount, SectionJumpNav, SectionHeading } from "@/components/detail-page-parts";

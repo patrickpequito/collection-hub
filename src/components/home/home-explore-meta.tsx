@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { useHomeSummary } from "@/components/home/home-summary-provider";
 import { PinIcon } from "@/components/pin-icon";
 import { usePinnedTitles } from "@/lib/use-pinned-titles";

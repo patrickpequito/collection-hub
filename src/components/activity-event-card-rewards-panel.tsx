@@ -1,6 +1,6 @@
 import { SectionHeading } from "@/components/detail-page-parts";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { HorizontalScrollHint } from "@/components/horizontal-scroll-hint";
 import { bungieIconUrl } from "@/lib/bungie-icon";
 import type {

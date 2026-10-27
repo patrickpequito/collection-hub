@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { useCallback, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ItemTooltip } from "@/components/item-tooltip";

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { Suspense } from "react";
 import { HistoryBackButton } from "@/components/history-back-button";
 import { BungieLoginButton } from "@/components/bungie-login-button";

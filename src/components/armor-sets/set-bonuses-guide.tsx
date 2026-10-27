@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { Fragment, useMemo, useState } from "react";
 import { ActivityArmorGrid } from "@/components/activity-current-loot-panel";
 import { useOwnership } from "@/components/client-ownership";
