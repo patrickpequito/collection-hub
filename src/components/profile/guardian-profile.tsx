@@ -495,9 +495,10 @@ function Clears({ profile }: { profile: GuardianProfile }) {
   const max = Math.max(1, ...rows.map((row) => row.clears));
   return (
     <section id="clears" className="min-w-0 scroll-mt-20">
-      <div className="mb-3.5 flex items-baseline justify-between gap-3 border-b border-white/[0.14] pb-2.5">
+      {/* Phones: the Raids / Dungeons toggle sits under the title so each button stays on one line. */}
+      <div className="mb-3.5 flex items-baseline justify-between gap-3 border-b border-white/[0.14] pb-2.5 max-sm:flex-col max-sm:items-start max-sm:gap-2.5">
         <h2 className="text-2xl font-semibold uppercase tracking-[0.06em] text-bone">Raid &amp; dungeon clears</h2>
-        <div className="flex gap-1">
+        <div className="flex shrink-0 gap-1">
           {(["raids", "dungeons"] as const).map((value) => (
             <button
               key={value}
@@ -507,7 +508,7 @@ function Clears({ profile }: { profile: GuardianProfile }) {
                 setTab(value);
                 setShowAll(false);
               }}
-              className={`inline-flex min-h-7 items-center border px-2.5 font-display text-xs uppercase tracking-[0.12em] transition ${
+              className={`inline-flex min-h-7 items-center whitespace-nowrap border px-2.5 font-display text-xs uppercase tracking-[0.12em] transition ${
                 tab === value ? "border-bone bg-white/[0.06] text-white" : "border-white/[0.22] text-[#c7cad0] hover:border-bone"
               }`}
             >
@@ -606,7 +607,7 @@ function Combat({ profile }: { profile: GuardianProfile }) {
   const rate = (wins: number, matches: number) => (matches > 0 ? ` · ${Math.round((wins / matches) * 100)}%` : "");
   return (
     <section id="combat" className="min-w-0 scroll-mt-20">
-      <SectionHeading title="Combat record" note="Lifetime · all characters" />
+      <SectionHeading title="Combat record" note="Lifetime" />
       <div className="grid gap-3 md:grid-cols-3">
         <CombatColumn
           title="PvE"
