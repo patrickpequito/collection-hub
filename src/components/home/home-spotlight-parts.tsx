@@ -88,7 +88,7 @@ export function HomeSearchLoot() {
         />
         <button
           type="submit"
-          className="h-11 shrink-0 bg-bone px-4 font-display text-sm font-semibold uppercase tracking-[0.14em] text-void transition hover:bg-white"
+          className="h-11 shrink-0 border border-white/25 bg-void/85 px-4 font-display text-sm font-semibold uppercase tracking-[0.14em] text-bone/80 transition hover:border-bone hover:text-bone"
         >
           Search
         </button>

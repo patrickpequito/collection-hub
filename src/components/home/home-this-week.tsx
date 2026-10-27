@@ -125,8 +125,16 @@ export async function HomeThisWeek() {
         }
       : null;
   const next = week.ironBanner.live
-    ? { label: "Trials of Osiris · returns after Iron Banner", href: "/activities/trials-of-osiris" }
-    : { label: `Iron Banner · ${formatDay(week.ironBanner.nextStartMs)}`, href: "/activities/iron-banner" };
+    ? {
+        label: "Trials of Osiris · returns after Iron Banner",
+        href: "/activities/trials-of-osiris",
+        image: "/images/headers/trials-of-osiris-header.webp",
+      }
+    : {
+        label: `Iron Banner · ${formatDay(week.ironBanner.nextStartMs)}`,
+        href: "/activities/iron-banner",
+        image: "/images/headers/iron-banner-header.webp",
+      };
 
   return (
     <section className="mx-auto max-w-[1360px] px-4 pt-10 sm:px-6">
@@ -181,7 +189,8 @@ export async function HomeThisWeek() {
             href={live.href}
             className="group flex min-w-0 flex-1 items-stretch border border-hairline bg-panel/85 transition hover:border-bone/60"
           >
-            <span className="relative hidden w-[180px] shrink-0 overflow-hidden sm:block">
+            {/* Phones: a narrower image strip so the card stays short. */}
+            <span className="relative w-24 shrink-0 overflow-hidden sm:w-[180px]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={live.image}
@@ -205,10 +214,16 @@ export async function HomeThisWeek() {
         )}
         <Link
           href={next.href}
-          className="flex flex-col justify-center gap-0.5 border border-hairline bg-panel/85 px-4 py-3 transition hover:border-bone/60 sm:min-w-[300px]"
+          className="group flex items-stretch border border-hairline bg-panel/85 transition hover:border-bone/60 sm:min-w-[300px]"
         >
-          <span className="ui-label text-[11px]!">Next</span>
-          <span className="text-sm text-bone">{next.label}</span>
+          <span className="relative w-24 shrink-0 overflow-hidden sm:hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={next.image} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover" />
+          </span>
+          <span className="flex flex-col justify-center gap-0.5 px-4 py-3">
+            <span className="ui-label text-[11px]!">Next</span>
+            <span className="text-sm text-bone">{next.label}</span>
+          </span>
         </Link>
       </div>
 

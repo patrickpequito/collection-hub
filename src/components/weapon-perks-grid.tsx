@@ -25,6 +25,23 @@ function columnTitles(columns: ResolvedWeaponPerkColumn[]): string[] {
   });
 }
 
+/** Gold ring for god roll perks, thin white ring for other recommendations. */
+function perkRing(tags: { label: string }[]): string {
+  return tags.find((tag) => tag.label === "God roll") ? "ring-2 ring-owned" : tags.length > 0 ? "ring-1 ring-white/60" : "";
+}
+
+function PerkTags({ tags }: { tags: { label: string; className: string }[] }) {
+  return (
+    <span className="flex shrink-0 gap-1">
+      {tags.map((tag) => (
+        <span key={tag.label} className={`font-display text-[10px] uppercase tracking-[0.1em] ${tag.className}`}>
+          {tag.label}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 function PerkRow({
   perk,
   tags,
@@ -34,11 +51,7 @@ function PerkRow({
   tags: { label: string; className: string }[];
   selected: boolean;
 }) {
-  const ring = tags.find((tag) => tag.label === "God roll")
-    ? "ring-2 ring-owned"
-    : tags.length > 0
-      ? "ring-1 ring-white/60"
-      : "";
+  const ring = perkRing(tags);
   return (
     <div
       className={`group relative flex items-center gap-2.5 border px-2 py-1.5 ${
@@ -54,18 +67,7 @@ function PerkRow({
         className={`size-[30px] shrink-0 rounded-full border border-white/40 bg-panel ${ring}`}
       />
       <span className="min-w-0 flex-1 truncate text-[13px] text-bone/90">{perk.name}</span>
-      {tags.length > 0 ? (
-        <span className="flex shrink-0 gap-1">
-          {tags.map((tag) => (
-            <span
-              key={tag.label}
-              className={`font-display text-[10px] uppercase tracking-[0.1em] ${tag.className}`}
-            >
-              {tag.label}
-            </span>
-          ))}
-        </span>
-      ) : null}
+      {tags.length > 0 ? <PerkTags tags={tags} /> : null}
       {perk.description ? (
         <span
           role="tooltip"
@@ -103,6 +105,7 @@ export function WeaponPerksGrid({
   rollHighlightPerks?: Set<string>;
 }) {
   const [mode, setMode] = useState<Mode>("all");
+  const [tappedHash, setTappedHash] = useState<string | null>(null);
   const titles = useMemo(() => columnTitles(columns), [columns]);
   const pve = useMemo(() => godRollHighlightedPerks(godRoll?.pve, columns, plugIndex), [columns, godRoll, plugIndex]);
   const pvp = useMemo(() => godRollHighlightedPerks(godRoll?.pvp, columns, plugIndex), [columns, godRoll, plugIndex]);
@@ -131,6 +134,92 @@ export function WeaponPerksGrid({
   const perkColumns = columns.map((column, index) => ({ column, title: titles[index] }));
   const main = perkColumns.filter((entry) => entry.title !== "Masterwork" && entry.title !== "Origin");
   const side = perkColumns.filter((entry) => entry.title === "Masterwork" || entry.title === "Origin");
+  // Phones (recommendations on): perk columns side by side as icon stacks, like the in-game
+  // inspect screen; tapping a perk shows its name, tags and description underneath.
+  const iconColumns = perkColumns.filter((entry) => entry.title !== "Masterwork");
+  const masterwork = perkColumns.find((entry) => entry.title === "Masterwork");
+  const tapped = columns.flatMap((column) => column.perks).find((perk) => perk.plugHash === tappedHash) ?? null;
+  const toggleTapped = (hash: string) => setTappedHash(tappedHash === hash ? null : hash);
+  const iconGrid = (
+    <div className="space-y-3 sm:hidden">
+      <div className="grid gap-1" style={{ gridTemplateColumns: `repeat(${iconColumns.length}, minmax(0, 1fr))` }}>
+        {iconColumns.map(({ column, title }) => (
+          <div key={title} className="flex min-w-0 flex-col gap-1">
+            <h3 className="truncate border-b border-white/10 pb-1.5 text-center font-display text-[10px] uppercase tracking-[0.12em] text-bone">
+              {title === "Magazine" ? "Mag" : title}
+            </h3>
+            {column.perks.map((perk) => (
+              <button
+                key={perk.plugHash}
+                type="button"
+                aria-label={perk.name}
+                aria-pressed={tappedHash === perk.plugHash}
+                onClick={() => toggleTapped(perk.plugHash)}
+                className={`flex justify-center py-1 ${
+                  rollHighlightPerks.has(perk.plugHash)
+                    ? "bg-sky-500/20 outline outline-1 outline-sky-500/60"
+                    : tappedHash === perk.plugHash
+                      ? "bg-white/[0.08]"
+                      : ""
+                }`}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={bungieIconUrl(perk.iconPath)}
+                  alt=""
+                  width={34}
+                  height={34}
+                  className={`size-[34px] rounded-full border border-white/40 bg-panel ${perkRing(tagsFor(perk.plugHash))}`}
+                />
+              </button>
+            ))}
+          </div>
+        ))}
+      </div>
+      {tapped ? (
+        <div className="flex gap-2.5 border border-white/25 bg-[#12161c] p-2.5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={bungieIconUrl(tapped.iconPath)}
+            alt=""
+            width={40}
+            height={40}
+            className={`size-10 shrink-0 rounded-full border border-white/40 bg-panel ${perkRing(tagsFor(tapped.plugHash))}`}
+          />
+          <span className="flex min-w-0 flex-col gap-1">
+            <span className="flex flex-wrap items-center gap-2">
+              <span className="text-sm font-medium text-bone">{tapped.name}</span>
+              <PerkTags tags={tagsFor(tapped.plugHash)} />
+            </span>
+            {tapped.description ? <span className="text-xs leading-snug text-bone/70">{tapped.description}</span> : null}
+          </span>
+        </div>
+      ) : (
+        <p className="text-xs text-ash">Tap a perk to see what it does.</p>
+      )}
+      {masterwork ? (
+        <div className="flex items-center gap-3">
+          <span className="ui-label w-20 shrink-0 text-[10px]!">Masterwork</span>
+          <span className="flex flex-wrap gap-1.5">
+            {masterwork.column.perks.map((perk) => (
+              <button key={perk.plugHash} type="button" aria-label={perk.name} onClick={() => toggleTapped(perk.plugHash)}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={bungieIconUrl(perk.iconPath)}
+                  alt=""
+                  width={28}
+                  height={28}
+                  className={`size-7 rounded-full border border-white/40 bg-panel ${
+                    rollHighlightPerks.has(perk.plugHash) ? "ring-2 ring-sky-400" : ""
+                  }`}
+                />
+              </button>
+            ))}
+          </span>
+        </div>
+      ) : null}
+    </div>
+  );
 
   return (
     <section className="min-w-0 space-y-3">
@@ -175,7 +264,9 @@ export function WeaponPerksGrid({
         </div>
         ) : null}
 
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_13rem]">
+        {showRecommendations ? iconGrid : null}
+
+        <div className={`grid gap-4 lg:grid-cols-[minmax(0,1fr)_13rem] ${showRecommendations ? "max-sm:hidden" : ""}`}>
           <div className="grid gap-x-3 gap-y-4 sm:grid-cols-2 xl:grid-cols-4">
             {main.map(({ column, title }) => (
               <div key={title} className="min-w-0">

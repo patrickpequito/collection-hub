@@ -28,7 +28,7 @@ export { isItemOwned };
  */
 export const ALL_LOOT_ROW_LAYOUT = [
   "grid items-center gap-x-2 border-b border-zinc-800/80 py-2 sm:gap-x-4 sm:py-3",
-  "grid-cols-[2.5rem_minmax(0,1fr)_1.75rem_1.375rem_2.25rem_1.375rem]",
+  "grid-cols-[3rem_minmax(0,1fr)_1.75rem_1.375rem_2.25rem_1.375rem]",
   "sm:grid-cols-[3rem_minmax(0,1.75fr)_repeat(4,minmax(0,1fr))_2.5rem]",
 ].join(" ");
 
@@ -68,7 +68,7 @@ function ItemIconWithSeasonBadge({
   const iconClass =
     size === "popover"
       ? "h-8 w-8 border border-zinc-800 bg-zinc-900 object-cover sm:h-9 sm:w-9"
-      : "h-10 w-10 border border-zinc-800 bg-zinc-900 object-cover sm:h-12 sm:w-12";
+      : "h-12 w-12 border border-zinc-800 bg-zinc-900 object-cover";
 
   return (
     <div className={`relative shrink-0 overflow-hidden ${className}`}>
@@ -109,7 +109,7 @@ function ItemMetaLine({
 
   return (
     <p
-      className="truncate text-[11px] sm:text-xs"
+      className="truncate text-xs"
       onMouseEnter={() => onHover?.(true)}
       onMouseLeave={() => onHover?.(false)}
     >
@@ -353,7 +353,7 @@ export function AllLootRow({ item, owned, showOwnership }: AllLootRowProps) {
     : "";
 
   const nameClass = [
-    "truncate text-[13px] font-semibold text-zinc-100 sm:text-sm",
+    "truncate text-[15px] font-semibold text-zinc-100 sm:text-sm",
     hasVersions &&
       "underline decoration-zinc-700 decoration-dotted underline-offset-2",
     isItemLink && "transition-colors duration-200 group-hover:text-white",
@@ -430,7 +430,7 @@ export function AllLootResultsHeader() {
     <div
       className={`${ALL_LOOT_ROW_LAYOUT} border-b border-zinc-800 pb-2 text-[10px] font-medium uppercase tracking-wide text-zinc-500`}
     >
-      <span className={`${COL_ICON} block h-10 w-10 sm:h-12 sm:w-12`} aria-hidden />
+      <span className={`${COL_ICON} block h-12 w-12`} aria-hidden />
       <span className={COL_ITEM}>Item</span>
       <span className={COL_RARITY}>Rarity</span>
       <span className={`${COL_CLASS_WEAPON} max-sm:text-center max-sm:text-[9px] max-sm:leading-tight`}>

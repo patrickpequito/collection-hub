@@ -34,7 +34,7 @@ function isInternalNavigationClick(event: MouseEvent, pathname: string): boolean
 }
 
 /** Never leave the overlay up longer than this, whatever happened to the navigation. */
-const MAX_OVERLAY_MS = 10_000;
+const MAX_OVERLAY_MS = 4_000;
 
 export function NavigationLoadingIndicator() {
   const pathname = usePathname();
