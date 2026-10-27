@@ -2,8 +2,8 @@
  * Weekly destination rotations Bungie does not expose in the API, filled in by hand.
  * `anchorWeek` = rotationWeekIndex() of a week where `order[0]` was active
  * (week 19 = Oct 20–27, 2026). null = not confirmed yet, so the card is hidden.
- * Europa week 19 confirmed in game: Eventide Ruins · The Dark Priestess · Survival.
- * Order of the other two weeks still provisional until the Oct 27 reset.
+ * Europa week 19 confirmed in game: Eventide Ruins · The Dark Priestess · Survival;
+ * week 20 (Oct 27): Asterion Abyss · The Warrior · Agility, so the order below is confirmed.
  */
 export type ManualRotation = {
   label: string;
@@ -45,8 +45,8 @@ export const EUROPA_ROTATIONS: ManualRotation[] = [
 /**
  * Dreaming City: three-week curse cycle; Blind Well enemies and Petra's spot follow it.
  * Week 19 seen in game: curse Weak, Blind Well Scorn, Petra at The Strand,
- * Ascendant Challenge Agonarch Abyss (not fully confirmed). Later Blind Well /
- * Petra entries are provisional until checked after each reset.
+ * Ascendant Challenge Agonarch Abyss (not fully confirmed). Week 20 (Oct 27): curse
+ * Growing, Blind Well Hive, Petra at Divalian Mists (Ascendant Challenge not checked).
  */
 export const DREAMING_CITY_CURSE = {
   anchorWeek: 19 as number | null,
@@ -68,7 +68,7 @@ export const DREAMING_CITY_ROTATIONS: ManualRotation[] = [
     anchorWeek: 19,
     order: [
       { name: "Scorn", detail: "Changes with the curse" },
-      { name: "Hive", detail: "Changes with the curse" },
+      { name: "Hive", detail: "Belhor, Teraph, Mholoch · final boss Cragur" },
       { name: "Taken", detail: "Changes with the curse" },
     ],
   },
@@ -90,7 +90,8 @@ export const DREAMING_CITY_ROTATIONS: ManualRotation[] = [
 /**
  * Throne World: weekly Witch Queen campaign mission and the two Altars of Reflection.
  * Week 19 seen in game: The Cunning ("El engaño"); altars Insight + Choice.
- * Mission order follows the campaign and the altar pairing is provisional until checked.
+ * Week 20 (Oct 27): The Last Chance; altars Insight + Catalyst. Insight looks fixed and the
+ * second altar rotates; Pact as the third week is a guess until checked.
  */
 export const THRONE_WORLD_ROTATIONS: ManualRotation[] = [
   {
@@ -112,7 +113,8 @@ export const THRONE_WORLD_ROTATIONS: ManualRotation[] = [
     anchorWeek: 19,
     order: [
       { name: "Insight · Choice", detail: "Tablet of Ruin · Crystal shard" },
-      { name: "Pact · Catalyst", detail: "Sagira's shell · The Enigma" },
+      { name: "Insight · Catalyst", detail: "Tablet of Ruin · The Enigma" },
+      { name: "Insight · Pact", detail: "Tablet of Ruin · Sagira's shell" },
     ],
   },
 ];
