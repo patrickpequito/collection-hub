@@ -27,6 +27,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  // Absolute base for og:image / twitter:image: the site's own domain (from the Bungie
+  // redirect URI), not the *.vercel.app URL Vercel would fall back to.
+  metadataBase: new URL(
+    process.env.BUNGIE_REDIRECT_URI?.trim() ? new URL(process.env.BUNGIE_REDIRECT_URI).origin : "https://d2collector.site",
+  ),
   title: "Collection HUB",
   description: "A collection tracker for Destiny 2 players",
 };
