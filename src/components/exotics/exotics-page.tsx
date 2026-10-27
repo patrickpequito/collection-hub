@@ -695,10 +695,13 @@ export function ExoticsPage({ data }: { data: ExoticsPageData }) {
                     <SubHeading right={showOwnership ? `${countOwned(all)} / ${all.length}` : all.length}>
                       {entry.label}
                     </SubHeading>
-                    <div className="flex flex-wrap gap-1.5">
+                    {/* Icons stretch to fill their column: five per row, three in the five-column desktop layout. */}
+                    <div className="grid grid-cols-5 gap-1.5 lg:grid-cols-3">
                       {pieces.map((piece) => (
                         <CollectionItemIcon
                           key={piece.itemHash}
+                          fluid
+                          fillCell
                           name={piece.name}
                           iconPath={piece.iconPath}
                           source={piece.source}
