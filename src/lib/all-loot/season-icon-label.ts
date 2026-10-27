@@ -49,6 +49,8 @@ export const WATERMARK_EVENT_LABELS: Record<string, string> = {
   "9c091ec0e22c01dacc25efb63b46eb9b.png": "Guardian Games",
   "50c3ebe414c6946429934d79504922fa.png": "Solstice",
   "2b89827888c5581a14af976968bcb18a.png": "Pride",
+  "24174c8ceefc3aea6bfe6b9d45de9d07.png": "10th Anniversary",
+  "c1e11e70eba15abcd4e0414fa29ef714.png": "The Revelry",
 };
 
 /**
@@ -65,7 +67,8 @@ export const EXTRA_WATERMARK_SEASON_LABELS: Record<string, string> = {
   "36418dde751148bd3b95a023d491ea73.png": "S14 Season of the Splicer",
   "41d05b7cb5cc0a384af07ee9b7d36dd2.png": "S19 Season of the Seraph",
   "58d3ec8338cc9746a2e0cf901fbcec0e.png": "S7 Season of Opulence",
-  "661c84a377389a3b8a1fc38b44189b41.png": "S24 Episode: Echoes",
+  // The Final Shape expansion emblem (circle with triangle), not the Echoes episode one.
+  "661c84a377389a3b8a1fc38b44189b41.png": "The Final Shape",
   "6f17d323d81dd683086d88a9268f8106.png": "S23 Season of the Wish",
   "75adde12e4e9c9fb237e492d8258eb73.png": "S17 Season of the Haunted",
   "7d815c943977fe71bbf00caf1bd9c514.png": "S18 Season of Plunder",

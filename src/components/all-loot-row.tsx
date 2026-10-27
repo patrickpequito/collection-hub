@@ -67,7 +67,7 @@ function ItemIconWithSeasonBadge({
 }) {
   const iconClass =
     size === "popover"
-      ? "h-8 w-8 border border-zinc-800 bg-zinc-900 object-cover sm:h-9 sm:w-9"
+      ? "h-9 w-9 border border-white/[0.14] bg-[#14181e] object-cover"
       : "h-12 w-12 border border-zinc-800 bg-zinc-900 object-cover";
 
   return (
@@ -141,32 +141,23 @@ function AllLootVersionsPopover({
 
   return (
     <div
-      className="absolute left-0 top-full z-50 mt-1.5 w-[min(18rem,calc(100vw-2rem))] rounded-lg border border-zinc-700 bg-zinc-950/98 p-2 shadow-xl backdrop-blur-sm"
+      className="absolute left-0 top-full z-50 mt-1.5 w-[min(18rem,calc(100vw-2rem))] border border-white/30 bg-[#12161c] p-2.5 shadow-lg"
       role="tooltip"
       onMouseEnter={() => onHover(true)}
       onMouseLeave={() => onHover(false)}
     >
-      <p className="mb-1.5 px-1 text-[10px] font-medium uppercase tracking-wide text-zinc-500">
-        All versions
-      </p>
-      <ul className="max-h-56 space-y-1 overflow-y-auto">
+      <p className="ui-label mb-2 text-[10px]!">All versions</p>
+      <ul className="max-h-56 space-y-0.5 overflow-y-auto">
         {versions.map((version) => (
-          <li
-            key={version.itemHash}
-            className="flex items-center gap-2 rounded-md px-1 py-1.5 hover:bg-zinc-900/80"
-          >
+          <li key={version.itemHash} className="flex items-center gap-2.5 px-1 py-1 hover:bg-white/[0.04]">
             <ItemIconWithSeasonBadge
               iconPath={version.iconPath}
               seasonIconPath={version.seasonIconPath}
               size="popover"
             />
             <div className="min-w-0">
-              <p className="truncate text-xs font-medium text-zinc-100 sm:text-sm">
-                {version.name}
-              </p>
-              <p className="truncate text-[10px] text-zinc-500 sm:text-xs">
-                {resolveVersionDisplayLabel(version)}
-              </p>
+              <p className="truncate text-[13px] font-medium text-bone">{version.name}</p>
+              <p className="truncate text-xs text-ash">{resolveVersionDisplayLabel(version)}</p>
             </div>
           </li>
         ))}
@@ -403,7 +394,7 @@ export function AllLootRow({ item, owned, showOwnership }: AllLootRowProps) {
         )}
         <ItemMetaLine
           type={item.type}
-          seasonLabel={item.seasonLabel}
+          seasonLabel={resolveVersionDisplayLabel(item)}
           onHover={setHover}
         />
         <AllLootVersionsPopover
@@ -536,7 +527,7 @@ export function AllLootGridCard({ item, owned, showOwnership }: AllLootRowProps)
       </span>
       <span className="flex min-w-0 flex-col gap-1">
         <span className="truncate text-[15px] font-medium text-bone">{item.name}</span>
-        <span className="truncate text-xs text-ash">{item.seasonLabel}</span>
+        <span className="truncate text-xs text-ash">{resolveVersionDisplayLabel(item)}</span>
         <span className="mt-1 flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-bone/75">
           {meta}
         </span>

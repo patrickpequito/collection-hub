@@ -1,4 +1,6 @@
 import { readFile, stat } from "node:fs/promises";
+import { EVENTS } from "@/lib/all-loot/events";
+import { expansionFromSource } from "@/lib/all-loot/expansion-from-source";
 import path from "node:path";
 import type {
   AllLootCatalog,
@@ -35,7 +37,8 @@ export async function loadAllLootCatalog(): Promise<AllLootCatalog> {
 
 export async function loadAllLootFacets(): Promise<AllLootFacets> {
   const catalog = await loadAllLootCatalog();
-  return catalog.facets;
+  const present = new Set(catalog.items.flatMap(itemEventLabels));
+  return { ...catalog.facets, events: EVENTS.map((event) => event.label).filter((label) => present.has(label)) };
 }
 
 function matchesMultiFilter(values: string[], candidates: string | string[] | null) {
@@ -45,21 +48,36 @@ function matchesMultiFilter(values: string[], candidates: string | string[] | nu
   return list.some((candidate) => values.includes(candidate));
 }
 
+/** Season / expansion labels of an item's non-event versions (event editions filter by event). */
 function itemSeasonLabels(item: AllLootItem) {
   const labels = new Set<string>();
   if (item.versions?.length) {
     for (const version of item.versions) {
-      labels.add(version.seasonLabel);
+      if (!version.eventLabel) labels.add(version.seasonLabel);
     }
-  } else {
+  } else if (!item.eventLabel) {
     labels.add(item.seasonLabel);
+  }
+  // Expansion loot often carries a reissue or launch-episode label: also match its expansion.
+  const expansion = expansionFromSource(item.source);
+  if (expansion && labels.size) labels.add(expansion);
+  return [...labels];
+}
+
+function itemEventLabels(item: AllLootItem): string[] {
+  const labels = new Set<string>();
+  if (item.eventLabel) labels.add(item.eventLabel);
+  for (const version of item.versions ?? []) {
+    if (version.eventLabel) labels.add(version.eventLabel);
   }
   return [...labels];
 }
 
 function matchesQuery(item: AllLootItem, query: string) {
-  if (!query.trim()) return true;
-  return item.searchText.includes(query.trim().toLowerCase());
+  const needle = query.trim().toLowerCase();
+  if (!needle) return true;
+  if (item.searchText.includes(needle)) return true;
+  return expansionFromSource(item.source)?.toLowerCase().includes(needle) ?? false;
 }
 
 export function searchAllLootItems(
@@ -77,6 +95,7 @@ export function searchAllLootItems(
     }
     if (!matchesMultiFilter(filters.types, item.type)) return false;
     if (!matchesMultiFilter(filters.seasons, itemSeasonLabels(item))) return false;
+    if (!matchesMultiFilter(filters.events, itemEventLabels(item))) return false;
     if (!matchesMultiFilter(filters.rarities, item.rarity)) return false;
     if (!matchesMultiFilter(filters.damageTypes, item.damageType)) return false;
 
@@ -174,6 +193,7 @@ export function parseAllLootSearchFilters(
     query: params.get("q")?.trim() ?? "",
     types: readList("types"),
     seasons: readList("seasons"),
+    events: readList("events"),
     rarities: readList("rarities"),
     classes: readList("classes"),
     weaponTypes: readList("weaponTypes"),

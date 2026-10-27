@@ -1,3 +1,4 @@
+import { eventDisplayLabel } from "@/lib/all-loot/events";
 import type { AllLootItem, AllLootItemVersion } from "@/types/all-loot";
 
 export type SeasonBadge = {
@@ -7,9 +8,9 @@ export type SeasonBadge = {
 };
 
 function versionDisplayKey(
-  version: Pick<AllLootItemVersion, "seasonLabel" | "eventLabel">,
+  version: Pick<AllLootItemVersion, "seasonLabel" | "eventLabel" | "eventYear">,
 ): string {
-  return version.eventLabel ?? version.seasonLabel;
+  return resolveVersionDisplayLabel(version);
 }
 
 /** One row per season/event label — catalog can retain multiple hashes per label. */
@@ -18,6 +19,7 @@ export function dedupeVersionsForDisplay(
     seasonLabel?: string;
     seasonNumber?: number;
     eventLabel?: string;
+    eventYear?: number;
     iconPath?: string;
     name?: string;
     seasonIconPath?: string;
@@ -35,6 +37,7 @@ export function dedupeVersionsForDisplay(
           seasonLabel: weapon.seasonLabel ?? "",
           seasonNumber: weapon.seasonNumber ?? 0,
           eventLabel: weapon.eventLabel,
+          eventYear: weapon.eventYear,
           seasonIconPath: weapon.seasonIconPath,
           seasonDisplayIconPath: weapon.seasonDisplayIconPath,
           seasonDisplayIconWatermark: weapon.seasonDisplayIconWatermark,
@@ -82,7 +85,7 @@ function resolveBadgeIconPath(
 
 function badgeFromVersion(version: AllLootItemVersion): SeasonBadge | null {
   const iconPath = resolveBadgeIconPath(version);
-  const label = version.eventLabel ?? version.seasonLabel;
+  const label = resolveVersionDisplayLabel(version);
   if (!iconPath || !label) return null;
 
   return {
@@ -92,10 +95,11 @@ function badgeFromVersion(version: AllLootItemVersion): SeasonBadge | null {
   };
 }
 
+/** Event items read "The Dawning 2019"; everything else shows its season / expansion. */
 export function resolveVersionDisplayLabel(
-  version: Pick<AllLootItemVersion, "seasonLabel" | "eventLabel">,
+  version: Pick<AllLootItemVersion, "seasonLabel" | "eventLabel" | "eventYear">,
 ): string {
-  return version.eventLabel ?? version.seasonLabel;
+  return version.eventLabel ? eventDisplayLabel(version.eventLabel, version.eventYear) : version.seasonLabel;
 }
 
 export function resolveSeasonBadges(weapon: AllLootItem): SeasonBadge[] {

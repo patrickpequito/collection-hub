@@ -207,6 +207,8 @@ export const WATERMARK_LABEL_OVERRIDES = {
   "95f7754d52d6016fdc445fb62aa7a31e.png": "Renegades",
   "4376a7d734583ae347acf9732aa3bb43.png": LAWLESS_LABEL,
   "0ac354c1c326441716ddb15d2c158c59.png": "S26 Episode: Heresy",
+  // The Final Shape expansion emblem (circle with triangle); DIM files it under season 24.
+  "661c84a377389a3b8a1fc38b44189b41.png": "The Final Shape",
 };
 
 /** Year-8 featured gear watermark reused across chapters; DIM maps to manifest 28. */
@@ -721,7 +723,7 @@ export const EXPANSION_SOURCE_PATTERNS = [
   [/"vow of the disciple"/i, "The Witch Queen"],
   [/witch queen|throne world|wellspring/i, "The Witch Queen"],
   [/"root of nightmares"/i, "Lightfall"],
-  [/lightfall|heist battlegrounds/i, "Lightfall"],
+  [/lightfall|heist battlegrounds|neomuna|terminal overload|vex incursion|"the final strand"/i, "Lightfall"],
   [/"deep stone crypt"/i, "Beyond Light"],
   [/"garden of salvation"/i, "Shadowkeep"],
   [/"pit of heresy"/i, "Shadowkeep"],
@@ -868,6 +870,8 @@ export const WATERMARK_EVENT_LABELS = {
   "9c091ec0e22c01dacc25efb63b46eb9b.png": "Guardian Games",
   "50c3ebe414c6946429934d79504922fa.png": "Solstice",
   "2b89827888c5581a14af976968bcb18a.png": "Pride",
+  "24174c8ceefc3aea6bfe6b9d45de9d07.png": "10th Anniversary",
+  "c1e11e70eba15abcd4e0414fa29ef714.png": "The Revelry",
 };
 
 export function resolveEventLabel(

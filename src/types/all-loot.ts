@@ -1,6 +1,8 @@
 export type AllLootFacets = {
   types: string[];
   seasons: string[];
+  /** Events present in the catalog (filter order); computed at load time. */
+  events?: string[];
   rarities: string[];
   classes: string[];
   weaponTypes: string[];
@@ -60,6 +62,8 @@ export type AllLootItemVersion = {
   seasonLabel: string;
   seasonNumber: number;
   eventLabel?: string;
+  /** Year of the event edition ("The Dawning 2019"), set at load time. */
+  eventYear?: number;
   perkColumns?: WeaponPerkColumn[];
   stats?: WeaponStat[];
   exoticPerk?: ExoticArmorPerk;
@@ -80,6 +84,8 @@ export type AllLootItem = {
   seasonLabel: string;
   seasonNumber: number;
   eventLabel?: string;
+  /** Year of the event edition ("The Dawning 2019"), set at load time. */
+  eventYear?: number;
   type: string;
   /** Emotes only: finishers and combat flair are listed as "Emote" too. */
   emoteKind?: "Finisher" | "Combat Flair";
@@ -123,6 +129,7 @@ export type AllLootSearchFilters = {
   query: string;
   types: string[];
   seasons: string[];
+  events: string[];
   rarities: string[];
   classes: string[];
   weaponTypes: string[];

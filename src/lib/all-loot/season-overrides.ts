@@ -3,7 +3,26 @@ import {
   resolveEventLabelFromIconPath,
   resolveSeasonLabelFromIconPath,
 } from "@/lib/all-loot/season-icon-label";
+import { eventDisplayLabel, eventYear } from "@/lib/all-loot/events";
 import type { AllLootItem, AllLootItemVersion } from "@/types/all-loot";
+
+/** Events read from the source text (no watermark of their own): keep them when the season is re-derived. */
+const SOURCE_EVENTS = new Set(["Crimson Days", "The Revelry"]);
+/** Moments of Triumph rewards carry their season's emblem: listed under that season, not as an event. */
+const NOT_EVENTS = new Set(["Moments of Triumph"]);
+
+function dropNonEvents(item: AllLootItem): AllLootItem {
+  const drop = (label?: string) => (label && NOT_EVENTS.has(label) ? undefined : label);
+  if (!NOT_EVENTS.has(item.eventLabel ?? "") && !item.versions?.some((version) => NOT_EVENTS.has(version.eventLabel ?? ""))) {
+    return item;
+  }
+  return {
+    ...item,
+    eventLabel: drop(item.eventLabel),
+    versions: item.versions?.map((version) => ({ ...version, eventLabel: drop(version.eventLabel) })),
+  };
+}
+const keptEvent = (label?: string) => (label && SOURCE_EVENTS.has(label) ? label : undefined);
 
 function applyIconLabelsToVersion(
   version: AllLootItemVersion,
@@ -23,7 +42,7 @@ function applyIconLabelsToVersion(
     ...version,
     seasonLabel: iconLabel,
     seasonNumber: displayNumberFromLabel(iconLabel),
-    eventLabel: undefined,
+    eventLabel: keptEvent(version.eventLabel),
   };
 }
 
@@ -64,11 +83,32 @@ export function applySeasonItemOverrides(item: AllLootItem): AllLootItem {
     ...item,
     seasonLabel: iconLabel,
     seasonNumber: displayNumberFromLabel(iconLabel),
-    eventLabel: undefined,
+    eventLabel: keptEvent(item.eventLabel),
     versions: patchedVersions,
   };
 }
 
+/** Event items get the year of their edition, searchable as "the dawning 2019". */
+function withEventYears(item: AllLootItem): AllLootItem {
+  const versions = item.versions?.map((version) =>
+    version.eventLabel
+      ? { ...version, eventYear: eventYear(version.eventLabel, version.seasonLabel, item.source) ?? undefined }
+      : version,
+  );
+  const year = item.eventLabel ? (eventYear(item.eventLabel, item.seasonLabel, item.source) ?? undefined) : undefined;
+  const labels = [
+    item.eventLabel ? eventDisplayLabel(item.eventLabel, year) : null,
+    ...(versions ?? []).map((version) => (version.eventLabel ? eventDisplayLabel(version.eventLabel, version.eventYear) : null)),
+  ].filter((label): label is string => Boolean(label));
+  if (!labels.length) return item;
+  return {
+    ...item,
+    eventYear: year,
+    versions,
+    searchText: `${item.searchText} ${[...new Set(labels)].join(" ").toLowerCase()}`,
+  };
+}
+
 export function applySeasonCatalogOverrides(items: AllLootItem[]): AllLootItem[] {
-  return items.map(applySeasonItemOverrides);
+  return items.map((item) => withEventYears(applySeasonItemOverrides(dropNonEvents(item))));
 }

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState, type ReactNode } from "react";
+import { EVENTS } from "@/lib/all-loot/events";
 import { localSeasonFilterIconPath } from "@/lib/all-loot/season-icon-path";
 import { armorSlotIconPath } from "@/lib/armor-slot-icon";
 import { bungieIconUrl } from "@/lib/bungie-icon";
@@ -30,6 +31,31 @@ function SeasonFilterLabel({ season }: { season: string }) {
         unoptimized
       />
       <span className="truncate">{season}</span>
+    </span>
+  );
+}
+
+function EventFilterLabel({ event }: { event: string }) {
+  const iconPath = EVENTS.find((entry) => entry.label === event)?.iconPath;
+  return (
+    <span className="inline-flex min-w-0 items-center gap-1.5 truncate">
+      {iconPath ? (
+        // Event watermarks are 96px overlays with the glyph in the top-left corner (~4–24px):
+        // scale and crop so only the glyph shows. Plain icons (.jpg emblems) show whole.
+        <span aria-hidden className="relative size-3.5 shrink-0 translate-y-[2px] overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={bungieIconUrl(iconPath)}
+            alt=""
+            className={
+              iconPath.endsWith(".png")
+                ? "absolute -left-[2.3px] -top-[2.3px] size-14 max-w-none"
+                : "absolute inset-0 size-full object-cover"
+            }
+          />
+        </span>
+      ) : null}
+      <span className="truncate">{event}</span>
     </span>
   );
 }
@@ -276,6 +302,7 @@ function hasAnyFilters(filters: AllLootFilterState) {
     filters.query.trim().length > 0 ||
     filters.types.length > 0 ||
     filters.seasons.length > 0 ||
+    filters.events.length > 0 ||
     filters.rarities.length > 0 ||
     filters.classes.length > 0 ||
     filters.weaponTypes.length > 0 ||
@@ -292,6 +319,7 @@ export type AllLootFilterState = {
   query: string;
   types: string[];
   seasons: string[];
+  events: string[];
   rarities: string[];
   classes: string[];
   weaponTypes: string[];
@@ -319,6 +347,7 @@ export function buildAllLootSearchParams(
 
   appendList("types", filters.types);
   appendList("seasons", filters.seasons);
+  appendList("events", filters.events);
   appendList("rarities", filters.rarities);
   appendList("classes", filters.classes);
   appendList("weaponTypes", filters.weaponTypes);
@@ -335,6 +364,7 @@ export function emptyAllLootFilterState(): AllLootFilterState {
     query: "",
     types: [],
     seasons: [],
+    events: [],
     rarities: [],
     classes: [],
     weaponTypes: [],
@@ -353,6 +383,7 @@ export type ActiveFilterChip = { key: string; label: string; clear: (filters: Al
 const LIST_KEYS = [
   "types",
   "seasons",
+  "events",
   "rarities",
   "weaponTypes",
   "classes",
@@ -435,6 +466,15 @@ export function AllLootFilterSidebar({
         renderOption={(season) => <SeasonFilterLabel season={season} />}
         searchable
       />
+      {facets.events?.length ? (
+        <FilterGroup
+          label="Event"
+          options={facets.events}
+          selected={filters.events}
+          onChange={(events) => update({ events })}
+          renderOption={(event) => <EventFilterLabel event={event} />}
+        />
+      ) : null}
       <FilterGroup
         label="Rarity"
         options={facets.rarities}
