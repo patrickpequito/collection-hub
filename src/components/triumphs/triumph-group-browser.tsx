@@ -41,6 +41,8 @@ export function TriumphGroupBrowser({ group }: { group: TriumphGroup }) {
   const leaves = tree.flatMap((entry) => entry.leaves);
   const [selectedId, setSelectedId] = useState(leaves[0]?.id ?? "");
   const [filter, setFilter] = useState<Filter>("all");
+  // Phones: the selected section opens in place; tapping it again closes it.
+  const [collapsed, setCollapsed] = useState(false);
 
   // Deep links: /triumphs/group/legends#raids-vault-of-glass
   useEffect(() => {
@@ -122,6 +124,110 @@ export function TriumphGroupBrowser({ group }: { group: TriumphGroup }) {
     </nav>
   );
 
+  const content = (
+    <>
+      {signedIn ? (
+        <div className="flex flex-wrap gap-1.5">
+          {(
+            [
+              ["all", "All"],
+              ["open", "Incomplete"],
+              ["done", "Completed"],
+            ] as [Filter, string][]
+          ).map(([id, label]) => (
+            <button
+              key={id}
+              type="button"
+              aria-pressed={filter === id}
+              onClick={() => setFilter(id)}
+              className={`inline-flex min-h-[38px] items-center border px-3.5 font-display text-sm uppercase tracking-[0.12em] transition max-lg:min-h-8 max-lg:px-3 max-lg:text-xs ${
+                filter === id ? "border-bone bg-bone text-void" : "border-white/[0.22] text-[#c7cad0] hover:border-bone/70"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      ) : null}
+      {visible.length ? (
+        <div className="grid gap-2.5 md:grid-cols-2">
+          {visible.map((record) => (
+            <TriumphTile
+              key={record.recordHash}
+              record={record}
+              instance={signedIn ? instances[record.recordHash] : undefined}
+              showProgress={signedIn}
+              stringVariables={stringVariables}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className="border border-dashed border-white/[0.14] px-4 py-3.5 text-[13px] text-ash">
+          Nothing to show with this filter.
+        </p>
+      )}
+    </>
+  );
+
+  // Phones: each section group is its own block (divider with icon), its sections are
+  // collapsible rows and the open one shows its filters and triumphs in place.
+  const mobileSections = (
+    <div className="space-y-3 lg:hidden">
+      {tree.map(({ section, leaves: sectionLeaves }) => (
+        <div key={section.presentationNodeHash} className="ui-panel">
+          <div className="flex items-center gap-2 border-b border-white/[0.14] bg-white/[0.02] px-3 pb-1.5 pt-2.5">
+            {section.iconPath ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={bungieIconUrl(section.iconPath)} alt="" width={18} height={18} className="size-[18px]" />
+            ) : null}
+            <span className="ui-label text-[11px]! text-[#c7cad0]!">{section.name}</span>
+          </div>
+          {sectionLeaves.map((leaf) => {
+            const progress = countTriumphProgress(leaf.records, instanceMap);
+            const complete = signedIn && progress.total > 0 && progress.completed === progress.total;
+            const open = leaf.id === selected?.id && !collapsed;
+            return (
+              <div key={leaf.id} className={`border-b border-white/[0.08] last:border-0 ${open ? "bg-white/[0.03]" : ""}`}>
+                <button
+                  type="button"
+                  aria-expanded={open}
+                  onClick={() => {
+                    if (leaf.id === selected?.id) {
+                      setCollapsed(!collapsed);
+                    } else {
+                      select(leaf.id);
+                      setCollapsed(false);
+                    }
+                  }}
+                  className="flex w-full items-center gap-2.5 px-3 py-2.5 text-left"
+                >
+                  <span className="min-w-0 flex-1 truncate font-display text-sm font-semibold uppercase tracking-[0.08em] text-bone">
+                    {leaf.name === section.name ? "All" : leaf.name}
+                  </span>
+                  {signedIn ? (
+                    <span className="block h-[3px] w-14 shrink-0 bg-white/10">
+                      <span
+                        className={`block h-full ${complete ? "bg-owned" : "bg-bone"}`}
+                        style={{ width: `${progress.total ? (progress.completed / progress.total) * 100 : 0}%` }}
+                      />
+                    </span>
+                  ) : null}
+                  <span className={`w-11 shrink-0 text-right text-[11.5px] tabular-nums ${complete ? "text-owned" : "text-ash"}`}>
+                    {signedIn ? `${progress.completed}/${progress.total}` : progress.total}
+                  </span>
+                  <span aria-hidden className={`text-[11px] transition ${open ? "rotate-90 text-bone" : "text-ash"}`}>
+                    ▸
+                  </span>
+                </button>
+                {open ? <div className="space-y-2.5 px-2.5 pb-3">{content}</div> : null}
+              </div>
+            );
+          })}
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <div className="space-y-6">
       <StatBlockGrid count={3}>
@@ -140,26 +246,9 @@ export function TriumphGroupBrowser({ group }: { group: TriumphGroup }) {
 
       <div className="grid gap-6 lg:grid-cols-[290px_minmax(0,1fr)] lg:items-start">
         <div className="hidden lg:sticky lg:top-20 lg:block">{nav}</div>
-        <label className="lg:hidden">
-          <span className="ui-label mb-1.5 block">Category</span>
-          <select
-            value={selected?.id}
-            onChange={(event) => select(event.target.value)}
-            className="w-full border border-white/[0.22] bg-panel px-3 py-2.5 text-sm text-bone"
-          >
-            {tree.map(({ section, leaves: sectionLeaves }) => (
-              <optgroup key={section.presentationNodeHash} label={section.name}>
-                {sectionLeaves.map((leaf) => (
-                  <option key={leaf.id} value={leaf.id}>
-                    {leaf.name}
-                  </option>
-                ))}
-              </optgroup>
-            ))}
-          </select>
-        </label>
+        {mobileSections}
 
-        <section className="min-w-0 space-y-3.5">
+        <section className="min-w-0 space-y-3.5 max-lg:hidden">
           <div className="flex items-baseline justify-between gap-3 border-b border-white/[0.14] pb-2.5">
             <h2 className="text-2xl font-semibold uppercase tracking-[0.06em] text-bone">
               {selected?.name}
@@ -168,46 +257,7 @@ export function TriumphGroupBrowser({ group }: { group: TriumphGroup }) {
               {signedIn ? `${selectedProgress.completed} / ${selectedProgress.total}` : `${selectedProgress.total} triumphs`}
             </span>
           </div>
-          {signedIn ? (
-            <div className="flex flex-wrap gap-1.5">
-              {(
-                [
-                  ["all", "All"],
-                  ["open", "Incomplete"],
-                  ["done", "Completed"],
-                ] as [Filter, string][]
-              ).map(([id, label]) => (
-                <button
-                  key={id}
-                  type="button"
-                  aria-pressed={filter === id}
-                  onClick={() => setFilter(id)}
-                  className={`inline-flex min-h-[38px] items-center border px-3.5 font-display text-sm uppercase tracking-[0.12em] transition ${
-                    filter === id ? "border-bone bg-bone text-void" : "border-white/[0.22] text-[#c7cad0] hover:border-bone/70"
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-          ) : null}
-          {visible.length ? (
-            <div className="grid gap-2.5 md:grid-cols-2">
-              {visible.map((record) => (
-                <TriumphTile
-                  key={record.recordHash}
-                  record={record}
-                  instance={signedIn ? instances[record.recordHash] : undefined}
-                  showProgress={signedIn}
-                  stringVariables={stringVariables}
-                />
-              ))}
-            </div>
-          ) : (
-            <p className="border border-dashed border-white/[0.14] px-4 py-3.5 text-[13px] text-ash">
-              Nothing to show with this filter.
-            </p>
-          )}
+          {content}
         </section>
       </div>
     </div>

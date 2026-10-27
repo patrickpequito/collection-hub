@@ -1,12 +1,10 @@
 "use client";
 
-import { useMemo } from "react";
 import { ArmorSetBlock } from "@/components/activity-current-loot-panel";
 import { useOwnership } from "@/components/client-ownership";
 import { SectionHeading } from "@/components/detail-page-parts";
 import { LootBox } from "@/components/loot-section";
 import { resolveArmorSetPreviewFile } from "@/lib/armor-sets/preview-images";
-import { countOwnedGroups } from "@/lib/expansions/expansion-progress";
 import type { EververseLoot } from "@/lib/eververse/resolve-eververse";
 import type { LootItem } from "@/types/activity-loot";
 
@@ -30,11 +28,6 @@ export function EververseSection({
   const { ownedItemHashes, showOwnership } = useOwnership();
   const { ornamentSets, otherArmorOrnaments, exoticArmorOrnaments, weaponOrnaments, sections } = eververse;
 
-  const owned = useMemo(
-    () => (showOwnership ? countOwnedGroups(eververse.ownershipGroups, ownedItemHashes) : null),
-    [eververse.ownershipGroups, ownedItemHashes, showOwnership],
-  );
-
   if (eververse.total === 0) return null;
 
   const boxes: { title: string; items: LootItem[] }[] = [
@@ -46,14 +39,7 @@ export function EververseSection({
 
   return (
     <section className="min-w-0 space-y-3">
-      <SectionHeading
-        title="Eververse"
-        note={
-          owned === null
-            ? `${eververse.total} items · not counted in progress`
-            : `${owned} / ${eververse.total} owned · not counted in progress`
-        }
-      />
+      <SectionHeading title="Eververse" />
       {description ? <p className="text-sm text-ash">{description}</p> : null}
 
       {ornamentSets.map((group) => {

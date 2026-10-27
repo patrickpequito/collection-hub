@@ -136,7 +136,8 @@ export function ActivityArmorGrid({
             {CLASS_LABELS[row.guardianClass]}
             {mixedSetNames ? ` · ${row.setName}` : null}
           </p>
-          <div className="grid grid-cols-[repeat(5,minmax(0,3.75rem))] gap-1.5">
+          {/* Phones: five equal columns spanning the block, so rows line up with the preview below. */}
+          <div className="grid grid-cols-5 gap-1.5 sm:grid-cols-[repeat(5,minmax(0,3.75rem))]">
             {ARMOR_SLOTS.map((slot, slotIndex) => {
               const piece = row.pieces[slot];
               if (!piece) {
@@ -167,6 +168,7 @@ export function ActivityArmorGrid({
                     showOwnership={showOwnership}
                     tooltipAlign={tooltipAlign}
                     fluid
+                    fillCell
                     href={itemHrefs?.[piece.itemHash]}
                     ornamentOverlay={piece.itemType === "Ornament"}
                     classOrWeaponType={CLASS_LABELS[row.guardianClass]}

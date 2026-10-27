@@ -132,8 +132,8 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
     { id: "campaign", label: "Campaign & Activities", show: true },
     { id: "eververse", label: "Eververse", show: Boolean(loot.eververse) },
     { id: "raids-dungeons", label: "Raids & dungeons", show: hasActivities },
-    { id: "triumphs", label: "Triumphs", show: hasTriumphs },
     { id: "deep-loot", label: "Deep loot", show: true },
+    { id: "triumphs", label: "Triumphs", show: hasTriumphs },
   ].filter((link) => link.show);
 
   return (
@@ -248,6 +248,14 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
             </div>
           ) : null}
 
+          <div id="deep-loot" className="scroll-mt-20">
+            <ExpansionDeepLootSection
+              pools={loot.deepLootPools}
+              itemHrefs={itemHrefs}
+              emptyDescription={hub.deepLootEmptyDescription}
+            />
+          </div>
+
           {hasTriumphs ? (
             <div id="triumphs" className="scroll-mt-20">
               <ExpansionTriumphsPanel
@@ -258,13 +266,6 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
             </div>
           ) : null}
 
-          <div id="deep-loot" className="scroll-mt-20">
-            <ExpansionDeepLootSection
-              pools={loot.deepLootPools}
-              itemHrefs={itemHrefs}
-              emptyDescription={hub.deepLootEmptyDescription}
-            />
-          </div>
         </div>
       </ClientOwnership>
     </SectionPageLayout>

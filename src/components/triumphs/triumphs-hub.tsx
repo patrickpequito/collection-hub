@@ -130,6 +130,48 @@ function TriumphsNav({
   );
 }
 
+/** Phones: every triumph category as an always-open list (Seals are the section below). */
+function MobileCategoryList({ groups }: { groups: TriumphGroupSummary[] }) {
+  const signedIn = useSignedIn();
+  const instances = useProfileRecordInstances();
+  return (
+    <div className="space-y-1.5 lg:hidden">
+      <p className="ui-label text-[10px]!">Triumph categories</p>
+      <nav aria-label="Triumph categories" className="ui-panel divide-y divide-white/[0.07]">
+        {TRIUMPH_GROUP_BANDS.flatMap((band) => groups.filter((group) => group.band === band)).map((group) => {
+          const progress = signedIn ? groupProgress(group.recordHashes, instances) : null;
+          const percent = progress && progress.total ? Math.round((progress.completed / progress.total) * 100) : 0;
+          const complete = progress !== null && progress.total > 0 && progress.completed === progress.total;
+          return (
+            <Link
+              key={group.slug}
+              href={`/triumphs/group/${group.slug}`}
+              className="flex items-center gap-2.5 px-3 py-2"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={bungieIconUrl(group.iconPath)} alt="" width={24} height={24} className="size-6 shrink-0 object-contain" />
+              <span className="min-w-0 flex-1 truncate text-[13.5px] text-bone">{group.name}</span>
+              {progress ? (
+                <>
+                  <span className="block h-[3px] w-16 shrink-0 bg-white/10">
+                    <span className={`block h-full ${complete ? "bg-owned" : "bg-bone"}`} style={{ width: `${percent}%` }} />
+                  </span>
+                  <span className={`w-9 shrink-0 text-right text-[11.5px] tabular-nums ${complete ? "text-owned" : "text-ash"}`}>
+                    {percent}%
+                  </span>
+                </>
+              ) : null}
+              <span aria-hidden className="text-[11px] text-ash">
+                ▸
+              </span>
+            </Link>
+          );
+        })}
+      </nav>
+    </div>
+  );
+}
+
 export function TriumphsHub({
   seals,
   legacySeals,
@@ -202,12 +244,7 @@ export function TriumphsHub({
         <div className="hidden lg:sticky lg:top-20 lg:block">
           <TriumphsNav seals={seals} groups={groups} sealTotals={sealTotals} />
         </div>
-        <details className="ui-panel lg:hidden">
-          <summary className="cursor-pointer px-4 py-3 font-display text-sm uppercase tracking-[0.12em] text-bone">
-            Triumph categories
-          </summary>
-          <TriumphsNav seals={seals} groups={groups} sealTotals={sealTotals} />
-        </details>
+        <MobileCategoryList groups={groups} />
 
         <section className="min-w-0 space-y-3.5">
           <div className="flex items-baseline justify-between gap-3 border-b border-white/[0.14] pb-2.5">

@@ -39,14 +39,14 @@ function ObjectiveRow({
   const percent = objective.completionValue > 0 ? Math.round((value / objective.completionValue) * 100) : 0;
   const checked = showProgress && objective.complete;
   return (
-    <div className="grid grid-cols-[22px_minmax(0,1fr)] items-center gap-2.5">
+    <div className="grid grid-cols-[18px_minmax(0,1fr)] items-center gap-2">
       <span
         aria-hidden
-        className={`size-[22px] border ${
-          checked ? "border-owned bg-owned bg-clip-content p-[3px]" : "border-white/45 bg-[#1d2026]"
+        className={`size-[18px] border ${
+          checked ? "border-owned bg-owned bg-clip-content p-[2.5px]" : "border-white/45 bg-[#1d2026]"
         }`}
       />
-      <span className="relative flex min-h-7 items-center justify-between gap-2.5 overflow-hidden bg-white/[0.06] px-3 text-[15px] text-bone">
+      <span className="relative flex min-h-6 items-center justify-between gap-2.5 overflow-hidden bg-white/[0.06] px-2.5 text-[13px] text-bone">
         {showProgress && !tileDone ? (
           <span className="absolute inset-y-0 left-0 bg-white/[0.12]" style={{ width: `${percent}%` }} />
         ) : null}
@@ -89,27 +89,27 @@ export function TriumphTile({
 
   return (
     <article
-      className={`relative flex min-w-0 flex-col gap-3.5 border p-[18px] pl-4 ${
+      className={`relative flex min-w-0 flex-col gap-3 border p-3.5 ${
         done
           ? "border-owned bg-[#12161c] bg-[linear-gradient(rgba(201,162,39,0.12),rgba(201,162,39,0.12))]"
           : "border-white/[0.16] bg-[#0e1115]/90"
       } ${state === "claim" ? "shadow-[0_0_0_1px_#c9a227,0_0_18px_rgba(201,162,39,0.4)]" : ""}`}
     >
-      <div className="grid grid-cols-[52px_minmax(0,1fr)_auto] items-start gap-3.5">
-        <span className="flex size-[52px] items-center justify-center">
+      <div className="grid grid-cols-[40px_minmax(0,1fr)_auto] items-start gap-3">
+        <span className="flex size-10 items-center justify-center">
           {iconUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={iconUrl} alt="" width={46} height={46} className="size-[46px] object-contain" />
+            <img src={iconUrl} alt="" width={36} height={36} className="size-9 object-contain" />
           ) : null}
         </span>
         <div className="min-w-0">
-          <h3 className="text-[19px] font-medium leading-snug text-[#f1efe9]">{record.name}</h3>
+          <h3 className="text-[15px] font-medium leading-snug text-[#f1efe9]">{record.name}</h3>
           {record.description ? (
-            <p className="mt-1.5 text-[15px] leading-[1.45] text-[#b9bcc2]">{formatRecordDescription(record.description, stringVariables)}</p>
+            <p className="mt-1 text-[13px] leading-[1.45] text-[#b9bcc2]">{formatRecordDescription(record.description, stringVariables)}</p>
           ) : null}
         </div>
         {record.score ? (
-          <span className="text-[17px] tabular-nums text-bone underline decoration-white/45 decoration-dotted underline-offset-[5px]">
+          <span className="text-sm tabular-nums text-bone underline decoration-white/45 decoration-dotted underline-offset-4">
             {record.score}
           </span>
         ) : null}
@@ -136,10 +136,10 @@ export function TriumphTile({
         const rewardIcon = bungieIconUrl(reward.iconPath);
         if (!reward.itemType || isIncreasedDropRateReward(reward.iconPath)) {
           return (
-            <div key={reward.itemHash} className="flex items-center gap-2.5 text-sm text-[#c7cad0]">
+            <div key={reward.itemHash} className="flex items-center gap-2.5 text-[13px] text-[#c7cad0]">
               {rewardIcon ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={rewardIcon} alt="" width={28} height={28} className="size-7 shrink-0 object-contain" />
+                <img src={rewardIcon} alt="" width={24} height={24} className="size-6 shrink-0 object-contain" />
               ) : null}
               <span className="underline decoration-white/40 decoration-dotted underline-offset-4">{reward.name}</span>
             </div>
@@ -148,17 +148,17 @@ export function TriumphTile({
         return (
           <div
             key={reward.itemHash}
-            className="grid grid-cols-[52px_minmax(0,1fr)] gap-3.5 border border-white/30 bg-white/[0.04] p-[3px]"
+            className="grid grid-cols-[40px_minmax(0,1fr)] gap-3 border border-white/30 bg-white/[0.04] p-[3px]"
           >
             {rewardIcon ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={rewardIcon} alt="" width={52} height={52} className="size-[52px] object-cover" />
+              <img src={rewardIcon} alt="" width={40} height={40} className="size-10 object-cover" />
             ) : (
               <span />
             )}
             <span className="flex min-w-0 flex-col justify-center">
-              <span className="truncate text-base text-bone">{reward.name}</span>
-              <span className="truncate text-[13px] text-ash">{reward.itemType}</span>
+              <span className="truncate text-sm text-bone">{reward.name}</span>
+              <span className="truncate text-xs text-ash">{reward.itemType}</span>
             </span>
           </div>
         );

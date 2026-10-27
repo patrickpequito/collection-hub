@@ -92,7 +92,7 @@ function BonusIcon({ bonus }: { bonus: ArmorSetBonus | null }) {
 }
 
 /** Searchable guide to every armor set bonus, with what you can wear today. */
-export function SetBonusesGuide({ sets }: { sets: BonusGuideSet[] }) {
+export function SetBonusesGuide({ sets, itemHrefs }: { sets: BonusGuideSet[]; itemHrefs?: Record<string, string> }) {
   const { ownedItemHashes, inventoryItemHashes, showOwnership } = useOwnership();
   const [query, setQuery] = useState("");
   const [source, setSource] = useState("all");
@@ -333,6 +333,7 @@ export function SetBonusesGuide({ sets }: { sets: BonusGuideSet[] }) {
                       armorRows={set.rows.filter((row) => row.guardianClass === guardianClass)}
                       ownedItemHashes={ownedItemHashes}
                       showOwnership={showOwnership}
+                      itemHrefs={itemHrefs}
                     />
                     <span className="flex flex-wrap items-center justify-between gap-2">
                       {set.origin.href ? (
@@ -404,7 +405,7 @@ export function SetBonusesGuide({ sets }: { sets: BonusGuideSet[] }) {
                 {expanded ? (
                   <div className="hidden gap-5 border-b border-white/[0.08] bg-white/[0.035] px-4 pb-4 pt-1 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:pl-[212px]">
                     <div className="min-w-0 space-y-3">
-                      <ActivityArmorGrid armorRows={set.rows} ownedItemHashes={ownedItemHashes} showOwnership={showOwnership} />
+                      <ActivityArmorGrid armorRows={set.rows} ownedItemHashes={ownedItemHashes} showOwnership={showOwnership} itemHrefs={itemHrefs} />
                       {set.origin.href ? (
                         <Link href={set.origin.href} className="inline-block font-display text-xs uppercase tracking-[0.14em] text-bone hover:text-white">
                           Open {set.origin.label.split(" · ")[0]} →

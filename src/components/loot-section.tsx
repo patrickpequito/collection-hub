@@ -40,15 +40,16 @@ export function LootItemGrid({
     return hashes.some((hash) => ownedItemHashes.has(hash));
   };
   return (
+    // Icons stretch a little so each row fills the box edge to edge (equal left / right margins).
     <div
-      className={
-        fill ? "grid grid-cols-[repeat(auto-fill,minmax(3.25rem,1fr))] gap-1.5" : "flex flex-wrap gap-1.5"
-      }
+      className={`grid gap-1.5 ${
+        fill ? "grid-cols-[repeat(auto-fill,minmax(3.25rem,1fr))]" : "grid-cols-[repeat(auto-fill,minmax(3.75rem,1fr))]"
+      }`}
     >
       {items.map((item) => (
         <CollectionItemIcon
-          fluid={fill}
-          fillCell={fill}
+          fluid
+          fillCell
           key={item.itemHash}
           name={item.name}
           iconPath={item.iconPath}
