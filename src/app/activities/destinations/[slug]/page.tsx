@@ -97,7 +97,7 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
 
           {weekly.length ? (
             <section id="this-week" className="scroll-mt-20">
-              <SectionHeading title="This week" note="Weekly reset Tuesday 17:00 UTC" />
+              <SectionHeading title="This week" />
               {curse ? <div className="mb-3"><CurseBar curse={curse} /></div> : null}
               <div className="grid gap-3 sm:grid-cols-3">
                 {weekly.map((activity) => (
@@ -115,7 +115,7 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
 
           {reputation ? (
             <section id="reputation" className="scroll-mt-20">
-              <SectionHeading title="Reputation" note={`${reputation.vendor} · ${destination.name} vendor`} />
+              <SectionHeading title="Reputation" />
               <DestinationReputation slug={destination.slug} info={reputation} />
             </section>
           ) : null}
@@ -144,7 +144,7 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
 
           {sections.length ? (
             <section id="triumphs" className="scroll-mt-20">
-              <SectionHeading title="Triumphs" note="Open a category to see every triumph" />
+              <SectionHeading title="Triumphs" />
               <DestinationTriumphs sections={sections} seal={seal} />
             </section>
           ) : null}

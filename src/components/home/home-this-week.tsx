@@ -34,10 +34,13 @@ function Tile({
   eyebrow,
   title,
   sub,
+  imagePosition,
   children,
 }: {
   href: string;
   image?: string;
+  /** CSS object-position for cropped art (e.g. "72% center"). */
+  imagePosition?: string;
   eyebrow: string;
   title: string;
   sub?: string;
@@ -52,6 +55,7 @@ function Tile({
           alt=""
           aria-hidden
           className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+          style={imagePosition ? { objectPosition: imagePosition } : undefined}
         />
       ) : null}
       <span aria-hidden className={SHADE} />
@@ -157,6 +161,7 @@ export async function HomeThisWeek() {
         <Tile
           href="/activities/the-pantheon"
           image="/images/rad-loot/activities/the-pantheon-wide.webp"
+          imagePosition="72% center"
           eyebrow="Pantheon"
           title="Pantheon"
           sub={week.pantheon.length ? `Open: ${week.pantheon.join(" · ")}` : "Raid boss rush"}
