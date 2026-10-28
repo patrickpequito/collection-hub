@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { DESTINATIONS, destinationImageUrl, type Destination } from "@/data/destinations";
@@ -14,13 +15,32 @@ import type { ActivityEntry } from "@/types/activity-loot";
 
 const MS_FOUR_WEEKS = 28 * 24 * 60 * 60 * 1000;
 
-/** Public profile whose launchable activities reveal this week's Nightfall and Pantheon. */
+/** Public profile whose launchable activities reveal this week's Nightfall and Pantheon bosses. */
 const PROBE_PROFILE = "/Platform/Destiny2/3/Profile/4611686018473121985/?components=204";
 
 /** Order of the destination strip; destinations without a `weekly` key show greyed out. */
 const DESTINATION_STRIP = ["kepler", "the-pale-heart", "neomuna", "throne-world", "europa", "the-moon", "dreaming-city"];
 
-type WeeklyActivityName = { kind: "nightfall" | "grandmaster" | "pantheon"; name: string; difficulty?: string };
+type WeeklyActivityName = {
+  kind: "nightfall" | "grandmaster" | "pantheon";
+  name: string;
+  difficulty?: string;
+  /** Pantheon only: which boss pool the featured boss comes from. */
+  pool?: "Reprise" | "Encore";
+};
+
+export type PantheonFeaturedBoss = {
+  pool: "Reprise" | "Encore";
+  boss: string;
+  /** Art in public/images/pantheon/bosses, or null when it hasn't been added yet. */
+  image: string | null;
+};
+
+/** "Insurrection Prime" → /images/pantheon/bosses/insurrection-prime.webp when the file exists. */
+function pantheonBossImage(boss: string): string | null {
+  const file = `/images/pantheon/bosses/${boss.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}.webp`;
+  return existsSync(path.join(process.cwd(), "public", file)) ? file : null;
+}
 
 export type DestinationWeek = {
   slug: string;
@@ -39,8 +59,8 @@ export type HomeThisWeekData = {
   dungeons: ActivityEntry[];
   /** This week's Nightfall strike; `grandmaster` when the Grandmaster version is up. */
   nightfall: { strike: string; grandmaster: boolean } | null;
-  /** Pantheon tiers open this week. */
-  pantheon: string[];
+  /** This week's featured Pantheon bosses (one Reprise, one Encore). */
+  pantheon: PantheonFeaturedBoss[];
   trials: TrialsFeaturedMapsResult;
   trialsRange: string;
   ironBanner: { live: boolean; startMs: number; endMs: number; nextStartMs: number };
@@ -69,7 +89,10 @@ async function loadWeeklyFromProbe(): Promise<Pick<HomeThisWeekData, "nightfall"
     const nightfall = grandmaster ?? found.find((entry) => entry.kind === "nightfall");
     return {
       nightfall: nightfall ? { strike: nightfall.name, grandmaster: Boolean(grandmaster) } : null,
-      pantheon: [...new Set(found.filter((entry) => entry.kind === "pantheon").map((entry) => entry.name))],
+      pantheon: (["Reprise", "Encore"] as const).flatMap((pool) => {
+        const entry = found.find((candidate) => candidate.kind === "pantheon" && candidate.pool === pool);
+        return entry ? [{ pool, boss: entry.name, image: pantheonBossImage(entry.name) }] : [];
+      }),
     };
   } catch {
     return { nightfall: null, pantheon: [] };

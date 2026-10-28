@@ -109,13 +109,16 @@ async function main() {
     patrol[activity.hash] = slug;
   }
 
-  // Nightfall strikes (mode 46) and Pantheon tiers, by activity hash.
+  // Nightfall strikes (mode 46) and the Pantheon's weekly featured bosses, by activity hash.
+  // "Featured Reprise: Calus: The Pantheon" → one Reprise and one Encore boss each week. The
+  // "Pantheon: <boss> <tier>" gauntlets are always open, so they are not listed.
   const weekly = {};
   for (const activity of Object.values(activities)) {
     const name = activity.displayProperties?.name ?? "";
     const modes = [activity.directActivityModeType, ...(activity.activityModeTypes ?? [])];
-    if (/^Pantheon: /.test(name)) {
-      weekly[activity.hash] = { kind: "pantheon", name: name.replace(/^Pantheon: /, "").replace(/: Customize$/, "") };
+    const featured = name.match(/^Featured (Reprise|Encore): ([^:]+):/);
+    if (featured) {
+      weekly[activity.hash] = { kind: "pantheon", pool: featured[1], name: featured[2].trim() };
     } else if (modes.includes(46) && /^Nightfall|Grandmaster/i.test(name)) {
       weekly[activity.hash] = {
         kind: /grandmaster/i.test(name) ? "grandmaster" : "nightfall",

@@ -1,7 +1,7 @@
 import Link from "@/components/app-link";
 import type { ReactNode } from "react";
 import { WeeklyLootBar } from "@/components/home/home-progress";
-import { loadHomeThisWeek, type DestinationWeek } from "@/lib/home/this-week";
+import { loadHomeThisWeek, type DestinationWeek, type PantheonFeaturedBoss } from "@/lib/home/this-week";
 import type { ActivityEntry } from "@/types/activity-loot";
 
 const TILE =
@@ -65,6 +65,51 @@ function Tile({
       </span>
       {sub ? <span className="text-on-art relative line-clamp-2 text-[12.5px] text-[#c7cad0]">{sub}</span> : null}
       {children}
+    </Link>
+  );
+}
+
+const PANTHEON_ART = "/images/rad-loot/activities/the-pantheon-wide.webp";
+
+/** Pantheon tile split in two: this week's featured Reprise and Encore bosses, each over its own art. */
+function PantheonTile({ bosses }: { bosses: PantheonFeaturedBoss[] }) {
+  if (bosses.length === 0) {
+    return (
+      <Tile href="/activities/the-pantheon" image={PANTHEON_ART} imagePosition="72% center" eyebrow="Pantheon" title="Raid boss rush">
+        <WeeklyLootBar slug="the-pantheon" />
+      </Tile>
+    );
+  }
+  return (
+    <Link href="/activities/the-pantheon" className={TILE}>
+      <span aria-hidden className="absolute inset-0 grid grid-cols-2 gap-px bg-white/[0.16]">
+        {bosses.map((featured, index) => (
+          <span key={featured.pool} className="relative overflow-hidden bg-panel">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={featured.image ?? PANTHEON_ART}
+              alt=""
+              className={`absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-[1.03] ${
+                featured.image ? "" : "opacity-35 blur-[3px] grayscale"
+              }`}
+              style={featured.image ? undefined : { objectPosition: index === 0 ? "35% center" : "80% center" }}
+            />
+          </span>
+        ))}
+      </span>
+      <span aria-hidden className={SHADE} />
+      <span className="ui-label text-on-art relative text-[11px]! text-[#e8c860]!">Pantheon · Featured bosses</span>
+      <span className="relative grid grid-cols-2 gap-3">
+        {bosses.map((featured) => (
+          <span key={featured.pool} className="flex min-w-0 flex-col">
+            <span className="ui-label text-on-art text-[10.5px]! text-[#c7cad0]!">{featured.pool}</span>
+            <span className="text-on-art truncate font-display text-xl font-semibold uppercase leading-tight tracking-[0.05em] text-white">
+              {featured.boss}
+            </span>
+          </span>
+        ))}
+      </span>
+      <WeeklyLootBar slug="the-pantheon" />
     </Link>
   );
 }
@@ -158,16 +203,7 @@ export async function HomeThisWeek() {
             <WeeklyLootBar slug={raidB.slug} />
           </Tile>
         ) : null}
-        <Tile
-          href="/activities/the-pantheon"
-          image="/images/rad-loot/activities/the-pantheon-wide.webp"
-          imagePosition="72% center"
-          eyebrow="Pantheon"
-          title="Pantheon"
-          sub={week.pantheon.length ? `Open: ${week.pantheon.join(" · ")}` : "Raid boss rush"}
-        >
-          <WeeklyLootBar slug="the-pantheon" />
-        </Tile>
+        <PantheonTile bosses={week.pantheon} />
         {dungeonA ? (
           <Tile href={`/activities/${dungeonA.slug}`} image={activityImage(dungeonA)} eyebrow="Featured dungeon" title={dungeonA.title}>
             <WeeklyLootBar slug={dungeonA.slug} />
