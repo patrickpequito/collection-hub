@@ -1,8 +1,12 @@
 {
-  "generatedAt": "2026-10-26T21:37:51.563Z",
-  "weekIndex": 19,
-  "weekStart": "2026-10-23T17:00:00.000Z",
-  "weekEnd": "2026-10-27T17:00:00.000Z",
-  "maps": [],
-  "source": "iron-banner"
+  "generatedAt": "2026-10-30T21:22:56.828Z",
+  "weekIndex": 20,
+  "weekStart": "2026-10-30T17:00:00.000Z",
+  "weekEnd": "2026-11-03T17:00:00.000Z",
+  "maps": [
+    "Endless Vale",
+    "Eventide Labs",
+    "Bannerfall"
+  ],
+  "source": "rotation"
 }
