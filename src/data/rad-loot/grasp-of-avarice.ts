@@ -155,6 +155,12 @@ export const graspOfAvariceLoot: ActivityLootPage = {
       SOURCE,
     ),
     item(
+      "1363886209",
+      "Gjallarhorn",
+      "/common/destiny2_content/icons/b62083eed6a4708e581fc9a061bcc8e9.jpg",
+      'Source: "And Out Fly the Wolves" Quest',
+    ),
+    item(
       "2139640995",
       "Hero of Ages",
       "/common/destiny2_content/icons/ed519f6031aedd209acd61bbd52bb9b9.jpg",

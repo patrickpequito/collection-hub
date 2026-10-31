@@ -102,9 +102,10 @@ export const RAID_COMPLETION_ACTIVITY_HASHES = {
     normal: [1077850348, 4148187374, 3637651331, 1788465402],
     master: [],
   },
+  // The manifest lists "Pit of Heresy: Master" activities, but the game has no Master tier: count them as normal.
   "pit-of-heresy": {
-    normal: [1375089621, 2582501063],
-    master: [785700673, 2559374374, 2559374375],
+    normal: [1375089621, 2582501063, 785700673, 2559374374, 2559374375],
+    master: [],
   },
   "the-shattered-throne": {
     normal: [2032534090],

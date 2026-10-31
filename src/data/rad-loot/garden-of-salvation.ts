@@ -51,6 +51,7 @@ export const gardenOfSalvationLoot: ActivityLootPage = {
   weapons: [
     item("3621336854", "Accrued Redemption", "/common/destiny2_content/icons/adbd4c3544c36a8c94e976bbb806095d.jpg", 'Source: "Garden of Salvation" Raid'),
     item("48643186", "Ancient Gospel", "/common/destiny2_content/icons/41a5d5366017686c8619d18d53b1ca2d.jpg", 'Source: "Garden of Salvation" Raid'),
+    item("4103414242", "Divinity", "/common/destiny2_content/icons/c6aa03536fd68b5fca5ad6b83ea0cf1e.jpg", "Source: An Exotic quest or challenge."),
     item("147444292", "Omniscient Eye", "/common/destiny2_content/icons/26b41e620ad2359ba805e2c405233474.jpg", 'Source: "Garden of Salvation" Raid'),
     item("2145441168", "Prophet of Doom", "/common/destiny2_content/icons/cae4dbf2b458a0f0f85f61baa6a5ee36.jpg", 'Source: "Garden of Salvation" Raid'),
     item("1992309064", "Reckless Oracle", "/common/destiny2_content/icons/af58615844b44293f5911ccaae913804.jpg", 'Source: "Garden of Salvation" Raid'),

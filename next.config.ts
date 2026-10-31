@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Share-kit images read fonts and art from disk at request time.
+  outputFileTracingIncludes: {
+    "/share/*": ["./assets/fonts/**", "./public/images/share/**", "./public/images/rad-loot/**", "./public/images/pantheon/**"],
+  },
   images: {
     remotePatterns: [
       {
