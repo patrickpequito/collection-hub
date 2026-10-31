@@ -1,8 +1,10 @@
 import Link from "@/components/app-link";
 import type { ReactNode } from "react";
 import { WeeklyLootBar } from "@/components/home/home-progress";
+import { HomeXur } from "@/components/home/home-xur";
 import { loadHomeThisWeek, type DestinationWeek, type PantheonFeaturedBoss } from "@/lib/home/this-week";
 import type { ActivityEntry } from "@/types/activity-loot";
+import { loadXur } from "@/lib/xur";
 
 const TILE =
   "group relative flex min-h-[165px] flex-col justify-end gap-1 overflow-hidden border border-white/[0.16] bg-panel px-4 py-3.5 transition hover:border-bone/60";
@@ -152,7 +154,7 @@ function DestinationCard({ destination }: { destination: DestinationWeek }) {
 
 /** Weekly rotation: endgame activities, the live event, and every destination's rotation. */
 export async function HomeThisWeek() {
-  const week = await loadHomeThisWeek();
+  const [week, xur] = await Promise.all([loadHomeThisWeek(), loadXur()]);
   const [raidA, raidB] = week.raids;
   const [dungeonA, dungeonB] = week.dungeons;
   const trialsLive = week.trials.maps.length > 0 && week.trials.source !== "iron-banner";
@@ -222,6 +224,8 @@ export async function HomeThisWeek() {
           sub={week.nightfall?.grandmaster ? "Grandmaster Nightfall is live" : "Nightfall strike this week"}
         />
       </div>
+
+      {xur ? <HomeXur data={xur} /> : null}
 
       {/* Two separate links: the live event, and the next one. */}
       <div className="mt-3 flex flex-col gap-3 sm:flex-row">
