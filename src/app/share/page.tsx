@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { formatShareWeek, loadResetShareData } from "@/lib/share/reset";
+import { loadXur } from "@/lib/xur";
 
 /** Share kit: this week's X images + post text, with warnings for anything not confirmed yet. Not linked anywhere. */
 
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ShareKitPage() {
-  const data = await loadResetShareData();
+  const [data, xur] = await Promise.all([loadResetShareData(), loadXur()]);
   const week = formatShareWeek(data.weekStart, data.weekEnd);
   const titles = (kind: string) =>
     data.rows
@@ -31,6 +32,17 @@ export default async function ShareKitPage() {
     .filter((line) => line !== null)
     .join("\n");
   const fileDate = data.weekStart.slice(0, 10);
+  const xurText = xur?.gear
+    ? [
+        "Xûr is in the Tower until the weekly reset 🎒",
+        "",
+        `Catalysts: ${xur.gear.catalysts.map((item) => item.name).join(" · ")}`,
+        `Exotic weapons: ${xur.gear.weapons.map((item) => item.name).join(" · ")}`,
+        `Exotic armor: ${xur.armor.map((item) => item.name).join(" · ")}`,
+        "",
+        "See what you're missing 👉 d2collector.site",
+      ].join("\n")
+    : null;
 
   return (
     <main className="mx-auto max-w-[1100px] px-4 py-10 sm:px-6">
@@ -73,6 +85,42 @@ export default async function ShareKitPage() {
           <p className="text-[12.5px] text-ash">Destinations, Iron Banner and Trials images will be added here next.</p>
         </div>
       </section>
+
+      {xur ? (
+        <section className="mt-10 grid gap-6 md:grid-cols-[1fr_1fr]">
+          <div className="flex flex-col gap-3">
+            <h2 className="ui-label text-bone!">2 · Xûr (Friday post)</h2>
+            {xur.gear ? (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/share/xur" alt="Xûr image" className="w-full border border-white/[0.16]" />
+                <a
+                  href="/share/xur"
+                  download={`d2-xur-${fileDate}.jpg`}
+                  className="ui-label self-start border border-white/30 px-3 py-2 text-bone! transition hover:border-bone"
+                >
+                  Download image
+                </a>
+              </>
+            ) : (
+              <p className="border border-[#e07a3f]/60 bg-[#e07a3f]/10 px-4 py-3 text-sm text-bone">
+                ⚠ Xûr&apos;s weapons and catalysts aren&apos;t loaded yet: open the home page while signed in, then reload this page.
+              </p>
+            )}
+          </div>
+          {xurText ? (
+            <div className="flex flex-col gap-3">
+              <h2 className="ui-label text-bone!">Post text</h2>
+              <textarea
+                readOnly
+                defaultValue={xurText}
+                rows={9}
+                className="w-full resize-y border border-white/[0.16] bg-panel p-3 font-mono text-[13px] leading-relaxed text-bone"
+              />
+            </div>
+          ) : null}
+        </section>
+      ) : null}
     </main>
   );
 }

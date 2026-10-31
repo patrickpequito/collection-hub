@@ -1,46 +1,9 @@
-import { ImageResponse } from "next/og";
-import sharp from "sharp";
-import { loadShareFonts } from "@/lib/share/assets";
+import { BONE, chip, display, EXOTIC, GOLD, ShareFrame, shareJpegResponse, TEAL, u, VOID, eyebrow } from "@/lib/share/layout";
 import { formatShareWeek, loadResetShareData, type ShareActivityRow, type ShareBoss } from "@/lib/share/reset";
 
 /** Weekly reset image for X (approved design "E1"): Pantheon bosses, Tier 5 ribbon, featured raids and dungeons. */
 
 export const dynamic = "force-dynamic";
-
-/** Laid out on a 1200 × 1292 grid, rendered at 1.5× for a sharp 1800 × 1938 PNG. */
-const SCALE = 1.5;
-const u = (px: number) => px * SCALE;
-
-const VOID = "#0b0d10";
-const BONE = "#e9e7e2";
-const GOLD = "#c9a227";
-const TEAL = "#24b4b3";
-const EXOTIC = "#ceae33";
-const DISPLAY = "Barlow Semi Condensed";
-
-const eyebrow = (size = 30) => ({
-  fontFamily: DISPLAY,
-  fontWeight: 600,
-  fontSize: u(size),
-  letterSpacing: u(size * 0.16),
-  textTransform: "uppercase" as const,
-  lineHeight: 1,
-});
-const display = (size: number) => ({
-  fontFamily: DISPLAY,
-  fontWeight: 700,
-  fontSize: u(size),
-  textTransform: "uppercase" as const,
-  lineHeight: 0.95,
-});
-const chip = (background: string) => ({
-  ...eyebrow(26),
-  fontWeight: 700,
-  letterSpacing: u(26 * 0.14),
-  background,
-  color: VOID,
-  padding: `${u(6)}px ${u(12)}px`,
-});
 
 function Boss({ boss }: { boss: ShareBoss }) {
   return (
@@ -131,46 +94,14 @@ function Row({ row }: { row: ShareActivityRow }) {
 }
 
 export async function GET() {
-  const [data, fonts] = await Promise.all([loadResetShareData(), loadShareFonts()]);
-  const png = new ImageResponse(
-    (
-      <div
-        style={{
-          position: "relative",
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          height: "100%",
-          padding: `${u(36)}px ${u(40)}px`,
-          backgroundImage: `linear-gradient(to bottom, #17150f, ${VOID} ${u(300)}px)`,
-          color: BONE,
-          fontFamily: "Barlow",
-        }}
-      >
-        {/* Header: "DESTINY 2 · dates", Destiny icon + THIS WEEK, brand on the right. */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ display: "flex", ...eyebrow() }}>
-              <span style={{ color: BONE, letterSpacing: u(30 * 0.24) }}>Destiny 2</span>
-              <span style={{ color: TEAL }}>&nbsp;· {formatShareWeek(data.weekStart, data.weekEnd)}</span>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: u(22), marginTop: u(12) }}>
-              {data.destinyIcon ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={data.destinyIcon} alt="" height={u(92)} width={u(92 * (438 / 405))} />
-              ) : null}
-              <div style={{ ...display(112) }}>This week</div>
-            </div>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: u(14) }}>
-            {data.logo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={data.logo} alt="" height={u(50)} width={u(50 * (495 / 569))} />
-            ) : null}
-            <div style={{ ...eyebrow(32), letterSpacing: u(32 * 0.2) }}>Collection Hub</div>
-          </div>
-        </div>
-
+  const data = await loadResetShareData();
+  return shareJpegResponse(
+    <ShareFrame
+      dates={formatShareWeek(data.weekStart, data.weekEnd)}
+      title="This week"
+      destinyIcon={data.destinyIcon}
+      logo={data.logo}
+    >
         {/* Pantheon: this week's featured Reprise and Encore bosses. */}
         <div
           style={{
@@ -230,17 +161,6 @@ export async function GET() {
             <Row key={row.title} row={row} />
           ))}
         </div>
-
-        <div style={{ position: "absolute", right: u(40), bottom: u(26), display: "flex", ...eyebrow(), color: TEAL }}>
-          d2collector.site
-        </div>
-      </div>
-    ),
-    { width: u(1200), height: u(1292), fonts },
+    </ShareFrame>,
   );
-  // JPEG keeps the file well under X's 5 MB image limit (the PNG is ~4 MB).
-  const jpeg = await sharp(Buffer.from(await png.arrayBuffer())).jpeg({ quality: 90 }).toBuffer();
-  return new Response(new Uint8Array(jpeg), {
-    headers: { "Content-Type": "image/jpeg", "Cache-Control": "private, no-store" },
-  });
 }
