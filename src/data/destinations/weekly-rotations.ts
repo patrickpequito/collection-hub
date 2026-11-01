@@ -15,6 +15,8 @@ const ASCENDANT = "/images/destinations/weekly/dreaming-city-ascendant-challenge
 export type ManualRotation = {
   label: string;
   anchorWeek: number | null;
+  /** Order confirmed in game over a full cycle (admin shows it as "Confirmed"). */
+  confirmed?: boolean;
   /** In-game order; the list repeats. `image`: Bungie pgcr path or /images/… art for the card. */
   order: { name: string; detail: string; image?: string }[];
 };
@@ -22,6 +24,7 @@ export type ManualRotation = {
 export const EUROPA_ROTATIONS: ManualRotation[] = [
   {
     label: "Eclipsed zone",
+    confirmed: true,
     anchorWeek: 17,
     order: [
       { name: "Asterion Abyss", detail: "Europa", image: ECLIPSED },
@@ -31,6 +34,7 @@ export const EUROPA_ROTATIONS: ManualRotation[] = [
   },
   {
     label: "Empire Hunt",
+    confirmed: true,
     anchorWeek: 17,
     order: [
       { name: "The Warrior", detail: "Phylaks", image: `${PGCR}empire-hunt-chowder.jpg` },
@@ -40,6 +44,7 @@ export const EUROPA_ROTATIONS: ManualRotation[] = [
   },
   {
     label: "Exo Challenge",
+    confirmed: true,
     anchorWeek: 17,
     order: [
       { name: "Agility", detail: "Exo Simulation", image: `${PGCR}exo-challenge-parkour.jpg` },
@@ -63,6 +68,7 @@ export const DREAMING_CITY_CURSE = {
 export const DREAMING_CITY_ROTATIONS: ManualRotation[] = [
   {
     label: "Petra's location",
+    confirmed: true,
     anchorWeek: 19,
     order: [
       { name: "The Strand", detail: "Dreaming City", image: PETRA },
@@ -72,6 +78,7 @@ export const DREAMING_CITY_ROTATIONS: ManualRotation[] = [
   },
   {
     label: "Blind Well",
+    confirmed: true,
     anchorWeek: 19,
     order: [
       { name: "Scorn", detail: "Changes with the curse", image: BLIND_WELL },
@@ -103,6 +110,7 @@ export const DREAMING_CITY_ROTATIONS: ManualRotation[] = [
 export const THRONE_WORLD_ROTATIONS: ManualRotation[] = [
   {
     label: "Weekly mission",
+    confirmed: true,
     anchorWeek: 14,
     order: [
       { name: "The Arrival", detail: "The Witch Queen campaign", image: `${PGCR}mission_genesis.jpg` },
@@ -153,3 +161,14 @@ export const NEOMUNA_ROTATIONS: ManualRotation[] = [
     ],
   },
 ];
+
+/** Destinations whose weekly rotations are entered by hand (admin panel), in page order. */
+export const MANUAL_ROTATION_GROUPS: { destination: string; name: string; rotations: ManualRotation[] }[] = [
+  { destination: "neomuna", name: "Neomuna", rotations: NEOMUNA_ROTATIONS },
+  { destination: "throne-world", name: "Throne World", rotations: THRONE_WORLD_ROTATIONS },
+  { destination: "europa", name: "Europa", rotations: EUROPA_ROTATIONS },
+  { destination: "dreaming-city", name: "Dreaming City", rotations: DREAMING_CITY_ROTATIONS },
+];
+
+/** Admin / history key for a rotation, e.g. "europa:Empire Hunt". */
+export const rotationKey = (destination: string, rotation: ManualRotation) => `${destination}:${rotation.label}`;

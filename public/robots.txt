@@ -1,6 +1,7 @@
 User-agent: *
 Disallow: /api/
 Disallow: /share
+Disallow: /admin
 Disallow: /data/
 Disallow: /weapons/
 Disallow: /armor/

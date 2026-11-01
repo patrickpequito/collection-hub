@@ -7,8 +7,11 @@ import {
   EUROPA_ROTATIONS,
   NEOMUNA_ROTATIONS,
   THRONE_WORLD_ROTATIONS,
+  rotationKey,
   type ManualRotation,
 } from "@/data/destinations/weekly-rotations";
+import { readRotationHistory, readWeekOverride } from "@/lib/admin/weekly-store";
+import { resolveRotation } from "@/lib/destinations/rotation-learning";
 import destinationLoot from "../../../data/destination-loot.json";
 import { rotationWeekIndex } from "@/lib/rad-loot/featured-rotation";
 
@@ -35,11 +38,15 @@ export function loadDestinationCurse(destination: Destination): CurseState | nul
   return { levels, current: cycleIndex(rotationWeekIndex(new Date()), anchorWeek, levels.length) };
 }
 
-function manualWeekly(rotations: ManualRotation[]): WeeklyActivity[] {
+/** This week's value of each hand-entered rotation: admin pick, else the learned cycle, else the coded order. */
+async function manualWeekly(destination: string, rotations: ManualRotation[]): Promise<WeeklyActivity[]> {
   const week = rotationWeekIndex(new Date());
+  const [override, history] = await Promise.all([readWeekOverride(week), readRotationHistory()]);
   return rotations.flatMap((rotation) => {
-    if (rotation.anchorWeek === null) return [];
-    const entry = rotation.order[cycleIndex(week, rotation.anchorWeek, rotation.order.length)];
+    const key = rotationKey(destination, rotation);
+    const picked = override?.rotations?.[key];
+    if (rotation.anchorWeek === null && !picked && !history[key]) return [];
+    const { entry } = resolveRotation(rotation, week, history[key], picked);
     return [{ label: rotation.label, name: entry.name, detail: entry.detail, image: entry.image, cadence: "weekly" as const }];
   });
 }
@@ -129,14 +136,14 @@ async function loadTerminalOverloadToday(): Promise<WeeklyActivity | null> {
 export async function loadDestinationWeekly(destination: Destination): Promise<WeeklyActivity[]> {
   if (destination.weekly === "throne-world") {
     const wellspring = await loadWellspringToday();
-    return [...manualWeekly(THRONE_WORLD_ROTATIONS), ...(wellspring ? [wellspring] : [])];
+    return [...(await manualWeekly("throne-world", THRONE_WORLD_ROTATIONS)), ...(wellspring ? [wellspring] : [])];
   }
-  if (destination.weekly === "europa") return manualWeekly(EUROPA_ROTATIONS);
+  if (destination.weekly === "europa") return manualWeekly("europa", EUROPA_ROTATIONS);
   if (destination.weekly === "neomuna") {
     const terminalOverload = await loadTerminalOverloadToday();
-    return [...manualWeekly(NEOMUNA_ROTATIONS), ...(terminalOverload ? [terminalOverload] : [])];
+    return [...(await manualWeekly("neomuna", NEOMUNA_ROTATIONS)), ...(terminalOverload ? [terminalOverload] : [])];
   }
-  if (destination.weekly === "dreaming-city") return manualWeekly(DREAMING_CITY_ROTATIONS);
+  if (destination.weekly === "dreaming-city") return manualWeekly("dreaming-city", DREAMING_CITY_ROTATIONS);
   if (destination.weekly !== "nightmare-hunts") return [];
   try {
     const snapshot = JSON.parse(

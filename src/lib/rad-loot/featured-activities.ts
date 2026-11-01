@@ -8,6 +8,7 @@ import {
   RAIDS,
 } from "@/data/rad-loot/activities";
 import type { ActivityEntry } from "@/types/activity-loot";
+import { readWeekOverride } from "@/lib/admin/weekly-store";
 import {
   DUNGEON_ROTATION_WEEKS,
   featuredDungeonSlugsForWeek,
@@ -101,6 +102,11 @@ export async function loadFeaturedActivities(): Promise<FeaturedActivitiesData> 
       featuredDungeons = featuredDungeonSlugsForWeek(weekIndex);
     }
   }
+
+  // Picks from /admin win (the owner checks the game right at the reset).
+  const override = await readWeekOverride(weekIndex);
+  if (override?.featuredRaids?.length === 2) featuredRaids = override.featuredRaids;
+  if (override?.featuredDungeons?.length === 2) featuredDungeons = override.featuredDungeons;
 
   return {
     generatedAt: snapshotIsCurrent
