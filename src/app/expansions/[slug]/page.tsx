@@ -5,6 +5,7 @@ import { ExpansionActivityShortcuts } from "@/components/expansions/expansion-ac
 import { ExpansionCampaignMissionsPanel } from "@/components/expansions/expansion-campaign-missions-panel";
 import { ExpansionCollectionPanel } from "@/components/expansions/expansion-collection-panel";
 import { ExpansionDeepLootSection } from "@/components/expansions/expansion-deep-loot-section";
+import { ExpansionDestinationBanner } from "@/components/expansions/expansion-destination-banner";
 import { ExpansionDestinationPanel } from "@/components/expansions/expansion-destination-panel";
 import { ExpansionLootPanel } from "@/components/expansions/expansion-loot-panel";
 import { ExpansionProgressStrip } from "@/components/expansions/expansion-progress-strip";
@@ -198,6 +199,7 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
           <div id="destination" className="scroll-mt-20">
             <ExpansionDestinationPanel
               destinationTitle={hub.destinationTitle}
+              banner={<ExpansionDestinationBanner slug={hub.destinationActivitySlug} />}
               destinationActivityTitle={hub.destinationActivityTitle}
               destinationActivitySlug={hub.destinationActivitySlug}
               armorRows={loot.destinationArmorRows}

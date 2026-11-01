@@ -1,7 +1,7 @@
 "use client";
 
 import { BoxHeading, SectionHeading } from "@/components/detail-page-parts";
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import { useOwnership } from "@/components/client-ownership";
 import {
   useProfileChecklists,
@@ -20,6 +20,8 @@ import type { RecordInstance } from "@/types/triumph";
 
 type ExpansionDestinationPanelProps = {
   destinationTitle: string;
+  /** Destination banner under the section title (rendered on the server). */
+  banner?: ReactNode;
   destinationActivityTitle: string;
   destinationActivitySlug: string;
   armorRows: ActivityArmorRow[];
@@ -66,6 +68,7 @@ function recordComplete(
 
 export function ExpansionDestinationPanel({
   destinationTitle,
+  banner,
   destinationActivityTitle,
   destinationActivitySlug,
   armorRows,
@@ -120,6 +123,7 @@ export function ExpansionDestinationPanel({
       <section className="min-w-0 space-y-3">
         <div>
           <SectionHeading title={destinationTitle.replace(" // ", " · ")} />
+          {banner ? <div className="mb-3">{banner}</div> : null}
           <p className="text-sm text-zinc-400">
             Destination loot and checklists will appear here as they are
             curated for this expansion.
@@ -133,6 +137,7 @@ export function ExpansionDestinationPanel({
   return (
     <section className="min-w-0 space-y-3">
       <SectionHeading title={destinationTitle.replace(" // ", " · ")} />
+      {banner}
 
       {hasLoot ? (
         <ActivityCurrentLootPanel
