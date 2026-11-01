@@ -1,4 +1,5 @@
-import { X_PROFILE_HANDLE, X_PROFILE_URL } from "@/lib/social";
+import { KofiCupIcon } from "@/components/kofi-cup-icon";
+import { KOFI_URL, X_PROFILE_HANDLE, X_PROFILE_URL } from "@/lib/social";
 
 type SiteFooterProps = {
   children?: React.ReactNode;
@@ -17,30 +18,52 @@ function XIcon({ className }: { className?: string }) {
   );
 }
 
+function FooterCard({ href, icon, title, detail }: {
+  href: string;
+  icon: React.ReactNode;
+  title: string;
+  detail: React.ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group inline-flex items-center gap-3 border border-hairline bg-panel/85 px-4 py-3 text-left transition hover:border-bone"
+    >
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/20 text-bone transition group-hover:bg-bone group-hover:text-void">
+        {icon}
+      </span>
+      <span className="min-w-0 text-left">
+        <span className="block font-display text-sm font-semibold uppercase tracking-[0.12em] text-bone">
+          {title}
+        </span>
+        <span className="block text-xs text-ash">{detail}</span>
+      </span>
+    </a>
+  );
+}
+
 export function SiteFooter({ children }: SiteFooterProps) {
   return (
     <footer className="mt-12 flex flex-col items-center gap-4 border-t border-hairline pt-8 text-center">
-      {children ? <p className="text-xs text-ash">{children}</p> : null}
-
-      <a
-        href={X_PROFILE_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group inline-flex items-center gap-3 border border-hairline bg-panel/85 px-4 py-3 text-left transition hover:border-bone"
-      >
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/20 text-bone transition group-hover:bg-bone group-hover:text-void">
-          <XIcon className="h-4 w-4" />
-        </span>
-        <span className="min-w-0 text-left">
-          <span className="block font-display text-sm font-semibold uppercase tracking-[0.12em] text-bone">
-            Follow us on X
-          </span>
-          <span className="block text-xs text-ash">
-            {X_PROFILE_HANDLE} · updates &amp; feedback
-          </span>
-        </span>
-      </a>
-      <p className="text-xs text-ash/70">Not affiliated with Bungie.</p>
+      <div className="flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:justify-center">
+        <FooterCard
+          href={X_PROFILE_URL}
+          icon={<XIcon className="h-4 w-4" />}
+          title="Follow us on X"
+          detail={<>{X_PROFILE_HANDLE} · updates &amp; feedback</>}
+        />
+        <FooterCard
+          href={KOFI_URL}
+          icon={<KofiCupIcon className="h-[18px] w-[22px]" />}
+          title="Support on Ko-fi"
+          detail="Keep the hub free & updated"
+        />
+      </div>
+      <p className="text-xs text-ash/70">
+        {children ? <>{children} </> : null}Not affiliated with Bungie.
+      </p>
     </footer>
   );
 }

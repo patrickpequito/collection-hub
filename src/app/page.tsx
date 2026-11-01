@@ -7,9 +7,9 @@ import { HomeSpotlight } from "@/components/home/home-spotlight";
 import { HomeSummaryProvider } from "@/components/home/home-summary-provider";
 import { HomeThisWeek } from "@/components/home/home-this-week";
 import { HomeTimelineStrip } from "@/components/home/home-timeline-strip";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 import { isBungieOAuthConfigured } from "@/lib/env";
-import { X_PROFILE_HANDLE, X_PROFILE_URL } from "@/lib/social";
 
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
@@ -31,19 +31,9 @@ export default function Home() {
         <HomeExplore />
         <HomeContinue />
         <HomeTimelineStrip />
-        <section className="mx-auto max-w-[1360px] px-4 pb-16 pt-10 sm:px-6">
-          <div className="ui-panel flex flex-wrap items-center justify-between gap-3 px-5 py-4">
-            <a
-              href={X_PROFILE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[15px] text-bone transition hover:text-white"
-            >
-              {X_PROFILE_HANDLE} on X
-            </a>
-            <p className="text-sm text-ash">Catalogs work without signing in. Not affiliated with Bungie.</p>
-          </div>
-        </section>
+        <div className="mx-auto max-w-[1360px] px-4 pb-16 sm:px-6">
+          <SiteFooter>Catalogs work without signing in.</SiteFooter>
+        </div>
         </ClientOwnership>
       </HomeSummaryProvider>
     </main>

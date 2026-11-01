@@ -11,7 +11,9 @@ import {
   NAV_TABS,
   type NavTab,
 } from "@/lib/navigation";
+import { KOFI_URL } from "@/lib/social";
 import { useSession } from "@/lib/use-session";
+import { KofiCupIcon } from "@/components/kofi-cup-icon";
 import siteLogo from "../../public/icon.png";
 
 const TAB_CLASS =
@@ -148,6 +150,16 @@ function AccountControl({ oauthConfigured }: { oauthConfigured: boolean }) {
           >
             My profile
           </Link>
+          <a
+            href={KOFI_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-bone/80 transition hover:bg-white/5 hover:text-white"
+          >
+            <KofiCupIcon className="h-[15px] w-[18px]" />
+            Support on Ko-fi
+          </a>
+          <div aria-hidden className="my-1 h-px bg-hairline" />
           <form action="/api/auth/logout" method="post">
             <button
               type="submit"
