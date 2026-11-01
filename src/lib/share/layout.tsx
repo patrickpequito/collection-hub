@@ -56,10 +56,14 @@ type ShareFrameProps = {
   title: string;
   destinyIcon: string | null;
   logo: string | null;
+  /** false when the layout already carries the site address (e.g. a closing tile). */
+  footer?: boolean;
+  /** Title size on the 1200 grid (long titles use a smaller one so the brand keeps its room). */
+  titleSize?: number;
   children: ReactNode;
 };
 
-export function ShareFrame({ dates, title, destinyIcon, logo, children }: ShareFrameProps) {
+export function ShareFrame({ dates, title, destinyIcon, logo, footer = true, titleSize = 112, children }: ShareFrameProps) {
   return (
     <div
       style={{
@@ -83,9 +87,9 @@ export function ShareFrame({ dates, title, destinyIcon, logo, children }: ShareF
           <div style={{ display: "flex", alignItems: "center", gap: u(22), marginTop: u(12) }}>
             {destinyIcon ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={destinyIcon} alt="" height={u(92)} width={u(92 * (438 / 405))} />
+              <img src={destinyIcon} alt="" height={u(titleSize * 0.82)} width={u(titleSize * 0.82 * (438 / 405))} />
             ) : null}
-            <div style={{ ...display(112) }}>{title}</div>
+            <div style={{ ...display(titleSize) }}>{title}</div>
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: u(14) }}>
@@ -99,9 +103,11 @@ export function ShareFrame({ dates, title, destinyIcon, logo, children }: ShareF
 
       {children}
 
-      <div style={{ position: "absolute", right: u(40), bottom: u(26), display: "flex", ...eyebrow(), color: TEAL }}>
-        d2collector.site
-      </div>
+      {footer ? (
+        <div style={{ position: "absolute", right: u(40), bottom: u(26), display: "flex", ...eyebrow(), color: TEAL }}>
+          d2collector.site
+        </div>
+      ) : null}
     </div>
   );
 }

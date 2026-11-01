@@ -28,6 +28,8 @@ type TrialsFeaturedMapsSnapshot = {
   weekStart: string;
   weekEnd: string;
   maps: string[];
+  /** How the cron job got the maps ("rotation" = the deterministic guess, not Bungie). */
+  source?: string;
 };
 
 type LiveMilestone = {
@@ -212,7 +214,8 @@ export async function resolveTrialsFeaturedMaps(
       maps: resolveMapNames(snapshot.maps),
       weekStart: snapshot.weekStart,
       weekEnd: snapshot.weekEnd,
-      source: "snapshot",
+      // A snapshot of the rotation guess is still a guess.
+      source: snapshot.source === "rotation" ? "rotation" : "snapshot",
     };
   }
 
