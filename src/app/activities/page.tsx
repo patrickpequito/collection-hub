@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import type { ReactNode } from "react";
 import { ActivitiesProgressProvider } from "@/components/activities/activities-progress-provider";
 import { ActivityCard } from "@/components/activities/activity-card";
@@ -15,6 +17,12 @@ import { isBungieOAuthConfigured } from "@/lib/env";
 import { loadHomeThisWeek } from "@/lib/home/this-week";
 import { PAGE_HEADERS } from "@/lib/page-headers";
 import type { ActivityEntry } from "@/types/activity-loot";
+
+export const metadata: Metadata = pageMetadata(
+  "/activities",
+  "Destiny 2 activities: raids, dungeons & playlists",
+  "Every Destiny 2 raid, dungeon and playlist with its loot, this week's featured activities and what you still need.",
+);
 
 export const revalidate = 1800;
 

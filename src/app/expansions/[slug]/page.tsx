@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { NOT_FOUND_METADATA, pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { ClientOwnership } from "@/components/client-ownership";
 import { EververseSection } from "@/components/eververse-section";
@@ -33,6 +35,17 @@ import {
   loadTriumphCatalog,
 } from "@/lib/triumphs/load";
 import { pickReferenced } from "@/lib/pick-referenced";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const hub = getExpansionHub(slug);
+  if (!hub || !PUBLISHED_EXPANSION_SLUGS.has(hub.slug)) return NOT_FOUND_METADATA;
+  return pageMetadata(
+    `/expansions/${slug}`,
+    `${hub.title} · Destiny 2 expansion loot & exotics`,
+    `Everything from Destiny 2's ${hub.title}: exotics, destination and raid loot, armor sets, campaign, quests and triumphs.`,
+  );
+}
 
 export const revalidate = 3600;
 

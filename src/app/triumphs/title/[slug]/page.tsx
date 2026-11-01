@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { NOT_FOUND_METADATA, pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import { SealDetail } from "@/components/triumphs/seal-detail";
@@ -5,6 +7,18 @@ import { isBungieOAuthConfigured } from "@/lib/env";
 import { PAGE_HEADERS } from "@/lib/page-headers";
 import { orderedSeals, summarizeSeal } from "@/lib/triumphs/hub";
 import { getTitleEntry, loadTriumphCatalog } from "@/lib/triumphs/load";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const title = getTitleEntry(await loadTriumphCatalog(), slug);
+  if (!title) return NOT_FOUND_METADATA;
+  const name = title.guardianTitle ?? title.name;
+  return pageMetadata(
+    `/triumphs/title/${slug}`,
+    `${name} title · Destiny 2 seal triumphs`,
+    `How to get the ${name} title in Destiny 2: every triumph in the ${title.name} seal, with your progress.`,
+  );
+}
 
 type TitlePageProps = {
   params: Promise<{ slug: string }>;

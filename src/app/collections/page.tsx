@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { ClientOwnership } from "@/components/client-ownership";
 import { CollectionsIndex } from "@/components/collections/collections-index";
 import { SectionPageLayout } from "@/components/section-page-layout";
@@ -10,10 +11,11 @@ import { pickReferenced } from "@/lib/pick-referenced";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "Collections | Destiny 2 Collection Hub",
-  description: "Every active Destiny 2 Collections badge, with completion tracked for Hunter, Titan and Warlock.",
-};
+export const metadata: Metadata = pageMetadata(
+  "/collections",
+  "Destiny 2 Collections badges",
+  "Every active Destiny 2 Collections badge, with completion tracked for Hunter, Titan and Warlock.",
+);
 
 export default async function CollectionsPage() {
   const [groups, allItemHrefs] = await Promise.all([loadCollections(), buildCollectibleHrefByItemHash("/collections")]);

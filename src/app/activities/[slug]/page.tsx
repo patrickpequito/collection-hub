@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { NOT_FOUND_METADATA, pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { ActivityTitleDetailPanel } from "@/components/activity-title-detail-panel";
 import { TriumphsListSection } from "@/components/triumphs-list-section";
@@ -45,6 +47,18 @@ import {
 } from "@/lib/triumphs/load";
 import type { TriumphRecord } from "@/types/triumph";
 import { pickReferenced } from "@/lib/pick-referenced";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const activity = getActivityLootPage(slug);
+  if (!activity) return NOT_FOUND_METADATA;
+  const kind = DUNGEONS.some((entry) => entry.slug === slug) ? "dungeon" : "raid";
+  return pageMetadata(
+    `/activities/${slug}`,
+    `${activity.title} · Destiny 2 ${kind} loot`,
+    `Every ${activity.title} weapon, armor piece, exotic and triumph in Destiny 2, with what you own and what you're still missing.`,
+  );
+}
 
 const ALL_RAIDS = [...RAIDS, ...LEGACY_RAIDS, ...RAID_LAIRS];
 

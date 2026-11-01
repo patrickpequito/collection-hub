@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { ClientOwnership } from "@/components/client-ownership";
 import { SeasonsTimeline } from "@/components/expansions/seasons-timeline";
 import { SectionPageLayout } from "@/components/section-page-layout";
@@ -14,6 +16,12 @@ import {
   getSeasonHub,
   PUBLISHED_SEASON_SLUGS,
 } from "@/data/seasons";
+
+export const metadata: Metadata = pageMetadata(
+  "/expansions",
+  "Destiny 2 expansions & seasons timeline",
+  "Every Destiny 2 expansion and season with its loot, exotics, armor sets and triumphs.",
+);
 
 export const revalidate = 3600;
 

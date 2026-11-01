@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ClientOwnership } from "@/components/client-ownership";
 import { HomeContinue } from "@/components/home/home-continue";
 import { HomeExplore } from "@/components/home/home-explore";
@@ -9,6 +10,8 @@ import { HomeTimelineStrip } from "@/components/home/home-timeline-strip";
 import { SiteNav } from "@/components/site-nav";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { X_PROFILE_HANDLE, X_PROFILE_URL } from "@/lib/social";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 /** Cacheable homepage — session-dependent pieces hydrate on the client. */
 export const revalidate = 1800;

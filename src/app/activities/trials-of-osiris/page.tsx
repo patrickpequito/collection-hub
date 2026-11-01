@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { ClientOwnership } from "@/components/client-ownership";
 import { SectionJumpNav } from "@/components/detail-page-parts";
 import { ExpansionTriumphsPanel } from "@/components/expansions/expansion-triumphs-panel";
@@ -21,6 +23,12 @@ import { isBungieOAuthConfigured } from "@/lib/env";
 import { getTitleEntry, loadTriumphCatalog } from "@/lib/triumphs/load";
 import { poolScheduleNow, trialsPoolOccurrences } from "@/lib/activities/pool-rotation";
 import { pickReferenced } from "@/lib/pick-referenced";
+
+export const metadata: Metadata = pageMetadata(
+  "/activities/trials-of-osiris",
+  "Trials of Osiris maps & loot · Destiny 2",
+  "This weekend's Destiny 2 Trials of Osiris maps, bonus weapons and armor, with what you own and what you're still missing.",
+);
 
 export const revalidate = 3600;
 

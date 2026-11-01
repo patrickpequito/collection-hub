@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { GuardianProfileBody, ProfileDataProvider, ProfileHeader } from "@/components/profile/guardian-profile";
 import { SectionPageLayout } from "@/components/section-page-layout";
@@ -8,10 +9,11 @@ type GuardianPageProps = {
   params: Promise<{ membershipType: string; membershipId: string }>;
 };
 
-export const metadata: Metadata = {
-  title: "Guardian | Destiny 2 Collection Hub",
-  description: "A guardian's Destiny 2 time played, favorites, clears, combat record and collection progress.",
-};
+export const metadata: Metadata = pageMetadata(
+  "/profile",
+  "Guardian · Destiny 2",
+  "A guardian's Destiny 2 time played, favorites, clears, combat record and collection progress.", { noindex: true },
+);
 
 /** Someone else's public profile (what their Bungie privacy settings allow). */
 export default async function GuardianPage({ params }: GuardianPageProps) {

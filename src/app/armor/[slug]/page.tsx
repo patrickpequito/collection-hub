@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { NOT_FOUND_METADATA, pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { ArmorDetailContent } from "@/components/armor-detail-content";
 import { SectionPageLayout } from "@/components/section-page-layout";
@@ -33,14 +34,18 @@ export async function generateMetadata({
     (item) => item.type === "Armor" && item.slug === slug,
   );
 
-  if (!armor) {
-    return { title: "Armor not found" };
-  }
+  if (!armor) return NOT_FOUND_METADATA;
 
-  return {
-    title: armor.name,
-    description: armor.description ?? armor.source,
-  };
+  const exotic = armor.rarity === "Exotic";
+  const type = armor.classOrWeaponType ?? "Armor";
+  const source = (armor.source ?? "").replace(/^Source:\s*/i, "");
+  // Only exotics are open to search engines (robots.ts); the thousands of legendary pages stay out.
+  return pageMetadata(
+    `/armor/${slug}`,
+    exotic ? `${armor.name} · Destiny 2 exotic ${type.toLowerCase()}` : `${armor.name} · Destiny 2 ${type.toLowerCase()}`,
+    `${armor.name}: Destiny 2 ${exotic ? "exotic " : ""}${type.toLowerCase()}${source ? `. Source: ${source}` : ""}. See its perks and whether you own it.`,
+    { noindex: !exotic },
+  );
 }
 
 export default async function ArmorPage({ params }: ArmorPageProps) {

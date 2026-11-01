@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { ActivityEventCardRewardsPanel } from "@/components/activity-event-card-rewards-panel";
 import { ClientOwnership } from "@/components/client-ownership";
 import { SectionJumpNav } from "@/components/detail-page-parts";
@@ -21,6 +23,12 @@ import { loadHomeThisWeek } from "@/lib/home/this-week";
 import { getTitleEntry, loadTriumphCatalog } from "@/lib/triumphs/load";
 import type { LootItem } from "@/types/activity-loot";
 import { pickReferenced } from "@/lib/pick-referenced";
+
+export const metadata: Metadata = pageMetadata(
+  "/activities/iron-banner",
+  "Iron Banner loot & schedule · Destiny 2",
+  "Destiny 2 Iron Banner focus weapons, armor set and next dates, with what you own and what you're still missing.",
+);
 
 export const revalidate = 3600;
 

@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import {
   MonumentActivities,
   MonumentGuideBanner,
@@ -23,6 +25,12 @@ import { summarizeSeal } from "@/lib/triumphs/hub";
 import { getTitleEntry, getTriumphGroup, loadTriumphCatalog } from "@/lib/triumphs/load";
 import { collectLeafSections, leafSectionId } from "@/lib/triumphs/sections";
 import { pickReferenced } from "@/lib/pick-referenced";
+
+export const metadata: Metadata = pageMetadata(
+  "/activities/monument-of-triumph",
+  "Monument of Triumph · Destiny 2 reissued loot",
+  "Destiny 2 Monument of Triumph: reissued raid, dungeon and expansion gear, with what you own and what you're still missing.",
+);
 
 export const revalidate = 3600;
 

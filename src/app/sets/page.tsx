@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "@/components/app-link";
 import { ArmorSetsPage } from "@/components/armor-sets/armor-sets-page";
 import { ClientOwnership } from "@/components/client-ownership";
@@ -5,6 +7,12 @@ import { SectionPageLayout } from "@/components/section-page-layout";
 import { loadArmorSetCollection } from "@/lib/armor-sets/collection";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { PAGE_HEADERS } from "@/lib/page-headers";
+
+export const metadata: Metadata = pageMetadata(
+  "/sets",
+  "Destiny 2 armor sets",
+  "Every Destiny 2 armor set by activity, expansion and season, with what you own and what you're missing.",
+);
 
 export const revalidate = 3600;
 

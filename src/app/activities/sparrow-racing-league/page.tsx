@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { ClientOwnership } from "@/components/client-ownership";
 import { SectionHeading, SectionJumpNav } from "@/components/detail-page-parts";
 import { SrlCurrentLoot } from "@/components/activities/srl-current-loot";
@@ -13,6 +15,12 @@ import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { getTriumphSectionRecords, loadTriumphCatalog } from "@/lib/triumphs/load";
 import { pickReferenced } from "@/lib/pick-referenced";
+
+export const metadata: Metadata = pageMetadata(
+  "/activities/sparrow-racing-league",
+  "Sparrow Racing League loot · Destiny 2",
+  "Destiny 2 Sparrow Racing League sparrows, ornaments and rewards, with what you own and what you're still missing.",
+);
 
 export const revalidate = 3600;
 

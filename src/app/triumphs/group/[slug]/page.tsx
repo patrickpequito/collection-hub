@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { NOT_FOUND_METADATA, pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import { TriumphGroupBrowser } from "@/components/triumphs/triumph-group-browser";
@@ -5,6 +7,17 @@ import { TRIUMPH_GROUP_BANDS, triumphGroupBand } from "@/data/triumphs/seal-cate
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { PAGE_HEADERS } from "@/lib/page-headers";
 import { getTriumphGroup, loadTriumphCatalog } from "@/lib/triumphs/load";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const group = getTriumphGroup(await loadTriumphCatalog(), slug);
+  if (!group) return NOT_FOUND_METADATA;
+  return pageMetadata(
+    `/triumphs/group/${slug}`,
+    `${group.name} triumphs · Destiny 2`,
+    `Every ${group.name} triumph in Destiny 2, with your progress and what's left.`,
+  );
+}
 
 type TriumphGroupPageProps = {
   params: Promise<{ slug: string }>;

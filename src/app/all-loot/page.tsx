@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Suspense } from "react";
 import { AllLootPageContent } from "@/components/all-loot-page-content";
 import { CollectionSummaryBlocks } from "@/components/collection-summary-blocks";
@@ -8,14 +9,11 @@ import { PAGE_HEADERS } from "@/lib/page-headers";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "Loot Collector | Destiny 2 Collection Hub",
-  description: "Search the full Destiny 2 collectible catalog.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+export const metadata: Metadata = pageMetadata(
+  "/all-loot",
+  "Loot Collector · Destiny 2",
+  "Search the full Destiny 2 collectible catalog.", { noindex: true },
+);
 
 export default async function AllLootPage() {
   const oauthConfigured = isBungieOAuthConfigured();

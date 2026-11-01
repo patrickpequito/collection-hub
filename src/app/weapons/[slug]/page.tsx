@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { NOT_FOUND_METADATA, pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import { WeaponDetailContent } from "@/components/weapon-detail-content";
@@ -33,14 +34,18 @@ export async function generateMetadata({
   const { slug } = await params;
   const weapon = await getWeaponBySlug(slug);
 
-  if (!weapon) {
-    return { title: "Weapon not found" };
-  }
+  if (!weapon) return NOT_FOUND_METADATA;
 
-  return {
-    title: weapon.name,
-    description: weapon.description ?? weapon.source,
-  };
+  const exotic = weapon.rarity === "Exotic";
+  const type = weapon.classOrWeaponType ?? "Weapon";
+  const source = (weapon.source ?? "").replace(/^Source:\s*/i, "");
+  // Only exotics are open to search engines (robots.ts); the thousands of legendary pages stay out.
+  return pageMetadata(
+    `/weapons/${slug}`,
+    exotic ? `${weapon.name} · Destiny 2 exotic ${type.toLowerCase()}` : `${weapon.name} · Destiny 2 ${type.toLowerCase()}`,
+    `${weapon.name}: Destiny 2 ${exotic ? "exotic " : ""}${type.toLowerCase()}${source ? `. Source: ${source}` : ""}. See its perks and whether you own it.`,
+    { noindex: !exotic },
+  );
 }
 
 export default async function WeaponPage({ params }: WeaponPageProps) {

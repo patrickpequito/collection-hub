@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import { ShadersCatalog } from "@/components/shaders-catalog";
 import { loadAllLootCatalog } from "@/lib/all-loot/search";
@@ -11,11 +12,11 @@ import {
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "Shaders | Destiny 2 Collection Hub",
-  description:
-    "Every Destiny 2 shader, grouped by expansion, season, event, or activity.",
-};
+export const metadata: Metadata = pageMetadata(
+  "/shaders",
+  "Destiny 2 shaders",
+  "Every Destiny 2 shader, grouped by expansion, season, event or activity.",
+);
 
 export default async function ShadersPage() {
   const catalog = await loadAllLootCatalog();

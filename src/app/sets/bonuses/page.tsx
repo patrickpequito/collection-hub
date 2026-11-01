@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { SetBonusesGuide } from "@/components/armor-sets/set-bonuses-guide";
 import { ClientOwnership } from "@/components/client-ownership";
 import { SectionPageLayout } from "@/components/section-page-layout";
@@ -6,6 +8,12 @@ import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { PAGE_HEADERS } from "@/lib/page-headers";
 import { pickReferenced } from "@/lib/pick-referenced";
+
+export const metadata: Metadata = pageMetadata(
+  "/sets/bonuses",
+  "Armor set bonuses guide · Destiny 2",
+  "Find Destiny 2 armor sets by set bonus effect and see which ones you can wear today.",
+);
 
 export const revalidate = 3600;
 

@@ -32,8 +32,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.BUNGIE_REDIRECT_URI?.trim() ? new URL(process.env.BUNGIE_REDIRECT_URI).origin : "https://d2collector.site",
   ),
-  title: "Collection HUB",
-  description: "A collection tracker for Destiny 2 players",
+  title: {
+    default: "Collection HUB · Destiny 2 collection tracker",
+    template: "%s | Collection HUB",
+  },
+  description:
+    "See what you own, what you're missing and where to get it in Destiny 2: raid and dungeon loot, weekly rotations, exotics, armor sets, titles and triumphs.",
+  openGraph: { siteName: "Collection HUB", type: "website" },
 };
 
 /** Matches the Director UI void background — tints Safari chrome and overscroll on iOS. */

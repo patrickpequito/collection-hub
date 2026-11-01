@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { NOT_FOUND_METADATA, pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { ClientOwnership } from "@/components/client-ownership";
 import { SectionHeading, SectionJumpNav } from "@/components/detail-page-parts";
@@ -26,6 +28,17 @@ import { loadDestinationCurse, loadDestinationWeekly } from "@/lib/destinations/
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { loadTriumphCatalog } from "@/lib/triumphs/load";
 import { pickReferenced } from "@/lib/pick-referenced";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const destination = DESTINATIONS.find((entry) => entry.slug === slug && entry.built);
+  if (!destination) return NOT_FOUND_METADATA;
+  return pageMetadata(
+    `/activities/destinations/${slug}`,
+    `${destination.name} · Destiny 2 weekly rotations & loot`,
+    `This week in ${destination.name} (Destiny 2): rotations, destination loot, armor set, reputation and triumphs.`,
+  );
+}
 
 type DestinationPageProps = {
   params: Promise<{ slug: string }>;

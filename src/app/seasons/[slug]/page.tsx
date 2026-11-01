@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { NOT_FOUND_METADATA, pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { ClientOwnership } from "@/components/client-ownership";
 import { EververseSection } from "@/components/eververse-section";
@@ -26,6 +28,17 @@ import { getSeasonNavAdjacent } from "@/lib/seasons/season-nav";
 import { findTimelineEntry, formatTimelineMonth } from "@/lib/home/timeline";
 import { resolveSeasonLoot } from "@/lib/seasons/resolve-season-loot";
 import { pickReferenced } from "@/lib/pick-referenced";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const hub = getSeasonHub(slug);
+  if (!hub || !PUBLISHED_SEASON_SLUGS.has(hub.slug)) return NOT_FOUND_METADATA;
+  return pageMetadata(
+    `/seasons/${slug}`,
+    `${hub.title} · Destiny 2 season loot`,
+    `Everything from Destiny 2's ${hub.title}: season pass, weapons, armor, exotics, activities and Eververse.`,
+  );
+}
 
 export const revalidate = 3600;
 

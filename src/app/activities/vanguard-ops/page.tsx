@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { ClientOwnership } from "@/components/client-ownership";
 import { SectionHeading, SectionJumpNav } from "@/components/detail-page-parts";
 import {
@@ -22,6 +24,12 @@ import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { getTriumphSectionRecords, loadTriumphCatalog } from "@/lib/triumphs/load";
 import { pickReferenced } from "@/lib/pick-referenced";
+
+export const metadata: Metadata = pageMetadata(
+  "/activities/vanguard-ops",
+  "Vanguard Ops & Nightfall loot · Destiny 2",
+  "This week's Destiny 2 Nightfall and Vanguard Ops loot, with what you own and what you're still missing.",
+);
 
 export const revalidate = 3600;
 
