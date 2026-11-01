@@ -108,9 +108,12 @@ async function destinationWeek(destination: Destination): Promise<DestinationWee
   };
   if (!destination.weekly) return { ...base, headline: null, cadence: null };
   const [weekly, curse] = [await loadDestinationWeekly(destination), loadDestinationCurse(destination)];
-  // Throne World leads with today's Wellspring (daily reset).
+  // Throne World and Neomuna lead with today's activity (daily reset): "Wellspring: …", "Terminal Overload: …".
   const daily = weekly.find((entry) => /today/i.test(entry.label));
-  if (daily) return { ...base, headline: `Wellspring: ${daily.name}`, cadence: "daily" };
+  if (daily) {
+    const activity = daily.label.replace(/^The /, "").replace(/\s*·\s*today$/i, "");
+    return { ...base, headline: `${activity}: ${daily.name}`, cadence: "daily" };
+  }
   const first = weekly[0];
   if (destination.weekly === "nightmare-hunts" && weekly.length) {
     return { ...base, headline: `Nightmare Hunts: ${weekly.map((entry) => entry.name).join(" · ")}`, cadence: "weekly" };

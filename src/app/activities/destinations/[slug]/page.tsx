@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { ClientOwnership } from "@/components/client-ownership";
 import { SectionHeading, SectionJumpNav } from "@/components/detail-page-parts";
 import { CurseBar } from "@/components/destinations/curse-bar";
+import { DestinationWeekCards } from "@/components/destinations/destination-week-cards";
 import { DestinationReputation } from "@/components/destinations/destination-reputation";
 import {
   DestinationStatBlocks,
@@ -99,17 +100,7 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
             <section id="this-week" className="scroll-mt-20">
               <SectionHeading title="This week" />
               {curse ? <div className="mb-3"><CurseBar curse={curse} /></div> : null}
-              <div className="grid gap-3 sm:grid-cols-3">
-                {weekly.map((activity) => (
-                  <div key={activity.name} className="ui-panel flex flex-col gap-1.5 p-4">
-                    <span className="ui-label">{activity.label}</span>
-                    <span className="font-display text-[22px] font-semibold uppercase leading-tight tracking-[0.04em] text-bone">
-                      {activity.name}
-                    </span>
-                    <span className="text-[13px] text-ash">{activity.detail}</span>
-                  </div>
-                ))}
-              </div>
+              <DestinationWeekCards slug={destination.slug} activities={weekly} />
             </section>
           ) : null}
 

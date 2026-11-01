@@ -24,7 +24,7 @@ export type Destination = {
    */
   reputation?: { vendor: string; progressionHash: string; maxRank: number };
   /** Weekly rotation shown in "This week" (from data/featured-activities.json). */
-  weekly?: "nightmare-hunts" | "europa" | "dreaming-city" | "throne-world";
+  weekly?: "nightmare-hunts" | "europa" | "dreaming-city" | "throne-world" | "neomuna";
   vaulted?: boolean;
   /** Page available (destinations are built one at a time). */
   built?: boolean;
@@ -56,10 +56,14 @@ export const DESTINATIONS: Destination[] = [
     name: "Neomuna",
     era: "Lightfall",
     imageFile: "neomuna.webp",
-    sourcePattern: /neomuna/i,
+    sourcePattern: /neomuna|lightfall campaign/i,
+    // Terminal Overload rewards (their catalog source no longer names Neomuna).
+    extraItems: { namePattern: /^(Basso Ostinato|Circular Logic|Synchronic Roulette)$/, types: ["Weapon"] },
     triumphs: { group: "neomuna" },
     titleSlug: "lightfall",
     reputation: { vendor: "Nimbus", progressionHash: "1807348350", maxRank: 30 },
+    weekly: "neomuna",
+    built: true,
   },
   {
     slug: "throne-world",

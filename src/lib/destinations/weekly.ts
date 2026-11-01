@@ -5,13 +5,21 @@ import {
   DREAMING_CITY_CURSE,
   DREAMING_CITY_ROTATIONS,
   EUROPA_ROTATIONS,
+  NEOMUNA_ROTATIONS,
   THRONE_WORLD_ROTATIONS,
   type ManualRotation,
 } from "@/data/destinations/weekly-rotations";
 import destinationLoot from "../../../data/destination-loot.json";
 import { rotationWeekIndex } from "@/lib/rad-loot/featured-rotation";
 
-export type WeeklyActivity = { label: string; name: string; detail: string };
+export type WeeklyActivity = {
+  label: string;
+  name: string;
+  detail: string;
+  /** Card art: Bungie pgcr path (/img/…) or local /images/… file. */
+  image?: string;
+  cadence?: "weekly" | "daily";
+};
 
 type NightmareHunt = { name: string; boss: string; image: string | null };
 
@@ -32,7 +40,7 @@ function manualWeekly(rotations: ManualRotation[]): WeeklyActivity[] {
   return rotations.flatMap((rotation) => {
     if (rotation.anchorWeek === null) return [];
     const entry = rotation.order[cycleIndex(week, rotation.anchorWeek, rotation.order.length)];
-    return [{ label: rotation.label, name: entry.name, detail: entry.detail }];
+    return [{ label: rotation.label, name: entry.name, detail: entry.detail, image: entry.image, cadence: "weekly" as const }];
   });
 }
 
@@ -61,7 +69,53 @@ async function loadWellspringToday(): Promise<WeeklyActivity | null> {
       for (const activity of character.availableActivities) {
         const encounter = WELLSPRING[String(activity.activityHash)];
         if (encounter) {
-          return { label: "The Wellspring · today", name: encounter.boss, detail: `${encounter.mode} · drops ${encounter.drop}` };
+          return {
+            label: "The Wellspring · today",
+            name: encounter.boss,
+            detail: `${encounter.mode} · drops ${encounter.drop}`,
+            image: `/img/destiny_content/pgcr/wellspring_${encounter.mode === "Defend" ? "defend" : "attack"}_one.jpg`,
+            cadence: "daily",
+          };
+        }
+      }
+    }
+  } catch {
+    // Card is skipped.
+  }
+  return null;
+}
+
+/** Terminal Overload moves between three Neomuna districts at the daily reset. */
+const TERMINAL_OVERLOAD: Record<string, { district: string; image: string }> = {
+  "508116160": { district: "Ahimsa Park", image: "/img/destiny_content/pgcr/neomuna_terminal_overload_frontline.jpg" },
+  "2375923691": { district: "Límíng Harbor", image: "/img/destiny_content/pgcr/neomuna_terminal_overload_harbor.jpg" },
+  "681459255": { district: "Zephyr Concourse", image: "/img/destiny_content/pgcr/neomuna_terminal_overload_avenue.jpg" },
+};
+
+/** Today's Terminal Overload district, or null if Bungie is unreachable. */
+async function loadTerminalOverloadToday(): Promise<WeeklyActivity | null> {
+  const apiKey = process.env.BUNGIE_API_KEY?.trim();
+  if (!apiKey) return null;
+  try {
+    const response = await fetch(`https://www.bungie.net${PROBE_PROFILE}`, {
+      headers: { "X-API-Key": apiKey },
+      next: { revalidate: 1800 },
+    });
+    if (!response.ok) return null;
+    const payload = (await response.json()) as {
+      Response?: { characterActivities?: { data?: Record<string, { availableActivities: { activityHash: number }[] }> } };
+    };
+    for (const character of Object.values(payload.Response?.characterActivities?.data ?? {})) {
+      for (const activity of character.availableActivities) {
+        const today = TERMINAL_OVERLOAD[String(activity.activityHash)];
+        if (today) {
+          return {
+            label: "Terminal Overload · today",
+            name: today.district,
+            detail: "Shadow Legion public event",
+            image: today.image,
+            cadence: "daily",
+          };
         }
       }
     }
@@ -78,6 +132,10 @@ export async function loadDestinationWeekly(destination: Destination): Promise<W
     return [...manualWeekly(THRONE_WORLD_ROTATIONS), ...(wellspring ? [wellspring] : [])];
   }
   if (destination.weekly === "europa") return manualWeekly(EUROPA_ROTATIONS);
+  if (destination.weekly === "neomuna") {
+    const terminalOverload = await loadTerminalOverloadToday();
+    return [...manualWeekly(NEOMUNA_ROTATIONS), ...(terminalOverload ? [terminalOverload] : [])];
+  }
   if (destination.weekly === "dreaming-city") return manualWeekly(DREAMING_CITY_ROTATIONS);
   if (destination.weekly !== "nightmare-hunts") return [];
   try {
@@ -89,6 +147,8 @@ export async function loadDestinationWeekly(destination: Destination): Promise<W
       label: "Nightmare Hunt",
       name: hunt.name,
       detail: hunt.boss,
+      image: hunt.image ?? undefined,
+      cadence: "weekly" as const,
     }));
   } catch {
     return [];
