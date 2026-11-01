@@ -27,6 +27,7 @@ import type {
   ExpansionCampaignMission,
   ExpansionCampaignQuest,
   ExpansionDifficultyHunt,
+  ExpansionActivityChecklist,
   ExpansionRotatingBossActivity,
   ExpansionWellspringBoss,
 } from "@/lib/expansions/resolve-expansion-loot";
@@ -36,6 +37,8 @@ type ExpansionCampaignMissionsPanelProps = {
   missions: ExpansionCampaignMission[];
   legendaryRecordHash: string;
   quests?: ExpansionCampaignQuest[];
+  /** Triumph checklists shown as their own columns (e.g. Partition). */
+  activityChecklists?: ExpansionActivityChecklist[];
   difficultyHunts?: ExpansionDifficultyHunt[];
   difficultyHuntsTitle?: string;
   rotatingBossActivity?: ExpansionRotatingBossActivity | null;
@@ -98,6 +101,7 @@ export function ExpansionCampaignMissionsPanel({
   missions,
   legendaryRecordHash,
   quests = [],
+  activityChecklists = [],
   difficultyHunts = [],
   difficultyHuntsTitle = "Difficulty activities",
   rotatingBossActivity = null,
@@ -109,8 +113,11 @@ export function ExpansionCampaignMissionsPanel({
   const { ownedItemHashes } = useOwnership();
   const instances = useProfileRecordInstances();
   const huntActivityHashes = useMemo(
-    () => collectDifficultyHuntActivityHashes(difficultyHunts),
-    [difficultyHunts],
+    () => [
+      ...collectDifficultyHuntActivityHashes(difficultyHunts),
+      ...missions.flatMap((mission) => mission.activityHashes ?? []),
+    ],
+    [difficultyHunts, missions],
   );
   const campaignQuestTargets = useMemo(
     () => collectQuestCompletionTargets(quests),
@@ -138,17 +145,21 @@ export function ExpansionCampaignMissionsPanel({
             instances[mission.normalRecordHash],
           );
         }
+        if (mission.activityHashes?.length && anyHashCompleted(mission.activityHashes, activityCompletions)) {
+          normal = true;
+        }
         if (legend === true) normal = true;
-        else if (mission.normalRecordHash == null) normal = legend;
+        else if (mission.normalRecordHash == null && !normal) normal = legend;
       }
 
       return { mission, normal, legend };
     });
-  }, [instances, legendaryRecordHash, missions, signedIn]);
+  }, [activityCompletions, instances, legendaryRecordHash, missions, signedIn]);
 
   if (
     missions.length === 0 &&
     quests.length === 0 &&
+    activityChecklists.length === 0 &&
     difficultyHunts.length === 0 &&
     !hasRotatingBosses &&
     wellspringBosses.length === 0
@@ -223,6 +234,27 @@ export function ExpansionCampaignMissionsPanel({
           </ul>
         </div>
       ) : null}
+
+      {activityChecklists.map((checklist) => {
+        const instance = instances[checklist.recordHash];
+        const done = checklist.entries.filter((entry) => objectiveComplete(instance, entry.objectiveHash) === true).length;
+        return (
+          <div key={checklist.recordHash} className={blockClass}>
+            <BoxHeading title={checklist.title} note={countNote(done, checklist.entries.length)} />
+            <ul className="divide-y divide-zinc-800">
+              {checklist.entries.map((entry) => (
+                <li key={entry.objectiveHash} className="flex items-center justify-between gap-2 py-2.5">
+                  <span className="text-sm font-medium text-zinc-100">{entry.name}</span>
+                  <CompletionMark
+                    complete={signedIn ? objectiveComplete(instance, entry.objectiveHash) : null}
+                    label="Complete"
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
 
       {difficultyHunts.length > 0 ? (
         <div className={blockClass}>

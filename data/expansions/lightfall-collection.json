@@ -1,18 +1,383 @@
 {
-  "badgeName": "",
-  "iconPath": "",
-  "bannerIconPath": "",
-  "completionRecordHash": "",
-  "items": [],
+  "generatedAt": "2026-11-01T10:05:12.480Z",
+  "badgePresentationNodeHash": "1074030956",
+  "badgeName": "Neomuni Souvenirs",
+  "iconPath": "/common/destiny2_content/icons/fb93c9748bf920e19620ac62362b213d.png",
+  "bannerIconPath": "/common/destiny2_content/icons/576e5c4125b3eee8ee33eba1f388ffcc.jpg",
+  "completionRecordHash": "368112774",
+  "items": [
+    {
+      "itemHash": "3118061004",
+      "collectibleHash": "2629609053",
+      "name": "Winterbite",
+      "iconPath": "/common/destiny2_content/icons/d9531516ad16980bd8b162b6aaca056a.jpg",
+      "itemTypeDisplayName": "Glaive",
+      "rarity": "Exotic",
+      "section": "weapons",
+      "source": "Source: Strider Exotic Quest"
+    },
+    {
+      "itemHash": "3121540812",
+      "collectibleHash": "2843753795",
+      "name": "Final Warning",
+      "iconPath": "/common/destiny2_content/icons/9f71c70124cd7f49c504298abeac801a.jpg",
+      "itemTypeDisplayName": "Sidearm",
+      "rarity": "Exotic",
+      "section": "weapons",
+      "source": "Source: \"The Final Strand\" Exotic Quest"
+    },
+    {
+      "itemHash": "449318888",
+      "collectibleHash": "4226434173",
+      "name": "Deterministic Chaos",
+      "iconPath": "/common/destiny2_content/icons/39f9d50e8ba21f2764aefc7b3aa77015.jpg",
+      "itemTypeDisplayName": "Machine Gun",
+      "rarity": "Exotic",
+      "section": "weapons",
+      "source": "Source: \"What Remains\" Exotic Quest"
+    },
+    {
+      "itemHash": "1311684613",
+      "collectibleHash": "2053873411",
+      "name": "Dimensional Hypotrochoid",
+      "iconPath": "/common/destiny2_content/icons/46a9c40194a54ef34fcf8d86d5370dd4.jpg",
+      "itemTypeDisplayName": "Grenade Launcher",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Lightfall Campaign"
+    },
+    {
+      "itemHash": "1289796511",
+      "collectibleHash": "2411110031",
+      "name": "Iterative Loop",
+      "iconPath": "/common/destiny2_content/icons/0ad473c931e18b9269232c8490b700ee.jpg",
+      "itemTypeDisplayName": "Fusion Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "3635821806",
+      "collectibleHash": "3056237876",
+      "name": "Phyllotactic Spiral",
+      "iconPath": "/common/destiny2_content/icons/35b4c19fffd24401e9f042edaf6f4473.jpg",
+      "itemTypeDisplayName": "Pulse Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Lightfall Campaign"
+    },
+    {
+      "itemHash": "3920310144",
+      "collectibleHash": "2035712007",
+      "name": "Volta Bracket",
+      "iconPath": "/common/destiny2_content/icons/7965c12d25b042a8ae90893a2a1e85cb.jpg",
+      "itemTypeDisplayName": "Sniper Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Lightfall Campaign"
+    },
+    {
+      "itemHash": "2034215657",
+      "collectibleHash": "3519199874",
+      "name": "Round Robin",
+      "iconPath": "/common/destiny2_content/icons/e0b5ac6087ba474a07dbc62a3ab7296e.jpg",
+      "itemTypeDisplayName": "Hand Cannon",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "2187717691",
+      "collectibleHash": "3118508935",
+      "name": "Circular Logic",
+      "iconPath": "/common/destiny2_content/icons/0b7d1b8bf5cde3563b09deba0e948cb9.jpg",
+      "itemTypeDisplayName": "Machine Gun",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Terminal Overload (Zephyr Concourse)"
+    },
+    {
+      "itemHash": "2573900604",
+      "collectibleHash": "3034497829",
+      "name": "Basso Ostinato",
+      "iconPath": "/common/destiny2_content/icons/9f1025a4b9423bb6de1e7f73ea75ee1a.jpg",
+      "itemTypeDisplayName": "Shotgun",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Terminal Overload (Ahimsa Park)"
+    },
+    {
+      "itemHash": "811403305",
+      "collectibleHash": "857252104",
+      "name": "Synchronic Roulette",
+      "iconPath": "/common/destiny2_content/icons/31489213b04a308567a4d47e9edc8816.jpg",
+      "itemTypeDisplayName": "Submachine Gun",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Terminal Overload (Límíng Harbor)"
+    },
+    {
+      "itemHash": "231118249",
+      "collectibleHash": "658894423",
+      "name": "Thunderhead Helm",
+      "iconPath": "/common/destiny2_content/icons/4514f669c514dcd1638ee9c51e21df7b.jpg",
+      "itemTypeDisplayName": "Helmet",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "2317494560",
+      "collectibleHash": "767761228",
+      "name": "Thunderhead Gauntlets",
+      "iconPath": "/common/destiny2_content/icons/52d656498a89f9704497ea382aad697a.jpg",
+      "itemTypeDisplayName": "Gauntlets",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "2609397864",
+      "collectibleHash": "1980715124",
+      "name": "Thunderhead Plate",
+      "iconPath": "/common/destiny2_content/icons/7f2637e8a5289ea73fdb8dbf59fdd809.jpg",
+      "itemTypeDisplayName": "Chest Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "1012434138",
+      "collectibleHash": "2610584410",
+      "name": "Thunderhead Greaves",
+      "iconPath": "/common/destiny2_content/icons/5c3be511601506a7e8a857c59b9852bb.jpg",
+      "itemTypeDisplayName": "Leg Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "16527941",
+      "collectibleHash": "3521132171",
+      "name": "Thunderhead Mark",
+      "iconPath": "/common/destiny2_content/icons/a9f6be90c7c5498980477e2c48a7a0f2.jpg",
+      "itemTypeDisplayName": "Titan Mark",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "1451723779",
+      "collectibleHash": "2737384323",
+      "name": "Thunderhead Mask",
+      "iconPath": "/common/destiny2_content/icons/6b5b4528ddb96c6b5392a79ad1c2d91a.jpg",
+      "itemTypeDisplayName": "Helmet",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "2589262546",
+      "collectibleHash": "3284602000",
+      "name": "Thunderhead Grips",
+      "iconPath": "/common/destiny2_content/icons/c8c46cadf12c7b45c606f963eb0ea774.jpg",
+      "itemTypeDisplayName": "Gauntlets",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "1017542806",
+      "collectibleHash": "465151912",
+      "name": "Thunderhead Vest",
+      "iconPath": "/common/destiny2_content/icons/14c5c2ef5829dfe52593742009133bb3.jpg",
+      "itemTypeDisplayName": "Chest Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "2990500972",
+      "collectibleHash": "863147406",
+      "name": "Thunderhead Strides",
+      "iconPath": "/common/destiny2_content/icons/5003a40d634daaced7e47978b12fc478.jpg",
+      "itemTypeDisplayName": "Leg Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "347169983",
+      "collectibleHash": "3715009079",
+      "name": "Thunderhead Cloak",
+      "iconPath": "/common/destiny2_content/icons/301f841575510b9b5834296b2c1fc112.jpg",
+      "itemTypeDisplayName": "Hunter Cloak",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "2832296494",
+      "collectibleHash": "3284945810",
+      "name": "Thunderhead Cover",
+      "iconPath": "/common/destiny2_content/icons/833bf34c3b3c21eab5c0bd9f346e3d77.jpg",
+      "itemTypeDisplayName": "Helmet",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "3857602975",
+      "collectibleHash": "3589672893",
+      "name": "Thunderhead Gloves",
+      "iconPath": "/common/destiny2_content/icons/9ec8ab9a5664eb8b8fed2a007652200c.jpg",
+      "itemTypeDisplayName": "Gauntlets",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "535551193",
+      "collectibleHash": "2007230891",
+      "name": "Thunderhead Robes",
+      "iconPath": "/common/destiny2_content/icons/d1168a7fdc37da49438a6ee98da27304.jpg",
+      "itemTypeDisplayName": "Chest Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "2778750049",
+      "collectibleHash": "4095757715",
+      "name": "Thunderhead Boots",
+      "iconPath": "/common/destiny2_content/icons/1ee5dedaf8a3affda66778558f8f3639.jpg",
+      "itemTypeDisplayName": "Leg Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "2274277780",
+      "collectibleHash": "3537305700",
+      "name": "Thunderhead Bond",
+      "iconPath": "/common/destiny2_content/icons/14097f38a268d06d1194c4bea12380d1.jpg",
+      "itemTypeDisplayName": "Warlock Bond",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "1534670698",
+      "collectibleHash": "2180024091",
+      "name": "Foremost Vimana",
+      "iconPath": "/common/destiny2_content/icons/339e69affadbdba645be1f4c63e64cb9.jpg",
+      "itemTypeDisplayName": "Ship",
+      "rarity": "Exotic",
+      "section": "other",
+      "source": "Source: \"Neomuna Sightseeing\" Triumph"
+    },
+    {
+      "itemHash": "1781477733",
+      "collectibleHash": "640355261",
+      "name": "Scintillant Trajectory",
+      "iconPath": "/common/destiny2_content/icons/5a7234ef845c977c7ab31da0e90056dc.jpg",
+      "itemTypeDisplayName": "Shader",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Exploring Neomuna"
+    },
+    {
+      "itemHash": "908153537",
+      "collectibleHash": "2793059359",
+      "name": "Sanctuary of Nefele",
+      "iconPath": "/common/destiny2_content/icons/56fd27ed6de1f024012cdcdbdaf133ac.jpg",
+      "itemTypeDisplayName": "Emblem",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Lightfall Campaign"
+    },
+    {
+      "itemHash": "908153536",
+      "collectibleHash": "2793059358",
+      "name": "Terminal Circuit",
+      "iconPath": "/common/destiny2_content/icons/896a9c96213276734c3fe67c7058f9f6.jpg",
+      "itemTypeDisplayName": "Emblem",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Terminal Overload"
+    }
+  ],
   "regionChests": {
-    "checklistHash": "",
-    "triumphHash": "",
-    "entries": []
+    "checklistHash": "1697465175",
+    "triumphHash": "209536962",
+    "entries": [
+      {
+        "entryHash": "1343989713",
+        "label": "Region chest 1"
+      },
+      {
+        "entryHash": "2493140158",
+        "label": "Region chest 2"
+      },
+      {
+        "entryHash": "2587582303",
+        "label": "Region chest 3"
+      },
+      {
+        "entryHash": "61217800",
+        "label": "Region chest 4"
+      },
+      {
+        "entryHash": "2442093127",
+        "label": "Region chest 5"
+      },
+      {
+        "entryHash": "4006123814",
+        "label": "Region chest 6"
+      },
+      {
+        "entryHash": "1351660365",
+        "label": "Region chest 7"
+      },
+      {
+        "entryHash": "1960240794",
+        "label": "Region chest 8"
+      },
+      {
+        "entryHash": "2522062651",
+        "label": "Region chest 9"
+      }
+    ]
   },
   "lostSectors": {
-    "checklistHash": "",
-    "discoveryRecordHash": "",
-    "sectors": []
+    "checklistHash": "3142056444",
+    "discoveryRecordHash": "14913506",
+    "sectors": [
+      {
+        "name": "Hydroponics Delta",
+        "checklistEntryHash": "",
+        "discoveryObjectiveHash": "882279227",
+        "expertRecordHash": "987583142",
+        "masterRecordHash": "2950526365",
+        "grandmasterRecordHash": "3999944721"
+      },
+      {
+        "name": "Gilded Precept",
+        "checklistEntryHash": "",
+        "discoveryObjectiveHash": "882279226",
+        "expertRecordHash": "3951548177",
+        "masterRecordHash": "1478134502",
+        "grandmasterRecordHash": "3965949828"
+      },
+      {
+        "name": "Thrilladrome",
+        "checklistEntryHash": "",
+        "discoveryObjectiveHash": "882279225",
+        "expertRecordHash": "3814890698",
+        "masterRecordHash": "1364118393",
+        "grandmasterRecordHash": "3100330213"
+      }
+    ]
   },
   "wellspring": {
     "normalRecordHash": "",
@@ -20,7 +385,292 @@
     "bosses": []
   },
   "campaign": {
-    "legendaryRecordHash": "",
-    "missions": []
+    "legendaryRecordHash": "2024002713",
+    "missions": [
+      {
+        "name": "First Contact",
+        "normalRecordHash": "3695031188",
+        "legendObjectiveHash": "4017200186",
+        "activityHashes": [
+          "2101866276",
+          "239690206"
+        ]
+      },
+      {
+        "name": "Under Siege",
+        "normalRecordHash": null,
+        "legendObjectiveHash": "4017200187",
+        "activityHashes": [
+          "2814341192",
+          "2879686618"
+        ]
+      },
+      {
+        "name": "Downfall",
+        "normalRecordHash": "2809254865",
+        "legendObjectiveHash": "4017200184",
+        "activityHashes": [
+          "1257086859",
+          "1257086860",
+          "1257086861",
+          "2314609324",
+          "765784278"
+        ]
+      },
+      {
+        "name": "Breakneck",
+        "normalRecordHash": "4209283181",
+        "legendObjectiveHash": "4017200185",
+        "activityHashes": [
+          "1338085878",
+          "1565392032",
+          "1565392033",
+          "1565392039",
+          "4024253728"
+        ]
+      },
+      {
+        "name": "On the Verge",
+        "normalRecordHash": null,
+        "legendObjectiveHash": "4017200190",
+        "activityHashes": [
+          "2466996414",
+          "28778404"
+        ]
+      },
+      {
+        "name": "No Time Left",
+        "normalRecordHash": "32601779",
+        "legendObjectiveHash": "4017200191",
+        "activityHashes": [
+          "1266868740",
+          "1267275762",
+          "1267275763",
+          "1267275765",
+          "376842534"
+        ]
+      },
+      {
+        "name": "Headlong",
+        "normalRecordHash": null,
+        "legendObjectiveHash": "4017200188",
+        "activityHashes": [
+          "1544807701",
+          "2441806959",
+          "264882961",
+          "759827239"
+        ]
+      },
+      {
+        "name": "Desperate Measures",
+        "normalRecordHash": "2053976875",
+        "legendObjectiveHash": "4017200189",
+        "activityHashes": [
+          "1152906386",
+          "2098315978",
+          "2098315979",
+          "2098315981",
+          "2787247596"
+        ]
+      }
+    ],
+    "quests": [
+      {
+        "name": "Legacy: Lightfall",
+        "questHash": "1875434402",
+        "completionStepHash": "3982990883",
+        "questStepHashes": [
+          "1875434402",
+          "1831789550",
+          "2921235458",
+          "2893724857",
+          "3616435444",
+          "1120173220",
+          "2893724856",
+          "2564910392",
+          "2893724863",
+          "3319704294",
+          "2347049484",
+          "2893724862",
+          "1099249219",
+          "2893724861",
+          "1871980184",
+          "399421978",
+          "1113204948",
+          "3401811367",
+          "3670562313",
+          "3638686275",
+          "3982990883"
+        ],
+        "stepObjectiveHashes": [
+          "1127761068",
+          "2716494944",
+          "2372723163",
+          "1842019290",
+          "582345257",
+          "2485771929",
+          "3052931605",
+          "2729996181",
+          "1554108252",
+          "4082018647",
+          "2731292347",
+          "3512430751",
+          "3571769720",
+          "4152212150",
+          "202060405",
+          "2154103555",
+          "3292535689",
+          "795936116",
+          "2005921534",
+          "282295206",
+          "3154948184"
+        ],
+        "iconPath": "/common/destiny2_content/icons/9cd3546b0172b01c310909ff9f90d0e7.jpg",
+        "completionObjectiveHash": "3154948184"
+      },
+      {
+        "name": "Unfinished Business",
+        "questHash": "3107649396",
+        "completionStepHash": "3317571822",
+        "questStepHashes": [
+          "3107649396",
+          "1354288074",
+          "4252762628",
+          "3578439097",
+          "2884502477",
+          "2392943047",
+          "3055839705",
+          "157696345",
+          "965473706",
+          "802746785",
+          "4102706977",
+          "3680805371",
+          "3317571822"
+        ],
+        "stepObjectiveHashes": [
+          "2270750121",
+          "2172595699",
+          "2182303864",
+          "2600771290",
+          "1111410374",
+          "1545862804",
+          "2551450746",
+          "1492025082",
+          "1778595027",
+          "4029974802",
+          "457233810",
+          "4223118784",
+          "1319855119"
+        ],
+        "iconPath": "/common/destiny2_content/icons/f2390467d8e07730c42eeb1b4a6d67b1.jpg",
+        "completionObjectiveHash": "1319855119",
+        "recordHash": "1014798089"
+      },
+      {
+        "name": "The Final Strand",
+        "questHash": "3610649340",
+        "completionStepHash": "2632313001",
+        "questStepHashes": [
+          "3610649340",
+          "3161484303",
+          "1550193703",
+          "3646525804",
+          "235749523",
+          "34163917",
+          "2632313001"
+        ],
+        "stepObjectiveHashes": [
+          "4237460445",
+          "976332076",
+          "87189244",
+          "2719377993",
+          "2427683918",
+          "876496712",
+          "639860594"
+        ],
+        "iconPath": "/common/destiny2_content/icons/8ef31ba637fe8764b3f6b6f97d786f5c.jpg",
+        "completionObjectiveHash": "639860594",
+        "recordHash": "293470650",
+        "completionItemHash": "3121540812"
+      },
+      {
+        "name": "From Zero…",
+        "recordHash": "272417846",
+        "recordObjectiveHash": "346136935",
+        "iconPath": "/common/destiny2_content/icons/1bec7f86912cc0b39e03a6387c0d60bc.png"
+      },
+      {
+        "name": "…To Hero",
+        "recordHash": "272417846",
+        "recordObjectiveHash": "346136934",
+        "iconPath": "/common/destiny2_content/icons/1bec7f86912cc0b39e03a6387c0d60bc.png"
+      },
+      {
+        "name": "Stargazer",
+        "recordHash": "3472604716",
+        "recordObjectiveHash": "3348334065",
+        "iconPath": "/common/destiny2_content/icons/9e6c42c7427efa14f50279d761744e38.png"
+      },
+      {
+        "name": "Maelstrom",
+        "recordHash": "3472604716",
+        "recordObjectiveHash": "3348334064",
+        "iconPath": "/common/destiny2_content/icons/9e6c42c7427efa14f50279d761744e38.png"
+      },
+      {
+        "name": "Bluejay",
+        "recordHash": "3472604716",
+        "recordObjectiveHash": "3348334067",
+        "iconPath": "/common/destiny2_content/icons/9e6c42c7427efa14f50279d761744e38.png"
+      },
+      {
+        "name": "Strider",
+        "questHash": "2565205711",
+        "completionStepHash": "1918331978",
+        "questStepHashes": [
+          "2565205711",
+          "3413453049",
+          "2557879920",
+          "2670023973",
+          "4054032200",
+          "2945759410",
+          "1918331978"
+        ],
+        "stepObjectiveHashes": [
+          "4116189676",
+          "2574881048",
+          "2678985884",
+          "5166510",
+          "1634489125",
+          "1009056203",
+          "2743919475"
+        ],
+        "iconPath": "/common/destiny2_content/icons/1dec2d0ac278e19870abe9cf6b286f79.jpg",
+        "completionObjectiveHash": "2743919475",
+        "completionItemHash": "3118061004",
+        "recordHash": "3472604716",
+        "recordObjectiveHash": "3348334066"
+      }
+    ],
+    "activityChecklists": [
+      {
+        "title": "Partition",
+        "recordHash": "145839363",
+        "entries": [
+          {
+            "name": "Ordnance",
+            "objectiveHash": "829601336"
+          },
+          {
+            "name": "Hard Reset",
+            "objectiveHash": "829601337"
+          },
+          {
+            "name": "Backdoor",
+            "objectiveHash": "829601338"
+          }
+        ]
+      }
+    ]
   }
 }

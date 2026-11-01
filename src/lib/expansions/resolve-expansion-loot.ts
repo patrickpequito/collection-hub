@@ -109,6 +109,18 @@ export type ExpansionCampaignMission = {
   name: string;
   normalRecordHash: string | null;
   legendObjectiveHash: string;
+  /**
+   * Mission activities (any difficulty). One clear in the account's activity history counts
+   * as done — Bungie's per-mission records don't track reliably for every campaign.
+   */
+  activityHashes?: string[];
+};
+
+/** A triumph whose objectives each mark one activity done (e.g. Partition → "Disk Cleanup"). */
+export type ExpansionActivityChecklist = {
+  title: string;
+  recordHash: string;
+  entries: { name: string; objectiveHash: string }[];
 };
 
 export type ExpansionCampaignQuest = {
@@ -202,6 +214,8 @@ type ExpansionCollectionFile = {
     sectionTitle?: string;
     /** Rotating public-event bosses nested under the campaign panel. */
     rotatingBossActivity?: ExpansionRotatingBossActivity;
+    /** Extra columns next to Quests, one per triumph checklist. */
+    activityChecklists?: ExpansionActivityChecklist[];
     /** @deprecated Prefer difficultyHunts */
     empireHunts?: ExpansionDifficultyHunt[];
   };
@@ -226,6 +240,7 @@ export type ExpansionLoot = {
   wellspringBosses: ExpansionWellspringBoss[];
   campaignLegendaryRecordHash: string;
   campaignMissions: ExpansionCampaignMission[];
+  campaignActivityChecklists: ExpansionActivityChecklist[];
   campaignQuests: ExpansionCampaignQuest[];
   difficultyHunts: ExpansionDifficultyHunt[];
   difficultyHuntsTitle: string;
@@ -785,6 +800,7 @@ export async function resolveExpansionLoot(
     campaignLegendaryRecordHash:
       collectionFile.campaign?.legendaryRecordHash ?? "",
     campaignMissions: collectionFile.campaign?.missions ?? [],
+    campaignActivityChecklists: collectionFile.campaign?.activityChecklists ?? [],
     campaignQuests: enrichCampaignQuests(
       collectionFile.campaign?.quests ?? [],
       triumphCatalog,

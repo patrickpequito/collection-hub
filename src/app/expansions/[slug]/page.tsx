@@ -48,7 +48,8 @@ export function generateStaticParams() {
 export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
   const { slug } = await params;
   const hub = getExpansionHub(slug);
-  if (!hub || !PUBLISHED_EXPANSION_SLUGS.has(hub.slug)) notFound();
+  // Unpublished hubs stay reachable in local dev so they can be reviewed before going live.
+  if (!hub || (!PUBLISHED_EXPANSION_SLUGS.has(hub.slug) && process.env.NODE_ENV === "production")) notFound();
 
   const oauthConfigured = isBungieOAuthConfigured();
 
@@ -221,6 +222,7 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
               missions={loot.campaignMissions}
               legendaryRecordHash={loot.campaignLegendaryRecordHash}
               quests={loot.campaignQuests}
+              activityChecklists={loot.campaignActivityChecklists}
               difficultyHunts={loot.difficultyHunts}
               difficultyHuntsTitle={loot.difficultyHuntsTitle}
               rotatingBossActivity={loot.rotatingBossActivity}
