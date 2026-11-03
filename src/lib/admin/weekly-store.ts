@@ -12,6 +12,8 @@ export const ADMIN_WEEK_TAG = "admin-week";
 export type AdminWeekOverride = {
   featuredRaids?: string[];
   featuredDungeons?: string[];
+  /** Pantheon featured bosses by pool, when Bungie's API is late after the reset. */
+  pantheon?: { Reprise?: string; Encore?: string };
   /** rotation key ("europa:Empire Hunt") → value name. */
   rotations?: Record<string, string>;
 };

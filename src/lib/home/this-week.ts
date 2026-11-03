@@ -8,6 +8,7 @@ import {
   type TrialsFeaturedMapsResult,
 } from "@/lib/activities/trials-featured-maps";
 import { ironBannerWindowFor } from "@/lib/activities/trials-schedule";
+import { readWeekOverride } from "@/lib/admin/weekly-store";
 import { loadDestinationCurse, loadDestinationWeekly } from "@/lib/destinations/weekly";
 import { featuredActivityEntries } from "@/lib/rad-loot/featured-activities";
 import { rotationWeekIndex, weekBounds } from "@/lib/rad-loot/featured-rotation";
@@ -66,6 +67,30 @@ export type HomeThisWeekData = {
   ironBanner: { live: boolean; startMs: number; endMs: number; nextStartMs: number };
   destinations: DestinationWeek[];
 };
+
+/** Pantheon boss names by pool, for the admin picker. */
+export async function pantheonBossOptions(): Promise<Record<"Reprise" | "Encore", string[]>> {
+  const names = JSON.parse(await readFile(path.join(process.cwd(), "data/weekly-activities.json"), "utf8")) as Record<
+    string,
+    WeeklyActivityName
+  >;
+  const options = { Reprise: new Set<string>(), Encore: new Set<string>() };
+  for (const entry of Object.values(names)) {
+    if (entry.kind === "pantheon" && entry.pool) options[entry.pool].add(entry.name);
+  }
+  return { Reprise: [...options.Reprise].sort(), Encore: [...options.Encore].sort() };
+}
+
+/** The owner's /admin pick wins over the probe (Bungie updates it a while after the reset). */
+async function applyPantheonOverride(probe: PantheonFeaturedBoss[], now: number): Promise<PantheonFeaturedBoss[]> {
+  const picked = (await readWeekOverride(rotationWeekIndex(new Date(now))))?.pantheon;
+  if (!picked) return probe;
+  return (["Reprise", "Encore"] as const).flatMap((pool) => {
+    const boss = picked[pool];
+    if (boss) return [{ pool, boss, image: pantheonBossImage(boss) }];
+    return probe.filter((entry) => entry.pool === pool);
+  });
+}
 
 async function loadWeeklyFromProbe(): Promise<Pick<HomeThisWeekData, "nightfall" | "pantheon">> {
   const apiKey = process.env.BUNGIE_API_KEY?.trim();
@@ -146,6 +171,7 @@ export async function loadHomeThisWeek(): Promise<HomeThisWeekData> {
     raids: featured.raids,
     dungeons: featured.dungeons,
     ...probe,
+    pantheon: await applyPantheonOverride(probe.pantheon, now),
     trials,
     trialsRange: formatTrialsWeekRange(trials.weekStart, trials.weekEnd),
     ironBanner: {

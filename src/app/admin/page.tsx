@@ -8,6 +8,7 @@ import { loadFeaturedActivities } from "@/lib/rad-loot/featured-activities";
 import { EXCLUDED_FEATURED_RAID_SLUGS, rotationWeekIndex, weekBounds } from "@/lib/rad-loot/featured-rotation";
 import { formatShareWeek } from "@/lib/share/reset";
 import { getSession } from "@/lib/session";
+import { loadHomeThisWeek, pantheonBossOptions } from "@/lib/home/this-week";
 
 /** Weekly admin panel (owner only): featured activities and hand-entered destination rotations. */
 
@@ -35,10 +36,12 @@ export default async function AdminPage() {
 
   const week = rotationWeekIndex(new Date());
   const { weekStart, weekEnd } = weekBounds(week);
-  const [featured, override, history] = await Promise.all([
+  const [featured, override, history, thisWeek, pantheonOptions] = await Promise.all([
     loadFeaturedActivities(),
     readWeekOverride(week),
     readRotationHistory(),
+    loadHomeThisWeek(),
+    pantheonBossOptions(),
   ]);
 
   const options = (entries: typeof RAIDS): AdminSelectOption[] =>
@@ -80,6 +83,12 @@ export default async function AdminPage() {
           raids: (override?.featuredRaids?.length ?? 0) === 2,
           dungeons: (override?.featuredDungeons?.length ?? 0) === 2,
         }}
+        pantheon={(["Reprise", "Encore"] as const).map((pool) => ({
+          pool,
+          options: pantheonOptions[pool],
+          value: thisWeek.pantheon.find((entry) => entry.pool === pool)?.boss,
+          fromAdmin: Boolean(override?.pantheon?.[pool]),
+        }))}
         groups={groups}
       />
     </main>

@@ -40,6 +40,9 @@ export async function saveAdminWeek(_previous: AdminSaveState, formData: FormDat
   const override: AdminWeekOverride = {
     featuredRaids: pair("raid1", "raid2"),
     featuredDungeons: pair("dungeon1", "dungeon2"),
+    pantheon: pick("pantheonReprise") || pick("pantheonEncore")
+      ? { Reprise: pick("pantheonReprise") || undefined, Encore: pick("pantheonEncore") || undefined }
+      : undefined,
     rotations,
   };
   try {

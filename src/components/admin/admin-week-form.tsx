@@ -30,6 +30,7 @@ type AdminWeekFormProps = {
   featuredRaids: string[];
   featuredDungeons: string[];
   featuredFromAdmin: { raids: boolean; dungeons: boolean };
+  pantheon: { pool: "Reprise" | "Encore"; options: string[]; value: string | undefined; fromAdmin: boolean }[];
   groups: { name: string; rows: AdminRotationRow[] }[];
 };
 
@@ -205,6 +206,20 @@ export function AdminWeekForm(props: AdminWeekFormProps) {
             value={props.featuredDungeons[index]}
             fromAdmin={props.featuredFromAdmin.dungeons}
             source="From Kyber's Corner / confirmed schedule"
+          />
+        ))}
+      </Block>
+
+      <Block title="Pantheon" note="Featured bosses from Bungie · can lag a while after the reset">
+        {props.pantheon.map((entry) => (
+          <FeaturedRow
+            key={entry.pool}
+            label={`${entry.pool} boss`}
+            name={`pantheon${entry.pool}`}
+            options={entry.options.map((boss) => ({ value: boss, label: boss }))}
+            value={entry.value}
+            fromAdmin={entry.fromAdmin}
+            source="Detected from Bungie"
           />
         ))}
       </Block>
