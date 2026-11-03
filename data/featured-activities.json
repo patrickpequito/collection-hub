@@ -1,32 +1,32 @@
 {
-  "generatedAt": "2026-10-28T21:39:34.752Z",
-  "weekIndex": 20,
-  "weekStart": "2026-10-27T17:00:00.000Z",
-  "weekEnd": "2026-11-03T17:00:00.000Z",
+  "generatedAt": "2026-11-03T22:15:48.073Z",
+  "weekIndex": 21,
+  "weekStart": "2026-11-03T17:00:00.000Z",
+  "weekEnd": "2026-11-10T17:00:00.000Z",
   "featuredRaids": [
-    "deep-stone-crypt",
-    "root-of-nightmares"
+    "crotas-end",
+    "vault-of-glass"
   ],
   "featuredDungeons": [
-    "duality",
-    "the-shattered-throne"
+    "spire-of-the-watcher",
+    "pit-of-heresy"
   ],
   "featuredNightmareHunts": [
     {
-      "name": "Fear",
-      "boss": "Nightmare of Phogoth",
-      "image": "/img/destiny_content/pgcr/nightmare_hunt_fear.jpg"
+      "name": "Anguish",
+      "boss": "Nightmare of Omnigul",
+      "image": "/img/destiny_content/pgcr/nightmare_hunt_anguish.jpg"
     },
     {
-      "name": "Isolation",
-      "boss": "Nightmare of Taniks, the Scarred",
-      "image": "/img/destiny_content/pgcr/nightmare_hunt_isolation.jpg"
+      "name": "Pride",
+      "boss": "Nightmare of Skolas, Kell of Kells",
+      "image": "/img/destiny_content/pgcr/nightmare_hunt_pride.jpg"
     },
     {
-      "name": "Rage",
-      "boss": "Nightmare of Dominus Ghaul",
-      "image": "/img/destiny_content/pgcr/nightmare_hunt_rage.jpg"
+      "name": "Servitude",
+      "boss": "Nightmare of Zydron, Gate Lord",
+      "image": "/img/destiny_content/pgcr/nightmare_hunt_servitude.jpg"
     }
   ],
-  "rotationWeeks": 21
+  "rotationWeeks": 22
 }
