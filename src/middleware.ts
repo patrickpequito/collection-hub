@@ -77,6 +77,6 @@ export const config = {
      * Run on pages + APIs; skip Next internals and common static assets
      * so image/css hits are not double-counted as function work here.
      */
-    "/((?!_next/static|_next/image|favicon.ico|icon.png|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml|map)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|icon.png|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml|map|html)$).*)",
   ],
 };
