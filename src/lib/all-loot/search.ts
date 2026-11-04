@@ -12,7 +12,8 @@ import type {
 import { isItemOwned } from "@/lib/all-loot/ownership";
 import { applySeasonCatalogOverrides } from "@/lib/all-loot/season-overrides";
 
-let catalogCache: AllLootCatalog | null = null;
+/** Shared by concurrent callers: the file (~40 MB) is read and parsed once, not once per caller. */
+let catalogCache: Promise<AllLootCatalog> | null = null;
 /** File mtime of the cached catalog, so a regenerated data/all-loot.json is picked up without a restart. */
 let catalogMtimeMs = 0;
 
@@ -22,12 +23,14 @@ async function readAllLootCatalogFromDisk(): Promise<AllLootCatalog> {
   if (catalogCache && mtimeMs === catalogMtimeMs) return catalogCache;
 
   catalogMtimeMs = mtimeMs;
-  const raw = await readFile(filePath, "utf8");
-  const parsed = JSON.parse(raw) as AllLootCatalog;
-  catalogCache = {
-    ...parsed,
-    items: applySeasonCatalogOverrides(parsed.items),
-  };
+  catalogCache = readFile(filePath, "utf8").then((raw) => {
+    const parsed = JSON.parse(raw) as AllLootCatalog;
+    return { ...parsed, items: applySeasonCatalogOverrides(parsed.items) };
+  });
+  // A failed read is retried on the next call instead of being cached.
+  catalogCache.catch(() => {
+    catalogCache = null;
+  });
   return catalogCache;
 }
 

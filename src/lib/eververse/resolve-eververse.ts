@@ -35,6 +35,7 @@ const COMBINED_ORNAMENT_SET_NAMES: { names: string[]; displayName: string }[] = 
   { names: ["Misthios", "Wolf-Kissed", "Eagle's"], displayName: "Assassin's Creed" },
   { names: ["Sun's Apex", "Radiant Breaker", "Dawn Singer"], displayName: "Solar 3.0" },
   { names: ["Abyss Walker", "Desolation Diver", "Elect of the Empty"], displayName: "Void 3.0" },
+  { names: ["Limitless Subversion", "Cogent Beat", "Technologic"], displayName: "S20 Eververse" },
 ];
 
 function ornamentDisplayName(setName: string): string {

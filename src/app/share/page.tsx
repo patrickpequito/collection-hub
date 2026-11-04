@@ -16,23 +16,31 @@ export const metadata: Metadata = {
 export default async function ShareKitPage() {
   const [data, xur, trials] = await Promise.all([loadResetShareData(), loadXur(), resolveTrialsFeaturedMaps()]);
   const week = formatShareWeek(data.weekStart, data.weekEnd);
-  const titles = (kind: string) =>
-    data.rows
-      .filter((row) => row.kind === kind)
-      .map((row) => row.title)
-      .join(" · ");
-  const postText = [
-    `Destiny 2 weekly reset · ${week}`,
-    "",
-    data.bosses.length ? `Pantheon: ${data.bosses.map((boss) => `${boss.boss} (${boss.pool})`).join(" · ")}` : null,
-    `Raids: ${titles("Raid")}`,
-    `Dungeons: ${titles("Dungeon")}`,
-    "Tier 5 loot in every featured activity.",
-    "",
-    "Loot, rotations & destinations 👉 d2collector.site",
-  ]
-    .filter((line) => line !== null)
-    .join("\n");
+  const names = (kind: string) => data.rows.filter((row) => row.kind === kind).map((row) => row.title);
+  const both = (items: string[]) => items.join(" and ");
+  const bosses = both(data.bosses.map((boss) => boss.boss));
+  const raids = both(names("Raid"));
+  const dungeons = names("Dungeon").join(" + ");
+  // A different wording each week (picked by week number) so the posts don't read the same.
+  const weekNumber = Math.floor(Date.parse(data.weekStart) / (7 * 24 * 60 * 60 * 1000));
+  const pick = <T,>(options: T[], offset = 0) => options[(weekNumber + offset) % options.length];
+  const comment = pick(["Nostalgic week.", "Solid rotation.", "Not a bad week at all.", "Plenty to farm.", "Busy week ahead."]);
+  const question = pick(
+    ["What are you running this week? 👇", "Which one are you running first? 👇", "What's first on your list? 👇", "Where are you spending your week? 👇"],
+    1,
+  );
+  // Missing pieces (bosses or dungeons not detected yet) drop out instead of leaving gaps.
+  const opening = pick(
+    [
+      [bosses && `${bosses} in the same Pantheon week, plus ${raids} featured. ${comment}`, dungeons && `And ${dungeons} for dungeons.`],
+      [bosses && `Pantheon brings ${bosses}, and ${raids} are the featured raids. ${comment}`, dungeons && `On the dungeon side: ${dungeons}.`],
+      [`${raids} featured this week${bosses ? `, with ${bosses} in the Pantheon` : ""}. ${comment}`, dungeons && `Dungeons: ${dungeons}.`],
+    ],
+    2,
+  );
+  const lead = opening[0] || `${raids} featured this week. ${comment}`;
+  const postText = [lead, ...(opening[1] ? ["", opening[1]] : []), "", question, "", "#Destiny2 #DestinyTheGame"].join("\n");
+  const replyText = "Full loot tables for every featured raid and dungeon, plus this week's destination rotations:\nd2collector.site";
   const fileDate = data.weekStart.slice(0, 10);
   const ironBanner = ironBannerWeek();
   const ironBannerDay = new Intl.DateTimeFormat("en-GB", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" }).format(
@@ -110,10 +118,18 @@ export default async function ShareKitPage() {
           <textarea
             readOnly
             defaultValue={postText}
-            rows={10}
+            rows={9}
             className="w-full resize-y border border-white/[0.16] bg-panel p-3 font-mono text-[13px] leading-relaxed text-bone"
           />
-                  </div>
+          <p className="text-[12.5px] text-ash">Wording changes every week: tweak the comment so it fits the rotation.</p>
+          <h2 className="ui-label mt-2 text-bone!">Reply (with the link)</h2>
+          <textarea
+            readOnly
+            defaultValue={replyText}
+            rows={3}
+            className="w-full resize-y border border-white/[0.16] bg-panel p-3 font-mono text-[13px] leading-relaxed text-bone"
+          />
+        </div>
       </section>
 
       {xur ? (

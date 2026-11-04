@@ -81,11 +81,12 @@ function enrichArmorRowsWithOwnership(
 
 function isSeasonWeapon(item: AllLootItem, hub: SeasonHub): boolean {
   if (item.type !== "Weapon") return false;
+  // Listed by name: kept even when Adept or below Legendary (leveling weapons).
+  if (hub.extraWeaponNames?.includes(item.name)) return true;
   if (item.rarity !== "Legendary") return false;
   if (ADEPT.test(item.name)) return false;
   if (EVERVERSE.test(item.source ?? "")) return false;
   if (hub.excludedWeaponNames?.includes(item.name)) return false;
-  if (hub.extraWeaponNames?.includes(item.name)) return true;
   if (item.seasonLabel === hub.seasonLabel) return true;
   if (hub.matchWeaponVersions === false) return false;
   return (item.versions ?? []).some(
