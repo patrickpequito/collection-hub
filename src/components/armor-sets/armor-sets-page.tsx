@@ -293,6 +293,7 @@ function SetDrawer({
                     rarity={piece.rarity}
                     itemType={set.kind === "armor" ? "Armor" : "Ornament"}
                     classOrWeaponType={entry.label}
+                    href={piece.href}
                   />
                 ))}
               </div>

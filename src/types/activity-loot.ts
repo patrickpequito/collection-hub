@@ -23,6 +23,8 @@ export type LootItem = {
   /** Catalog season/expansion label for sorting and badges. */
   seasonLabel?: string;
   seasonNumber?: number;
+  /** Item page link, where the page lists one (armor sets). */
+  href?: string;
 };
 
 export type ActivityArmorRow = {

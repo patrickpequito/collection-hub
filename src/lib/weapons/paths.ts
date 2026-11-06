@@ -8,6 +8,7 @@ export function backLabelForPath(path: string) {
   if (path === "/") return "← Home";
   if (path === "/all-loot") return "← Loot Collector";
   if (path === "/exotics") return "← Exotics";
+  if (path === "/sets") return "← Armor sets";
   if (path === "/pve-activities") return "← PvE Activities";
   if (path === "/pvp-activities") return "← PvP Activities";
   if (path === "/activities") return "← RAD Loot";

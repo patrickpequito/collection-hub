@@ -18,12 +18,39 @@ import {
   resolveArmorSetPreviewFile,
 } from "@/lib/armor-sets/preview-images";
 import { loadArmorSetBonusCatalog, resolveArmorSetBonuses } from "@/lib/armor/set-bonuses";
+import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { resolveAllEververseOrnamentSets } from "@/lib/eververse/resolve-eververse";
 import { resolveExpansionLoot } from "@/lib/expansions/resolve-expansion-loot";
 import { resolveSeasonLoot } from "@/lib/seasons/resolve-season-loot";
 import type { LegacyArmorSetGroup, ResolvedActivityHubLoot } from "@/types/activity-hub";
 import type { ActivityArmorRow, LootItem } from "@/types/activity-loot";
 import type { ArmorSetBonus } from "@/types/armor-set-bonuses";
+
+
+/** Shorter display names for multi-class sets, keyed by their per-class set names (any order). */
+const SET_DISPLAY_NAMES: { parts: string[]; name: string }[] = [
+  { parts: ["Promised Reign", "Promised Reunion", "Promised Victory"], name: "Promised Set" },
+  { parts: ["God-Knight Armor", "Willbreaker Armor", "Deathsinger Suit"], name: "Crota's End Set" },
+  { parts: ["Trepidation", "Agony", "Detestation"], name: "Root of Nightmares Set" },
+  { parts: ["Darkhollow", "War Numen's", "Worm God"], name: "King's Fall Set" },
+  { parts: ["Prime Zealot", "Kabr's Suit", "Armor of the Hezen Lords"], name: "Vault of Glass Set" },
+  { parts: ["Shadow of Silence", "Shadow of War", "Shadow of Judgment"], name: "Shadow Set" },
+  { parts: ["Bladesmith's Memory", "Bulletsmith's Ire", "Gunsmith's Devotion"], name: "Scourge of the Past Set" },
+  { parts: ["Equitis Shade", "Turris Shade", "Insigne Shade"], name: "Spire of Stars Set" },
+  { parts: ["Feltroc", "Nohr", "Sekris"], name: "Eater of Worlds Set" },
+  { parts: ["Ace-Defiant", "Rull", "Fulminator"], name: "Leviathan Set" },
+  { parts: ["Emperor's Agent", "Emperor's Champion", "Emperor's Minister"], name: "Prestige Leviathan Set" },
+  { parts: ["Twisting Echo", "Descending Echo", "Corrupting Echo"], name: "Echo Set" },
+  { parts: ["TM-Earp Custom", "TM-Cogburn Custom", "TM-Moss Custom"], name: "TM-Set" },
+];
+
+function displaySetName(name: string): string {
+  const parts = new Set(name.split(" / "));
+  const match = SET_DISPLAY_NAMES.find(
+    (entry) => entry.parts.length === parts.size && entry.parts.every((part) => parts.has(part)),
+  );
+  return match?.name ?? name;
+}
 
 export type ArmorSetOriginGroup =
   | "raids"
@@ -419,14 +446,15 @@ export async function loadArmorSetCollection(): Promise<ArmorSetCollection> {
   }
   const piecesOfEntry = (entry: ArmorSetEntry) =>
     Object.values(entry.classes).flatMap((slots) => Object.values(slots ?? {}).filter(Boolean) as LootItem[]);
-  const catalogItemsOf = (entry: ArmorSetEntry) =>
-    piecesOfEntry(entry)
+  const catalogItemsFor = (pieces: LootItem[]) =>
+    pieces
       .map((piece) =>
         [piece.itemHash, ...(piece.ownershipHashes ?? [])]
           .map((hash) => catalogByAnyHash.get(hash))
           .find(Boolean),
       )
       .filter((item): item is NonNullable<typeof item> => Boolean(item));
+  const catalogItemsOf = (entry: ArmorSetEntry) => catalogItemsFor(piecesOfEntry(entry));
 
   // Eververse: merge one-set-per-class seasons into one entry, like season pages.
   const eververseBySeason = new Map<string, ArmorSetEntry[]>();
@@ -466,23 +494,56 @@ export async function loadArmorSetCollection(): Promise<ArmorSetCollection> {
   }
 
   // Armor 3.0 bonuses + original release season.
-  const bonusCatalog = await loadArmorSetBonusCatalog();
+  const [bonusCatalog, itemHrefs] = await Promise.all([
+    loadArmorSetBonusCatalog(),
+    buildCollectibleHrefByItemHash("/sets"),
+  ]);
+  // Class items are often generic and shared with other sets (Leviathan's are Spacewalk's),
+  // so only the other four slots decide which bonus a set has.
+  const bonusPiecesOf = (entry: ArmorSetEntry) =>
+    Object.values(entry.classes).flatMap((slots) =>
+      Object.entries(slots ?? {})
+        .filter(([slot, piece]) => slot !== "classItem" && piece)
+        .map(([, piece]) => piece as LootItem),
+    );
+  // Each piece links to its item page.
+  const withHrefs = (entry: ArmorSetEntry): ArmorSetEntry["classes"] =>
+    Object.fromEntries(
+      Object.entries(entry.classes).map(([cls, slots]) => [
+        cls,
+        Object.fromEntries(
+          Object.entries(slots ?? {}).map(([slot, piece]) => [
+            slot,
+            piece && {
+              ...piece,
+              href: [piece.itemHash, ...(piece.ownershipHashes ?? [])].map((hash) => itemHrefs[hash]).find(Boolean),
+            },
+          ]),
+        ),
+      ]),
+    ) as ArmorSetEntry["classes"];
   const sets: ArmorSetEntry[] = [];
   for (const entry of byKey.values()) {
     const catalogItems = catalogItemsOf(entry);
+    const bonusItems = catalogItemsFor(bonusPiecesOf(entry));
     const seasons = catalogItems.flatMap((item) => [
       item.seasonNumber,
       ...(item.versions ?? []).map((version) => version.seasonNumber),
     ]).filter((value): value is number => typeof value === "number" && value > 0);
-    let next: ArmorSetEntry = { ...entry, releaseSeason: seasons.length ? Math.min(...seasons) : 0 };
+    let next: ArmorSetEntry = {
+      ...entry,
+      name: displaySetName(entry.name),
+      classes: withHrefs(entry),
+      releaseSeason: seasons.length ? Math.min(...seasons) : 0,
+    };
     if (entry.kind === "armor") {
       const setHash =
-        catalogItems.map((item) => item.equipableItemSetHash).find(Boolean) ??
-        piecesOfEntry(entry)
+        bonusItems.map((item) => item.equipableItemSetHash).find(Boolean) ??
+        bonusPiecesOf(entry)
           .flatMap((piece) => [piece.itemHash, ...(piece.ownershipHashes ?? [])])
           .map((hash) => bonusCatalog.itemHashToSetHash?.[hash])
           .find(Boolean) ??
-        piecesOfEntry(entry)
+        bonusPiecesOf(entry)
           .map((piece) => bonusCatalog.itemNameToSetHash?.[piece.name])
           .find(Boolean);
       if (setHash) {
