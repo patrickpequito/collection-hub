@@ -31,6 +31,8 @@ const ICON_TONE = {
 /** Not owned yet: dimmed like unowned items on every other page. */
 const NOT_OWNED = "opacity-70 brightness-90 saturate-75";
 const LINK = "block min-w-0 transition duration-200 ease-out hover:brightness-110";
+/** Same hover as item tiles on every other page (CollectionItemIcon): grid cells on phones grow less. */
+const ICON_HOVER = "hover:scale-105 md:hover:scale-110 active:scale-95";
 
 type Ownership = "owned" | "missing" | "unknown";
 type XurStatus = { href?: string; ownership: Ownership };
@@ -58,7 +60,7 @@ function ItemLink({ href, className = "", children }: { href?: string; className
 function Icon({ item, className = "" }: { item: XurItem; className?: string }) {
   const { href, ownership } = useContext(StatusContext)(item, "item");
   return (
-    <ItemLink href={href} className={`${ownership === "missing" ? NOT_OWNED : ""} ${className}`}>
+    <ItemLink href={href} className={`${href ? ICON_HOVER : ""} ${ownership === "missing" ? NOT_OWNED : ""} ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={item.icon}
@@ -84,7 +86,7 @@ function Catalyst({ item }: { item: XurItem }) {
   return (
     <ItemLink
       href={href}
-      className={`flex min-w-0 items-center gap-2.5 overflow-hidden border md:gap-3 md:px-3 md:py-[9px] ${
+      className={`group flex min-w-0 items-center gap-2.5 overflow-hidden border md:gap-3 md:px-3 md:py-[9px] ${
         owned
           ? "border-[rgba(18,233,135,0.55)] bg-[linear-gradient(90deg,rgba(18,233,135,0.10),transparent)]"
           : `${GOLD_BORDER} bg-[linear-gradient(90deg,rgba(232,200,96,0.10),transparent)]`
@@ -95,7 +97,9 @@ function Catalyst({ item }: { item: XurItem }) {
         src={item.icon}
         alt={item.name}
         title={item.name}
-        className={`${EXOTIC_ICON} ${ICON_TONE[owned ? "owned" : "gold"]} size-[52px] shrink-0 md:size-14`}
+        className={`${EXOTIC_ICON} ${ICON_TONE[owned ? "owned" : "gold"]} size-[52px] shrink-0 transition duration-200 ease-out md:size-14 ${
+          href ? "group-hover:scale-110 group-active:scale-95" : ""
+        }`}
       />
       <div className="min-w-0 pr-2">
         <div className={`${LABEL} ${owned ? "text-[rgb(18,233,135)]!" : "text-[#e8c860]!"}`}>{owned ? "Catalyst · Owned" : "Catalyst"}</div>
