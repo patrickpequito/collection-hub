@@ -3,6 +3,7 @@ import { formatShareWeek, loadResetShareData } from "@/lib/share/reset";
 import { resolveTrialsFeaturedMaps } from "@/lib/activities/trials-featured-maps";
 import { ironBannerWeek } from "@/lib/share/iron-banner";
 import { loadXur } from "@/lib/xur";
+import { XurGearButton } from "@/app/share/xur-gear-button";
 
 /** Share kit: this week's X images + post text, with warnings for anything not confirmed yet. Not linked anywhere. */
 
@@ -149,9 +150,12 @@ export default async function ShareKitPage() {
                 </a>
               </>
             ) : (
-              <p className="border border-[#e07a3f]/60 bg-[#e07a3f]/10 px-4 py-3 text-sm text-bone">
-                ⚠ Xûr&apos;s weapons and catalysts aren&apos;t loaded yet: open the home page while signed in, then reload this page.
-              </p>
+              <>
+                <p className="border border-[#e07a3f]/60 bg-[#e07a3f]/10 px-4 py-3 text-sm text-bone">
+                  ⚠ Xûr&apos;s weapons and catalysts aren&apos;t loaded yet: sign in, then load them from your account.
+                </p>
+                <XurGearButton />
+              </>
             )}
           </div>
           {xurText ? (

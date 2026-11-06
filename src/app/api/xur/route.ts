@@ -8,6 +8,6 @@ const NO_STORE = { "Cache-Control": "private, no-store" };
 export async function POST() {
   const session = await getFreshSession();
   if (!session) return NextResponse.json({ gear: null, error: "Not signed in" }, { status: 401, headers: NO_STORE });
-  const gear = await refreshXurGear(session);
-  return NextResponse.json({ gear }, { headers: NO_STORE });
+  const { gear, error } = await refreshXurGear(session);
+  return NextResponse.json({ gear, error }, { headers: NO_STORE });
 }

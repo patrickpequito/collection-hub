@@ -144,27 +144,27 @@ export async function loadXur(): Promise<XurData | null> {
 }
 
 /** Reads the weapons + catalysts sub-vendor with a signed-in player's token and stores them for everyone. */
-export async function refreshXurGear(session: BungieUserSession): Promise<XurGear | null> {
+export async function refreshXurGear(session: BungieUserSession): Promise<{ gear: XurGear | null; error?: string }> {
   const window = xurWindow();
-  if (!window) return null;
+  if (!window) return { gear: null, error: "Xûr is not in the Tower right now" };
   const stored = await readStoredGear(window.weekStart);
-  if (stored) return stored;
+  if (stored) return { gear: stored };
 
   const membership = await resolveDestinyMembership(session);
-  if (!membership) return null;
+  if (!membership) return { gear: null, error: "No Destiny account found for this sign-in" };
   const auth = { headers: { Authorization: `Bearer ${session.accessToken}` }, cache: "no-store" as const };
   const profile = await bungieGet<{ characters?: { data?: Record<string, unknown> } }>(
     `/Destiny2/${membership.membershipType}/Profile/${membership.membershipId}/?components=200`,
     auth,
   );
   const characterId = Object.keys(profile?.characters?.data ?? {})[0];
-  if (!characterId) return null;
+  if (!characterId) return { gear: null, error: "Bungie returned no characters for this account" };
   const vendor = await bungieGet<{ sales?: { data?: SaleItems } }>(
     `/Destiny2/${membership.membershipType}/Profile/${membership.membershipId}/Character/${characterId}/Vendors/${XUR_GEAR_VENDOR_HASH}/?components=402`,
     auth,
   );
   const sales = vendor?.sales?.data;
-  if (!sales) return null;
+  if (!sales) return { gear: null, error: "Bungie didn't return Xûr's Strange Gear Offers" };
 
   const defs = await definitions(sales);
   const exotic = defs.filter(([, def]) => def.inventory?.tierType === TIER_EXOTIC);
@@ -174,7 +174,9 @@ export async function refreshXurGear(session: BungieUserSession): Promise<XurGea
       .filter(([, def]) => / Catalyst$/.test(def.displayProperties.name))
       .map(([hash, def]) => ({ ...toItem(hash, def), name: def.displayProperties.name.replace(/ Catalyst$/, "") })),
   };
-  if (!gear.weapons.length && !gear.catalysts.length) return null;
+  if (!gear.weapons.length && !gear.catalysts.length) {
+    return { gear: null, error: "Xûr's Strange Gear Offers had no exotic weapons or catalysts" };
+  }
   await storeGear(window.weekStart, window.leavesAt, gear);
-  return gear;
+  return { gear };
 }
