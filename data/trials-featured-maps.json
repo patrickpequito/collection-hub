@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-30T21:22:56.828Z",
-  "weekIndex": 20,
-  "weekStart": "2026-10-30T17:00:00.000Z",
-  "weekEnd": "2026-11-03T17:00:00.000Z",
+  "generatedAt": "2026-11-06T21:56:47.855Z",
+  "weekIndex": 21,
+  "weekStart": "2026-11-06T17:00:00.000Z",
+  "weekEnd": "2026-11-10T17:00:00.000Z",
   "maps": [
-    "Endless Vale",
+    "Burnout",
     "Eventide Labs",
-    "Bannerfall"
+    "The Anomaly"
   ],
   "source": "rotation"
 }
