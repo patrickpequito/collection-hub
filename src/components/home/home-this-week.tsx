@@ -5,6 +5,7 @@ import { HomeXur } from "@/components/home/home-xur";
 import { loadHomeThisWeek, type DestinationWeek, type PantheonFeaturedBoss } from "@/lib/home/this-week";
 import type { ActivityEntry } from "@/types/activity-loot";
 import { loadXur } from "@/lib/xur";
+import { loadXurCollection } from "@/lib/xur-collection";
 
 const TILE =
   "group relative flex min-h-[165px] flex-col justify-end gap-1 overflow-hidden border border-white/[0.16] bg-panel px-4 py-3.5 transition hover:border-bone/60";
@@ -155,6 +156,7 @@ function DestinationCard({ destination }: { destination: DestinationWeek }) {
 /** Weekly rotation: endgame activities, the live event, and every destination's rotation. */
 export async function HomeThisWeek() {
   const [week, xur] = await Promise.all([loadHomeThisWeek(), loadXur()]);
+  const xurCollection = xur ? await loadXurCollection(xur) : {};
   const [raidA, raidB] = week.raids;
   const [dungeonA, dungeonB] = week.dungeons;
   const trialsLive = week.trials.maps.length > 0 && week.trials.source !== "iron-banner";
@@ -225,7 +227,7 @@ export async function HomeThisWeek() {
         />
       </div>
 
-      {xur ? <HomeXur data={xur} /> : null}
+      {xur ? <HomeXur data={xur} collection={xurCollection} /> : null}
 
       {/* Two separate links: the live event, and the next one. */}
       <div className="mt-3 flex flex-col gap-3 sm:flex-row">

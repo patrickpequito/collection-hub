@@ -55,12 +55,12 @@ function cleanSource(source: string): string {
 }
 
 /** Exotic weapons (with their catalyst) and exotic armor for the Exotics page. */
-export async function loadExoticsPageData(): Promise<ExoticsPageData> {
+export async function loadExoticsPageData(fromPath = "/exotics"): Promise<ExoticsPageData> {
   const [catalog, catalysts, catalogByHash, hrefs] = await Promise.all([
     loadExoticCatalog(),
     loadCatalystCatalog(),
     loadCatalogHashIndex(),
-    buildCollectibleHrefByItemHash("/exotics"),
+    buildCollectibleHrefByItemHash(fromPath),
   ]);
 
   const ownership = (item: ExoticItem) => {

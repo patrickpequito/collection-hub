@@ -47,17 +47,27 @@ export default async function ShareKitPage() {
   const ironBannerDay = new Intl.DateTimeFormat("en-GB", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" }).format(
     new Date(ironBanner.startMs),
   );
+  // Same shape as the reset post: the image carries the full list, the text picks out the highlights.
+  const list = (items: { name: string }[]) =>
+    items.length > 1 ? `${items.slice(0, -1).map((item) => item.name).join(", ")} and ${items.at(-1)!.name}` : (items[0]?.name ?? "");
+  const xurWeapons = xur?.gear ? list(xur.gear.weapons) : "";
+  const xurCatalysts = xur?.gear ? list(xur.gear.catalysts) : "";
+  const xurOpening = pick(
+    [
+      [`Xûr is in the Tower until reset with ${xurWeapons}.`, `Catalysts this week: ${xurCatalysts}.`],
+      [`Xûr's back until Tuesday's reset. On the weapon side: ${xurWeapons}.`, `And ${xurCatalysts} for catalysts.`],
+      [`This weekend Xûr brings ${xurWeapons}, plus the ${xurCatalysts} catalysts.`, "Full armor list in the image."],
+    ],
+    3,
+  );
+  const xurQuestion = pick(
+    ["What are you picking up first? 👇", "Anything worth your Strange Coins this week? 👇", "Which one is going home with you? 👇", "Hit or miss this week? 👇"],
+    1,
+  );
   const xurText = xur?.gear
-    ? [
-        "Xûr is in the Tower until the weekly reset 🎒",
-        "",
-        `Catalysts: ${xur.gear.catalysts.map((item) => item.name).join(" · ")}`,
-        `Exotic weapons: ${xur.gear.weapons.map((item) => item.name).join(" · ")}`,
-        `Exotic armor: ${xur.armor.map((item) => item.name).join(" · ")}`,
-        "",
-        "See what you're missing 👉 d2collector.site",
-      ].join("\n")
+    ? [xurOpening[0], "", xurOpening[1], "", xurQuestion, "", "#Destiny2 #DestinyTheGame"].join("\n")
     : null;
+  const xurReplyText = "Check which of these you're still missing:\nd2collector.site";
 
   return (
     <main className="mx-auto max-w-[1100px] px-4 py-10 sm:px-6">
@@ -165,6 +175,14 @@ export default async function ShareKitPage() {
                 readOnly
                 defaultValue={xurText}
                 rows={9}
+                className="w-full resize-y border border-white/[0.16] bg-panel p-3 font-mono text-[13px] leading-relaxed text-bone"
+              />
+              <p className="text-[12.5px] text-ash">Wording changes every week: add a highlight (a fan favourite or a standout armor piece) before posting.</p>
+              <h2 className="ui-label mt-2 text-bone!">Reply (with the link)</h2>
+              <textarea
+                readOnly
+                defaultValue={xurReplyText}
+                rows={3}
                 className="w-full resize-y border border-white/[0.16] bg-panel p-3 font-mono text-[13px] leading-relaxed text-bone"
               />
             </div>

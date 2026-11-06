@@ -34,8 +34,11 @@ export function progressShare(status: CatalystStatus): number {
   return total > 0 ? done / total : 0;
 }
 
+/** The catalyst fields the status reads (pages may pass a trimmed entry). */
+type CatalystStatusInput = Pick<ExoticCatalystEntry, "objectives" | "ownershipHashes" | "recordHash">;
+
 function describe(
-  catalyst: ExoticCatalystEntry,
+  catalyst: CatalystStatusInput,
   live: { objectiveHash: string; progress: number; completionValue: number }[],
 ): CatalystObjectiveProgress[] {
   return catalyst.objectives.map((objective) => {
@@ -54,7 +57,7 @@ function describe(
  * objectives) carries the real kill counter; the catalyst triumph is only a
  * fallback for found / unlocked.
  */
-export function catalystStatus(catalyst: ExoticCatalystEntry, data: CatalystLiveData): CatalystStatus {
+export function catalystStatus(catalyst: CatalystStatusInput, data: CatalystLiveData): CatalystStatus {
   if (!data.plugs || !data.instances) return { kind: "unknown" };
 
   // Live plug data wins: the collection-wide ownership set also counts
