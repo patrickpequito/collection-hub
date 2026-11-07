@@ -4,8 +4,11 @@ import { notFound } from "next/navigation";
 import { ArmorDetailContent } from "@/components/armor-detail-content";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import { loadAllLootCatalog } from "@/lib/all-loot/search";
-import { resolveArmorSetForItem } from "@/lib/armor-sets/from-all-loot";
+import { findArmorSetEntryForItem } from "@/lib/armor-sets/collection";
+import { armorSetFromCollectionEntry, resolveArmorSetForItem } from "@/lib/armor-sets/from-all-loot";
 import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
+import { collectArmorItemHashes } from "@/lib/armor/item-hashes";
+import { guardianClassFromLabel } from "@/lib/armor-sets/lookup";
 import {
   loadArmorSetBonusCatalog,
   resolveArmorSetBonuses,
@@ -67,11 +70,27 @@ export default async function ArmorPage({ params }: ArmorPageProps) {
     resolveEquipableItemSetHash(armor, setBonusCatalog),
   );
 
-  const armorSetMatch = resolveArmorSetForItem(
+  const resolvedSet = resolveArmorSetForItem(
     catalog.items,
     setBonusCatalog,
     armor,
   );
+  // Prefer the Armor sets page entry: same name and preview, and multi-class sets whose
+  // classes have different names (Scourge of the Past, Leviathan…) keep all three classes.
+  const listedEntry = armor.rarity === "Exotic" ? null : await findArmorSetEntryForItem(collectArmorItemHashes(armor));
+  const listedSet = listedEntry
+    ? armorSetFromCollectionEntry(listedEntry, catalog.items, setBonusCatalog, armor)
+    : null;
+  const classCount = (set: { classes: object } | null | undefined) => Object.keys(set?.classes ?? {}).length;
+  const armorSetMatch = listedSet
+    ? {
+        set:
+          resolvedSet && classCount(resolvedSet.set) >= classCount(listedSet)
+            ? { ...resolvedSet.set, name: listedSet.name, previewUrl: listedSet.previewUrl }
+            : listedSet,
+        primaryClass: resolvedSet?.primaryClass ?? guardianClassFromLabel(armor.classOrWeaponType),
+      }
+    : resolvedSet;
 
   const oauthConfigured = isBungieOAuthConfigured();
   const matchedOrigin = resolveItemOrigin(armor);

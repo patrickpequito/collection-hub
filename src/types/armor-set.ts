@@ -42,6 +42,8 @@ export type ArmorSet = {
   source: string;
   sourceLabel: string;
   classes: Partial<Record<GuardianClass, ClassArmorPieces>>;
+  /** Preview image chosen by the Armor sets page, when the set is listed there. */
+  previewUrl?: string;
 };
 
 export type ArmorSetCatalog = {

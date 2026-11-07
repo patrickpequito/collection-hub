@@ -30,12 +30,12 @@ import type { ArmorSetBonus } from "@/types/armor-set-bonuses";
 /** Shorter display names for multi-class sets, keyed by their per-class set names (any order). */
 const SET_DISPLAY_NAMES: { parts: string[]; name: string }[] = [
   { parts: ["Promised Reign", "Promised Reunion", "Promised Victory"], name: "Promised Set" },
-  { parts: ["God-Knight Armor", "Willbreaker Armor", "Deathsinger Suit"], name: "Crota's End Set" },
-  { parts: ["Trepidation", "Agony", "Detestation"], name: "Root of Nightmares Set" },
-  { parts: ["Darkhollow", "War Numen's", "Worm God"], name: "King's Fall Set" },
-  { parts: ["Prime Zealot", "Kabr's Suit", "Armor of the Hezen Lords"], name: "Vault of Glass Set" },
+  { parts: ["God-Knight Armor", "Willbreaker Armor", "Deathsinger Suit"], name: "Crota's Memory" },
+  { parts: ["Trepidation", "Agony", "Detestation"], name: "Nezarec's Nightmare" },
+  { parts: ["Darkhollow", "War Numen's", "Worm God"], name: "Oryx's Memory" },
+  { parts: ["Prime Zealot", "Kabr's Suit", "Armor of the Hezen Lords"], name: "Atheon's Memory" },
   { parts: ["Shadow of Silence", "Shadow of War", "Shadow of Judgment"], name: "Shadow Set" },
-  { parts: ["Bladesmith's Memory", "Bulletsmith's Ire", "Gunsmith's Devotion"], name: "Scourge of the Past Set" },
+  { parts: ["Bladesmith's Memory", "Bulletsmith's Ire", "Gunsmith's Devotion"], name: "Bladesmith's Memory" },
   { parts: ["Equitis Shade", "Turris Shade", "Insigne Shade"], name: "Spire of Stars Set" },
   { parts: ["Feltroc", "Nohr", "Sekris"], name: "Eater of Worlds Set" },
   { parts: ["Ace-Defiant", "Rull", "Fulminator"], name: "Leviathan Set" },
@@ -590,4 +590,26 @@ export async function loadArmorSetCollection(): Promise<ArmorSetCollection> {
     sets: shown.sort((a, b) => b.releaseSeason - a.releaseSeason || a.name.localeCompare(b.name)),
     review,
   };
+}
+
+let armorSetIndex: Promise<Map<string, ArmorSetEntry>> | null = null;
+
+/** The Armor sets page entry (name, preview, every class) that lists one of these hashes. */
+export async function findArmorSetEntryForItem(hashes: string[]): Promise<ArmorSetEntry | null> {
+  armorSetIndex ??= loadArmorSetCollection().then(({ sets }) => {
+    const index = new Map<string, ArmorSetEntry>();
+    for (const entry of sets) {
+      if (entry.kind !== "armor") continue;
+      for (const slots of Object.values(entry.classes)) {
+        for (const piece of Object.values(slots ?? {})) {
+          for (const hash of [piece?.itemHash, ...(piece?.ownershipHashes ?? [])]) {
+            if (hash && !index.has(hash)) index.set(hash, entry);
+          }
+        }
+      }
+    }
+    return index;
+  });
+  const index = await armorSetIndex;
+  return hashes.map((hash) => index.get(hash)).find(Boolean) ?? null;
 }

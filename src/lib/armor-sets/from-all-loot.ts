@@ -425,3 +425,26 @@ export function resolveArmorSetForItem(
 
   return { set, primaryClass };
 }
+
+/** Same set as the Armor sets page shows (its name, preview and every class), built from catalog items. */
+export function armorSetFromCollectionEntry(
+  entry: { id: string; name: string; previewUrl?: string; classes: Record<string, Record<string, { itemHash: string; ownershipHashes?: string[] } | undefined> | undefined> },
+  items: AllLootItem[],
+  bonusCatalog: ArmorSetBonusCatalog,
+  armor: AllLootItem,
+): ArmorSet | null {
+  const byHash = new Map<string, AllLootItem>();
+  for (const item of items) {
+    for (const hash of collectArmorItemHashes(item)) if (!byHash.has(hash)) byHash.set(hash, item);
+  }
+  const setItems = [
+    ...new Set(
+      Object.values(entry.classes)
+        .flatMap((slots) => Object.values(slots ?? {}))
+        .map((piece) => piece && [piece.itemHash, ...(piece.ownershipHashes ?? [])].map((hash) => byHash.get(hash)).find(Boolean))
+        .filter((item): item is AllLootItem => Boolean(item)),
+    ),
+  ];
+  const set = itemsToArmorSet(`set-${entry.id}`, setItems, bonusCatalog, new Set(collectArmorItemHashes(armor)), entry.name);
+  return set && { ...set, previewUrl: entry.previewUrl };
+}

@@ -613,7 +613,7 @@ export function ArmorDetailContent({
             selectedSeasonKey={selectedSeasonKey}
             isSignedIn={isSignedIn}
             itemHrefs={itemHrefs}
-            preview={<ArmorSetPreviewPanel setName={armorSet.name} source={armorSet.source} />}
+            preview={<ArmorSetPreviewPanel setName={armorSet.name} source={armorSet.source} previewUrl={armorSet.previewUrl} />}
           />
         </section>
       ) : null}
