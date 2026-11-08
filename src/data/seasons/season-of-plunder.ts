@@ -94,9 +94,10 @@ export const SEASON_OF_PLUNDER_HUB: SeasonHub = {
       pgcrImagePath: "/img/destiny_content/pgcr/season_18_ketchcrash.jpg",
     },
     {
-      id: "expeditions",
-      title: "Expeditions",
-      description: "Three-player treasure digs on the Cosmodrome, Europa and Nessus.",
+      // Only the Cosmodrome expedition is still launchable (Europa and Nessus aren't).
+      id: "expedition-cosmodrome",
+      title: "Expedition: Cosmodrome",
+      description: "Three-player treasure dig on the Cosmodrome.",
       location: "Vanguard Fireteam Ops",
       pgcrImagePath: "/img/destiny_content/pgcr/season_18_expedition.jpg",
     },

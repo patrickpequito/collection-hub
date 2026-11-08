@@ -35,7 +35,9 @@ const COMBINED_ORNAMENT_SET_NAMES: { names: string[]; displayName: string }[] = 
   { names: ["Misthios", "Wolf-Kissed", "Eagle's"], displayName: "Assassin's Creed" },
   { names: ["Sun's Apex", "Radiant Breaker", "Dawn Singer"], displayName: "Solar 3.0" },
   { names: ["Abyss Walker", "Desolation Diver", "Elect of the Empty"], displayName: "Void 3.0" },
+  { names: ["Eternal Vengeance", "Knightly Noire", "Painted Kitsune"], displayName: "Fortnite x Destiny 2" },
   { names: ["Limitless Subversion", "Cogent Beat", "Technologic"], displayName: "S20 Eververse" },
+  { names: ["Anointed", "Godsbane", "Ancestral"], displayName: "PlayStation x Destiny 2" },
 ];
 
 function ornamentDisplayName(setName: string): string {
@@ -48,8 +50,14 @@ function ornamentDisplayName(setName: string): string {
   return `${match?.displayName ?? setName} ornaments`;
 }
 
+/** Pieces named "<Slot> of the <Set>" ("Vest of the Anointed"). */
+const SLOT_OF_THE_SET =
+  /^(?:Helm|Helmet|Mask|Hood|Cover|Casque|Gauntlets|Grips|Gloves|Plate|Vest|Robes|Greaves|Strides|Boots|Mark|Cloak|Bond) of the (.+)$/i;
+
 /** Last word of an armor ornament name is the slot piece ("Abyss Walker Grips"). */
 function ornamentSetName(name: string): string {
+  const slotOfThe = name.trim().match(SLOT_OF_THE_SET);
+  if (slotOfThe) return slotOfThe[1];
   const words = name.trim().split(/\s+/);
   return words.length > 1 ? words.slice(0, -1).join(" ") : name;
 }

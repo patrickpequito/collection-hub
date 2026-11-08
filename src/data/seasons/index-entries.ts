@@ -70,7 +70,7 @@ export const SEASONS_BY_EXPANSION_SLUG: Readonly<
   // (Season of the Witch omitted from this index layout).
   lightfall: [
     publishedSeason("s20-season-of-defiance", "Season of Defiance"),
-    season("s21-season-of-the-deep", "Season of the Deep"),
+    publishedSeason("s21-season-of-the-deep", "Season of the Deep"),
     season("s23-season-of-the-wish", "Season of the Wish"),
     season("into-the-light", "Into the Light"),
   ],
