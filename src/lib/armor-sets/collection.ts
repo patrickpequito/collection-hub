@@ -176,10 +176,16 @@ function groupRowsBySet(rows: ActivityArmorRow[]): Map<string, ActivityArmorRow[
   return bySet;
 }
 
+/** "cruel-electrum.webp", or "cruel-electrum-set.webp" when saved that way. */
+function previewForSingleName(name: string): string | undefined {
+  const file = resolveArmorSetPreviewFile(name);
+  return previewIfExists(file) ?? previewIfExists(file.replace(/\.webp$/, "-set.webp"));
+}
+
 /** Preview for a set named "A / B / C": try each name. */
 function previewForSetName(name: string): string | undefined {
   for (const part of [name, ...name.split(" / ")]) {
-    const url = previewIfExists(resolveArmorSetPreviewFile(part));
+    const url = previewForSingleName(part);
     if (url) return url;
   }
   return undefined;
@@ -367,7 +373,7 @@ export async function loadArmorSetCollection(): Promise<ArmorSetCollection> {
         group: "events",
         subgroup: event,
         originLabel: event,
-        previewUrl: previewIfExists(resolveArmorSetPreviewFile(set.name)),
+        previewUrl: previewForSingleName(set.name),
         classes,
       });
     } else if (
