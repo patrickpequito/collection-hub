@@ -267,6 +267,20 @@ export async function loadArmorSetCollection(): Promise<ArmorSetCollection> {
   }
 
   // Playlists: current rotation + legacy sets.
+  const playlistCatalog = await loadAllLootCatalog();
+  const playlistItemByHash = new Map(playlistCatalog.items.map((item) => [item.itemHash, item]));
+  /** "Crucible · Monument of Triumph": the release the current pieces carry. */
+  const currentOriginLabel = (playlistName: string, rows: ActivityArmorRow[]) => {
+    const counts = new Map<string, number>();
+    for (const row of rows) {
+      for (const piece of Object.values(row.pieces)) {
+        const label = piece ? playlistItemByHash.get(piece.itemHash)?.seasonLabel : undefined;
+        if (label) counts.set(label, (counts.get(label) ?? 0) + 1);
+      }
+    }
+    const label = [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+    return label ? `${playlistName} · ${label}` : playlistName;
+  };
   for (const playlist of PLAYLIST_RESOLVERS) {
     const loot = await playlist.load();
     const origin = {
@@ -280,6 +294,7 @@ export async function loadArmorSetCollection(): Promise<ArmorSetCollection> {
         ...origin,
         name: setName,
         kind: "armor",
+        originLabel: currentOriginLabel(playlist.name, rows),
         previewUrl: previewForSetName(setName),
         classes: classesFromRows(rows),
       });
@@ -290,6 +305,7 @@ export async function loadArmorSetCollection(): Promise<ArmorSetCollection> {
           ...origin,
           name: setName,
           kind: "armor",
+          originLabel: currentOriginLabel(playlist.name, rows),
           previewUrl: previewForSetName(setName),
           classes: classesFromRows(rows),
         });
