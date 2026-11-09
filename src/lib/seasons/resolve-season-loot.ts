@@ -2,6 +2,7 @@ import {
   buildPartialArmorRowsFromCatalogItems,
 } from "@/lib/activities/armor-rows";
 import { toLootItemFromCatalog } from "@/lib/activities/loot-item";
+import { LEGACY_TRIALS_CROSS_CLASS_SETS } from "@/data/activities/trials-of-osiris";
 import type { SeasonHub } from "@/data/seasons/types";
 import { SEASON_WORLD_LOOT_POOL } from "@/data/seasons/types";
 import { collectAllLootItemHashes } from "@/lib/all-loot/item-hashes";
@@ -182,6 +183,20 @@ function collectSeasonArmorOrOrnamentItems(
     }
 
     return matching;
+  }
+
+  // Trials sets with a different name per class (e.g. "Season of the Witch Set").
+  const crossClassNames = LEGACY_TRIALS_CROSS_CLASS_SETS[setName];
+  if (itemType === "Armor" && crossClassNames) {
+    const classSetNames = Object.values(crossClassNames).filter(
+      (name): name is string => Boolean(name),
+    );
+    return catalogItems.filter(
+      (item) =>
+        item.type === "Armor" &&
+        item.rarity === "Legendary" &&
+        classSetNames.some((name) => itemNameBelongsToArmorSet(item.name, name)),
+    );
   }
 
   return catalogItems.filter(

@@ -4,6 +4,8 @@ import { SEASON_OF_THE_CHOSEN_HUB } from "@/data/seasons/season-of-the-chosen";
 import { SEASON_OF_DAWN_HUB } from "@/data/seasons/season-of-dawn";
 import { SEASON_OF_DEFIANCE_HUB } from "@/data/seasons/season-of-defiance";
 import { SEASON_OF_THE_DEEP_HUB } from "@/data/seasons/season-of-the-deep";
+import { SEASON_OF_THE_WITCH_HUB } from "@/data/seasons/season-of-the-witch";
+import { SEASON_OF_THE_WISH_HUB } from "@/data/seasons/season-of-the-wish";
 import { SEASON_OF_THE_HAUNTED_HUB } from "@/data/seasons/season-of-the-haunted";
 import { SEASON_OF_THE_HUNT_HUB } from "@/data/seasons/season-of-the-hunt";
 import { SEASON_OF_THE_LOST_HUB } from "@/data/seasons/season-of-the-lost";
@@ -35,6 +37,8 @@ const SEASON_HUBS: Record<string, SeasonHub> = {
   [SEASON_OF_THE_SERAPH_HUB.slug]: SEASON_OF_THE_SERAPH_HUB,
   [SEASON_OF_DEFIANCE_HUB.slug]: SEASON_OF_DEFIANCE_HUB,
   [SEASON_OF_THE_DEEP_HUB.slug]: SEASON_OF_THE_DEEP_HUB,
+  [SEASON_OF_THE_WITCH_HUB.slug]: SEASON_OF_THE_WITCH_HUB,
+  [SEASON_OF_THE_WISH_HUB.slug]: SEASON_OF_THE_WISH_HUB,
 };
 
 export const PUBLISHED_SEASON_SLUGS = new Set(

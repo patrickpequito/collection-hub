@@ -66,12 +66,12 @@ export const SEASONS_BY_EXPANSION_SLUG: Readonly<
     publishedSeason("s18-season-of-plunder", "Season of Plunder"),
     publishedSeason("s19-season-of-the-seraph", "Season of the Seraph"),
   ],
-  // Lightfall year slots: Defiance, Deep, Wish, Into the Light
-  // (Season of the Witch omitted from this index layout).
+  // Lightfall year slots: Defiance, Deep, Witch, Wish, Into the Light.
   lightfall: [
     publishedSeason("s20-season-of-defiance", "Season of Defiance"),
     publishedSeason("s21-season-of-the-deep", "Season of the Deep"),
-    season("s23-season-of-the-wish", "Season of the Wish"),
+    publishedSeason("s22-season-of-the-witch", "Season of the Witch"),
+    publishedSeason("s23-season-of-the-wish", "Season of the Wish"),
     season("into-the-light", "Into the Light"),
   ],
   "the-final-shape": [

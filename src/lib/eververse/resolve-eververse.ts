@@ -38,6 +38,9 @@ const COMBINED_ORNAMENT_SET_NAMES: { names: string[]; displayName: string }[] = 
   { names: ["Eternal Vengeance", "Knightly Noire", "Painted Kitsune"], displayName: "Fortnite x Destiny 2" },
   { names: ["Limitless Subversion", "Cogent Beat", "Technologic"], displayName: "S20 Eververse" },
   { names: ["Anointed", "Godsbane", "Ancestral"], displayName: "PlayStation x Destiny 2" },
+  { names: ["White Wolf", "Kaer Morhen", "Hexer"], displayName: "The Witcher x Destiny 2" },
+  { names: ["Vakarian", "N7", "Shadow Broker"], displayName: "Mass Effect x Destiny 2" },
+  { names: ["Warrior's Memorial", "Fenrir's Bane", "Skaldic Chant"], displayName: "Gjallarheart" },
 ];
 
 function ornamentDisplayName(setName: string): string {
