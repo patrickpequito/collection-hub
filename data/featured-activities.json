@@ -1,32 +1,32 @@
 {
-  "generatedAt": "2026-11-03T22:15:48.073Z",
-  "weekIndex": 21,
-  "weekStart": "2026-11-03T17:00:00.000Z",
-  "weekEnd": "2026-11-10T17:00:00.000Z",
+  "generatedAt": "2026-11-10T22:18:36.843Z",
+  "weekIndex": 22,
+  "weekStart": "2026-11-10T17:00:00.000Z",
+  "weekEnd": "2026-11-17T17:00:00.000Z",
   "featuredRaids": [
-    "crotas-end",
-    "vault-of-glass"
+    "salvations-edge",
+    "vow-of-the-disciple"
   ],
   "featuredDungeons": [
-    "spire-of-the-watcher",
-    "pit-of-heresy"
+    "ghosts-of-the-deep",
+    "prophecy"
   ],
   "featuredNightmareHunts": [
     {
-      "name": "Anguish",
-      "boss": "Nightmare of Omnigul",
-      "image": "/img/destiny_content/pgcr/nightmare_hunt_anguish.jpg"
+      "name": "Insanity",
+      "boss": "Nightmare of the Fanatic",
+      "image": "/img/destiny_content/pgcr/nightmare_hunt_insanity.jpg"
     },
     {
-      "name": "Pride",
-      "boss": "Nightmare of Skolas, Kell of Kells",
-      "image": "/img/destiny_content/pgcr/nightmare_hunt_pride.jpg"
+      "name": "Despair",
+      "boss": "Nightmare of Crota, Son of Oryx",
+      "image": "/img/destiny_content/pgcr/nightmare_hunt_despair.jpg"
     },
     {
-      "name": "Servitude",
-      "boss": "Nightmare of Zydron, Gate Lord",
-      "image": "/img/destiny_content/pgcr/nightmare_hunt_servitude.jpg"
+      "name": "Fear",
+      "boss": "Nightmare of Phogoth",
+      "image": "/img/destiny_content/pgcr/nightmare_hunt_fear.jpg"
     }
   ],
-  "rotationWeeks": 22
+  "rotationWeeks": 23
 }
