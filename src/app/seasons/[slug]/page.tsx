@@ -35,8 +35,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!hub || !PUBLISHED_SEASON_SLUGS.has(hub.slug)) return NOT_FOUND_METADATA;
   return pageMetadata(
     `/seasons/${slug}`,
-    `${hub.title} · Destiny 2 season loot`,
-    `Everything from Destiny 2's ${hub.title}: season pass, weapons, armor, exotics, activities and Eververse.`,
+    `${hub.title} · Destiny 2 ${hub.isUpdate ? "update" : "season"} loot`,
+    hub.isUpdate
+      ? `Everything from Destiny 2's ${hub.title} update: weapons, armor, exotics, cosmetics and activities.`
+      : `Everything from Destiny 2's ${hub.title}: season pass, weapons, armor, exotics, activities and Eververse.`,
   );
 }
 
@@ -75,7 +77,7 @@ export default async function SeasonHubPage({ params }: SeasonPageProps) {
   const timeline = findTimelineEntry(hub.slug);
   const parentTimeline = parentExpansion ? findTimelineEntry(parentExpansion.slug) : null;
   const eyebrow = [
-    `Season ${hub.seasonNumber}`,
+    hub.isUpdate ? "Update" : `Season ${hub.seasonNumber}`,
     timeline?.year.label,
     parentExpansion?.title,
   ]
@@ -127,6 +129,7 @@ export default async function SeasonHubPage({ params }: SeasonPageProps) {
             ownershipGroups={loot.progressOwnershipGroups}
             exoticOwnershipGroups={ownershipGroups(loot.exoticItems)}
             cosmeticOwnershipGroups={ownershipGroups(loot.cosmeticItems)}
+            isUpdate={hub.isUpdate}
           />
 
           <SectionJumpNav links={sectionLinks} />
@@ -179,7 +182,10 @@ export default async function SeasonHubPage({ params }: SeasonPageProps) {
           </div>
 
           <div id="activities" className="scroll-mt-20">
-            <SeasonPlayableActivities activities={hub.playableActivities} />
+            <SeasonPlayableActivities
+              activities={hub.playableActivities}
+              isUpdate={hub.isUpdate}
+            />
           </div>
 
           {loot.eververse ? (

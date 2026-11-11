@@ -1,6 +1,7 @@
 import { collectAllLootItemHashes } from "@/lib/all-loot/item-hashes";
 import { ARMOR_SLOTS, GUARDIAN_CLASSES } from "@/lib/armor-sets/constants";
 import type { ActivityArmorRow, LootItem } from "@/types/activity-loot";
+import { seasonVersionArt } from "@/lib/activities/loot-item";
 import type { AllLootItem } from "@/types/all-loot";
 import type { ArmorSet, ArmorSlot, GuardianClass } from "@/types/armor-set";
 
@@ -109,6 +110,8 @@ export function buildArmorRowsFromCatalogItems(
 export function buildPartialArmorRowsFromCatalogItems(
   items: AllLootItem[],
   setName: string,
+  /** Season / expansion pages: show each piece's art (and watermark) from these releases. */
+  seasonLabels?: readonly string[],
 ): ActivityArmorRow[] {
   const byClassSlot = indexCatalogItemsByClassSlot(items);
   const rows: ActivityArmorRow[] = [];
@@ -122,6 +125,12 @@ export function buildPartialArmorRowsFromCatalogItems(
       // Reissued armor (e.g. Dreambane) keeps older hashes: any version counts as owned.
       pieces[slot] = {
         ...toLootItem(item.itemHash, item.name, item.iconPath, item.source, item.type, item.rarity),
+        ...(seasonLabels
+          ? {
+              seasonIconPath: item.seasonIconPath,
+              ...seasonVersionArt(item, seasonLabels),
+            }
+          : {}),
         ownershipHashes: collectAllLootItemHashes(item),
       };
     }

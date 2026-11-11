@@ -72,7 +72,7 @@ export const SEASONS_BY_EXPANSION_SLUG: Readonly<
     publishedSeason("s21-season-of-the-deep", "Season of the Deep"),
     publishedSeason("s22-season-of-the-witch", "Season of the Witch"),
     publishedSeason("s23-season-of-the-wish", "Season of the Wish"),
-    season("into-the-light", "Into the Light"),
+    publishedSeason("into-the-light", "Into the Light"),
   ],
   "the-final-shape": [
     season("s24-episode-echoes", "Episode: Echoes"),

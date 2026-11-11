@@ -30,8 +30,8 @@ export const SEASON_OF_THE_WISH_HUB: SeasonHub = {
   armorSetNames: ["Wyrmguard", "Dark Age"],
   ornamentSets: [{ setName: "Anthemic Invocation", armorSetName: "Wyrmguard" }],
   // Most S23 weapons were reissued later (Monument, Echoes) and the catalog
-  // also tags event, Prophecy (reprised dungeon) and Into the Light weapons
-  // with S23 — list the season's weapons explicitly.
+  // also tags event and Into the Light weapons with S23 — list the season's
+  // weapons explicitly.
   matchWeaponVersions: false,
   extraWeaponNames: [
     // The Coil, Riven's Lair and wish activities.
@@ -56,6 +56,13 @@ export const SEASON_OF_THE_WISH_HUB: SeasonHub = {
     "Indebted Kindness",
     "Naeem's Lance",
     "Vengeful Whisper",
+    // Prophecy (refreshed this season).
+    "A Sudden Death",
+    "Adjudicator",
+    "Darkest Before",
+    "Judgment",
+    "Prosecutor",
+    "Relentless",
     // Playlists.
     "Double-Edged Answer",
     "The Slammer",
@@ -76,16 +83,18 @@ export const SEASON_OF_THE_WISH_HUB: SeasonHub = {
     "Incisor",
     "Incisor (Adept)",
     "Lethal Abundance",
+    "Multimach CCX",
+    "Riiswalker",
+    "Tusk of the Boar",
+    "Belisarius-D",
+    "Retrofuturist",
     // Season Pass.
     "Appetence",
     "Scalar Potential",
-    // World loot.
-    "Belisarius-D",
+    // Ritual weapon.
     "Chivalric Fire",
-    "Multimach CCX",
+    // World loot.
     "Parabellum",
-    "Riiswalker",
-    "Tusk of the Boar",
     "Crux Termination IV",
     "Marcato-45",
     "Ros Arago IV",
@@ -107,8 +116,18 @@ export const SEASON_OF_THE_WISH_HUB: SeasonHub = {
       title: "Warlord's Ruin",
       sourcePattern: /warlord's ruin/i,
     },
-    // Crucible and Gambit side by side in the two-column grid.
-    ...["vanguard-ops", "crucible", "gambit", "trials-of-osiris", "iron-banner", "season-pass"].map(pool),
+    {
+      id: "prophecy",
+      title: "Prophecy",
+      sourcePattern: /prophecy/i,
+    },
+    // Custom order on this page: Trials before Crucible and Gambit.
+    ...["vanguard-ops", "trials-of-osiris", "crucible", "gambit", "iron-banner", "season-pass"].map(pool),
+    {
+      id: "ritual",
+      title: "Ritual Weapon",
+      sourcePattern: /(?!)/,
+    },
   ],
   weaponPoolByName: {
     Adhortative: "wish-activities",
@@ -130,6 +149,12 @@ export const SEASON_OF_THE_WISH_HUB: SeasonHub = {
     "Indebted Kindness": "warlords-ruin",
     "Naeem's Lance": "warlords-ruin",
     "Vengeful Whisper": "warlords-ruin",
+    "A Sudden Death": "prophecy",
+    Adjudicator: "prophecy",
+    "Darkest Before": "prophecy",
+    Judgment: "prophecy",
+    Prosecutor: "prophecy",
+    Relentless: "prophecy",
     "Double-Edged Answer": "vanguard-ops",
     "The Slammer": "vanguard-ops",
     "The Slammer (Adept)": "vanguard-ops",
@@ -151,12 +176,13 @@ export const SEASON_OF_THE_WISH_HUB: SeasonHub = {
     "Lethal Abundance": "iron-banner",
     Appetence: "season-pass",
     "Scalar Potential": "season-pass",
-    "Belisarius-D": "world-loot",
-    "Chivalric Fire": "world-loot",
-    "Multimach CCX": "world-loot",
+    "Multimach CCX": "iron-banner",
+    Riiswalker: "iron-banner",
+    "Tusk of the Boar": "iron-banner",
+    "Belisarius-D": "crucible",
+    Retrofuturist: "crucible",
+    "Chivalric Fire": "ritual",
     Parabellum: "world-loot",
-    Riiswalker: "world-loot",
-    "Tusk of the Boar": "world-loot",
     "Crux Termination IV": "world-loot",
     "Marcato-45": "world-loot",
     "Ros Arago IV": "world-loot",

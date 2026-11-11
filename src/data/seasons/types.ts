@@ -32,6 +32,8 @@ export type SeasonHub = {
   seasonLabel: string;
   parentExpansionSlug: string;
   seasonNumber: number;
+  /** Free update page (Into the Light): page copy says "Update", not "Season". */
+  isUpdate?: boolean;
   videos: readonly SeasonVideo[];
   /** Named armor sets shown in the season loot panel. */
   armorSetNames: readonly string[];

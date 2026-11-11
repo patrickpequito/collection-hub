@@ -4,7 +4,10 @@ import {
   buildArmorRowsFromSet,
   buildPartialArmorRowsFromCatalogItems,
 } from "@/lib/activities/armor-rows";
-import { toLootItemFromCatalog } from "@/lib/activities/loot-item";
+import {
+  toLootItemForSeason,
+  toLootItemFromCatalog,
+} from "@/lib/activities/loot-item";
 import type { ExpansionHub } from "@/data/expansions/types";
 import { collectAllLootItemHashes } from "@/lib/all-loot/item-hashes";
 import { loadAllLootCatalog } from "@/lib/all-loot/search";
@@ -397,7 +400,7 @@ function buildDeepLootArmorGroups(
         itemNameBelongsToArmorSet(item.name, setName),
     );
     const rows = enrichArmorRowsWithOwnership(
-      buildPartialArmorRowsFromCatalogItems(matching, setName),
+      buildPartialArmorRowsFromCatalogItems(matching, setName, hub.seasonLabels),
       catalogByHash,
     );
     if (rows.length === 0) continue;
@@ -613,7 +616,7 @@ export async function resolveExpansionLoot(
     const catalogItem = catalogByHash.get(entry.itemHash);
     if (catalogItem) {
       return {
-        ...toLootItemFromCatalog(catalogItem),
+        ...toLootItemForSeason(catalogItem, hub.seasonLabels),
         section: entry.section,
         rarity: entry.rarity || catalogItem.rarity,
         itemTypeDisplayName: entry.itemTypeDisplayName,
@@ -637,7 +640,7 @@ export async function resolveExpansionLoot(
       const typeOrder = a.type === b.type ? 0 : a.type === "Weapon" ? -1 : 1;
       return typeOrder || a.name.localeCompare(b.name);
     })
-    .map(toLootItemFromCatalog);
+    .map((item) => toLootItemForSeason(item, hub.seasonLabels));
 
   const destinationArmorRows: ActivityArmorRow[] = [];
   for (const setName of hub.destinationArmorSetNames) {
@@ -650,7 +653,7 @@ export async function resolveExpansionLoot(
         itemNameBelongsToArmorSet(item.name, setName),
     );
     const fromCatalog = enrichArmorRowsWithOwnership(
-      buildPartialArmorRowsFromCatalogItems(matching, setName),
+      buildPartialArmorRowsFromCatalogItems(matching, setName, hub.seasonLabels),
       catalogByHash,
     );
     if (fromCatalog.length > 0) {
@@ -672,7 +675,7 @@ export async function resolveExpansionLoot(
   const destinationWeapons = items
     .filter((item) => isDestinationWeapon(item, hub))
     .sort((a, b) => a.name.localeCompare(b.name))
-    .map(toLootItemFromCatalog);
+    .map((item) => toLootItemForSeason(item, hub.seasonLabels));
 
   const deepLootPools: ExpansionDeepLootPool[] = [];
   const claimedHashes = new Set<string>();
@@ -697,7 +700,7 @@ export async function resolveExpansionLoot(
     const weapons = poolItems
       .filter((item) => item.type === "Weapon")
       .sort((a, b) => a.name.localeCompare(b.name))
-      .map(toLootItemFromCatalog);
+      .map((item) => toLootItemForSeason(item, hub.seasonLabels));
     const otherItems = poolItems.filter(
       (item) => item.type !== "Armor" && item.type !== "Weapon",
     );

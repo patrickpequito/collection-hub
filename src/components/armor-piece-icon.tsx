@@ -56,6 +56,7 @@ export function ArmorPieceIcon({
     <CollectionItemIcon
       name={piece.name}
       iconPath={piece.iconPath}
+      seasonIconPath={"seasonIconPath" in piece ? (piece.seasonIconPath as string | undefined) : undefined}
       source={sourceLabel}
       owned={owned}
       showOwnership={showOwnership}

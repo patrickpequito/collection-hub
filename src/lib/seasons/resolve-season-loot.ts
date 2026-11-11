@@ -1,7 +1,10 @@
 import {
   buildPartialArmorRowsFromCatalogItems,
 } from "@/lib/activities/armor-rows";
-import { toLootItemFromCatalog } from "@/lib/activities/loot-item";
+import {
+  toLootItemForSeason,
+  toLootItemFromCatalog,
+} from "@/lib/activities/loot-item";
 import { LEGACY_TRIALS_CROSS_CLASS_SETS } from "@/data/activities/trials-of-osiris";
 import type { SeasonHub } from "@/data/seasons/types";
 import { SEASON_WORLD_LOOT_POOL } from "@/data/seasons/types";
@@ -225,6 +228,7 @@ function buildNamedSetGroup(
       isGroupedVanguardLegacySetName(setName)
         ? VANGUARD_SET_DISPLAY_NAME
         : setName,
+      [hub.seasonLabel],
     ),
     catalogByHash,
   );
@@ -308,14 +312,14 @@ export async function resolveSeasonLoot(hub: SeasonHub): Promise<SeasonLoot> {
 
   const weapons = catalogItems
     .filter((item) => isSeasonWeapon(item, hub))
-    .map((item) => toLootItemFromCatalog(item));
+    .map((item) => toLootItemForSeason(item, [hub.seasonLabel]));
 
   const weaponPools = buildWeaponPools(weapons, hub);
 
   const exoticItems = hub.exoticItemNames
     .map((name) => catalogItems.find((item) => item.name === name))
     .filter((item): item is AllLootItem => Boolean(item))
-    .map((item) => toLootItemFromCatalog(item));
+    .map((item) => toLootItemForSeason(item, [hub.seasonLabel]));
 
   const progressOwnershipGroups: string[][] = [];
   collectProgressFromGroups(armorGroups, catalogByHash, progressOwnershipGroups);
