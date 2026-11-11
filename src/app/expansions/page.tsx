@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import { ClientOwnership } from "@/components/client-ownership";
@@ -12,6 +14,7 @@ import { buildSeasonProgressInputs } from "@/lib/seasons/build-season-progress-i
 import { resolveExpansionLoot } from "@/lib/expansions/resolve-expansion-loot";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { getTitleEntry, loadTriumphCatalog } from "@/lib/triumphs/load";
+import { DESTINY_1_TIMELINE } from "@/lib/home/timeline";
 import {
   getSeasonHub,
   PUBLISHED_SEASON_SLUGS,
@@ -53,6 +56,14 @@ export default async function ExpansionsPage() {
     ),
   ]);
 
+  // Destiny 1 cards show art only once the owner adds the file.
+  const destinyOneArtSlugs = DESTINY_1_TIMELINE.map((entry) => entry.slug).filter(
+    (slug) =>
+      fs.existsSync(
+        path.join(process.cwd(), "public/images/destiny-1", `${slug}.webp`),
+      ),
+  );
+
   return (
     <SectionPageLayout
       title="Expansions & Seasons"
@@ -64,6 +75,7 @@ export default async function ExpansionsPage() {
         <SeasonsTimeline
           progressInputs={progressInputs}
           seasonProgressInputs={seasonProgressInputs}
+          destinyOneArtSlugs={destinyOneArtSlugs}
         />
       </ClientOwnership>
     </SectionPageLayout>

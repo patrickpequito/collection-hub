@@ -19,13 +19,20 @@ import { useSeasonProfileProgress } from "@/lib/seasons/use-season-profile-progr
 const HATCH =
   "bg-[repeating-linear-gradient(135deg,rgb(255_255_255/0.05)_0_2px,transparent_2px_14px)]";
 
-/** One line of the timeline: expansion on the left, season on the right. */
-type TimelineRow = { left?: TimelineEntry; right?: TimelineEntry };
+/**
+ * One line of the timeline: expansion on the left, season on the right, or a
+ * centred card on the line (base game, free update).
+ */
+type TimelineRow = { left?: TimelineEntry; right?: TimelineEntry; center?: TimelineEntry };
 
 /** Newest first; an expansion and a season released the same month share a row. */
 function buildRows(entries: readonly TimelineEntry[]): TimelineRow[] {
   const rows: TimelineRow[] = [];
   for (const entry of [...entries].reverse()) {
+    if (entry.centered) {
+      rows.push({ center: entry });
+      continue;
+    }
     const side = entry.kind === "expansion" ? "left" : "right";
     const previous = rows.at(-1);
     const other = previous?.[side === "left" ? "right" : "left"];
@@ -43,7 +50,14 @@ const YEARS = [...HOME_TIMELINE].reverse().map((year) => ({
   id: year.label.toLowerCase().replace(/\s+/g, "-"),
   rows: buildRows(year.entries),
 }));
-const LATEST_SLUG = YEARS[0]?.rows[0]?.left?.slug ?? YEARS[0]?.rows[0]?.right?.slug;
+const LATEST_SLUG =
+  YEARS[0]?.rows[0]?.left?.slug ??
+  YEARS[0]?.rows[0]?.right?.slug ??
+  YEARS[0]?.rows[0]?.center?.slug;
+
+/** Full-width on phones (beside the line), 480px on the line from md up. */
+const CENTER_ROW = "relative pl-7 md:flex md:justify-center md:pl-0";
+const CENTER_CARD_WIDTH = "w-full md:w-[480px]";
 
 const CHIP_CLASS =
   "inline-flex h-10 items-center border border-white/[0.22] px-3.5 font-display text-sm uppercase tracking-[0.12em] text-bone/80 transition hover:border-bone hover:text-white";
@@ -60,7 +74,7 @@ export function TimelineEntryCard({
   compact?: boolean;
   showLatest?: boolean;
 }) {
-  const isExpansion = entry.kind === "expansion" && !compact;
+  const isExpansion = (entry.kind === "expansion" || Boolean(entry.centered)) && !compact;
   const percent = entry.href ? progress?.percent : null;
   const className = `group relative flex flex-col justify-end overflow-hidden border border-white/[0.18] bg-panel ${HATCH} ${
     isExpansion
@@ -90,7 +104,11 @@ export function TimelineEntryCard({
           Latest
         </span>
       ) : null}
-      <span className={`relative flex flex-col ${compact ? "gap-0.5" : "gap-1.5"}`}>
+      <span
+        className={`relative flex flex-col ${compact ? "gap-0.5" : "gap-1.5"} ${
+          entry.alignRight && !compact ? "items-end text-right" : ""
+        }`}
+      >
         <span className={`ui-label text-on-art text-bone/80! ${compact ? "text-[11px]!" : ""}`}>
           {entry.tag} · {formatTimelineMonth(entry.date)}
         </span>
@@ -102,7 +120,9 @@ export function TimelineEntryCard({
           {entry.fullTitle}
         </span>
         {!entry.href ? (
-          <span className="text-on-art text-[13px] text-ash">Hub coming soon</span>
+          <span className="text-on-art text-[13px] text-ash">
+            {entry.vaulted ? "Vaulted content" : "Hub coming soon"}
+          </span>
         ) : percent != null ? (
           <span className={`flex items-center gap-2.5 ${compact ? "mt-1.5" : ""}`}>
             <ProgressBar owned={percent} total={100} className="flex-1" />
@@ -163,13 +183,54 @@ function YearMarker({ id, label, span, dashed = false }: { id: string; label: st
   );
 }
 
+/** Destiny 1 placeholder: dashed card, art from public/images/destiny-1 once added. */
+function DestinyOneCard({
+  entry,
+  hasArt,
+}: {
+  entry: (typeof DESTINY_1_TIMELINE)[number];
+  hasArt: boolean;
+}) {
+  return (
+    <div className="relative flex h-[150px] flex-col justify-end gap-1.5 overflow-hidden border border-dashed border-white/20 bg-void px-[18px] py-4">
+      {hasArt ? (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`/images/destiny-1/${entry.slug}.webp`}
+            alt=""
+            aria-hidden
+            className="absolute inset-0 h-full w-full object-cover opacity-70"
+          />
+          <span
+            aria-hidden
+            className="absolute inset-0 bg-gradient-to-t from-void/90 via-void/30 via-60% to-transparent"
+          />
+        </>
+      ) : null}
+      <span className="ui-label text-on-art relative">
+        {entry.tag} · {formatTimelineMonth(entry.date)}
+      </span>
+      <span className="text-on-art relative font-display text-[26px] font-semibold uppercase leading-[1.05] tracking-[0.06em] text-ash">
+        {entry.title}
+      </span>
+    </div>
+  );
+}
+
 type SeasonsTimelineProps = {
   progressInputs: ExpansionProgressInputs[];
   seasonProgressInputs: SeasonProgressInputs[];
+  /** Destiny 1 entries whose art exists in public/images/destiny-1. */
+  destinyOneArtSlugs?: string[];
 };
 
 /** Expansions & Seasons as one vertical timeline, newest at the top. */
-export function SeasonsTimeline({ progressInputs, seasonProgressInputs }: SeasonsTimelineProps) {
+export function SeasonsTimeline({
+  progressInputs,
+  seasonProgressInputs,
+  destinyOneArtSlugs = [],
+}: SeasonsTimelineProps) {
   const expansionProgress = useExpansionProfileProgress(progressInputs);
   const seasonProgress = useSeasonProfileProgress(seasonProgressInputs);
   const progressFor = (entry: TimelineEntry) =>
@@ -242,7 +303,15 @@ export function SeasonsTimeline({ progressInputs, seasonProgressInputs }: Season
         {YEARS.map((year) => (
           <div key={year.id} className="contents">
             <YearMarker id={year.id} label={year.label} span={year.span} />
-            {year.rows.map((row) => (
+            {year.rows.map((row) =>
+              row.center ? (
+                <div key={row.center.slug} className={CENTER_ROW}>
+                  {/* Opaque backing: cards without a hub are dimmed (opacity-70), which would show the line through them. */}
+                  <div className={`flex flex-col bg-void ${CENTER_CARD_WIDTH}`}>
+                    <TimelineEntryCard entry={row.center} progress={progressFor(row.center)} />
+                  </div>
+                </div>
+              ) : (
               <div key={(row.left ?? row.right)!.slug} className={ROW_CLASS}>
                 {row.left ? (
                   <div className={LEFT_CELL}>
@@ -265,29 +334,30 @@ export function SeasonsTimeline({ progressInputs, seasonProgressInputs }: Season
                   </div>
                 ) : null}
               </div>
-            ))}
+              ),
+            )}
           </div>
         ))}
 
         <YearMarker id="destiny" label="Destiny" span="2014–17" dashed />
-        {DESTINY_1_TIMELINE.map((entry) => (
-          <div key={entry.title} className={ROW_CLASS}>
-            <div className={LEFT_CELL}>
-              <div className="flex h-[150px] flex-col justify-end gap-1.5 border border-dashed border-white/20 px-[18px] py-4">
-                <span className="ui-label">
-                  {entry.tag} · {formatTimelineMonth(entry.date)}
-                </span>
-                <span className="font-display text-[26px] font-semibold uppercase leading-[1.05] tracking-[0.06em] text-ash">
-                  {entry.title}
-                </span>
+        {DESTINY_1_TIMELINE.map((entry) => {
+          const card = (
+            <DestinyOneCard entry={entry} hasArt={destinyOneArtSlugs.includes(entry.slug)} />
+          );
+          return entry.centered ? (
+            <div key={entry.slug} className={CENTER_ROW}>
+              <div className={CENTER_CARD_WIDTH}>{card}</div>
+            </div>
+          ) : (
+            <div key={entry.slug} className={ROW_CLASS}>
+              <div className={LEFT_CELL}>{card}</div>
+              <div className={MID_CELL}>
+                <Connectors left right={false} dashed />
+                <span aria-hidden className="relative size-3 rotate-45 border border-dashed border-ash bg-void" />
               </div>
             </div>
-            <div className={MID_CELL}>
-              <Connectors left right={false} dashed />
-              <span aria-hidden className="relative size-3 rotate-45 border border-dashed border-ash bg-void" />
-            </div>
-          </div>
-        ))}
+          );
+        })}
 
         <div className="flex justify-start pt-2.5 md:justify-center">
           <span className="ui-label relative bg-void px-2.5 py-1">Destiny launch · Sep 2014</span>

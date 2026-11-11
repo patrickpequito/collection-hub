@@ -12,6 +12,12 @@ export type TimelineEntry = {
   /** Short tag under the title, e.g. "S17" or "Expansion". */
   tag: string;
   kind: "expansion" | "season";
+  /** Neither an expansion nor a season (base game, free update): card on the line itself. */
+  centered?: boolean;
+  /** Card text aligned right (Destiny 2 base game art). */
+  alignRight?: boolean;
+  /** Content Bungie removed from the game: "Vaulted content" instead of "Hub coming soon". */
+  vaulted?: boolean;
   imageUrl?: string;
   /** Only published hubs link; the rest show as "Soon". */
   href?: string;
@@ -24,16 +30,37 @@ export type TimelineYear = {
   entries: TimelineEntry[];
 };
 
-function expansion(slug: string, title: string, date: string): TimelineEntry {
+function expansion(
+  slug: string,
+  title: string,
+  date: string,
+  {
+    tag = "Expansion",
+    centered,
+    alignRight,
+    vaulted,
+    imageFile = slug,
+  }: {
+    tag?: string;
+    centered?: boolean;
+    alignRight?: boolean;
+    vaulted?: boolean;
+    /** Art file name without extension, when it differs from the slug. */
+    imageFile?: string;
+  } = {},
+): TimelineEntry {
   const published = PUBLISHED_EXPANSION_SLUGS.has(slug);
   return {
     slug,
     title,
     fullTitle: title,
     date,
-    tag: "Expansion",
+    tag,
     kind: "expansion",
-    imageUrl: `/images/expansions/activities/${slug}.webp`,
+    centered,
+    alignRight,
+    vaulted,
+    imageUrl: `/images/expansions/activities/${imageFile}.webp`,
     href: published ? `/expansions/${slug}` : undefined,
   };
 }
@@ -43,7 +70,12 @@ function season(
   title: string,
   tag: string,
   date: string,
-  { hasImage = true, fullTitle }: { hasImage?: boolean; fullTitle?: string } = {},
+  {
+    hasImage = true,
+    fullTitle,
+    centered,
+    vaulted,
+  }: { hasImage?: boolean; fullTitle?: string; centered?: boolean; vaulted?: boolean } = {},
 ): TimelineEntry {
   const published = PUBLISHED_SEASON_SLUGS.has(slug);
   return {
@@ -53,6 +85,8 @@ function season(
     date,
     tag,
     kind: "season",
+    centered,
+    vaulted,
     imageUrl: hasImage ? `/images/seasons/activities/${slug}.webp` : undefined,
     href: published ? `/seasons/${slug}` : undefined,
   };
@@ -64,19 +98,26 @@ export const HOME_TIMELINE: readonly TimelineYear[] = [
     label: "Year 1",
     span: "2017–18",
     entries: [
-      expansion("red-war", "Red War", "2017-09"),
-      expansion("curse-of-osiris", "Curse of Osiris", "2017-12"),
-      expansion("warmind", "Warmind", "2018-05"),
+      // The Red War hub is Destiny 2's base game.
+      expansion("red-war", "Destiny 2", "2017-09", {
+        tag: "Base game",
+        centered: true,
+        alignRight: true,
+        vaulted: true,
+        imageFile: "destiny-2",
+      }),
+      expansion("curse-of-osiris", "Curse of Osiris", "2017-12", { vaulted: true }),
+      expansion("warmind", "Warmind", "2018-05", { vaulted: true }),
     ],
   },
   {
     label: "Year 2",
     span: "2018–19",
     entries: [
-      expansion("forsaken", "Forsaken", "2018-09"),
-      season("s5-season-of-the-forge", "Forge", "S5", "2018-11", { fullTitle: "Season of the Forge" }),
-      season("s6-season-of-the-drifter", "Drifter", "S6", "2019-03", { fullTitle: "Season of the Drifter" }),
-      season("s7-season-of-opulence", "Opulence", "S7", "2019-06", { fullTitle: "Season of Opulence" }),
+      expansion("forsaken", "Forsaken", "2018-09", { vaulted: true }),
+      season("s5-season-of-the-forge", "Forge", "S5", "2018-11", { fullTitle: "Season of the Forge", vaulted: true }),
+      season("s6-season-of-the-drifter", "Drifter", "S6", "2019-03", { fullTitle: "Season of the Drifter", vaulted: true }),
+      season("s7-season-of-opulence", "Opulence", "S7", "2019-06", { fullTitle: "Season of Opulence", vaulted: true }),
     ],
   },
   {
@@ -127,7 +168,7 @@ export const HOME_TIMELINE: readonly TimelineYear[] = [
     label: "Year 7",
     span: "2024–25",
     entries: [
-      season("into-the-light", "Into the Light", "Update", "2024-04"),
+      season("into-the-light", "Into the Light", "Update", "2024-04", { centered: true }),
       expansion("the-final-shape", "The Final Shape", "2024-06"),
       season("s24-episode-echoes", "Echoes", "Episode", "2024-06"),
       season("s25-episode-revenant", "Revenant", "Episode", "2024-10"),
@@ -140,25 +181,35 @@ export const HOME_TIMELINE: readonly TimelineYear[] = [
     entries: [
       expansion("the-edge-of-fate", "The Edge of Fate", "2025-07"),
       season("s27-season-reclamation", "Reclamation", "S27", "2025-07", {
-        hasImage: false,
         fullTitle: "Season: Reclamation",
       }),
+      // Free mid-season update between The Edge of Fate and Renegades; sits
+      // in the seasons column (it plays like a mid-season, not a big update).
+      season("ash-and-iron", "Ash & Iron", "Update", "2025-09"),
       expansion("renegades", "Renegades", "2025-12"),
       season("s28-season-lawless", "Lawless", "S28", "2025-12", {
-        hasImage: false,
         fullTitle: "Season: Lawless",
       }),
     ],
   },
 ];
 
-/** Destiny 1 release, newest first — placeholders on the Seasons timeline. */
-export const DESTINY_1_TIMELINE: readonly { title: string; tag: string; date: string }[] = [
-  { title: "Rise of Iron", tag: "Expansion", date: "2016-09" },
-  { title: "The Taken King", tag: "Expansion", date: "2015-09" },
-  { title: "House of Wolves", tag: "Expansion", date: "2015-05" },
-  { title: "The Dark Below", tag: "Expansion", date: "2014-12" },
-  { title: "Destiny", tag: "Base game", date: "2014-09" },
+/**
+ * Destiny 1 release, newest first — placeholders on the Seasons timeline.
+ * Art: `public/images/destiny-1/{slug}.webp` (hidden until the file exists).
+ */
+export const DESTINY_1_TIMELINE: readonly {
+  slug: string;
+  title: string;
+  tag: string;
+  date: string;
+  centered?: boolean;
+}[] = [
+  { slug: "rise-of-iron", title: "Rise of Iron", tag: "Expansion", date: "2016-09" },
+  { slug: "the-taken-king", title: "The Taken King", tag: "Expansion", date: "2015-09" },
+  { slug: "house-of-wolves", title: "House of Wolves", tag: "Expansion", date: "2015-05" },
+  { slug: "the-dark-below", title: "The Dark Below", tag: "Expansion", date: "2014-12" },
+  { slug: "destiny", title: "Destiny", tag: "Base game", date: "2014-09", centered: true },
 ];
 
 /** Timeline entry and its year for a hub page header ("Year 5 · Feb 2022"). */
