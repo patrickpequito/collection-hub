@@ -153,6 +153,22 @@ export type ExpansionCampaignQuest = {
   iconPath?: string;
   /** Parent quest line shown as a header above its sub-quests (e.g. "The Final Days"). */
   group?: string;
+  /** Quest log group: legacy campaign, the expansion's own quests, or exotic quests. */
+  category?: "campaign" | "expansion" | "exotic";
+  /** Exotic reward name (exotic quests). */
+  reward?: string;
+  /** Ordered steps (manifest quest steps, or records for record-tracked quests). */
+  steps?: ExpansionQuestStep[];
+};
+
+export type ExpansionQuestStep = {
+  /** Quest step item hash. */
+  hash?: string;
+  /** Record that marks this step done (record-tracked quests). */
+  recordHash?: string;
+  objectiveHash?: string;
+  description: string;
+  objectives: { hash: string; label: string; total: number }[];
 };
 
 /** Playlist activity with difficulty tiers (Empire / Nightmare Hunts: 3 in-game). */

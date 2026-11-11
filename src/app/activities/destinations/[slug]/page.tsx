@@ -108,7 +108,8 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
       maxWidth="5xl"
       headerEyebrow={`Destination · ${destination.era}`}
       breadcrumbs={[{ label: "Destinations", href: "/activities/destinations" }]}
-      siblings={{ previous: link(BUILT[index - 1]), next: link(BUILT[index + 1]) }}
+      // DESTINATIONS is newest first: previous (left, Z) = older, next (right, X) = newer — same as expansions.
+      siblings={{ previous: link(BUILT[index + 1]), next: link(BUILT[index - 1]) }}
     >
       <ClientOwnership>
         <div className="space-y-9">

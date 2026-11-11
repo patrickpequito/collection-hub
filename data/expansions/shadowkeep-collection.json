@@ -538,7 +538,219 @@
           "1322836372",
           "1322836373"
         ],
-        "iconPath": "/common/destiny2_content/icons/aa75d0c0f7745a2b4cd1b1ac6a7f3a5b.jpg"
+        "iconPath": "/common/destiny2_content/icons/aa75d0c0f7745a2b4cd1b1ac6a7f3a5b.jpg",
+        "steps": [
+          {
+            "hash": "4039893890",
+            "description": "Investigate the strange Hive behavior near the Scarlet Keep.",
+            "objectives": [
+              {
+                "hash": "2204302414",
+                "label": "\"In Search of Answers\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4016941122",
+            "description": "A Nightmare of Omnigul has stormed through the lunar encampment.",
+            "objectives": [
+              {
+                "hash": "4045631914",
+                "label": "Eris Morn visited in Sanctuary",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4010589224",
+            "description": "Eris believes the Essence dropped by the Nightmare of Crota is a key to entering the Pyramid and learning the truth behind its presence on the Moon.",
+            "objectives": [
+              {
+                "hash": "3068831200",
+                "label": "\"Essence of Despair\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2369227168",
+            "description": "The Essence of Despair is cleansed. Its true purpose may now be uncovered.",
+            "objectives": [
+              {
+                "hash": "3139562516",
+                "label": "Eris Morn visited in Sanctuary",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4039893891",
+            "description": "Eris used a Hive talisman of her own to create the first piece of protective armor.",
+            "objectives": [
+              {
+                "hash": "3020102650",
+                "label": "Nightmare of Omnigul defeated",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2663040515",
+            "description": "Speak with Eris Morn to learn what she believes lies within the Scarlet Keep.",
+            "objectives": [
+              {
+                "hash": "841309893",
+                "label": "Eris Morn visited in Sanctuary",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2579262077",
+            "description": "Investigate the Scarlet Keep to locate more Hive curios and discover a connection between the Hive and the Pyramid.",
+            "objectives": [
+              {
+                "hash": "2324778933",
+                "label": "Strike \"The Scarlet Keep\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1074168413",
+            "description": "Cleanse the Essence of Anguish dropped by Omnigul.",
+            "objectives": [
+              {
+                "hash": "2314157749",
+                "label": "\"Essence of Anguish\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2369227171",
+            "description": "Hashladûn's death has yielded information of great value: the existence of the Hive Cryptoglyph and where to find it.",
+            "objectives": [
+              {
+                "hash": "2091228133",
+                "label": "Eris Morn visited in Sanctuary",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3076437306",
+            "description": "Somewhere in the horrific depths of the Hellmouth lies the Hive Cryptoglyph. With it, Eris Morn can craft further Dreambane armor for your quest to find a way inside the Pyramid.",
+            "objectives": [
+              {
+                "hash": "321162479",
+                "label": "\"In the Deep\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2369227170",
+            "description": "Taking the Cryptoglyph from the Catacombs has interrupted the dark rituals planned by the Hidden Swarm… for now.",
+            "objectives": [
+              {
+                "hash": "241202442",
+                "label": "Eris Morn visited in Sanctuary",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4150657477",
+            "description": "Use the Cryptoglyph to empower the Lectern of Enchantment near Eris Morn.",
+            "objectives": [
+              {
+                "hash": "1253156931",
+                "label": "Lectern of Enchantment empowered",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4141787158",
+            "description": "Ikora has arrived on the Moon to see the Pyramid for herself and deliver a message.",
+            "objectives": [
+              {
+                "hash": "196559451",
+                "label": "Ikora visited on the Moon",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1858645823",
+            "description": "Defeat the three remaining Nightmare bosses to collect their Essences: the Essence of Fear, the Essence of Isolation, and the Essence of Pride.",
+            "objectives": [
+              {
+                "hash": "818582018",
+                "label": "Dreambane armor pieces created",
+                "total": 3
+              }
+            ]
+          },
+          {
+            "hash": "2369227173",
+            "description": "You now have a full set of Dreambane armor.",
+            "objectives": [
+              {
+                "hash": "1629163171",
+                "label": "Eris Morn visited in Sanctuary",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1983731381",
+            "description": "What secrets lie within the Pyramid? It sits in silence, waiting for you.",
+            "objectives": [
+              {
+                "hash": "410158452",
+                "label": "\"Beyond\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2369227172",
+            "description": "Return to Eris Morn with the Unknown Artifact.",
+            "objectives": [
+              {
+                "hash": "3171447448",
+                "label": "Eris Morn visited in Sanctuary",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1322836372",
+            "description": "Share your findings from the Moon with the Vanguard leaders in the Tower.",
+            "objectives": [
+              {
+                "hash": "480981559",
+                "label": "Speak with Zavala",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1322836373",
+            "description": "Share your findings from the Moon with the Vanguard leaders in the Tower.",
+            "objectives": [
+              {
+                "hash": "677431719",
+                "label": "Speak with Ikora",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "campaign"
       },
       {
         "name": "Memory of Sai Mota",
@@ -558,7 +770,54 @@
           "1340580578",
           "1340580579"
         ],
-        "iconPath": "/common/destiny2_content/icons/3ef1b4b340ba528936a3277d2c638905.jpg"
+        "iconPath": "/common/destiny2_content/icons/3ef1b4b340ba528936a3277d2c638905.jpg",
+        "steps": [
+          {
+            "hash": "1340580576",
+            "description": "Complete the \"Lunar Spelunker\" bounty to earn a Firewall Data Fragment. Use the fragment to access the system core vault in the K1 Revelation Lost Sector.",
+            "objectives": [
+              {
+                "hash": "2640343482",
+                "label": "System core vault accessed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1340580577",
+            "description": "Search for scraps of Sai Mota's necklace by defeating Nightmares on the Moon with Arc abilities. Stronger combatants grant more progress.",
+            "objectives": [
+              {
+                "hash": "3210929559",
+                "label": "Necklace Scraps collected",
+                "total": 20
+              }
+            ]
+          },
+          {
+            "hash": "1340580578",
+            "description": "Use the portal in Sanctuary to return Sai Mota's Repaired Necklace to Eris.",
+            "objectives": [
+              {
+                "hash": "493205512",
+                "label": "Return to Eris",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1340580579",
+            "description": "Collect your reward from the chest in Eris Morn's overlook in the Enduring Abyss.",
+            "objectives": [
+              {
+                "hash": "1063791717",
+                "label": "Reward collected",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Memory of Eriana-3",
@@ -578,7 +837,54 @@
           "1285862606",
           "1285862607"
         ],
-        "iconPath": "/common/destiny2_content/icons/3ef1b4b340ba528936a3277d2c638905.jpg"
+        "iconPath": "/common/destiny2_content/icons/3ef1b4b340ba528936a3277d2c638905.jpg",
+        "steps": [
+          {
+            "hash": "1285862604",
+            "description": "Search beneath the surface of the Moon to reclaim treasure from Hive Lunar Scavengers or Fallen Lunar Scavengers.",
+            "objectives": [
+              {
+                "hash": "2236561038",
+                "label": "Lunar Scavenger chest looted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1285862605",
+            "description": "Search for Eriana-3's lost letters from Wei Ning.",
+            "objectives": [
+              {
+                "hash": "2807147243",
+                "label": "Letters collected",
+                "total": 10
+              }
+            ]
+          },
+          {
+            "hash": "1285862606",
+            "description": "Return Eriana-3's Letters from Wei Ning to Eris Morn.",
+            "objectives": [
+              {
+                "hash": "89423196",
+                "label": "Return to Eris",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1285862607",
+            "description": "Collect your reward from the chest in Eris Morn's overlook in the Enduring Abyss.",
+            "objectives": [
+              {
+                "hash": "660009401",
+                "label": "Reward collected",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Memory of Omar Agah",
@@ -598,7 +904,54 @@
           "2174686654",
           "2174686655"
         ],
-        "iconPath": "/common/destiny2_content/icons/3ef1b4b340ba528936a3277d2c638905.jpg"
+        "iconPath": "/common/destiny2_content/icons/3ef1b4b340ba528936a3277d2c638905.jpg",
+        "steps": [
+          {
+            "hash": "2174686652",
+            "description": "Defeat a powerful Hive Wizard with any Super ability.",
+            "objectives": [
+              {
+                "hash": "4094908702",
+                "label": "Hive Wizard defeated",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2174686653",
+            "description": "Find Omar Agah's lost throwing knives.",
+            "objectives": [
+              {
+                "hash": "1444295227",
+                "label": "Throwing Knives recovered",
+                "total": 20
+              }
+            ]
+          },
+          {
+            "hash": "2174686654",
+            "description": "Use the portal in Sanctuary to return Omar Agah's Brace of Knives to Eris Morn.",
+            "objectives": [
+              {
+                "hash": "1947770860",
+                "label": "Return to Eris",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2174686655",
+            "description": "Collect your reward from the chest in Eris Morn's overlook in the Enduring Abyss.",
+            "objectives": [
+              {
+                "hash": "1444589321",
+                "label": "Reward collected",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Memory of Toland, the Shattered",
@@ -618,7 +971,54 @@
           "3985923226",
           "3985923227"
         ],
-        "iconPath": "/common/destiny2_content/icons/3ef1b4b340ba528936a3277d2c638905.jpg"
+        "iconPath": "/common/destiny2_content/icons/3ef1b4b340ba528936a3277d2c638905.jpg",
+        "steps": [
+          {
+            "hash": "3985923224",
+            "description": "On the Moon, search the Hellmouth, Archer's Line, and Anchor of Light for a Hive Trove Guardian obscuring a hidden path.",
+            "objectives": [
+              {
+                "hash": "2368379298",
+                "label": "Trove Guardian chest looted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3985923225",
+            "description": "Search for pages of Toland's journal by using a Hive Relic Sword to defeat combatants.",
+            "objectives": [
+              {
+                "hash": "2938965407",
+                "label": "Journal Pages collected",
+                "total": 35
+              }
+            ]
+          },
+          {
+            "hash": "3985923226",
+            "description": "Use the portal in Sanctuary to return Toland, The Shattered's Journal to Eris.",
+            "objectives": [
+              {
+                "hash": "2368673520",
+                "label": "Return to Eris",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3985923227",
+            "description": "Collect your reward from the chest in Eris Morn's overlook in the Enduring Abyss.",
+            "objectives": [
+              {
+                "hash": "254943693",
+                "label": "Reward collected",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Memory of Vell Tarlowe",
@@ -638,7 +1038,54 @@
           "3077591739",
           "3077591738"
         ],
-        "iconPath": "/common/destiny2_content/icons/3ef1b4b340ba528936a3277d2c638905.jpg"
+        "iconPath": "/common/destiny2_content/icons/3ef1b4b340ba528936a3277d2c638905.jpg",
+        "steps": [
+          {
+            "hash": "3077591737",
+            "description": "Complete the currently active replayable story mission on the Moon.",
+            "objectives": [
+              {
+                "hash": "3119504447",
+                "label": "Story mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3077591736",
+            "description": "Search for fragments of Vell Tarlowe's Titan Mark.",
+            "objectives": [
+              {
+                "hash": "2548918210",
+                "label": "Mark Fragments found",
+                "total": 25
+              }
+            ]
+          },
+          {
+            "hash": "3077591739",
+            "description": "Use the portal in Santuary to return Vell Tarlowe's Mark to Eris.",
+            "objectives": [
+              {
+                "hash": "435482733",
+                "label": "Return to Eris",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3077591738",
+            "description": "Collect your reward from the chest in Eris Morn's overlook in the Enduring Abyss.",
+            "objectives": [
+              {
+                "hash": "401780368",
+                "label": "Reward collected",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Symphony of Death",
@@ -655,7 +1102,108 @@
           "1961485542",
           "2887971121"
         ],
-        "iconPath": "/common/destiny2_content/icons/6c1ebb7aafb678a8b11f712fef80abe0.jpg"
+        "iconPath": "/common/destiny2_content/icons/6c1ebb7aafb678a8b11f712fef80abe0.jpg",
+        "steps": [
+          {
+            "hash": "613601972",
+            "description": "Eris Morn believes the Hive's wicked science can be turned against them. Help her investigate the Circle of Bones beneath the Moon.",
+            "objectives": [
+              {
+                "hash": "1662555529",
+                "label": "Circle of Bones explored",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3908666296",
+            "description": "Your understanding of the Hive's Deathsong has only just begun. Take the Silent Skull to Eris Morn.",
+            "objectives": [
+              {
+                "hash": "266191960",
+                "label": "Eris Morn visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1479328354",
+            "description": "Collect bones from public events near the Hellmouth, the Lost Sector K1 Revelation in Sorrow's Harbor, and a wandering Bone Collector on the Moon.",
+            "objectives": [
+              {
+                "hash": "620592546",
+                "label": "Festering Bone collected",
+                "total": 1
+              },
+              {
+                "hash": "1378752314",
+                "label": "Ritualistic Bone collected",
+                "total": 1
+              },
+              {
+                "hash": "1605161895",
+                "label": "Bone Collector's Marrow acquired",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "926942410",
+            "description": "Enter the Scarlet Keep strike and slay the High Conductor, Sulmâkta, within.",
+            "objectives": [
+              {
+                "hash": "3855440750",
+                "label": "High Conductor defeated",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1325063399",
+            "description": "Record your enemies' screams. Defeat base combatants to record discomfort. Defeat elites and minibosses to record pain. Defeat bosses and other Guardians to record anguish. Screams gathered on the Moon count more.",
+            "objectives": [
+              {
+                "hash": "1515271058",
+                "label": "Discomfort recorded",
+                "total": 700
+              },
+              {
+                "hash": "2043859401",
+                "label": "Pained cries recorded",
+                "total": 110
+              },
+              {
+                "hash": "1019617254",
+                "label": "Anguished screams recorded",
+                "total": 50
+              }
+            ]
+          },
+          {
+            "hash": "1961485542",
+            "description": "Fight your way into the depths of the Circle of Bones, survive the Aria, and defeat the Deathsinger, Ir Airâm. Then, bring her skull to Eris Morn.",
+            "objectives": [
+              {
+                "hash": "1662593395",
+                "label": "Ir Airâm, Deathsinger defeated",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2887971121",
+            "description": "Bring the Singing Skull to Eris Morn to complete your terrifying new instrument of war.",
+            "objectives": [
+              {
+                "hash": "228980975",
+                "label": "Eris Morn visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "exotic",
+        "reward": "Deathbringer"
       },
       {
         "name": "The Journey",
@@ -670,7 +1218,92 @@
           "60788839",
           "1465888553"
         ],
-        "iconPath": "/common/destiny2_content/icons/0dcf6a903c206a58968e8b97c069fe14.jpg"
+        "iconPath": "/common/destiny2_content/icons/0dcf6a903c206a58968e8b97c069fe14.jpg",
+        "steps": [
+          {
+            "hash": "3715926175",
+            "description": "Around you… darkness. If you are to discover your path, you must anchor yourself to light.",
+            "objectives": [
+              {
+                "hash": "2849959266",
+                "label": "Emerged from the dark",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3710486535",
+            "description": "A light shines on your path. But you have yet to bring it into focus. Until then, your path remains among the lost.",
+            "objectives": [
+              {
+                "hash": "4206645403",
+                "label": "Archer's Line Path Fragment found",
+                "total": 1
+              },
+              {
+                "hash": "4206645400",
+                "label": "Sorrow's Harbor Path Fragment found",
+                "total": 1
+              },
+              {
+                "hash": "4206645401",
+                "label": "Hellmouth Path Fragment found",
+                "total": 1
+              },
+              {
+                "hash": "4206645406",
+                "label": "Anchor of Light Path Fragment found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2269402074",
+            "description": "Your path brightens, shining through the barrier of emerald, beneath a harbor built from sorrow.",
+            "objectives": [
+              {
+                "hash": "1291575938",
+                "label": "Path uncovered",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1503907116",
+            "description": "The Pariahs stand guard over far more than just despair, for within these tunnels lie many secrets.",
+            "objectives": [
+              {
+                "hash": "2967175114",
+                "label": "Path's end located",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "60788839",
+            "description": "The end of your path is in sight. Defeat those who would keep you from it.",
+            "objectives": [
+              {
+                "hash": "1865340231",
+                "label": "Volmâr, the Tempted slain",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1465888553",
+            "description": "Return to Eris Morn with the Hive bug.",
+            "objectives": [
+              {
+                "hash": "1890933159",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "exotic",
+        "reward": "Xenophage"
       }
     ],
     "difficultyHuntsTitle": "Nightmare Hunts",
@@ -682,19 +1315,28 @@
         {
           "name": "Nightmare of Taniks, the Scarred",
           "completionItemHash": "846241149",
-          "completionItemHashes": ["846241149", "2164448701"],
+          "completionItemHashes": [
+            "846241149",
+            "2164448701"
+          ],
           "rewardNote": "Apostate"
         },
         {
           "name": "Nightmare of Zydron, Gate Lord",
           "completionItemHash": "2136808079",
-          "completionItemHashes": ["2136808079", "3067821200"],
+          "completionItemHashes": [
+            "2136808079",
+            "3067821200"
+          ],
           "rewardNote": "Heretic"
         },
         {
           "name": "Nightmare of Phogoth, the Untamed",
           "completionItemHash": "2527058297",
-          "completionItemHashes": ["2527058297", "2782847179"],
+          "completionItemHashes": [
+            "2527058297",
+            "2782847179"
+          ],
           "rewardNote": "Blasphemer"
         }
       ]

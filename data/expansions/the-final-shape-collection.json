@@ -542,7 +542,409 @@
           "2965681115"
         ],
         "iconPath": "/common/destiny2_content/icons/df1858a0b153eb676dea032116cc9e1c.png",
-        "completionObjectiveHash": "2965681115"
+        "completionObjectiveHash": "2965681115",
+        "steps": [
+          {
+            "hash": "4009316293",
+            "description": "Begin your trek through the Pale Heart and search for Crow.",
+            "objectives": [
+              {
+                "hash": "1660019521",
+                "label": "\"Temptation\" mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3716079445",
+            "description": "Join Cayde and Crow in Refuge of Repose.",
+            "objectives": [
+              {
+                "hash": "3994521719",
+                "label": "Regrouped at the campfire",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3460941821",
+            "description": "Confer with Ghost at Refuge of Repose.",
+            "objectives": [
+              {
+                "hash": "1894503879",
+                "label": "Ghost consulted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3897411504",
+            "description": "Listen to the radio at Refuge of Repose.",
+            "objectives": [
+              {
+                "hash": "1499526234",
+                "label": "Broadcast heard",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "152104176",
+            "description": "Search for the wreckage of Ikora's ship.",
+            "objectives": [
+              {
+                "hash": "1186408404",
+                "label": "Mission \"Exegesis\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2065743110",
+            "description": "Reunite with Ikora and Cayde at Refuge of Silver Wings.",
+            "objectives": [
+              {
+                "hash": "3147379738",
+                "label": "Regrouped at the campfire",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3919284466",
+            "description": "Confer with Ghost at Refuge of Silver Wings.",
+            "objectives": [
+              {
+                "hash": "4081789754",
+                "label": "Ghost consulted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1915080913",
+            "description": "Listen to the radio at Refuge of Silver Wings.",
+            "objectives": [
+              {
+                "hash": "2745677765",
+                "label": "Broadcast heard",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "265376475",
+            "description": "Press further ahead through the Pale Heart and look for Zavala.",
+            "objectives": [
+              {
+                "hash": "1917583787",
+                "label": "Mission \"Requiem\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4120577687",
+            "description": "Confer with Ghost at Refuge of Home.",
+            "objectives": [
+              {
+                "hash": "289914677",
+                "label": "Ghost consulted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "888548234",
+            "description": "Listen to the radio at Refuge of Home.",
+            "objectives": [
+              {
+                "hash": "3269556280",
+                "label": "Broadcast heard",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "658840641",
+            "description": "Scale the treacherous ice wall with Cayde and Crow.",
+            "objectives": [
+              {
+                "hash": "827113725",
+                "label": "\"Ascent\" mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2679970016",
+            "description": "Discuss the next move with Ikora, Zavala, and Crow.",
+            "objectives": [
+              {
+                "hash": "1369638792",
+                "label": "Regrouped at the campfire",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3760001336",
+            "description": "Confer with Ghost at Refuge of Beginnings",
+            "objectives": [
+              {
+                "hash": "4292413604",
+                "label": "Ghost consulted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1536545003",
+            "description": "Listen to the Radio at Refuge of Beginnings",
+            "objectives": [
+              {
+                "hash": "1642281587",
+                "label": "Broadcast heard",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1016912462",
+            "description": "Attempt to commune with the Traveler in the Broken Deep.",
+            "objectives": [
+              {
+                "hash": "931297134",
+                "label": "\"The Message, Part I\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3113918754",
+            "description": "Attempt to commune with the Traveler in the Forgotten Deep.",
+            "objectives": [
+              {
+                "hash": "4122171394",
+                "label": "\"The Message, Part II\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1433731838",
+            "description": "Attempt to commune with the Traveler in the Blooming Deep.",
+            "objectives": [
+              {
+                "hash": "229189086",
+                "label": "\"The Message, Part Ill\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1492240036",
+            "description": "Confer with Ghost at Refuge of Beginnings.",
+            "objectives": [
+              {
+                "hash": "1462362136",
+                "label": "Ghost consulted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2783395451",
+            "description": "Listen to the radio at Refuge of Beginnings.",
+            "objectives": [
+              {
+                "hash": "167301027",
+                "label": "Broadcast heard",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4096912375",
+            "description": "Clear a path through a blighted pass, and uncover a long-buried past.",
+            "objectives": [
+              {
+                "hash": "152205737",
+                "label": "\"Liminality\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2761711865",
+            "description": "Crow is going to try to talk Zavala down. This may not end well.",
+            "objectives": [
+              {
+                "hash": "1228298643",
+                "label": "Regrouped at the campfire",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2929046193",
+            "description": "Confer with Ghost at Refuge of Wishes.",
+            "objectives": [
+              {
+                "hash": "1785022083",
+                "label": "Ghost consulted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3862422804",
+            "description": "Help Targe find Zavala, before it's too late.",
+            "objectives": [
+              {
+                "hash": "3068408856",
+                "label": "\"Dissent\" mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1924771146",
+            "description": "Support Zavala at Refuge of Endings.",
+            "objectives": [
+              {
+                "hash": "1921712534",
+                "label": "Regrouped at the campfire",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3324027446",
+            "description": "Confer with Ghost at Refuge of Endings.",
+            "objectives": [
+              {
+                "hash": "1455844854",
+                "label": "Ghost consulted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4227599758",
+            "description": "Confront the Witness in the place where it was made.",
+            "objectives": [
+              {
+                "hash": "2547845166",
+                "label": "\"Iconoclasm\" mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2215711693",
+            "description": "Confer with Ghost in the Lost City.",
+            "objectives": [
+              {
+                "hash": "3897727639",
+                "label": "Ghost consulted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3051590530",
+            "description": "Complete the \"Destined Heroes\" quest.",
+            "objectives": [
+              {
+                "hash": "1317032607",
+                "label": "Allies rallied",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1002654008",
+            "description": "Complete The Hunt Quest",
+            "objectives": [
+              {
+                "hash": "586274557",
+                "label": "\"Wild Card\" mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1047491773",
+            "description": "The final shape looms. There isn't much time to prepare.",
+            "objectives": [
+              {
+                "hash": "1947105023",
+                "label": "Complete",
+                "total": 1
+              },
+              {
+                "hash": "3433190765",
+                "label": "Prepared for the final shape",
+                "total": 1
+              },
+              {
+                "hash": "1671950171",
+                "label": "Prismatic unlocked",
+                "total": 36
+              },
+              {
+                "hash": "1078588330",
+                "label": "Lost Ghosts healed",
+                "total": 1
+              },
+              {
+                "hash": "968721065",
+                "label": "Personal contributions",
+                "total": 1
+              },
+              {
+                "hash": "3457751120",
+                "label": "Global preparation efforts",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2302997306",
+            "description": "Confront and unmake the Witness.",
+            "objectives": [
+              {
+                "hash": "2000537234",
+                "label": "Witness unmade",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1142335168",
+            "description": "Return with Ghost to the Lost City in the Pale Heart.",
+            "objectives": [
+              {
+                "hash": "889303979",
+                "label": "Ghost visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "93470569",
+            "description": "Confer with Ghost in the Lost City.",
+            "objectives": [
+              {
+                "hash": "2965681115",
+                "label": "Ghost consulted",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "campaign"
       },
       {
         "name": "Destined Heroes",
@@ -571,7 +973,124 @@
           "935595952"
         ],
         "iconPath": "/common/destiny2_content/icons/9538fbb3e1031913b52185592f694c9e.jpg",
-        "completionObjectiveHash": "935595952"
+        "completionObjectiveHash": "935595952",
+        "steps": [
+          {
+            "hash": "2145594812",
+            "description": "There's a strange radio transmission coming from the old Tower in the Lost City… and it's using a Hive frequency.",
+            "objectives": [
+              {
+                "hash": "2531500566",
+                "label": "Message heard",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "227865745",
+            "description": "Investigate the activity of Savathûn's Lucent Hive near the portal.",
+            "objectives": [
+              {
+                "hash": "1000347839",
+                "label": "Queens, Part I completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1437284567",
+            "description": "Speak to Micah-10 through her conduit in the Arbor of Light.",
+            "objectives": [
+              {
+                "hash": "1994811421",
+                "label": "Micah-10 contacted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3108716040",
+            "description": "Talk to Cayde-6 in the Lost City.",
+            "objectives": [
+              {
+                "hash": "1582606920",
+                "label": "Talked to Cayde-6",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2505385643",
+            "description": "Ghost has something he wants to talk to you about. Go to the ledge of the old Tower in the Lost City to speak with him.",
+            "objectives": [
+              {
+                "hash": "4216479609",
+                "label": "Checked in with Ghost.",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3381752080",
+            "description": "Talk to Ghost to begin the quests \"Lost in the Light\" and \"Found in the Dark.\" Work with your allies to explore the possibility of synergy between Light and Darkness.",
+            "objectives": [
+              {
+                "hash": "2273617662",
+                "label": "Quests acquired",
+                "total": 1
+              },
+              {
+                "hash": "2135428778",
+                "label": "\"Lost in the Light\" completed",
+                "total": 1
+              },
+              {
+                "hash": "2382273890",
+                "label": "\"Found in the Dark\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2036483182",
+            "description": "Investigate spikes in Taken energy in the Refraction.",
+            "objectives": [
+              {
+                "hash": "1369507008",
+                "label": "Queens, Part II completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2505385640",
+            "description": "Go to the Lost City and confer with Ghost.",
+            "objectives": [
+              {
+                "hash": "2893253352",
+                "label": "Conferred with Ghost",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3761753927",
+            "description": "Use the Dyadic Prism to access the new landing zone in the Sacrarium and claim your destiny.",
+            "objectives": [
+              {
+                "hash": "664704283",
+                "label": "Make Your Own Fate",
+                "total": 1
+              },
+              {
+                "hash": "935595952",
+                "label": "Make Your Own Fate",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "The Heart's Depths",
@@ -596,7 +1115,92 @@
           "2767905509"
         ],
         "iconPath": "/common/destiny2_content/icons/c72c1e511e45fd7725f063650cc42799.jpg",
-        "completionObjectiveHash": "2767905509"
+        "completionObjectiveHash": "2767905509",
+        "steps": [
+          {
+            "hash": "1218497598",
+            "description": "Defeat foes of the Traveler wherever they're found.",
+            "objectives": [
+              {
+                "hash": "2606713631",
+                "label": "Progress",
+                "total": 100
+              }
+            ]
+          },
+          {
+            "hash": "3265116853",
+            "description": "Defeat combatants using your abilities or Super.",
+            "objectives": [
+              {
+                "hash": "3146153470",
+                "label": "Progress",
+                "total": 50
+              }
+            ]
+          },
+          {
+            "hash": "3197859223",
+            "description": "Complete the quest \"A Guardian Rises\" while you wait for the schematic to finish processing the data.",
+            "objectives": [
+              {
+                "hash": "1073140580",
+                "label": "Quest completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3113971187",
+            "description": "Bring the schematic to Banshee-44 in the Tower Courtyard.",
+            "objectives": [
+              {
+                "hash": "3878220776",
+                "label": "Speak with Banshee-44",
+                "total": 1
+              },
+              {
+                "hash": "3878220777",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3063491139",
+            "description": "Cross the threshold and discover what lies within the Traveler.",
+            "objectives": [
+              {
+                "hash": "2448219512",
+                "label": "\"Transmigration\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1352027002",
+            "description": "Defeat targets while using any Fusion Rifle or Linear Fusion Rifle.",
+            "objectives": [
+              {
+                "hash": "3688352227",
+                "label": "Linear Fusion Rifle",
+                "total": 150
+              }
+            ]
+          },
+          {
+            "hash": "1150401288",
+            "description": "Deliver the completed schematic to Banshee-44 in the Tower Courtyard.",
+            "objectives": [
+              {
+                "hash": "2767905509",
+                "label": "Speak with Banshee-44",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Found in the Dark",
@@ -617,7 +1221,65 @@
           "3063841781"
         ],
         "iconPath": "/common/destiny2_content/icons/718e3a59033f13913ec2e35ba895cc2b.jpg",
-        "completionObjectiveHash": "3063841781"
+        "completionObjectiveHash": "3063841781",
+        "steps": [
+          {
+            "hash": "3878661814",
+            "description": "Find a manifestation of Darkness in the cave in the Seclusion.",
+            "objectives": [
+              {
+                "hash": "378334598",
+                "label": "Darkness synergized",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3858524939",
+            "description": "Investigate Shadow Legion activity in the Transgression.",
+            "objectives": [
+              {
+                "hash": "3674934785",
+                "label": "\"Home, Part I\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3878661813",
+            "description": "Return to the cave in the Seclusion and commune with the Darkness.",
+            "objectives": [
+              {
+                "hash": "3784492677",
+                "label": "Darkness synergized",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3843819494",
+            "description": "Destroy Shadow Legion mining operations in the Divide.",
+            "objectives": [
+              {
+                "hash": "158676664",
+                "label": "\"Home, Part II\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3634243230",
+            "description": "Paracausal ripples have unearthed a manifestation of Darkness.",
+            "objectives": [
+              {
+                "hash": "3063841781",
+                "label": "Darkness synergized",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Lost in the Light",
@@ -638,7 +1300,65 @@
           "361336933"
         ],
         "iconPath": "/common/destiny2_content/icons/a10a1a700f4685195d860482eb8ed84b.jpg",
-        "completionObjectiveHash": "361336933"
+        "completionObjectiveHash": "361336933",
+        "steps": [
+          {
+            "hash": "4096435878",
+            "description": "Find a manifestation of the Light in the cave in the Refraction.",
+            "objectives": [
+              {
+                "hash": "1161349462",
+                "label": "Light synergized",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3208963371",
+            "description": "Uncover House Salvation's operations in the Blooming.",
+            "objectives": [
+              {
+                "hash": "1586134945",
+                "label": "\"The Hollow, Part I\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4096435877",
+            "description": "Return to the cave in the Refraction and commune with the Light.",
+            "objectives": [
+              {
+                "hash": "1405981109",
+                "label": "Light synergized",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "186303403",
+            "description": "Launch \"The Hollow, Part II\" to travel to Europa and eliminate the Wrathborn threat.",
+            "objectives": [
+              {
+                "hash": "77697569",
+                "label": "\"The Hollow, Part II\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3627559758",
+            "description": "Paracausal ripples have unearthed a manifestation of Light.",
+            "objectives": [
+              {
+                "hash": "361336933",
+                "label": "Light synergized",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "The Return",
@@ -658,7 +1378,54 @@
         ],
         "iconPath": "/common/destiny2_content/icons/b5c3b4228d79ab6104be7e6cbc33e127.png",
         "completionObjectiveHash": "367259677",
-        "group": "The Final Days"
+        "group": "The Final Days",
+        "steps": [
+          {
+            "hash": "3758175010",
+            "description": "Search for Ghost telemetry in strike \"The Disgraced\" in the Cosmodrome.",
+            "objectives": [
+              {
+                "hash": "2723327496",
+                "label": "Coordinates found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2179804365",
+            "description": "Search the Cosmodrome for Peach.",
+            "objectives": [
+              {
+                "hash": "3250011746",
+                "label": "Ghost found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "137319671",
+            "description": "Return to the Arbor of Light in the Pale Heart to restore the lost Ghost.",
+            "objectives": [
+              {
+                "hash": "3106192324",
+                "label": "Ghost restored",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3719510256",
+            "description": "Return to the Arbor of Light to discuss next steps.",
+            "objectives": [
+              {
+                "hash": "367259677",
+                "label": "Micah-10 visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "The Hellmouth",
@@ -678,7 +1445,54 @@
         ],
         "iconPath": "/common/destiny2_content/icons/b29f79816cc66bb49c19c059c7346f0b.png",
         "completionObjectiveHash": "3440949012",
-        "group": "The Final Days"
+        "group": "The Final Days",
+        "steps": [
+          {
+            "hash": "578566109",
+            "description": "Search for Ghost telemetry in \"Nightmare Hunt: Fear\" on the Moon.",
+            "objectives": [
+              {
+                "hash": "2353812825",
+                "label": "Coordinates found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1719082278",
+            "description": "Explore beneath the Moon's surface to search for Link.",
+            "objectives": [
+              {
+                "hash": "130912625",
+                "label": "Ghost found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "781655348",
+            "description": "Return to the Arbor of Light in the Pale Heart to restore the lost Ghost.",
+            "objectives": [
+              {
+                "hash": "1336664169",
+                "label": "Ghost restored",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1534595911",
+            "description": "Return to the Arbor of Light to discuss next steps.",
+            "objectives": [
+              {
+                "hash": "3440949012",
+                "label": "Micah-10 visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "The Shadows",
@@ -698,7 +1512,54 @@
         ],
         "iconPath": "/common/destiny2_content/icons/d4c9e1116280a597ea0f04267239e1da.png",
         "completionObjectiveHash": "1067104703",
-        "group": "The Final Days"
+        "group": "The Final Days",
+        "steps": [
+          {
+            "hash": "2038129348",
+            "description": "Search for Ghost telemetry in strike \"Lake of Shadows\" in the EDZ.",
+            "objectives": [
+              {
+                "hash": "1352163662",
+                "label": "Coordinates found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1375475507",
+            "description": "Search the EDZ for Dejana.",
+            "objectives": [
+              {
+                "hash": "2914287504",
+                "label": "Ghost found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2839862009",
+            "description": "Return to the Arbor of Light in the Pale Heart to restore the lost Ghost.",
+            "objectives": [
+              {
+                "hash": "2848421658",
+                "label": "Ghost restored",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2272665054",
+            "description": "Return to the Arbor of Light to discuss next steps.",
+            "objectives": [
+              {
+                "hash": "1067104703",
+                "label": "Micah-10 visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "The Oracle",
@@ -718,7 +1579,54 @@
         ],
         "iconPath": "/common/destiny2_content/icons/feced73903894da867ecbbe2d5990225.png",
         "completionObjectiveHash": "2974579822",
-        "group": "The Final Days"
+        "group": "The Final Days",
+        "steps": [
+          {
+            "hash": "1711768439",
+            "description": "Search for Ghost telemetry in strike \"Insight Terminus\" on Nessus.",
+            "objectives": [
+              {
+                "hash": "860485991",
+                "label": "Coordinates found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4216908924",
+            "description": "Search Nessus for signs of Bean.",
+            "objectives": [
+              {
+                "hash": "1846493175",
+                "label": "Ghost found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3526414646",
+            "description": "Return to the Arbor of Light in the Pale Heart to restore the lost Ghost.",
+            "objectives": [
+              {
+                "hash": "1390628967",
+                "label": "Ghost restored",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "607418085",
+            "description": "Return to the Arbor of Light to discuss next steps.",
+            "objectives": [
+              {
+                "hash": "2974579822",
+                "label": "Micah-10 visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "The Ascendant",
@@ -738,7 +1646,54 @@
         ],
         "iconPath": "/common/destiny2_content/icons/bfeb898a0b725094d62dadef86f23e97.png",
         "completionObjectiveHash": "3407971505",
-        "group": "The Final Days"
+        "group": "The Final Days",
+        "steps": [
+          {
+            "hash": "1069076942",
+            "description": "Search for Ghost telemetry in mission \"Dark Monastery\" in the Dreaming City.",
+            "objectives": [
+              {
+                "hash": "3612635172",
+                "label": "Coordinates found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2104674665",
+            "description": "Search the Dreaming City for signs of Akasha.",
+            "objectives": [
+              {
+                "hash": "1647501534",
+                "label": "Ghost found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1204353787",
+            "description": "Return to the Arbor of Light in the Pale Heart to restore the lost Ghost.",
+            "objectives": [
+              {
+                "hash": "176693440",
+                "label": "Ghost restored",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4079570156",
+            "description": "Return to the Arbor of Light to discuss next steps.",
+            "objectives": [
+              {
+                "hash": "3407971505",
+                "label": "Micah-10 visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "The Past",
@@ -758,7 +1713,54 @@
         ],
         "iconPath": "/common/destiny2_content/icons/e5ab8c57536e967103468dcef36dbcd9.png",
         "completionObjectiveHash": "1245600472",
-        "group": "The Final Days"
+        "group": "The Final Days",
+        "steps": [
+          {
+            "hash": "4195357129",
+            "description": "Search for Ghost telemetry in \"Heist Battleground: Mars\" located on the Throne World map.",
+            "objectives": [
+              {
+                "hash": "4088102245",
+                "label": "Coordinates found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4047209202",
+            "description": "Search Mars for signs of Citrine.",
+            "objectives": [
+              {
+                "hash": "1492299421",
+                "label": "Ghost found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1543279656",
+            "description": "Return to the Arbor of Light in the Pale Heart to restore the lost Ghost.",
+            "objectives": [
+              {
+                "hash": "4064367749",
+                "label": "Ghost restored",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2347179427",
+            "description": "Return to the Arbor of Light to discuss next steps.",
+            "objectives": [
+              {
+                "hash": "1245600472",
+                "label": "Micah-10 visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "The Veiled",
@@ -778,7 +1780,54 @@
         ],
         "iconPath": "/common/destiny2_content/icons/0bc1e93b3c7167aa05dfa1342bebcf99.png",
         "completionObjectiveHash": "2824149219",
-        "group": "The Final Days"
+        "group": "The Final Days",
+        "steps": [
+          {
+            "hash": "541603424",
+            "description": "Search for Ghost telemetry in mission \"The Communion\" on Europa.",
+            "objectives": [
+              {
+                "hash": "1321473802",
+                "label": "Coordinates found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2522697935",
+            "description": "Search Europa for signs of Anwar.",
+            "objectives": [
+              {
+                "hash": "3657825532",
+                "label": "Ghost found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1756509213",
+            "description": "Return to the Arbor of Light in the Pale Heart to restore the lost Ghost.",
+            "objectives": [
+              {
+                "hash": "1959824790",
+                "label": "Ghost restored",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "148715642",
+            "description": "Return to the Arbor of Light to discuss next steps.",
+            "objectives": [
+              {
+                "hash": "2824149219",
+                "label": "Micah-10 visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "The Desperation",
@@ -798,7 +1847,54 @@
         ],
         "iconPath": "/common/destiny2_content/icons/d3d38420f5b6c79f75ef680b179a1453.png",
         "completionObjectiveHash": "1773865004",
-        "group": "The Final Days"
+        "group": "The Final Days",
+        "steps": [
+          {
+            "hash": "3400121653",
+            "description": "Search for Ghost telemetry in strike \"Devils' Lair\" in the Cosmodrome.",
+            "objectives": [
+              {
+                "hash": "1995230385",
+                "label": "Coordinates found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3127309054",
+            "description": "Search the Cosmodrome for signs of Hecate.",
+            "objectives": [
+              {
+                "hash": "3261123417",
+                "label": "Ghost found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1041633852",
+            "description": "Return to the Arbor of Light in the Pale Heart to restore the lost Ghost.",
+            "objectives": [
+              {
+                "hash": "2903747393",
+                "label": "Ghost restored",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2616169743",
+            "description": "Return to the Arbor of Light to discuss next steps.",
+            "objectives": [
+              {
+                "hash": "1773865004",
+                "label": "Micah-10 visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Convalescence",
@@ -837,7 +1933,174 @@
           "1909056411"
         ],
         "iconPath": "/common/destiny2_content/icons/81576a92af99b4acbf145abbde859c80.png",
-        "completionObjectiveHash": "1909056411"
+        "completionObjectiveHash": "1909056411",
+        "steps": [
+          {
+            "hash": "1831806500",
+            "description": "Complete campaign missions on Cooperative Focus mode.",
+            "objectives": [
+              {
+                "hash": "3624932185",
+                "label": "Ascent",
+                "total": 1
+              },
+              {
+                "hash": "1096017689",
+                "label": "Dissent",
+                "total": 1
+              },
+              {
+                "hash": "1493823176",
+                "label": "Iconoclasm",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1230738388",
+            "description": "Return to the Arbor of Light.",
+            "objectives": [
+              {
+                "hash": "1475187849",
+                "label": "Arbor visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3838101920",
+            "description": "Explore the search area to find the missing, possibly injured, Ghost.",
+            "objectives": [
+              {
+                "hash": "1906454861",
+                "label": "Lost Ghost located",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2162076565",
+            "description": "Investigate the new growth in the Arbor of Light.",
+            "objectives": [
+              {
+                "hash": "2066200542",
+                "label": "Arbor Assessed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3308978151",
+            "description": "Speak with Micah in the Arbor of Light to assess the injured Ghost's wounds.",
+            "objectives": [
+              {
+                "hash": "873689780",
+                "label": "Ghost Returned",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2617996611",
+            "description": "Acquire a Flickering Blessing mod by opening chests anywhere in the Pale Heart. Pathfinder field assignment chests have a massively higher chance of granting Traveler's Blessing mods.",
+            "objectives": [
+              {
+                "hash": "4259313272",
+                "label": "Blessing acquired",
+                "total": 2
+              }
+            ]
+          },
+          {
+            "hash": "2154917694",
+            "description": "Equip the new Flickering Blessing.",
+            "objectives": [
+              {
+                "hash": "1563372575",
+                "label": "Flickering Blessing equipped",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2750760699",
+            "description": "Investigate the new growth in the Arbor of Light.",
+            "objectives": [
+              {
+                "hash": "2410341568",
+                "label": "Arbor Assessed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "931113523",
+            "description": "Speak with Micah in the Arbor of Light to discuss your new connection with the Light.",
+            "objectives": [
+              {
+                "hash": "3973269032",
+                "label": "Arbor visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3465651225",
+            "description": "Open Overthrow chests in the Landing to gain access to the location Micah indicated.",
+            "objectives": [
+              {
+                "hash": "3718428346",
+                "label": "Chests",
+                "total": 20
+              }
+            ]
+          },
+          {
+            "hash": "1043681923",
+            "description": "Follow the vision of Light into the depths of the Pale Heart and fight the infection found there.",
+            "objectives": [
+              {
+                "hash": "2051181240",
+                "label": "Cyst expressed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2259993497",
+            "description": "Return to the Lost City's Arbor of Light.",
+            "objectives": [
+              {
+                "hash": "2512404794",
+                "label": "Lost Light restored",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3998813372",
+            "description": "Investigate the new growth in the Arbor of Light.",
+            "objectives": [
+              {
+                "hash": "2946727617",
+                "label": "Arbor Assessed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1003295682",
+            "description": "Speak with Micah in the Arbor of Light to assess the injured Ghost's recovery.",
+            "objectives": [
+              {
+                "hash": "1909056411",
+                "label": "Micah visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Wild Card",
@@ -855,12 +2118,65 @@
         ],
         "iconPath": "/common/destiny2_content/icons/9743db0bdbabf201c853ee7229d664c8.png",
         "completionObjectiveHash": "3302811324",
-        "completionItemHash": "2905188646"
+        "completionItemHash": "2905188646",
+        "steps": [
+          {
+            "hash": "1768751086",
+            "description": "Investigate an unknown threat with Cayde and Crow.",
+            "objectives": [
+              {
+                "hash": "2489932047",
+                "label": "Wild Card completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "488004607",
+            "description": "Listen to the radio transmission in the Lost City Tower.",
+            "objectives": [
+              {
+                "hash": "1770267548",
+                "label": "Transmission heard",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1075457695",
+            "description": "Speak to Cayde-6.",
+            "objectives": [
+              {
+                "hash": "3302811324",
+                "label": "Talked to Cayde-6",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "exotic",
+        "reward": "Still Hunt"
       },
       {
         "name": "Dual Destiny",
         "recordHash": "3225424862",
-        "iconPath": "/common/destiny2_content/icons/842f32c6ea265df69715195aa5f9edf2.png"
+        "iconPath": "/common/destiny2_content/icons/842f32c6ea265df69715195aa5f9edf2.png",
+        "steps": [
+          {
+            "recordHash": "3225424862",
+            "objectiveHash": "1863846847",
+            "description": "Dual Destiny completed",
+            "objectives": [
+              {
+                "hash": "1863846847",
+                "label": "Dual Destiny completed",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "exotic",
+        "reward": "Exotic class item"
       }
     ]
   }

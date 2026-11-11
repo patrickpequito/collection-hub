@@ -609,15 +609,92 @@ function applyRecordAndItemCompletion(
   }
 }
 
+export type ActiveQuestStep = {
+  stepHash: string;
+  objectives: Array<{
+    objectiveHash: string;
+    progress: number;
+    completionValue: number;
+    complete: boolean;
+  }>;
+};
+
+export type QuestProgress = {
+  completed: Record<string, boolean>;
+  /** Furthest step held in inventory per quest line (keyed by canonical questHash). */
+  active: Record<string, ActiveQuestStep>;
+};
+
+/** Ordered step list of a target: quest item, extra steps, then the final step. */
+function orderedSteps(target: QuestCompletionTarget): string[] {
+  const steps = [target.questHash, ...(target.stepHashes ?? []), target.completionStepHash];
+  return [...new Set(steps)];
+}
+
+function findActiveQuestSteps(
+  profile: ProfileQuestProgressResponse,
+  targets: QuestCompletionTarget[],
+): Record<string, ActiveQuestStep> {
+  const stepIndex = new Map<string, { questHash: string; index: number }>();
+  for (const target of targets) {
+    orderedSteps(target).forEach((hash, index) => {
+      if (!stepIndex.has(hash)) stepIndex.set(hash, { questHash: target.questHash, index });
+    });
+  }
+
+  const instanced = profile.itemComponents?.objectives?.data ?? {};
+  const uninstanced = new Map<string, ObjectiveProgress[]>();
+  for (const components of Object.values(profile.characterUninstancedItemComponents?.data ?? {})) {
+    for (const [itemHash, bucket] of Object.entries(components.objectives?.data ?? {})) {
+      if (bucket.objectives?.length) uninstanced.set(itemHash, bucket.objectives);
+    }
+  }
+
+  const best = new Map<string, { index: number; step: ActiveQuestStep }>();
+  for (const item of collectAllInventoryItems(profile)) {
+    const itemHash = item.itemHash != null ? String(item.itemHash) : "";
+    const hit = itemHash ? stepIndex.get(itemHash) : undefined;
+    if (!hit) continue;
+    const current = best.get(hit.questHash);
+    if (current && current.index >= hit.index) continue;
+    const objectives =
+      (item.itemInstanceId ? instanced[item.itemInstanceId]?.objectives : undefined) ??
+      uninstanced.get(itemHash) ??
+      [];
+    best.set(hit.questHash, {
+      index: hit.index,
+      step: {
+        stepHash: itemHash,
+        objectives: objectives.map((objective) => ({
+          objectiveHash: String(objective.objectiveHash ?? ""),
+          progress: objective.progress ?? 0,
+          completionValue: objective.completionValue ?? 1,
+          complete: isObjectiveProgressComplete(objective),
+        })),
+      },
+    });
+  }
+
+  return Object.fromEntries([...best].map(([questHash, entry]) => [questHash, entry.step]));
+}
+
 /** Returns quest-line completion keyed by canonical questHash. */
 export async function fetchCompletedQuestHashes(
   session: BungieUserSession,
   targets: QuestCompletionTarget[],
 ): Promise<Record<string, boolean>> {
-  if (targets.length === 0) return {};
+  return (await fetchQuestProgress(session, targets)).completed;
+}
+
+/** Quest-line completion plus the step currently held for each quest line. */
+export async function fetchQuestProgress(
+  session: BungieUserSession,
+  targets: QuestCompletionTarget[],
+): Promise<QuestProgress> {
+  if (targets.length === 0) return { completed: {}, active: {} };
 
   const membership = await resolveDestinyMembership(session);
-  if (!membership) return {};
+  if (!membership) return { completed: {}, active: {} };
 
   const profile = await bungieGet<ProfileQuestProgressResponse>(
     `/Platform/Destiny2/${membership.membershipType}/Profile/${membership.membershipId}/?components=102,104,200,201,202,301,900`,
@@ -660,7 +737,12 @@ export async function fetchCompletedQuestHashes(
     ownedItemHashes,
   );
 
-  return completed;
+  const active = findActiveQuestSteps(profile, targets);
+  for (const questHash of Object.keys(active)) {
+    if (completed[questHash]) delete active[questHash];
+  }
+
+  return { completed, active };
 }
 
 export function parseQuestCompletionTargets(

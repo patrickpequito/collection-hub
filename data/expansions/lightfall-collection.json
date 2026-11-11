@@ -526,7 +526,241 @@
           "3154948184"
         ],
         "iconPath": "/common/destiny2_content/icons/9cd3546b0172b01c310909ff9f90d0e7.jpg",
-        "completionObjectiveHash": "3154948184"
+        "completionObjectiveHash": "3154948184",
+        "steps": [
+          {
+            "hash": "1875434402",
+            "description": "Go see Osiris in the Hall of Heroes.",
+            "objectives": [
+              {
+                "hash": "1127761068",
+                "label": "Osiris visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1831789550",
+            "description": "Go see Rohan in the Hall of Heroes.",
+            "objectives": [
+              {
+                "hash": "2716494944",
+                "label": "Rohan visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2921235458",
+            "description": "Complete the \"Under Siege\" mission.",
+            "objectives": [
+              {
+                "hash": "2372723163",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2893724857",
+            "description": "Go see Nimbus.",
+            "objectives": [
+              {
+                "hash": "1842019290",
+                "label": "Nimbus visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3616435444",
+            "description": "Complete the \"Downfall\" mission.",
+            "objectives": [
+              {
+                "hash": "582345257",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1120173220",
+            "description": "Go see Osiris in the Hall of Heroes.",
+            "objectives": [
+              {
+                "hash": "2485771929",
+                "label": "Osiris visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2893724856",
+            "description": "Go see Nimbus.",
+            "objectives": [
+              {
+                "hash": "3052931605",
+                "label": "Nimbus visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2564910392",
+            "description": "Complete the \"Breakneck\" mission.",
+            "objectives": [
+              {
+                "hash": "2729996181",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2893724863",
+            "description": "Go see Nimbus.",
+            "objectives": [
+              {
+                "hash": "1554108252",
+                "label": "Nimbus visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3319704294",
+            "description": "Complete the \"On the Verge\" mission.",
+            "objectives": [
+              {
+                "hash": "4082018647",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2347049484",
+            "description": "Complete the \"No Time Left\" mission.",
+            "objectives": [
+              {
+                "hash": "2731292347",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2893724862",
+            "description": "Go see Nimbus.",
+            "objectives": [
+              {
+                "hash": "3512430751",
+                "label": "Nimbus visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1099249219",
+            "description": "Complete the \"HyperNet Current\" strike.",
+            "objectives": [
+              {
+                "hash": "3571769720",
+                "label": "Strike completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2893724861",
+            "description": "Go see Nimbus.",
+            "objectives": [
+              {
+                "hash": "4152212150",
+                "label": "Nimbus visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1871980184",
+            "description": "Complete the \"Headlong\" mission.",
+            "objectives": [
+              {
+                "hash": "202060405",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "399421978",
+            "description": "Complete the \"Desperate Measures\" mission.",
+            "objectives": [
+              {
+                "hash": "2154103555",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1113204948",
+            "description": "Go see Zavala in the Tower.",
+            "objectives": [
+              {
+                "hash": "3292535689",
+                "label": "Zavala visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3401811367",
+            "description": "Go see Ikora in the Tower.",
+            "objectives": [
+              {
+                "hash": "795936116",
+                "label": "Ikora visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3670562313",
+            "description": "Go to the Hall of Heroes and meditate to receive your Strand subclass.",
+            "objectives": [
+              {
+                "hash": "2005921534",
+                "label": "Centering",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3638686275",
+            "description": "You have made a breakthrough in your journey of mastering Strand. Strand subclasses are now available to equip at any time.",
+            "objectives": [
+              {
+                "hash": "282295206",
+                "label": "Aspect purchased",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3982990883",
+            "description": "Go see Nimbus.",
+            "objectives": [
+              {
+                "hash": "3154948184",
+                "label": "Nimbus visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "campaign"
       },
       {
         "name": "Unfinished Business",
@@ -564,7 +798,163 @@
         ],
         "iconPath": "/common/destiny2_content/icons/f2390467d8e07730c42eeb1b4a6d67b1.jpg",
         "completionObjectiveHash": "1319855119",
-        "recordHash": "1014798089"
+        "recordHash": "1014798089",
+        "steps": [
+          {
+            "hash": "3107649396",
+            "description": "Go to the Hall of Heroes.",
+            "objectives": [
+              {
+                "hash": "2270750121",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1354288074",
+            "description": "Visit Nimbus to find out why they left Rohan's induction ceremony early.",
+            "objectives": [
+              {
+                "hash": "2172595699",
+                "label": "Nimbus visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4252762628",
+            "description": "Collect cipher qubits from the Vex and use them to extract Rohan's data from Cloud Accretions in Neomuna.",
+            "objectives": [
+              {
+                "hash": "2182303865",
+                "label": "Cipher qubits",
+                "total": 8
+              },
+              {
+                "hash": "1030205002",
+                "label": "Data extractions available",
+                "total": 8
+              },
+              {
+                "hash": "2182303864",
+                "label": "Resources extracted",
+                "total": 5
+              }
+            ]
+          },
+          {
+            "hash": "3578439097",
+            "description": "Locate the final data packet in Maya's Retreat.",
+            "objectives": [
+              {
+                "hash": "2600771290",
+                "label": "Data packet located",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2884502477",
+            "description": "Survive the Vex attack and recover the data packet from their conflux.",
+            "objectives": [
+              {
+                "hash": "1111410374",
+                "label": "Data packet recovered",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2392943047",
+            "description": "Regroup with Nimbus and Osiris in Radiosonde to find out what was in Rohan's notes.",
+            "objectives": [
+              {
+                "hash": "1545862804",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3055839705",
+            "description": "Retrieve a Vex compass from the Lost Sector in Límíng Harbor.",
+            "objectives": [
+              {
+                "hash": "2551450746",
+                "label": "Compass retrieved",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "157696345",
+            "description": "Create chaos in Ahimsa Park to draw Shadow Legion forces away from Calus's ship. The more you use your abilities to defeat combatants, the more mayhem you create.",
+            "objectives": [
+              {
+                "hash": "1492025082",
+                "label": "Combatants defeated",
+                "total": 100
+              }
+            ]
+          },
+          {
+            "hash": "965473706",
+            "description": "The passkey's other component is a Seed of Silver Wings. One can be found in Calus's trove deep within the Typhon Imperator.",
+            "objectives": [
+              {
+                "hash": "1778595027",
+                "label": "Seed obtained",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "802746785",
+            "description": "Return to Nimbus in Striders' Gate to build the passkey.",
+            "objectives": [
+              {
+                "hash": "4029974802",
+                "label": "Nimbus visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4102706977",
+            "description": "Complete the mission \"What Remains.\"",
+            "objectives": [
+              {
+                "hash": "457233810",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3680805371",
+            "description": "Bring the Conceptual Mind's memory core to Nimbus in Striders' Gate.",
+            "objectives": [
+              {
+                "hash": "4223118784",
+                "label": "Nimbus visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3317571822",
+            "description": "Go to the Hall of Heroes to honor those who cut their years short for the sake of humanity.",
+            "objectives": [
+              {
+                "hash": "1319855119",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "The Final Strand",
@@ -591,37 +981,198 @@
         "iconPath": "/common/destiny2_content/icons/8ef31ba637fe8764b3f6b6f97d786f5c.jpg",
         "completionObjectiveHash": "639860594",
         "recordHash": "293470650",
-        "completionItemHash": "3121540812"
+        "completionItemHash": "3121540812",
+        "steps": [
+          {
+            "hash": "3610649340",
+            "description": "Visit Nimbus in Striders' Gate in Neomuna.",
+            "objectives": [
+              {
+                "hash": "4237460445",
+                "label": "Nimbus visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3161484303",
+            "description": "Search for Strand-inoculated gadgets in Veil Containment in Neomuna.",
+            "objectives": [
+              {
+                "hash": "976332076",
+                "label": "Veil Containment searched",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1550193703",
+            "description": "Defeat the Shadow Legion looters and read their orders to learn where they took the spoils.",
+            "objectives": [
+              {
+                "hash": "87189244",
+                "label": "Orders read",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3646525804",
+            "description": "Retrieve the Veil spectrometer from the Typhon Imperator.",
+            "objectives": [
+              {
+                "hash": "2719377993",
+                "label": "Veil spectrometer retrieved",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "235749523",
+            "description": "Visit the Pouka Pond in the Hall of Heroes in Neomuna.",
+            "objectives": [
+              {
+                "hash": "2427683918",
+                "label": "Pouka Pond visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "34163917",
+            "description": "Complete Osiris's training program in Radiosonde in at least 5 minutes 30 seconds to retune the Veil spectrometer.",
+            "objectives": [
+              {
+                "hash": "1123502954",
+                "label": "Record time",
+                "total": 110000
+              },
+              {
+                "hash": "876496712",
+                "label": "Goal time: 5:30",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2632313001",
+            "description": "Visit the Pouka Pond in the Hall of Heroes to finish your Strand weapon.",
+            "objectives": [
+              {
+                "hash": "639860594",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "exotic",
+        "reward": "Final Warning"
       },
       {
         "name": "From Zero…",
         "recordHash": "272417846",
         "recordObjectiveHash": "346136935",
-        "iconPath": "/common/destiny2_content/icons/1bec7f86912cc0b39e03a6387c0d60bc.png"
+        "iconPath": "/common/destiny2_content/icons/1bec7f86912cc0b39e03a6387c0d60bc.png",
+        "steps": [
+          {
+            "recordHash": "272417846",
+            "objectiveHash": "346136935",
+            "description": "\"From Zero…\" quest completed",
+            "objectives": [
+              {
+                "hash": "346136935",
+                "label": "\"From Zero…\" quest completed",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "…To Hero",
         "recordHash": "272417846",
         "recordObjectiveHash": "346136934",
-        "iconPath": "/common/destiny2_content/icons/1bec7f86912cc0b39e03a6387c0d60bc.png"
+        "iconPath": "/common/destiny2_content/icons/1bec7f86912cc0b39e03a6387c0d60bc.png",
+        "steps": [
+          {
+            "recordHash": "272417846",
+            "objectiveHash": "346136934",
+            "description": "\"…To Hero\" quest completed",
+            "objectives": [
+              {
+                "hash": "346136934",
+                "label": "\"…To Hero\" quest completed",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Stargazer",
         "recordHash": "3472604716",
         "recordObjectiveHash": "3348334065",
-        "iconPath": "/common/destiny2_content/icons/9e6c42c7427efa14f50279d761744e38.png"
+        "iconPath": "/common/destiny2_content/icons/9e6c42c7427efa14f50279d761744e38.png",
+        "steps": [
+          {
+            "recordHash": "3472604716",
+            "objectiveHash": "3348334065",
+            "description": "\"Stargazer\" quest completed",
+            "objectives": [
+              {
+                "hash": "3348334065",
+                "label": "\"Stargazer\" quest completed",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Maelstrom",
         "recordHash": "3472604716",
         "recordObjectiveHash": "3348334064",
-        "iconPath": "/common/destiny2_content/icons/9e6c42c7427efa14f50279d761744e38.png"
+        "iconPath": "/common/destiny2_content/icons/9e6c42c7427efa14f50279d761744e38.png",
+        "steps": [
+          {
+            "recordHash": "3472604716",
+            "objectiveHash": "3348334064",
+            "description": "\"Maelstrom\" quest completed",
+            "objectives": [
+              {
+                "hash": "3348334064",
+                "label": "\"Maelstrom\" quest completed",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Bluejay",
         "recordHash": "3472604716",
         "recordObjectiveHash": "3348334067",
-        "iconPath": "/common/destiny2_content/icons/9e6c42c7427efa14f50279d761744e38.png"
+        "iconPath": "/common/destiny2_content/icons/9e6c42c7427efa14f50279d761744e38.png",
+        "steps": [
+          {
+            "recordHash": "3472604716",
+            "objectiveHash": "3348334067",
+            "description": "\"Bluejay\" quest completed",
+            "objectives": [
+              {
+                "hash": "3348334067",
+                "label": "\"Bluejay\" quest completed",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Strider",
@@ -649,7 +1200,103 @@
         "completionObjectiveHash": "2743919475",
         "completionItemHash": "3118061004",
         "recordHash": "3472604716",
-        "recordObjectiveHash": "3348334066"
+        "recordObjectiveHash": "3348334066",
+        "steps": [
+          {
+            "hash": "2565205711",
+            "description": "Visit the archivist.",
+            "objectives": [
+              {
+                "hash": "4116189676",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3413453049",
+            "description": "Spend keys on a Terminal Overload Key Chest in each of the three different areas of Neomuna.",
+            "objectives": [
+              {
+                "hash": "2574881050",
+                "label": "Ahimsa Park chest looted",
+                "total": 1
+              },
+              {
+                "hash": "2574881051",
+                "label": "Zephyr Concourse chest looted",
+                "total": 1
+              },
+              {
+                "hash": "2574881048",
+                "label": "Límíng Harbor chest looted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2557879920",
+            "description": "Defeat Shadow Legion forces in Neomuna to find location data, and dive into the Ahimsa Park Lost Sector for a data cipher to put the data together.",
+            "objectives": [
+              {
+                "hash": "2678985885",
+                "label": "Location data gathered",
+                "total": 20
+              },
+              {
+                "hash": "2678985884",
+                "label": "Data cipher found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2670023973",
+            "description": "The archivist wants to discuss your findings.",
+            "objectives": [
+              {
+                "hash": "5166510",
+                "label": "Archivist visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4054032200",
+            "description": "Approach Strider's memorial to repair it.",
+            "objectives": [
+              {
+                "hash": "1634489125",
+                "label": "Memorial restored",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2945759410",
+            "description": "Destroy the Hydras and shut down the confluxes at Maya's Retreat.",
+            "objectives": [
+              {
+                "hash": "1009056203",
+                "label": "Vex operation halted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1918331978",
+            "description": "The archivist has a reward for you.",
+            "objectives": [
+              {
+                "hash": "2743919475",
+                "label": "Archivist visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "exotic",
+        "reward": "Winterbite"
       }
     ],
     "activityChecklists": [

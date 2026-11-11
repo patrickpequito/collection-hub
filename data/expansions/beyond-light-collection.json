@@ -496,7 +496,417 @@
           "1481711502",
           "1330251823"
         ],
-        "iconPath": "/common/destiny2_content/icons/b5df0556c7239d00481ef0eaa4899122.jpg"
+        "iconPath": "/common/destiny2_content/icons/b5df0556c7239d00481ef0eaa4899122.jpg",
+        "steps": [
+          {
+            "hash": "3612061731",
+            "description": "Meet Variks inside of the Charon's Crossing comms station to learn about the Fallen on Europa and their use of Darkness.",
+            "objectives": [
+              {
+                "hash": "1051076453",
+                "label": "Speak with Variks",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3987765209",
+            "description": "Complete the \"Darkness's Doorstep\" mission.",
+            "objectives": [
+              {
+                "hash": "1073685114",
+                "label": "Call of Darkness on Europa answered",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3616224969",
+            "description": "Complete the \"Darkness's Doorstep\" mission.",
+            "objectives": [
+              {
+                "hash": "3283150090",
+                "label": "Call of Darkness on Europa answered",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "422583190",
+            "description": "Return to the Tower and discuss your successes on Europa with Zavala.",
+            "objectives": [
+              {
+                "hash": "1853386318",
+                "label": "Speak with Commander Zavala",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "431984069",
+            "description": "Attune your Splinter of Darkness with the next Stasis Seal in the Ziggurat in Beyond.",
+            "objectives": [
+              {
+                "hash": "1857129539",
+                "label": "unlocked",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "431984070",
+            "description": "Attune your Splinter of Darkness with the next Stasis Seal in the Ziggurat in Beyond.",
+            "objectives": [
+              {
+                "hash": "1851419582",
+                "label": "unlocked",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "431984071",
+            "description": "Attune the Splinter of Darkness in the Ziggurat in Beyond.",
+            "objectives": [
+              {
+                "hash": "1397002441",
+                "label": "unlocked",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "523748088",
+            "description": "Complete \"The Warrior\" Empire Hunt.",
+            "objectives": [
+              {
+                "hash": "3977348277",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "780325502",
+            "description": "Complete \"The Kell of Darkness\" mission.",
+            "objectives": [
+              {
+                "hash": "3576279035",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "785647193",
+            "description": "Commune with the next Crux of Darkness in the Riis-Reborn Approach.",
+            "objectives": [
+              {
+                "hash": "1829844541",
+                "label": "Attuned",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "785647194",
+            "description": "Commune with the next Crux of Darkness in Bray Exoscience.",
+            "objectives": [
+              {
+                "hash": "526006380",
+                "label": "Attuned",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "785647195",
+            "description": "Commune with a Crux of Darkness in Nexus.",
+            "objectives": [
+              {
+                "hash": "1782367587",
+                "label": "Attuned",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1013534599",
+            "description": "Draw out and defeat Elenaks, Salvation Elite in Asterion Abyss.",
+            "objectives": [
+              {
+                "hash": "2845282388",
+                "label": "Elenaks, Salvation Elite defeated",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1239957057",
+            "description": "Return to Variks to discuss what to do about Eramis's growing power.",
+            "objectives": [
+              {
+                "hash": "1621826255",
+                "label": "Speak with Variks",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1239957058",
+            "description": "Speak to the Exo Stranger to learn why she's here and what the monolith is.",
+            "objectives": [
+              {
+                "hash": "4093629354",
+                "label": "Speak with the Exo Stranger",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1239957059",
+            "description": "Regroup with Variks in Charon's Crossing.",
+            "objectives": [
+              {
+                "hash": "1383318661",
+                "label": "Speak with Variks",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1239957060",
+            "description": "Return to the Exo Stranger in Beyond.",
+            "objectives": [
+              {
+                "hash": "1398132408",
+                "label": "Speak with the Exo Stranger",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1239957061",
+            "description": "Return to your camp in Beyond.",
+            "objectives": [
+              {
+                "hash": "2842891047",
+                "label": "Return to camp",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1239957062",
+            "description": "Regroup with Variks in Charon's Crossing.",
+            "objectives": [
+              {
+                "hash": "3445224766",
+                "label": "Speak with Variks",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1239957063",
+            "description": "Return to the Exo Stranger in Beyond.",
+            "objectives": [
+              {
+                "hash": "2990807625",
+                "label": "Speak with the Exo Stranger",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1239957064",
+            "description": "Regroup with Variks in Charon's Crossing.",
+            "objectives": [
+              {
+                "hash": "1500118780",
+                "label": "Speak with Variks",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1438363708",
+            "description": "In a single life, defeat Fallen in Eventide Ruins.",
+            "objectives": [
+              {
+                "hash": "41039169",
+                "label": "Fallen",
+                "total": 35
+              }
+            ]
+          },
+          {
+            "hash": "1438363709",
+            "description": "Collect tracking devices by defeating Vex in Asterion Abyss. Minotaurs will always drop the devices.",
+            "objectives": [
+              {
+                "hash": "2468077878",
+                "label": "Tracking Device",
+                "total": 10
+              }
+            ]
+          },
+          {
+            "hash": "1495419808",
+            "description": "Complete \"The Glassway\" strike. Select it from the Europa map.",
+            "objectives": [
+              {
+                "hash": "434239149",
+                "label": "\"The Glassway\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2577006689",
+            "description": "Speak to Shaw Han in The Steppes.",
+            "objectives": [
+              {
+                "hash": "271512047",
+                "label": "Speak with Shaw Han",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2577006690",
+            "description": "Return to the Exo Stranger in Beyond and stand before her as an adept of Stasis.",
+            "objectives": [
+              {
+                "hash": "1836997962",
+                "label": "Speak with the Exo Stranger",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2577006691",
+            "description": "Return to the Exo Stranger in Beyond.",
+            "objectives": [
+              {
+                "hash": "2342597925",
+                "label": "Speak with the Exo Stranger",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2683598861",
+            "description": "In Eventide Ruins, ensure that the fleeing allied Skiff escapes Europa.",
+            "objectives": [
+              {
+                "hash": "2357722374",
+                "label": "Skiff evacuated",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2757895693",
+            "description": "Complete \"The New Kell\" mission.",
+            "objectives": [
+              {
+                "hash": "866071862",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2757895694",
+            "description": "Complete the \"Rising Resistance\" mission.",
+            "objectives": [
+              {
+                "hash": "403259947",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2943602311",
+            "description": "Complete \"The Technocrat\" Empire Hunt.",
+            "objectives": [
+              {
+                "hash": "2012791120",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3513278115",
+            "description": "Secure the nearby locked chest in Nexus by breaking the Stasis Seal and opening the container.",
+            "objectives": [
+              {
+                "hash": "3907766675",
+                "label": "Chests",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3577538268",
+            "description": "Eliminate Bakris, the Adamantine and scatter the Devils in the Exodus Garden 2A Lost Sector in The Divide.",
+            "objectives": [
+              {
+                "hash": "2507559361",
+                "label": "Bakris defeated",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3577538269",
+            "description": "Defeat Fallen in the Cosmodrome, The Divide, to gather intel on the location of Bakris, the Adamantine.",
+            "objectives": [
+              {
+                "hash": "2894710104",
+                "label": "Intel collected",
+                "total": 5
+              }
+            ]
+          },
+          {
+            "hash": "3824718318",
+            "description": "Now, embrace the power of Darkness and close out this chapter of your journey.",
+            "objectives": [
+              {
+                "hash": "233478022",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3848329302",
+            "description": "Attune your Splinter of Darkness with the final Stasis Seal in the Ziggurat in Beyond.",
+            "objectives": [
+              {
+                "hash": "1481711502",
+                "label": "unlocked",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4224533134",
+            "description": "In Cadmus Ridge, locate and shut down the Vex conflux created by Praksis.",
+            "objectives": [
+              {
+                "hash": "1330251823",
+                "label": "Praksis's Conflux disabled",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "campaign"
       },
       {
         "name": "Reclaiming Europa",
@@ -514,7 +924,43 @@
           "1570809861",
           "4125506058"
         ],
-        "iconPath": "/common/destiny2_content/icons/1653c1c3697fe021b9d49416d6945e7d.jpg"
+        "iconPath": "/common/destiny2_content/icons/1653c1c3697fe021b9d49416d6945e7d.jpg",
+        "steps": [
+          {
+            "hash": "1589407358",
+            "description": "Speak with Variks in Charon's Crossing.",
+            "objectives": [
+              {
+                "hash": "804255758",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3593342632",
+            "description": "Complete \"Sabotaging Salvation\" mission.",
+            "objectives": [
+              {
+                "hash": "1570809861",
+                "label": "\"Sabotaging Salvation\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3593342633",
+            "description": "Visit Variks in Charon's Crossing.",
+            "objectives": [
+              {
+                "hash": "4125506058",
+                "label": "Variks visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Born in Darkness Part 1",
@@ -539,7 +985,75 @@
           "2464037994",
           "1564730799"
         ],
-        "iconPath": "/common/destiny2_content/icons/4bfc1664e73ea011ed60a718755e7a17.jpg"
+        "iconPath": "/common/destiny2_content/icons/4bfc1664e73ea011ed60a718755e7a17.jpg",
+        "steps": [
+          {
+            "hash": "2975357706",
+            "description": "• Gather Energized Ether by defeating Fallen on Europa.",
+            "objectives": [
+              {
+                "hash": "173632307",
+                "label": "Energized Ether collected",
+                "total": 50
+              },
+              {
+                "hash": "173632306",
+                "label": "Stasis melee final blows",
+                "total": 10
+              }
+            ]
+          },
+          {
+            "hash": "2975357707",
+            "description": "• Complete Vanguard Ops activities with your Stasis subclass equipped.",
+            "objectives": [
+              {
+                "hash": "1071874000",
+                "label": "Vanguard Ops completed with Stasis equipped",
+                "total": 2
+              },
+              {
+                "hash": "1071874001",
+                "label": "Targets affected by Stasis",
+                "total": 40
+              }
+            ]
+          },
+          {
+            "hash": "2975357704",
+            "description": "Defeat Weniks's platoon near the Crux of Darkness in Eternity.",
+            "objectives": [
+              {
+                "hash": "1246216933",
+                "label": "Weniks's platoon defeated",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2975357705",
+            "description": "Bring the Skeleton Key to the Exo Stranger in the Bunker E15 Lost Sector in Eventide Ruins.",
+            "objectives": [
+              {
+                "hash": "2464037994",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2975357710",
+            "description": "Regroup with the Exo Stranger in Beyond.",
+            "objectives": [
+              {
+                "hash": "1564730799",
+                "label": "Exo Stranger visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Born in Darkness Part 2",
@@ -564,7 +1078,75 @@
           "393184657",
           "4248875536"
         ],
-        "iconPath": "/common/destiny2_content/icons/4bfc1664e73ea011ed60a718755e7a17.jpg"
+        "iconPath": "/common/destiny2_content/icons/4bfc1664e73ea011ed60a718755e7a17.jpg",
+        "steps": [
+          {
+            "hash": "285715023",
+            "description": "• Defeat Vex on Europa for their energy.",
+            "objectives": [
+              {
+                "hash": "3714306156",
+                "label": "Energized radiolarian fluid collected",
+                "total": 50
+              },
+              {
+                "hash": "3714306157",
+                "label": "Combatants defeated with shatter damage",
+                "total": 15
+              }
+            ]
+          },
+          {
+            "hash": "285715022",
+            "description": "• Complete Vanguard, Crucible, or Gambit Ops activities with your Stasis subclass equipped.",
+            "objectives": [
+              {
+                "hash": "3468784111",
+                "label": "Ops activities completed with Stasis equipped",
+                "total": 2
+              },
+              {
+                "hash": "3468784110",
+                "label": "Combatants affected by Stasis",
+                "total": 40
+              }
+            ]
+          },
+          {
+            "hash": "285715021",
+            "description": "Defeat the House Salvation Fallen platoon near the Crux of Darkness in Riis-Reborn Approach.",
+            "objectives": [
+              {
+                "hash": "1746894406",
+                "label": "House Salvation platoon defeated",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "285715020",
+            "description": "Bring the Skeleton Key to the Exo Stranger in the Perdition Lost Sector in Cadmus Ridge.",
+            "objectives": [
+              {
+                "hash": "393184657",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "285715019",
+            "description": "Regroup with the Exo Stranger in Beyond.",
+            "objectives": [
+              {
+                "hash": "4248875536",
+                "label": "Exo Stranger visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Born in Darkness Part 3",
@@ -590,7 +1172,80 @@
           "1580045632",
           "1188557185"
         ],
-        "iconPath": "/common/destiny2_content/icons/4bfc1664e73ea011ed60a718755e7a17.jpg"
+        "iconPath": "/common/destiny2_content/icons/4bfc1664e73ea011ed60a718755e7a17.jpg",
+        "steps": [
+          {
+            "hash": "2205014136",
+            "description": "• Defeat Vex and Fallen on Europa for their residual Darkness energy.",
+            "objectives": [
+              {
+                "hash": "2766725333",
+                "label": "Vex Darkness energy collected",
+                "total": 30
+              },
+              {
+                "hash": "2766725332",
+                "label": "Fallen Darkness energy collected",
+                "total": 30
+              },
+              {
+                "hash": "2766725335",
+                "label": "Targets affected by Stasis",
+                "total": 20
+              }
+            ]
+          },
+          {
+            "hash": "2205014137",
+            "description": "• Complete Gambit activities with your Stasis subclass equipped.",
+            "objectives": [
+              {
+                "hash": "1104038810",
+                "label": "Gambit activities with Stasis equipped",
+                "total": 2
+              },
+              {
+                "hash": "1104038811",
+                "label": "Stasis final blows",
+                "total": 40
+              }
+            ]
+          },
+          {
+            "hash": "2205014138",
+            "description": "Defeat Teraks's platoon near the Crux of Darkness in Eternity.",
+            "objectives": [
+              {
+                "hash": "2911893731",
+                "label": "Teraks's platoon defeated",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2205014139",
+            "description": "Bring the Skeleton Key to the Exo Stranger in the Concealed Void Lost Sector in Asterion Abyss.",
+            "objectives": [
+              {
+                "hash": "1580045632",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2205014140",
+            "description": "Regroup with the Exo Stranger in Beyond.",
+            "objectives": [
+              {
+                "hash": "1188557185",
+                "label": "Exo Stranger visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Born in Darkness Part 4",
@@ -614,7 +1269,70 @@
           "802194519",
           "1291850834"
         ],
-        "iconPath": "/common/destiny2_content/icons/4bfc1664e73ea011ed60a718755e7a17.jpg"
+        "iconPath": "/common/destiny2_content/icons/4bfc1664e73ea011ed60a718755e7a17.jpg",
+        "steps": [
+          {
+            "hash": "1891580901",
+            "description": "Defeat combatants on Europa using Stasis abilities.",
+            "objectives": [
+              {
+                "hash": "3849524078",
+                "label": "Stasis final blows",
+                "total": 35
+              }
+            ]
+          },
+          {
+            "hash": "1891580900",
+            "description": "• Complete Expert Vanguard Ops activities with your Stasis subclass equipped.",
+            "objectives": [
+              {
+                "hash": "3961658073",
+                "label": "Vanguard Ops completed with Stasis equipped",
+                "total": 2
+              },
+              {
+                "hash": "3961658072",
+                "label": "Combatants affected by Stasis",
+                "total": 40
+              }
+            ]
+          },
+          {
+            "hash": "1891580903",
+            "description": "Defeat the House Salvation Fallen platoon near the Crux of Darkness in Creation.",
+            "objectives": [
+              {
+                "hash": "2179172020",
+                "label": "House Salvation platoon defeated",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1891580902",
+            "description": "Bring the Skeleton Key to the Exo Stranger in Creation.",
+            "objectives": [
+              {
+                "hash": "802194519",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1891580897",
+            "description": "Regroup with the Exo Stranger in Beyond.",
+            "objectives": [
+              {
+                "hash": "1291850834",
+                "label": "Exo Stranger visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Empire's Fall",
@@ -634,7 +1352,54 @@
           "3984655685",
           "1989902666"
         ],
-        "iconPath": "/common/destiny2_content/icons/ca6502dcc0633a4afbe2ca48aa4a2071.jpg"
+        "iconPath": "/common/destiny2_content/icons/ca6502dcc0633a4afbe2ca48aa4a2071.jpg",
+        "steps": [
+          {
+            "hash": "113061891",
+            "description": "Speak with Variks in Charon's Crossing.",
+            "objectives": [
+              {
+                "hash": "2626223928",
+                "label": "Variks visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1708910513",
+            "description": "Purchase and complete two Sabotage quests acquired from Variks.",
+            "objectives": [
+              {
+                "hash": "3787760546",
+                "label": "Sabotage completed",
+                "total": 2
+              }
+            ]
+          },
+          {
+            "hash": "1781597160",
+            "description": "Speak with Variks in Charon's Crossing.",
+            "objectives": [
+              {
+                "hash": "3984655685",
+                "label": "Variks visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1781597161",
+            "description": "Complete \"The Aftermath\" mission.",
+            "objectives": [
+              {
+                "hash": "1989902666",
+                "label": "\"The Aftermath\" completed",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Lost Lament",
@@ -671,7 +1436,142 @@
           "1658693517",
           "2734532235"
         ],
-        "iconPath": "/common/destiny2_content/icons/2742913c6800415e68f007272a9f822b.jpg"
+        "iconPath": "/common/destiny2_content/icons/2742913c6800415e68f007272a9f822b.jpg",
+        "steps": [
+          {
+            "hash": "25511490",
+            "description": "Locate the Giant Exo hidden in the Exo facility.",
+            "objectives": [
+              {
+                "hash": "1571362280",
+                "label": "Giant Exo found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "465838244",
+            "description": "Acquire and complete the listed quests from Commander Zavala and Variks to prove yourself to the Clovis AI and continue on with \"Lost Lament.\"",
+            "objectives": [
+              {
+                "hash": "4031802009",
+                "label": "\"Reclaiming Europa\" completed",
+                "total": 1
+              },
+              {
+                "hash": "4031802008",
+                "label": "\"Empire's Fall\" completed",
+                "total": 1
+              },
+              {
+                "hash": "4031802011",
+                "label": "\"The Dark Priestess\" completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1399678798",
+            "description": "Locate and scan 3 dead Exos on Europa.",
+            "objectives": [
+              {
+                "hash": "3619075036",
+                "label": "Dead Exos found",
+                "total": 3
+              }
+            ]
+          },
+          {
+            "hash": "2423789933",
+            "description": "Access the strike \"The Glassway\" and locate the blade pieces within.",
+            "objectives": [
+              {
+                "hash": "1358519734",
+                "label": "Blade pieces found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2711270400",
+            "description": "Head back to the Tower and report your discoveries to Banshee-44.",
+            "objectives": [
+              {
+                "hash": "1490877917",
+                "label": "Spoke with Banshee-44",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3263361561",
+            "description": "Head back to the Tower and speak to Banshee-44 about the broken blade.",
+            "objectives": [
+              {
+                "hash": "1988711497",
+                "label": "Spoke with Banshee-44",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3357553626",
+            "description": "Search Eventide Ruins for an abandoned bunker and explore inside.",
+            "objectives": [
+              {
+                "hash": "3246847786",
+                "label": "Abandoned bunker explored",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3535843838",
+            "description": "Defeat Vex with finishers to satisfy the Clovis AI. Defeating powerful Vex grants the most efficient progress.",
+            "objectives": [
+              {
+                "hash": "4223851534",
+                "label": "Vex defeated with finishers",
+                "total": 60
+              }
+            ]
+          },
+          {
+            "hash": "3938019989",
+            "description": "Prove your worth to the Clovis AI by completing an Exo Challenge.",
+            "objectives": [
+              {
+                "hash": "1596308833",
+                "label": "Exo Challenge completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4107530250",
+            "description": "Prove yourself to the Clovis AI by using Swords against the Vex across Europa.",
+            "objectives": [
+              {
+                "hash": "1658693517",
+                "label": "Vex defeated with Swords",
+                "total": 100
+              }
+            ]
+          },
+          {
+            "hash": "4257510940",
+            "description": "Complete the mission \"Reforging the Past\" to save the Clovis AI from being destroyed.",
+            "objectives": [
+              {
+                "hash": "2734532235",
+                "label": "\"Reforging the Past\" completed",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "exotic",
+        "reward": "The Lament"
       },
       {
         "name": "Soon",
@@ -691,7 +1591,55 @@
           "1761777134",
           "2982153788"
         ],
-        "iconPath": "/common/destiny2_content/icons/e34c771217b377715243d6599f69894c.jpg"
+        "iconPath": "/common/destiny2_content/icons/e34c771217b377715243d6599f69894c.jpg",
+        "steps": [
+          {
+            "hash": "2510021888",
+            "description": "Defeat Vex with No Time to Explain in Nexus, Infinitude, and The Glassway on Europa.",
+            "objectives": [
+              {
+                "hash": "1182061173",
+                "label": "Vex defeated",
+                "total": 60
+              }
+            ]
+          },
+          {
+            "hash": "2510021889",
+            "description": "Return to the Exo Stranger.",
+            "objectives": [
+              {
+                "hash": "519933977",
+                "label": "Exo Stranger visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2510021890",
+            "description": "Defeat combatants in the BrayTech facility.",
+            "objectives": [
+              {
+                "hash": "1761777134",
+                "label": "Schematic code fragments found",
+                "total": 5
+              }
+            ]
+          },
+          {
+            "hash": "2510021895",
+            "description": "Return to the Exo Stranger.",
+            "objectives": [
+              {
+                "hash": "2982153788",
+                "label": "Exo Stranger visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "exotic",
+        "reward": "No Time to Explain"
       },
       {
         "name": "The Stasis Prototype",
@@ -719,7 +1667,93 @@
           "1461054908",
           "882310764"
         ],
-        "iconPath": "/common/destiny2_content/icons/672c1fdc48f1bd9eabcd26de09e8ffb3.jpg"
+        "iconPath": "/common/destiny2_content/icons/672c1fdc48f1bd9eabcd26de09e8ffb3.jpg",
+        "steps": [
+          {
+            "hash": "1299795970",
+            "description": "Complete the \"Stealing Stasis\" mission.",
+            "objectives": [
+              {
+                "hash": "1692833192",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1388623635",
+            "description": "Rendezvous with Spider's associate in the Concealed Void Lost Sector.",
+            "objectives": [
+              {
+                "hash": "3490967413",
+                "label": "Skiff codes acquired",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3136133748",
+            "description": "Defeat Fallen Captains and Servitors on Europa to collect intel.",
+            "objectives": [
+              {
+                "hash": "996308273",
+                "label": "Fallen Captains",
+                "total": 10
+              },
+              {
+                "hash": "2902359057",
+                "label": "Servitors",
+                "total": 10
+              }
+            ]
+          },
+          {
+            "hash": "3184764590",
+            "description": "Visit the Drifter in the Annex.",
+            "objectives": [
+              {
+                "hash": "3029994940",
+                "label": "Drifter visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3257985301",
+            "description": "Eliminate combatants with, or affected by, your Stasis abilities.",
+            "objectives": [
+              {
+                "hash": "4149065667",
+                "label": "Stasis-afflicted enemies",
+                "total": 100
+              }
+            ]
+          },
+          {
+            "hash": "3459548846",
+            "description": "Defeat one of Eramis's council members in an Empire Hunt.",
+            "objectives": [
+              {
+                "hash": "1461054908",
+                "label": "Empire Hunt",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3599609918",
+            "description": "Visit Drifter in the Annex.",
+            "objectives": [
+              {
+                "hash": "882310764",
+                "label": "Drifter visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "exotic",
+        "reward": "Salvation's Grip"
       }
     ],
     "difficultyHunts": [

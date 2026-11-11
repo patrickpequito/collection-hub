@@ -542,7 +542,274 @@
           "1395633834",
           "4172086056"
         ],
-        "iconPath": "/common/destiny2_content/icons/940fbc426dcd7048d31160c92d5d5708.jpg"
+        "iconPath": "/common/destiny2_content/icons/940fbc426dcd7048d31160c92d5d5708.jpg",
+        "steps": [
+          {
+            "hash": "1612715075",
+            "description": "Complete \"The Ghosts\" mission.",
+            "objectives": [
+              {
+                "hash": "2975148920",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "239128441",
+            "description": "Speak with Ikora in the Enclave on Mars.",
+            "objectives": [
+              {
+                "hash": "1732266138",
+                "label": "Ikora visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3323206616",
+            "description": "Complete \"The Communion\" mission at the Europan Pyramid.",
+            "objectives": [
+              {
+                "hash": "689148341",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "239128446",
+            "description": "Speak with Ikora in the Enclave on Mars.",
+            "objectives": [
+              {
+                "hash": "571255903",
+                "label": "Ikora visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2838331549",
+            "description": "Complete \"The Mirror\" mission.",
+            "objectives": [
+              {
+                "hash": "842082070",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3294953102",
+            "description": "Speak with Fynch in the Throne World.",
+            "objectives": [
+              {
+                "hash": "1688247343",
+                "label": "Fynch visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "610104115",
+            "description": "Complete \"The Lightblade\" strike.",
+            "objectives": [
+              {
+                "hash": "523340072",
+                "label": "Strike completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "972929711",
+            "description": "Return to the Altar of Reflection in Witch's Echo, Throne World.",
+            "objectives": [
+              {
+                "hash": "1026235980",
+                "label": "Memory unlocked",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "239128447",
+            "description": "Speak with Ikora in the Enclave on Mars.",
+            "objectives": [
+              {
+                "hash": "3476822180",
+                "label": "Ikora visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2147231503",
+            "description": "Complete \"The Cunning\" mission.",
+            "objectives": [
+              {
+                "hash": "4086468140",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2609952321",
+            "description": "Return to the Altar of Reflection in Witch's Echo, Throne World.",
+            "objectives": [
+              {
+                "hash": "1104006962",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "737156186",
+            "description": "Speak with Ikora in the Enclave on Mars.",
+            "objectives": [
+              {
+                "hash": "1393495619",
+                "label": "Ikora visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2664658118",
+            "description": "Complete \"The Last Chance\" mission.",
+            "objectives": [
+              {
+                "hash": "2841836343",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "972929708",
+            "description": "Return to the Altar of Reflection in Witch's Echo, Throne World.",
+            "objectives": [
+              {
+                "hash": "3097210737",
+                "label": "Memory unlocked",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1266353966",
+            "description": "Meet with the Vanguard in Zavala's office in the Tower.",
+            "objectives": [
+              {
+                "hash": "2537210191",
+                "label": "Vanguard consulted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "239128444",
+            "description": "Speak with Ikora in the Tower.",
+            "objectives": [
+              {
+                "hash": "1816784513",
+                "label": "Ikora visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "239128445",
+            "description": "Speak with Ikora on Mars.",
+            "objectives": [
+              {
+                "hash": "1634823798",
+                "label": "Ikora visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4192582969",
+            "description": "Complete \"The Ritual\" mission.",
+            "objectives": [
+              {
+                "hash": "935121242",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "147850787",
+            "description": "Speak with Ikora on Mars.",
+            "objectives": [
+              {
+                "hash": "3568445528",
+                "label": "Ikora visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1946423823",
+            "description": "Complete \"The Arrival\" mission.",
+            "objectives": [
+              {
+                "hash": "4179068716",
+                "label": "Complete \"The Arrival\" mission.",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1826993016",
+            "description": "Speak with Ikora in the Enclave on Mars.",
+            "objectives": [
+              {
+                "hash": "4246940117",
+                "label": "Speak with Ikora in the Enclave on Mars.",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2881823111",
+            "description": "Speak with Ikora in the Enclave on Mars.",
+            "objectives": [
+              {
+                "hash": "3701397076",
+                "label": "Ikora visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3247379273",
+            "description": "Complete \"The Investigation\" mission, which can be launched from the Enclave.",
+            "objectives": [
+              {
+                "hash": "1395633834",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2839660851",
+            "description": "Speak with the rebel Ghost, Fynch.",
+            "objectives": [
+              {
+                "hash": "4172086056",
+                "label": "Fynch visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "campaign"
       },
       {
         "name": "Hard Evidence",
@@ -565,7 +832,65 @@
           "530954767",
           "3227915091"
         ],
-        "iconPath": "/common/destiny2_content/icons/b794c4c55c9b3613a05a548d883556ba.jpg"
+        "iconPath": "/common/destiny2_content/icons/b794c4c55c9b3613a05a548d883556ba.jpg",
+        "steps": [
+          {
+            "hash": "3478646613",
+            "description": "Bring the Osmic Fragment to the Hidden in the Enclave.",
+            "objectives": [
+              {
+                "hash": "1590112308",
+                "label": "Evidence Board visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1438667217",
+            "description": "Search Quagmire for a sample to match the Osmic Fragment.",
+            "objectives": [
+              {
+                "hash": "1482918594",
+                "label": "Area searched",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "279735181",
+            "description": "Defeat the Lucent Brood ambush.",
+            "objectives": [
+              {
+                "hash": "1805853574",
+                "label": "Ambush defeated",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2852332270",
+            "description": "Log the Osmic Fragment on the Evidence Board in the Enclave.",
+            "objectives": [
+              {
+                "hash": "530954767",
+                "label": "Evidence logged",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "601035050",
+            "description": "Review the case on the Evidence Board in the Enclave.",
+            "objectives": [
+              {
+                "hash": "3227915091",
+                "label": "Case reviewed",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Trust Goes Both Ways",
@@ -590,7 +915,75 @@
           "1164279343",
           "2063586538"
         ],
-        "iconPath": "/common/destiny2_content/icons/ee74d1314e94fae9bffa498dfeca4529.jpg"
+        "iconPath": "/common/destiny2_content/icons/ee74d1314e94fae9bffa498dfeca4529.jpg",
+        "steps": [
+          {
+            "hash": "1083548813",
+            "description": "Loot region chests.",
+            "objectives": [
+              {
+                "hash": "722810502",
+                "label": "Chests looted",
+                "total": 3
+              }
+            ]
+          },
+          {
+            "hash": "1083548812",
+            "description": "Defeat Scorn and complete a public event in the Miasma.",
+            "objectives": [
+              {
+                "hash": "2537280465",
+                "label": "Scorn defeated",
+                "total": 100
+              },
+              {
+                "hash": "2537280464",
+                "label": "Public event completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1083548815",
+            "description": "Loot Faction Chests and complete patrols in the Miasma.",
+            "objectives": [
+              {
+                "hash": "1631511212",
+                "label": "Chests looted",
+                "total": 4
+              },
+              {
+                "hash": "1631511213",
+                "label": "Patrols completed",
+                "total": 2
+              }
+            ]
+          },
+          {
+            "hash": "1083548814",
+            "description": "Earn enough reputation with Fynch to reach Rank 3.",
+            "objectives": [
+              {
+                "hash": "1164279343",
+                "label": "Reputation earned",
+                "total": 2000
+              }
+            ]
+          },
+          {
+            "hash": "1083548809",
+            "description": "Return to Fynch.",
+            "objectives": [
+              {
+                "hash": "2063586538",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "The Gift of Appreciation",
@@ -614,7 +1007,70 @@
           "4005753848",
           "615921465"
         ],
-        "iconPath": "/common/destiny2_content/icons/ee74d1314e94fae9bffa498dfeca4529.jpg"
+        "iconPath": "/common/destiny2_content/icons/ee74d1314e94fae9bffa498dfeca4529.jpg",
+        "steps": [
+          {
+            "hash": "3010588096",
+            "description": "Defeat Scorn in the Miasma to obtain 10 Umbral Helmets.",
+            "objectives": [
+              {
+                "hash": "1410503405",
+                "label": "Umbral Helmets obtained",
+                "total": 10
+              }
+            ]
+          },
+          {
+            "hash": "3010588097",
+            "description": "Locate all region chests.",
+            "objectives": [
+              {
+                "hash": "1652384178",
+                "label": "Region chests looted",
+                "total": 9
+              }
+            ]
+          },
+          {
+            "hash": "3010588098",
+            "description": "Defeat Lucent Brood and complete a public event in the Florescent Canal.",
+            "objectives": [
+              {
+                "hash": "1847689627",
+                "label": "Lucent Brood defeated",
+                "total": 100
+              },
+              {
+                "hash": "1847689626",
+                "label": "Public event completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3010588099",
+            "description": "Within the Queen's Bailey, place the Umbral Helmets and defeat the Hive Lightbearers, then crush their Ghosts.",
+            "objectives": [
+              {
+                "hash": "4005753848",
+                "label": "Hive Ghosts crushed",
+                "total": 3
+              }
+            ]
+          },
+          {
+            "hash": "3010588100",
+            "description": "Return to Fynch.",
+            "objectives": [
+              {
+                "hash": "615921465",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Reshaping the Enigma",
@@ -647,7 +1103,98 @@
           "1736882397",
           "2595497736",
           "3448423264"
-        ]
+        ],
+        "steps": [
+          {
+            "hash": "658479834",
+            "description": "To upgrade the Enigma with enhanced traits, Ascendant Alloys are required. Speak with Rahool in the Tower to learn about this material.",
+            "objectives": [
+              {
+                "hash": "4282322371",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1232302363",
+            "description": "The Enigma can be upgraded with enhanced intrinsics and traits by increasing its level.",
+            "objectives": [
+              {
+                "hash": "1951572064",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1232302361",
+            "description": "Return to the Relic in the Enclave on Mars.",
+            "objectives": [
+              {
+                "hash": "1953736122",
+                "label": "Relic Conduit accessed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3099265193",
+            "description": "Select \"Reshape\" at the Relic in the Enclave on Mars, then select the Enigma.",
+            "objectives": [
+              {
+                "hash": "3781900298",
+                "label": "The Relic accessed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1232302360",
+            "description": "Insert an enhanced intrinsic to upgrade the Enigma.",
+            "objectives": [
+              {
+                "hash": "22312437",
+                "label": "Intrinsic inserted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1232302367",
+            "description": "Select an enhanced trait to insert into the Enigma.",
+            "objectives": [
+              {
+                "hash": "3273052732",
+                "label": "Enhanced trait inserted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3216708524",
+            "description": "Select \"Finalize Shape\" to reshape the Enigma.",
+            "objectives": [
+              {
+                "hash": "2128552561",
+                "label": "The Enigma reshaped",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1232302366",
+            "description": "Return to the Relic in the Enclave on Mars.",
+            "objectives": [
+              {
+                "hash": "3905937919",
+                "label": "Relic Conduit accessed",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Vox Obscura",
@@ -665,7 +1212,45 @@
           "2812324401",
           "46524085"
         ],
-        "iconPath": "/common/destiny2_content/icons/d8a986afdb448b12a18779a341123572.jpg"
+        "iconPath": "/common/destiny2_content/icons/d8a986afdb448b12a18779a341123572.jpg",
+        "steps": [
+          {
+            "recordHash": "3444043369",
+            "description": "Report: REVERSE-LURE",
+            "objectives": []
+          },
+          {
+            "recordHash": "3103334548",
+            "description": "Report: PYRAMID-INSPECT",
+            "objectives": []
+          },
+          {
+            "recordHash": "3103334551",
+            "description": "Report: STEPS-RETRACED",
+            "objectives": []
+          },
+          {
+            "recordHash": "3103334550",
+            "description": "Report: RELIC-DATA",
+            "objectives": []
+          },
+          {
+            "recordHash": "3103334545",
+            "description": "Report: SCORN-ORDER",
+            "objectives": []
+          },
+          {
+            "recordHash": "3103334544",
+            "description": "Report: ALTAR-REFLECT",
+            "objectives": []
+          },
+          {
+            "recordHash": "3103334547",
+            "description": "Report: RESONANCE-COMP",
+            "objectives": []
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "The Evidence Board",
@@ -680,7 +1265,25 @@
           "542203595",
           "14194600"
         ],
-        "iconPath": "/common/destiny2_content/icons/1bec7f86912cc0b39e03a6387c0d60bc.png"
+        "iconPath": "/common/destiny2_content/icons/1bec7f86912cc0b39e03a6387c0d60bc.png",
+        "steps": [
+          {
+            "recordHash": "1955149226",
+            "description": "Edge of Action",
+            "objectives": []
+          },
+          {
+            "recordHash": "3296489718",
+            "description": "Edge of Concurrence",
+            "objectives": []
+          },
+          {
+            "recordHash": "96042291",
+            "description": "Edge of Intent",
+            "objectives": []
+          }
+        ],
+        "category": "expansion"
       },
       {
         "name": "Of Queens and Worms",
@@ -727,7 +1330,198 @@
           "2087531346",
           "3416503488"
         ],
-        "iconPath": "/common/destiny2_content/icons/49c440209cd6e62681268776d4749496.jpg"
+        "iconPath": "/common/destiny2_content/icons/49c440209cd6e62681268776d4749496.jpg",
+        "steps": [
+          {
+            "hash": "472120382",
+            "description": "Meet with Mara Sov in the Enclave on Mars.",
+            "objectives": [
+              {
+                "hash": "1680890655",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3383073000",
+            "description": "Complete the \"Birthplace of the Vile\" strike.",
+            "objectives": [
+              {
+                "hash": "3768945733",
+                "label": "Strike completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3383073001",
+            "description": "Visit Fynch.",
+            "objectives": [
+              {
+                "hash": "1774192714",
+                "label": "Complete",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3383073002",
+            "description": "Locate a Cryptoglyph rune in the Temple of the Cunning.",
+            "objectives": [
+              {
+                "hash": "557956371",
+                "label": "Rune found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3494281470",
+            "description": "Defeat Scorn in the Throne World to charge the depleted rune.",
+            "objectives": [
+              {
+                "hash": "536067295",
+                "label": "Scorn defeated",
+                "total": 100
+              }
+            ]
+          },
+          {
+            "hash": "595317119",
+            "description": "Find the entrance to the Sepulcher Lost Sector in the Florescent Canal.",
+            "objectives": [
+              {
+                "hash": "4209451036",
+                "label": "Lost Sector discovered",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3383073003",
+            "description": "Locate a larvae incubator at the end of the Sepulcher Lost Sector in the Florescent Canal.",
+            "objectives": [
+              {
+                "hash": "520240304",
+                "label": "Incubator found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "773742346",
+            "description": "Gather leads by completing three patrols in the Florescent Canal.",
+            "objectives": [
+              {
+                "hash": "2355238707",
+                "label": "Leads gathered",
+                "total": 3
+              }
+            ]
+          },
+          {
+            "hash": "3383073004",
+            "description": "Locate a Cryptoglyph Rune in the Queen's Bailey.",
+            "objectives": [
+              {
+                "hash": "1404324017",
+                "label": "Rune found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1921923758",
+            "description": "Find the entrance to the Metamorphosis Lost Sector in the Miasma.",
+            "objectives": [
+              {
+                "hash": "747218895",
+                "label": "Lost Sector discovered",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3383073005",
+            "description": "Locate a larvae incubator at the end of the Metamorphosis Lost Sector in Miasma.",
+            "objectives": [
+              {
+                "hash": "65271654",
+                "label": "Incubator found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3383073006",
+            "description": "Locate a Cryptoglyph rune in the Alluring Curtain.",
+            "objectives": [
+              {
+                "hash": "1379961871",
+                "label": "Rune found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3383073007",
+            "description": "Find the nearby Deepsight cache in the Alluring Curtain.",
+            "objectives": [
+              {
+                "hash": "3066222220",
+                "label": "Cache found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3338373948",
+            "description": "Find the entrance to the Extraction Lost Sector in Quagmire.",
+            "objectives": [
+              {
+                "hash": "1430552129",
+                "label": "Lost Sector discovered",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3383072992",
+            "description": "Locate a larvae incubator at the end of the Extraction Lost Sector in the Quagmire.",
+            "objectives": [
+              {
+                "hash": "2976947597",
+                "label": "Incubator found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3383072993",
+            "description": "Visit Fynch and see if he can help Savathûn's worm.",
+            "objectives": [
+              {
+                "hash": "2087531346",
+                "label": "Fynch visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1487910651",
+            "description": "Complete the \"Parasitic Pilgrimage\" mission.",
+            "objectives": [
+              {
+                "hash": "3416503488",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "category": "exotic",
+        "reward": "Parasite"
       }
     ]
   }

@@ -1,4 +1,5 @@
 import type { RaidCompletions } from "@/lib/destiny-activity-stats";
+import type { ActiveQuestStep } from "@/lib/destiny-quest-progress";
 import type { RecordInstance, TriumphStringVariables } from "@/types/triumph";
 import { EMPTY_TRIUMPH_STRING_VARIABLES } from "@/types/triumph";
 
@@ -16,6 +17,8 @@ export type ProfileCacheSnapshot = {
   activityCompletions: Record<string, number>;
   raidCompletionsBySlug: Partial<Record<string, RaidCompletions>>;
   questCompletions: Record<string, boolean>;
+  /** Step currently held per quest line (only quests not yet complete). */
+  questActiveSteps?: Record<string, ActiveQuestStep>;
   checklists: Record<string, Record<string, boolean>>;
 };
 
@@ -111,6 +114,7 @@ export function mergeProfileCache(
       ...current.questCompletions,
       ...patch.questCompletions,
     },
+    questActiveSteps: patch.questActiveSteps ?? current.questActiveSteps,
     checklists: patch.checklists ?? current.checklists,
     recordInstances: patch.recordInstances ?? current.recordInstances,
     stringVariables: patch.stringVariables ?? current.stringVariables,

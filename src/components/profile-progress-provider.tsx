@@ -10,7 +10,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import type { QuestCompletionTarget } from "@/lib/destiny-quest-progress";
+import type { ActiveQuestStep, QuestCompletionTarget } from "@/lib/destiny-quest-progress";
 import { serializeQuestCompletionTargets } from "@/lib/destiny-quest-progress";
 import type { RaidCompletions } from "@/lib/destiny-activity-stats";
 import {
@@ -34,11 +34,14 @@ type ProfileProgressContextValue = {
   activityCompletions: Record<string, number>;
   raidCompletionsBySlug: Partial<Record<string, RaidCompletions>>;
   questCompletions: Record<string, boolean>;
+  questActiveSteps: Record<string, ActiveQuestStep>;
   checklists: Record<string, Record<string, boolean>>;
   registerActivityHashes: (hashes: readonly string[]) => void;
   registerQuestTargets: (targets: readonly QuestCompletionTarget[]) => void;
   requestChecklists: () => void;
 };
+
+const EMPTY_ACTIVE_STEPS: Record<string, ActiveQuestStep> = {};
 
 const ProfileProgressContext = createContext<ProfileProgressContextValue | null>(
   null,
@@ -238,8 +241,12 @@ export function ProfileProgressProvider({
       .then(async (response) => {
         const payload = (await response.json()) as {
           completed?: Record<string, boolean>;
+          active?: Record<string, ActiveQuestStep>;
         };
-        patchSnapshot({ questCompletions: payload.completed ?? {} });
+        patchSnapshot({
+          questCompletions: payload.completed ?? {},
+          questActiveSteps: payload.active ?? {},
+        });
       })
       .catch(() => {
         // Keep cached quest completions when refresh fails.
@@ -326,6 +333,7 @@ export function ProfileProgressProvider({
       activityCompletions: snapshot?.activityCompletions ?? {},
       raidCompletionsBySlug: snapshot?.raidCompletionsBySlug ?? {},
       questCompletions: snapshot?.questCompletions ?? {},
+      questActiveSteps: snapshot?.questActiveSteps ?? EMPTY_ACTIVE_STEPS,
       checklists: snapshot?.checklists ?? {},
       registerActivityHashes,
       registerQuestTargets,
@@ -339,6 +347,7 @@ export function ProfileProgressProvider({
       snapshot?.activityCompletions,
       snapshot?.raidCompletionsBySlug,
       snapshot?.questCompletions,
+      snapshot?.questActiveSteps,
       snapshot?.checklists,
       ownedItemHashes,
       inventoryItemHashes,
@@ -404,6 +413,21 @@ export function useProfileQuestCompletions(
   }, [registerQuestTargets, targets]);
 
   return questCompletions;
+}
+
+/** Quest completion plus the step currently held for each unfinished quest line. */
+export function useProfileQuestProgress(targets: readonly QuestCompletionTarget[]): {
+  completed: Record<string, boolean>;
+  active: Record<string, ActiveQuestStep>;
+} {
+  const { questCompletions, questActiveSteps, registerQuestTargets } =
+    useProfileProgressContext();
+
+  useEffect(() => {
+    registerQuestTargets(targets);
+  }, [registerQuestTargets, targets]);
+
+  return { completed: questCompletions, active: questActiveSteps };
 }
 
 export function useProfileStringVariables(): TriumphStringVariables {

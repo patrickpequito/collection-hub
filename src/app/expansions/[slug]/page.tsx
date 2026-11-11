@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ClientOwnership } from "@/components/client-ownership";
 import { EververseSection } from "@/components/eververse-section";
 import { ExpansionActivityShortcuts } from "@/components/expansions/expansion-activity-shortcuts";
-import { ExpansionCampaignMissionsPanel } from "@/components/expansions/expansion-campaign-missions-panel";
+import { ExpansionCampaignQuests } from "@/components/expansions/expansion-campaign-quests";
 import { ExpansionCollectionPanel } from "@/components/expansions/expansion-collection-panel";
 import { ExpansionDeepLootSection } from "@/components/expansions/expansion-deep-loot-section";
 import { ExpansionDestinationBanner } from "@/components/expansions/expansion-destination-banner";
@@ -35,6 +35,9 @@ import {
   loadTriumphCatalog,
 } from "@/lib/triumphs/load";
 import { pickReferenced } from "@/lib/pick-referenced";
+import { DESTINATIONS } from "@/data/destinations";
+import { DESTINATION_BANNER_THEMES } from "@/lib/destinations/banner-themes";
+import { getDestinationActivities } from "@/lib/destinations/activities-data";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -138,13 +141,29 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
     .join(" · ");
 
   const hasTriumphs = Boolean(title || triumphGroup);
+  const activityDestination = DESTINATIONS.find((entry) => entry.slug === hub.destinationActivitySlug);
+  const destinationActivities = activityDestination?.built
+    ? getDestinationActivities(activityDestination.slug)
+    : null;
+  const destinationTheme = activityDestination ? DESTINATION_BANNER_THEMES[activityDestination.slug] : undefined;
+  const destinationBanner =
+    activityDestination && destinationActivities && destinationTheme
+      ? {
+          slug: activityDestination.slug,
+          name: activityDestination.name,
+          imageUrl: `/images/destinations/explore/${activityDestination.slug}.webp`,
+          theme: destinationTheme,
+          activities: destinationActivities,
+        }
+      : null;
+  const campaignLabel = loot.campaignMissions.length ? "Campaign & Quests" : "Quests";
   const hasActivities = hub.relatedRadSlugs.length > 0;
   const sectionLinks = [
     { id: "overview", label: "Overview", show: Boolean(hub.trailerYoutubeId) || yearSeasons.length > 0 },
     { id: "collection", label: "Collection", show: true },
     { id: "exotics", label: "Exotics", show: loot.exoticItems.length > 0 },
     { id: "destination", label: "Destination", show: true },
-    { id: "campaign", label: "Campaign & Activities", show: true },
+    { id: "campaign", label: campaignLabel, show: loot.campaignMissions.length > 0 || loot.campaignQuests.length > 0 },
     { id: "eververse", label: "Eververse", show: Boolean(loot.eververse) },
     { id: "raids-dungeons", label: "Raids & dungeons", show: hasActivities },
     { id: "deep-loot", label: "Deep loot", show: true },
@@ -223,27 +242,16 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
                   : undefined
               }
               itemHrefs={itemHrefs}
-              regionChestsChecklistHash={loot.regionChestsChecklistHash}
-              regionChests={loot.regionChests}
-              lostSectorsChecklistHash={loot.lostSectorsChecklistHash}
-              lostSectorsDiscoveryRecordHash={loot.lostSectorsDiscoveryRecordHash}
-              lostSectors={loot.lostSectors}
-              featuredLostSectorName={null}
             />
           </div>
 
           <div id="campaign" className="scroll-mt-20">
-            <ExpansionCampaignMissionsPanel
+            <ExpansionCampaignQuests
+              expansionTitle={hub.title}
               missions={loot.campaignMissions}
               legendaryRecordHash={loot.campaignLegendaryRecordHash}
               quests={loot.campaignQuests}
-              activityChecklists={loot.campaignActivityChecklists}
-              difficultyHunts={loot.difficultyHunts}
-              difficultyHuntsTitle={loot.difficultyHuntsTitle}
-              rotatingBossActivity={loot.rotatingBossActivity}
-              wellspringNormalRecordHash={loot.wellspringNormalRecordHash}
-              wellspringMasterRecordHash={loot.wellspringMasterRecordHash}
-              wellspringBosses={loot.wellspringBosses}
+              destination={destinationBanner}
             />
           </div>
 
