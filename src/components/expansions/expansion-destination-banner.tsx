@@ -1,6 +1,7 @@
 import Link from "@/components/app-link";
 import { DESTINATIONS, destinationImageUrl } from "@/data/destinations";
 import { loadDestinationWeekly } from "@/lib/destinations/weekly";
+import { loadPathfinderBoard, pathfinderOverthrowRegions } from "@/lib/destinations/pathfinder";
 
 /**
  * Expansion page · Destination section: banner linking to the destination page, in the
@@ -19,6 +20,14 @@ type BannerTheme = {
 };
 
 const THEMES: Record<string, BannerTheme> = {
+  // Pale, luminous Traveler light over the Witness's dark.
+  "the-pale-heart": {
+    accent: "#e9d8a6",
+    border: "rgba(233,216,166,0.85)",
+    glow: "0 0 16px rgba(233,216,166,0.28)",
+    wash: "linear-gradient(90deg, rgba(14,12,18,0.95) 25%, rgba(14,12,18,0.35) 65%, rgba(233,216,166,0.08))",
+    nameGlow: "0 0 12px rgba(255,244,214,0.65)",
+  },
   neomuna: {
     accent: "#ff7bf5",
     border: "#ff3df2",
@@ -65,6 +74,12 @@ export async function ExpansionDestinationBanner({ slug }: { slug: string }) {
     const label = activity.label.replace(/\s*·\s*today$/i, "");
     return { label: SHORT_LABEL[label] ?? label, name: activity.name };
   });
+  // Pale Heart: the Pathfinder board's Overthrow regions for the week.
+  if (slug === "the-pale-heart") {
+    const board = await loadPathfinderBoard();
+    const regions = board ? pathfinderOverthrowRegions(board) : [];
+    if (regions.length) weekly.push({ label: "Pathfinder · Overthrow", name: regions.join(" · ") });
+  }
 
   return (
     <Link

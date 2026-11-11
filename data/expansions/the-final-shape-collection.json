@@ -1,18 +1,393 @@
 {
-  "badgeName": "",
-  "iconPath": "",
-  "bannerIconPath": "",
-  "completionRecordHash": "",
-  "items": [],
+  "generatedAt": "2026-11-11T13:21:47.331Z",
+  "badgePresentationNodeHash": "1528010893",
+  "badgeName": "Pale Heart Pathfinder",
+  "iconPath": "/common/destiny2_content/icons/fe56ac0b6b8f9dcc7a149cfc72498b41.png",
+  "bannerIconPath": "/common/destiny2_content/icons/259fe3a60b8fa713ce7c4ebe74436fdc.jpg",
+  "completionRecordHash": "941779893",
+  "items": [
+    {
+      "itemHash": "4129629253",
+      "collectibleHash": "1578345208",
+      "name": "Khvostov 7G-0X",
+      "iconPath": "/common/destiny2_content/icons/1f9cea35a7966cc72c97afece03da943.jpg",
+      "itemTypeDisplayName": "Auto Rifle",
+      "rarity": "Exotic",
+      "section": "weapons",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "2905188646",
+      "collectibleHash": "2289185883",
+      "name": "Still Hunt",
+      "iconPath": "/common/destiny2_content/icons/770aec173400faab3b821a56f4cdd2f5.jpg",
+      "itemTypeDisplayName": "Sniper Rifle",
+      "rarity": "Exotic",
+      "section": "weapons",
+      "source": "Source: Wild Card Exotic Quest"
+    },
+    {
+      "itemHash": "4207066264",
+      "collectibleHash": "3613141427",
+      "name": "Microcosm",
+      "iconPath": "/common/destiny2_content/icons/b713989965f5e3ef13fcda2a8b6ff24f.jpg",
+      "itemTypeDisplayName": "Trace Rifle",
+      "rarity": "Exotic",
+      "section": "weapons",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "4209476803",
+      "collectibleHash": "585522107",
+      "name": "Khvostov 7G-02",
+      "iconPath": "/common/destiny2_content/icons/8d62640295831408fdfb7542f70d47d5.jpg",
+      "itemTypeDisplayName": "Auto Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "3605603507",
+      "collectibleHash": "2505662511",
+      "name": "Pro Memoria",
+      "iconPath": "/common/destiny2_content/icons/818471067e03941655b964b9c6a8788d.jpg",
+      "itemTypeDisplayName": "Machine Gun",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "4207120603",
+      "collectibleHash": "4107222257",
+      "name": "False Idols",
+      "iconPath": "/common/destiny2_content/icons/9810b584ff1a7948ef7fbb3574b687c3.jpg",
+      "itemTypeDisplayName": "Sword",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "1801007332",
+      "collectibleHash": "3911566636",
+      "name": "No Hesitation",
+      "iconPath": "/common/destiny2_content/icons/89c59353a430aa5ea21ce77dab10a625.jpg",
+      "itemTypeDisplayName": "Auto Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "496728945",
+      "collectibleHash": "3330240536",
+      "name": "Bold Endings",
+      "iconPath": "/common/destiny2_content/icons/f75de2fb0c640bc5a4f48ed1bb3344ea.jpg",
+      "itemTypeDisplayName": "Hand Cannon",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "3867373351",
+      "collectibleHash": "202844183",
+      "name": "Axial Lacuna",
+      "iconPath": "/common/destiny2_content/icons/8e1ab7b1be0ec24d99fe951a74023562.jpg",
+      "itemTypeDisplayName": "Fusion Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "3232203524",
+      "collectibleHash": "370915961",
+      "name": "Someday",
+      "iconPath": "/common/destiny2_content/icons/93d4cfe4382be431bde491898c2ae01d.jpg",
+      "itemTypeDisplayName": "Shotgun",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "3947966653",
+      "collectibleHash": "2061326661",
+      "name": "The Call",
+      "iconPath": "/common/destiny2_content/icons/0248f0febe8c49cd9526af9b6a60da91.jpg",
+      "itemTypeDisplayName": "Sidearm",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "2821677368",
+      "collectibleHash": "3113229393",
+      "name": "Embraced Identity",
+      "iconPath": "/common/destiny2_content/icons/c05d610bcca8e9706cb4483abc6b6625.jpg",
+      "itemTypeDisplayName": "Sniper Rifle",
+      "rarity": "Legendary",
+      "section": "weapons",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "3238797830",
+      "collectibleHash": "1056149262",
+      "name": "First Ascent Casque",
+      "iconPath": "/common/destiny2_content/icons/054eab73d1fa21513314f6c0364b3630.jpg",
+      "itemTypeDisplayName": "Helmet",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "2252757719",
+      "collectibleHash": "104400609",
+      "name": "First Ascent Grips",
+      "iconPath": "/common/destiny2_content/icons/7c64bba5658655984be1eac3025099c1.jpg",
+      "itemTypeDisplayName": "Gauntlets",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "1139897377",
+      "collectibleHash": "2998652975",
+      "name": "First Ascent Vest",
+      "iconPath": "/common/destiny2_content/icons/d2060ea5e6b22e0cf9c808af66c621bb.jpg",
+      "itemTypeDisplayName": "Chest Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "4061292537",
+      "collectibleHash": "188569479",
+      "name": "First Ascent Strides",
+      "iconPath": "/common/destiny2_content/icons/085d04389ffe8f662850448cc7a7da7b.jpg",
+      "itemTypeDisplayName": "Leg Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "1922402428",
+      "collectibleHash": "1468681552",
+      "name": "First Ascent Cloak",
+      "iconPath": "/common/destiny2_content/icons/887126a9d28fd3c563ba20262fa87573.jpg",
+      "itemTypeDisplayName": "Hunter Cloak",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "298824490",
+      "collectibleHash": "315838602",
+      "name": "First Ascent Helm",
+      "iconPath": "/common/destiny2_content/icons/28481d5889f3b5af2eefe9ad2129edc2.jpg",
+      "itemTypeDisplayName": "Helmet",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "304385651",
+      "collectibleHash": "3252451413",
+      "name": "First Ascent Gauntlets",
+      "iconPath": "/common/destiny2_content/icons/299638ad5c15ccabf83dad79dfdb5d42.jpg",
+      "itemTypeDisplayName": "Gauntlets",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "1725332125",
+      "collectibleHash": "1922808307",
+      "name": "First Ascent Plate",
+      "iconPath": "/common/destiny2_content/icons/3fcb4cb3701220808d95a3df919fa044.jpg",
+      "itemTypeDisplayName": "Chest Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "39339589",
+      "collectibleHash": "1074731371",
+      "name": "First Ascent Greaves",
+      "iconPath": "/common/destiny2_content/icons/14e5289fa84caac3df5e59248acfafa9.jpg",
+      "itemTypeDisplayName": "Leg Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "3187320016",
+      "collectibleHash": "2957472556",
+      "name": "First Ascent Mark",
+      "iconPath": "/common/destiny2_content/icons/36710e939bdcb9f1fedfd7e21418489f.jpg",
+      "itemTypeDisplayName": "Titan Mark",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "3364817839",
+      "collectibleHash": "1352216479",
+      "name": "First Ascent Hood",
+      "iconPath": "/common/destiny2_content/icons/1fa8e1ad96f0b1a22441191c241f9e09.jpg",
+      "itemTypeDisplayName": "Helmet",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "1183405878",
+      "collectibleHash": "2034935092",
+      "name": "First Ascent Gloves",
+      "iconPath": "/common/destiny2_content/icons/372b310b86be1c7111e54104686fb97b.jpg",
+      "itemTypeDisplayName": "Gauntlets",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "4143415290",
+      "collectibleHash": "3481768556",
+      "name": "First Ascent Robes",
+      "iconPath": "/common/destiny2_content/icons/8ebb50be41903c2de3ae90fd8ebbcd72.jpg",
+      "itemTypeDisplayName": "Chest Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "2395788176",
+      "collectibleHash": "2219796226",
+      "name": "First Ascent Boots",
+      "iconPath": "/common/destiny2_content/icons/f3ad9af1f57606e39ca6e01fd0082ce1.jpg",
+      "itemTypeDisplayName": "Leg Armor",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "3791868619",
+      "collectibleHash": "179991939",
+      "name": "First Ascent Bond",
+      "iconPath": "/common/destiny2_content/icons/c14c963814b2c87c54952e215b6172a8.jpg",
+      "itemTypeDisplayName": "Warlock Bond",
+      "rarity": "Legendary",
+      "section": "armor",
+      "source": "Source: Exploring the Pale Heart"
+    },
+    {
+      "itemHash": "4031236762",
+      "collectibleHash": "3474690445",
+      "name": "The First Knife",
+      "iconPath": "/common/destiny2_content/icons/b051a9aedc63b07683c354b87bb9a344.jpg",
+      "itemTypeDisplayName": "Ship",
+      "rarity": "Exotic",
+      "section": "other",
+      "source": "Source: Pale Heart Triumph"
+    },
+    {
+      "itemHash": "2847579027",
+      "collectibleHash": "1679700073",
+      "name": "Victorious Oddment",
+      "iconPath": "/common/destiny2_content/icons/bfee07e42fbde4f0d960bcb7b0348728.png",
+      "itemTypeDisplayName": "Emblem",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: The Final Shape Campaign"
+    },
+    {
+      "itemHash": "2847579024",
+      "collectibleHash": "1679700074",
+      "name": "Wander On",
+      "iconPath": "/common/destiny2_content/icons/73bedf15f8e890bed47c98b08d02849f.jpg",
+      "itemTypeDisplayName": "Emblem",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: The Final Shape Campaign"
+    },
+    {
+      "itemHash": "439240927",
+      "collectibleHash": "1017075285",
+      "name": "Reaching Within",
+      "iconPath": "/common/destiny2_content/icons/e40eca08e2f1547ad817684bd6767df9.jpg",
+      "itemTypeDisplayName": "Shader",
+      "rarity": "Legendary",
+      "section": "other",
+      "source": "Source: Exploring the Pale Heart"
+    }
+  ],
   "regionChests": {
-    "checklistHash": "",
+    "checklistHash": "1697465175",
     "triumphHash": "",
-    "entries": []
+    "entries": [
+      {
+        "entryHash": "4166997609",
+        "label": "Region chest 1"
+      },
+      {
+        "entryHash": "2008208662",
+        "label": "Region chest 2"
+      },
+      {
+        "entryHash": "1505906871",
+        "label": "Region chest 3"
+      },
+      {
+        "entryHash": "3615182125",
+        "label": "Region chest 4"
+      },
+      {
+        "entryHash": "3056974714",
+        "label": "Region chest 5"
+      },
+      {
+        "entryHash": "1151638683",
+        "label": "Region chest 6"
+      },
+      {
+        "entryHash": "3071105937",
+        "label": "Region chest 7"
+      },
+      {
+        "entryHash": "1133550974",
+        "label": "Region chest 8"
+      },
+      {
+        "entryHash": "1228096031",
+        "label": "Region chest 9"
+      }
+    ]
   },
   "lostSectors": {
-    "checklistHash": "",
+    "checklistHash": "3142056444",
     "discoveryRecordHash": "",
-    "sectors": []
+    "sectors": [
+      {
+        "name": "The Blooming Deep",
+        "checklistEntryHash": "",
+        "discoveryObjectiveHash": "",
+        "expertRecordHash": "12116937",
+        "masterRecordHash": "964280078",
+        "grandmasterRecordHash": "535185420"
+      },
+      {
+        "name": "The Broken Deep",
+        "checklistEntryHash": "",
+        "discoveryObjectiveHash": "",
+        "expertRecordHash": "693057237",
+        "masterRecordHash": "518361506",
+        "grandmasterRecordHash": "2910620584"
+      },
+      {
+        "name": "The Forgotten Deep",
+        "checklistEntryHash": "",
+        "discoveryObjectiveHash": "",
+        "expertRecordHash": "3923973109",
+        "masterRecordHash": "3940587202",
+        "grandmasterRecordHash": "1126742152"
+      }
+    ]
   },
   "wellspring": {
     "normalRecordHash": "",
@@ -20,7 +395,473 @@
     "bosses": []
   },
   "campaign": {
-    "legendaryRecordHash": "",
-    "missions": []
+    "legendaryRecordHash": "1580882372",
+    "missions": [
+      {
+        "name": "Transmigration",
+        "normalRecordHash": null,
+        "legendObjectiveHash": "641882937",
+        "activityHashes": [
+          "2169925752",
+          "596541314"
+        ]
+      },
+      {
+        "name": "Temptation",
+        "normalRecordHash": null,
+        "legendObjectiveHash": "641882936",
+        "activityHashes": [
+          "1224040266",
+          "3399285984"
+        ]
+      },
+      {
+        "name": "Exegesis",
+        "normalRecordHash": null,
+        "legendObjectiveHash": "641882939",
+        "activityHashes": [
+          "2559804572",
+          "2935910110"
+        ]
+      },
+      {
+        "name": "Requiem",
+        "normalRecordHash": null,
+        "legendObjectiveHash": "641882938",
+        "activityHashes": [
+          "1578888348",
+          "2790832414"
+        ]
+      },
+      {
+        "name": "Ascent",
+        "normalRecordHash": null,
+        "legendObjectiveHash": "641882941",
+        "activityHashes": [
+          "1152354921",
+          "230477216",
+          "477319993"
+        ]
+      },
+      {
+        "name": "Dissent",
+        "normalRecordHash": null,
+        "legendObjectiveHash": "641882940",
+        "activityHashes": [
+          "1329796464",
+          "2283124845",
+          "38511561"
+        ]
+      },
+      {
+        "name": "Iconoclasm",
+        "normalRecordHash": null,
+        "legendObjectiveHash": "641882943",
+        "activityHashes": [
+          "1475344277",
+          "165967000",
+          "4041778390"
+        ]
+      }
+    ],
+    "quests": [
+      {
+        "name": "The Final Shape",
+        "questHash": "4009316293",
+        "completionStepHash": "93470569",
+        "questStepHashes": [
+          "4009316293",
+          "3716079445",
+          "3460941821",
+          "3897411504",
+          "152104176",
+          "2065743110",
+          "3919284466",
+          "1915080913",
+          "265376475",
+          "4120577687",
+          "888548234",
+          "658840641",
+          "2679970016",
+          "3760001336",
+          "1536545003",
+          "1016912462",
+          "3113918754",
+          "1433731838",
+          "1492240036",
+          "2783395451",
+          "4096912375",
+          "2761711865",
+          "2929046193",
+          "3862422804",
+          "1924771146",
+          "3324027446",
+          "4227599758",
+          "2215711693",
+          "3051590530",
+          "1002654008",
+          "1047491773",
+          "2302997306",
+          "1142335168",
+          "93470569"
+        ],
+        "stepObjectiveHashes": [
+          "1660019521",
+          "3994521719",
+          "1894503879",
+          "1499526234",
+          "1186408404",
+          "3147379738",
+          "4081789754",
+          "2745677765",
+          "1917583787",
+          "289914677",
+          "3269556280",
+          "827113725",
+          "1369638792",
+          "4292413604",
+          "1642281587",
+          "931297134",
+          "4122171394",
+          "229189086",
+          "1462362136",
+          "167301027",
+          "152205737",
+          "1228298643",
+          "1785022083",
+          "3068408856",
+          "1921712534",
+          "1455844854",
+          "2547845166",
+          "3897727639",
+          "1317032607",
+          "586274557",
+          "3457751120",
+          "2000537234",
+          "889303979",
+          "2965681115"
+        ],
+        "iconPath": "/common/destiny2_content/icons/df1858a0b153eb676dea032116cc9e1c.png",
+        "completionObjectiveHash": "2965681115"
+      },
+      {
+        "name": "Destined Heroes",
+        "questHash": "2145594812",
+        "completionStepHash": "3761753927",
+        "questStepHashes": [
+          "2145594812",
+          "227865745",
+          "1437284567",
+          "3108716040",
+          "2505385643",
+          "3381752080",
+          "2036483182",
+          "2505385640",
+          "3761753927"
+        ],
+        "stepObjectiveHashes": [
+          "2531500566",
+          "1000347839",
+          "1994811421",
+          "1582606920",
+          "4216479609",
+          "2382273890",
+          "1369507008",
+          "2893253352",
+          "935595952"
+        ],
+        "iconPath": "/common/destiny2_content/icons/9538fbb3e1031913b52185592f694c9e.jpg",
+        "completionObjectiveHash": "935595952"
+      },
+      {
+        "name": "The Heart's Depths",
+        "questHash": "1218497598",
+        "completionStepHash": "1150401288",
+        "questStepHashes": [
+          "1218497598",
+          "3265116853",
+          "3197859223",
+          "3113971187",
+          "3063491139",
+          "1352027002",
+          "1150401288"
+        ],
+        "stepObjectiveHashes": [
+          "2606713631",
+          "3146153470",
+          "1073140580",
+          "3878220777",
+          "2448219512",
+          "3688352227",
+          "2767905509"
+        ],
+        "iconPath": "/common/destiny2_content/icons/c72c1e511e45fd7725f063650cc42799.jpg",
+        "completionObjectiveHash": "2767905509"
+      },
+      {
+        "name": "Found in the Dark",
+        "questHash": "3878661814",
+        "completionStepHash": "3634243230",
+        "questStepHashes": [
+          "3878661814",
+          "3858524939",
+          "3878661813",
+          "3843819494",
+          "3634243230"
+        ],
+        "stepObjectiveHashes": [
+          "378334598",
+          "3674934785",
+          "3784492677",
+          "158676664",
+          "3063841781"
+        ],
+        "iconPath": "/common/destiny2_content/icons/718e3a59033f13913ec2e35ba895cc2b.jpg",
+        "completionObjectiveHash": "3063841781"
+      },
+      {
+        "name": "Lost in the Light",
+        "questHash": "4096435878",
+        "completionStepHash": "3627559758",
+        "questStepHashes": [
+          "4096435878",
+          "3208963371",
+          "4096435877",
+          "186303403",
+          "3627559758"
+        ],
+        "stepObjectiveHashes": [
+          "1161349462",
+          "1586134945",
+          "1405981109",
+          "77697569",
+          "361336933"
+        ],
+        "iconPath": "/common/destiny2_content/icons/a10a1a700f4685195d860482eb8ed84b.jpg",
+        "completionObjectiveHash": "361336933"
+      },
+      {
+        "name": "The Return",
+        "questHash": "3758175010",
+        "completionStepHash": "3719510256",
+        "questStepHashes": [
+          "3758175010",
+          "2179804365",
+          "137319671",
+          "3719510256"
+        ],
+        "stepObjectiveHashes": [
+          "2723327496",
+          "3250011746",
+          "3106192324",
+          "367259677"
+        ],
+        "iconPath": "/common/destiny2_content/icons/b5c3b4228d79ab6104be7e6cbc33e127.png",
+        "completionObjectiveHash": "367259677",
+        "group": "The Final Days"
+      },
+      {
+        "name": "The Hellmouth",
+        "questHash": "578566109",
+        "completionStepHash": "1534595911",
+        "questStepHashes": [
+          "578566109",
+          "1719082278",
+          "781655348",
+          "1534595911"
+        ],
+        "stepObjectiveHashes": [
+          "2353812825",
+          "130912625",
+          "1336664169",
+          "3440949012"
+        ],
+        "iconPath": "/common/destiny2_content/icons/b29f79816cc66bb49c19c059c7346f0b.png",
+        "completionObjectiveHash": "3440949012",
+        "group": "The Final Days"
+      },
+      {
+        "name": "The Shadows",
+        "questHash": "2038129348",
+        "completionStepHash": "2272665054",
+        "questStepHashes": [
+          "2038129348",
+          "1375475507",
+          "2839862009",
+          "2272665054"
+        ],
+        "stepObjectiveHashes": [
+          "1352163662",
+          "2914287504",
+          "2848421658",
+          "1067104703"
+        ],
+        "iconPath": "/common/destiny2_content/icons/d4c9e1116280a597ea0f04267239e1da.png",
+        "completionObjectiveHash": "1067104703",
+        "group": "The Final Days"
+      },
+      {
+        "name": "The Oracle",
+        "questHash": "1711768439",
+        "completionStepHash": "607418085",
+        "questStepHashes": [
+          "1711768439",
+          "4216908924",
+          "3526414646",
+          "607418085"
+        ],
+        "stepObjectiveHashes": [
+          "860485991",
+          "1846493175",
+          "1390628967",
+          "2974579822"
+        ],
+        "iconPath": "/common/destiny2_content/icons/feced73903894da867ecbbe2d5990225.png",
+        "completionObjectiveHash": "2974579822",
+        "group": "The Final Days"
+      },
+      {
+        "name": "The Ascendant",
+        "questHash": "1069076942",
+        "completionStepHash": "4079570156",
+        "questStepHashes": [
+          "1069076942",
+          "2104674665",
+          "1204353787",
+          "4079570156"
+        ],
+        "stepObjectiveHashes": [
+          "3612635172",
+          "1647501534",
+          "176693440",
+          "3407971505"
+        ],
+        "iconPath": "/common/destiny2_content/icons/bfeb898a0b725094d62dadef86f23e97.png",
+        "completionObjectiveHash": "3407971505",
+        "group": "The Final Days"
+      },
+      {
+        "name": "The Past",
+        "questHash": "4195357129",
+        "completionStepHash": "2347179427",
+        "questStepHashes": [
+          "4195357129",
+          "4047209202",
+          "1543279656",
+          "2347179427"
+        ],
+        "stepObjectiveHashes": [
+          "4088102245",
+          "1492299421",
+          "4064367749",
+          "1245600472"
+        ],
+        "iconPath": "/common/destiny2_content/icons/e5ab8c57536e967103468dcef36dbcd9.png",
+        "completionObjectiveHash": "1245600472",
+        "group": "The Final Days"
+      },
+      {
+        "name": "The Veiled",
+        "questHash": "541603424",
+        "completionStepHash": "148715642",
+        "questStepHashes": [
+          "541603424",
+          "2522697935",
+          "1756509213",
+          "148715642"
+        ],
+        "stepObjectiveHashes": [
+          "1321473802",
+          "3657825532",
+          "1959824790",
+          "2824149219"
+        ],
+        "iconPath": "/common/destiny2_content/icons/0bc1e93b3c7167aa05dfa1342bebcf99.png",
+        "completionObjectiveHash": "2824149219",
+        "group": "The Final Days"
+      },
+      {
+        "name": "The Desperation",
+        "questHash": "3400121653",
+        "completionStepHash": "2616169743",
+        "questStepHashes": [
+          "3400121653",
+          "3127309054",
+          "1041633852",
+          "2616169743"
+        ],
+        "stepObjectiveHashes": [
+          "1995230385",
+          "3261123417",
+          "2903747393",
+          "1773865004"
+        ],
+        "iconPath": "/common/destiny2_content/icons/d3d38420f5b6c79f75ef680b179a1453.png",
+        "completionObjectiveHash": "1773865004",
+        "group": "The Final Days"
+      },
+      {
+        "name": "Convalescence",
+        "questHash": "1831806500",
+        "completionStepHash": "1003295682",
+        "questStepHashes": [
+          "1831806500",
+          "1230738388",
+          "3838101920",
+          "2162076565",
+          "3308978151",
+          "2617996611",
+          "2154917694",
+          "2750760699",
+          "931113523",
+          "3465651225",
+          "1043681923",
+          "2259993497",
+          "3998813372",
+          "1003295682"
+        ],
+        "stepObjectiveHashes": [
+          "1493823176",
+          "1475187849",
+          "1906454861",
+          "2066200542",
+          "873689780",
+          "4259313272",
+          "1563372575",
+          "2410341568",
+          "3973269032",
+          "3718428346",
+          "2051181240",
+          "2512404794",
+          "2946727617",
+          "1909056411"
+        ],
+        "iconPath": "/common/destiny2_content/icons/81576a92af99b4acbf145abbde859c80.png",
+        "completionObjectiveHash": "1909056411"
+      },
+      {
+        "name": "Wild Card",
+        "questHash": "1768751086",
+        "completionStepHash": "1075457695",
+        "questStepHashes": [
+          "1768751086",
+          "488004607",
+          "1075457695"
+        ],
+        "stepObjectiveHashes": [
+          "2489932047",
+          "1770267548",
+          "3302811324"
+        ],
+        "iconPath": "/common/destiny2_content/icons/9743db0bdbabf201c853ee7229d664c8.png",
+        "completionObjectiveHash": "3302811324",
+        "completionItemHash": "2905188646"
+      },
+      {
+        "name": "Dual Destiny",
+        "recordHash": "3225424862",
+        "iconPath": "/common/destiny2_content/icons/842f32c6ea265df69715195aa5f9edf2.png"
+      }
+    ]
   }
 }

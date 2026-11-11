@@ -1,0 +1,2881 @@
+{
+ "rootNodeHash": "1062988660",
+ "pathsClaimedRecordHash": "3938118506",
+ "boards": {
+  "1279587311": {
+   "rewardHash": "845594531",
+   "rows": [
+    [
+     {
+      "hash": "17993007",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     },
+     {
+      "hash": "17993006",
+      "name": "Landed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Landing grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "3389071160",
+      "name": "Frozen Skirmish",
+      "description": "In the Pale Heart, travel to the Divide and claim a reward for defeating Akgon, Light-Cleaver."
+     },
+     {
+      "hash": "3389071161",
+      "name": "Novelties of Light",
+      "description": "In the Pale Heart, defeat combatants using the following Supers: Hunter Storm's Edge, Titan Twilight Arsenal, or Warlock Song of Flame."
+     },
+     {
+      "hash": "3389071162",
+      "name": "Urban Clash",
+      "description": "In the Pale Heart, travel to the Lost City and claim a reward for defeating Naadin, the Searing."
+     }
+    ],
+    [
+     {
+      "hash": "2982553409",
+      "name": "Powerful Taken Revelation",
+      "description": "In the Pale Heart, defeat powerful Taken in the Blooming, the Seclusion, or the Refraction. Bosses grant bonus progress."
+     },
+     {
+      "hash": "2982553408",
+      "name": "Overgrown Skirmish",
+      "description": "In the Pale Heart, travel to the Landing and claim a reward for defeating Ei Räkosh, Banisher of Memory."
+     },
+     {
+      "hash": "2982553411",
+      "name": "Wasteland Clash",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Vrhalja, Subjugator of Ruin."
+     },
+     {
+      "hash": "2982553410",
+      "name": "Cross My Heart",
+      "description": "In the Pale Heart, defeat combatants with precision final blows using Sniper Rifles."
+     }
+    ],
+    [
+     {
+      "hash": "812150778",
+      "name": "Blighted Skirmish",
+      "description": "In the Pale Heart, travel to the Transgression and claim a reward for defeating Ithriks, the Lost."
+     },
+     {
+      "hash": "812150779",
+      "name": "Flawless Taken Impasse",
+      "description": "In the Pale Heart, during a single life, defeat Taken in the Impasse."
+     },
+     {
+      "hash": "812150776",
+      "name": "Frozen Fairway",
+      "description": "In the Pale Heart, travel to the Divide, and complete the Mending event."
+     },
+     {
+      "hash": "812150777",
+      "name": "Flawless Scouting",
+      "description": "In the Pale Heart, during a single life, defeat combatants using Scout Rifles."
+     },
+     {
+      "hash": "812150782",
+      "name": "Natural Skirmish",
+      "description": "In the Pale Heart, travel to the Seclusion and claim a reward for defeating Vrhaask, Subjugator of Solace."
+     }
+    ],
+    [
+     {
+      "hash": "2495339899",
+      "name": "Freezing Heart",
+      "description": "In the Pale Heart, defeat combatants with Stasis weapons."
+     },
+     {
+      "hash": "2495339898",
+      "name": "Overgrown Parkour",
+      "description": "In the Pale Heart, travel to the Landing, and complete the Stitching event."
+     },
+     {
+      "hash": "2495339897",
+      "name": "Energetic Revelation",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Blooming."
+     },
+     {
+      "hash": "2495339896",
+      "name": "Taken Revelation",
+      "description": "In the Pale Heart, defeat Taken in the Blooming."
+     },
+     {
+      "hash": "2495339903",
+      "name": "Blighted Demolition",
+      "description": "In the Pale Heart, travel to the Transgression, and complete the Expunging event."
+     },
+     {
+      "hash": "2495339902",
+      "name": "Taken Heart",
+      "description": "In the Pale Heart, defeat Taken combatants."
+     }
+    ]
+   ]
+  },
+  "1279587310": {
+   "rewardHash": "901561344",
+   "rows": [
+    [
+     {
+      "hash": "624889218",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     },
+     {
+      "hash": "624889219",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "3399378413",
+      "name": "Unstable Skirmish",
+      "description": "In the Pale Heart, travel to the Blooming and claim a reward for defeating Erkult, the Sequestered."
+     },
+     {
+      "hash": "3399378412",
+      "name": "Heart's Hidden Depths",
+      "description": "In the Pale Heart, complete any Lost Sector."
+     },
+     {
+      "hash": "3399378415",
+      "name": "Wasteland Clash",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Vrhalja, Subjugator of Ruin."
+     }
+    ],
+    [
+     {
+      "hash": "3235218260",
+      "name": "Secluded Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Seclusion."
+     },
+     {
+      "hash": "3235218261",
+      "name": "Blighted Skirmish",
+      "description": "In the Pale Heart, travel to the Transgression and claim a reward for defeating Ithriks, the Lost."
+     },
+     {
+      "hash": "3235218262",
+      "name": "Urban Skirmish",
+      "description": "In the Pale Heart, travel to the Lost City and claim a reward for defeating Arak-Thul, the Arisen."
+     },
+     {
+      "hash": "3235218263",
+      "name": "Flawless Taken Impasse",
+      "description": "In the Pale Heart, during a single life, defeat Taken in the Impasse."
+     }
+    ],
+    [
+     {
+      "hash": "2801719063",
+      "name": "Natural Skirmish",
+      "description": "In the Pale Heart, travel to the Seclusion and claim a reward for defeating Vrhaask, Subjugator of Solace."
+     },
+     {
+      "hash": "2801719062",
+      "name": "Heavy Heart",
+      "description": "In the Pale Heart, defeat combatants by using Power weapons in the Impasse, the Transgression, or the Divide."
+     },
+     {
+      "hash": "2801719061",
+      "name": "Precise Conversion",
+      "description": "In the Pale Heart, defeat combatants with precision final blows using Energy weapons."
+     },
+     {
+      "hash": "2801719060",
+      "name": "SMG Reclamation",
+      "description": "In the Pale Heart, defeat combatants with Submachine Guns in the Landing, the Lost City, or the Refraction."
+     },
+     {
+      "hash": "2801719059",
+      "name": "Overgrown Clash",
+      "description": "In the Pale Heart, travel to the Landing and claim a reward for defeating Urgoth, the Blistering Glare."
+     }
+    ],
+    [
+     {
+      "hash": "2010693910",
+      "name": "Lucent Revelation",
+      "description": "In the Pale Heart, defeat Lucent Hive in the Blooming."
+     },
+     {
+      "hash": "2010693911",
+      "name": "Blighted Demolition",
+      "description": "In the Pale Heart, travel to the Transgression, and complete the Expunging event."
+     },
+     {
+      "hash": "2010693908",
+      "name": "Impassive Treasure",
+      "description": "In the Pale Heart, open faction chests in the Impasse."
+     },
+     {
+      "hash": "2010693909",
+      "name": "Freezing Heart",
+      "description": "In the Pale Heart, defeat combatants with Stasis weapons."
+     },
+     {
+      "hash": "2010693906",
+      "name": "Wasteland Fairway",
+      "description": "In the Pale Heart, travel to the Impasse and complete the Mending event."
+     },
+     {
+      "hash": "2010693907",
+      "name": "Gravity's Heart",
+      "description": "In the Pale Heart, defeat combatants with Void weapons."
+     }
+    ]
+   ]
+  },
+  "1279587309": {
+   "rewardHash": "1772566969",
+   "rows": [
+    [
+     {
+      "hash": "3812601617",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     },
+     {
+      "hash": "3812601616",
+      "name": "Landed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Landing grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "293862366",
+      "name": "Wasteland Clash",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Vrhalja, Subjugator of Ruin."
+     },
+     {
+      "hash": "293862367",
+      "name": "Heart's Hidden Depths",
+      "description": "In the Pale Heart, complete any Lost Sector."
+     },
+     {
+      "hash": "293862364",
+      "name": "Urban Skirmish",
+      "description": "In the Pale Heart, travel to the Lost City and claim a reward for defeating Arak-Thul, the Arisen."
+     }
+    ],
+    [
+     {
+      "hash": "1747494975",
+      "name": "Flawless Lucent Heart",
+      "description": "In the Pale Heart, during a single life, defeat Lucent Hive combatants."
+     },
+     {
+      "hash": "1747494974",
+      "name": "Crystalline Gifts",
+      "description": "In the Pale Heart, travel to the Refraction, and complete the Offering event."
+     },
+     {
+      "hash": "1747494973",
+      "name": "Urban Parkour",
+      "description": "In the Pale Heart, travel to the Lost City, and complete the Stitching event."
+     },
+     {
+      "hash": "1747494972",
+      "name": "Precise Conversion",
+      "description": "In the Pale Heart, defeat combatants with precision final blows using Energy weapons."
+     }
+    ],
+    [
+     {
+      "hash": "1070425020",
+      "name": "Overgrown Clash",
+      "description": "In the Pale Heart, travel to the Landing and claim a reward for defeating Urgoth, the Blistering Glare."
+     },
+     {
+      "hash": "1070425021",
+      "name": "Flawless Scouting",
+      "description": "In the Pale Heart, during a single life, defeat combatants using Scout Rifles."
+     },
+     {
+      "hash": "1070425022",
+      "name": "Divide and Gather",
+      "description": "In the Pale Heart, collect resource nodes in the Divide."
+     },
+     {
+      "hash": "1070425023",
+      "name": "Revelatory Pulse",
+      "description": "In the Pale Heart, defeat combatants with Pulse Rifles in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "1070425016",
+      "name": "Overgrown Skirmish",
+      "description": "In the Pale Heart, travel to the Landing and claim a reward for defeating Ei Räkosh, Banisher of Memory."
+     }
+    ],
+    [
+     {
+      "hash": "3226292533",
+      "name": "Taken Heart",
+      "description": "In the Pale Heart, defeat Taken combatants."
+     },
+     {
+      "hash": "3226292532",
+      "name": "Urban Clash",
+      "description": "In the Pale Heart, travel to the Lost City and claim a reward for defeating Naadin, the Searing."
+     },
+     {
+      "hash": "3226292535",
+      "name": "Energetic Impasse",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Impasse."
+     },
+     {
+      "hash": "3226292534",
+      "name": "Burning Heart",
+      "description": "In the Pale Heart, defeat combatants with Solar weapons."
+     },
+     {
+      "hash": "3226292529",
+      "name": "Frozen Fairway",
+      "description": "In the Pale Heart, travel to the Divide, and complete the Mending event."
+     },
+     {
+      "hash": "3226292528",
+      "name": "Revealed Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Blooming."
+     }
+    ]
+   ]
+  },
+  "1279587308": {
+   "rewardHash": "1054262686",
+   "rows": [
+    [
+     {
+      "hash": "3221096260",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     },
+     {
+      "hash": "3221096261",
+      "name": "Landed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Landing grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "3026861075",
+      "name": "Unstable Skirmish",
+      "description": "In the Pale Heart, travel to the Blooming and claim a reward for defeating Erkult, the Sequestered."
+     },
+     {
+      "hash": "3026861074",
+      "name": "Reclaimed Light",
+      "description": "In the Pale Heart, defeat Hive Ghosts after taking down their Lightbearer."
+     },
+     {
+      "hash": "3026861073",
+      "name": "Urban Clash",
+      "description": "In the Pale Heart, travel to the Lost City and claim a reward for defeating Naadin, the Searing."
+     }
+    ],
+    [
+     {
+      "hash": "1402623602",
+      "name": "Flawless Scouting",
+      "description": "In the Pale Heart, during a single life, defeat combatants using Scout Rifles."
+     },
+     {
+      "hash": "1402623603",
+      "name": "Unstable Fairway",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Mending event."
+     },
+     {
+      "hash": "1402623600",
+      "name": "Natural Sanitization",
+      "description": "In the Pale Heart, travel to the Seclusion, and complete the Cleansing event."
+     },
+     {
+      "hash": "1402623601",
+      "name": "Flawless Taken Impasse",
+      "description": "In the Pale Heart, during a single life, defeat Taken in the Impasse."
+     }
+    ],
+    [
+     {
+      "hash": "3984163065",
+      "name": "Crystalline Clash",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Aksul, Light's Rebuke."
+     },
+     {
+      "hash": "3984163064",
+      "name": "Heavy Bloom",
+      "description": "In the Pale Heart, defeat combatants by using Power weapons in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "3984163067",
+      "name": "Double-Time",
+      "description": "In the Pale Heart, defeat combatants with Hand Cannons in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "3984163066",
+      "name": "Flawless Quickdraw",
+      "description": "In the Pale Heart, defeat combatants with Sidearms in a single life."
+     },
+     {
+      "hash": "3984163069",
+      "name": "Frozen Clash",
+      "description": "In the Pale Heart, travel to the Divide and claim a reward for defeating Ir Nasrir, Secret Seeker."
+     }
+    ],
+    [
+     {
+      "hash": "3317016208",
+      "name": "Revealed Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Blooming."
+     },
+     {
+      "hash": "3317016209",
+      "name": "Wasteland Skirmish",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Ir Anak, Lightdrinker."
+     },
+     {
+      "hash": "3317016210",
+      "name": "Lucent Reclamation",
+      "description": "In the Pale Heart, defeat Lucent Hive in the Landing."
+     },
+     {
+      "hash": "3317016211",
+      "name": "Energetic Reclamation",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Landing."
+     },
+     {
+      "hash": "3317016212",
+      "name": "Frozen Fairway",
+      "description": "In the Pale Heart, travel to the Divide, and complete the Mending event."
+     },
+     {
+      "hash": "3317016213",
+      "name": "Lucent Revelation",
+      "description": "In the Pale Heart, defeat Lucent Hive in the Blooming."
+     }
+    ]
+   ]
+  },
+  "1279587307": {
+   "rewardHash": "531194039",
+   "rows": [
+    [
+     {
+      "hash": "2613568435",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     },
+     {
+      "hash": "2613568434",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "2341769444",
+      "name": "Natural Clash",
+      "description": "In the Pale Heart, travel to the Seclusion and claim a reward for defeating Keraidos, Grasp of the Witness."
+     },
+     {
+      "hash": "2341769445",
+      "name": "Flawless Lucent Finisher",
+      "description": "In the Pale Heart, during a single life, defeat Lucent Hive with finishers."
+     },
+     {
+      "hash": "2341769446",
+      "name": "Unstable Clash",
+      "description": "In the Pale Heart, travel to the Blooming and claim a reward for defeating Vrhada, Subjugator of Insight."
+     }
+    ],
+    [
+     {
+      "hash": "229718141",
+      "name": "Special Impasse",
+      "description": "In the Pale Heart, defeat combatants using Special ammo weapons in the Impasse, the Transgression, or the Divide."
+     },
+     {
+      "hash": "229718140",
+      "name": "Urban Clash",
+      "description": "In the Pale Heart, travel to the Lost City and claim a reward for defeating Naadin, the Searing."
+     },
+     {
+      "hash": "229718143",
+      "name": "Frozen Skirmish",
+      "description": "In the Pale Heart, travel to the Divide and claim a reward for defeating Akgon, Light-Cleaver."
+     },
+     {
+      "hash": "229718142",
+      "name": "Precise Taken Heart",
+      "description": "In the Pale Heart, defeat Taken combatants with precision final blows."
+     }
+    ],
+    [
+     {
+      "hash": "751885926",
+      "name": "Urban Skirmish",
+      "description": "In the Pale Heart, travel to the Lost City and claim a reward for defeating Arak-Thul, the Arisen."
+     },
+     {
+      "hash": "751885927",
+      "name": "Precise Motion",
+      "description": "In the Pale Heart, defeat combatants with precision final blows using Kinetic weapons."
+     },
+     {
+      "hash": "751885924",
+      "name": "Special Revelation",
+      "description": "In the Pale Heart, defeat combatants using Special ammo weapons in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "751885925",
+      "name": "Divide and Gather",
+      "description": "In the Pale Heart, collect resource nodes in the Divide."
+     },
+     {
+      "hash": "751885922",
+      "name": "Crystalline Clash",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Aksul, Light's Rebuke."
+     }
+    ],
+    [
+     {
+      "hash": "3508473895",
+      "name": "Sparking Heart",
+      "description": "In the Pale Heart, defeat combatants with Arc weapons."
+     },
+     {
+      "hash": "3508473894",
+      "name": "Overgrown Parkour",
+      "description": "In the Pale Heart, travel to the Landing, and complete the Stitching event."
+     },
+     {
+      "hash": "3508473893",
+      "name": "Reclaimed Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Landing."
+     },
+     {
+      "hash": "3508473892",
+      "name": "Gravity's Heart",
+      "description": "In the Pale Heart, defeat combatants with Void weapons."
+     },
+     {
+      "hash": "3508473891",
+      "name": "Crystalline Skirmish",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Harrak, the Rejoined."
+     },
+     {
+      "hash": "3508473890",
+      "name": "Revealed Treasure",
+      "description": "In the Pale Heart, open faction chests in the Blooming."
+     }
+    ]
+   ]
+  },
+  "1279587306": {
+   "rewardHash": "2761828100",
+   "rows": [
+    [
+     {
+      "hash": "358559798",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     },
+     {
+      "hash": "358559799",
+      "name": "Landed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Landing grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "1716466537",
+      "name": "Swift Tracking",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Trace Rifles."
+     },
+     {
+      "hash": "1716466536",
+      "name": "Wasteland Clash",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Vrhalja, Subjugator of Ruin."
+     },
+     {
+      "hash": "1716466539",
+      "name": "Resonant Synergy",
+      "description": "In the Pale Heart, defeat combatants using weapons that match your subclass damage type."
+     }
+    ],
+    [
+     {
+      "hash": "3399512512",
+      "name": "Special Impasse",
+      "description": "In the Pale Heart, defeat combatants using Special ammo weapons in the Impasse, the Transgression, or the Divide."
+     },
+     {
+      "hash": "3399512513",
+      "name": "Powerful Taken Revelation",
+      "description": "In the Pale Heart, defeat powerful Taken in the Blooming, the Seclusion, or the Refraction. Bosses grant bonus progress."
+     },
+     {
+      "hash": "3399512514",
+      "name": "Crystalline Skirmish",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Harrak, the Rejoined."
+     },
+     {
+      "hash": "3399512515",
+      "name": "Precise Fusion",
+      "description": "In the Pale Heart, defeat combatants with precision final blows using Linear Fusion Rifles."
+     }
+    ],
+    [
+     {
+      "hash": "127802435",
+      "name": "Blighted Skirmish",
+      "description": "In the Pale Heart, travel to the Transgression and claim a reward for defeating Ithriks, the Lost."
+     },
+     {
+      "hash": "127802434",
+      "name": "Special Reclamation",
+      "description": "In the Pale Heart, defeat combatants using Special ammo weapons in the Landing, the Lost City, or the Refraction."
+     },
+     {
+      "hash": "127802433",
+      "name": "Precise Taken Heart",
+      "description": "In the Pale Heart, defeat Taken combatants with precision final blows."
+     },
+     {
+      "hash": "127802432",
+      "name": "Frozen Clash",
+      "description": "In the Pale Heart, travel to the Divide and claim a reward for defeating Ir Nasrir, Secret Seeker."
+     },
+     {
+      "hash": "127802439",
+      "name": "Heavy Bloom",
+      "description": "In the Pale Heart, defeat combatants by using Power weapons in the Blooming, the Seclusion, or the Refraction."
+     }
+    ],
+    [
+     {
+      "hash": "139543202",
+      "name": "Unstable Gifts",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Offering event."
+     },
+     {
+      "hash": "139543203",
+      "name": "Energetic Revelation",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Blooming."
+     },
+     {
+      "hash": "139543200",
+      "name": "Flawless Quickdraw",
+      "description": "In the Pale Heart, defeat combatants with Sidearms in a single life."
+     },
+     {
+      "hash": "139543201",
+      "name": "Heartstrings",
+      "description": "In the Pale Heart, defeat combatants with Strand weapons."
+     },
+     {
+      "hash": "139543206",
+      "name": "Sparking Heart",
+      "description": "In the Pale Heart, defeat combatants with Arc weapons."
+     },
+     {
+      "hash": "139543207",
+      "name": "Urban Skirmish",
+      "description": "In the Pale Heart, travel to the Lost City and claim a reward for defeating Arak-Thul, the Arisen."
+     }
+    ]
+   ]
+  },
+  "1279587305": {
+   "rewardHash": "315516541",
+   "rows": [
+    [
+     {
+      "hash": "3925451301",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     },
+     {
+      "hash": "3925451300",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "331145210",
+      "name": "Swift Machinery",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Machine Guns."
+     },
+     {
+      "hash": "331145211",
+      "name": "Wasteland Skirmish",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Ir Anak, Lightdrinker."
+     },
+     {
+      "hash": "331145208",
+      "name": "Resonant Synergy",
+      "description": "In the Pale Heart, defeat combatants using weapons that match your subclass damage type."
+     }
+    ],
+    [
+     {
+      "hash": "2014334331",
+      "name": "Uneasy Fusion",
+      "description": "In the Pale Heart, defeat combatants with Fusion Rifles in the Landing, the Lost City, or the Refraction."
+     },
+     {
+      "hash": "2014334330",
+      "name": "Reclaimed Overthrow",
+      "description": "In the Pale Heart, complete Overthrow level 2 and 3 encounters, and open the chests in the Landing."
+     },
+     {
+      "hash": "2014334329",
+      "name": "Overgrown Clash",
+      "description": "In the Pale Heart, travel to the Landing and claim a reward for defeating Urgoth, the Blistering Glare."
+     },
+     {
+      "hash": "2014334328",
+      "name": "Swift Launch",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Grenade Launchers."
+     }
+    ],
+    [
+     {
+      "hash": "2908065592",
+      "name": "Unstable Clash",
+      "description": "In the Pale Heart, travel to the Blooming and claim a reward for defeating Vrhada, Subjugator of Insight."
+     },
+     {
+      "hash": "2908065593",
+      "name": "Heavy Heart",
+      "description": "In the Pale Heart, defeat combatants by using Power weapons in the Impasse, the Transgression, or the Divide."
+     },
+     {
+      "hash": "2908065594",
+      "name": "Rampant Light",
+      "description": "In the Pale Heart, defeat Lucent Hive in groups of 2 or more."
+     },
+     {
+      "hash": "2908065595",
+      "name": "Unstable Gifts",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Offering event."
+     },
+     {
+      "hash": "2908065596",
+      "name": "Flawless Toxophilite",
+      "description": "In the Pale Heart, during a single life, defeat combatants with Bows."
+     }
+    ],
+    [
+     {
+      "hash": "2501547841",
+      "name": "Blighted Clash",
+      "description": "In the Pale Heart, travel to the Transgression and claim a reward for defeating Vrhiija, Subjugator of Paradise."
+     },
+     {
+      "hash": "2501547840",
+      "name": "Energetic Revelation",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Blooming."
+     },
+     {
+      "hash": "2501547843",
+      "name": "Existential Detonation",
+      "description": "In the Pale Heart, defeat combatants with Grenade Launchers in the Impasse, the Transgression, or the Divide."
+     },
+     {
+      "hash": "2501547842",
+      "name": "Heartstrings",
+      "description": "In the Pale Heart, defeat combatants with Strand weapons."
+     },
+     {
+      "hash": "2501547845",
+      "name": "Freezing Heart",
+      "description": "In the Pale Heart, defeat combatants with Stasis weapons."
+     },
+     {
+      "hash": "2501547844",
+      "name": "Crystalline Clash",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Aksul, Light's Rebuke."
+     }
+    ]
+   ]
+  },
+  "1279587304": {
+   "rewardHash": "3371689762",
+   "rows": [
+    [
+     {
+      "hash": "2215050952",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     },
+     {
+      "hash": "2215050953",
+      "name": "Landed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Landing grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "4260090687",
+      "name": "Flawless Launch",
+      "description": "In the Pale Heart, during a single life, defeat combatants using Rocket Launchers."
+     },
+     {
+      "hash": "4260090686",
+      "name": "Blighted Skirmish",
+      "description": "In the Pale Heart, travel to the Transgression and claim a reward for defeating Ithriks, the Lost."
+     },
+     {
+      "hash": "4260090685",
+      "name": "Resonant Synergy",
+      "description": "In the Pale Heart, defeat combatants using weapons that match your subclass damage type."
+     }
+    ],
+    [
+     {
+      "hash": "2806458078",
+      "name": "Secluded Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Seclusion."
+     },
+     {
+      "hash": "2806458079",
+      "name": "Swift Swordplay",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Swords."
+     },
+     {
+      "hash": "2806458076",
+      "name": "Frozen Clash",
+      "description": "In the Pale Heart, travel to the Divide and claim a reward for defeating Ir Nasrir, Secret Seeker."
+     },
+     {
+      "hash": "2806458077",
+      "name": "Swift Launch",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Grenade Launchers."
+     }
+    ],
+    [
+     {
+      "hash": "1443920949",
+      "name": "Wasteland Clash",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Vrhalja, Subjugator of Ruin."
+     },
+     {
+      "hash": "1443920948",
+      "name": "Special Reclamation",
+      "description": "In the Pale Heart, defeat combatants using Special ammo weapons in the Landing, the Lost City, or the Refraction."
+     },
+     {
+      "hash": "1443920951",
+      "name": "Excised Blight",
+      "description": "In the Pale Heart, defeat Taken in groups of 2 or more."
+     },
+     {
+      "hash": "1443920950",
+      "name": "Unstable Fairway",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Mending event."
+     },
+     {
+      "hash": "1443920945",
+      "name": "Heavy Bloom",
+      "description": "In the Pale Heart, defeat combatants by using Power weapons in the Blooming, the Seclusion, or the Refraction."
+     }
+    ],
+    [
+     {
+      "hash": "3583020732",
+      "name": "Urban Parkour",
+      "description": "In the Pale Heart, travel to the Lost City, and complete the Stitching event."
+     },
+     {
+      "hash": "3583020733",
+      "name": "Energetic Revelation",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Blooming."
+     },
+     {
+      "hash": "3583020734",
+      "name": "Uneasy Fusion",
+      "description": "In the Pale Heart, defeat combatants with Fusion Rifles in the Landing, the Lost City, or the Refraction."
+     },
+     {
+      "hash": "3583020735",
+      "name": "Energetic Impasse",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Impasse."
+     },
+     {
+      "hash": "3583020728",
+      "name": "Freezing Heart",
+      "description": "In the Pale Heart, defeat combatants with Stasis weapons."
+     },
+     {
+      "hash": "3583020729",
+      "name": "Crystalline Clash",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Aksul, Light's Rebuke."
+     }
+    ]
+   ]
+  },
+  "1279587303": {
+   "rewardHash": "176347131",
+   "rows": [
+    [
+     {
+      "hash": "1698319639",
+      "name": "Landed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Landing grants additional progress."
+     },
+     {
+      "hash": "1698319638",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "355775136",
+      "name": "Swift Tracking",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Trace Rifles."
+     },
+     {
+      "hash": "355775137",
+      "name": "Wasteland Skirmish",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Ir Anak, Lightdrinker."
+     },
+     {
+      "hash": "355775138",
+      "name": "Resonant Synergy",
+      "description": "In the Pale Heart, defeat combatants using weapons that match your subclass damage type."
+     }
+    ],
+    [
+     {
+      "hash": "1522870601",
+      "name": "Precise Motion",
+      "description": "In the Pale Heart, defeat combatants with precision final blows using Kinetic weapons."
+     },
+     {
+      "hash": "1522870600",
+      "name": "Flawless Taken Finisher",
+      "description": "In the Pale Heart, during a single life, defeat Taken with finishers."
+     },
+     {
+      "hash": "1522870603",
+      "name": "Overgrown Skirmish",
+      "description": "In the Pale Heart, travel to the Landing and claim a reward for defeating Ei Räkosh, Banisher of Memory."
+     },
+     {
+      "hash": "1522870602",
+      "name": "Precise Fusion",
+      "description": "In the Pale Heart, defeat combatants with precision final blows using Linear Fusion Rifles."
+     }
+    ],
+    [
+     {
+      "hash": "3816457090",
+      "name": "Blighted Clash",
+      "description": "In the Pale Heart, travel to the Transgression and claim a reward for defeating Vrhiija, Subjugator of Paradise."
+     },
+     {
+      "hash": "3816457091",
+      "name": "Flawless Primacy",
+      "description": "In the Pale Heart, during a single life, defeat combatants using Primary ammo weapons."
+     },
+     {
+      "hash": "3816457088",
+      "name": "Precise Taken Heart",
+      "description": "In the Pale Heart, defeat Taken combatants with precision final blows."
+     },
+     {
+      "hash": "3816457089",
+      "name": "Overgrown Demolition",
+      "description": "In the Pale Heart, travel to the Landing, and complete the Expunging event."
+     },
+     {
+      "hash": "3816457094",
+      "name": "Flawless Toxophilite",
+      "description": "In the Pale Heart, during a single life, defeat combatants with Bows."
+     }
+    ],
+    [
+     {
+      "hash": "252079779",
+      "name": "Crystalline Skirmish",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Harrak, the Rejoined."
+     },
+     {
+      "hash": "252079778",
+      "name": "Energetic Impasse",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Impasse."
+     },
+     {
+      "hash": "252079777",
+      "name": "Flawless Quickdraw",
+      "description": "In the Pale Heart, defeat combatants with Sidearms in a single life."
+     },
+     {
+      "hash": "252079776",
+      "name": "Heartstrings",
+      "description": "In the Pale Heart, defeat combatants with Strand weapons."
+     },
+     {
+      "hash": "252079783",
+      "name": "Gravity's Heart",
+      "description": "In the Pale Heart, defeat combatants with Void weapons."
+     },
+     {
+      "hash": "252079782",
+      "name": "Crystalline Clash",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Aksul, Light's Rebuke."
+     }
+    ]
+   ]
+  },
+  "1279587302": {
+   "rewardHash": "310460184",
+   "rows": [
+    [
+     {
+      "hash": "896527338",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     },
+     {
+      "hash": "896527339",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "2527954645",
+      "name": "Swift Machinery",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Machine Guns."
+     },
+     {
+      "hash": "2527954644",
+      "name": "Wasteland Clash",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Vrhalja, Subjugator of Ruin."
+     },
+     {
+      "hash": "2527954647",
+      "name": "Resonant Synergy",
+      "description": "In the Pale Heart, defeat combatants using weapons that match your subclass damage type."
+     }
+    ],
+    [
+     {
+      "hash": "991428828",
+      "name": "Swift Tracking",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Trace Rifles."
+     },
+     {
+      "hash": "991428829",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, complete Overthrow level 2 and 3 encounters, and open the chests in the Impasse."
+     },
+     {
+      "hash": "991428830",
+      "name": "Overgrown Skirmish",
+      "description": "In the Pale Heart, travel to the Landing and claim a reward for defeating Ei Räkosh, Banisher of Memory."
+     },
+     {
+      "hash": "991428831",
+      "name": "Flawless Scattershot",
+      "description": "In the Pale Heart, in a single life, defeat combatants using Shotguns."
+     }
+    ],
+    [
+     {
+      "hash": "1473614559",
+      "name": "Wasteland Skirmish",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Ir Anak, Lightdrinker."
+     },
+     {
+      "hash": "1473614558",
+      "name": "SMG Reclamation",
+      "description": "In the Pale Heart, defeat combatants with Submachine Guns in the Landing, the Lost City, or the Refraction."
+     },
+     {
+      "hash": "1473614557",
+      "name": "Precise Taken Heart",
+      "description": "In the Pale Heart, defeat Taken combatants with precision final blows."
+     },
+     {
+      "hash": "1473614556",
+      "name": "Wasteland Sanitation",
+      "description": "In the Pale Heart, travel to the Impasse and complete the Cleansing event."
+     },
+     {
+      "hash": "1473614555",
+      "name": "Heartstrings",
+      "description": "In the Pale Heart, defeat combatants with Strand weapons."
+     }
+    ],
+    [
+     {
+      "hash": "3848915198",
+      "name": "Overgrown Clash",
+      "description": "In the Pale Heart, travel to the Landing and claim a reward for defeating Urgoth, the Blistering Glare."
+     },
+     {
+      "hash": "3848915199",
+      "name": "Energetic Impasse",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Impasse."
+     },
+     {
+      "hash": "3848915196",
+      "name": "Revelatory Pulse",
+      "description": "In the Pale Heart, defeat combatants with Pulse Rifles in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "3848915197",
+      "name": "Freezing Heart",
+      "description": "In the Pale Heart, defeat combatants with Stasis weapons."
+     },
+     {
+      "hash": "3848915194",
+      "name": "Gravity's Heart",
+      "description": "In the Pale Heart, defeat combatants with Void weapons."
+     },
+     {
+      "hash": "3848915195",
+      "name": "Frozen Skirmish",
+      "description": "In the Pale Heart, travel to the Divide and claim a reward for defeating Akgon, Light-Cleaver."
+     }
+    ]
+   ]
+  },
+  "4270587802": {
+   "rewardHash": "3680531860",
+   "rows": [
+    [
+     {
+      "hash": "2549191590",
+      "name": "Landed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Landing grants additional progress."
+     },
+     {
+      "hash": "2549191591",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "3964823769",
+      "name": "Overgrown Skirmish",
+      "description": "In the Pale Heart, travel to the Landing and claim a reward for defeating Ei Räkosh, Banisher of Memory."
+     },
+     {
+      "hash": "3964823768",
+      "name": "Reclaimed Light",
+      "description": "In the Pale Heart, defeat Hive Ghosts after taking down their Lightbearer."
+     },
+     {
+      "hash": "3964823771",
+      "name": "Overgrown Clash",
+      "description": "In the Pale Heart, travel to the Landing and claim a reward for defeating Urgoth, the Blistering Glare."
+     }
+    ],
+    [
+     {
+      "hash": "2555346416",
+      "name": "Revelatory Pulse",
+      "description": "In the Pale Heart, defeat combatants with Pulse Rifles in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "2555346417",
+      "name": "SMG Reclamation",
+      "description": "In the Pale Heart, defeat combatants with Submachine Guns in the Landing, the Lost City, or the Refraction."
+     },
+     {
+      "hash": "2555346418",
+      "name": "Cross My Heart",
+      "description": "In the Pale Heart, defeat combatants with precision final blows using Sniper Rifles."
+     },
+     {
+      "hash": "2555346419",
+      "name": "Rampant Light",
+      "description": "In the Pale Heart, defeat Lucent Hive in groups of 2 or more."
+     }
+    ],
+    [
+     {
+      "hash": "3626863603",
+      "name": "Special Impasse",
+      "description": "In the Pale Heart, defeat combatants using Special ammo weapons in the Impasse, the Transgression, or the Divide."
+     },
+     {
+      "hash": "3626863602",
+      "name": "Crystalline Clash",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Aksul, Light's Rebuke."
+     },
+     {
+      "hash": "3626863601",
+      "name": "Unstable Parkour",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Stitching event."
+     },
+     {
+      "hash": "3626863600",
+      "name": "Weighing the Heart",
+      "description": "In the Pale Heart, defeat combatants by using Power weapons in the Landing, the Lost City, or the Refraction."
+     },
+     {
+      "hash": "3626863607",
+      "name": "Precise Lucent Heart",
+      "description": "In the Pale Heart, defeat Lucent Hive combatants with precision final blows. Bosses grant bonus progress."
+     }
+    ],
+    [
+     {
+      "hash": "1383284306",
+      "name": "Near-Infinite Reserves",
+      "description": "In the Pale Heart, defeat combatants with Auto Rifles in the Impasse, the Transgression, or the Divide."
+     },
+     {
+      "hash": "1383284307",
+      "name": "Lucent Revelation",
+      "description": "In the Pale Heart, defeat Lucent Hive in the Blooming."
+     },
+     {
+      "hash": "1383284304",
+      "name": "Lucent Heart",
+      "description": "In the Pale Heart, defeat Lucent Hive combatants."
+     },
+     {
+      "hash": "1383284305",
+      "name": "Unstable Clash",
+      "description": "In the Pale Heart, travel to the Blooming and claim a reward for defeating Vrhada, Subjugator of Insight."
+     },
+     {
+      "hash": "1383284310",
+      "name": "Burning Heart",
+      "description": "In the Pale Heart, defeat combatants with Solar weapons."
+     },
+     {
+      "hash": "1383284311",
+      "name": "Flawless Lucent Heart",
+      "description": "In the Pale Heart, during a single life, defeat Lucent Hive combatants."
+     }
+    ]
+   ]
+  },
+  "4270587803": {
+   "rewardHash": "2663593735",
+   "rows": [
+    [
+     {
+      "hash": "1607706211",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     },
+     {
+      "hash": "1607706210",
+      "name": "Landed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Landing grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "3062987796",
+      "name": "Overgrown Clash",
+      "description": "In the Pale Heart, travel to the Landing and claim a reward for defeating Urgoth, the Blistering Glare."
+     },
+     {
+      "hash": "3062987797",
+      "name": "Flawless Lucent Finisher",
+      "description": "In the Pale Heart, during a single life, defeat Lucent Hive with finishers."
+     },
+     {
+      "hash": "3062987798",
+      "name": "Crystalline Skirmish",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Harrak, the Rejoined."
+     }
+    ],
+    [
+     {
+      "hash": "3927798701",
+      "name": "Double-Time",
+      "description": "In the Pale Heart, defeat combatants with Hand Cannons in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "3927798700",
+      "name": "Flawless Primacy",
+      "description": "In the Pale Heart, during a single life, defeat combatants using Primary ammo weapons."
+     },
+     {
+      "hash": "3927798703",
+      "name": "Swift Swordplay",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Swords."
+     },
+     {
+      "hash": "3927798702",
+      "name": "Powerful Lucent Reclamation",
+      "description": "In the Pale Heart, defeat powerful Lucent Hive in the Landing, the Lost City, or the Refraction. Bosses grant bonus progress."
+     }
+    ],
+    [
+     {
+      "hash": "1796886742",
+      "name": "Heavy Heart",
+      "description": "In the Pale Heart, defeat combatants by using Power weapons in the Impasse, the Transgression, or the Divide."
+     },
+     {
+      "hash": "1796886743",
+      "name": "Crystalline Clash",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Aksul, Light's Rebuke."
+     },
+     {
+      "hash": "1796886740",
+      "name": "Unstable Gifts",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Offering event."
+     },
+     {
+      "hash": "1796886741",
+      "name": "Flawless Lucent Heart",
+      "description": "In the Pale Heart, during a single life, defeat Lucent Hive combatants."
+     },
+     {
+      "hash": "1796886738",
+      "name": "Precise Lucent Heart",
+      "description": "In the Pale Heart, defeat Lucent Hive combatants with precision final blows. Bosses grant bonus progress."
+     }
+    ],
+    [
+     {
+      "hash": "2629488599",
+      "name": "Near-Infinite Reserves",
+      "description": "In the Pale Heart, defeat combatants with Auto Rifles in the Impasse, the Transgression, or the Divide."
+     },
+     {
+      "hash": "2629488598",
+      "name": "Lucent Revelation",
+      "description": "In the Pale Heart, defeat Lucent Hive in the Blooming."
+     },
+     {
+      "hash": "2629488597",
+      "name": "Energetic Impasse",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Impasse."
+     },
+     {
+      "hash": "2629488596",
+      "name": "Unstable Parkour",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Stitching event."
+     },
+     {
+      "hash": "2629488595",
+      "name": "Energetic Revelation",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Blooming."
+     },
+     {
+      "hash": "2629488594",
+      "name": "Rampant Light",
+      "description": "In the Pale Heart, defeat Lucent Hive in groups of 2 or more."
+     }
+    ]
+   ]
+  },
+  "4270587800": {
+   "rewardHash": "802929010",
+   "rows": [
+    [
+     {
+      "hash": "2931917688",
+      "name": "Landed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Landing grants additional progress."
+     },
+     {
+      "hash": "2931917689",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "4280264303",
+      "name": "Overgrown Skirmish",
+      "description": "In the Pale Heart, travel to the Landing and claim a reward for defeating Ei Räkosh, Banisher of Memory."
+     },
+     {
+      "hash": "4280264302",
+      "name": "Reclaimed Light",
+      "description": "In the Pale Heart, defeat Hive Ghosts after taking down their Lightbearer."
+     },
+     {
+      "hash": "4280264301",
+      "name": "Urban Skirmish",
+      "description": "In the Pale Heart, travel to the Lost City and claim a reward for defeating Arak-Thul, the Arisen."
+     }
+    ],
+    [
+     {
+      "hash": "4044061774",
+      "name": "Double-Time",
+      "description": "In the Pale Heart, defeat combatants with Hand Cannons in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "4044061775",
+      "name": "Special Impasse",
+      "description": "In the Pale Heart, defeat combatants using Special ammo weapons in the Impasse, the Transgression, or the Divide."
+     },
+     {
+      "hash": "4044061772",
+      "name": "Cross My Heart",
+      "description": "In the Pale Heart, defeat combatants with precision final blows using Sniper Rifles."
+     },
+     {
+      "hash": "4044061773",
+      "name": "Flawless Lucent Heart",
+      "description": "In the Pale Heart, during a single life, defeat Lucent Hive combatants."
+     }
+    ],
+    [
+     {
+      "hash": "862804069",
+      "name": "City Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Lost City."
+     },
+     {
+      "hash": "862804068",
+      "name": "Crystalline Skirmish",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Harrak, the Rejoined."
+     },
+     {
+      "hash": "862804071",
+      "name": "Natural Sanitization",
+      "description": "In the Pale Heart, travel to the Seclusion, and complete the Cleansing event."
+     },
+     {
+      "hash": "862804070",
+      "name": "Special Revelation",
+      "description": "In the Pale Heart, defeat combatants using Special ammo weapons in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "862804065",
+      "name": "Precise Lucent Heart",
+      "description": "In the Pale Heart, defeat Lucent Hive combatants with precision final blows. Bosses grant bonus progress."
+     }
+    ],
+    [
+     {
+      "hash": "3615336236",
+      "name": "Flawless Quickdraw",
+      "description": "In the Pale Heart, defeat combatants with Sidearms in a single life."
+     },
+     {
+      "hash": "3615336237",
+      "name": "Lucent Revelation",
+      "description": "In the Pale Heart, defeat Lucent Hive in the Blooming."
+     },
+     {
+      "hash": "3615336238",
+      "name": "Lucent Reclamation",
+      "description": "In the Pale Heart, defeat Lucent Hive in the Landing."
+     },
+     {
+      "hash": "3615336239",
+      "name": "Unstable Parkour",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Stitching event."
+     },
+     {
+      "hash": "3615336232",
+      "name": "Gravity's Heart",
+      "description": "In the Pale Heart, defeat combatants with Void weapons."
+     },
+     {
+      "hash": "3615336233",
+      "name": "Lucent Heart",
+      "description": "In the Pale Heart, defeat Lucent Hive combatants."
+     }
+    ]
+   ]
+  },
+  "4270587801": {
+   "rewardHash": "3148133261",
+   "rows": [
+    [
+     {
+      "hash": "1675542357",
+      "name": "Landed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Landing grants additional progress."
+     },
+     {
+      "hash": "1675542356",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "44115050",
+      "name": "Powerful Taken Revelation",
+      "description": "In the Pale Heart, defeat powerful Taken in the Blooming, the Seclusion, or the Refraction. Bosses grant bonus progress."
+     },
+     {
+      "hash": "44115051",
+      "name": "Unstable Gifts",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Offering event."
+     },
+     {
+      "hash": "44115048",
+      "name": "Swift Launch",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Grenade Launchers."
+     }
+    ],
+    [
+     {
+      "hash": "1790786667",
+      "name": "Precise Taken Heart",
+      "description": "In the Pale Heart, defeat Taken combatants with precision final blows."
+     },
+     {
+      "hash": "1790786666",
+      "name": "Unstable Clash",
+      "description": "In the Pale Heart, travel to the Blooming and claim a reward for defeating Vrhada, Subjugator of Insight."
+     },
+     {
+      "hash": "1790786665",
+      "name": "Crystalline Gifts",
+      "description": "In the Pale Heart, travel to the Refraction, and complete the Offering event."
+     },
+     {
+      "hash": "1790786664",
+      "name": "Special Impasse",
+      "description": "In the Pale Heart, defeat combatants using Special ammo weapons in the Impasse, the Transgression, or the Divide."
+     }
+    ],
+    [
+     {
+      "hash": "4274378984",
+      "name": "Crystalline Clash",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Aksul, Light's Rebuke."
+     },
+     {
+      "hash": "4274378985",
+      "name": "Refracted Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Refraction."
+     },
+     {
+      "hash": "4274378986",
+      "name": "Rampant Light",
+      "description": "In the Pale Heart, defeat Lucent Hive in groups of 2 or more."
+     },
+     {
+      "hash": "4274378987",
+      "name": "Revealed Treasure",
+      "description": "In the Pale Heart, open faction chests in the Blooming."
+     },
+     {
+      "hash": "4274378988",
+      "name": "Urban Skirmish",
+      "description": "In the Pale Heart, travel to the Lost City and claim a reward for defeating Arak-Thul, the Arisen."
+     }
+    ],
+    [
+     {
+      "hash": "1519417777",
+      "name": "Energetic Impasse",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Impasse."
+     },
+     {
+      "hash": "1519417776",
+      "name": "Overgrown Gifts",
+      "description": "In the Pale Heart, travel to the Landing, and complete the Offering event."
+     },
+     {
+      "hash": "1519417779",
+      "name": "Freezing Heart",
+      "description": "In the Pale Heart, defeat combatants with Stasis weapons."
+     },
+     {
+      "hash": "1519417778",
+      "name": "Reclaimed Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Landing."
+     },
+     {
+      "hash": "1519417781",
+      "name": "Natural Sanitization",
+      "description": "In the Pale Heart, travel to the Seclusion, and complete the Cleansing event."
+     },
+     {
+      "hash": "1519417780",
+      "name": "Impassive",
+      "description": "In the Pale Heart, defeat combatants in the Impasse."
+     }
+    ]
+   ]
+  },
+  "4270587806": {
+   "rewardHash": "1420756048",
+   "rows": [
+    [
+     {
+      "hash": "1259209970",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     },
+     {
+      "hash": "1259209971",
+      "name": "Landed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Landing grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "1902949341",
+      "name": "Revealed Overthrow",
+      "description": "In the Pale Heart, complete Overthrow level 2 and 3 encounters, and open the chests in the Blooming."
+     },
+     {
+      "hash": "1902949340",
+      "name": "Unstable Gifts",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Offering event."
+     },
+     {
+      "hash": "1902949343",
+      "name": "Powerful Lucent Reclamation",
+      "description": "In the Pale Heart, defeat powerful Lucent Hive in the Landing, the Lost City, or the Refraction. Bosses grant bonus progress."
+     }
+    ],
+    [
+     {
+      "hash": "3077682628",
+      "name": "Flawless Primacy",
+      "description": "In the Pale Heart, during a single life, defeat combatants using Primary ammo weapons."
+     },
+     {
+      "hash": "3077682629",
+      "name": "Unstable Clash",
+      "description": "In the Pale Heart, travel to the Blooming and claim a reward for defeating Vrhada, Subjugator of Insight."
+     },
+     {
+      "hash": "3077682630",
+      "name": "Crystalline Gifts",
+      "description": "In the Pale Heart, travel to the Refraction, and complete the Offering event."
+     },
+     {
+      "hash": "3077682631",
+      "name": "Excised Blight",
+      "description": "In the Pale Heart, defeat Taken in groups of 2 or more."
+     }
+    ],
+    [
+     {
+      "hash": "4202810375",
+      "name": "Urban Skirmish",
+      "description": "In the Pale Heart, travel to the Lost City and claim a reward for defeating Arak-Thul, the Arisen."
+     },
+     {
+      "hash": "4202810374",
+      "name": "Refracted Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Refraction."
+     },
+     {
+      "hash": "4202810373",
+      "name": "City Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Lost City."
+     },
+     {
+      "hash": "4202810372",
+      "name": "Secluded Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Seclusion."
+     },
+     {
+      "hash": "4202810371",
+      "name": "Natural Skirmish",
+      "description": "In the Pale Heart, travel to the Seclusion and claim a reward for defeating Vrhaask, Subjugator of Solace."
+     }
+    ],
+    [
+     {
+      "hash": "3209024454",
+      "name": "Energetic Impasse",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Impasse."
+     },
+     {
+      "hash": "3209024455",
+      "name": "Overgrown Gifts",
+      "description": "In the Pale Heart, travel to the Landing, and complete the Offering event."
+     },
+     {
+      "hash": "3209024452",
+      "name": "Freezing Heart",
+      "description": "In the Pale Heart, defeat combatants with Stasis weapons."
+     },
+     {
+      "hash": "3209024453",
+      "name": "Reclaimed Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Landing."
+     },
+     {
+      "hash": "3209024450",
+      "name": "Wasteland Demolition",
+      "description": "In the Pale Heart, travel to the Impasse, and complete the Expunging event."
+     },
+     {
+      "hash": "3209024451",
+      "name": "Revealed",
+      "description": "In the Pale Heart, defeat combatants in the Blooming."
+     }
+    ]
+   ]
+  },
+  "4270587807": {
+   "rewardHash": "2510287091",
+   "rows": [
+    [
+     {
+      "hash": "3107874271",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     },
+     {
+      "hash": "3107874270",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "2466083688",
+      "name": "Unstable Fairway",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Mending event."
+     },
+     {
+      "hash": "2466083689",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, complete Overthrow level 2 and 3 encounters, and open the chests in the Impasse."
+     },
+     {
+      "hash": "2466083690",
+      "name": "Unstable Skirmish",
+      "description": "In the Pale Heart, travel to the Blooming and claim a reward for defeating Erkult, the Sequestered."
+     }
+    ],
+    [
+     {
+      "hash": "4006089777",
+      "name": "Wasteland Skirmish",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Ir Anak, Lightdrinker."
+     },
+     {
+      "hash": "4006089776",
+      "name": "Revelatory Pulse",
+      "description": "In the Pale Heart, defeat combatants with Pulse Rifles in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "4006089779",
+      "name": "Powerful Taken Impasse",
+      "description": "In the Pale Heart, defeat powerful Taken in the Impasse, the Transgression, or the Divide. Bosses grant bonus progress."
+     },
+     {
+      "hash": "4006089778",
+      "name": "Crystalline Clash",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Aksul, Light's Rebuke."
+     }
+    ],
+    [
+     {
+      "hash": "2530787050",
+      "name": "Frozen Fairway",
+      "description": "In the Pale Heart, travel to the Divide, and complete the Mending event."
+     },
+     {
+      "hash": "2530787051",
+      "name": "Swift Tracking",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Trace Rifles."
+     },
+     {
+      "hash": "2530787048",
+      "name": "Divide and Gather",
+      "description": "In the Pale Heart, collect resource nodes in the Divide."
+     },
+     {
+      "hash": "2530787049",
+      "name": "Wasteland Fairway",
+      "description": "In the Pale Heart, travel to the Impasse and complete the Mending event."
+     },
+     {
+      "hash": "2530787054",
+      "name": "Wasteland Clash",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Vrhalja, Subjugator of Ruin."
+     }
+    ],
+    [
+     {
+      "hash": "4277458667",
+      "name": "Wasteland Demolition",
+      "description": "In the Pale Heart, travel to the Impasse, and complete the Expunging event."
+     },
+     {
+      "hash": "4277458666",
+      "name": "Energetic Reclamation",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Landing."
+     },
+     {
+      "hash": "4277458665",
+      "name": "Natural Skirmish",
+      "description": "In the Pale Heart, travel to the Seclusion and claim a reward for defeating Vrhaask, Subjugator of Solace."
+     },
+     {
+      "hash": "4277458664",
+      "name": "Energetic Impasse",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Impasse."
+     },
+     {
+      "hash": "4277458671",
+      "name": "Taken Revelation",
+      "description": "In the Pale Heart, defeat Taken in the Blooming."
+     },
+     {
+      "hash": "4277458670",
+      "name": "Blighted Demolition",
+      "description": "In the Pale Heart, travel to the Transgression, and complete the Expunging event."
+     }
+    ]
+   ]
+  },
+  "4270587804": {
+   "rewardHash": "1780413038",
+   "rows": [
+    [
+     {
+      "hash": "897386164",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     },
+     {
+      "hash": "897386165",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "845353475",
+      "name": "Unstable Fairway",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Mending event."
+     },
+     {
+      "hash": "845353474",
+      "name": "Swift Machinery",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Machine Guns."
+     },
+     {
+      "hash": "845353473",
+      "name": "Crystalline Skirmish",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Harrak, the Rejoined."
+     }
+    ],
+    [
+     {
+      "hash": "815414370",
+      "name": "Blighted Clash",
+      "description": "In the Pale Heart, travel to the Transgression and claim a reward for defeating Vrhiija, Subjugator of Paradise."
+     },
+     {
+      "hash": "815414371",
+      "name": "Secluded Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Seclusion."
+     },
+     {
+      "hash": "815414368",
+      "name": "Swift Launch",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Grenade Launchers."
+     },
+     {
+      "hash": "815414369",
+      "name": "Unstable Skirmish",
+      "description": "In the Pale Heart, travel to the Blooming and claim a reward for defeating Erkult, the Sequestered."
+     }
+    ],
+    [
+     {
+      "hash": "2116041257",
+      "name": "Frozen Fairway",
+      "description": "In the Pale Heart, travel to the Divide, and complete the Mending event."
+     },
+     {
+      "hash": "2116041256",
+      "name": "Powerful Lucent Reclamation",
+      "description": "In the Pale Heart, defeat powerful Lucent Hive in the Landing, the Lost City, or the Refraction. Bosses grant bonus progress."
+     },
+     {
+      "hash": "2116041259",
+      "name": "Divide and Gather",
+      "description": "In the Pale Heart, collect resource nodes in the Divide."
+     },
+     {
+      "hash": "2116041258",
+      "name": "Wasteland Fairway",
+      "description": "In the Pale Heart, travel to the Impasse and complete the Mending event."
+     },
+     {
+      "hash": "2116041261",
+      "name": "Natural Skirmish",
+      "description": "In the Pale Heart, travel to the Seclusion and claim a reward for defeating Vrhaask, Subjugator of Solace."
+     }
+    ],
+    [
+     {
+      "hash": "4116960384",
+      "name": "Wasteland Demolition",
+      "description": "In the Pale Heart, travel to the Impasse, and complete the Expunging event."
+     },
+     {
+      "hash": "4116960385",
+      "name": "Energetic Impasse",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Impasse."
+     },
+     {
+      "hash": "4116960386",
+      "name": "Frozen Clash",
+      "description": "In the Pale Heart, travel to the Divide and claim a reward for defeating Ir Nasrir, Secret Seeker."
+     },
+     {
+      "hash": "4116960387",
+      "name": "Impassive Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Impasse."
+     },
+     {
+      "hash": "4116960388",
+      "name": "Revealed",
+      "description": "In the Pale Heart, defeat combatants in the Blooming."
+     },
+     {
+      "hash": "4116960389",
+      "name": "Blighted Demolition",
+      "description": "In the Pale Heart, travel to the Transgression, and complete the Expunging event."
+     }
+    ]
+   ]
+  },
+  "4270587805": {
+   "rewardHash": "3660937673",
+   "rows": [
+    [
+     {
+      "hash": "2663391553",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     },
+     {
+      "hash": "2663391552",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "3398042894",
+      "name": "Wasteland Clash",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Vrhalja, Subjugator of Ruin."
+     },
+     {
+      "hash": "3398042895",
+      "name": "Revered Heart",
+      "description": "In the Pale Heart, defeat Dread Subjugators."
+     },
+     {
+      "hash": "3398042892",
+      "name": "Frozen Skirmish",
+      "description": "In the Pale Heart, travel to the Divide and claim a reward for defeating Akgon, Light-Cleaver."
+     }
+    ],
+    [
+     {
+      "hash": "3993798447",
+      "name": "Swift Tracking",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Trace Rifles."
+     },
+     {
+      "hash": "3993798446",
+      "name": "Cross My Heart",
+      "description": "In the Pale Heart, defeat combatants with precision final blows using Sniper Rifles."
+     },
+     {
+      "hash": "3993798445",
+      "name": "Swift Swordplay",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Swords."
+     },
+     {
+      "hash": "3993798444",
+      "name": "Excised Blight",
+      "description": "In the Pale Heart, defeat Taken in groups of 2 or more."
+     }
+    ],
+    [
+     {
+      "hash": "3711647980",
+      "name": "Blighted Clash",
+      "description": "In the Pale Heart, travel to the Transgression and claim a reward for defeating Vrhiija, Subjugator of Paradise."
+     },
+     {
+      "hash": "3711647981",
+      "name": "Transgressive Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Transgression."
+     },
+     {
+      "hash": "3711647982",
+      "name": "Natural Sanitization",
+      "description": "In the Pale Heart, travel to the Seclusion, and complete the Cleansing event."
+     },
+     {
+      "hash": "3711647983",
+      "name": "Uneasy Fusion",
+      "description": "In the Pale Heart, defeat combatants with Fusion Rifles in the Landing, the Lost City, or the Refraction."
+     },
+     {
+      "hash": "3711647976",
+      "name": "Natural Skirmish",
+      "description": "In the Pale Heart, travel to the Seclusion and claim a reward for defeating Vrhaask, Subjugator of Solace."
+     }
+    ],
+    [
+     {
+      "hash": "4087295013",
+      "name": "Revealed",
+      "description": "In the Pale Heart, defeat combatants in the Blooming."
+     },
+     {
+      "hash": "4087295012",
+      "name": "Special Reclamation",
+      "description": "In the Pale Heart, defeat combatants using Special ammo weapons in the Landing, the Lost City, or the Refraction."
+     },
+     {
+      "hash": "4087295015",
+      "name": "Unstable Skirmish",
+      "description": "In the Pale Heart, travel to the Blooming and claim a reward for defeating Erkult, the Sequestered."
+     },
+     {
+      "hash": "4087295014",
+      "name": "Crystalline Skirmish",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Harrak, the Rejoined."
+     },
+     {
+      "hash": "4087295009",
+      "name": "Flawless Taken Impasse",
+      "description": "In the Pale Heart, during a single life, defeat Taken in the Impasse."
+     },
+     {
+      "hash": "4087295008",
+      "name": "Gravity's Heart",
+      "description": "In the Pale Heart, defeat combatants with Void weapons."
+     }
+    ]
+   ]
+  },
+  "4270587794": {
+   "rewardHash": "4061058412",
+   "rows": [
+    [
+     {
+      "hash": "697449230",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     },
+     {
+      "hash": "697449231",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "4257765185",
+      "name": "Wasteland Clash",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Vrhalja, Subjugator of Ruin."
+     },
+     {
+      "hash": "4257765184",
+      "name": "Flawless Lucent Finisher",
+      "description": "In the Pale Heart, during a single life, defeat Lucent Hive with finishers."
+     },
+     {
+      "hash": "4257765187",
+      "name": "Frozen Skirmish",
+      "description": "In the Pale Heart, travel to the Divide and claim a reward for defeating Akgon, Light-Cleaver."
+     }
+    ],
+    [
+     {
+      "hash": "369315640",
+      "name": "Heavy Bloom",
+      "description": "In the Pale Heart, defeat combatants by using Power weapons in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "369315641",
+      "name": "Cross My Heart",
+      "description": "In the Pale Heart, defeat combatants with precision final blows using Sniper Rifles."
+     },
+     {
+      "hash": "369315642",
+      "name": "Swift Machinery",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Machine Guns."
+     },
+     {
+      "hash": "369315643",
+      "name": "Powerful Taken Impasse",
+      "description": "In the Pale Heart, defeat powerful Taken in the Impasse, the Transgression, or the Divide. Bosses grant bonus progress."
+     }
+    ],
+    [
+     {
+      "hash": "3770551675",
+      "name": "Wasteland Skirmish",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Ir Anak, Lightdrinker."
+     },
+     {
+      "hash": "3770551674",
+      "name": "Transgressive Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Transgression."
+     },
+     {
+      "hash": "3770551673",
+      "name": "Unstable Fairway",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Mending event."
+     },
+     {
+      "hash": "3770551672",
+      "name": "Refracted Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Refraction."
+     },
+     {
+      "hash": "3770551679",
+      "name": "Natural Clash",
+      "description": "In the Pale Heart, travel to the Seclusion and claim a reward for defeating Keraidos, Grasp of the Witness."
+     }
+    ],
+    [
+     {
+      "hash": "2087362554",
+      "name": "Freezing Heart",
+      "description": "In the Pale Heart, defeat combatants with Stasis weapons."
+     },
+     {
+      "hash": "2087362555",
+      "name": "Flawless Primacy",
+      "description": "In the Pale Heart, during a single life, defeat combatants using Primary ammo weapons."
+     },
+     {
+      "hash": "2087362552",
+      "name": "Blighted Clash",
+      "description": "In the Pale Heart, travel to the Transgression and claim a reward for defeating Vrhiija, Subjugator of Paradise."
+     },
+     {
+      "hash": "2087362553",
+      "name": "Revealed",
+      "description": "In the Pale Heart, defeat combatants in the Blooming."
+     },
+     {
+      "hash": "2087362558",
+      "name": "Flawless Taken Impasse",
+      "description": "In the Pale Heart, during a single life, defeat Taken in the Impasse."
+     },
+     {
+      "hash": "2087362559",
+      "name": "Burning Heart",
+      "description": "In the Pale Heart, defeat combatants with Solar weapons."
+     }
+    ]
+   ]
+  },
+  "4270587795": {
+   "rewardHash": "1651610335",
+   "rows": [
+    [
+     {
+      "hash": "2648964139",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     },
+     {
+      "hash": "2648964138",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "997090844",
+      "name": "Wasteland Clash",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Vrhalja, Subjugator of Ruin."
+     },
+     {
+      "hash": "997090845",
+      "name": "Revered Heart",
+      "description": "In the Pale Heart, defeat Dread Subjugators."
+     },
+     {
+      "hash": "997090846",
+      "name": "Frozen Skirmish",
+      "description": "In the Pale Heart, travel to the Divide and claim a reward for defeating Akgon, Light-Cleaver."
+     }
+    ],
+    [
+     {
+      "hash": "1749812501",
+      "name": "Swift Machinery",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Machine Guns."
+     },
+     {
+      "hash": "1749812500",
+      "name": "Swift Launch",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Grenade Launchers."
+     },
+     {
+      "hash": "1749812503",
+      "name": "Swift Tracking",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Trace Rifles."
+     },
+     {
+      "hash": "1749812502",
+      "name": "Powerful Taken Impasse",
+      "description": "In the Pale Heart, defeat powerful Taken in the Impasse, the Transgression, or the Divide. Bosses grant bonus progress."
+     }
+    ],
+    [
+     {
+      "hash": "2687892286",
+      "name": "Blighted Skirmish",
+      "description": "In the Pale Heart, travel to the Transgression and claim a reward for defeating Ithriks, the Lost."
+     },
+     {
+      "hash": "2687892287",
+      "name": "Transgressive Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Transgression."
+     },
+     {
+      "hash": "2687892284",
+      "name": "Unstable Gifts",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Offering event."
+     },
+     {
+      "hash": "2687892285",
+      "name": "Precise Taken Heart",
+      "description": "In the Pale Heart, defeat Taken combatants with precision final blows."
+     },
+     {
+      "hash": "2687892282",
+      "name": "Unstable Clash",
+      "description": "In the Pale Heart, travel to the Blooming and claim a reward for defeating Vrhada, Subjugator of Insight."
+     }
+    ],
+    [
+     {
+      "hash": "1013345567",
+      "name": "Lucent Revelation",
+      "description": "In the Pale Heart, defeat Lucent Hive in the Blooming."
+     },
+     {
+      "hash": "1013345566",
+      "name": "SMG Reclamation",
+      "description": "In the Pale Heart, defeat combatants with Submachine Guns in the Landing, the Lost City, or the Refraction."
+     },
+     {
+      "hash": "1013345565",
+      "name": "Taken Revelation",
+      "description": "In the Pale Heart, defeat Taken in the Blooming."
+     },
+     {
+      "hash": "1013345564",
+      "name": "Energetic Revelation",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Blooming."
+     },
+     {
+      "hash": "1013345563",
+      "name": "Flawless Taken Impasse",
+      "description": "In the Pale Heart, during a single life, defeat Taken in the Impasse."
+     },
+     {
+      "hash": "1013345562",
+      "name": "Gravity's Heart",
+      "description": "In the Pale Heart, defeat combatants with Void weapons."
+     }
+    ]
+   ]
+  },
+  "4253810215": {
+   "rewardHash": "1049013691",
+   "rows": [
+    [
+     {
+      "hash": "3343334487",
+      "name": "Landed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Landing grants additional progress."
+     },
+     {
+      "hash": "3343334486",
+      "name": "Bloomed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Blooming grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "2701543904",
+      "name": "Wasteland Sanitation",
+      "description": "In the Pale Heart, travel to the Impasse and complete the Cleansing event."
+     },
+     {
+      "hash": "2701543905",
+      "name": "Heart's Hidden Depths",
+      "description": "In the Pale Heart, complete any Lost Sector."
+     },
+     {
+      "hash": "2701543906",
+      "name": "Flawless Lucent Finisher",
+      "description": "In the Pale Heart, during a single life, defeat Lucent Hive with finishers."
+     }
+    ],
+    [
+     {
+      "hash": "39603081",
+      "name": "Special Revelation",
+      "description": "In the Pale Heart, defeat combatants using Special ammo weapons in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "39603080",
+      "name": "Blighted Skirmish",
+      "description": "In the Pale Heart, travel to the Transgression and claim a reward for defeating Ithriks, the Lost."
+     },
+     {
+      "hash": "39603083",
+      "name": "Swift Tracking",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Trace Rifles."
+     },
+     {
+      "hash": "39603082",
+      "name": "Natural Sanitization",
+      "description": "In the Pale Heart, travel to the Seclusion, and complete the Cleansing event."
+     }
+    ],
+    [
+     {
+      "hash": "2333189570",
+      "name": "Heavy Heart",
+      "description": "In the Pale Heart, defeat combatants by using Power weapons in the Impasse, the Transgression, or the Divide."
+     },
+     {
+      "hash": "2333189571",
+      "name": "Overgrown Parkour",
+      "description": "In the Pale Heart, travel to the Landing, and complete the Stitching event."
+     },
+     {
+      "hash": "2333189568",
+      "name": "Heavy Bloom",
+      "description": "In the Pale Heart, defeat combatants by using Power weapons in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "2333189569",
+      "name": "Overgrown Skirmish",
+      "description": "In the Pale Heart, travel to the Landing and claim a reward for defeating Ei Räkosh, Banisher of Memory."
+     },
+     {
+      "hash": "2333189574",
+      "name": "Unstable Parkour",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Stitching event."
+     }
+    ],
+    [
+     {
+      "hash": "2321552099",
+      "name": "Lucent Reclamation",
+      "description": "In the Pale Heart, defeat Lucent Hive in the Landing."
+     },
+     {
+      "hash": "2321552098",
+      "name": "Lucent Heart",
+      "description": "In the Pale Heart, defeat Lucent Hive combatants."
+     },
+     {
+      "hash": "2321552097",
+      "name": "Urban Parkour",
+      "description": "In the Pale Heart, travel to the Lost City, and complete the Stitching event."
+     },
+     {
+      "hash": "2321552096",
+      "name": "Reclaimed Treasure",
+      "description": "In the Pale Heart, open faction chests in the Landing."
+     },
+     {
+      "hash": "2321552103",
+      "name": "Crystalline Clash",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Aksul, Light's Rebuke."
+     },
+     {
+      "hash": "2321552102",
+      "name": "Heartstrings",
+      "description": "In the Pale Heart, defeat combatants with Strand weapons."
+     }
+    ]
+   ]
+  },
+  "4253810214": {
+   "rewardHash": "3219206872",
+   "rows": [
+    [
+     {
+      "hash": "803840042",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     },
+     {
+      "hash": "803840043",
+      "name": "Landed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Landing grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "1693039893",
+      "name": "Wasteland Sanitation",
+      "description": "In the Pale Heart, travel to the Impasse and complete the Cleansing event."
+     },
+     {
+      "hash": "1693039892",
+      "name": "Flawless Lucent Finisher",
+      "description": "In the Pale Heart, during a single life, defeat Lucent Hive with finishers."
+     },
+     {
+      "hash": "1693039895",
+      "name": "Swift Tracking",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Trace Rifles."
+     }
+    ],
+    [
+     {
+      "hash": "940318236",
+      "name": "Refracted Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Refraction."
+     },
+     {
+      "hash": "940318237",
+      "name": "Wasteland Clash",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Vrhalja, Subjugator of Ruin."
+     },
+     {
+      "hash": "940318238",
+      "name": "Swift Swordplay",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Swords."
+     },
+     {
+      "hash": "940318239",
+      "name": "Natural Sanitization",
+      "description": "In the Pale Heart, travel to the Seclusion, and complete the Cleansing event."
+     }
+    ],
+    [
+     {
+      "hash": "956572959",
+      "name": "Precise Motion",
+      "description": "In the Pale Heart, defeat combatants with precision final blows using Kinetic weapons."
+     },
+     {
+      "hash": "956572958",
+      "name": "Overgrown Parkour",
+      "description": "In the Pale Heart, travel to the Landing, and complete the Stitching event."
+     },
+     {
+      "hash": "956572957",
+      "name": "Flawless Specialization",
+      "description": "In the Pale Heart, during a single life, defeat combatants using Special ammo weapons."
+     },
+     {
+      "hash": "956572956",
+      "name": "Urban Skirmish",
+      "description": "In the Pale Heart, travel to the Lost City and claim a reward for defeating Arak-Thul, the Arisen."
+     },
+     {
+      "hash": "956572955",
+      "name": "Unstable Parkour",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Stitching event."
+     }
+    ],
+    [
+     {
+      "hash": "2631119678",
+      "name": "Reclaimed",
+      "description": "In the Pale Heart, defeat combatants in the Landing."
+     },
+     {
+      "hash": "2631119679",
+      "name": "Heavy Bloom",
+      "description": "In the Pale Heart, defeat combatants by using Power weapons in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "2631119676",
+      "name": "Urban Parkour",
+      "description": "In the Pale Heart, travel to the Lost City, and complete the Stitching event."
+     },
+     {
+      "hash": "2631119677",
+      "name": "Uneasy Fusion",
+      "description": "In the Pale Heart, defeat combatants with Fusion Rifles in the Landing, the Lost City, or the Refraction."
+     },
+     {
+      "hash": "2631119674",
+      "name": "Frozen Skirmish",
+      "description": "In the Pale Heart, travel to the Divide and claim a reward for defeating Akgon, Light-Cleaver."
+     },
+     {
+      "hash": "2631119675",
+      "name": "Energetic Reclamation",
+      "description": "In the Pale Heart, defeat combatants with Energy weapons in the Landing."
+     }
+    ]
+   ]
+  },
+  "4253810213": {
+   "rewardHash": "3939271313",
+   "rows": [
+    [
+     {
+      "hash": "4079191065",
+      "name": "Landed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Landing grants additional progress."
+     },
+     {
+      "hash": "4079191064",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "2663455718",
+      "name": "Natural Skirmish",
+      "description": "In the Pale Heart, travel to the Seclusion and claim a reward for defeating Vrhaask, Subjugator of Solace."
+     },
+     {
+      "hash": "2663455719",
+      "name": "Natural Clash",
+      "description": "In the Pale Heart, travel to the Seclusion and claim a reward for defeating Keraidos, Grasp of the Witness."
+     },
+     {
+      "hash": "2663455716",
+      "name": "Wasteland Skirmish",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Ir Anak, Lightdrinker."
+     }
+    ],
+    [
+     {
+      "hash": "1125076391",
+      "name": "Double-Time",
+      "description": "In the Pale Heart, defeat combatants with Hand Cannons in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "1125076390",
+      "name": "Heavy Heart",
+      "description": "In the Pale Heart, defeat combatants by using Power weapons in the Impasse, the Transgression, or the Divide."
+     },
+     {
+      "hash": "1125076389",
+      "name": "Near-Infinite Reserves",
+      "description": "In the Pale Heart, defeat combatants with Auto Rifles in the Impasse, the Transgression, or the Divide."
+     },
+     {
+      "hash": "1125076388",
+      "name": "Revelatory Pulse",
+      "description": "In the Pale Heart, defeat combatants with Pulse Rifles in the Blooming, the Seclusion, or the Refraction."
+     }
+    ],
+    [
+     {
+      "hash": "4253339236",
+      "name": "Revealed Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Blooming."
+     },
+     {
+      "hash": "4253339237",
+      "name": "Precise Lucent Heart",
+      "description": "In the Pale Heart, defeat Lucent Hive combatants with precision final blows. Bosses grant bonus progress."
+     },
+     {
+      "hash": "4253339238",
+      "name": "City Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Lost City."
+     },
+     {
+      "hash": "4253339239",
+      "name": "Flawless Lucent Heart",
+      "description": "In the Pale Heart, during a single life, defeat Lucent Hive combatants."
+     },
+     {
+      "hash": "4253339232",
+      "name": "Taken Impasse",
+      "description": "In the Pale Heart, defeat Taken in the Impasse."
+     }
+    ],
+    [
+     {
+      "hash": "2141287933",
+      "name": "Urban Skirmish",
+      "description": "In the Pale Heart, travel to the Lost City and claim a reward for defeating Arak-Thul, the Arisen."
+     },
+     {
+      "hash": "2141287932",
+      "name": "Unstable Parkour",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Stitching event."
+     },
+     {
+      "hash": "2141287935",
+      "name": "Frozen Fairway",
+      "description": "In the Pale Heart, travel to the Divide, and complete the Mending event."
+     },
+     {
+      "hash": "2141287934",
+      "name": "Natural Sanitization",
+      "description": "In the Pale Heart, travel to the Seclusion, and complete the Cleansing event."
+     },
+     {
+      "hash": "2141287929",
+      "name": "Crystalline Gifts",
+      "description": "In the Pale Heart, travel to the Refraction, and complete the Offering event."
+     },
+     {
+      "hash": "2141287928",
+      "name": "Frozen Clash",
+      "description": "In the Pale Heart, travel to the Divide and claim a reward for defeating Ir Nasrir, Secret Seeker."
+     }
+    ]
+   ]
+  },
+  "4253810212": {
+   "rewardHash": "2548046390",
+   "rows": [
+    [
+     {
+      "hash": "1873992108",
+      "name": "Landed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Landing grants additional progress."
+     },
+     {
+      "hash": "1873992109",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "1463630395",
+      "name": "Crystalline Clash",
+      "description": "In the Pale Heart, travel to the Refraction and claim a reward for defeating Aksul, Light's Rebuke."
+     },
+     {
+      "hash": "1463630394",
+      "name": "Frozen Skirmish",
+      "description": "In the Pale Heart, travel to the Divide and claim a reward for defeating Akgon, Light-Cleaver."
+     },
+     {
+      "hash": "1463630393",
+      "name": "Frozen Clash",
+      "description": "In the Pale Heart, travel to the Divide and claim a reward for defeating Ir Nasrir, Secret Seeker."
+     }
+    ],
+    [
+     {
+      "hash": "4116985274",
+      "name": "City Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Lost City."
+     },
+     {
+      "hash": "4116985275",
+      "name": "Heart's Hidden Depths",
+      "description": "In the Pale Heart, complete any Lost Sector."
+     },
+     {
+      "hash": "4116985272",
+      "name": "SMG Reclamation",
+      "description": "In the Pale Heart, defeat combatants with Submachine Guns in the Landing, the Lost City, or the Refraction."
+     },
+     {
+      "hash": "4116985273",
+      "name": "Swift Tracking",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Trace Rifles."
+     }
+    ],
+    [
+     {
+      "hash": "784055809",
+      "name": "Revealed Treasure",
+      "description": "In the Pale Heart, open faction chests in the Blooming."
+     },
+     {
+      "hash": "784055808",
+      "name": "Precise Lucent Heart",
+      "description": "In the Pale Heart, defeat Lucent Hive combatants with precision final blows. Bosses grant bonus progress."
+     },
+     {
+      "hash": "784055811",
+      "name": "Flawless Quickdraw",
+      "description": "In the Pale Heart, defeat combatants with Sidearms in a single life."
+     },
+     {
+      "hash": "784055810",
+      "name": "Special Revelation",
+      "description": "In the Pale Heart, defeat combatants using Special ammo weapons in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "784055813",
+      "name": "Impassive",
+      "description": "In the Pale Heart, defeat combatants in the Impasse."
+     }
+    ],
+    [
+     {
+      "hash": "1190573560",
+      "name": "Wasteland Clash",
+      "description": "In the Pale Heart, travel to the Impasse and claim a reward for defeating Vrhalja, Subjugator of Ruin."
+     },
+     {
+      "hash": "1190573561",
+      "name": "Unstable Skirmish",
+      "description": "In the Pale Heart, travel to the Blooming and claim a reward for defeating Erkult, the Sequestered."
+     },
+     {
+      "hash": "1190573562",
+      "name": "Unstable Clash",
+      "description": "In the Pale Heart, travel to the Blooming and claim a reward for defeating Vrhada, Subjugator of Insight."
+     },
+     {
+      "hash": "1190573563",
+      "name": "Crystalline Gifts",
+      "description": "In the Pale Heart, travel to the Refraction, and complete the Offering event."
+     },
+     {
+      "hash": "1190573564",
+      "name": "Natural Clash",
+      "description": "In the Pale Heart, travel to the Seclusion and claim a reward for defeating Keraidos, Grasp of the Witness."
+     },
+     {
+      "hash": "1190573565",
+      "name": "Unstable Parkour",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Stitching event."
+     }
+    ]
+   ]
+  },
+  "4253810211": {
+   "rewardHash": "3329140175",
+   "rows": [
+    [
+     {
+      "hash": "986381115",
+      "name": "Landed Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Landing grants additional progress."
+     },
+     {
+      "hash": "986381114",
+      "name": "Impassive Overthrow",
+      "description": "In the Pale Heart, progress through Overthrow levels 2 and 3 and loot the chests. Overthrowing the Impasse grants additional progress."
+     }
+    ],
+    [
+     {
+      "hash": "1396742828",
+      "name": "Natural Skirmish",
+      "description": "In the Pale Heart, travel to the Seclusion and claim a reward for defeating Vrhaask, Subjugator of Solace."
+     },
+     {
+      "hash": "1396742829",
+      "name": "Urban Clash",
+      "description": "In the Pale Heart, travel to the Lost City and claim a reward for defeating Naadin, the Searing."
+     },
+     {
+      "hash": "1396742830",
+      "name": "Frozen Skirmish",
+      "description": "In the Pale Heart, travel to the Divide and claim a reward for defeating Akgon, Light-Cleaver."
+     }
+    ],
+    [
+     {
+      "hash": "2939177957",
+      "name": "Special Revelation",
+      "description": "In the Pale Heart, defeat combatants using Special ammo weapons in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "2939177956",
+      "name": "Double-Time",
+      "description": "In the Pale Heart, defeat combatants with Hand Cannons in the Blooming, the Seclusion, or the Refraction."
+     },
+     {
+      "hash": "2939177959",
+      "name": "Rampant Light",
+      "description": "In the Pale Heart, defeat Lucent Hive in groups of 2 or more."
+     },
+     {
+      "hash": "2939177958",
+      "name": "Swift Swordplay",
+      "description": "In the Pale Heart, defeat combatants in groups of 2 or more using Swords."
+     }
+    ],
+    [
+     {
+      "hash": "1825468366",
+      "name": "Revealed Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Blooming."
+     },
+     {
+      "hash": "1825468367",
+      "name": "Precise Motion",
+      "description": "In the Pale Heart, defeat combatants with precision final blows using Kinetic weapons."
+     },
+     {
+      "hash": "1825468364",
+      "name": "Precise Fusion",
+      "description": "In the Pale Heart, defeat combatants with precision final blows using Linear Fusion Rifles."
+     },
+     {
+      "hash": "1825468365",
+      "name": "Flawless Taken Impasse",
+      "description": "In the Pale Heart, during a single life, defeat Taken in the Impasse."
+     },
+     {
+      "hash": "1825468362",
+      "name": "Impassive Gathering",
+      "description": "In the Pale Heart, collect resource nodes in the Impasse."
+     }
+    ],
+    [
+     {
+      "hash": "2061670895",
+      "name": "Unstable Parkour",
+      "description": "In the Pale Heart, travel to the Blooming, and complete the Stitching event."
+     },
+     {
+      "hash": "2061670894",
+      "name": "Blighted Clash",
+      "description": "In the Pale Heart, travel to the Transgression and claim a reward for defeating Vrhiija, Subjugator of Paradise."
+     },
+     {
+      "hash": "2061670893",
+      "name": "Overgrown Skirmish",
+      "description": "In the Pale Heart, travel to the Landing and claim a reward for defeating Ei Räkosh, Banisher of Memory."
+     },
+     {
+      "hash": "2061670892",
+      "name": "Urban Parkour",
+      "description": "In the Pale Heart, travel to the Lost City, and complete the Stitching event."
+     },
+     {
+      "hash": "2061670891",
+      "name": "Blighted Skirmish",
+      "description": "In the Pale Heart, travel to the Transgression and claim a reward for defeating Ithriks, the Lost."
+     },
+     {
+      "hash": "2061670890",
+      "name": "Wasteland Demolition",
+      "description": "In the Pale Heart, travel to the Impasse, and complete the Expunging event."
+     }
+    ]
+   ]
+  }
+ }
+}

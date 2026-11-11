@@ -2,7 +2,7 @@
 
 import { BoxHeading, SectionHeading } from "@/components/detail-page-parts";
 import Image from "next/image";
-import { useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import { useOwnership } from "@/components/client-ownership";
 import {
   useProfileActivityCompletions,
@@ -210,10 +210,22 @@ export function ExpansionCampaignMissionsPanel({
         <div className={blockClass}>
           <BoxHeading title="Expansion quests" note={countNote(quests.filter(questComplete).length, quests.length)} />
           <ul className="divide-y divide-zinc-800">
-            {quests.map((quest) => {
+            {quests.map((quest, index) => {
               const iconUrl = quest.iconPath ? bungieIconUrl(quest.iconPath) : null;
+              const startsGroup = quest.group && quests[index - 1]?.group !== quest.group;
+              const groupQuests = startsGroup ? quests.filter((entry) => entry.group === quest.group) : [];
               return (
-                <li key={getCampaignQuestKey(quest)} className="flex items-center justify-between gap-2 py-2.5">
+                <Fragment key={getCampaignQuestKey(quest)}>
+                {startsGroup ? (
+                  <li className="flex items-center justify-between gap-2 py-2.5">
+                    <span className="text-sm font-medium text-zinc-100">{quest.group}</span>
+                    <CompletionMark
+                      complete={signedIn ? groupQuests.every(questComplete) : null}
+                      label="Complete"
+                    />
+                  </li>
+                ) : null}
+                <li className={`flex items-center justify-between gap-2 py-2.5${quest.group ? " pl-6" : ""}`}>
                   <div className="flex min-w-0 items-center gap-2.5">
                     {iconUrl ? (
                       <Image
@@ -229,6 +241,7 @@ export function ExpansionCampaignMissionsPanel({
                   </div>
                   <CompletionMark complete={signedIn ? questComplete(quest) : null} label="Complete" />
                 </li>
+                </Fragment>
               );
             })}
           </ul>

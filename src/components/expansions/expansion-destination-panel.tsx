@@ -221,7 +221,10 @@ export function ExpansionDestinationPanel({
                       ) : null}
                     </div>
                     <div className="flex flex-wrap gap-3">
-                      <CompletionMark complete={normal} label="Normal" />
+                      {/* Some destinations (Pale Heart) have no per-sector Normal record. */}
+                      {sector.discoveryObjectiveHash ? (
+                        <CompletionMark complete={normal} label="Normal" />
+                      ) : null}
                       <CompletionMark complete={expert} label="Expert" />
                       <CompletionMark complete={master} label="Master" />
                       <CompletionMark complete={grandmaster} label="Flawless Solo Mastery" />

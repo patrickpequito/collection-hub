@@ -151,6 +151,8 @@ export type ExpansionCampaignQuest = {
   /** Every step objective — all must be complete in profile progress. */
   stepObjectiveHashes?: string[];
   iconPath?: string;
+  /** Parent quest line shown as a header above its sub-quests (e.g. "The Final Days"). */
+  group?: string;
 };
 
 /** Playlist activity with difficulty tiers (Empire / Nightmare Hunts: 3 in-game). */

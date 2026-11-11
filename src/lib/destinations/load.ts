@@ -77,7 +77,10 @@ export async function loadDestinationLoot(destination: Destination) {
   for (const [setName, setItems] of armorBySet) {
     const rows = buildArmorRowsFromCatalogItems(setItems, setName);
     if (rows.length) {
-      armorSets.push({ setName, rows, previewFile: resolveArmorSetPreviewFile(setName, setItems[0]?.source ?? "") });
+      armorSets.push({ setName, rows, previewFile:
+          destination.armorPreviewFiles?.[setName] ??
+          resolveArmorSetPreviewFile(setName, setItems[0]?.source ?? ""),
+      });
     } else {
       looseArmor.push(...setItems.map(toLootItemFromCatalog));
     }

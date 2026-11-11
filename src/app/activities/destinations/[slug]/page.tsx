@@ -4,6 +4,10 @@ import { notFound } from "next/navigation";
 import { ClientOwnership } from "@/components/client-ownership";
 import { SectionHeading, SectionJumpNav } from "@/components/detail-page-parts";
 import { CurseBar } from "@/components/destinations/curse-bar";
+import { DestinationActivitiesSection } from "@/components/destinations/destination-activities";
+import { getDestinationActivities } from "@/lib/destinations/activities-data";
+import { PathfinderCard } from "@/components/destinations/pathfinder-card";
+import { loadPathfinderBoard } from "@/lib/destinations/pathfinder";
 import { DestinationWeekCards } from "@/components/destinations/destination-week-cards";
 import { DestinationReputation } from "@/components/destinations/destination-reputation";
 import {
@@ -36,7 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return pageMetadata(
     `/activities/destinations/${slug}`,
     `${destination.name} · Destiny 2 weekly rotations & loot`,
-    `This week in ${destination.name} (Destiny 2): rotations, destination loot, armor set, reputation and triumphs.`,
+    `This week in ${destination.name} (Destiny 2): rotations, destination loot, armor set, reputation, activities and triumphs.`,
   );
 }
 
@@ -67,8 +71,10 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
   const sections = destinationTriumphSections(triumphCatalog, destination);
   const seal = destinationSeal(triumphCatalog, destination);
   const weekly = await loadDestinationWeekly(destination);
+  const pathfinder = destination.slug === "the-pale-heart" ? await loadPathfinderBoard() : null;
   const curse = loadDestinationCurse(destination);
   const reputation = destinationReputation(destination);
+  const activities = getDestinationActivities(destination.slug);
 
   const lootItems = [
     ...loot.armorSets.flatMap((set) =>
@@ -86,10 +92,11 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
     entry ? { href: `/activities/destinations/${entry.slug}`, label: entry.name } : undefined;
 
   const sectionLinks = [
-    ...(weekly.length ? [{ id: "this-week", label: "This week" }] : []),
+    ...(weekly.length || pathfinder ? [{ id: "this-week", label: "This week" }] : []),
     ...(reputation ? [{ id: "reputation", label: "Reputation" }] : []),
     { id: "loot", label: "Loot" },
     ...(loot.cosmetics.length ? [{ id: "cosmetics", label: "Cosmetics" }] : []),
+    ...(activities ? [{ id: "activities", label: "Activities" }] : []),
     ...(sections.length ? [{ id: "triumphs", label: "Triumphs" }] : []),
   ];
 
@@ -105,15 +112,16 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
     >
       <ClientOwnership>
         <div className="space-y-9">
-          <DestinationStatBlocks lootGroups={lootGroups} sections={sections} seal={seal} />
+          <DestinationStatBlocks lootGroups={lootGroups} sections={sections} seal={seal} activities={activities} />
 
           {sectionLinks.length > 1 ? <SectionJumpNav links={sectionLinks} /> : null}
 
-          {weekly.length ? (
+          {weekly.length || pathfinder ? (
             <section id="this-week" className="scroll-mt-20">
               <SectionHeading title="This week" />
               {curse ? <div className="mb-3"><CurseBar curse={curse} /></div> : null}
-              <DestinationWeekCards slug={destination.slug} activities={weekly} />
+              {weekly.length ? <DestinationWeekCards slug={destination.slug} activities={weekly} /> : null}
+              {pathfinder ? <PathfinderCard board={pathfinder} /> : null}
             </section>
           ) : null}
 
@@ -145,6 +153,8 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
               <OwnedActivityCosmeticLootPanel sections={loot.cosmetics} itemHrefs={itemHrefs} heading="Cosmetics" />
             </div>
           ) : null}
+
+          {activities ? <DestinationActivitiesSection slug={destination.slug} activities={activities} /> : null}
 
           {sections.length ? (
             <section id="triumphs" className="scroll-mt-20">

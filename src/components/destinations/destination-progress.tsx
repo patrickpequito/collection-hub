@@ -12,18 +12,23 @@ import type { SealSummary } from "@/lib/triumphs/hub";
 import { countTriumphProgress } from "@/lib/triumphs/record-progress";
 import { sealProgress } from "@/lib/triumphs/seal-progress";
 import { useSignedIn } from "@/lib/use-signed-in";
+import { useActivitiesTally } from "@/components/destinations/destination-activities";
+import type { DestinationActivities } from "@/lib/destinations/activities";
 
 /** Summary blocks: loot, triumphs and (when there is one) the destination's seal. */
 export function DestinationStatBlocks({
   lootGroups,
   sections,
   seal,
+  activities = null,
 }: {
   lootGroups: string[][];
   sections: DestinationTriumphSection[];
   seal: SealSummary | null;
+  activities?: DestinationActivities | null;
 }) {
   const signedIn = useSignedIn();
+  const activityTally = useActivitiesTally(activities);
   const { ownedItemHashes, showOwnership } = useOwnership();
   const instances = useProfileRecordInstances();
   const instanceMap = useMemo(() => new Map(Object.entries(signedIn ? instances : {})), [instances, signedIn]);
@@ -32,10 +37,15 @@ export function DestinationStatBlocks({
   const sealBase = seal ? sealProgress(seal, signedIn ? instances : {}).base : null;
 
   return (
-    <StatBlockGrid count={1 + (records.length ? 1 : 0) + (seal ? 1 : 0)}>
+    <StatBlockGrid count={1 + (activityTally ? 1 : 0) + (records.length ? 1 : 0) + (seal ? 1 : 0)}>
       <StatBlock label="Destination loot">
         <StatCount owned={showOwnership ? countOwnedGroups(lootGroups, ownedItemHashes) : null} total={lootGroups.length} gold />
       </StatBlock>
+      {activityTally ? (
+        <StatBlock label="Activities">
+          <StatCount owned={signedIn ? activityTally.done : null} total={activityTally.total} />
+        </StatBlock>
+      ) : null}
       {records.length ? (
         <StatBlock label="Triumphs">
           <StatCount owned={signedIn ? triumphs.completed : null} total={triumphs.total} />

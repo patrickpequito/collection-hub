@@ -14,6 +14,8 @@ export type Destination = {
   sourcePattern: RegExp;
   /** Reissued gear whose catalog source still names its old season (e.g. Seventh Seraph). */
   extraItems?: { namePattern: RegExp; types: string[] };
+  /** Armor set preview art by set name, when the file isn't named after the set. */
+  armorPreviewFiles?: Record<string, string>;
   /** Triumph group slug, or Legends section paths when the destination has no group. */
   triumphs: { group: string } | { group: string; sections: [string, string][] } | null;
   /** Seal tied to the destination (counted in "Destination titles"). */
@@ -47,9 +49,11 @@ export const DESTINATIONS: Destination[] = [
     era: "The Final Shape",
     imageFile: "the-pale-heart.webp",
     sourcePattern: /pale heart/i,
+    armorPreviewFiles: { "First Ascent": "the-pale-heart.webp" },
     triumphs: { group: "the-pale-heart" },
     titleSlug: "the-final-shape",
     reputation: { vendor: "Ghost", progressionHash: "3011295063", maxRank: 16 },
+    built: true,
   },
   {
     slug: "neomuna",

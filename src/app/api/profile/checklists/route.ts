@@ -9,7 +9,7 @@ type ChecklistMap = Record<string, Record<string, boolean>>;
 
 /**
  * Returns Destiny profile checklist entry completion keyed by checklist hash,
- * then entry hash. Used for Throne World region chests / lost-sector discovery.
+ * then entry hash. Used for region chests, lost-sector discovery and destination collectibles.
  */
 export async function GET() {
   const session = await getFreshSession();
@@ -26,7 +26,7 @@ export async function GET() {
         error: "No Destiny membership found",
       });
     }
-    const url = `https://www.bungie.net/Platform/Destiny2/${membership.membershipType}/Profile/${membership.membershipId}/?components=104`;
+    const url = `https://www.bungie.net/Platform/Destiny2/${membership.membershipType}/Profile/${membership.membershipId}/?components=104,202`;
     const response = await fetch(url, {
       headers: {
         "X-API-Key": apiKey,
@@ -43,6 +43,9 @@ export async function GET() {
             checklists?: Record<string, Record<string, boolean>>;
           };
         };
+        characterProgressions?: {
+          data?: Record<string, { checklists?: Record<string, Record<string, boolean>> }>;
+        };
       };
     };
 
@@ -53,15 +56,21 @@ export async function GET() {
       });
     }
 
-    const rawChecklists =
-      payload.Response?.profileProgression?.data?.checklists ?? {};
+    // Profile checklists plus character ones (an entry counts once any character has it).
+    const sources = [
+      payload.Response?.profileProgression?.data?.checklists ?? {},
+      ...Object.values(payload.Response?.characterProgressions?.data ?? {}).map(
+        (character) => character.checklists ?? {},
+      ),
+    ];
     const checklists: ChecklistMap = {};
-    for (const [checklistHash, entries] of Object.entries(rawChecklists)) {
-      const normalized: Record<string, boolean> = {};
-      for (const [entryHash, done] of Object.entries(entries ?? {})) {
-        normalized[String(entryHash)] = Boolean(done);
+    for (const rawChecklists of sources) {
+      for (const [checklistHash, entries] of Object.entries(rawChecklists)) {
+        const normalized = (checklists[String(checklistHash)] ??= {});
+        for (const [entryHash, done] of Object.entries(entries ?? {})) {
+          normalized[String(entryHash)] = normalized[String(entryHash)] || Boolean(done);
+        }
       }
-      checklists[String(checklistHash)] = normalized;
     }
 
     return NextResponse.json({ checklists, error: null });

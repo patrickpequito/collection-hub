@@ -17,6 +17,7 @@ export const FINAL_SHAPE_HUB: ExpansionHub = {
   destinationActivitySlug: "the-pale-heart",
   destinationWeaponSourcePattern: /pale heart/i,
   relatedRadSlugs: ["salvations-edge"],
+  trailerYoutubeId: "6Gm5mbwrqSA",
   deepLootActivities: DEFAULT_DEEP_LOOT_ACTIVITIES,
   deepLootExcludedSourcePattern:
     /pale heart|salvation.?s edge|eververse|bright engram/i,
