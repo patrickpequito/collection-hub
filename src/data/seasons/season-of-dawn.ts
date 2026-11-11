@@ -73,15 +73,22 @@ export const SEASON_OF_DAWN_HUB: SeasonHub = {
   cosmeticPanelDescription:
     "Season Pass cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
   showEververseCosmetics: true,
+  // Exactly the Season Archive (Monument to Seasons Past) rewards.
   cosmeticRewards: [
-    "Saintly Shell",
+    "Pigeon Feed",
+    "Coin Trick",
     "The Kellbreaker",
-    "Dawn Chaser",
+    "Saintly Shell",
     "Defiant Vexsplosion",
     "Gunmetal Marigold",
     "Regal Medallion",
+    "Skyline Constellation",
     "Meteoric Descent",
     "Zaroff's Prized Longbore",
+  ],
+  // Seasonal triumph / vendor rewards no longer obtainable.
+  seasonalRewards: [
+    "Dawn Chaser",
   ],
   available: true,
 };

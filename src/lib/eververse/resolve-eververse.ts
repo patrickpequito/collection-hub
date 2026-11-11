@@ -274,6 +274,7 @@ export function resolveSeasonEververse(
   // Items already shown elsewhere on the page (Season Pass, exotics) stay out.
   const excludedNames = new Set([
     ...(hub.cosmeticRewards ?? []),
+    ...(hub.seasonalRewards ?? []),
     ...hub.exoticItemNames,
     ...(hub.excludedEververseNames ?? []),
   ]);

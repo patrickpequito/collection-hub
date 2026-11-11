@@ -60,15 +60,22 @@ export const SEASON_OF_THE_UNDYING_HUB: SeasonHub = {
   cosmeticPanelDescription:
     "Season Pass cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
   showEververseCosmetics: true,
+  // Exactly the Season Archive (Monument to Seasons Past) rewards.
   cosmeticRewards: [
-    "Never Live It Down",
+    "Clash of Swords",
     "Belgian Flying Kick",
+    "Never Live It Down",
+    "Blackheart Growth",
+    "Night's Chill",
+    "First Frost",
+    "For Wei",
+    "They Had Built",
+    "Let the Future Narrow",
+  ],
+  // Seasonal triumph / vendor rewards no longer obtainable.
+  seasonalRewards: [
     "Blade Carnival",
     "Palm of Wen Jie",
-    "Blackheart Growth",
-    "First Frost",
-    "Night's Chill",
-    "For Wei",
   ],
   available: true,
 };

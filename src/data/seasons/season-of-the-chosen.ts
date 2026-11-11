@@ -117,11 +117,12 @@ export const SEASON_OF_THE_CHOSEN_HUB: SeasonHub = {
     "Contender Boots",
     "Contender Bond",
   ],
+  // Exactly the Season Archive (Monument to Seasons Past) rewards.
   cosmeticRewards: [
-    "Challenger Shell",
     "Blade Breaker",
     "Humanity's Shield",
     "Shield Slam",
+    "Challenger Shell",
     "Gladitorial Entrance",
     "Armatura",
     "Testudo",

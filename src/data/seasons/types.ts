@@ -56,6 +56,11 @@ export type SeasonHub = {
    * Curated by name — shown in a single row in this order.
    */
   cosmeticRewards?: readonly string[];
+  /**
+   * Seasonal triumph / vendor cosmetics that are not in the Season Archive and
+   * can no longer be earned. Own block, not counted in progress.
+   */
+  seasonalRewards?: readonly string[];
   /** Optional blurb under the Cosmetic rewards heading. */
   cosmeticPanelDescription?: string;
   /**

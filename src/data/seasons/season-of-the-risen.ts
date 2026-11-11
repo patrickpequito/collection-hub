@@ -75,17 +75,24 @@ export const SEASON_OF_THE_RISEN_HUB: SeasonHub = {
     "Exotic gear from Season of the Risen — Grand Overture from the Season Pass and Dead Messenger from Vox Obscura.",
   cosmeticPanelDescription:
     "Season Pass cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  // Exactly the Season Archive (Monument to Seasons Past) rewards.
   cosmeticRewards: [
+    "A Funny Thing",
+    "A Huge Crush",
+    "Like a Moth to a…",
     "Flayer Shell",
     "Mind Shard",
-    "Sovereign Order",
     "Lucent Shrieker Entrance",
+    "Royal Dye",
+    "Mind's Eye",
+    "Red Allegiant",
+  ],
+  // Seasonal triumph / vendor rewards no longer obtainable.
+  seasonalRewards: [
+    "Sovereign Order",
     "Risen Projection",
     "Psychic Warfare",
     "Life for Life",
-    "Like a Moth to a…",
-    "Mind's Eye",
-    "Royal Dye",
   ],
   showEververseCosmetics: true,
   excludedEververseNames: ["Witch Queen Projection"],

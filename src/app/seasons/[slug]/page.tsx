@@ -179,6 +179,16 @@ export default async function SeasonHubPage({ params }: SeasonPageProps) {
               items={loot.cosmeticItems}
               itemHrefs={itemHrefs}
             />
+            {loot.seasonalRewardItems.length > 0 ? (
+              <div className="mt-6">
+                <ExpansionLootPanel
+                  title="Seasonal rewards"
+                  note="Not obtainable"
+                  items={loot.seasonalRewardItems}
+                  itemHrefs={itemHrefs}
+                />
+              </div>
+            ) : null}
           </div>
 
           <div id="activities" className="scroll-mt-20">

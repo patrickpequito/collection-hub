@@ -116,15 +116,21 @@ export const SEASON_OF_THE_HAUNTED_HUB: SeasonHub = {
     "Exotic gear from Season of the Haunted — Trespasser from the Season Pass, Heartshadow from Duality, and the season's new exotic armor.",
   cosmeticPanelDescription:
     "Season Pass and seasonal triumph cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  // Exactly the Season Archive (Monument to Seasons Past) rewards.
   cosmeticRewards: [
+    "Reaper Projection",
+    "Shower of Wealth",
+    "Cabal Loyalty",
+    "Swing of the Scythe",
     "Phantasmal Shell",
     "Pale Steed",
     "Egregore Entrance",
-    "Reaper Projection",
-    "Swing of the Scythe",
-    "One False Step",
-    "Spectral Indigo",
     "Graceful Phantom",
+    "Spectral Indigo",
+    "One False Step",
+  ],
+  // Seasonal triumph / vendor rewards no longer obtainable.
+  seasonalRewards: [
     "Eidolon Shell",
     "Trauermarsch",
     "Tymbal Lucidae",

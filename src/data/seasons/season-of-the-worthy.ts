@@ -74,15 +74,23 @@ export const SEASON_OF_THE_WORTHY_HUB: SeasonHub = {
   cosmeticPanelDescription:
     "Season Pass cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
   showEververseCosmetics: true,
+  // Exactly the Season Archive (Monument to Seasons Past) rewards.
   cosmeticRewards: [
-    "Hardlink Shell",
+    "None Shall Pass",
     "Valkyrian Impaler",
-    "Emblem of the Worthy",
+    "Seventh Seraph Vector",
+    "Tatarstan",
     "Big Red Entrance",
-    "Darkwater Froth",
     "Silver Tactical",
+    "Darkwater Froth",
     "The Chopper",
+    "Tyrant's Lash",
     "Tyrant's Cudgel",
+  ],
+  // Seasonal triumph / vendor rewards no longer obtainable.
+  seasonalRewards: [
+    "Hardlink Shell",
+    "Emblem of the Worthy",
   ],
   available: true,
 };

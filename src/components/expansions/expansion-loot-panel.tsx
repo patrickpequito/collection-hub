@@ -11,6 +11,8 @@ type ExpansionLootPanelProps = {
   items: LootItem[];
   ownedBorder?: "gold" | "green";
   itemHrefs?: Record<string, string>;
+  /** Small label at the right of the heading (e.g. "Not obtainable"). */
+  note?: string;
 };
 
 export function ExpansionLootPanel({
@@ -19,12 +21,13 @@ export function ExpansionLootPanel({
   items,
   ownedBorder = "gold",
   itemHrefs,
+  note,
 }: ExpansionLootPanelProps) {
   const { ownedItemHashes, showOwnership } = useOwnership();
 
   return (
     <section className="min-w-0">
-      <SectionHeading title={title} />
+      <SectionHeading title={title} note={note} />
       <div className="min-w-0 overflow-hidden border border-hairline bg-panel/85 p-3 sm:p-4">
       {description ? (
         <p className="mb-4 text-sm text-zinc-400">{description}</p>

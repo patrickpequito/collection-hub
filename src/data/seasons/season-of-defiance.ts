@@ -154,14 +154,21 @@ export const SEASON_OF_DEFIANCE_HUB: SeasonHub = {
     "Exotic weapons from Season of Defiance — Verglas Curve from the Season Pass and Vexcalibur from //node.ovrd.AVALON//.",
   cosmeticPanelDescription:
     "Season Pass and seasonal quest cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  // Exactly the Season Archive (Monument to Seasons Past) rewards.
   cosmeticRewards: [
     "Queensguard Projection",
+    "Thinking with Portals",
+    "Techeun Levitation",
     "Wake Up!",
-    "Inside Line",
     "Guardian's Angel Shell",
+    "Inside Line",
     "Luminous Entrance",
     "Queensguard Valor",
     "Dreamtide Daybreak",
+    "Heritance of the Thaw",
+  ],
+  // Seasonal triumph / vendor rewards no longer obtainable.
+  seasonalRewards: [
     "Amethyst Stronghold",
     "Brazen Spark",
     "Tech Witch Shell",

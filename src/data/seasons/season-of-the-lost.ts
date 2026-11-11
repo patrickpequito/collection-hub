@@ -149,14 +149,20 @@ export const SEASON_OF_THE_LOST_HUB: SeasonHub = {
   cosmeticPanelDescription:
     "Season Pass cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
   showEververseCosmetics: true,
+  // Exactly the Season Archive (Monument to Seasons Past) rewards.
   cosmeticRewards: [
-    "Wayfinder's Shell",
-    "Stable Prototype",
-    "Astral Location",
+    "Royal Alignment",
+    "Petra's Party Trick",
     "Field Work",
+    "Wayfinder's Shell",
     "Wayfinder's Entrance",
-    "Amrita's Dream",
     "Queensgrace",
+    "Amrita's Dream",
+    "Stable Prototype",
+  ],
+  // Seasonal triumph / vendor rewards no longer obtainable.
+  seasonalRewards: [
+    "Astral Location",
   ],
   available: true,
 };

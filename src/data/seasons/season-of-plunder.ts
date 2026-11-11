@@ -106,16 +106,22 @@ export const SEASON_OF_PLUNDER_HUB: SeasonHub = {
     "Exotic gear from Season of Plunder — Delicate Tomb, Quicksilver Storm, and the season's new exotic armor.",
   cosmeticPanelDescription:
     "Season Pass and seasonal triumph cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  // Exactly the Season Archive (Monument to Seasons Past) rewards.
   cosmeticRewards: [
+    "Swashbuckler's Projection",
+    "Pirate Treasure",
+    "Victorious Captain",
+    "Flintlock Fury",
     "Castaway's Shell",
     "Bucca's Jollyboat",
     "Thar Be Treasure!",
-    "Swashbuckler's Projection",
-    "Flintlock Fury",
-    "Avant-Garde Mausoleum",
-    "Directive: Crash",
-    "Rusted Coin",
     "Dusted Tome",
+    "Rusted Coin",
+    "Avant-Garde Mausoleum",
+  ],
+  // Seasonal triumph / vendor rewards no longer obtainable.
+  seasonalRewards: [
+    "Directive: Crash",
     "Swashbuckler Shell",
     "Generation's Shadow",
   ],

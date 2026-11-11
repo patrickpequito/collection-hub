@@ -216,18 +216,24 @@ export const SEASON_OF_THE_WISH_HUB: SeasonHub = {
     "Exotic weapons from Season of the Wish — Dragon's Breath from the Season Pass, Wish-Keeper from the Starcrossed mission, and Buried Bloodline from Warlord's Ruin.",
   cosmeticPanelDescription:
     "Season Pass and seasonal triumph cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  // Exactly the Season Archive (Monument to Seasons Past) rewards.
   cosmeticRewards: [
     "Many-Voiced Projection",
+    "Dragon Summon",
+    "Luminous Vigil",
     "Censered",
     "Anthemic Invocation Shell",
-    "Wyrmguard Shell",
     "Nostos",
+    "Manifested Power",
+    "Valor at Dusk",
+    "Dreamweaver",
+    "Dying Dream",
+  ],
+  // Seasonal triumph / vendor rewards no longer obtainable.
+  seasonalRewards: [
+    "Wyrmguard Shell",
     "Gloaming Journeyer",
     "Unforeseen Consequences",
-    "Manifested Power",
-    "Dreamweaver",
-    "Valor at Dusk",
-    "Dying Dream",
     "Wish Upon a Star",
     "Never Lost, Always Found",
   ],

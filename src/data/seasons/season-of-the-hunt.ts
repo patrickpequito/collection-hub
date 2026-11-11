@@ -60,11 +60,13 @@ export const SEASON_OF_THE_HUNT_HUB: SeasonHub = {
   cosmeticPanelDescription:
     "Season Pass cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
   showEververseCosmetics: true,
+  // Exactly the Season Archive (Monument to Seasons Past) rewards.
   cosmeticRewards: [
-    "Digital Cortex",
-    "Little Bird",
     "Victory Pose",
+    "Little Bird",
     "Silencing Shot",
+    "Digital Cortex",
+    "Firecrest",
     "Stalker's Entrance",
     "Lawful Neutral",
     "Horizon Blush",

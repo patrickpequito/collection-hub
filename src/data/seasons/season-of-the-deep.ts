@@ -184,19 +184,24 @@ export const SEASON_OF_THE_DEEP_HUB: SeasonHub = {
     "Exotic gear from Season of the Deep — Centrifuse from the Season Pass, Wicked Implement from its hidden quest, The Navigator from Ghosts of the Deep, and the season's new exotic armor.",
   cosmeticPanelDescription:
     "Season Pass and seasonal triumph cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  // Exactly the Season Archive (Monument to Seasons Past) rewards.
   cosmeticRewards: [
     "Pressure Monitor Projection",
-    "White Whale",
     "Tentacle Trap",
+    "Siren Call",
+    "White Whale",
     "Deepseeker Shell",
-    "Síocháin's Scuba Shell",
     "Pale Reflection",
+    "Methane Burst",
+    "Mesopelagic",
+    "Epipelagic",
+    "Fluorescent Depth",
+  ],
+  // Seasonal triumph / vendor rewards no longer obtainable.
+  seasonalRewards: [
+    "Síocháin's Scuba Shell",
     "To Be Remembered",
     "Akashic Revelation",
-    "Methane Burst",
-    "Epipelagic",
-    "Mesopelagic",
-    "Fluorescent Depth",
     "Depths of Memory",
     "Pond Pals",
   ],

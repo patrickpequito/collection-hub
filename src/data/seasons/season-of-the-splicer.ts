@@ -130,15 +130,20 @@ export const SEASON_OF_THE_SPLICER_HUB: SeasonHub = {
   cosmeticPanelDescription:
     "Season Pass cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
   showEververseCosmetics: true,
+  // Exactly the Season Archive (Monument to Seasons Past) rewards.
   cosmeticRewards: [
-    "Riis Racer",
-    "Deletion Protocol",
-    "Luminous Tapestry",
+    "Absorb the Ether",
+    "Ready for Anything",
     "Security Breach",
+    "Riis Racer",
     "House of Light Entrance",
     "Technofusion",
-    "Ready for Anything",
-    "Absorb the Ether",
+    "Ritualism",
+    "Deletion Protocol",
+  ],
+  // Seasonal triumph / vendor rewards no longer obtainable.
+  seasonalRewards: [
+    "Luminous Tapestry",
   ],
   available: true,
 };

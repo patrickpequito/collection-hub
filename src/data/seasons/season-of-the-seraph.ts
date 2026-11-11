@@ -125,15 +125,21 @@ export const SEASON_OF_THE_SERAPH_HUB: SeasonHub = {
     "Exotic weapons from Season of the Seraph — The Manticore from the Season Pass, Revision Zero from Operation: Seraph's Shield, and Hierarchy of Needs from Spire of the Watcher.",
   cosmeticPanelDescription:
     "Season Pass and seasonal triumph cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  // Exactly the Season Archive (Monument to Seasons Past) rewards.
   cosmeticRewards: [
+    "Mechanica Projection",
+    "Tripwire Dodge",
+    "Spy Goggles",
+    "Stylish Draw",
     "Infiltrator Shell",
     "Intercepted Transmission",
     "Seraph Reboot Entrance",
-    "Mechanica Projection",
-    "Stylish Draw",
-    "Scorpionflight",
     "Seraphim Cloak",
     "Carrhae Black",
+    "Scorpionflight",
+  ],
+  // Seasonal triumph / vendor rewards no longer obtainable.
+  seasonalRewards: [
     "Warsat Shell",
     "Archangel's Refit",
     "Spirit of the Warmind",

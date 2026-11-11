@@ -42,6 +42,8 @@ export type SeasonLoot = {
   exoticItems: LootItem[];
   /** Season Pass cosmetics reclaimable from the Season Archive. */
   cosmeticItems: LootItem[];
+  /** Seasonal triumph / vendor cosmetics no longer obtainable (not in progress). */
+  seasonalRewardItems: LootItem[];
   /** Eververse cosmetics with this season's watermark (own counter). */
   eververse: EververseLoot | null;
   /**
@@ -343,6 +345,11 @@ export async function resolveSeasonLoot(hub: SeasonHub): Promise<SeasonLoot> {
     .filter((item): item is AllLootItem => Boolean(item))
     .map((item) => toLootItemFromCatalog(item));
 
+  const seasonalRewardItems = (hub.seasonalRewards ?? [])
+    .map((name) => catalogItems.find((item) => item.name === name))
+    .filter((item): item is AllLootItem => Boolean(item))
+    .map((item) => toLootItemFromCatalog(item));
+
   for (const cosmetic of cosmeticItems) {
     // Season Archive reclaimables count even when catalog marks them unobtainable.
     progressOwnershipGroups.push(ownershipGroup(cosmetic));
@@ -353,6 +360,7 @@ export async function resolveSeasonLoot(hub: SeasonHub): Promise<SeasonLoot> {
     weaponPools,
     exoticItems,
     cosmeticItems,
+    seasonalRewardItems,
     eververse: resolveSeasonEververse(catalogItems, hub),
     progressOwnershipGroups,
     progressTotal: progressOwnershipGroups.length,

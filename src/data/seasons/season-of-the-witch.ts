@@ -124,19 +124,25 @@ export const SEASON_OF_THE_WITCH_HUB: SeasonHub = {
     "Exotic gear from Season of the Witch — Ex Diris from the Season Pass, Tessellation from The Final Shape pre-order, and the season's new exotic armor.",
   cosmeticPanelDescription:
     "Season Pass and seasonal triumph cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
+  // Exactly the Season Archive (Monument to Seasons Past) rewards.
   cosmeticRewards: [
     "Prophetic Projection",
+    "Summoning Circle",
+    "Runic Sketching",
     "Arcane Banishment",
     "Hexed Shell",
-    "Pharmakos Shell",
     "Acroamatis",
+    "Beyond Sight",
+    "Ossified Carving",
+    "Organic Adornment",
+    "Fatebinder",
+  ],
+  // Seasonal triumph / vendor rewards no longer obtainable.
+  seasonalRewards: [
+    "Pharmakos Shell",
     "Laminos",
     "Sparagmos",
-    "Beyond Sight",
-    "Organic Adornment",
-    "Ossified Carving",
     "Forbidden Wish",
-    "Fatebinder",
     "Cartomancy",
     "Twisted Space",
   ],

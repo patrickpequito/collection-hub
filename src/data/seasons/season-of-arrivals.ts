@@ -86,15 +86,22 @@ export const SEASON_OF_ARRIVALS_HUB: SeasonHub = {
   cosmeticPanelDescription:
     "Season Pass cosmetics reclaimable with Chronologs from the Season Archive in the Tower.",
   showEververseCosmetics: true,
+  // Exactly the Season Archive (Monument to Seasons Past) rewards.
   cosmeticRewards: [
+    "Nurturing Nature",
+    "Revolution Blade",
     "Last Bastion Shell",
     "Warden's Wailer",
-    "Edge of Arrival",
-    "Revolution Blade",
     "Traveler Entrance",
-    "Horizons Beyond",
     "Throne of Soot",
+    "Horizons Beyond",
     "White Collar Crime",
+    "Riptide",
+    "Dark Waters",
+  ],
+  // Seasonal triumph / vendor rewards no longer obtainable.
+  seasonalRewards: [
+    "Edge of Arrival",
   ],
   available: true,
 };
