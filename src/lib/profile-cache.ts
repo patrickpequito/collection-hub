@@ -93,6 +93,18 @@ export function emptyProfileCacheSnapshot(
   };
 }
 
+/** Completion counts only go up: a partial or failed refresh never hides a clear. */
+function mergeCompletionCounts(
+  current: Record<string, number>,
+  patch: Record<string, number> | undefined,
+): Record<string, number> {
+  const merged = { ...current };
+  for (const [hash, count] of Object.entries(patch ?? {})) {
+    merged[hash] = Math.max(merged[hash] ?? 0, count);
+  }
+  return merged;
+}
+
 export function mergeProfileCache(
   current: ProfileCacheSnapshot,
   patch: Partial<
@@ -102,10 +114,7 @@ export function mergeProfileCache(
   return {
     ...current,
     ...patch,
-    activityCompletions: {
-      ...current.activityCompletions,
-      ...patch.activityCompletions,
-    },
+    activityCompletions: mergeCompletionCounts(current.activityCompletions, patch.activityCompletions),
     raidCompletionsBySlug: {
       ...current.raidCompletionsBySlug,
       ...patch.raidCompletionsBySlug,

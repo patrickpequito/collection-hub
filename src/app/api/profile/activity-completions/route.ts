@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { fetchActivityHashCompletions } from "@/lib/destiny-activity-stats";
 import { getFreshSession } from "@/lib/session-access";
 
+/** Bungie's activity stats can be slow; give the function time instead of the default limit. */
+export const maxDuration = 60;
+
 /** Completions for arbitrary activity hashes (Empire Hunts, etc.). */
 export async function GET(request: NextRequest) {
   const session = await getFreshSession();

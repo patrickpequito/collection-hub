@@ -194,12 +194,23 @@ export function ProfileProgressProvider({
     activityFetchInFlightRef.current = true;
     const params = new URLSearchParams({ hashes: hashes.join(",") });
 
-    fetch(`/api/profile/activity-completions?${params}`, { cache: "no-store" })
-      .then(async (response) => {
+    const load = () =>
+      fetch(`/api/profile/activity-completions?${params}`, { cache: "no-store" }).then(async (response) => {
         const payload = (await response.json()) as {
           completions?: Record<string, number>;
+          error?: string | null;
         };
-        patchSnapshot({ activityCompletions: payload.completions ?? {} });
+        if (!response.ok || payload.error) throw new Error(payload.error ?? `HTTP ${response.status}`);
+        return payload.completions ?? {};
+      });
+
+    // Bungie's stats endpoints fail now and then: retry once before giving up.
+    load()
+      .catch(() => new Promise<Record<string, number>>((resolve, reject) => {
+        window.setTimeout(() => load().then(resolve, reject), 3000);
+      }))
+      .then((completions) => {
+        patchSnapshot({ activityCompletions: completions });
       })
       .catch(() => {
         // Keep cached activity completions when refresh fails.

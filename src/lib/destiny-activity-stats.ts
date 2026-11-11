@@ -355,37 +355,6 @@ async function fetchHistoryCountsByCharacter(
   );
 }
 
-async function fetchAggregateCountsByCharacter(
-  membership: DestinyMembership,
-  characterIds: string[],
-  accessToken: string,
-): Promise<Map<number, number>[] | null> {
-  const probe = await fetchAggregateCountsForCharacter(
-    membership,
-    characterIds[0],
-    accessToken,
-  );
-  if (!probe) {
-    return null;
-  }
-
-  if (characterIds.length === 1) {
-    return [probe];
-  }
-
-  const rest = await Promise.all(
-    characterIds.slice(1).map((characterId) =>
-      fetchAggregateCountsForCharacter(membership, characterId, accessToken),
-    ),
-  );
-
-  if (rest.some((counts) => counts === null)) {
-    return null;
-  }
-
-  return [probe, ...(rest as Map<number, number>[])];
-}
-
 async function fetchCompletionCountsByCharacter(session: BungieUserSession) {
   const membership = await resolveDestinyMembership(session);
   if (!membership) return null;
@@ -398,26 +367,29 @@ async function fetchCompletionCountsByCharacter(session: BungieUserSession) {
   const characterIds = Object.keys(profile.characters?.data ?? {});
   if (!characterIds.length) return null;
 
-  if (shouldTryAggregateEndpoint()) {
-    const aggregateCounts = await fetchAggregateCountsByCharacter(
-      membership,
-      characterIds,
-      session.accessToken,
-    );
-
-    if (aggregateCounts) {
-      markAggregateEndpointHealthy();
-      return aggregateCounts;
-    }
-
-    markAggregateEndpointUnhealthy();
+  if (!shouldTryAggregateEndpoint()) {
+    return fetchHistoryCountsByCharacter(membership, characterIds, session.accessToken);
   }
 
-  return fetchHistoryCountsByCharacter(
-    membership,
-    characterIds,
-    session.accessToken,
+  // Aggregate stats per character (one retry); only a character whose aggregate
+  // still fails falls back to the much slower full activity history.
+  const counts = await Promise.all(
+    characterIds.map(async (characterId) => {
+      const aggregate =
+        (await fetchAggregateCountsForCharacter(membership, characterId, session.accessToken)) ??
+        (await fetchAggregateCountsForCharacter(membership, characterId, session.accessToken));
+      if (aggregate) return { aggregate: true, counts: aggregate };
+      return {
+        aggregate: false,
+        counts: await fetchCompletionCountsForCharacter(membership, characterId, session.accessToken),
+      };
+    }),
   );
+
+  if (counts.every((entry) => entry.aggregate)) markAggregateEndpointHealthy();
+  else if (counts.every((entry) => !entry.aggregate)) markAggregateEndpointUnhealthy();
+
+  return counts.map((entry) => entry.counts);
 }
 
 function readActivityCompletions(
