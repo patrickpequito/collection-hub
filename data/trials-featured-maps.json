@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-06T21:56:47.855Z",
-  "weekIndex": 21,
-  "weekStart": "2026-11-06T17:00:00.000Z",
-  "weekEnd": "2026-11-10T17:00:00.000Z",
+  "generatedAt": "2026-11-13T22:23:49.528Z",
+  "weekIndex": 22,
+  "weekStart": "2026-11-13T17:00:00.000Z",
+  "weekEnd": "2026-11-17T17:00:00.000Z",
   "maps": [
-    "Burnout",
-    "Eventide Labs",
-    "The Anomaly"
+    "Javelin-4",
+    "The Dead Cliffs",
+    "Fragment"
   ],
   "source": "rotation"
 }
