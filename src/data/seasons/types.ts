@@ -22,6 +22,10 @@ export type SeasonPlayableActivity = {
   location: string;
   /** Bungie manifest `pgcrImage` path for the Director-style activity art. */
   pgcrImagePath: string;
+  /** Local art in /public that replaces the pgcr image (Bungie shares one image across variants). */
+  imageFile?: string;
+  /** Rotating activity: its manifest hashes, to mark it when it is this week's pick. */
+  rotationActivityHashes?: string[];
   href?: string;
 };
 

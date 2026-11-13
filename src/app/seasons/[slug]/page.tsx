@@ -13,6 +13,7 @@ import { SeasonProgressStrip } from "@/components/seasons/season-progress-strip"
 import { SeasonTrailerSection } from "@/components/seasons/season-trailer-section";
 import { YouTubeEmbed } from "@/components/seasons/youtube-embed";
 import { SectionJumpNav, SectionHeading } from "@/components/detail-page-parts";
+import { loadAvailableActivityHashes } from "@/lib/seasons/available-activities";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import {
   getSeasonHub,
@@ -95,6 +96,13 @@ export default async function SeasonHubPage({ params }: SeasonPageProps) {
     { id: "activities", label: "Activities", show: hub.playableActivities.length > 0 },
     { id: "eververse", label: "Eververse", show: Boolean(loot.eververse) },
   ].filter((link) => link.show);
+
+  // Rotating activities (e.g. expeditions): mark this week's pick; none when Bungie doesn't say.
+  const rotating = hub.playableActivities.filter((activity) => activity.rotationActivityHashes?.length);
+  const available = rotating.length ? await loadAvailableActivityHashes() : new Set<string>();
+  const activeActivityIds = rotating
+    .filter((activity) => activity.rotationActivityHashes!.some((hash) => available.has(hash)))
+    .map((activity) => activity.id);
 
   return (
     <SectionPageLayout
@@ -194,6 +202,7 @@ export default async function SeasonHubPage({ params }: SeasonPageProps) {
           <div id="activities" className="scroll-mt-20">
             <SeasonPlayableActivities
               activities={hub.playableActivities}
+              activeIds={activeActivityIds}
               isUpdate={hub.isUpdate}
             />
           </div>

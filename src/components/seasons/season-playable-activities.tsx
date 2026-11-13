@@ -10,14 +10,20 @@ type SeasonPlayableActivitiesProps = {
   activities: readonly SeasonPlayableActivity[];
   /** Free update page: copy says "Update content". */
   isUpdate?: boolean;
+  /** Rotating activities that are this week's pick. */
+  activeIds?: readonly string[];
 };
 
-function ActivityBannerCard({ activity }: { activity: SeasonPlayableActivity }) {
-  const imageUrl = bungieIconUrl(activity.pgcrImagePath);
+function ActivityBannerCard({ activity, active = false }: { activity: SeasonPlayableActivity; active?: boolean }) {
+  const imageUrl = activity.imageFile ?? bungieIconUrl(activity.pgcrImagePath);
   const [failed, setFailed] = useState(false);
 
   const content = (
-    <div className="relative aspect-video w-full overflow-hidden border border-hairline bg-panel">
+    <div
+      className={`relative aspect-video w-full overflow-hidden border bg-panel ${
+        active ? "border-seasonal/70" : "border-hairline"
+      }`}
+    >
       {!failed ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -28,6 +34,14 @@ function ActivityBannerCard({ activity }: { activity: SeasonPlayableActivity }) 
         />
       ) : null}
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/95 via-black/60 to-transparent" />
+      {active ? (
+        <>
+          <span aria-hidden className="absolute inset-x-0 top-0 h-[3px] bg-seasonal" />
+          <span className="absolute left-2 top-2 bg-seasonal px-2 py-1 font-display text-[10px] uppercase tracking-[0.16em] text-void">
+            This week
+          </span>
+        </>
+      ) : null}
       <span className="absolute right-2 top-2 border border-white/20 bg-black/70 px-2 py-1 font-display text-[10px] uppercase tracking-[0.16em] text-bone">
         {activity.location}
       </span>
@@ -59,6 +73,7 @@ function ActivityBannerCard({ activity }: { activity: SeasonPlayableActivity }) 
 export function SeasonPlayableActivities({
   activities,
   isUpdate = false,
+  activeIds = [],
 }: SeasonPlayableActivitiesProps) {
   if (activities.length === 0) return null;
 
@@ -72,7 +87,7 @@ export function SeasonPlayableActivities({
       </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
         {activities.map((activity) => (
-          <ActivityBannerCard key={activity.id} activity={activity} />
+          <ActivityBannerCard key={activity.id} activity={activity} active={activeIds.includes(activity.id)} />
         ))}
       </div>
     </section>

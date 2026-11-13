@@ -93,13 +93,33 @@ export const SEASON_OF_PLUNDER_HUB: SeasonHub = {
       location: "Vanguard Arena Ops",
       pgcrImagePath: "/img/destiny_content/pgcr/season_18_ketchcrash.jpg",
     },
+    // The three expeditions rotate weekly in Fireteam Ops; Bungie shares one art across them
+    // (Europa: its patrol art; Nessus: owner-supplied screenshot).
     {
-      // Only the Cosmodrome expedition is still launchable (Europa and Nessus aren't).
       id: "expedition-cosmodrome",
       title: "Expedition: Cosmodrome",
       description: "Three-player treasure dig on the Cosmodrome.",
       location: "Vanguard Fireteam Ops",
       pgcrImagePath: "/img/destiny_content/pgcr/season_18_expedition.jpg",
+      rotationActivityHashes: ["4001207919", "3082680901", "3302997692", "3219786703", "2003481787", "1516872608"],
+    },
+    {
+      id: "expedition-europa",
+      title: "Expedition: Europa",
+      description: "Three-player treasure dig on Europa.",
+      location: "Vanguard Fireteam Ops",
+      pgcrImagePath: "/img/destiny_content/pgcr/season_18_expedition.jpg",
+      imageFile: "/images/seasons/playable/expedition-europa.webp",
+      rotationActivityHashes: ["4001207918", "4263349830", "3766038363", "2425464470", "1826451826", "1516872609"],
+    },
+    {
+      id: "expedition-nessus",
+      title: "Expedition: Nessus",
+      description: "Three-player treasure dig on Nessus.",
+      location: "Vanguard Fireteam Ops",
+      pgcrImagePath: "/img/destiny_content/pgcr/season_18_expedition.jpg",
+      imageFile: "/images/seasons/playable/expedition-nessus.webp",
+      rotationActivityHashes: ["2407738200", "1230209641", "651146256", "2396783420", "1516872611"],
     },
   ],
   exoticPanelDescription:

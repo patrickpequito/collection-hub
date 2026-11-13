@@ -91,6 +91,7 @@ export const SEASON_OF_THE_SPLICER_HUB: SeasonHub = {
     "Hung Jury SR4": "world-loot",
     "Archon's Thunder": "iron-banner",
   },
+  // The four Overrides rotate in Arena Ops; this week's one is marked.
   playableActivities: [
     {
       id: "override-europa",
@@ -99,6 +100,7 @@ export const SEASON_OF_THE_SPLICER_HUB: SeasonHub = {
       location: "Vanguard Arena Ops",
       pgcrImagePath:
         "/img/destiny_content/pgcr/season_14_override_europa.jpg",
+      rotationActivityHashes: ["1644254322", "1026239567", "25688104", "1307933814", "1792588602"],
     },
     {
       id: "override-moon",
@@ -107,6 +109,7 @@ export const SEASON_OF_THE_SPLICER_HUB: SeasonHub = {
       location: "Vanguard Arena Ops",
       pgcrImagePath:
         "/img/destiny_content/pgcr/season_14_override_moon.jpg",
+      rotationActivityHashes: ["650473962", "3595613735", "2865532048", "2301670494", "3480889442"],
     },
     {
       id: "override-tangled-shore",
@@ -115,6 +118,7 @@ export const SEASON_OF_THE_SPLICER_HUB: SeasonHub = {
       location: "Vanguard Arena Ops",
       pgcrImagePath:
         "/img/destiny_content/pgcr/season_14_override_tangled_shore.jpg",
+      rotationActivityHashes: ["4230843715", "3251791982", "3933916447", "2307304497", "2277697861"],
     },
     {
       id: "override-last-city",
@@ -123,6 +127,7 @@ export const SEASON_OF_THE_SPLICER_HUB: SeasonHub = {
       location: "Vanguard Arena Ops",
       pgcrImagePath:
         "/img/destiny_content/pgcr/season_14_override_last_city.jpg",
+      rotationActivityHashes: ["2573597190", "3907305499", "612985278", "883763122", "3343628502"],
     },
   ],
   exoticPanelDescription:
