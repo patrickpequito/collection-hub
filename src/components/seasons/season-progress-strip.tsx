@@ -12,6 +12,8 @@ type SeasonProgressStripProps = {
   cosmeticOwnershipGroups: string[][];
   /** Free update page: "Update loot" / "Cosmetics" labels. */
   isUpdate?: boolean;
+  /** "Season", "Episode" or "Update". */
+  term?: string;
 };
 
 /** Season loot, exotics and Season Pass cosmetics. */
@@ -21,6 +23,7 @@ export function SeasonProgressStrip({
   exoticOwnershipGroups,
   cosmeticOwnershipGroups,
   isUpdate = false,
+  term = "Season",
 }: SeasonProgressStripProps) {
   const { ownedItemHashes, showOwnership } = useOwnership();
   const count = useMemo(
@@ -30,10 +33,10 @@ export function SeasonProgressStrip({
   );
 
   const blocks = [
-    { label: isUpdate ? "Update loot" : "Season loot", groups: ownershipGroups, total, gold: true },
+    { label: `${term} loot`, groups: ownershipGroups, total, gold: true },
     { label: "Exotics", groups: exoticOwnershipGroups, total: exoticOwnershipGroups.length },
     {
-      label: isUpdate ? "Cosmetics" : "Season pass cosmetics",
+      label: isUpdate ? "Cosmetics" : `${term} pass cosmetics`,
       groups: cosmeticOwnershipGroups,
       total: cosmeticOwnershipGroups.length,
     },

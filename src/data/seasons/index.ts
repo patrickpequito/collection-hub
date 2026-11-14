@@ -7,6 +7,9 @@ import { SEASON_OF_THE_DEEP_HUB } from "@/data/seasons/season-of-the-deep";
 import { SEASON_OF_THE_WITCH_HUB } from "@/data/seasons/season-of-the-witch";
 import { SEASON_OF_THE_WISH_HUB } from "@/data/seasons/season-of-the-wish";
 import { INTO_THE_LIGHT_HUB } from "@/data/seasons/into-the-light";
+import { EPISODE_ECHOES_HUB } from "@/data/seasons/episode-echoes";
+import { EPISODE_REVENANT_HUB } from "@/data/seasons/episode-revenant";
+import { EPISODE_HERESY_HUB } from "@/data/seasons/episode-heresy";
 import { SEASON_OF_THE_HAUNTED_HUB } from "@/data/seasons/season-of-the-haunted";
 import { SEASON_OF_THE_HUNT_HUB } from "@/data/seasons/season-of-the-hunt";
 import { SEASON_OF_THE_LOST_HUB } from "@/data/seasons/season-of-the-lost";
@@ -41,6 +44,9 @@ const SEASON_HUBS: Record<string, SeasonHub> = {
   [SEASON_OF_THE_WITCH_HUB.slug]: SEASON_OF_THE_WITCH_HUB,
   [SEASON_OF_THE_WISH_HUB.slug]: SEASON_OF_THE_WISH_HUB,
   [INTO_THE_LIGHT_HUB.slug]: INTO_THE_LIGHT_HUB,
+  [EPISODE_ECHOES_HUB.slug]: EPISODE_ECHOES_HUB,
+  [EPISODE_REVENANT_HUB.slug]: EPISODE_REVENANT_HUB,
+  [EPISODE_HERESY_HUB.slug]: EPISODE_HERESY_HUB,
 };
 
 export const PUBLISHED_SEASON_SLUGS = new Set(

@@ -30,7 +30,7 @@ const SOURCELESS_EVERVERSE_TYPES = new Set(["Emote", "Ghost Projection"]);
 const GUARDIAN_CLASS_ORDER = ["Hunter", "Titan", "Warlock"] as const;
 
 /** Ornament sets sold as three per-class names under one shared theme. */
-const COMBINED_ORNAMENT_SET_NAMES: { names: string[]; displayName: string }[] = [
+const COMBINED_ORNAMENT_SET_NAMES: { names: string[]; displayName: string; previewFile?: string }[] = [
   { names: ["Dynamo Current", "Thunderous Impact", "Arclight"], displayName: "Arc 3.0" },
   { names: ["Misthios", "Wolf-Kissed", "Eagle's"], displayName: "Assassin's Creed" },
   { names: ["Sun's Apex", "Radiant Breaker", "Dawn Singer"], displayName: "Solar 3.0" },
@@ -41,16 +41,40 @@ const COMBINED_ORNAMENT_SET_NAMES: { names: string[]; displayName: string }[] = 
   { names: ["White Wolf", "Kaer Morhen", "Hexer"], displayName: "The Witcher x Destiny 2" },
   { names: ["Vakarian", "N7", "Shadow Broker"], displayName: "Mass Effect x Destiny 2" },
   { names: ["Warrior's Memorial", "Fenrir's Bane", "Skaldic Chant"], displayName: "Gjallarheart" },
+  { names: ["Spectral Displacer", "Apex Draconic", "Flayer's Dominion"], displayName: "Destiny 2 x Dungeons & Dragons" },
+  {
+    names: ["Doki Doki Destiny Hunter", "Doki Doki Destiny Titan", "Doki Doki Destiny Warlock"],
+    displayName: "Doki Doki Destiny",
+    previewFile: "doki-doki-destiny.webp",
+  },
+  {
+    names: ["Verglas Stalker", "Cracked Iceberg", "Cryosphere"],
+    displayName: "Stasis Armor",
+    previewFile: "stasis-armor.webp",
+  },
+  {
+    names: ["Uncanny Conjurer", "Cryptic Magus", "Eerie Thaumaturge"],
+    displayName: "Wizard Set",
+    previewFile: "wizard-set.webp",
+  },
+  {
+    names: ["Covert Ranger", "Shock Enforcer", "Royal Protector"],
+    displayName: "Destiny 2 x Star Wars",
+    previewFile: "destiny-2-x-star-wars.webp",
+  },
 ];
 
-function ornamentDisplayName(setName: string): string {
+function findCombinedOrnamentSet(setName: string) {
   const parts = setName.split(" / ").map((part) => part.trim().toLowerCase());
-  const match = COMBINED_ORNAMENT_SET_NAMES.find(
+  return COMBINED_ORNAMENT_SET_NAMES.find(
     (entry) =>
       entry.names.length === parts.length &&
       entry.names.every((name) => parts.includes(name.toLowerCase())),
   );
-  return `${match?.displayName ?? setName} ornaments`;
+}
+
+function ornamentDisplayName(setName: string): string {
+  return `${findCombinedOrnamentSet(setName)?.displayName ?? setName} ornaments`;
 }
 
 /** Pieces named "<Slot> of the <Set>" ("Vest of the Anointed"). */
@@ -184,7 +208,8 @@ function buildOrnamentSetGroups(
       setName,
       displayName: ornamentDisplayName(setName),
       kind: "ornament",
-      previewFile: resolveArmorSetPreviewFile(setName),
+      previewFile:
+        findCombinedOrnamentSet(setName)?.previewFile ?? resolveArmorSetPreviewFile(setName),
       rows,
     });
   }
@@ -333,10 +358,12 @@ function buildEververseLoot(
     bucket.push(item);
     legendarySets.set(setName, bucket);
   }
-  // A lone piece (e.g. "Cloak of Bakris") is a standalone ornament, not a set.
+  // A lone piece (e.g. "Cloak of Bakris") or the same piece for each class
+  // (e.g. "The Rat King's Crown" helmets) is a standalone ornament, not a set.
   const standaloneOrnaments: AllLootItem[] = [];
   for (const [setName, setItems] of legendarySets) {
-    if (setItems.length > 1) continue;
+    const samePiece = new Set(setItems.map((item) => item.name)).size === 1;
+    if (setItems.length > 1 && !samePiece) continue;
     standaloneOrnaments.push(...setItems);
     legendarySets.delete(setName);
   }
@@ -385,41 +412,90 @@ function buildEververseLoot(
   };
 }
 
+export type CatalogEververseOrnamentSet = LegacyArmorSetGroup & {
+  /** Event the set was sold for (Solstice, The Dawning…), from the catalog. */
+  eventLabel?: string;
+};
+
 /**
- * Every Eververse legendary armor ornament set in the catalog, one group per
- * named set, tagged with its season (Armor sets page).
+ * Every Eververse legendary armor ornament set in the catalog, tagged with its
+ * season and event (Armor sets page). Grouped like season pages: lone pieces
+ * are skipped, and one single-class set per class in the same season and event
+ * becomes one combined set. `excludedItemHashes`: pieces already shown from a
+ * season page.
  */
 export function resolveAllEververseOrnamentSets(
   catalogItems: AllLootItem[],
-): LegacyArmorSetGroup[] {
+  excludedItemHashes: ReadonlySet<string> = new Set(),
+): CatalogEververseOrnamentSet[] {
   const isClassItem = (item: AllLootItem) =>
     GUARDIAN_CLASS_ORDER.some((label) => label === item.classOrWeaponType);
-  const bySet = new Map<string, AllLootItem[]>();
+  // season::event → set name → pieces
+  const buckets = new Map<string, Map<string, AllLootItem[]>>();
   const seen = new Set<string>();
   for (const item of catalogItems) {
     if (item.type !== "Ornament" || !isClassItem(item) || !item.slot) continue;
     if (item.rarity !== "Legendary" || !isEververseCosmetic(item)) continue;
-    if (seen.has(item.itemHash)) continue;
+    if (seen.has(item.itemHash) || excludedItemHashes.has(item.itemHash)) continue;
     seen.add(item.itemHash);
-    const key = `${item.seasonLabel}::${ornamentSetName(item.name)}`;
-    bySet.set(key, [...(bySet.get(key) ?? []), item]);
+    const bucketKey = `${item.seasonLabel ?? ""}::${item.eventLabel ?? ""}`;
+    const sets = buckets.get(bucketKey) ?? new Map<string, AllLootItem[]>();
+    const setName = ornamentSetName(item.name);
+    sets.set(setName, [...(sets.get(setName) ?? []), item]);
+    buckets.set(bucketKey, sets);
   }
 
-  const groups: LegacyArmorSetGroup[] = [];
-  for (const [key, setItems] of bySet) {
-    if (setItems.length < 2) continue; // a lone piece isn't a set
-    const setName = key.split("::")[1];
-    const rows = enrichOrnamentRows(setItems, setName);
-    if (rows.length === 0) continue;
-    groups.push({
-      setName,
-      displayName: ornamentDisplayName(setName),
-      kind: "ornament",
-      previewFile: resolveArmorSetPreviewFile(setName),
-      seasonLabel: setItems[0].seasonLabel,
-      seasonNumber: setItems[0].seasonNumber ?? undefined,
-      rows,
-    });
+  const groups: CatalogEververseOrnamentSet[] = [];
+  for (const sets of buckets.values()) {
+    // A lone piece or the same piece for each class isn't a set.
+    const entries = [...sets.entries()].filter(
+      ([, setItems]) => setItems.length > 1 && new Set(setItems.map((item) => item.name)).size > 1,
+    );
+    const first = entries[0]?.[1][0];
+    if (!first) continue;
+    const tags = {
+      seasonLabel: first.seasonLabel ?? undefined,
+      seasonNumber: first.seasonNumber ?? undefined,
+      eventLabel: first.eventLabel ?? undefined,
+    };
+
+    const singleClass = entries.filter(([, setItems]) => classOfSet(setItems));
+    const classes = singleClass.map(([, setItems]) => classOfSet(setItems));
+    const isOnePerClass =
+      singleClass.length === GUARDIAN_CLASS_ORDER.length &&
+      GUARDIAN_CLASS_ORDER.every((label) => classes.filter((value) => value === label).length === 1);
+    const merged = new Set<string>();
+    if (isOnePerClass) {
+      const ordered = GUARDIAN_CLASS_ORDER.map((label) => singleClass[classes.indexOf(label)]);
+      const setName = ordered.map(([name]) => name).join(" / ");
+      const rows = enrichOrnamentRows(ordered.flatMap(([, setItems]) => setItems), setName);
+      if (rows.length) {
+        for (const [name] of ordered) merged.add(name);
+        groups.push({
+          setName,
+          displayName: ornamentDisplayName(setName),
+          kind: "ornament",
+          previewFile:
+            findCombinedOrnamentSet(setName)?.previewFile ?? resolveArmorSetPreviewFile(setName),
+          ...tags,
+          rows,
+        });
+      }
+    }
+
+    for (const [setName, setItems] of entries) {
+      if (merged.has(setName)) continue;
+      const rows = enrichOrnamentRows(setItems, setName);
+      if (rows.length === 0) continue;
+      groups.push({
+        setName,
+        displayName: ornamentDisplayName(setName),
+        kind: "ornament",
+        previewFile: resolveArmorSetPreviewFile(setName),
+        ...tags,
+        rows,
+      });
+    }
   }
   return groups;
 }

@@ -13,7 +13,9 @@ export type XurCollection = Record<string, XurCollectionEntry>;
 /** Links and ownership data for this weekend's stock (catalysts link to their weapon). */
 export async function loadXurCollection(xur: XurData): Promise<XurCollection> {
   const { weapons, armor } = await loadExoticsPageData("/");
-  const weaponByName = new Map(weapons.map((weapon) => [weapon.name, weapon]));
+  // Catalysts can drop the weapon's leading "The" ("Huckleberry Catalyst" → The Huckleberry).
+  const weaponKey = (name: string) => name.replace(/^the\s+/i, "").toLowerCase();
+  const weaponByName = new Map(weapons.map((weapon) => [weaponKey(weapon.name), weapon]));
   const armorByName = new Map(armor.map((piece) => [piece.name, piece]));
   const collection: XurCollection = {};
 
@@ -22,7 +24,7 @@ export async function loadXurCollection(xur: XurData): Promise<XurCollection> {
     if (entry) collection[piece.name] = { href: entry.href, ownershipHashes: entry.ownershipHashes };
   }
   for (const item of [...(xur.gear?.weapons ?? []), ...(xur.gear?.catalysts ?? [])]) {
-    const weapon = weaponByName.get(item.name);
+    const weapon = weaponByName.get(weaponKey(item.name));
     if (!weapon) continue;
     collection[item.name] = {
       href: weapon.href,

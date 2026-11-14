@@ -75,9 +75,9 @@ export const SEASONS_BY_EXPANSION_SLUG: Readonly<
     publishedSeason("into-the-light", "Into the Light"),
   ],
   "the-final-shape": [
-    season("s24-episode-echoes", "Episode: Echoes"),
-    season("s25-episode-revenant", "Episode: Revenant"),
-    season("s26-episode-heresy", "Episode: Heresy"),
+    publishedSeason("s24-episode-echoes", "Episode: Echoes"),
+    publishedSeason("s25-episode-revenant", "Episode: Revenant"),
+    publishedSeason("s26-episode-heresy", "Episode: Heresy"),
   ],
 };
 

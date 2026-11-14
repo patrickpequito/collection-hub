@@ -6,6 +6,7 @@ import {
   toLootItemFromCatalog,
 } from "@/lib/activities/loot-item";
 import { LEGACY_TRIALS_CROSS_CLASS_SETS } from "@/data/activities/trials-of-osiris";
+import { RAD_LOOT_ACTIVITY_PAGES } from "@/data/rad-loot/activity-pages";
 import type { SeasonHub } from "@/data/seasons/types";
 import { SEASON_WORLD_LOOT_POOL } from "@/data/seasons/types";
 import { collectAllLootItemHashes } from "@/lib/all-loot/item-hashes";
@@ -204,11 +205,24 @@ function collectSeasonArmorOrOrnamentItems(
     );
   }
 
-  return catalogItems.filter(
+  const matching = catalogItems.filter(
     (item) =>
       item.type === itemType &&
       item.rarity === "Legendary" &&
       itemNameBelongsToArmorSet(item.name, setName),
+  );
+  if (matching.length || itemType !== "Armor") return matching;
+
+  // Sets whose pieces don't share a name pattern (e.g. Sundered Doctrine's "Flain"):
+  // take the exact pieces from the raid / dungeon page that lists the set.
+  const pieceNames = new Set(
+    Object.values(RAD_LOOT_ACTIVITY_PAGES)
+      .flatMap((page) => page.armorSets ?? [])
+      .filter((set) => set.setName === setName)
+      .flatMap((set) => Object.values(set.pieces).map((piece) => piece?.name)),
+  );
+  return catalogItems.filter(
+    (item) => item.type === "Armor" && item.rarity === "Legendary" && pieceNames.has(item.name),
   );
 }
 
@@ -269,6 +283,27 @@ function collectProgressFromGroups(
       }
     }
   }
+}
+
+const CLASS_ORDER = ["Hunter", "Titan", "Warlock"];
+
+/**
+ * One catalog item per name, except helmet-style ornaments that share one name
+ * across the three classes (e.g. "Navigator's Crown"): all three, Hunter first.
+ */
+function cosmeticsByName(catalogItems: AllLootItem[], name: string): AllLootItem[] {
+  const matches = catalogItems.filter((item) => item.name === name);
+  const classes = matches.map((item) => CLASS_ORDER.indexOf(item.classOrWeaponType ?? ""));
+  const isPerClass =
+    matches.length > 1 &&
+    matches.every((item) => item.type === "Ornament") &&
+    classes.every((index) => index !== -1) &&
+    new Set(classes).size === matches.length;
+  if (!isPerClass) return matches.slice(0, 1);
+  return [...matches].sort(
+    (a, b) =>
+      CLASS_ORDER.indexOf(a.classOrWeaponType ?? "") - CLASS_ORDER.indexOf(b.classOrWeaponType ?? ""),
+  );
 }
 
 export async function resolveSeasonLoot(hub: SeasonHub): Promise<SeasonLoot> {
@@ -341,8 +376,7 @@ export async function resolveSeasonLoot(hub: SeasonHub): Promise<SeasonLoot> {
   }
 
   const cosmeticItems = (hub.cosmeticRewards ?? [])
-    .map((name) => catalogItems.find((item) => item.name === name))
-    .filter((item): item is AllLootItem => Boolean(item))
+    .flatMap((name) => cosmeticsByName(catalogItems, name))
     .map((item) => toLootItemFromCatalog(item));
 
   const seasonalRewardItems = (hub.seasonalRewards ?? [])

@@ -19,7 +19,10 @@ import {
 } from "@/lib/armor-sets/preview-images";
 import { loadArmorSetBonusCatalog, resolveArmorSetBonuses } from "@/lib/armor/set-bonuses";
 import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
-import { resolveAllEververseOrnamentSets } from "@/lib/eververse/resolve-eververse";
+import {
+  resolveAllEververseOrnamentSets,
+  resolveSeasonEververse,
+} from "@/lib/eververse/resolve-eververse";
 import { resolveExpansionLoot } from "@/lib/expansions/resolve-expansion-loot";
 import { resolveSeasonLoot } from "@/lib/seasons/resolve-season-loot";
 import type { LegacyArmorSetGroup, ResolvedActivityHubLoot } from "@/types/activity-hub";
@@ -110,6 +113,9 @@ export const EVENT_SUBGROUPS = [
   "Crimson Days",
   "Guardian Games",
 ] as const;
+
+/** Event sets (armor and Eververse) stay hidden until the event pages exist. */
+const SHOW_EVENT_SETS = false;
 
 /** Earlier origins win when the same set shows up in several places. */
 const GROUP_PRIORITY: ArmorSetOriginGroup[] = [
@@ -383,6 +389,7 @@ export async function loadArmorSetCollection(): Promise<ArmorSetCollection> {
       classes[guardianClass as ArmorSetClass] = mapped;
     }
     if (event) {
+      if (!SHOW_EVENT_SETS) continue;
       add({
         name: set.name,
         kind: "armor",
@@ -406,13 +413,37 @@ export async function loadArmorSetCollection(): Promise<ArmorSetCollection> {
     }
   }
 
-  // Eververse ornament sets, by season.
-  for (const group of resolveAllEververseOrnamentSets(allLoot.items)) {
+  // Eververse ornament sets: exactly as season pages show them (names, merged
+  // sets, preview images); the rest straight from the catalog, by season or event.
+  const seasonEververseHashes = new Set<string>();
+  for (const slug of getSeasonSlugs()) {
+    const hub = PUBLISHED_SEASON_SLUGS.has(slug) ? getSeasonHub(slug) : undefined;
+    if (!hub) continue;
+    for (const group of resolveSeasonEververse(allLoot.items, hub)?.ornamentSets ?? []) {
+      for (const row of group.rows) {
+        for (const piece of Object.values(row.pieces)) {
+          for (const hash of [piece?.itemHash, ...(piece?.ownershipHashes ?? [])]) {
+            if (hash) seasonEververseHashes.add(hash);
+          }
+        }
+      }
+      add({
+        name: group.displayName?.replace(/\s+ornaments$/, "") ?? group.setName,
+        kind: "eververse",
+        group: "eververse",
+        originLabel: `${hub.seasonLabel} · Eververse`,
+        previewUrl: previewIfExists(group.previewFile),
+        classes: classesFromRows(group.rows),
+      });
+    }
+  }
+  for (const group of resolveAllEververseOrnamentSets(allLoot.items, seasonEververseHashes)) {
+    if (group.eventLabel && !SHOW_EVENT_SETS) continue;
     add({
       name: group.displayName?.replace(/\s+ornaments$/, "") ?? group.setName,
       kind: "eververse",
       group: "eververse",
-      originLabel: group.seasonLabel ? `${group.seasonLabel} · Eververse` : "Eververse",
+      originLabel: `${group.eventLabel ?? group.seasonLabel ?? ""} · Eververse`.replace(/^ · /, ""),
       previewUrl: previewIfExists(group.previewFile),
       classes: classesFromRows(group.rows),
     });
@@ -478,41 +509,15 @@ export async function loadArmorSetCollection(): Promise<ArmorSetCollection> {
       .filter((item): item is NonNullable<typeof item> => Boolean(item));
   const catalogItemsOf = (entry: ArmorSetEntry) => catalogItemsFor(piecesOfEntry(entry));
 
-  // Eververse: merge one-set-per-class seasons into one entry, like season pages.
-  const eververseBySeason = new Map<string, ArmorSetEntry[]>();
+  // Eververse sets left with a single class (no matching sets for the other classes).
   for (const [key, entry] of byKey) {
     if (entry.kind !== "eververse" || Object.keys(entry.classes).length !== 1) continue;
     byKey.delete(key);
-    const season = entry.originLabel;
-    eververseBySeason.set(season, [...(eververseBySeason.get(season) ?? []), entry]);
-  }
-  for (const [season, entries] of eververseBySeason) {
-    const byClass = new Map<string, ArmorSetEntry[]>();
-    for (const entry of entries) {
-      const cls = Object.keys(entry.classes)[0];
-      byClass.set(cls, [...(byClass.get(cls) ?? []), entry]);
-    }
-    const onePerClass =
-      byClass.size === 3 && [...byClass.values()].every((list) => list.length === 1);
-    if (onePerClass) {
-      const ordered = (["hunter", "titan", "warlock"] as const).map((cls) => byClass.get(cls)![0]);
-      const merged: ArmorSetEntry = {
-        ...ordered[0],
-        id: `eververse-${normalize(season)}-merged`,
-        name: ordered.map((entry) => entry.name).join(" / "),
-        previewUrl: ordered.map((entry) => entry.previewUrl).find(Boolean),
-        classes: Object.assign({}, ...ordered.map((entry) => entry.classes)),
-      };
-      byKey.set(`ornament::${merged.id}`, merged);
-    } else {
-      for (const entry of entries) {
-        review.push({
-          name: entry.name,
-          reason: "Single class",
-          detail: `${season}: only ${Object.keys(entry.classes)[0]}. Which sets are its other classes?`,
-        });
-      }
-    }
+    review.push({
+      name: entry.name,
+      reason: "Single class",
+      detail: `${entry.originLabel}: only ${Object.keys(entry.classes)[0]}. Which sets are its other classes?`,
+    });
   }
 
   // Armor 3.0 bonuses + original release season.

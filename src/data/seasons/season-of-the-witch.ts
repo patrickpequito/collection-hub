@@ -6,6 +6,23 @@ import {
 const pool = (id: string) =>
   DEFAULT_SEASON_WEAPON_POOLS.find((entry) => entry.id === id)!;
 
+// Crota's End, reprised this season.
+const CROTAS_END_WEAPONS = [
+  "Abyss Defiant",
+  "Abyss Defiant (Adept)",
+  "Eidolon Ally",
+  "Fang of Ir Yût",
+  "Fang of Ir Yût (Adept)",
+  "Oversoul Edict",
+  "Oversoul Edict (Adept)",
+  "Song of Ir Yût",
+  "Song of Ir Yût (Adept)",
+  "Swordbreaker",
+  "Swordbreaker (Adept)",
+  "Word of Crota",
+  "Word of Crota (Adept)",
+];
+
 export const SEASON_OF_THE_WITCH_HUB: SeasonHub = {
   slug: "s22-season-of-the-witch",
   title: "Season of the Witch",
@@ -31,8 +48,7 @@ export const SEASON_OF_THE_WITCH_HUB: SeasonHub = {
   armorSetNames: ["Veiled Tithes", "Season of the Witch Set"],
   ornamentSets: [{ setName: "Hexwrought", armorSetName: "Veiled Tithes" }],
   // Most S22 weapons were reissued later (Monument, Echoes) and the catalog
-  // also tags Solstice reprisals and Crota's End (a reprised raid, left out)
-  // with S22 — list the season's weapons explicitly.
+  // also tags Solstice reprisals with S22 — list the season's weapons explicitly.
   matchWeaponVersions: false,
   extraWeaponNames: [
     // Altars of Summoning, Savathûn's Spire and the Imbaru Engine.
@@ -67,9 +83,9 @@ export const SEASON_OF_THE_WITCH_HUB: SeasonHub = {
     "Nox Perennial V",
     "Psi Hermetic V",
     "Unending Tempest",
+    // Crota's End (reprised raid) with its Adept versions.
+    ...CROTAS_END_WEAPONS,
   ],
-  // Crota's End weapon whose primary version carries the S22 watermark.
-  excludedWeaponNames: ["Eidolon Ally"],
   exoticItemNames: [
     "Ex Diris",
     // The Final Shape pre-order bonus, released with the S22 watermark.
@@ -83,6 +99,11 @@ export const SEASON_OF_THE_WITCH_HUB: SeasonHub = {
       id: "witch-activities",
       title: "Altars & Savathûn's Spire",
       sourcePattern: /season of the witch/i,
+    },
+    {
+      id: "crotas-end",
+      title: "Crota's End",
+      sourcePattern: /(?!)/,
     },
     // Crucible and Gambit side by side in the two-column grid.
     ...["vanguard-ops", "crucible", "gambit", "trials-of-osiris", "iron-banner", "season-pass"].map(pool),
@@ -116,9 +137,9 @@ export const SEASON_OF_THE_WITCH_HUB: SeasonHub = {
     "Nox Perennial V": "world-loot",
     "Psi Hermetic V": "world-loot",
     "Unending Tempest": "crucible",
+    ...Object.fromEntries(CROTAS_END_WEAPONS.map((name) => [name, "crotas-end"])),
   },
   // Altars of Summoning and Savathûn's Spire are no longer launchable.
-  // Crota's End launched this season but is a reprised raid, not season content.
   playableActivities: [],
   exoticPanelDescription:
     "Exotic gear from Season of the Witch — Ex Diris from the Season Pass, Tessellation from The Final Shape pre-order, and the season's new exotic armor.",

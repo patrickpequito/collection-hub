@@ -36,6 +36,8 @@ export type SeasonHub = {
   seasonLabel: string;
   parentExpansionSlug: string;
   seasonNumber: number;
+  /** Episode number (The Final Shape year): page copy says "Episode", not "Season". */
+  episodeNumber?: number;
   /** Free update page (Into the Light): page copy says "Update", not "Season". */
   isUpdate?: boolean;
   videos: readonly SeasonVideo[];
@@ -96,6 +98,12 @@ export type SeasonHub = {
   exoticPanelDescription: string;
   available: boolean;
 };
+
+/** What the page calls this content: "Season", "Episode" or "Update". */
+export function seasonTerm(hub: Pick<SeasonHub, "isUpdate" | "episodeNumber">): "Season" | "Episode" | "Update" {
+  if (hub.isUpdate) return "Update";
+  return hub.episodeNumber ? "Episode" : "Season";
+}
 
 /** Shared playlist buckets for season weapon grouping. */
 export const DEFAULT_SEASON_WEAPON_POOLS: readonly SeasonWeaponPoolDefinition[] =

@@ -14,6 +14,7 @@ import { SeasonTrailerSection } from "@/components/seasons/season-trailer-sectio
 import { YouTubeEmbed } from "@/components/seasons/youtube-embed";
 import { SectionJumpNav, SectionHeading } from "@/components/detail-page-parts";
 import { loadAvailableActivityHashes } from "@/lib/seasons/available-activities";
+import { seasonTerm } from "@/data/seasons/types";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import {
   getSeasonHub,
@@ -36,10 +37,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!hub || !PUBLISHED_SEASON_SLUGS.has(hub.slug)) return NOT_FOUND_METADATA;
   return pageMetadata(
     `/seasons/${slug}`,
-    `${hub.title} · Destiny 2 ${hub.isUpdate ? "update" : "season"} loot`,
+    `${hub.title} · Destiny 2 ${seasonTerm(hub).toLowerCase()} loot`,
     hub.isUpdate
       ? `Everything from Destiny 2's ${hub.title} update: weapons, armor, exotics, cosmetics and activities.`
-      : `Everything from Destiny 2's ${hub.title}: season pass, weapons, armor, exotics, activities and Eververse.`,
+      : `Everything from Destiny 2's ${hub.title}: ${seasonTerm(hub).toLowerCase()} pass, weapons, armor, exotics, activities and Eververse.`,
   );
 }
 
@@ -70,15 +71,18 @@ export default async function SeasonHubPage({ params }: SeasonPageProps) {
   const itemHrefs = pickReferenced(allItemHrefs, [loot]);
 
   const trailerVideo = hub.videos.find((video) => video.id === "trailer");
-  const cutsceneVideo = hub.videos.find(
-    (video) => video.id === "cutscene-archive",
-  );
+  // One "cutscene-archive" video, or several ("cutscene-archive-1"…) for episodes.
+  const cutsceneVideos = hub.videos.filter((video) => video.id.startsWith("cutscene-archive"));
   const { previous, next } = getSeasonNavAdjacent(hub.slug);
   const parentExpansion = getExpansionHub(hub.parentExpansionSlug);
   const timeline = findTimelineEntry(hub.slug);
   const parentTimeline = parentExpansion ? findTimelineEntry(parentExpansion.slug) : null;
   const eyebrow = [
-    hub.isUpdate ? "Update" : `Season ${hub.seasonNumber}`,
+    hub.isUpdate
+      ? "Update"
+      : hub.episodeNumber
+        ? `Episode ${hub.episodeNumber}`
+        : `Season ${hub.seasonNumber}`,
     timeline?.year.label,
     parentExpansion?.title,
   ]
@@ -138,6 +142,7 @@ export default async function SeasonHubPage({ params }: SeasonPageProps) {
             exoticOwnershipGroups={ownershipGroups(loot.exoticItems)}
             cosmeticOwnershipGroups={ownershipGroups(loot.cosmeticItems)}
             isUpdate={hub.isUpdate}
+            term={seasonTerm(hub)}
           />
 
           <SectionJumpNav links={sectionLinks} />
@@ -204,6 +209,7 @@ export default async function SeasonHubPage({ params }: SeasonPageProps) {
               activities={hub.playableActivities}
               activeIds={activeActivityIds}
               isUpdate={hub.isUpdate}
+              term={seasonTerm(hub)}
             />
           </div>
 
@@ -213,15 +219,23 @@ export default async function SeasonHubPage({ params }: SeasonPageProps) {
             </div>
           ) : null}
 
-          {cutsceneVideo ? (
+          {cutsceneVideos.length ? (
             <section className="min-w-0 space-y-3">
               <SectionHeading title="Cutscene archive" />
-              <div className="max-w-xl">
-                <YouTubeEmbed
-                  youtubeId={cutsceneVideo.youtubeId}
-                  title={cutsceneVideo.label}
-                />
-              </div>
+              {cutsceneVideos.length === 1 ? (
+                <div className="max-w-xl">
+                  <YouTubeEmbed youtubeId={cutsceneVideos[0].youtubeId} title={cutsceneVideos[0].label} />
+                </div>
+              ) : (
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {cutsceneVideos.map((video) => (
+                    <div key={video.id} className="min-w-0 space-y-1.5">
+                      <YouTubeEmbed youtubeId={video.youtubeId} title={video.label} />
+                      <p className="ui-label text-xs!">{video.label}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </section>
           ) : null}
         </div>

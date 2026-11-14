@@ -10,6 +10,8 @@ type SeasonPlayableActivitiesProps = {
   activities: readonly SeasonPlayableActivity[];
   /** Free update page: copy says "Update content". */
   isUpdate?: boolean;
+  /** "Season", "Episode" or "Update". */
+  term?: string;
   /** Rotating activities that are this week's pick. */
   activeIds?: readonly string[];
 };
@@ -73,6 +75,7 @@ function ActivityBannerCard({ activity, active = false }: { activity: SeasonPlay
 export function SeasonPlayableActivities({
   activities,
   isUpdate = false,
+  term = isUpdate ? "Update" : "Season",
   activeIds = [],
 }: SeasonPlayableActivitiesProps) {
   if (activities.length === 0) return null;
@@ -82,7 +85,7 @@ export function SeasonPlayableActivities({
       <div>
         <SectionHeading title="Playable activities" />
         <p className="text-sm text-zinc-400">
-          {isUpdate ? "Update" : "Season"} content that is still available in the Director today.
+          {term} content that is still available in the Director today.
         </p>
       </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">

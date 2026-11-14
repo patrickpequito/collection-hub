@@ -2,6 +2,8 @@ import type { LootItem } from "@/types/activity-loot";
 import type { AllLootItem, AllLootItemVersion } from "@/types/all-loot";
 import { collectAllLootItemHashes } from "@/lib/all-loot/item-hashes";
 
+const GUARDIAN_CLASSES = new Set(["Titan", "Hunter", "Warlock"]);
+
 export function weaponMetaFromCatalogItem(
   item: AllLootItem,
 ): Pick<LootItem, "classOrWeaponType" | "damageType" | "ammoType"> {
@@ -14,6 +16,12 @@ export function weaponMetaFromCatalogItem(
   }
 
   if (item.type === "Armor") {
+    return { classOrWeaponType: item.classOrWeaponType };
+  }
+
+  // Armor ornaments keep their class so tooltips read "Titan armor" like set
+  // pieces; weapon ornaments stay plain "Ornament".
+  if (item.type === "Ornament" && GUARDIAN_CLASSES.has(item.classOrWeaponType ?? "")) {
     return { classOrWeaponType: item.classOrWeaponType };
   }
 
