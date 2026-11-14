@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import type { Metadata } from "next";
 import { NOT_FOUND_METADATA, pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
@@ -5,6 +7,7 @@ import { ActivityTitleDetailPanel } from "@/components/activity-title-detail-pan
 import { TriumphsListSection } from "@/components/triumphs-list-section";
 import { ClientOwnership } from "@/components/client-ownership";
 import {
+  OwnedLootBox,
   OwnedActivityArmorSection,
   OwnedLootSection,
 } from "@/components/owned-activity-loot";
@@ -35,6 +38,8 @@ import {
 } from "@/lib/destiny-activity-stats";
 import { isBungieOAuthConfigured } from "@/lib/env";
 import { activityHeaderUrl } from "@/lib/page-headers";
+import { activityArmorSetPreviewUrl } from "@/lib/activity-armor-set-image";
+import { epicArmorPreviewFile, isEpicRaidItem, isEpicRaidRow } from "@/lib/activities/epic-raid";
 import { buildCollectibleHrefByItemHash } from "@/lib/collectible-hrefs";
 import { enrichWeaponLootItems } from "@/lib/activities/loot-item";
 import { loadCatalogHashIndex } from "@/lib/all-loot/catalog-hash-index";
@@ -186,13 +191,20 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
         ]),
     ).values(),
   ];
-  const weapons = enrichWeaponLootItems(activity.weapons, catalogByHash);
+  // Epic Raid loot (The Desert Perpetual) is listed in its own section.
+  const isEpic = isEpicRaidItem;
+  const isEpicRow = isEpicRaidRow;
+  const allWeapons = enrichWeaponLootItems(activity.weapons, catalogByHash);
+  const weapons = allWeapons.filter((item) => !isEpic(item));
+  const epicWeapons = allWeapons.filter(isEpic);
   const timelostWeapons = enrichWeaponLootItems(
     activity.timelostWeapons,
     catalogByHash,
   );
-  const cosmetics = enrichWeaponLootItems(activity.other, catalogByHash);
-  const armorSets = activity.armorSets.map((row) => ({
+  const allCosmetics = enrichWeaponLootItems(activity.other, catalogByHash);
+  const cosmetics = allCosmetics.filter((item) => !isEpic(item));
+  const epicCosmetics = allCosmetics.filter(isEpic);
+  const allArmorSets = activity.armorSets.map((row) => ({
     ...row,
     pieces: Object.fromEntries(
       Object.entries(row.pieces).map(([slot, piece]) => [
@@ -201,6 +213,16 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
       ]),
     ) as typeof row.pieces,
   }));
+  // Epic sets follow the normal ones; their image is {slug}-epic.webp once it exists
+  // (never the normal raid's).
+  const armorSets = [...allArmorSets.filter((row) => !isEpicRow(row)), ...allArmorSets.filter(isEpicRow)];
+  const epicPreview = epicArmorPreviewFile(activity);
+  const armorPreviewFiles = allArmorSets.some(isEpicRow)
+    ? [
+        ...(activity.armorSetPreviewFiles ?? [`${slug}.webp`]),
+        ...(existsSync(path.join(process.cwd(), "public", activityArmorSetPreviewUrl(epicPreview))) ? [epicPreview] : []),
+      ]
+    : activity.armorSetPreviewFiles;
   const panelName = title?.name ?? activity.triumphPanel?.name ?? "";
   const panelDescription =
     title?.description ?? activity.triumphPanel?.description ?? "";
@@ -217,7 +239,7 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
   const sectionLinks = [
     { id: "weapons", label: "Weapons" },
     { id: "armor", label: "Armor" },
-    ...(activity.other.length > 0 ? [{ id: "cosmetics", label: "Cosmetics" }] : []),
+    ...(cosmetics.length + epicCosmetics.length > 0 ? [{ id: "cosmetics", label: "Cosmetics" }] : []),
     ...(hasTriumphSection ? [{ id: "triumphs", label: "Triumphs" }] : []),
   ];
 
@@ -251,12 +273,21 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
             <SectionJumpNav links={sectionLinks} />
 
             <div id="weapons" className="scroll-mt-20 space-y-4">
-              <OwnedLootSection
-                title="Weapons"
-                items={weapons}
-                exoticItemHashes={exoticItemHashes}
-                itemHrefs={itemHrefs}
-              />
+              {epicWeapons.length > 0 ? (
+                // Raid + Epic Raid: one Weapons heading, one box each.
+                <section className="space-y-4">
+                  <SectionHeading title="Weapons" />
+                  <OwnedLootBox title="Raid Weapons" items={weapons} exoticItemHashes={exoticItemHashes} itemHrefs={itemHrefs} />
+                  <OwnedLootBox title="Epic Raid Weapons" items={epicWeapons} exoticItemHashes={exoticItemHashes} itemHrefs={itemHrefs} />
+                </section>
+              ) : (
+                <OwnedLootSection
+                  title="Weapons"
+                  items={weapons}
+                  exoticItemHashes={exoticItemHashes}
+                  itemHrefs={itemHrefs}
+                />
+              )}
               {activity.timelostWeapons.length > 0 ? (
                 <OwnedLootSection
                   title={activity.timelostWeaponsTitle ?? "Timelost Weapons"}
@@ -272,19 +303,29 @@ export default async function ActivityLootPage({ params }: ActivityPageProps) {
                 activitySlug={slug}
                 activityTitle={activity.title}
                 rows={armorSets}
-                previewFiles={activity.armorSetPreviewFiles}
+                previewFiles={armorPreviewFiles}
                 itemHrefs={itemHrefs}
               />
             </div>
 
-            {activity.other.length > 0 ? (
+            {cosmetics.length + epicCosmetics.length > 0 ? (
               <div id="cosmetics" className="scroll-mt-20">
-                <OwnedLootSection
-                  title="Cosmetics"
-                  items={cosmetics}
-                  exoticItemHashes={exoticItemHashes}
-                  itemHrefs={itemHrefs}
-                />
+                {epicCosmetics.length > 0 ? (
+                  <section className="space-y-4">
+                    <SectionHeading title="Cosmetics" />
+                    {cosmetics.length > 0 ? (
+                      <OwnedLootBox title="Raid Cosmetics" items={cosmetics} exoticItemHashes={exoticItemHashes} itemHrefs={itemHrefs} />
+                    ) : null}
+                    <OwnedLootBox title="Epic Raid Cosmetics" items={epicCosmetics} exoticItemHashes={exoticItemHashes} itemHrefs={itemHrefs} />
+                  </section>
+                ) : (
+                  <OwnedLootSection
+                    title="Cosmetics"
+                    items={cosmetics}
+                    exoticItemHashes={exoticItemHashes}
+                    itemHrefs={itemHrefs}
+                  />
+                )}
               </div>
             ) : null}
 

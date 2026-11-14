@@ -1,4 +1,5 @@
 import { RAD_LOOT_ACTIVITY_PAGES } from "@/data/rad-loot/activity-pages";
+import { epicArmorPreviewFile, isEpicRaidRow } from "@/lib/activities/epic-raid";
 
 export const ARMOR_SET_PREVIEW_DIR = "/images/armor-set-previews";
 
@@ -39,7 +40,11 @@ function buildRadSetPreviewMap(): ReadonlyMap<string, string> {
   for (const page of Object.values(RAD_LOOT_ACTIVITY_PAGES)) {
     const previewFiles =
       page.armorSetPreviewFiles ?? [defaultActivityPreviewFile(page.slug)];
-    const setNames = uniqueSetNamesInOrder(page.armorSets);
+    const setNames = uniqueSetNamesInOrder(page.armorSets.filter((row) => !isEpicRaidRow(row)));
+    // Epic Raid sets get their own image, never the normal raid's.
+    for (const name of uniqueSetNamesInOrder(page.armorSets.filter(isEpicRaidRow))) {
+      map.set(name, epicArmorPreviewFile(page));
+    }
 
     if (
       previewFiles.length > 1 &&

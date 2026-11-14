@@ -121,8 +121,9 @@ export function LootBox({
   ownedItemHashes,
   showOwnership,
   itemHrefs,
+  exoticItemHashes,
   fill = false,
-}: Pick<LootSectionProps, "items" | "ownedItemHashes" | "showOwnership" | "itemHrefs"> & {
+}: Pick<LootSectionProps, "items" | "ownedItemHashes" | "showOwnership" | "itemHrefs" | "exoticItemHashes"> & {
   title: string;
   /** Icons stretch so rows fill the box (see LootItemGrid). */
   fill?: boolean;
@@ -138,6 +139,7 @@ export function LootBox({
         ownedItemHashes={ownedItemHashes}
         showOwnership={showOwnership}
         itemHrefs={itemHrefs}
+        exoticItemHashes={exoticItemHashes}
         fill={fill}
       />
     </div>

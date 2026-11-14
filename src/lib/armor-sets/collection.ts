@@ -9,6 +9,7 @@ import { resolveGambitLoot } from "@/lib/activities/gambit-loot";
 import { resolveIronBannerLoot } from "@/lib/activities/iron-banner-loot";
 import { resolveTrialsOfOsirisLoot } from "@/lib/activities/trials-of-osiris-loot";
 import { resolveVanguardOpsLoot } from "@/lib/activities/vanguard-ops-loot";
+import { isEpicRaidRow } from "@/lib/activities/epic-raid";
 import { toLootItemFromCatalog } from "@/lib/activities/loot-item";
 import { loadAllLootCatalog } from "@/lib/all-loot/search";
 import { loadArmorSetCatalog } from "@/lib/armor-sets/load";
@@ -253,13 +254,15 @@ export async function loadArmorSetCollection(): Promise<ArmorSetCollection> {
     if (!page) continue;
     const previews = resolveActivityArmorSetPreviewFiles(entry.slug, page.armorSetPreviewFiles);
     for (const [setName, rows] of groupRowsBySet(page.armorSets)) {
+      const epic = rows.some(isEpicRaidRow);
       add({
         name: setName,
         kind: "armor",
         group,
-        originLabel: `${entry.title} · ${kind}`,
+        originLabel: `${entry.title} · ${epic ? "Epic Raid" : kind}`,
         href: entry.available ? `/activities/${entry.slug}` : undefined,
-        previewUrl: previewForSetName(setName) ?? previewIfExists(previews[0]),
+        // Epic sets only use their own image (see epicArmorPreviewFile).
+        previewUrl: previewForSetName(setName) ?? (epic ? undefined : previewIfExists(previews[0])),
         classes: classesFromRows(rows),
       });
     }

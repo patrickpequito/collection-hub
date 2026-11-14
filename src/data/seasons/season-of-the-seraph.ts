@@ -97,12 +97,20 @@ export const SEASON_OF_THE_SERAPH_HUB: SeasonHub = {
   },
   playableActivities: [
     {
-      id: "heist-battlegrounds",
-      title: "Heist Battlegrounds",
-      description: "Three-player heists on Mars and the Moon to recover Rasputin's subminds.",
+      id: "heist-battleground-mars",
+      title: "Heist Battleground: Mars",
+      description: "Three-player heist on the BrayTech Futurescape campus to recover the submind Charlemagne.",
       location: "Vanguard Fireteam Ops",
       pgcrImagePath:
         "/img/destiny_content/pgcr/season_19_battleground_polaris.jpg",
+    },
+    {
+      id: "heist-battleground-moon",
+      title: "Heist Battleground: Moon",
+      description: "Three-player heist in a Seraph bunker under the Moon to recover the submind Malahayati.",
+      location: "Vanguard Fireteam Ops",
+      pgcrImagePath:
+        "/img/destiny_content/pgcr/season_19_battleground_luna.jpg",
     },
     {
       id: "operation-seraphs-shield",

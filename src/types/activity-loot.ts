@@ -55,6 +55,8 @@ export type ActivityLootPage = {
   armorSets: ActivityArmorRow[];
   /** Optional extra armor preview images (e.g. Prophecy: prophecy.webp + prophecy2.webp). */
   armorSetPreviewFiles?: string[];
+  /** Preview images for the Epic Raid armor (items whose source says "Epic Raid"). */
+  epicArmorSetPreviewFiles?: string[];
   weapons: LootItem[];
   timelostWeapons: LootItem[];
   /** Defaults to "Timelost Weapons" when omitted. */
