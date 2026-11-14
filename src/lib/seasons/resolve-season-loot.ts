@@ -312,6 +312,7 @@ export async function resolveSeasonLoot(hub: SeasonHub): Promise<SeasonLoot> {
   const catalogByHash = indexCatalogByAnyHash(catalogItems);
 
   const ornamentsByArmorSet = new Map<string, LegacyArmorSetGroup[]>();
+  const ornamentsBeforeArmorSet = new Map<string, LegacyArmorSetGroup[]>();
   for (const ornament of hub.ornamentSets ?? []) {
     const group = buildNamedSetGroup(
       catalogItems,
@@ -321,9 +322,10 @@ export async function resolveSeasonLoot(hub: SeasonHub): Promise<SeasonLoot> {
       hub,
     );
     if (!group) continue;
-    const bucket = ornamentsByArmorSet.get(ornament.armorSetName) ?? [];
+    const target = ornament.position === "before" ? ornamentsBeforeArmorSet : ornamentsByArmorSet;
+    const bucket = target.get(ornament.armorSetName) ?? [];
     bucket.push(group);
-    ornamentsByArmorSet.set(ornament.armorSetName, bucket);
+    target.set(ornament.armorSetName, bucket);
   }
 
   const armorGroups: LegacyArmorSetGroup[] = [];
@@ -336,6 +338,7 @@ export async function resolveSeasonLoot(hub: SeasonHub): Promise<SeasonLoot> {
       hub,
     );
     if (!group) continue;
+    armorGroups.push(...(ornamentsBeforeArmorSet.get(setName) ?? []));
     armorGroups.push(group);
     const ornaments = ornamentsByArmorSet.get(setName);
     if (ornaments?.length) {

@@ -176,6 +176,20 @@ function enrichOrnamentRows(setItems: AllLootItem[], setName: string) {
   });
 }
 
+/**
+ * A real ornament set has at least two pieces for one class. A lone piece, the same
+ * piece for each class ("The Rat King's Crown") or one piece per class with its own
+ * name ("Optica Lion Mask / Helm / Cowl") is a standalone ornament.
+ */
+function isOrnamentSet(setItems: AllLootItem[]): boolean {
+  const perClass = new Map<string, number>();
+  for (const item of setItems) {
+    const key = item.classOrWeaponType ?? "";
+    perClass.set(key, (perClass.get(key) ?? 0) + 1);
+  }
+  return Math.max(0, ...perClass.values()) >= 2;
+}
+
 function classOfSet(setItems: AllLootItem[]): string | null {
   const classes = new Set(setItems.map((item) => item.classOrWeaponType));
   return classes.size === 1 ? [...classes][0] : null;
@@ -358,12 +372,10 @@ function buildEververseLoot(
     bucket.push(item);
     legendarySets.set(setName, bucket);
   }
-  // A lone piece (e.g. "Cloak of Bakris") or the same piece for each class
-  // (e.g. "The Rat King's Crown" helmets) is a standalone ornament, not a set.
+  // Lone pieces and one-piece-per-class ornaments are standalone (see isOrnamentSet).
   const standaloneOrnaments: AllLootItem[] = [];
   for (const [setName, setItems] of legendarySets) {
-    const samePiece = new Set(setItems.map((item) => item.name)).size === 1;
-    if (setItems.length > 1 && !samePiece) continue;
+    if (isOrnamentSet(setItems)) continue;
     standaloneOrnaments.push(...setItems);
     legendarySets.delete(setName);
   }
@@ -447,10 +459,7 @@ export function resolveAllEververseOrnamentSets(
 
   const groups: CatalogEververseOrnamentSet[] = [];
   for (const sets of buckets.values()) {
-    // A lone piece or the same piece for each class isn't a set.
-    const entries = [...sets.entries()].filter(
-      ([, setItems]) => setItems.length > 1 && new Set(setItems.map((item) => item.name)).size > 1,
-    );
+    const entries = [...sets.entries()].filter(([, setItems]) => isOrnamentSet(setItems));
     const first = entries[0]?.[1][0];
     if (!first) continue;
     const tags = {

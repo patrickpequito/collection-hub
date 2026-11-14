@@ -50,6 +50,8 @@ export type SeasonHub = {
   ornamentSets?: readonly {
     setName: string;
     armorSetName: string;
+    /** "before": shown above the armor set instead of under it. */
+    position?: "before";
   }[];
   /** Legendary weapons introduced this season but remastered into Monument / playlists. */
   extraWeaponNames?: readonly string[];
@@ -62,6 +64,8 @@ export type SeasonHub = {
    * Curated by name — shown in a single row in this order.
    */
   cosmeticRewards?: readonly string[];
+  /** Name of the pass when it isn't the Season / Episode Pass (S27+: "Rewards Pass"). */
+  passName?: string;
   /**
    * Seasonal triumph / vendor cosmetics that are not in the Season Archive and
    * can no longer be earned. Own block, not counted in progress.

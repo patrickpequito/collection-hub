@@ -60,12 +60,12 @@ export const YEAR_OF_PROPHECY_ARMOR_SETS: readonly {
     playlists: ["crucible"],
   },
   {
-    // Crucible and Vanguard Ops, S27 Season: Reclamation.
+    // Crucible, S27 Season: Reclamation.
     catalogName: "Last Discipline",
     displayName: "Last Discipline",
     equipableItemSetHash: "3252452908",
     previewFile: "last-discipline.webp",
-    playlists: ["vanguard-ops", "crucible"],
+    playlists: ["crucible"],
   },
 ];
 

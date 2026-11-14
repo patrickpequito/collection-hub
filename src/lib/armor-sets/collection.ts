@@ -340,14 +340,19 @@ export async function loadArmorSetCollection(): Promise<ArmorSetCollection> {
   for (const hub of EXPANSION_HUBS) {
     const loot = await resolveExpansionLoot(hub);
     const href = PUBLISHED_EXPANSION_SLUGS.has(hub.slug) ? `/expansions/${hub.slug}` : undefined;
-    for (const [setName, rows] of groupRowsBySet(loot.destinationArmorRows)) {
+    // Same images as the expansion page's Destination block (pairs with sets when counts match).
+    const destinationSets = [...groupRowsBySet(loot.destinationArmorRows)];
+    const destinationPreviews = hub.destinationArmorPreviewFiles ?? [`${hub.destinationActivitySlug}.webp`];
+    for (const [index, [setName, rows]] of destinationSets.entries()) {
+      const fallback =
+        destinationPreviews.length === destinationSets.length ? destinationPreviews[index] : destinationPreviews[0];
       add({
         name: setName,
         kind: "armor",
         group: "expansions",
         originLabel: `${hub.title} · ${hub.destinationTitle.replace(/^Destination\s*\/\/\s*/i, "")}`,
         href,
-        previewUrl: previewForSetName(setName),
+        previewUrl: previewForSetName(setName) ?? previewIfExists(fallback),
         classes: classesFromRows(rows),
       });
     }

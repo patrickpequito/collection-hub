@@ -143,6 +143,7 @@ export default async function SeasonHubPage({ params }: SeasonPageProps) {
             cosmeticOwnershipGroups={ownershipGroups(loot.cosmeticItems)}
             isUpdate={hub.isUpdate}
             term={seasonTerm(hub)}
+            passName={hub.passName}
           />
 
           <SectionJumpNav links={sectionLinks} />
