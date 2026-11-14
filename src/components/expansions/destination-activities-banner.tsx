@@ -56,9 +56,12 @@ export function DestinationActivitiesBanner({
   theme,
   activities,
   wide = false,
+  tileColumns = 3,
 }: DestinationActivitiesBannerProps & {
   /** Full width (expansions without campaign missions). */
   wide?: boolean;
+  /** Tiles per row on large screens in the stacked layout (4 when the banner spans the page). */
+  tileColumns?: 3 | 4;
 }) {
   const signedIn = useSignedIn();
   const instances = useProfileRecordInstances();
@@ -66,8 +69,8 @@ export function DestinationActivitiesBanner({
 
   const tiles = useMemo(() => {
     const sources = { signedIn, instances, checklists };
+    // Cards only count when they carry marks (The Sieve bosses); the tier ladder has none.
     return allBlocks(activities)
-      .filter((block) => block.type !== "card")
       .map((block) => {
         const marks = blockMarks(block, sources);
         return { title: block.title, done: marks.filter((mark) => mark === true).length, total: marks.length };
@@ -111,7 +114,7 @@ export function DestinationActivitiesBanner({
   );
 
   const grid = (
-    <div className={`relative grid grid-cols-2 gap-2 ${wide ? "lg:grid-cols-4" : "sm:grid-cols-3"}`}>
+    <div className={`relative grid grid-cols-2 gap-2 ${wide || tileColumns === 4 ? "lg:grid-cols-4" : "sm:grid-cols-3"}`}>
       {tiles.map((tile) => {
         const complete = signedIn && tile.done === tile.total;
         return (

@@ -145,10 +145,12 @@ export function ExpansionProgressStrip({
   });
 
   return (
-    <StatBlockGrid count={4}>
-      <StatBlock label="Collection">
-        <StatCount owned={collectionOwned} total={collectionTotal} gold />
-      </StatBlock>
+    <StatBlockGrid count={collectionTotal ? 4 : 3}>
+      {collectionTotal ? (
+        <StatBlock label="Collection">
+          <StatCount owned={collectionOwned} total={collectionTotal} gold />
+        </StatBlock>
+      ) : null}
       <StatBlock label={title?.guardianTitle ? `Title · ${title.guardianTitle}` : "Title"}>
         <StatCount owned={titleDone} total={titleTotal} />
       </StatBlock>

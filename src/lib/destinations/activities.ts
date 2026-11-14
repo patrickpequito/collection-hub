@@ -44,11 +44,31 @@ export type ActivityTilesBlock = {
   tiles: ActivityTile[];
 };
 
+/** Rows of named sets, one run of marks per column (Kepler chests & urns per sub-zone). */
+export type ActivitySetTableBlock = {
+  type: "setTable";
+  title: string;
+  columns: string[];
+  /** Width of each marks column (CSS length) on wider screens. */
+  columnWidth?: string;
+  groups: { name?: string; rows: { name: string; cells: (ActivitySetSource | null)[] }[] }[];
+};
+
+/** Informative difficulty ladder (Kepler World Tiers): time played and kills, nothing to complete. */
+export type ActivityTiersBlock = {
+  type: "tiers";
+  title: string;
+  tiers: { label: string; name: string; activityHashes: string[] }[];
+};
+
 /** The destination's repeatable activity, in its own colours. */
 export type ActivityCardBlock = {
   type: "card";
   title: string;
-  description: string;
+  description?: string;
+  /** Named checks under the count (The Sieve bosses), with a column header. */
+  rows?: { name: string; check: ActivityCheck }[];
+  rowsHeader?: string;
   /** Count from activity history… */
   activityHashes?: string[];
   /** …or from a counting record's objective progress. */
@@ -59,6 +79,8 @@ export type ActivityBlock =
   | ActivityTableBlock
   | ActivitySetBlock
   | ActivityTilesBlock
+  | ActivitySetTableBlock
+  | ActivityTiersBlock
   | ActivityCardBlock;
 
 /** Row → columns → stacked blocks. A single column is full width. */
@@ -115,7 +137,7 @@ export function counterValue(recordHash: string, sources: ProgressSources): numb
   return objectives.reduce((max, objective) => Math.max(max, objective.progress), 0);
 }
 
-/** Every mark in a block (cards don't count toward progress). */
+/** Every mark in a block (a card's count and the tier ladder don't count toward progress). */
 export function blockMarks(block: ActivityBlock, sources: ProgressSources): (boolean | null)[] {
   switch (block.type) {
     case "table":
@@ -132,8 +154,16 @@ export function blockMarks(block: ActivityBlock, sources: ProgressSources): (boo
             ? setMarks(tile.set, sources)
             : [],
       );
-    case "card":
+    case "setTable":
+      return block.groups.flatMap((group) =>
+        group.rows.flatMap((row) =>
+          row.cells.flatMap((cell) => (cell ? setMarks(cell, sources) : [])),
+        ),
+      );
+    case "tiers":
       return [];
+    case "card":
+      return (block.rows ?? []).map((row) => checkDone(row.check, sources));
   }
 }
 
@@ -149,4 +179,11 @@ export function activitiesTally(activities: DestinationActivities, sources: Prog
 /** Activity hashes the page needs from activity history (repeatable cards). */
 export function activityHistoryHashes(activities: DestinationActivities): string[] {
   return allBlocks(activities).flatMap((block) => (block.type === "card" ? (block.activityHashes ?? []) : []));
+}
+
+/** Activity hashes whose time played / kills the tier ladder shows. */
+export function tierActivityHashes(activities: DestinationActivities): string[] {
+  return allBlocks(activities).flatMap((block) =>
+    block.type === "tiers" ? block.tiers.flatMap((tier) => tier.activityHashes) : [],
+  );
 }

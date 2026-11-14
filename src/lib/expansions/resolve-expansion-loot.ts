@@ -119,6 +119,19 @@ export type ExpansionCampaignMission = {
   activityHashes?: string[];
 };
 
+/** One mark in a mission table: any clear of these activities, or a triumph objective. */
+export type ExpansionMissionCell = {
+  activityHashes: string[];
+  record?: { r: string; o: string };
+};
+
+/** Missions × difficulties (The Edge of Fate: Brave / Legendary / Fabled / Mythic). */
+export type ExpansionMissionTable = {
+  title: string;
+  columns: string[];
+  missions: { name: string; cells: ExpansionMissionCell[] }[];
+};
+
 /** A triumph whose objectives each mark one activity done (e.g. Partition → "Disk Cleanup"). */
 export type ExpansionActivityChecklist = {
   title: string;
@@ -224,8 +237,10 @@ type ExpansionCollectionFile = {
     bosses: ExpansionWellspringBoss[];
   };
   campaign?: {
-    legendaryRecordHash: string;
+    legendaryRecordHash?: string;
     missions: ExpansionCampaignMission[];
+    /** Several mission tables with difficulty columns (replaces `missions`). */
+    missionTables?: ExpansionMissionTable[];
     quests?: ExpansionCampaignQuest[];
     /** Empire Hunts, Nightmare Hunts, etc. */
     difficultyHunts?: ExpansionDifficultyHunt[];
@@ -261,6 +276,7 @@ export type ExpansionLoot = {
   wellspringBosses: ExpansionWellspringBoss[];
   campaignLegendaryRecordHash: string;
   campaignMissions: ExpansionCampaignMission[];
+  campaignMissionTables: ExpansionMissionTable[];
   campaignActivityChecklists: ExpansionActivityChecklist[];
   campaignQuests: ExpansionCampaignQuest[];
   difficultyHunts: ExpansionDifficultyHunt[];
@@ -821,6 +837,7 @@ export async function resolveExpansionLoot(
     campaignLegendaryRecordHash:
       collectionFile.campaign?.legendaryRecordHash ?? "",
     campaignMissions: collectionFile.campaign?.missions ?? [],
+    campaignMissionTables: collectionFile.campaign?.missionTables ?? [],
     campaignActivityChecklists: collectionFile.campaign?.activityChecklists ?? [],
     campaignQuests: enrichCampaignQuests(
       collectionFile.campaign?.quests ?? [],

@@ -129,7 +129,7 @@ async function destinationWeek(destination: Destination): Promise<DestinationWee
   const base = {
     slug: destination.slug,
     name: destination.name,
-    imageUrl: destinationImageUrl(destination),
+    imageUrl: destination.homeImageFile ? `/images/destinations/${destination.homeImageFile}` : destinationImageUrl(destination),
     href: destination.built ? `/activities/destinations/${destination.slug}` : null,
   };
   // Pale Heart: the Pathfinder board's Overthrow regions for the week.
@@ -149,6 +149,9 @@ async function destinationWeek(destination: Destination): Promise<DestinationWee
     return { ...base, headline: `${activity}: ${daily.name}`, cadence: "daily" };
   }
   const first = weekly[0];
+  if (destination.weekly === "kepler" && weekly.length) {
+    return { ...base, headline: `Fabled missions: ${weekly.map((entry) => entry.name).join(" · ")}`, cadence: "weekly" };
+  }
   if (destination.weekly === "nightmare-hunts" && weekly.length) {
     return { ...base, headline: `Nightmare Hunts: ${weekly.map((entry) => entry.name).join(" · ")}`, cadence: "weekly" };
   }

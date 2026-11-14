@@ -23,6 +23,7 @@ export const PUBLISHED_EXPANSION_SLUGS = new Set<string>([
   "beyond-light",
   "lightfall",
   "the-final-shape",
+  "the-edge-of-fate",
 ]);
 
 /** Chronological expansion hubs with pages (Red War is index-only for now). */

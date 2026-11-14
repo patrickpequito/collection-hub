@@ -1,7 +1,4 @@
-import {
-  DEFAULT_DEEP_LOOT_ACTIVITIES,
-  type ExpansionHub,
-} from "@/data/expansions/types";
+import type { ExpansionHub } from "@/data/expansions/types";
 
 export const EDGE_OF_FATE_HUB: ExpansionHub = {
   slug: "the-edge-of-fate",
@@ -16,12 +13,15 @@ export const EDGE_OF_FATE_HUB: ExpansionHub = {
   ],
   seasonNumber: 27,
   destinationArmorSetNames: ["AION Adapter", "AION Renewal"],
+  destinationArmorPreviewFiles: ["aion-adapter.webp", "aion-renewal.webp"],
   destinationTitle: "Destination // Kepler",
   destinationActivityTitle: "Kepler",
   destinationActivitySlug: "kepler",
   destinationWeaponSourcePattern: /kepler/i,
   relatedRadSlugs: ["the-desert-perpetual"],
-  deepLootActivities: DEFAULT_DEEP_LOOT_ACTIVITIES,
+  trailerYoutubeId: "5LFBTFpWYVI",
+  // Playlist loot of this era carries the Season: Reclamation (S27) watermark: it lives on the season page.
+  deepLootActivities: [],
   deepLootExcludedSourcePattern:
     /kepler|desert perpetual|edge of fate|eververse|bright engram/i,
   raidsDungeonsBlurb:

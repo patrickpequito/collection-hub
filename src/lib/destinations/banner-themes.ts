@@ -12,6 +12,15 @@ export type BannerTheme = {
 };
 
 export const DESTINATION_BANNER_THEMES: Record<string, BannerTheme> = {
+  // Kepler's pale turquoise highlights.
+  kepler: {
+    accent: "#8fe3d6",
+    border: "rgba(143,227,214,0.75)",
+    glow: "0 0 16px rgba(143,227,214,0.25)",
+    wash: "linear-gradient(90deg, rgba(8,13,14,0.95) 25%, rgba(8,13,14,0.35) 65%, rgba(143,227,214,0.08))",
+    nameGlow: "0 0 12px rgba(143,227,214,0.6)",
+    image: "/images/destinations/kepler-banner.webp",
+  },
   // Pale, luminous Traveler light over the Witness's dark.
   "the-pale-heart": {
     accent: "#e9d8a6",

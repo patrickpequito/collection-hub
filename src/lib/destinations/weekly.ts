@@ -132,6 +132,31 @@ async function loadTerminalOverloadToday(): Promise<WeeklyActivity | null> {
   return null;
 }
 
+/**
+ * Kepler's weekly Fabled missions: a fixed three-week cycle of two story missions.
+ * Anchor: the week of the Nov 17 2026 reset is The Invitation / Gouge (owner, in game).
+ */
+const KEPLER_FABLED_CYCLE: { name: string; image: string }[][] = [
+  [
+    { name: "The Invitation", image: "/img/destiny_content/pgcr/mission_touchdown.jpg" },
+    { name: "Gouge", image: "/img/destiny_content/pgcr/mission_overseer.jpg" },
+  ],
+  [
+    { name: "Commencement", image: "/img/destiny_content/pgcr/mission_gate.jpg" },
+    { name: "Charge", image: "/img/destiny_content/pgcr/mission_energize.jpg" },
+  ],
+  [
+    { name: "Quarantine", image: "/img/destiny_content/pgcr/mission_offline.jpg" },
+    { name: "The Message", image: "/img/destiny_content/pgcr/mission_voracious.jpg" },
+  ],
+];
+const KEPLER_ANCHOR_WEEK = rotationWeekIndex(new Date("2026-11-14T12:00:00Z"));
+
+function keplerWeekly(): WeeklyActivity[] {
+  const week = KEPLER_FABLED_CYCLE[cycleIndex(rotationWeekIndex(new Date()), KEPLER_ANCHOR_WEEK, KEPLER_FABLED_CYCLE.length)];
+  return week.map((mission) => ({ label: "Fabled mission", name: mission.name, detail: "", image: mission.image, cadence: "weekly" }));
+}
+
 /** "This week" entries for a destination; empty when nothing is confirmed for it. */
 export async function loadDestinationWeekly(destination: Destination): Promise<WeeklyActivity[]> {
   if (destination.weekly === "throne-world") {
@@ -144,6 +169,7 @@ export async function loadDestinationWeekly(destination: Destination): Promise<W
     return [...(await manualWeekly("neomuna", NEOMUNA_ROTATIONS)), ...(terminalOverload ? [terminalOverload] : [])];
   }
   if (destination.weekly === "dreaming-city") return manualWeekly("dreaming-city", DREAMING_CITY_ROTATIONS);
+  if (destination.weekly === "kepler") return keplerWeekly();
   if (destination.weekly !== "nightmare-hunts") return [];
   try {
     const snapshot = JSON.parse(

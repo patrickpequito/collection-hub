@@ -1,26 +1,3105 @@
 {
-  "badgeName": "",
-  "iconPath": "",
-  "bannerIconPath": "",
-  "completionRecordHash": "",
-  "items": [],
-  "regionChests": {
-    "checklistHash": "",
-    "triumphHash": "",
-    "entries": []
-  },
-  "lostSectors": {
-    "checklistHash": "",
-    "discoveryRecordHash": "",
-    "sectors": []
-  },
-  "wellspring": {
-    "normalRecordHash": "",
-    "masterRecordHash": "",
-    "bosses": []
-  },
-  "campaign": {
-    "legendaryRecordHash": "",
-    "missions": []
-  }
+ "badgeName": "",
+ "iconPath": "",
+ "bannerIconPath": "",
+ "completionRecordHash": "",
+ "items": [],
+ "regionChests": {
+  "checklistHash": "",
+  "triumphHash": "",
+  "entries": []
+ },
+ "lostSectors": {
+  "checklistHash": "",
+  "discoveryRecordHash": "",
+  "sectors": []
+ },
+ "wellspring": {
+  "normalRecordHash": "",
+  "masterRecordHash": "",
+  "bosses": []
+ },
+ "campaign": {
+  "missionTables": [
+   {
+    "title": "Story missions",
+    "columns": [
+     "Brave",
+     "Legendary",
+     "Fabled",
+     "Mythic"
+    ],
+    "missions": [
+     {
+      "name": "The Invitation",
+      "cells": [
+       {
+        "activityHashes": [
+         "22513938",
+         "3583259793"
+        ]
+       },
+       {
+        "activityHashes": [
+         "3124375945"
+        ],
+        "record": {
+         "r": "4217750891",
+         "o": "3695474224"
+        }
+       },
+       {
+        "activityHashes": [
+         "4031602888"
+        ]
+       },
+       {
+        "activityHashes": [
+         "4031602889"
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Commencement",
+      "cells": [
+       {
+        "activityHashes": [
+         "1957458397"
+        ]
+       },
+       {
+        "activityHashes": [
+         "415368209"
+        ],
+        "record": {
+         "r": "4217750891",
+         "o": "3695474227"
+        }
+       },
+       {
+        "activityHashes": [
+         "2406687436"
+        ],
+        "record": {
+         "r": "3002424689",
+         "o": "686074979"
+        }
+       },
+       {
+        "activityHashes": [
+         "2406687437"
+        ],
+        "record": {
+         "r": "597611526",
+         "o": "4263698038"
+        }
+       }
+      ]
+     },
+     {
+      "name": "Gouge",
+      "cells": [
+       {
+        "activityHashes": [
+         "2463077903"
+        ]
+       },
+       {
+        "activityHashes": [
+         "3686816891"
+        ],
+        "record": {
+         "r": "4217750891",
+         "o": "3695474230"
+        }
+       },
+       {
+        "activityHashes": [
+         "2163004629"
+        ],
+        "record": {
+         "r": "3002424689",
+         "o": "686074977"
+        }
+       },
+       {
+        "activityHashes": [
+         "2163004628"
+        ],
+        "record": {
+         "r": "597611526",
+         "o": "4263698036"
+        }
+       }
+      ]
+     },
+     {
+      "name": "Charge",
+      "cells": [
+       {
+        "activityHashes": [
+         "2852920047"
+        ]
+       },
+       {
+        "activityHashes": [
+         "470101943"
+        ],
+        "record": {
+         "r": "4217750888",
+         "o": "2649212356"
+        }
+       },
+       {
+        "activityHashes": [
+         "3491522834"
+        ],
+        "record": {
+         "r": "3002424689",
+         "o": "686074978"
+        }
+       },
+       {
+        "activityHashes": [
+         "3491522835"
+        ],
+        "record": {
+         "r": "597611526",
+         "o": "4263698039"
+        }
+       }
+      ]
+     },
+     {
+      "name": "Quarantine",
+      "cells": [
+       {
+        "activityHashes": [
+         "2131485965"
+        ]
+       },
+       {
+        "activityHashes": [
+         "3907319841"
+        ],
+        "record": {
+         "r": "4217750888",
+         "o": "2649212353"
+        }
+       },
+       {
+        "activityHashes": [
+         "1459303702"
+        ],
+        "record": {
+         "r": "3002424689",
+         "o": "686074976"
+        }
+       },
+       {
+        "activityHashes": [
+         "1459303703"
+        ],
+        "record": {
+         "r": "597611526",
+         "o": "4263698037"
+        }
+       }
+      ]
+     },
+     {
+      "name": "The Message",
+      "cells": [
+       {
+        "activityHashes": [
+         "2296346665"
+        ]
+       },
+       {
+        "activityHashes": [
+         "1240909349"
+        ],
+        "record": {
+         "r": "4217750888",
+         "o": "2649212355"
+        }
+       },
+       {
+        "activityHashes": [
+         "1350796200"
+        ]
+       },
+       {
+        "activityHashes": [
+         "1350796201"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Time Latch missions",
+    "columns": [
+     "Brave",
+     "Legendary",
+     "Fabled",
+     "Mythic"
+    ],
+    "missions": [
+     {
+      "name": "Fallow",
+      "cells": [
+       {
+        "activityHashes": [
+         "3627493943"
+        ]
+       },
+       {
+        "activityHashes": [
+         "297157555"
+        ],
+        "record": {
+         "r": "4217750891",
+         "o": "3695474225"
+        }
+       },
+       {
+        "activityHashes": [
+         "251203634"
+        ],
+        "record": {
+         "r": "1858511068",
+         "o": "3019783269"
+        }
+       },
+       {
+        "activityHashes": [
+         "251203635"
+        ],
+        "record": {
+         "r": "3399807667",
+         "o": "670774188"
+        }
+       }
+      ]
+     },
+     {
+      "name": "Nostos",
+      "cells": [
+       {
+        "activityHashes": [
+         "2513694906"
+        ]
+       },
+       {
+        "activityHashes": [
+         "1060540968"
+        ],
+        "record": {
+         "r": "4217750891",
+         "o": "3695474226"
+        }
+       },
+       {
+        "activityHashes": [
+         "2337450949"
+        ],
+        "record": {
+         "r": "1858511068",
+         "o": "3019783268"
+        }
+       },
+       {
+        "activityHashes": [
+         "2337450948"
+        ],
+        "record": {
+         "r": "3399807667",
+         "o": "670774189"
+        }
+       }
+      ]
+     },
+     {
+      "name": "Saturnism",
+      "cells": [
+       {
+        "activityHashes": [
+         "1813217007"
+        ]
+       },
+       {
+        "activityHashes": [
+         "2610054011"
+        ],
+        "record": {
+         "r": "4217750891",
+         "o": "3695474228"
+        }
+       },
+       {
+        "activityHashes": [
+         "1031141961"
+        ],
+        "record": {
+         "r": "1858511068",
+         "o": "3019783264"
+        }
+       },
+       {
+        "activityHashes": [
+         "1031141960"
+        ],
+        "record": {
+         "r": "3399807667",
+         "o": "670774185"
+        }
+       }
+      ]
+     },
+     {
+      "name": "Transient",
+      "cells": [
+       {
+        "activityHashes": [
+         "1723283994"
+        ]
+       },
+       {
+        "activityHashes": [
+         "559144296"
+        ],
+        "record": {
+         "r": "4217750891",
+         "o": "3695474229"
+        }
+       },
+       {
+        "activityHashes": [
+         "2552742882"
+        ],
+        "record": {
+         "r": "1858511068",
+         "o": "3019783265"
+        }
+       },
+       {
+        "activityHashes": [
+         "2552742883"
+        ],
+        "record": {
+         "r": "3399807667",
+         "o": "670774184"
+        }
+       }
+      ]
+     },
+     {
+      "name": "Morphology",
+      "cells": [
+       {
+        "activityHashes": [
+         "1349441320"
+        ]
+       },
+       {
+        "activityHashes": [
+         "42165478"
+        ],
+        "record": {
+         "r": "4217750888",
+         "o": "2649212357"
+        }
+       },
+       {
+        "activityHashes": [
+         "1633298727"
+        ],
+        "record": {
+         "r": "1858511068",
+         "o": "3019783266"
+        }
+       },
+       {
+        "activityHashes": [
+         "1633298726"
+        ],
+        "record": {
+         "r": "3399807667",
+         "o": "670774187"
+        }
+       }
+      ]
+     },
+     {
+      "name": "Disruption",
+      "cells": [
+       {
+        "activityHashes": [
+         "3799131196"
+        ]
+       },
+       {
+        "activityHashes": [
+         "3598735554"
+        ],
+        "record": {
+         "r": "4217750888",
+         "o": "2649212359"
+        }
+       },
+       {
+        "activityHashes": [
+         "2765528837"
+        ],
+        "record": {
+         "r": "1858511068",
+         "o": "3019783271"
+        }
+       },
+       {
+        "activityHashes": [
+         "2765528836"
+        ],
+        "record": {
+         "r": "3399807667",
+         "o": "670774190"
+        }
+       }
+      ]
+     },
+     {
+      "name": "Calculus",
+      "cells": [
+       {
+        "activityHashes": [
+         "2676684267"
+        ]
+       },
+       {
+        "activityHashes": [
+         "4149309255"
+        ],
+        "record": {
+         "r": "4217750888",
+         "o": "2649212358"
+        }
+       },
+       {
+        "activityHashes": [
+         "2083729880"
+        ],
+        "record": {
+         "r": "1858511068",
+         "o": "3019783270"
+        }
+       },
+       {
+        "activityHashes": [
+         "2083729881"
+        ],
+        "record": {
+         "r": "3399807667",
+         "o": "670774191"
+        }
+       }
+      ]
+     },
+     {
+      "name": "Criticality",
+      "cells": [
+       {
+        "activityHashes": [
+         "2802076450"
+        ]
+       },
+       {
+        "activityHashes": [
+         "4250211952"
+        ],
+        "record": {
+         "r": "4217750888",
+         "o": "2649212352"
+        }
+       },
+       {
+        "activityHashes": [
+         "3864101701"
+        ],
+        "record": {
+         "r": "1858511068",
+         "o": "3019783267"
+        }
+       },
+       {
+        "activityHashes": [
+         "3864101700"
+        ],
+        "record": {
+         "r": "3399807667",
+         "o": "670774186"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "missions": [],
+  "quests": [
+   {
+    "name": "The Edge of Fate",
+    "questHash": "3817006762",
+    "completionStepHash": "2774667135",
+    "questStepHashes": [
+     "3817006762",
+     "90819397",
+     "1081937072",
+     "3817006761",
+     "751119954",
+     "619514514",
+     "384567555",
+     "2481608195",
+     "4052488163",
+     "3924303346",
+     "833558114",
+     "3623595775",
+     "2753243352",
+     "2041340298",
+     "2406992543",
+     "3454986034",
+     "3356250183",
+     "1713968321",
+     "1001275728",
+     "3815488208",
+     "3004620527",
+     "2405373351",
+     "2904384410",
+     "3059064441",
+     "3669359672",
+     "3414086942",
+     "1773716996",
+     "2926942383",
+     "2262866846",
+     "2761249057",
+     "2774667135"
+    ],
+    "stepObjectiveHashes": [
+     "2901808648",
+     "1075574129",
+     "2416429214",
+     "1260154807",
+     "1809984542",
+     "4106405705",
+     "2887787857",
+     "3732726174",
+     "1384173694",
+     "3255423321",
+     "601793558",
+     "946649682",
+     "808437327",
+     "1144296267",
+     "681652490",
+     "3089646147",
+     "3761474754",
+     "916110755",
+     "246599372",
+     "2276849740",
+     "3432889063",
+     "3755033357",
+     "3343498397",
+     "2582954902",
+     "1586160956",
+     "2721005823",
+     "2158134740",
+     "3883185295",
+     "3554459538",
+     "3891254162",
+     "2040847973"
+    ],
+    "iconPath": "/common/destiny2_content/icons/da8dc1e8a3eaea782368ff221e7254df.png",
+    "completionObjectiveHash": "2040847973",
+    "category": "campaign",
+    "steps": [
+     {
+      "hash": "3817006762",
+      "description": "Meet Rebecca, Dean of the Aionians.",
+      "objectives": [
+       {
+        "hash": "2901808648",
+        "label": "Dean Rebecca met",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "90819397",
+      "description": "Draw out the Barricade Mind to obtain the Acceleron it guards.",
+      "objectives": [
+       {
+        "hash": "1075574129",
+        "label": "Acceleron acquired",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1081937072",
+      "description": "Access the terminal to acquire the translation cipher \"Rosetta.\"",
+      "objectives": [
+       {
+        "hash": "2416429214",
+        "label": "Rosetta acquired",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3817006761",
+      "description": "Return to Dean Rebecca with the Rosetta technology and attempt another conversation.",
+      "objectives": [
+       {
+        "hash": "1260154807",
+        "label": "Dean Rebecca consulted",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "751119954",
+      "description": "Access the Aionians's telemetry buoys to locate the disruptive signal.",
+      "objectives": [
+       {
+        "hash": "1809984542",
+        "label": "Telemetry acquired",
+        "total": 3
+       }
+      ]
+     },
+     {
+      "hash": "619514514",
+      "description": "Meet with Orin.",
+      "objectives": [
+       {
+        "hash": "4106405705",
+        "label": "Orin located",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "384567555",
+      "description": "Access the Altar of Relativity to begin tracking down the lost strangelet capsules.",
+      "objectives": [
+       {
+        "hash": "2887787857",
+        "label": "Altar of Relativity accessed",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2481608195",
+      "description": "Visit the Altar of Relativity to begin tracking strangelet capsules in the Central Academy and Exile's Accord.",
+      "objectives": [
+       {
+        "hash": "3732726174",
+        "label": "Central Academy strangelet research acquired",
+        "total": 1
+       },
+       {
+        "hash": "4116381947",
+        "label": "Exile's Accord strangelet research acquired",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "4052488163",
+      "description": "Recover strangelet capsules across Kepler and return them to the Altar of Relativity.",
+      "objectives": [
+       {
+        "hash": "1384173694",
+        "label": "Central Academy strangelet capsule integrated",
+        "total": 1
+       },
+       {
+        "hash": "1359057755",
+        "label": "Exile's Accord strangelet capsule integrated",
+        "total": 1
+       },
+       {
+        "hash": "408559936",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "3924303346",
+      "description": "The strangelet capsule is ready for integration. Return to the Altar and perform the integration.",
+      "objectives": [
+       {
+        "hash": "3255423321",
+        "label": "Central Academy strangelet capsule integrated",
+        "total": 1
+       },
+       {
+        "hash": "460476342",
+        "label": "Exile's Accord strangelet capsule integrated",
+        "total": 1
+       },
+       {
+        "hash": "760408293",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "833558114",
+      "description": "Restore Power to the Altar of Relativity.",
+      "objectives": [
+       {
+        "hash": "601793558",
+        "label": "Altar power restored",
+        "total": 2
+       },
+       {
+        "hash": "3226226787",
+        "label": "Altar restarted",
+        "total": 1
+       },
+       {
+        "hash": "3390484661",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "3623595775",
+      "description": "The strangelet capsule is ready for integration. Return to the Altar and perform the integration.",
+      "objectives": [
+       {
+        "hash": "946649682",
+        "label": "Central Academy strangelet capsule integrated",
+        "total": 1
+       },
+       {
+        "hash": "4148274407",
+        "label": "Exile's Accord strangelet capsule integrated",
+        "total": 1
+       },
+       {
+        "hash": "231395564",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "2753243352",
+      "description": "Meet Drifter in the Caldera.",
+      "objectives": [
+       {
+        "hash": "808437327",
+        "label": "Drifter Met on Kepler",
+        "total": 1
+       },
+       {
+        "hash": "3426825879",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "2041340298",
+      "description": "Acquire the strangelet capsule located in Central Academy.",
+      "objectives": [
+       {
+        "hash": "1144296267",
+        "label": "Central Academy strangelet capsule integrated",
+        "total": 1
+       },
+       {
+        "hash": "2120652109",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "2406992543",
+      "description": "Locate and acquire the strangelet capsule located in Exile's Accord.",
+      "objectives": [
+       {
+        "hash": "681652490",
+        "label": "Exile's Accord strangelet capsule integrated",
+        "total": 1
+       },
+       {
+        "hash": "668350796",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "3454986034",
+      "description": "Integrate the Central Academy strangelet capsule at the Altar of Relativity.",
+      "objectives": [
+       {
+        "hash": "3089646147",
+        "label": "Central Academy strangelet capsule integrated",
+        "total": 1
+       },
+       {
+        "hash": "1148353445",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "3356250183",
+      "description": "Integrate the Exile's Accord strangelet capsule at the Altar of Relativity.",
+      "objectives": [
+       {
+        "hash": "3761474754",
+        "label": "Exile's Accord strangelet capsule integrated",
+        "total": 1
+       },
+       {
+        "hash": "429050692",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "1713968321",
+      "description": "Access the Altar of Relativity to begin tracking the stranglet capsule in Outer Steppes.",
+      "objectives": [
+       {
+        "hash": "916110755",
+        "label": "Outer Steppes research acquired",
+        "total": 1
+       },
+       {
+        "hash": "2180510322",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "1001275728",
+      "description": "Locate and acquire the strangelet capsule from Outer Steppes.",
+      "objectives": [
+       {
+        "hash": "246599372",
+        "label": "Outer Steppes strangelet capsule secured",
+        "total": 1
+       },
+       {
+        "hash": "3373149215",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "3815488208",
+      "description": "Integrate the strangelet capsule from Outer Steppes at the Altar of Relativity. Then only one remains.",
+      "objectives": [
+       {
+        "hash": "2276849740",
+        "label": "Outer Steppes strangelet capsule integrated",
+        "total": 1
+       },
+       {
+        "hash": "3361539487",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "3004620527",
+      "description": "Meet with Lodi and Ikora at the Altar of Relativity.",
+      "objectives": [
+       {
+        "hash": "3432889063",
+        "label": "Lodi and Ikora met",
+        "total": 1
+       },
+       {
+        "hash": "3487269052",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "2405373351",
+      "description": "Access the Altar of Relativity to begin tracking the stranglet capsule in The Gorge.",
+      "objectives": [
+       {
+        "hash": "3755033357",
+        "label": "The Gorge strangelet research acquired",
+        "total": 1
+       },
+       {
+        "hash": "1790246244",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "2904384410",
+      "description": "Locate and acquire the strangelet capsule from The Gorge.",
+      "objectives": [
+       {
+        "hash": "3343498397",
+        "label": "Gorge strangelet capsule integrated",
+        "total": 1
+       },
+       {
+        "hash": "3109081597",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "3059064441",
+      "description": "Speak with Orin in the Assimilated Easement.",
+      "objectives": [
+       {
+        "hash": "2582954902",
+        "label": "Rendezvous with Orin complete",
+        "total": 1
+       },
+       {
+        "hash": "1936880090",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "3669359672",
+      "description": "Complete mission \"Criticality\" to shut down the overloading reactors and save the Aionian settlement from obliteration.",
+      "objectives": [
+       {
+        "hash": "1586160956",
+        "label": "\"Criticality\" completed",
+        "total": 1
+       },
+       {
+        "hash": "3665092663",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "3414086942",
+      "description": "Integrate the strangelet capsule from The Gorge into the Altar of Relativity.",
+      "objectives": [
+       {
+        "hash": "2721005823",
+        "label": "Altar restarted",
+        "total": 1
+       },
+       {
+        "hash": "1113143441",
+        "label": "Final strangelet capsule integrated",
+        "total": 1
+       },
+       {
+        "hash": "304027841",
+        "label": "All strangelet capsules integrated",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "1773716996",
+      "description": "Meet with Lodi and Orin near the Altar.",
+      "objectives": [
+       {
+        "hash": "2158134740",
+        "label": "Be weaponized",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2926942383",
+      "description": "Complete mission \"The Message.\"",
+      "objectives": [
+       {
+        "hash": "3883185295",
+        "label": "\"The Message\" completed",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2262866846",
+      "description": "Meet with Lodi and your fireteam to discuss what you've learned.",
+      "objectives": [
+       {
+        "hash": "3554459538",
+        "label": "Fireteam met",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2761249057",
+      "description": "Meet with Lodi in the Caldera to discuss his intel.",
+      "objectives": [
+       {
+        "hash": "3891254162",
+        "label": "Met with Lodi",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2774667135",
+      "description": "Examine the Altar's new state.",
+      "objectives": [
+       {
+        "hash": "2040847973",
+        "label": "Altar examined",
+        "total": 1
+       },
+       {
+        "hash": "4245814703",
+        "label": "",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "fallbackRecordHashes": [
+     "3854636015"
+    ]
+   },
+   {
+    "name": "The Central Academy Strangelet",
+    "questHash": "418685604",
+    "completionStepHash": "1322118319",
+    "questStepHashes": [
+     "418685604",
+     "3764625196",
+     "1343763011",
+     "573683850",
+     "2234037074",
+     "1182689487",
+     "3660810735",
+     "1827275207",
+     "341007722",
+     "1322118319"
+    ],
+    "stepObjectiveHashes": [
+     "2666511142",
+     "426088925",
+     "2516300109",
+     "2939470218",
+     "819682896",
+     "109086561",
+     "978613071",
+     "1705074521",
+     "533384776",
+     "3446780026"
+    ],
+    "iconPath": "/common/destiny2_content/icons/88f34090e87d7ad9314e6bf21b8f1413.png",
+    "completionObjectiveHash": "3446780026",
+    "group": "Strangelets",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "418685604",
+      "description": "Locate the Emeritus in the Aionian Campus to obtain more information about the strangelet capsule there.",
+      "objectives": [
+       {
+        "hash": "2666511142",
+        "label": "Emeritus located",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3764625196",
+      "description": "Find a way into the Aionian laboratory to rescue the scientists held there and obtain the Acceleron.",
+      "objectives": [
+       {
+        "hash": "426088925",
+        "label": "Aionian scientists rescued",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1343763011",
+      "description": "Let the Emeritus know that you have saved his researchers.",
+      "objectives": [
+       {
+        "hash": "2516300109",
+        "label": "Emeritus contacted",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "573683850",
+      "description": "Push back the assault on the Aionian Agricultural Center.",
+      "objectives": [
+       {
+        "hash": "2939470218",
+        "label": "\"Fallow\" completed",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2234037074",
+      "description": "Let the Emeritus know the problem at the Agricultural Center has been resolved.",
+      "objectives": [
+       {
+        "hash": "819682896",
+        "label": "Emeritus updated",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1182689487",
+      "description": "Speak with Dean Rebecca in the Aionian Campus.",
+      "objectives": [
+       {
+        "hash": "109086561",
+        "label": "Dean Rebecca consulted",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3660810735",
+      "description": "Protect the Aionian holy site.",
+      "objectives": [
+       {
+        "hash": "978613071",
+        "label": "\"Nostos\" completed",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1827275207",
+      "description": "Talk to the Emeritus in the Aionian Campus.",
+      "objectives": [
+       {
+        "hash": "1705074521",
+        "label": "Emeritus consulted",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "341007722",
+      "description": "Speak with the dean in the Aionian Campus regarding the Vex.",
+      "objectives": [
+       {
+        "hash": "533384776",
+        "label": "Dean Rebecca consulted",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1322118319",
+      "description": "Retrieve the strangelet capsule from its resting place, which is currently overrun by Vex.",
+      "objectives": [
+       {
+        "hash": "3446780026",
+        "label": "\"Commencement\" completed",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "fallbackRecordHashes": [
+     "3854636015"
+    ]
+   },
+   {
+    "name": "The Exile's Accord Strangelet",
+    "questHash": "261046310",
+    "completionStepHash": "2258411286",
+    "questStepHashes": [
+     "261046310",
+     "629807684",
+     "2709649276",
+     "232000212",
+     "261046311",
+     "429783253",
+     "2258411286"
+    ],
+    "stepObjectiveHashes": [
+     "3564996709",
+     "2844035653",
+     "1088614539",
+     "2445860408",
+     "3066070268",
+     "4081908746",
+     "2726890563"
+    ],
+    "iconPath": "/common/destiny2_content/icons/bec0fb3502f556d52b0cb0e5788e3be3.png",
+    "completionObjectiveHash": "2726890563",
+    "group": "Strangelets",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "261046310",
+      "description": "Meet Lodi in the Curtilage Divide within the Exile's Accord.",
+      "objectives": [
+       {
+        "hash": "3564996709",
+        "label": "Lodi consulted",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "629807684",
+      "description": "Engage the Exiles to acquire the Relocator tech and the Acceleron held by the Exile commander here.",
+      "objectives": [
+       {
+        "hash": "2844035653",
+        "label": "Relocator",
+        "total": 1
+       },
+       {
+        "hash": "2318996405",
+        "label": "Acceleron: Displacement",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2709649276",
+      "description": "Meet with Lodi.",
+      "objectives": [
+       {
+        "hash": "1088614539",
+        "label": "Lodi consulted",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "232000212",
+      "description": "Sabotage the House of Exile's Arc refinery operations.",
+      "objectives": [
+       {
+        "hash": "2445860408",
+        "label": "\"Transient\" completed",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "261046311",
+      "description": "Locate Lodi in Augur's Bethel.",
+      "objectives": [
+       {
+        "hash": "3066070268",
+        "label": "Lodi located",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "429783253",
+      "description": "Acquire the Acceleron from Spoil to access mission \"Saturnism.\"",
+      "objectives": [
+       {
+        "hash": "4081908746",
+        "label": "Acceleron: Spoil",
+        "total": 1
+       },
+       {
+        "hash": "3759796578",
+        "label": "\"Saturnism\" completed",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2258411286",
+      "description": "Destroy the Exiles' Prime Servitor and claim the House's strangelet capsule.",
+      "objectives": [
+       {
+        "hash": "2726890563",
+        "label": "\"Gouge\" completed",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "fallbackRecordHashes": [
+     "3854636015"
+    ]
+   },
+   {
+    "name": "The Gorge Strangelet",
+    "questHash": "1849756152",
+    "completionStepHash": "1447128681",
+    "questStepHashes": [
+     "1849756152",
+     "1145603399",
+     "1447128681"
+    ],
+    "stepObjectiveHashes": [
+     "2063660140",
+     "4209827820",
+     "3031260282"
+    ],
+    "iconPath": "/common/destiny2_content/icons/2a21e4a936570e4c5a967abcc42197e3.png",
+    "completionObjectiveHash": "3031260282",
+    "group": "Strangelets",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "1849756152",
+      "description": "Find and speak with Orin in the Gorge.",
+      "objectives": [
+       {
+        "hash": "2063660140",
+        "label": "Orin met",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1145603399",
+      "description": "Clear a path to the final strangelet capsule by destroying the Vex Minds that refine the Nine's power and shield the collective from degradation.",
+      "objectives": [
+       {
+        "hash": "4209827820",
+        "label": "Acceleron: Surveillance",
+        "total": 1
+       },
+       {
+        "hash": "2590760299",
+        "label": "\"Disruption\" completed",
+        "total": 1
+       },
+       {
+        "hash": "19925863",
+        "label": "Acceleron: Siphon",
+        "total": 1
+       },
+       {
+        "hash": "2275682574",
+        "label": "\"Calculus\" completed",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1447128681",
+      "description": "Defeat the Vex Mind maintaining the quarantine around the Acceleron and retrieve the strangelet capsule it holds.",
+      "objectives": [
+       {
+        "hash": "3031260282",
+        "label": "\"Quarantine\" completed",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "fallbackRecordHashes": [
+     "3854636015"
+    ]
+   },
+   {
+    "name": "The Outer Steppes Strangelet",
+    "questHash": "870155466",
+    "completionStepHash": "3834851019",
+    "questStepHashes": [
+     "870155466",
+     "3427598700",
+     "714938645",
+     "1294183585",
+     "270723513",
+     "271106369",
+     "3834851019"
+    ],
+    "stepObjectiveHashes": [
+     "1004500051",
+     "3525640331",
+     "3321992998",
+     "3117026543",
+     "3701149519",
+     "4076838031",
+     "1831743376"
+    ],
+    "iconPath": "/common/destiny2_content/icons/c30c8c4edd597a041f9b94f1d5968019.png",
+    "completionObjectiveHash": "1831743376",
+    "group": "Strangelets",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "870155466",
+      "description": "Ikora wants you to investigate the relationship between dark matter and Kepler, but first she needs you to meet up with Lodi's Aionian contact in the Stacks.",
+      "objectives": [
+       {
+        "hash": "1004500051",
+        "label": "Lodi's contact found",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3427598700",
+      "description": "Dr. Carnahan's office has been ransacked. Trace amounts of of Stasis and Strand energy hang in the air. Find the culprits, and maybe the Dr.",
+      "objectives": [
+       {
+        "hash": "3525640331",
+        "label": "Stasis Exiles defeated",
+        "total": 1
+       },
+       {
+        "hash": "1866202206",
+        "label": "Strand Exiles defeated",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "714938645",
+      "description": "Track down the last of the Exiles who ransacked the lab and claim the leader's Acceleron.",
+      "objectives": [
+       {
+        "hash": "3321992998",
+        "label": "Exile Marauder defeated",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1294183585",
+      "description": "Talk to Dr. Carnahan about the murder of her assistant.",
+      "objectives": [
+       {
+        "hash": "3117026543",
+        "label": "Dr. Carnahan located",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "270723513",
+      "description": "Find the murderer. Exact justice and retrieve the stolen technology.",
+      "objectives": [
+       {
+        "hash": "3701149519",
+        "label": "\"Morphology\" completed",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "271106369",
+      "description": "Return to Dr. Carnahan with the Mattermorph technology.",
+      "objectives": [
+       {
+        "hash": "4076838031",
+        "label": "Mattermorph returned",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3834851019",
+      "description": "Retrieve the Outer Steppes strangelet capsule in mission \"Charge.\"",
+      "objectives": [
+       {
+        "hash": "1831743376",
+        "label": "\"Charge\" completed",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "fallbackRecordHashes": [
+     "3854636015"
+    ]
+   },
+   {
+    "name": "Dark Academia",
+    "questHash": "3685490865",
+    "completionStepHash": "447068219",
+    "questStepHashes": [
+     "3685490865",
+     "3247371271",
+     "447068219"
+    ],
+    "stepObjectiveHashes": [
+     "3162141767",
+     "563671508",
+     "3095321856"
+    ],
+    "iconPath": "/common/destiny2_content/icons/651ee927e48bca1b2f3f5327976a5f49.png",
+    "completionObjectiveHash": "3095321856",
+    "group": "Ikora's Tasks",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "3685490865",
+      "description": "Scour the area for information.",
+      "objectives": [
+       {
+        "hash": "3162141767",
+        "label": "Aionian device found",
+        "total": 1
+       },
+       {
+        "hash": "1042923099",
+        "label": "Scan Remains",
+        "total": 1
+       },
+       {
+        "hash": "4086287948",
+        "label": "Shrine investigated",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3247371271",
+      "description": "Return the strange device you found to the Aionian encampment in the Caldera.",
+      "objectives": [
+       {
+        "hash": "563671508",
+        "label": "Aionian device returned",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "447068219",
+      "description": "You have the unstable artifact, and Dean Rebecca has asked that you return to her in the Caldera.",
+      "objectives": [
+       {
+        "hash": "3095321856",
+        "label": "Artifact delivered to Dean Rebecca",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "recordHash": "803783203",
+    "recordObjectiveHash": "2066988120"
+   },
+   {
+    "name": "Declassification",
+    "questHash": "1280324466",
+    "completionStepHash": "1735162791",
+    "questStepHashes": [
+     "1280324466",
+     "1280324467",
+     "1280324464",
+     "4112214724",
+     "1735162791"
+    ],
+    "stepObjectiveHashes": [
+     "65771147",
+     "3688259688",
+     "4170302365",
+     "2140780089",
+     "65230708"
+    ],
+    "iconPath": "/common/destiny2_content/icons/651ee927e48bca1b2f3f5327976a5f49.png",
+    "completionObjectiveHash": "65230708",
+    "group": "Ikora's Tasks",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "1280324466",
+      "description": "Void signals indicate the locations of the microscopic singularities. Find and destroy them.",
+      "objectives": [
+       {
+        "hash": "65771147",
+        "label": "Microscopic singularities destroyed",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1280324467",
+      "description": "The singularities are being caused by axion bolts. Destroy them to prevent further singularity development.",
+      "objectives": [
+       {
+        "hash": "3688259688",
+        "label": "Axion bolts destroyed",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1280324464",
+      "description": "Another axion-bolt-created singularity remains to be destroyed.",
+      "objectives": [
+       {
+        "hash": "4170302365",
+        "label": "Axion bolt destroyed",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "4112214724",
+      "description": "One final set of readings remains. Track them down.",
+      "objectives": [
+       {
+        "hash": "2140780089",
+        "label": "Final axion bolt located",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1735162791",
+      "description": "Defend the Ares One against the encroaching Vex.",
+      "objectives": [
+       {
+        "hash": "65230708",
+        "label": "Shuttle protected",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "recordHash": "803783203",
+    "recordObjectiveHash": "2066988120"
+   },
+   {
+    "name": "Faculty Advisement",
+    "questHash": "3855958218",
+    "completionStepHash": "2178080007",
+    "questStepHashes": [
+     "3855958218",
+     "2306703768",
+     "1891059392",
+     "3819424393",
+     "3855958219",
+     "4173803691",
+     "2188712690",
+     "2178080007"
+    ],
+    "stepObjectiveHashes": [
+     "2364626693",
+     "1559958527",
+     "1017850855",
+     "1197493412",
+     "3670186466",
+     "2597471298",
+     "2186012749",
+     "3131577910"
+    ],
+    "iconPath": "/common/destiny2_content/icons/651ee927e48bca1b2f3f5327976a5f49.png",
+    "completionObjectiveHash": "3131577910",
+    "group": "Ikora's Tasks",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "3855958218",
+      "description": "Use your basic understanding of the Aionian language to converse with the Aionian researcher.",
+      "objectives": [
+       {
+        "hash": "2364626693",
+        "label": "Spoke to Aionian",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2306703768",
+      "description": "You're told there is a monument here that carries great importance to the Aionians. Find it and learn what you can from it.",
+      "objectives": [
+       {
+        "hash": "1559958527",
+        "label": "Monument located",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1891059392",
+      "description": "Speak with Dean Rebecca to learn more about the Aionians and how you can help.",
+      "objectives": [
+       {
+        "hash": "1017850855",
+        "label": "Dean Rebecca consulted",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3819424393",
+      "description": "Collect samples of the local Vex for the Aionians' studies.",
+      "objectives": [
+       {
+        "hash": "1197493412",
+        "label": "Vex samples collected",
+        "total": 20
+       }
+      ]
+     },
+     {
+      "hash": "3855958219",
+      "description": "Return the Vex samples to the Aionian researcher as requested.",
+      "objectives": [
+       {
+        "hash": "3670186466",
+        "label": "Samples delivered",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "4173803691",
+      "description": "Speak with Ghost.",
+      "objectives": [
+       {
+        "hash": "2597471298",
+        "label": "Ghost consulted",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2188712690",
+      "description": "An offline terminal in House of Exile territory holds data that could be valuable to the Aionians.",
+      "objectives": [
+       {
+        "hash": "2186012749",
+        "label": "Terminal analyzed",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2178080007",
+      "description": "Return to Ikora to speak with her about everything that's happened.",
+      "objectives": [
+       {
+        "hash": "3131577910",
+        "label": "Ikora visited",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "recordHash": "803783203",
+    "recordObjectiveHash": "2066988120"
+   },
+   {
+    "name": "Forensic Horology",
+    "questHash": "4144260662",
+    "completionStepHash": "2369741157",
+    "questStepHashes": [
+     "4144260662",
+     "1123841232",
+     "333972147",
+     "2369741157"
+    ],
+    "stepObjectiveHashes": [
+     "2340214631",
+     "1354121981",
+     "970384296",
+     "1515823086"
+    ],
+    "iconPath": "/common/destiny2_content/icons/651ee927e48bca1b2f3f5327976a5f49.png",
+    "completionObjectiveHash": "1515823086",
+    "group": "Ikora's Tasks",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "4144260662",
+      "description": "Locate and investigate Temporal Disturbances across Kepler that are being tampered with by the Conductor's Vex.",
+      "objectives": [
+       {
+        "hash": "2340214631",
+        "label": "Temporal Disturbance investigated",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1123841232",
+      "description": "Ikora found a strange relic and requests your presence immediately. Meet with her to investigate further.",
+      "objectives": [
+       {
+        "hash": "1354121981",
+        "label": "Met with Ikora",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "333972147",
+      "description": "Locate and scan the next disturbance site.",
+      "objectives": [
+       {
+        "hash": "970384296",
+        "label": "Site scanned",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2369741157",
+      "description": "Ghost is detecting a Vanguard signal. Establish contact with Ikora Rey and hear what she has to say.",
+      "objectives": [
+       {
+        "hash": "1515823086",
+        "label": "Call from Ikora received",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "recordHash": "803783203",
+    "recordObjectiveHash": "2066988120"
+   },
+   {
+    "name": "Hyperreal G-Man",
+    "questHash": "1664229795",
+    "completionStepHash": "795784746",
+    "questStepHashes": [
+     "1664229795",
+     "795784746"
+    ],
+    "stepObjectiveHashes": [
+     "1915433908",
+     "2008173139"
+    ],
+    "iconPath": "/common/destiny2_content/icons/651ee927e48bca1b2f3f5327976a5f49.png",
+    "completionObjectiveHash": "2008173139",
+    "group": "Ikora's Tasks",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "1664229795",
+      "description": "Ikora has forwarded the coordinated of a number of Vex data spikes. Lodi's been bouncing signals off of them. Find them, and pull the data.",
+      "objectives": [
+       {
+        "hash": "1915433908",
+        "label": "First data spike found",
+        "total": 1
+       },
+       {
+        "hash": "1915433911",
+        "label": "Second data spike found",
+        "total": 1
+       },
+       {
+        "hash": "1915433910",
+        "label": "Third data spike found",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "795784746",
+      "description": "Now that the Vex lures are deciphered, Lodi is trying to contact you. Find a clear signal and answer his call.",
+      "objectives": [
+       {
+        "hash": "2008173139",
+        "label": "Lodi's call answered",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "recordHash": "803783203",
+    "recordObjectiveHash": "2066988120"
+   },
+   {
+    "name": "Orientation",
+    "questHash": "3391367636",
+    "completionStepHash": "70884179",
+    "questStepHashes": [
+     "3391367636",
+     "3391367639",
+     "3391367638",
+     "3391367633",
+     "70884179"
+    ],
+    "stepObjectiveHashes": [
+     "2031083267",
+     "1643227157",
+     "680132944",
+     "719836902",
+     "3809930696"
+    ],
+    "iconPath": "/common/destiny2_content/icons/b165218f943f589d06fe01cd58fda3b8.png",
+    "completionObjectiveHash": "3809930696",
+    "group": "Lodi's Requests",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "3391367636",
+      "description": "Seek out vestiges of the Nine's presence across Kepler.",
+      "objectives": [
+       {
+        "hash": "2031083267",
+        "label": "I located",
+        "total": 1
+       },
+       {
+        "hash": "2533102032",
+        "label": "II located",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3391367639",
+      "description": "Locate a second group of symbols of the Nine.",
+      "objectives": [
+       {
+        "hash": "1643227157",
+        "label": "V located",
+        "total": 1
+       },
+       {
+        "hash": "1147902310",
+        "label": "VI located",
+        "total": 1
+       },
+       {
+        "hash": "963348422",
+        "label": "IX located",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3391367638",
+      "description": "Locate a third group of symbols of the Nine.",
+      "objectives": [
+       {
+        "hash": "680132944",
+        "label": "VII located",
+        "total": 1
+       },
+       {
+        "hash": "557846681",
+        "label": "VIII located",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3391367633",
+      "description": "Locate a fourth group of symbols of the Nine.",
+      "objectives": [
+       {
+        "hash": "719836902",
+        "label": "IV located",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "70884179",
+      "description": "Bind your connections with the Nine to the Orrery.",
+      "objectives": [
+       {
+        "hash": "3809930696",
+        "label": "Orrery visited",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "recordHash": "803783203",
+    "recordObjectiveHash": "2066988121"
+   },
+   {
+    "name": "The Man Out Of Time",
+    "questHash": "3358744199",
+    "completionStepHash": "2290544465",
+    "questStepHashes": [
+     "3358744199",
+     "3235330220",
+     "2290544465"
+    ],
+    "stepObjectiveHashes": [
+     "1296512022",
+     "1168740185",
+     "1946613239"
+    ],
+    "iconPath": "/common/destiny2_content/icons/b165218f943f589d06fe01cd58fda3b8.png",
+    "completionObjectiveHash": "1946613239",
+    "group": "Lodi's Requests",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "3358744199",
+      "description": "Investigate the time scars Lodi has located.",
+      "objectives": [
+       {
+        "hash": "1296512022",
+        "label": "Aionian Campus time scar investigated",
+        "total": 1
+       },
+       {
+        "hash": "4180529440",
+        "label": "Curtilage Divide time scar investigated",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3235330220",
+      "description": "Investigate the next time scar Lodi has located.",
+      "objectives": [
+       {
+        "hash": "1168740185",
+        "label": "Caldera time scar investigated",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2290544465",
+      "description": "One time scar remains to investigate.",
+      "objectives": [
+       {
+        "hash": "1946613239",
+        "label": "Final time scar investigated",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "recordHash": "803783203",
+    "recordObjectiveHash": "2066988121"
+   },
+   {
+    "name": "Turophile",
+    "questHash": "1520650325",
+    "completionStepHash": "3425720481",
+    "questStepHashes": [
+     "1520650325",
+     "2239309442",
+     "3631716173",
+     "1520650326",
+     "3425720481"
+    ],
+    "stepObjectiveHashes": [
+     "516054942",
+     "1911680347",
+     "3992964422",
+     "449930759",
+     "1988974098"
+    ],
+    "iconPath": "/common/destiny2_content/icons/b165218f943f589d06fe01cd58fda3b8.png",
+    "completionObjectiveHash": "1988974098",
+    "group": "Lodi's Requests",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "1520650325",
+      "description": "Destroy the Vex hunting after a strange signal.",
+      "objectives": [
+       {
+        "hash": "516054942",
+        "label": "Ambush defeated",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2239309442",
+      "description": "Examine the remaining wreckage of Vex.",
+      "objectives": [
+       {
+        "hash": "1911680347",
+        "label": "Vex remains investigated",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3631716173",
+      "description": "This particular Vex seems well-mannered. For now. Search the area for clues about its provenance.",
+      "objectives": [
+       {
+        "hash": "3992964422",
+        "label": "Source located",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1520650326",
+      "description": "The Vex arrive once again. They want what you carry. Defeat them!",
+      "objectives": [
+       {
+        "hash": "449930759",
+        "label": "Ambush defeated",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3425720481",
+      "description": "Return Sharp Cheddar to Dean Rebecca.",
+      "objectives": [
+       {
+        "hash": "1988974098",
+        "label": "Returned to Dean Rebecca",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "recordHash": "803783203",
+    "recordObjectiveHash": "2066988121"
+   },
+   {
+    "name": "Vessel of the Nine",
+    "questHash": "3900061864",
+    "completionStepHash": "2443614657",
+    "questStepHashes": [
+     "3900061864",
+     "1072701727",
+     "1143556309",
+     "1143556310",
+     "2443614657"
+    ],
+    "stepObjectiveHashes": [
+     "1667151365",
+     "3390071356",
+     "2579313950",
+     "2513189767",
+     "2778219954"
+    ],
+    "iconPath": "/common/destiny2_content/icons/b165218f943f589d06fe01cd58fda3b8.png",
+    "completionObjectiveHash": "2778219954",
+    "group": "Lodi's Requests",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "3900061864",
+      "description": "Lodi's voice channel is being overloaded with some kind of strange interference, but his signal is pinging your comms. Search for a spot with a clearer signal and contact him.",
+      "objectives": [
+       {
+        "hash": "1667151365",
+        "label": "Lodi contacted",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1072701727",
+      "description": "Search for a signature that might indicate Lodi's presence by inspecting the House of Exile corpses coated in strange energy.",
+      "objectives": [
+       {
+        "hash": "3390071356",
+        "label": "Energy signature located",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1143556309",
+      "description": "Search the area for anything of relevance to Lodi's strange experience.",
+      "objectives": [
+       {
+        "hash": "2579313950",
+        "label": "Archon drawn out",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1143556310",
+      "description": "Find another slime in order to reach back to the Archon. Hopefully it can be stopped from impacting Lodi.",
+      "objectives": [
+       {
+        "hash": "2513189767",
+        "label": "Archon contacted",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2443614657",
+      "description": "Use the resonance of the energy point to attract the Archon's attention.",
+      "objectives": [
+       {
+        "hash": "2778219954",
+        "label": "Energy point resonated",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "recordHash": "803783203",
+    "recordObjectiveHash": "2066988121"
+   },
+   {
+    "name": "The Paper Crane",
+    "questHash": "809874453",
+    "completionStepHash": "870411438",
+    "questStepHashes": [
+     "809874453",
+     "3640820183",
+     "3981633273",
+     "2514237104",
+     "870411438"
+    ],
+    "stepObjectiveHashes": [
+     "2080040286",
+     "1280648612",
+     "2557836058",
+     "1847006173",
+     "19795407"
+    ],
+    "iconPath": "/common/destiny2_content/icons/7ec5d0d95622a59942812d8132f184f7.png",
+    "completionObjectiveHash": "19795407",
+    "group": "Orin's Pieces",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "809874453",
+      "description": "A nearby radiolaria pool contains strange dark matter signatures. Investigate it and see what knowledge can be gleaned.",
+      "objectives": [
+       {
+        "hash": "2080040286",
+        "label": "Radiolaria pool investigated",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3640820183",
+      "description": "A Vex ambush protects the pool. Destroy the attackers and find what secrets they're guarding.",
+      "objectives": [
+       {
+        "hash": "1280648612",
+        "label": "Vex defeated",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3981633273",
+      "description": "Ikora suspects there is a life form, maybe a plant, that may be actively feeding off of the dark matter. She surmises that we might be able to find a specimen in the Caldera.",
+      "objectives": [
+       {
+        "hash": "2557836058",
+        "label": "Caldera searched",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2514237104",
+      "description": "Ghost is tracking a concentration of dark matter traces. They converge in the Stacks, near where you landed.",
+      "objectives": [
+       {
+        "hash": "1847006173",
+        "label": "The Stacks searched",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "870411438",
+      "description": "The Aionians have a Shrine to Failure nearby. Perhaps it holds a clue to the Aionian's history.",
+      "objectives": [
+       {
+        "hash": "19795407",
+        "label": "Shrine found",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "recordHash": "803783203",
+    "recordObjectiveHash": "2066988122"
+   },
+   {
+    "name": "Transfer of Power",
+    "questHash": "2523889577",
+    "completionStepHash": "1099314475",
+    "questStepHashes": [
+     "2523889577",
+     "2580338934",
+     "4140618828",
+     "2679258427",
+     "1099314475"
+    ],
+    "stepObjectiveHashes": [
+     "2902308106",
+     "175763495",
+     "246190993",
+     "3507532800",
+     "2044949744"
+    ],
+    "iconPath": "/common/destiny2_content/icons/7ec5d0d95622a59942812d8132f184f7.png",
+    "completionObjectiveHash": "2044949744",
+    "group": "Orin's Pieces",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "2523889577",
+      "description": "Defeat Vex in the area to collect radiolaria specimens for the temporal beacon.",
+      "objectives": [
+       {
+        "hash": "2902308106",
+        "label": "Time-Locked radiolaria collected",
+        "total": 1
+       },
+       {
+        "hash": "2902308107",
+        "label": "Time-Locked radiolaria collected",
+        "total": 1
+       },
+       {
+        "hash": "2902308104",
+        "label": "Time-Locked radiolaria collected",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2580338934",
+      "description": "Orin needs you to plant the completed beacon to act as a temporal antenna. She means to show something to Lodi.",
+      "objectives": [
+       {
+        "hash": "175763495",
+        "label": "Temporal Beacon planted",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "4140618828",
+      "description": "Orin is pinging you on a private channel. Pinpoint the signal and connect to her call.",
+      "objectives": [
+       {
+        "hash": "246190993",
+        "label": "Orin's call received",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2679258427",
+      "description": "Your attempts to tap into Unknown Space have drawn in Vex of the Nessian Schism. Remove them.",
+      "objectives": [
+       {
+        "hash": "3507532800",
+        "label": "Conductor's Vex cleared",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1099314475",
+      "description": "Return to Orin to speak with her.",
+      "objectives": [
+       {
+        "hash": "2044949744",
+        "label": "Orin's call received",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "recordHash": "803783203",
+    "recordObjectiveHash": "2066988122"
+   },
+   {
+    "name": "Sacred Emergence",
+    "questHash": "3182409793",
+    "completionStepHash": "3968529813",
+    "questStepHashes": [
+     "3182409793",
+     "1260962137",
+     "3968529813"
+    ],
+    "stepObjectiveHashes": [
+     "1097744578",
+     "1616510714",
+     "2028414430"
+    ],
+    "iconPath": "/common/destiny2_content/icons/7ec5d0d95622a59942812d8132f184f7.png",
+    "completionObjectiveHash": "2028414430",
+    "group": "Orin's Pieces",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "3182409793",
+      "description": "Continue helping Orin recover fragments of herself across Kepler.",
+      "objectives": [
+       {
+        "hash": "1097744578",
+        "label": "Central Academy molt found",
+        "total": 1
+       },
+       {
+        "hash": "3636174708",
+        "label": "Exile's Accord molt found",
+        "total": 1
+       },
+       {
+        "hash": "4032130704",
+        "label": "Outer Wastes molt found",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1260962137",
+      "description": "There is more of Orin's past to uncover, deeper within Kepler.",
+      "objectives": [
+       {
+        "hash": "1616510714",
+        "label": "Orin found",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3968529813",
+      "description": "Track down the remnants of Orin's Ghost, Gol.",
+      "objectives": [
+       {
+        "hash": "2028414430",
+        "label": "Orin's Ghost, Gol, found",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "recordHash": "803783203",
+    "recordObjectiveHash": "2066988122"
+   },
+   {
+    "name": "Skylines",
+    "questHash": "2903390121",
+    "completionStepHash": "2684755243",
+    "questStepHashes": [
+     "2903390121",
+     "1720482314",
+     "2913772187",
+     "2913772184",
+     "2684755243"
+    ],
+    "stepObjectiveHashes": [
+     "3023740170",
+     "1968775219",
+     "1176514784",
+     "3542222453",
+     "2193321200"
+    ],
+    "iconPath": "/common/destiny2_content/icons/7ec5d0d95622a59942812d8132f184f7.png",
+    "completionObjectiveHash": "2193321200",
+    "group": "Orin's Pieces",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "2903390121",
+      "description": "Orin needs your help finding Lodi before the Vex do.",
+      "objectives": [
+       {
+        "hash": "3023740170",
+        "label": "Lodi found",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1720482314",
+      "description": "There is a faint bio-signature on the telescope. Maybe Lodi was here.",
+      "objectives": [
+       {
+        "hash": "1968775219",
+        "label": "Telescope scanned",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2913772187",
+      "description": "Starting at the North Star, Outline the constellation Ursa Major.",
+      "objectives": [
+       {
+        "hash": "1176514784",
+        "label": "Ursa Major drawn",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2913772184",
+      "description": "Outline the constellation Orion, the Hunter.",
+      "objectives": [
+       {
+        "hash": "3542222453",
+        "label": "Orion drawn",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2684755243",
+      "description": "Orin is calling back into the comms line for an update. Find a safe spot to speak.",
+      "objectives": [
+       {
+        "hash": "2193321200",
+        "label": "Orin consulted",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "recordHash": "803783203",
+    "recordObjectiveHash": "2066988122"
+   },
+   {
+    "name": "Correspondence",
+    "questHash": "2686022506",
+    "completionStepHash": "1249896600",
+    "questStepHashes": [
+     "2686022506",
+     "4019658221",
+     "2686022505",
+     "693840694",
+     "1249896600"
+    ],
+    "stepObjectiveHashes": [
+     "4015801416",
+     "1896246915",
+     "2374044407",
+     "1334189218",
+     "250322722"
+    ],
+    "iconPath": "/common/destiny2_content/icons/45a3717b30e0b62be64b148fecff56d8.png",
+    "completionObjectiveHash": "250322722",
+    "group": "Drifter's Undertaking",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "2686022506",
+      "description": "Mysterious chess pieces may have some relation to the Aionians's history. Maybe an Aionian historian will know more.",
+      "objectives": [
+       {
+        "hash": "4015801416",
+        "label": "Aionian historian located",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "4019658221",
+      "description": "The chess pieces are long-lost correspondences to Earth! The Aionians have asked you to find more, if you can.",
+      "objectives": [
+       {
+        "hash": "1896246915",
+        "label": "Chess piece found",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2686022505",
+      "description": "You've found another encoded chess piece, but it's significance is unclear.",
+      "objectives": [
+       {
+        "hash": "2374044407",
+        "label": "Chess piece returned",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "693840694",
+      "description": "The historian believes the chess pieces provide insight into how Aionian society came to be. They've has asked you to collect more lost correspondences from across Kepler.",
+      "objectives": [
+       {
+        "hash": "1334189218",
+        "label": "Chess pieces found",
+        "total": 9
+       }
+      ]
+     },
+     {
+      "hash": "1249896600",
+      "description": "You've collected the remainder of the lost correspondences. Return the completed collection to Dean Rebecca.",
+      "objectives": [
+       {
+        "hash": "250322722",
+        "label": "Collection returned",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "recordHash": "803783203",
+    "recordObjectiveHash": "2066988123"
+   },
+   {
+    "name": "Explore Kepler: Fabled",
+    "questHash": "2722243586",
+    "completionStepHash": "325356765",
+    "questStepHashes": [
+     "2722243586",
+     "325356765"
+    ],
+    "stepObjectiveHashes": [
+     "71548443",
+     "3129069049"
+    ],
+    "iconPath": "/common/destiny2_content/icons/da8dc1e8a3eaea782368ff221e7254df.png",
+    "completionObjectiveHash": "3129069049",
+    "group": "Explore Kepler",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "2722243586",
+      "description": "Collect strangelet capsules in World Tier: Fabled and integrate them at the Altar of Relativity.",
+      "objectives": [
+       {
+        "hash": "71548443",
+        "label": "The Gorge Strangelet",
+        "total": 1
+       },
+       {
+        "hash": "2105521898",
+        "label": "Exile's Accord Strangelet",
+        "total": 1
+       },
+       {
+        "hash": "1060945081",
+        "label": "Central Academy Strangelet",
+        "total": 1
+       },
+       {
+        "hash": "3502681347",
+        "label": "Outer Steppes Strangelet",
+        "total": 1
+       },
+       {
+        "hash": "491830583",
+        "label": "Secret strangelet capsules collected",
+        "total": 2
+       }
+      ]
+     },
+     {
+      "hash": "325356765",
+      "description": "Defeat the Archon in World Tier: Fabled.",
+      "objectives": [
+       {
+        "hash": "3129069049",
+        "label": "The Message: Fabled completed",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "recordHash": "3002424689",
+    "recordObjectiveHash": "686074982"
+   },
+   {
+    "name": "Explore Kepler: Mythic",
+    "questHash": "3540520473",
+    "completionStepHash": "650779620",
+    "questStepHashes": [
+     "3540520473",
+     "650779620"
+    ],
+    "stepObjectiveHashes": [
+     "2886029820",
+     "3952540456"
+    ],
+    "iconPath": "/common/destiny2_content/icons/da8dc1e8a3eaea782368ff221e7254df.png",
+    "completionObjectiveHash": "3952540456",
+    "group": "Explore Kepler",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "3540520473",
+      "description": "Collect strangelet capsules in World Tier: Mythic and integrate them at the Altar of Relativity.",
+      "objectives": [
+       {
+        "hash": "2886029820",
+        "label": "The Gorge Strangelet",
+        "total": 1
+       },
+       {
+        "hash": "1491986531",
+        "label": "Exile's Accord Strangelet",
+        "total": 1
+       },
+       {
+        "hash": "306078458",
+        "label": "Central Academy Strangelet",
+        "total": 1
+       },
+       {
+        "hash": "3715683366",
+        "label": "Outer Steppes Strangelet",
+        "total": 1
+       },
+       {
+        "hash": "3344226068",
+        "label": "Secret strangelet capsules collected",
+        "total": 4
+       }
+      ]
+     },
+     {
+      "hash": "650779620",
+      "description": "Defeat the Archon in World Tier: Mythic.",
+      "objectives": [
+       {
+        "hash": "3952540456",
+        "label": "The Message: Mythic completed",
+        "total": 1
+       }
+      ]
+     }
+    ],
+    "recordHash": "597611526",
+    "recordObjectiveHash": "4263698035"
+   },
+   {
+    "name": "Map and Territory",
+    "questHash": "2499607616",
+    "completionStepHash": "4142710206",
+    "questStepHashes": [
+     "2499607616",
+     "4162305076",
+     "2259155960",
+     "803088062",
+     "3100679920",
+     "4142710206"
+    ],
+    "stepObjectiveHashes": [
+     "1383743130",
+     "1473584070",
+     "4008334082",
+     "470849772",
+     "1160763626",
+     "3808593900"
+    ],
+    "iconPath": "/common/destiny2_content/icons/33fea479fc53e63189338dc6f7b343be.png",
+    "completionObjectiveHash": "3808593900",
+    "category": "expansion",
+    "steps": [
+     {
+      "hash": "2499607616",
+      "description": "Visit Dean Rebecca on Kepler.",
+      "objectives": [
+       {
+        "hash": "1383743130",
+        "label": "Dean visited",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "4162305076",
+      "description": "Complete the raid.",
+      "objectives": [
+       {
+        "hash": "1473584070",
+        "label": "Raid completed",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2259155960",
+      "description": "Approach the Simulant Ansible within the Nursery.",
+      "objectives": [
+       {
+        "hash": "4008334082",
+        "label": "Ansible visited",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "803088062",
+      "description": "Use your network proximity sensor to identify areas where simulations converge.",
+      "objectives": [
+       {
+        "hash": "470849772",
+        "label": "Convergence identified",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "3100679920",
+      "description": "Search for convergences to add to Maya and Chioma's data set.",
+      "objectives": [
+       {
+        "hash": "1160763626",
+        "label": "Signals identified",
+        "total": 12
+       }
+      ]
+     },
+     {
+      "hash": "4142710206",
+      "description": "Maya and Chioma signal you back to the communications hub in the Nursery.",
+      "objectives": [
+       {
+        "hash": "3808593900",
+        "label": "Ansible visited",
+        "total": 1
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Graviton Through the Ages",
+    "questHash": "1551074583",
+    "completionStepHash": "2027753418",
+    "questStepHashes": [
+     "1551074583",
+     "2899952451",
+     "921768335",
+     "1089887054",
+     "2899952448",
+     "921768332",
+     "1089887053",
+     "2899952449",
+     "921768333",
+     "1089887052",
+     "2899952454",
+     "896613373",
+     "1089887051",
+     "1910310091",
+     "2027753418"
+    ],
+    "stepObjectiveHashes": [
+     "3185618404",
+     "253497464",
+     "4058886572",
+     "936553711",
+     "1953214317",
+     "669688529",
+     "3509631302",
+     "2195095090",
+     "3150185862",
+     "2155921553",
+     "4018137783",
+     "3169740790",
+     "1716645136",
+     "3187058064",
+     "901552626"
+    ],
+    "iconPath": "/common/destiny2_content/icons/cfabd8935cfc99dc1515c86157367747.png",
+    "completionObjectiveHash": "901552626",
+    "category": "exotic",
+    "reward": "Graviton Spike",
+    "completionItemHashes": [
+     "648595258"
+    ],
+    "steps": [
+     {
+      "hash": "1551074583",
+      "description": "Speak to Lodi.",
+      "objectives": [
+       {
+        "hash": "3185618404",
+        "label": "Lodi visited",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2899952451",
+      "description": "Speak with the Emeritus in the Caldera.",
+      "objectives": [
+       {
+        "hash": "253497464",
+        "label": "Conversation heard",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "921768335",
+      "description": "Triangulate the location of the weapon piece using the Rosetta device in the Outer Steppes.",
+      "objectives": [
+       {
+        "hash": "4058886572",
+        "label": "Department of External Observations weapon piece located",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1089887054",
+      "description": "Find the lost Department of External Observations weapon piece within the search area.",
+      "objectives": [
+       {
+        "hash": "936553711",
+        "label": "Weapon piece acquired",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2899952448",
+      "description": "Speak with the Emeritus in the Caldera.",
+      "objectives": [
+       {
+        "hash": "1953214317",
+        "label": "Conversation heard",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "921768332",
+      "description": "Triangulate the location of the weapon piece using the Rosetta device in the Gorge.",
+      "objectives": [
+       {
+        "hash": "669688529",
+        "label": "Department of External Observations weapon piece located",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1089887053",
+      "description": "Find the lost Department of External Observations weapon piece within the search area.",
+      "objectives": [
+       {
+        "hash": "3509631302",
+        "label": "Weapon piece acquired",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2899952449",
+      "description": "Speak with Lodi in the Caldera.",
+      "objectives": [
+       {
+        "hash": "2195095090",
+        "label": "Conversation heard",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "921768333",
+      "description": "Triangulate the location of the weapon piece using the Rosetta device in Exile's Accord.",
+      "objectives": [
+       {
+        "hash": "3150185862",
+        "label": "",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1089887052",
+      "description": "Find the lost Department of External Observations weapon piece within the search area.",
+      "objectives": [
+       {
+        "hash": "2155921553",
+        "label": "Weapon piece acquired",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2899952454",
+      "description": "Speak with the Emeritus in the Caldera.",
+      "objectives": [
+       {
+        "hash": "4018137783",
+        "label": "Conversation heard",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "896613373",
+      "description": "Collect Data Fragments from defeated Vex. More powerful Vex will provide more data.",
+      "objectives": [
+       {
+        "hash": "3169740790",
+        "label": "Vex Data Fragments collected",
+        "total": 125
+       }
+      ]
+     },
+     {
+      "hash": "1089887051",
+      "description": "Find the lost Department of External Observations weapon piece within the search area.",
+      "objectives": [
+       {
+        "hash": "1716645136",
+        "label": "Weapon piece acquired",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "1910310091",
+      "description": "Speak to Lodi.",
+      "objectives": [
+       {
+        "hash": "3187058064",
+        "label": "Lodi visited",
+        "total": 1
+       }
+      ]
+     },
+     {
+      "hash": "2027753418",
+      "description": "Assemble the weapon using the Sieve.",
+      "objectives": [
+       {
+        "hash": "901552626",
+        "label": "Sieve activity completed",
+        "total": 1
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
 }

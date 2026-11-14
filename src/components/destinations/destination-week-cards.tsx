@@ -15,6 +15,7 @@ const THEMES: Record<string, CardTheme> = {
   europa: { accent: "#8fc4ff", border: "rgba(210,230,255,0.85)", glow: "inset 0 0 18px rgba(143,196,255,0.22)" },
   "the-moon": { accent: "#ff3b3b", border: "rgba(255,59,59,0.85)", glow: "0 0 16px rgba(200,16,46,0.35)" },
   "dreaming-city": { accent: "#bfeaff", border: "rgba(200,240,255,0.6)", glow: "inset 0 0 18px rgba(190,235,255,0.18)" },
+  kepler: { accent: "#8fe3d6", border: "rgba(143,227,214,0.7)", glow: "0 0 16px rgba(143,227,214,0.18)" },
 };
 
 /** Activities whose look differs from their destination's (by rotation label). */
@@ -34,7 +35,7 @@ function cardImage(image: string | undefined): string | null {
 export function DestinationWeekCards({ slug, activities }: { slug: string; activities: WeeklyActivity[] }) {
   const base = THEMES[slug] ?? DEFAULT_THEME;
   return (
-    <div className="grid gap-3 sm:grid-cols-3">
+    <div className={`grid gap-3 ${activities.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
       {activities.map((activity) => {
         const theme = ACTIVITY_THEMES[activity.label] ?? base;
         const image = cardImage(activity.image);
@@ -71,7 +72,7 @@ export function DestinationWeekCards({ slug, activities }: { slug: string; activ
             <span className="relative font-display text-[26px] font-semibold uppercase leading-none tracking-[0.04em] text-white">
               {activity.name}
             </span>
-            <span className="relative text-[13px] text-[#c7cad0]">{activity.detail}</span>
+            {activity.detail ? <span className="relative text-[13px] text-[#c7cad0]">{activity.detail}</span> : null}
           </div>
         );
       })}

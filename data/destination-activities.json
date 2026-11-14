@@ -1,4 +1,424 @@
 {
+ "kepler": {
+  "combat": [
+   [
+    [
+     {
+      "type": "tiers",
+      "title": "World tier",
+      "tiers": [
+       {
+        "label": "Tier 1",
+        "name": "Brave",
+        "activityHashes": [
+         "4068828792",
+         "3344433206"
+        ]
+       },
+       {
+        "label": "Tier 2",
+        "name": "Legendary",
+        "activityHashes": [
+         "226815557"
+        ]
+       },
+       {
+        "label": "Tier 3",
+        "name": "Fabled",
+        "activityHashes": [
+         "226815558"
+        ]
+       },
+       {
+        "label": "Tier 4",
+        "name": "Mythic",
+        "activityHashes": [
+         "226815559"
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "type": "card",
+      "title": "The Sieve",
+      "activityHashes": [
+       "1073708151",
+       "3037439068"
+      ],
+      "rowsHeader": "Defeated",
+      "rows": [
+       {
+        "name": "Giver's Sentry",
+        "check": {
+         "r": "2560556601",
+         "o": "1403796570"
+        }
+       },
+       {
+        "name": "Illaszk",
+        "check": {
+         "r": "2560556601",
+         "o": "1403796571"
+        }
+       },
+       {
+        "name": "Kylazk",
+        "check": {
+         "r": "2560556601",
+         "o": "1403796568"
+        }
+       }
+      ]
+     }
+    ]
+   ]
+  ],
+  "exploration": [
+   [
+    [
+     {
+      "type": "setTable",
+      "title": "Ability chests & urns",
+      "columns": [
+       "Ability chests",
+       "Urns"
+      ],
+      "columnWidth": "19rem",
+      "groups": [
+       {
+        "name": "Central Academy",
+        "rows": [
+         {
+          "name": "Aionian Campus",
+          "cells": [
+           {
+            "r": "2571140713",
+            "o": "2957300938",
+            "total": 7
+           },
+           {
+            "r": "3979268955",
+            "o": "1054697376",
+            "total": 3
+           }
+          ]
+         },
+         {
+          "name": "Caldera",
+          "cells": [
+           {
+            "r": "2571140713",
+            "o": "2957300939",
+            "total": 9
+           },
+           {
+            "r": "3979268955",
+            "o": "1054697377",
+            "total": 3
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "name": "Exile's Accord",
+        "rows": [
+         {
+          "name": "Curtilage Divide",
+          "cells": [
+           {
+            "r": "1658403846",
+            "o": "3054392951",
+            "total": 6
+           },
+           {
+            "r": "4288950128",
+            "o": "300357533",
+            "total": 3
+           }
+          ]
+         },
+         {
+          "name": "Augur's Bethel",
+          "cells": [
+           {
+            "r": "1658403846",
+            "o": "3054392950",
+            "total": 5
+           },
+           {
+            "r": "4288950128",
+            "o": "300357532",
+            "total": 3
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "name": "The Gorge",
+        "rows": [
+         {
+          "name": "Assimilated Easement",
+          "cells": [
+           {
+            "r": "2334005447",
+            "o": "3022775188",
+            "total": 5
+           },
+           {
+            "r": "551697209",
+            "o": "2500000602",
+            "total": 5
+           }
+          ]
+         },
+         {
+          "name": "Stellar Sink",
+          "cells": [
+           {
+            "r": "2334005447",
+            "o": "3022775189",
+            "total": 3
+           },
+           {
+            "r": "551697209",
+            "o": "2500000603",
+            "total": 1
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "name": "Outer Steppes",
+        "rows": [
+         {
+          "name": "Outer Wastes",
+          "cells": [
+           {
+            "r": "1644941825",
+            "o": "2609521138",
+            "total": 5
+           },
+           {
+            "r": "628203319",
+            "o": "3387799813",
+            "total": 2
+           }
+          ]
+         },
+         {
+          "name": "Stacks",
+          "cells": [
+           {
+            "r": "1644941825",
+            "o": "2609521139",
+            "total": 10
+           },
+           {
+            "r": "628203319",
+            "o": "3387799812",
+            "total": 4
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "name": "The Singularity",
+        "rows": [
+         {
+          "name": "Singularity",
+          "cells": [
+           {
+            "r": "990845897",
+            "o": "3686128682",
+            "total": 3
+           },
+           null
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   ],
+   [
+    [
+     {
+      "type": "setTable",
+      "title": "Kepler abilities",
+      "columns": [
+       "Upgrades"
+      ],
+      "columnWidth": "9.5rem",
+      "groups": [
+       {
+        "rows": [
+         {
+          "name": "Matterspark",
+          "cells": [
+           {
+            "items": [
+             {
+              "r": "3059285938",
+              "o": "1477928651"
+             },
+             {
+              "r": "3059285938",
+              "o": "1477928650"
+             },
+             {
+              "r": "3059285938",
+              "o": "1477928649"
+             },
+             {
+              "r": "3059285938",
+              "o": "1477928648"
+             }
+            ]
+           }
+          ]
+         },
+         {
+          "name": "Rosetta",
+          "cells": [
+           {
+            "items": [
+             {
+              "r": "1551316272",
+              "o": "4181037917"
+             },
+             {
+              "r": "1551316272",
+              "o": "4181037916"
+             },
+             {
+              "r": "1551316272",
+              "o": "4181037919"
+             }
+            ]
+           }
+          ]
+         },
+         {
+          "name": "Relocator",
+          "cells": [
+           {
+            "items": [
+             {
+              "r": "2850752313",
+              "o": "2783919962"
+             },
+             {
+              "r": "2850752313",
+              "o": "2783919963"
+             }
+            ]
+           }
+          ]
+         },
+         {
+          "name": "Mattermorph",
+          "cells": [
+           {
+            "items": [
+             {
+              "r": "1710668270"
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "type": "setTable",
+      "title": "Graviton Spike mysteries",
+      "columns": [
+       "Acquired"
+      ],
+      "columnWidth": "9.5rem",
+      "groups": [
+       {
+        "rows": [
+         {
+          "name": "Intrinsics",
+          "cells": [
+           {
+            "items": [
+             {
+              "r": "2580840552",
+              "o": "1072279237"
+             },
+             {
+              "r": "2580840552",
+              "o": "1072279236"
+             },
+             {
+              "r": "2580840552",
+              "o": "1072279239"
+             }
+            ]
+           }
+          ]
+         },
+         {
+          "name": "Rapid Hit",
+          "cells": [
+           {
+            "r": "2580840552",
+            "o": "1072279238",
+            "total": 3
+           }
+          ]
+         },
+         {
+          "name": "Subsistence",
+          "cells": [
+           {
+            "r": "2580840552",
+            "o": "1072279233",
+            "total": 3
+           }
+          ]
+         },
+         {
+          "name": "Transcendent Zen",
+          "cells": [
+           {
+            "r": "2580840552",
+            "o": "1072279232",
+            "total": 3
+           }
+          ]
+         },
+         {
+          "name": "Temporal Alignment",
+          "cells": [
+           {
+            "r": "2580840552",
+            "o": "1072279235",
+            "total": 3
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   ]
+  ]
+ },
  "the-pale-heart": {
   "combat": [
    [

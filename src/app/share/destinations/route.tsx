@@ -24,12 +24,13 @@ type Skin = {
 };
 
 const SKINS: Record<DestinationSlug, Skin> = {
+  // Kepler's pale turquoise highlights.
   kepler: {
-    accent: "#ff8a3d",
-    text: "#fff3e8",
-    frame: { border: `${u(2)}px solid #ff8a3d` },
-    glow: "0 0 0 transparent",
-    tint: "linear-gradient(135deg, rgba(255,138,61,0.18), rgba(255,138,61,0) 60%)",
+    accent: "#8fe3d6",
+    text: "#effcfa",
+    frame: { border: `${u(1)}px solid rgba(143,227,214,0.75)`, boxShadow: `0 0 ${u(16)}px rgba(143,227,214,0.25)` },
+    glow: `0 0 ${u(14)}px rgba(143,227,214,0.5)`,
+    tint: "linear-gradient(135deg, rgba(143,227,214,0.18), rgba(143,227,214,0) 60%)",
     artPosition: "50% 40%",
   },
   "the-pale-heart": {

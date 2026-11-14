@@ -28,7 +28,7 @@ const EXPANSION_SOURCE_PATTERNS: [RegExp, string][] = [
   [/the edge of fate activities|edge of fate campaign/i, "The Edge of Fate"],
   [/edge of fate|desert perpetual|equilibrium|vesper'?s host|sundered doctrine|pantheon/i, "The Edge of Fate"],
   [/renegades|fireteam ops/i, "Renegades"],
-  [/kepler|exploring kepler/i, "Renegades"],
+  [/kepler|exploring kepler/i, "The Edge of Fate"],
   [/warmind|\bescalation protocol|\bspire of stars|\bmars\b/i, "Warmind"],
   [
     /curse of osiris|\beater of worlds|lost prophecies|\bbrother vance|rank-up packages on mercury|activities.*\bon mercury\b/i,

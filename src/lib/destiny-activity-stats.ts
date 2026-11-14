@@ -488,3 +488,46 @@ export function isRaidCompletionSlug(slug: string): slug is RaidCompletionSlug {
 export function raidHasMasterTier(slug: RaidCompletionSlug): boolean {
   return RAID_COMPLETION_ACTIVITY_HASHES[slug].master.length > 0;
 }
+
+export type ActivityPlayStats = { seconds: number; kills: number };
+
+/**
+ * Time played and kills per activity hash across all characters, from aggregate
+ * stats only (patrols such as Kepler's World Tiers never record completions).
+ * Hashes Bungie has no stats for are left out.
+ */
+export async function fetchActivityHashPlayStats(
+  session: BungieUserSession,
+  activityHashes: readonly string[],
+): Promise<Record<string, ActivityPlayStats>> {
+  const wanted = new Set(activityHashes.filter((hash) => /^\d+$/.test(hash)));
+  const result: Record<string, ActivityPlayStats> = {};
+  if (!wanted.size) return result;
+
+  const membership = await resolveDestinyMembership(session);
+  if (!membership) return result;
+  const profile = await bungieGet<ProfileCharactersResponse>(
+    `/Platform/Destiny2/${membership.membershipType}/Profile/${membership.membershipId}/?components=200`,
+    session.accessToken,
+  );
+  const characterIds = Object.keys(profile.characters?.data ?? {});
+
+  const perCharacter = await Promise.all(
+    characterIds.map((characterId) =>
+      bungieGet<AggregateActivityStatsResponse>(
+        `/Platform/Destiny2/${membership.membershipType}/Account/${membership.membershipId}/Character/${characterId}/Stats/AggregateActivityStats/`,
+        session.accessToken,
+      ).catch(() => null),
+    ),
+  );
+  for (const stats of perCharacter) {
+    for (const activity of stats?.activities ?? []) {
+      const hash = String(activity.activityHash);
+      if (!wanted.has(hash)) continue;
+      const entry = (result[hash] ??= { seconds: 0, kills: 0 });
+      entry.seconds += activity.values?.activitySecondsPlayed?.basic?.value ?? 0;
+      entry.kills += activity.values?.activityKills?.basic?.value ?? 0;
+    }
+  }
+  return result;
+}

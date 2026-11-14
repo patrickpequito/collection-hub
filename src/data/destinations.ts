@@ -26,8 +26,10 @@ export type Destination = {
    */
   reputation?: { vendor: string; progressionHash: string; maxRank: number };
   /** Weekly rotation shown in "This week" (from data/featured-activities.json). */
-  weekly?: "nightmare-hunts" | "europa" | "dreaming-city" | "throne-world" | "neomuna";
+  weekly?: "nightmare-hunts" | "europa" | "dreaming-city" | "throne-world" | "neomuna" | "kepler";
   vaulted?: boolean;
+  /** Home "This week" tile art when it differs from the destination art (public/images/destinations). */
+  homeImageFile?: string;
   /** Page available (destinations are built one at a time). */
   built?: boolean;
 };
@@ -39,9 +41,12 @@ export const DESTINATIONS: Destination[] = [
     name: "Kepler",
     era: "The Edge of Fate",
     imageFile: "kepler.webp",
+    homeImageFile: "kepler-banner.webp",
     sourcePattern: /kepler/i,
     triumphs: { group: "kepler" },
     titleSlug: "the-edge-of-fate",
+    weekly: "kepler",
+    built: true,
   },
   {
     slug: "the-pale-heart",

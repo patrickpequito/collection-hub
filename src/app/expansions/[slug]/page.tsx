@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import type { Metadata } from "next";
 import { NOT_FOUND_METADATA, pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
@@ -151,22 +153,27 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
       ? {
           slug: activityDestination.slug,
           name: activityDestination.name,
-          imageUrl: `/images/destinations/explore/${activityDestination.slug}.webp`,
+          // Explore (patrol) art; the destination art until one exists (Kepler).
+          imageUrl: existsSync(path.join(process.cwd(), "public/images/destinations/explore", `${activityDestination.slug}.webp`))
+            ? `/images/destinations/explore/${activityDestination.slug}.webp`
+            : `/images/destinations/${activityDestination.slug}.webp`,
           theme: destinationTheme,
           activities: destinationActivities,
         }
       : null;
-  const campaignLabel = loot.campaignMissions.length ? "Campaign & Quests" : "Quests";
+  const hasMissions = loot.campaignMissions.length > 0 || loot.campaignMissionTables.length > 0;
+  const campaignLabel = hasMissions ? "Campaign & Quests" : "Quests";
   const hasActivities = hub.relatedRadSlugs.length > 0;
   const sectionLinks = [
     { id: "overview", label: "Overview", show: Boolean(hub.trailerYoutubeId) || yearSeasons.length > 0 },
-    { id: "collection", label: "Collection", show: true },
+    // The Edge of Fate has no destination collection badge.
+    { id: "collection", label: "Collection", show: loot.collectionItems.length > 0 },
     { id: "exotics", label: "Exotics", show: loot.exoticItems.length > 0 },
     { id: "destination", label: "Destination", show: true },
-    { id: "campaign", label: campaignLabel, show: loot.campaignMissions.length > 0 || loot.campaignQuests.length > 0 },
+    { id: "campaign", label: campaignLabel, show: hasMissions || loot.campaignQuests.length > 0 },
     { id: "eververse", label: "Eververse", show: Boolean(loot.eververse) },
     { id: "raids-dungeons", label: "Raids & dungeons", show: hasActivities },
-    { id: "deep-loot", label: "Deep loot", show: true },
+    { id: "deep-loot", label: "Deep loot", show: hub.deepLootActivities.length > 0 },
     { id: "triumphs", label: "Triumphs", show: hasTriumphs },
   ].filter((link) => link.show);
 
@@ -209,15 +216,17 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
             />
           </div>
 
-          <div id="collection" className="scroll-mt-20">
-            <ExpansionCollectionPanel
-              badgeName={loot.collectionMeta.badgeName}
-              iconPath={loot.collectionMeta.iconPath}
-              bannerIconPath={loot.collectionMeta.bannerIconPath}
-              items={loot.collectionItems}
-              itemHrefs={itemHrefs}
-            />
-          </div>
+          {loot.collectionItems.length ? (
+            <div id="collection" className="scroll-mt-20">
+              <ExpansionCollectionPanel
+                badgeName={loot.collectionMeta.badgeName}
+                iconPath={loot.collectionMeta.iconPath}
+                bannerIconPath={loot.collectionMeta.bannerIconPath}
+                items={loot.collectionItems}
+                itemHrefs={itemHrefs}
+              />
+            </div>
+          ) : null}
 
           <div id="exotics" className="scroll-mt-20">
             <ExpansionLootPanel
@@ -249,6 +258,7 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
             <ExpansionCampaignQuests
               expansionTitle={hub.title}
               missions={loot.campaignMissions}
+              missionTables={loot.campaignMissionTables}
               legendaryRecordHash={loot.campaignLegendaryRecordHash}
               quests={loot.campaignQuests}
               destination={destinationBanner}
@@ -273,13 +283,15 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
             </div>
           ) : null}
 
-          <div id="deep-loot" className="scroll-mt-20">
-            <ExpansionDeepLootSection
-              pools={loot.deepLootPools}
-              itemHrefs={itemHrefs}
-              emptyDescription={hub.deepLootEmptyDescription}
-            />
-          </div>
+          {hub.deepLootActivities.length ? (
+            <div id="deep-loot" className="scroll-mt-20">
+              <ExpansionDeepLootSection
+                pools={loot.deepLootPools}
+                itemHrefs={itemHrefs}
+                emptyDescription={hub.deepLootEmptyDescription}
+              />
+            </div>
+          ) : null}
 
           {hasTriumphs ? (
             <div id="triumphs" className="scroll-mt-20">

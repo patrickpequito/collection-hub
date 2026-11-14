@@ -22,6 +22,8 @@ import {
 import type {
   ExpansionCampaignMission,
   ExpansionCampaignQuest,
+  ExpansionMissionCell,
+  ExpansionMissionTable,
   ExpansionQuestStep,
 } from "@/lib/expansions/resolve-expansion-loot";
 import type { ActiveQuestStep } from "@/lib/destiny-quest-progress";
@@ -38,6 +40,8 @@ import type { RecordInstance } from "@/types/triumph";
 type Props = {
   expansionTitle: string;
   missions: ExpansionCampaignMission[];
+  /** Mission tables with difficulty columns (The Edge of Fate); replaces `missions`. */
+  missionTables?: ExpansionMissionTable[];
   legendaryRecordHash: string;
   quests: ExpansionCampaignQuest[];
   destination: DestinationActivitiesBannerProps | null;
@@ -86,6 +90,56 @@ function missionState(
   if (mission.normalRecordHash != null && isProfileRecordComplete(instances[mission.normalRecordHash])) normal = true;
   if (mission.activityHashes?.some((hash) => (activityCompletions[hash] ?? 0) > 0)) normal = true;
   return { normal, legend };
+}
+
+function cellDone(
+  cell: ExpansionMissionCell,
+  instances: Record<string, RecordInstance>,
+  activityCompletions: Record<string, number>,
+): boolean {
+  if (cell.activityHashes.some((hash) => (activityCompletions[hash] ?? 0) > 0)) return true;
+  return cell.record ? objectiveComplete(instances[cell.record.r], cell.record.o) : false;
+}
+
+function MissionTable({ table, marks, signedIn }: { table: ExpansionMissionTable; marks: (boolean | null)[][]; signedIn: boolean }) {
+  const done = marks.flat().filter((mark) => mark === true).length;
+  const total = marks.flat().length;
+  return (
+    <div className="ui-panel min-w-0 px-4 py-3.5 sm:px-[18px]">
+      <div className="flex items-baseline justify-between gap-3">
+        <h3 className="font-display text-base font-semibold uppercase tracking-[0.08em] text-bone">{table.title}</h3>
+        <Count done={done} total={total} signedIn={signedIn} />
+      </div>
+      <div
+        className="mt-1 grid items-center [--col:3.6rem] sm:[--col:4.75rem]"
+        style={{ gridTemplateColumns: `minmax(0,1fr) repeat(${table.columns.length}, var(--col))` }}
+      >
+        <span />
+        {table.columns.map((column) => (
+          <span key={column} className="pb-1.5 text-center text-[10px] font-medium uppercase tracking-[0.12em] text-zinc-500 sm:text-[11px]">
+            {column}
+          </span>
+        ))}
+        {table.missions.map((mission, row) => (
+          <div key={mission.name} className="contents">
+            <span className="min-w-0 border-t border-white/[0.07] py-2.5 pr-2 text-sm text-zinc-100">{mission.name}</span>
+            {mission.cells.map((_, column) => (
+              <span
+                key={column}
+                className="flex justify-center self-stretch border-t border-white/[0.07] py-2.5"
+                role="img"
+                aria-label={`${mission.name} · ${table.columns[column]}: ${
+                  marks[row][column] === null ? "not tracked" : marks[row][column] ? "complete" : "incomplete"
+                }`}
+              >
+                <Notch complete={marks[row][column]} />
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 function Count({ done, total, signedIn }: { done: number; total: number; signedIn: boolean }) {
@@ -276,11 +330,24 @@ function DetailHeader({
   );
 }
 
-export function ExpansionCampaignQuests({ expansionTitle, missions, legendaryRecordHash, quests, destination }: Props) {
+export function ExpansionCampaignQuests({
+  expansionTitle,
+  missions,
+  missionTables = [],
+  legendaryRecordHash,
+  quests,
+  destination,
+}: Props) {
   const signedIn = useSignedIn();
   const { ownedItemHashes } = useOwnership();
   const instances = useProfileRecordInstances();
-  const missionActivityHashes = useMemo(() => missions.flatMap((mission) => mission.activityHashes ?? []), [missions]);
+  const missionActivityHashes = useMemo(
+    () => [
+      ...missions.flatMap((mission) => mission.activityHashes ?? []),
+      ...missionTables.flatMap((table) => table.missions.flatMap((mission) => mission.cells.flatMap((cell) => cell.activityHashes))),
+    ],
+    [missionTables, missions],
+  );
   const activityCompletions = useProfileActivityCompletions(missionActivityHashes);
   const targets = useMemo(() => collectQuestCompletionTargets(quests), [quests]);
   const { completed, active } = useProfileQuestProgress(targets);
@@ -295,6 +362,15 @@ export function ExpansionCampaignQuests({ expansionTitle, missions, legendaryRec
     }));
   }, [activityCompletions, instances, legendaryRecordHash, missions, signedIn]);
   const showLegend = missions.some((mission) => Boolean(mission.legendObjectiveHash));
+  const tableMarks = useMemo(
+    () =>
+      missionTables.map((table) =>
+        table.missions.map((mission) =>
+          mission.cells.map((cell) => (signedIn ? cellDone(cell, instances, activityCompletions) : null)),
+        ),
+      ),
+    [activityCompletions, instances, missionTables, signedIn],
+  );
 
   const views = useMemo<QuestView[]>(
     () =>
@@ -367,16 +443,21 @@ export function ExpansionCampaignQuests({ expansionTitle, missions, legendaryRec
   const [pickedId, setPickedId] = useState<string | null>(null);
   const selected = entries.find((entry) => entry.id === (pickedId ?? defaultId)) ?? null;
 
-  if (!missions.length && !quests.length) return null;
+  if (!missions.length && !missionTables.length && !quests.length) return null;
 
-  const missionsDone = missionRows.filter((row) => row.normal === true).length;
+  // Mission tables count every difficulty mark; the classic table counts Normal clears.
+  const tableCells = tableMarks.flat(2);
+  const missionsDone = missionTables.length
+    ? tableCells.filter((mark) => mark === true).length
+    : missionRows.filter((row) => row.normal === true).length;
+  const missionsTotal = missionTables.length ? tableCells.length : missions.length;
   const questsDone = views.filter((view) => view.complete).length;
   const note = signedIn
-    ? missions.length
-      ? `Campaign ${missionsDone} / ${missions.length} · Quests ${questsDone} / ${quests.length}`
+    ? missionsTotal
+      ? `Campaign ${missionsDone} / ${missionsTotal} · Quests ${questsDone} / ${quests.length}`
       : `Quests ${questsDone} / ${quests.length}`
-    : missions.length
-      ? `Campaign ${missions.length} · Quests ${quests.length}`
+    : missionsTotal
+      ? `Campaign ${missionsTotal} · Quests ${quests.length}`
       : `Quests ${quests.length}`;
 
   const sectionLabel = (view: QuestView) =>
@@ -384,9 +465,22 @@ export function ExpansionCampaignQuests({ expansionTitle, missions, legendaryRec
 
   return (
     <section className="min-w-0">
-      <SectionHeading title={missions.length ? "Campaign & Quests" : "Quests"} note={note} />
+      <SectionHeading title={missionsTotal ? "Campaign & Quests" : "Quests"} note={note} />
 
-      {missions.length ? (
+      {missionTables.length ? (
+        <>
+          <div className="grid items-stretch gap-3 lg:grid-cols-2">
+            {missionTables.map((table, index) => (
+              <MissionTable key={table.title} table={table} marks={tableMarks[index]} signedIn={signedIn} />
+            ))}
+          </div>
+          {destination ? (
+            <div className="mt-3">
+              <DestinationActivitiesBanner {...destination} tileColumns={4} />
+            </div>
+          ) : null}
+        </>
+      ) : missions.length ? (
         <div className="grid items-stretch gap-3 lg:grid-cols-3">
           <div className="ui-panel px-4 py-3.5 sm:px-[18px]">
             <div className="flex items-baseline justify-between gap-3">
@@ -429,7 +523,7 @@ export function ExpansionCampaignQuests({ expansionTitle, missions, legendaryRec
 
       {entries.length ? (
         <div
-          className={`ui-panel grid lg:grid-cols-[calc((100%-10px)/3-1px)_1fr] ${missions.length || destination ? "mt-3" : ""}`}
+          className={`ui-panel grid lg:grid-cols-[calc((100%-10px)/3-1px)_1fr] ${missionsTotal || destination ? "mt-3" : ""}`}
         >
           <div className="pb-2 lg:border-r lg:border-white/10">
             {sections.map((section) => (
@@ -445,7 +539,7 @@ export function ExpansionCampaignQuests({ expansionTitle, missions, legendaryRec
                         onSelect={() => setPickedId(entry.id)}
                         icon={<QuestIcon quest={entry.views[0].quest} />}
                         name={entry.name}
-                        status={`${entry.views.length} quests`}
+                        status={`${entry.views.length} ${entry.views.length === 1 ? "quest" : "quests"}`}
                         count={<Count done={done} total={entry.views.length} signedIn={signedIn} />}
                       />
                     );
@@ -493,7 +587,7 @@ export function ExpansionCampaignQuests({ expansionTitle, missions, legendaryRec
                     quest={selected.views[0].quest}
                     label={sectionLabel(selected.views[0])}
                     name={selected.name}
-                    status={`${selected.views.length} quests`}
+                    status={`${selected.views.length} ${selected.views.length === 1 ? "quest" : "quests"}`}
                     aside={
                       <StepNotches
                         states={selected.views.map((view) => (!signedIn ? "unknown" : view.complete ? "done" : "todo"))}

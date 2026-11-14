@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from "react";
 import { BoxHeading, SectionHeading } from "@/components/detail-page-parts";
 import { Notch, NotchRow } from "@/components/expansions/completion-mark";
 import {
@@ -16,10 +16,13 @@ import {
   checkDone,
   counterValue,
   setMarks,
+  tierActivityHashes,
   type ActivityBlock,
   type ActivityCardBlock,
   type ActivityRow,
+  type ActivitySetTableBlock,
   type ActivityTableBlock,
+  type ActivityTiersBlock,
   type ActivityTilesBlock,
   type DestinationActivities,
   type ProgressSources,
@@ -94,6 +97,21 @@ const CARD_THEMES: Record<string, CardTheme> = {
       <>
         <path d="M22 5l15 26H7z" fill="none" stroke="#ff3b3b" strokeWidth="1.3" />
         <circle cx="22" cy="23" r="4" fill="#ff3b3b" />
+      </>
+    ),
+  },
+  // The Sieve: Kepler's pale turquoise highlights.
+  kepler: {
+    background: "radial-gradient(circle at 85% 15%, rgba(143,227,214,.2), transparent 50%), linear-gradient(160deg, #0c1716, #080d0e)",
+    border: "rgba(143,227,214,.7)",
+    shadow: "0 0 16px rgba(143,227,214,.18)",
+    accent: "#8fe3d6",
+    glow: "0 0 12px rgba(143,227,214,.5)",
+    icon: (
+      <>
+        <circle cx="22" cy="22" r="16" fill="none" stroke="#8fe3d6" strokeWidth="1.2" />
+        <path d="M10 22h24M22 10v24M13 13l18 18M31 13L13 31" stroke="#8fe3d6" strokeWidth=".7" opacity=".7" />
+        <circle cx="22" cy="22" r="3.5" fill="#8fe3d6" />
       </>
     ),
   },
@@ -277,9 +295,137 @@ function CardBlock({
           Completed {count.toLocaleString("en-US")}×
         </span>
       ) : null}
-      <span className="text-[13px] text-[#c7cad0]">{block.description}</span>
+      {block.description ? <span className="text-[13px] text-[#c7cad0]">{block.description}</span> : null}
+      {block.rows?.length ? (
+        <div className="relative mt-2 grid grid-cols-[minmax(0,1fr)_auto] items-center">
+          <span />
+          <span className="pb-1.5 text-right text-[10px] font-medium uppercase tracking-[0.12em] text-zinc-500 sm:text-[11px]">
+            {block.rowsHeader ?? ""}
+          </span>
+          {block.rows.map((row) => {
+            const done = checkDone(row.check, sources);
+            return (
+              <div key={row.name} className="contents">
+                <span className="border-t border-white/[0.07] py-2.5 text-sm text-zinc-100">{row.name}</span>
+                <span className="flex h-full items-center justify-end border-t border-white/[0.07]" role="img" aria-label={`${row.name}: ${statusText(done)}`}>
+                  <Notch complete={done} />
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      ) : null}
     </div>
   );
+}
+
+function SetTableBlock({ block, sources, grow }: { block: ActivitySetTableBlock; sources: ProgressSources; grow?: boolean }) {
+  const marks = blockMarks(block, sources);
+  const gridStyle = { gridTemplateColumns: `minmax(0,1fr) repeat(${block.columns.length}, var(--setcol))` };
+  const setColStyle = { "--setcol-lg": block.columnWidth ?? "9rem" } as CSSProperties;
+  return (
+    <Panel title={block.title} note={countNote(marks)} grow={grow}>
+      <div className="overflow-x-auto" style={setColStyle}>
+        <div className="grid min-w-[22rem] items-center gap-x-4 [--setcol:minmax(7rem,auto)] sm:[--setcol:var(--setcol-lg)]" style={gridStyle}>
+          <span />
+          {block.columns.map((column) => (
+            <span key={column} className="pb-1.5 text-[10px] leading-tight font-medium uppercase tracking-[0.12em] text-zinc-500 sm:text-[11px]">
+              {column}
+            </span>
+          ))}
+          {block.groups.map((group, groupIndex) => (
+            <div key={group.name ?? groupIndex} className="contents">
+              {group.name ? (
+                <span className="col-span-full pt-3.5 pb-1.5 font-display text-[11px] uppercase tracking-[0.16em] text-zinc-400">
+                  {group.name}
+                </span>
+              ) : null}
+              {group.rows.map((row) => (
+                <div key={row.name} className="contents">
+                  <span className="min-w-0 border-t border-white/[0.07] py-2.5 pr-2 text-sm text-zinc-100">{row.name}</span>
+                  {row.cells.map((cell, index) => {
+                    if (!cell) {
+                      return (
+                        <span key={index} className="flex h-full items-center border-t border-white/[0.07] text-sm text-zinc-600" aria-label={`${block.columns[index]}: not available`}>
+                          —
+                        </span>
+                      );
+                    }
+                    const cellMarks = setMarks(cell, sources);
+                    return (
+                      <span key={index} className="flex h-full items-center justify-between gap-3 border-t border-white/[0.07] py-2">
+                        <NotchRow marks={cellMarks} label={`${row.name} · ${block.columns[index]}`} />
+                        <span className="ui-label shrink-0">{countNote(cellMarks)}</span>
+                      </span>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </Panel>
+  );
+}
+
+type PlayStats = Record<string, { seconds: number; kills: number }>;
+
+function playedText(seconds: number): string {
+  const minutes = Math.round(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  return hours ? `${hours}h ${minutes % 60}m` : `${minutes}m`;
+}
+
+/** World Tier ladder: informative only (patrols never complete), with time played and kills. */
+function TiersBlock({ block, signedIn, stats, grow }: { block: ActivityTiersBlock; signedIn: boolean; stats: PlayStats | null; grow?: boolean }) {
+  return (
+    <Panel title={block.title} grow={grow}>
+      <div className="grid auto-rows-fr grid-cols-2 gap-2.5">
+        {block.tiers.map((tier) => {
+          const totals = tier.activityHashes.reduce(
+            (sum, hash) => ({ seconds: sum.seconds + (stats?.[hash]?.seconds ?? 0), kills: sum.kills + (stats?.[hash]?.kills ?? 0) }),
+            { seconds: 0, kills: 0 },
+          );
+          return (
+            <div key={tier.name} className="flex flex-col gap-1 border border-white/[0.14] px-3 py-2.5">
+              <span className="ui-label">{tier.label}</span>
+              <span className="font-display text-[15px] font-semibold uppercase tracking-[0.06em] text-bone">{tier.name}</span>
+              {signedIn && stats ? (
+                totals.seconds > 0 ? (
+                  <span className="mt-1 flex flex-wrap gap-x-3.5 text-xs text-zinc-500">
+                    <span><span className="text-zinc-300">{playedText(totals.seconds)}</span> played</span>
+                    <span><span className="text-zinc-300">{totals.kills.toLocaleString("en-US")}</span> kills</span>
+                  </span>
+                ) : (
+                  <span className="mt-1 text-xs text-zinc-500">—</span>
+                )
+              ) : null}
+            </div>
+          );
+        })}
+      </div>
+    </Panel>
+  );
+}
+
+function usePlayStats(activities: DestinationActivities, signedIn: boolean): PlayStats | null {
+  const hashes = useMemo(() => tierActivityHashes(activities), [activities]);
+  const [stats, setStats] = useState<PlayStats | null>(null);
+  useEffect(() => {
+    if (!signedIn || !hashes.length) return;
+    let cancelled = false;
+    fetch(`/api/profile/activity-play-stats?hashes=${hashes.join(",")}`, { cache: "no-store" })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((payload: { stats?: PlayStats } | null) => {
+        if (!cancelled && payload?.stats) setStats(payload.stats);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, [hashes, signedIn]);
+  return stats;
 }
 
 function Block({
@@ -287,15 +433,21 @@ function Block({
   slug,
   sources,
   completions,
+  playStats,
   grow,
 }: {
   block: ActivityBlock;
   slug: string;
   sources: ProgressSources;
   completions: Record<string, number>;
+  playStats: PlayStats | null;
   grow?: boolean;
 }) {
   switch (block.type) {
+    case "setTable":
+      return <SetTableBlock block={block} sources={sources} grow={grow} />;
+    case "tiers":
+      return <TiersBlock block={block} signedIn={sources.signedIn} stats={playStats} grow={grow} />;
     case "table":
       return <TableBlock block={block} sources={sources} grow={grow} />;
     case "set": {
@@ -313,7 +465,19 @@ function Block({
   }
 }
 
-function Rows({ rows, slug, sources, completions }: { rows: ActivityRow[]; slug: string; sources: ProgressSources; completions: Record<string, number> }) {
+function Rows({
+  rows,
+  slug,
+  sources,
+  completions,
+  playStats,
+}: {
+  rows: ActivityRow[];
+  slug: string;
+  sources: ProgressSources;
+  completions: Record<string, number>;
+  playStats: PlayStats | null;
+}) {
   return (
     <div className="space-y-3">
       {rows.map((row, rowIndex) => (
@@ -327,6 +491,7 @@ function Rows({ rows, slug, sources, completions }: { rows: ActivityRow[]; slug:
                   slug={slug}
                   sources={sources}
                   completions={completions}
+                  playStats={playStats}
                   // The last block of a stacked column stretches so paired columns end level.
                   grow={blockIndex === column.length - 1}
                 />
@@ -352,6 +517,7 @@ function GroupLabel({ children }: { children: ReactNode }) {
 export function DestinationActivitiesSection({ slug, activities }: { slug: string; activities: DestinationActivities }) {
   const { completions, ...sources } = useProgressSources(activities);
   const tally = activitiesTally(activities, sources);
+  const playStats = usePlayStats(activities, sources.signedIn);
   return (
     <section id="activities" className="scroll-mt-20">
       <SectionHeading
@@ -361,13 +527,13 @@ export function DestinationActivitiesSection({ slug, activities }: { slug: strin
       {activities.combat.length ? (
         <>
           <GroupLabel>Combat</GroupLabel>
-          <Rows rows={activities.combat} slug={slug} sources={sources} completions={completions} />
+          <Rows rows={activities.combat} slug={slug} sources={sources} completions={completions} playStats={playStats} />
         </>
       ) : null}
       {activities.exploration.length ? (
         <>
           <GroupLabel>Exploration</GroupLabel>
-          <Rows rows={activities.exploration} slug={slug} sources={sources} completions={completions} />
+          <Rows rows={activities.exploration} slug={slug} sources={sources} completions={completions} playStats={playStats} />
         </>
       ) : null}
     </section>
