@@ -3,11 +3,13 @@ import sharp from "sharp";
 import { DESTINATIONS } from "@/data/destinations";
 import { localImage } from "@/lib/share/assets";
 import { loadDestinationCurse, loadDestinationWeekly } from "@/lib/destinations/weekly";
+import { loadPathfinderBoard, pathfinderOverthrowRegions } from "@/lib/destinations/pathfinder";
 
 /**
  * Destinations share image (approved design "V3"): seven equal tiles, one image and one look
- * per destination, each rotation on one line ("TYPE · value"). Destinations whose weekly
- * rotation isn't tracked yet show "Rotation coming soon".
+ * per destination, each rotation on one line ("TYPE · value"). The Pale Heart shows the
+ * Pathfinder board's Overthrow regions. Destinations whose weekly rotation isn't tracked
+ * yet show "Rotation coming soon".
  */
 
 const ORDER = ["kepler", "the-pale-heart", "neomuna", "throne-world", "europa", "the-moon", "dreaming-city"] as const;
@@ -40,6 +42,12 @@ async function europaArt(): Promise<string | null> {
 }
 
 async function rowsFor(slug: DestinationSlug): Promise<DestinationRow[]> {
+  // Pale Heart: the Pathfinder board's Overthrow regions for the week.
+  if (slug === "the-pale-heart") {
+    const board = await loadPathfinderBoard();
+    const regions = board ? pathfinderOverthrowRegions(board) : [];
+    return regions.length ? [{ label: "Overthrow", value: regions.join(" · ") }] : [];
+  }
   const destination = DESTINATIONS.find((entry) => entry.slug === slug);
   if (!destination?.weekly) return [];
   const weekly = (await loadDestinationWeekly(destination)).filter(

@@ -10,6 +10,7 @@ import {
 import { ironBannerWindowFor } from "@/lib/activities/trials-schedule";
 import { readWeekOverride } from "@/lib/admin/weekly-store";
 import { loadDestinationCurse, loadDestinationWeekly } from "@/lib/destinations/weekly";
+import { loadPathfinderBoard, pathfinderOverthrowRegions } from "@/lib/destinations/pathfinder";
 import { featuredActivityEntries } from "@/lib/rad-loot/featured-activities";
 import { rotationWeekIndex, weekBounds } from "@/lib/rad-loot/featured-rotation";
 import type { ActivityEntry } from "@/types/activity-loot";
@@ -131,6 +132,14 @@ async function destinationWeek(destination: Destination): Promise<DestinationWee
     imageUrl: destinationImageUrl(destination),
     href: destination.built ? `/activities/destinations/${destination.slug}` : null,
   };
+  // Pale Heart: the Pathfinder board's Overthrow regions for the week.
+  if (destination.slug === "the-pale-heart") {
+    const board = await loadPathfinderBoard();
+    const regions = board ? pathfinderOverthrowRegions(board) : [];
+    return regions.length
+      ? { ...base, headline: `Overthrow: ${regions.join(" · ")}`, cadence: "weekly" }
+      : { ...base, headline: null, cadence: null };
+  }
   if (!destination.weekly) return { ...base, headline: null, cadence: null };
   const [weekly, curse] = [await loadDestinationWeekly(destination), loadDestinationCurse(destination)];
   // Throne World and Neomuna lead with today's activity (daily reset): "Wellspring: …", "Terminal Overload: …".
