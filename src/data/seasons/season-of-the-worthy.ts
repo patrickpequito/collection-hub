@@ -24,7 +24,7 @@ export const SEASON_OF_THE_WORTHY_HUB: SeasonHub = {
       youtubeId: "2lCOjueWHgs",
     },
   ],
-  armorSetNames: ["Seventh Seraph", "Iron Remembrance"],
+  armorSetNames: ["Seventh Seraph", "Exile Set", "Iron Remembrance"],
   ornamentSets: [{ setName: "Valkyrian", armorSetName: "Seventh Seraph" }],
   exoticItemNames: [
     "The Fourth Horseman",

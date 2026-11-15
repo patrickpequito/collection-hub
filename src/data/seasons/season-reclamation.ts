@@ -8,7 +8,7 @@ const byPool = (id: string, names: string[]) =>
  * (Sep 9 – Dec 2) shares the S27 watermark but has its own page: items released with it
  * carry the manifest trait "releases.v910" (Reclamation's carry "releases.v900").
  */
-const CAMPAIGN_WEAPONS = ["Ahab Char", "Faustus Decline", "Jurisprudent", "Shoreline Dissident"];
+const CAMPAIGN_WEAPONS = ["Ahab Char", "Faustus Decline", "Jurisprudent", "Shoreline Dissident", "Synanceia"];
 // "Source: The Edge of Fate Activities" (Portal).
 const PORTAL_WEAPONS = ["Aurora Dawn", "Boomslang-4fr", "Mercury-A", "Qua Nilus II"];
 const PINNACLE_OPS_WEAPONS = [
@@ -26,8 +26,8 @@ const TRIALS_WEAPONS = [
   "Forgiveness",
   "Unwavering Duty",
 ];
-// Lionfish reissues with the S27 watermark.
-const MONUMENT_WEAPONS = ["Ribbontail", "Synanceia", "Trachinus"];
+// Heavy Metal activity.
+const HEAVY_METAL_WEAPONS = ["Trachinus"];
 
 export const SEASON_RECLAMATION_HUB: SeasonHub = {
   slug: "s27-season-reclamation",
@@ -49,7 +49,7 @@ export const SEASON_RECLAMATION_HUB: SeasonHub = {
     ...PINNACLE_OPS_WEAPONS,
     ...CRUCIBLE_WEAPONS,
     ...TRIALS_WEAPONS,
-    ...MONUMENT_WEAPONS,
+    ...HEAVY_METAL_WEAPONS,
   ],
   excludedWeaponNames: [
     // Events: Solstice, Arms Week, Festival of the Lost.
@@ -57,6 +57,7 @@ export const SEASON_RECLAMATION_HUB: SeasonHub = {
     "Fortunate Star",
     "Yeartide Apex",
     "Phoneutria Fera",
+    "Ribbontail",
     "Arcane Embrace",
     "Gunburn",
     "Hushed Whisper",
@@ -83,7 +84,7 @@ export const SEASON_RECLAMATION_HUB: SeasonHub = {
     { id: "pinnacle-ops", title: "Pinnacle Ops", sourcePattern: /(?!)/ },
     { id: "crucible", title: "Crucible", sourcePattern: /(?!)/ },
     { id: "trials-of-osiris", title: "Trials of Osiris", sourcePattern: /(?!)/ },
-    { id: "monument-of-triumph", title: "Monument of Triumph", sourcePattern: /(?!)/ },
+    { id: "heavy-metal", title: "Heavy Metal", sourcePattern: /(?!)/ },
   ],
   weaponPoolByName: {
     ...byPool("campaign", CAMPAIGN_WEAPONS),
@@ -91,7 +92,7 @@ export const SEASON_RECLAMATION_HUB: SeasonHub = {
     ...byPool("pinnacle-ops", PINNACLE_OPS_WEAPONS),
     ...byPool("crucible", CRUCIBLE_WEAPONS),
     ...byPool("trials-of-osiris", TRIALS_WEAPONS),
-    ...byPool("monument-of-triumph", MONUMENT_WEAPONS),
+    ...byPool("heavy-metal", HEAVY_METAL_WEAPONS),
   },
   // Reclamation had no activity of its own: it launched with The Edge of Fate.
   playableActivities: [],
@@ -118,6 +119,8 @@ export const SEASON_RECLAMATION_HUB: SeasonHub = {
     "Zero-G Gambol",
   ],
   showEververseCosmetics: true,
+  // Ash & Iron Eververse sets (shown on its own page).
+  excludedEververseSetNames: ["Jade Rabbit", "Taken Knife"],
   // Rewards Pass cosmetics (Reclamation and Ash & Iron passes) are not Eververse items.
   excludedEververseNames: [
     "Autognosis",

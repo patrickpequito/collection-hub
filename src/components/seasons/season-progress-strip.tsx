@@ -38,7 +38,7 @@ export function SeasonProgressStrip({
     { label: `${term} loot`, groups: ownershipGroups, total, gold: true },
     { label: "Exotics", groups: exoticOwnershipGroups, total: exoticOwnershipGroups.length },
     {
-      label: isUpdate ? "Cosmetics" : `${passName ?? `${term} pass`} cosmetics`,
+      label: passName ? `${passName} cosmetics` : isUpdate ? "Cosmetics" : `${term} pass cosmetics`,
       groups: cosmeticOwnershipGroups,
       total: cosmeticOwnershipGroups.length,
     },

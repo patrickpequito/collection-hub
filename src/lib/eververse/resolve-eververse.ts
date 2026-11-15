@@ -318,11 +318,20 @@ export function resolveSeasonEververse(
     ...(hub.excludedEververseNames ?? []),
   ]);
   const watermark = resolveSeasonWatermark(catalogItems, hub);
+  // Pages sharing a watermark (S27 / Ash & Iron) split Eververse by ornament set name.
+  const onlySets = hub.eververseSetNames ? new Set(hub.eververseSetNames) : null;
+  const skippedSets = new Set(hub.excludedEververseSetNames ?? []);
+  const setOf = (item: AllLootItem) =>
+    item.type === "Ornament" ? ornamentSetName(item.name) : null;
   const items = collectEververseItems(
     catalogItems,
-    (item) =>
-      item.seasonNumber === hub.seasonNumber &&
-      (!watermark || item.seasonIconPath === watermark),
+    (item) => {
+      if (item.seasonNumber !== hub.seasonNumber) return false;
+      if (watermark && item.seasonIconPath !== watermark) return false;
+      const setName = setOf(item);
+      if (onlySets) return Boolean(setName && onlySets.has(setName));
+      return !(setName && skippedSets.has(setName));
+    },
     excludedNames,
   );
   return buildEververseLoot(

@@ -132,7 +132,8 @@ export function resolveArmorSetPreviewFile(
     }
   }
 
-  return `${slugifySetName(setName)}.webp`;
+  // Bungie names some sets "Iron Panoply Set": the file is "iron-panoply.webp".
+  return `${slugifySetName(setName.replace(/\s+Set$/i, ""))}.webp`;
 }
 
 /** Resolves preview filenames for a RAD Loot activity page. */

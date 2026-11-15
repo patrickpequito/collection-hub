@@ -225,7 +225,7 @@ export function ArmorSetBlock({
         <div className="min-w-0 space-y-3">
           <div className={bare ? "hidden" : "space-y-1"}>
             <h3 className="max-w-[28rem] font-display text-base font-semibold uppercase tracking-[0.08em] text-bone">
-              {title ?? `Armor · ${setName}`}
+              {title ?? `Armor · ${setName.replace(/\s+Set$/i, "")}`}
             </h3>
             {/* Source note on its own line under the title (e.g. the playlists it drops in). */}
             {note ? <p className="ui-label whitespace-nowrap text-[11px]!">{note}</p> : null}

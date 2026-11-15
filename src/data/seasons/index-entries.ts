@@ -79,7 +79,10 @@ export const SEASONS_BY_EXPANSION_SLUG: Readonly<
     publishedSeason("s25-episode-revenant", "Episode: Revenant"),
     publishedSeason("s26-episode-heresy", "Episode: Heresy"),
   ],
-  "the-edge-of-fate": [publishedSeason("s27-season-reclamation", "Season: Reclamation")],
+  "the-edge-of-fate": [
+    publishedSeason("s27-season-reclamation", "Season: Reclamation"),
+    publishedSeason("ash-and-iron", "Ash & Iron"),
+  ],
 };
 
 /** Flat list for docs / tooling (newest first). */

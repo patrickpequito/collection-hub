@@ -39,7 +39,7 @@ export function SeasonArmorSection({
           <ArmorSetBlock
             key={group.setName}
             setName={name}
-            title={group.kind === "ornament" ? `Ornaments · ${name.replace(/ ornaments$/i, "")}` : `Armor · ${name}`}
+            title={group.kind === "ornament" ? `Ornaments · ${name.replace(/ ornaments$/i, "")}` : `Armor · ${name.replace(/\s+Set$/i, "")}`}
             rows={group.rows}
             previewFiles={[group.previewFile ?? resolveArmorSetPreviewFile(group.setName, source ?? "")]}
             missingImageVariant="contribute"

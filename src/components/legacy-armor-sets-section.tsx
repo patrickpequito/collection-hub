@@ -125,7 +125,8 @@ export function LegacyArmorSetsSection({
 
       {groups.map((group) => {
         const progress = countOwnedArmorPieces(group.rows, isOwned);
-        const name = group.displayName ?? group.setName;
+        // Bungie names some sets "Exile Set": the page shows "Exile".
+        const name = (group.displayName ?? group.setName).replace(/\s+Set$/i, "");
         const title = group.kind === "ornament" ? `Ornaments · ${name.replace(/ ornaments$/i, "")}` : `Armor · ${name}`;
         const previewFile = group.previewFile ?? resolveArmorSetPreviewFile(group.setName, legacySetSource(group));
         const open = openSets.has(group.setName);

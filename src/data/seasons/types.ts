@@ -80,6 +80,10 @@ export type SeasonHub = {
   showEververseCosmetics?: boolean;
   /** Season-watermarked cosmetics that were not sold in the Eververse. */
   excludedEververseNames?: readonly string[];
+  /** Only these Eververse armor ornament sets (a watermark shared with another page). */
+  eververseSetNames?: readonly string[];
+  /** Eververse armor ornament sets shown on another page that shares the watermark. */
+  excludedEververseSetNames?: readonly string[];
   /**
    * Eververse armor ornament sets shown together (one per class), for seasons
    * with several sets per class. Otherwise one-set-per-class merges on its own.

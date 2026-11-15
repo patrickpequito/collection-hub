@@ -11,6 +11,7 @@ import { EPISODE_ECHOES_HUB } from "@/data/seasons/episode-echoes";
 import { EPISODE_REVENANT_HUB } from "@/data/seasons/episode-revenant";
 import { EPISODE_HERESY_HUB } from "@/data/seasons/episode-heresy";
 import { SEASON_RECLAMATION_HUB } from "@/data/seasons/season-reclamation";
+import { ASH_AND_IRON_HUB } from "@/data/seasons/ash-and-iron";
 import { SEASON_OF_THE_HAUNTED_HUB } from "@/data/seasons/season-of-the-haunted";
 import { SEASON_OF_THE_HUNT_HUB } from "@/data/seasons/season-of-the-hunt";
 import { SEASON_OF_THE_LOST_HUB } from "@/data/seasons/season-of-the-lost";
@@ -49,6 +50,7 @@ const SEASON_HUBS: Record<string, SeasonHub> = {
   [EPISODE_REVENANT_HUB.slug]: EPISODE_REVENANT_HUB,
   [EPISODE_HERESY_HUB.slug]: EPISODE_HERESY_HUB,
   [SEASON_RECLAMATION_HUB.slug]: SEASON_RECLAMATION_HUB,
+  [ASH_AND_IRON_HUB.slug]: ASH_AND_IRON_HUB,
 };
 
 export const PUBLISHED_SEASON_SLUGS = new Set(

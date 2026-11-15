@@ -5,7 +5,10 @@ import {
   toLootItemForSeason,
   toLootItemFromCatalog,
 } from "@/lib/activities/loot-item";
-import { LEGACY_TRIALS_CROSS_CLASS_SETS } from "@/data/activities/trials-of-osiris";
+import {
+  LEGACY_TRIALS_CROSS_CLASS_SETS,
+  LEGACY_TRIALS_NAME_SUFFIX_SETS,
+} from "@/data/activities/trials-of-osiris";
 import { RAD_LOOT_ACTIVITY_PAGES } from "@/data/rad-loot/activity-pages";
 import type { SeasonHub } from "@/data/seasons/types";
 import { SEASON_WORLD_LOOT_POOL } from "@/data/seasons/types";
@@ -202,6 +205,15 @@ function collectSeasonArmorOrOrnamentItems(
         item.type === "Armor" &&
         item.rarity === "Legendary" &&
         classSetNames.some((name) => itemNameBelongsToArmorSet(item.name, name)),
+    );
+  }
+
+  // Trials sets named by suffix (e.g. "Helm of the Exile" in "Exile Set").
+  const nameSuffix = LEGACY_TRIALS_NAME_SUFFIX_SETS[setName];
+  if (itemType === "Armor" && nameSuffix) {
+    return catalogItems.filter(
+      (item) =>
+        item.type === "Armor" && item.rarity === "Legendary" && item.name.endsWith(nameSuffix),
     );
   }
 

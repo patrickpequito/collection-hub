@@ -25,8 +25,11 @@ const LEGACY_ARMOR_INTRODUCTION_SEASONS: Record<
   string,
   { seasonLabel: string; seasonNumber: number }
 > = {
-  "binary phoenix set": { seasonLabel: "Red War", seasonNumber: 1 },
-  "wing set": { seasonLabel: "Forsaken", seasonNumber: 4 },
+  // Keys are normalized: lower case, without a trailing "Set".
+  "binary phoenix": { seasonLabel: "Red War", seasonNumber: 1 },
+  "wing": { seasonLabel: "Forsaken", seasonNumber: 4 },
+  // Trials set from Season of the Worthy, reissued in Season of Arrivals.
+  "exile": { seasonLabel: "S10 Season of the Worthy", seasonNumber: 10 },
 };
 
 function normalizeLegacySetKey(setName: string): string {

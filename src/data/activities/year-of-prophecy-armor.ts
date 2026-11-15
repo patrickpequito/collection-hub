@@ -10,14 +10,14 @@ export const YEAR_OF_PROPHECY_ARMOR_SETS: readonly {
 }[] = [
   {
     catalogName: "Ferropotent",
-    displayName: "Ferropotent set",
+    displayName: "Ferropotent",
     equipableItemSetHash: "3734029045",
     previewFile: "ferropotent.webp",
     playlists: ["vanguard-ops"],
   },
   {
     catalogName: "Swordmaster's",
-    displayName: "Swordmaster set",
+    displayName: "Swordmaster",
     equipableItemSetHash: "2391762223",
     previewFile: "swordmaster.webp",
     playlists: ["vanguard-ops"],
@@ -32,31 +32,31 @@ export const YEAR_OF_PROPHECY_ARMOR_SETS: readonly {
   },
   {
     catalogName: "Bushido",
-    displayName: "Bushido set",
+    displayName: "Bushido",
     equipableItemSetHash: "1083114430",
     previewFile: "bushido.webp",
     playlists: ["vanguard-ops"],
   },
   {
     catalogName: "Techsec",
-    displayName: "Techsec set",
+    displayName: "Techsec",
     equipableItemSetHash: "239346083",
     previewFile: "techsec.webp",
     playlists: ["vanguard-ops"],
   },
   {
     catalogName: "Smoke Jumper",
-    displayName: "Smoke Jumper set",
+    displayName: "Smoke Jumper",
     equipableItemSetHash: "2751989785",
-    previewFile: "smoke-jumper-set.webp",
+    previewFile: "smoke-jumper.webp",
     playlists: ["vanguard-ops"],
   },
   {
     // Crucible, S27 Season: Reclamation.
     catalogName: "Disaster Corps",
-    displayName: "Disaster Corps set",
+    displayName: "Disaster Corps",
     equipableItemSetHash: "2947197258",
-    previewFile: "disaster-corps-set.webp",
+    previewFile: "disaster-corps.webp",
     playlists: ["crucible"],
   },
   {
