@@ -83,10 +83,12 @@ export const SEASONS_BY_EXPANSION_SLUG: Readonly<
     publishedSeason("s27-season-reclamation", "Season: Reclamation"),
     publishedSeason("ash-and-iron", "Ash & Iron"),
   ],
+  renegades: [publishedSeason("s28-season-lawless", "Season: Lawless")],
 };
 
 /** Flat list for docs / tooling (newest first). */
 export const SEASON_INDEX_ENTRIES: readonly SeasonIndexEntry[] = [
+  ...[...(SEASONS_BY_EXPANSION_SLUG.renegades ?? [])].reverse(),
   ...[...(SEASONS_BY_EXPANSION_SLUG["the-edge-of-fate"] ?? [])].reverse(),
   ...[...(SEASONS_BY_EXPANSION_SLUG["the-final-shape"] ?? [])].reverse(),
   ...[...(SEASONS_BY_EXPANSION_SLUG.lightfall ?? [])].reverse(),

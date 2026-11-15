@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import {
   MonumentActivities,
+  MonumentDeadlands,
   MonumentGuideBanner,
   MonumentRewards,
   MonumentStatBlocks,
@@ -74,6 +75,7 @@ export default async function MonumentOfTriumphPage() {
     { id: "armor-sets", label: "Armor sets" },
     ...(data.weapons.length ? [{ id: "weapons", label: "Weapons" }] : []),
     { id: "rewards", label: "Monument rewards" },
+    ...(data.deadlands.rows.length ? [{ id: "deadlands", label: "Deadlands Bundle" }] : []),
     { id: "activities", label: "Activities" },
     ...(triumphSections.length ? [{ id: "triumphs", label: "Triumphs" }] : []),
     ...(title ? [{ id: "seal", label: "Seal" }] : []),
@@ -127,6 +129,17 @@ export default async function MonumentOfTriumphPage() {
               itemHrefs={itemHrefs}
             />
           </div>
+
+          {data.deadlands.rows.length ? (
+            <div id="deadlands" className="scroll-mt-20">
+              <MonumentDeadlands
+                rows={data.deadlands.rows}
+                previewFile={data.deadlands.previewFile}
+                cosmetics={data.deadlands.cosmetics}
+                itemHrefs={itemHrefs}
+              />
+            </div>
+          ) : null}
 
           <MonumentGuideBanner
             imageUrl={PAGE_HEADERS.armorSetsHeader}

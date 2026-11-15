@@ -50,10 +50,6 @@ const YEARS = [...HOME_TIMELINE].reverse().map((year) => ({
   id: year.label.toLowerCase().replace(/\s+/g, "-"),
   rows: buildRows(year.entries),
 }));
-const LATEST_SLUG =
-  YEARS[0]?.rows[0]?.left?.slug ??
-  YEARS[0]?.rows[0]?.right?.slug ??
-  YEARS[0]?.rows[0]?.center?.slug;
 
 /** Full-width on phones (beside the line), 480px on the line from md up. */
 const CENTER_ROW = "relative pl-7 md:flex md:justify-center md:pl-0";
@@ -66,13 +62,11 @@ export function TimelineEntryCard({
   entry,
   progress,
   compact = false,
-  showLatest = true,
 }: {
   entry: TimelineEntry;
   progress: ExpansionOverallProgress | undefined;
   /** Short card for side columns (expansion page overview). */
   compact?: boolean;
-  showLatest?: boolean;
 }) {
   const isExpansion = (entry.kind === "expansion" || Boolean(entry.centered)) && !compact;
   const percent = entry.href ? progress?.percent : null;
@@ -99,11 +93,6 @@ export function TimelineEntryCard({
         aria-hidden
         className="absolute inset-0 bg-gradient-to-t from-void/90 via-void/30 via-60% to-transparent"
       />
-      {showLatest && entry.slug === LATEST_SLUG ? (
-        <span className="absolute left-3 top-2.5 bg-bone px-2 py-0.5 font-display text-[11px] uppercase tracking-[0.16em] text-void">
-          Latest
-        </span>
-      ) : null}
       <span
         className={`relative flex flex-col ${compact ? "gap-0.5" : "gap-1.5"} ${
           entry.alignRight && !compact ? "items-end text-right" : ""

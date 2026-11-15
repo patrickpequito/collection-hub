@@ -3,6 +3,8 @@
 import Link from "@/components/app-link";
 import { useEffect, useMemo, useState } from "react";
 import { ActivityCard } from "@/components/activities/activity-card";
+import { ArmorSetBlock } from "@/components/activity-current-loot-panel";
+import { CollectionItemIcon } from "@/components/collection-item-icon";
 import { ArmorPieceIcon } from "@/components/armor-piece-icon";
 import { ClassToggle } from "@/components/class-toggle";
 import { useOwnership } from "@/components/client-ownership";
@@ -18,8 +20,9 @@ import type { SealSummary } from "@/lib/triumphs/hub";
 import { countTriumphProgress } from "@/lib/triumphs/record-progress";
 import { sealProgress } from "@/lib/triumphs/seal-progress";
 import { useSignedIn } from "@/lib/use-signed-in";
+import { DEADLANDS_CLASS_CODES, DEADLANDS_REDEEM_URL, DEADLANDS_SET_NAME } from "@/data/activities/deadlands-bundle";
 import type { ActivityHubLootSection } from "@/types/activity-hub";
-import type { LootItem } from "@/types/activity-loot";
+import type { ActivityArmorRow, LootItem } from "@/types/activity-loot";
 import type { GuardianClass } from "@/types/armor-set";
 import type { TriumphRecord } from "@/types/triumph";
 
@@ -267,6 +270,124 @@ export function MonumentRewards({
           />
         ))}
       </div>
+    </section>
+  );
+}
+
+/** Redeem code with a copy button; gold border once its items are owned. */
+function RedeemCode({ code, redeemed }: { code: string; redeemed: boolean }) {
+  const [copied, setCopied] = useState(false);
+  useEffect(() => {
+    if (!copied) return;
+    const timer = window.setTimeout(() => setCopied(false), 1500);
+    return () => window.clearTimeout(timer);
+  }, [copied]);
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        void navigator.clipboard?.writeText(code).then(() => setCopied(true), () => undefined);
+      }}
+      aria-label={`Copy code ${code}`}
+      className={`inline-flex min-h-[30px] shrink-0 items-center gap-2 border px-2 font-display text-[15px] tracking-[0.08em] whitespace-nowrap text-bone transition hover:border-bone/60 ${
+        redeemed ? "border-owned" : "border-white/[0.22]"
+      }`}
+    >
+      {code}
+      {/* Always as wide as "Copied", so the row never reflows when the label changes. */}
+      <span className="grid border-l border-white/[0.18] pl-2 text-center text-[10.5px] tracking-[0.16em] text-ash">
+        <span className={`col-start-1 row-start-1 ${copied ? "invisible" : ""}`}>Copy</span>
+        <span aria-live="polite" className={`col-start-1 row-start-1 ${copied ? "" : "invisible"}`}>
+          Copied
+        </span>
+      </span>
+    </button>
+  );
+}
+
+/** Deadlands Bundle: ornament set (per-class codes) and cosmetics, each unlocked with a Bungie.net code. */
+export function MonumentDeadlands({
+  rows,
+  previewFile,
+  cosmetics,
+  itemHrefs,
+}: {
+  rows: ActivityArmorRow[];
+  previewFile: string;
+  cosmetics: (LootItem & { code: string })[];
+  itemHrefs?: Record<string, string>;
+}) {
+  const { ownedItemHashes, showOwnership } = useOwnership();
+  const owns = (item: LootItem) => ownershipOf(item).some((hash) => ownedItemHashes.has(hash));
+  // One code unlocks the class's five ornaments: any owned piece means it was redeemed.
+  const classRedeemed = (guardianClass: GuardianClass) => {
+    const row = rows.find((entry) => entry.guardianClass === guardianClass);
+    return showOwnership && Boolean(row && Object.values(row.pieces).some((piece) => piece && owns(piece)));
+  };
+  const ownedCosmetics = cosmetics.filter(owns).length;
+
+  return (
+    <section className="min-w-0 space-y-3">
+      <SectionHeading title="Deadlands Bundle" />
+      <ArmorSetBlock
+        setName={DEADLANDS_SET_NAME}
+        title={`Armor · ${DEADLANDS_SET_NAME}`}
+        rows={rows}
+        previewFiles={[previewFile]}
+        missingImageVariant="contribute"
+        ownedItemHashes={ownedItemHashes}
+        showOwnership={showOwnership}
+        itemHrefs={itemHrefs}
+      >
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-3 border-t border-white/[0.07] pt-3.5">
+          {(Object.keys(DEADLANDS_CLASS_CODES) as GuardianClass[]).map((guardianClass) => (
+            <div key={guardianClass} className="flex items-center gap-2">
+              <span className="ui-label">{CLASS_LABELS[guardianClass]}</span>
+              <RedeemCode code={DEADLANDS_CLASS_CODES[guardianClass]} redeemed={classRedeemed(guardianClass)} />
+            </div>
+          ))}
+          <a
+            href={DEADLANDS_REDEEM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-[31px] items-center bg-bone px-3 font-display text-xs uppercase tracking-[0.18em] whitespace-nowrap text-void transition hover:bg-white sm:ml-auto"
+          >
+            Redeem on Bungie.net →
+          </a>
+        </div>
+      </ArmorSetBlock>
+      {cosmetics.length ? (
+        <div className={BLOCK_CLASS}>
+          <BoxHeading
+            title="Cosmetics"
+            note={showOwnership ? `${ownedCosmetics} / ${cosmetics.length}` : cosmetics.length}
+          />
+          <div className="grid gap-x-10 md:grid-cols-2">
+            {cosmetics.map((item) => (
+              <div key={item.itemHash} className="grid grid-cols-[3.5rem_minmax(0,1fr)_auto] items-center gap-3.5 py-2.5">
+                <CollectionItemIcon
+                  fluid
+                  fillCell
+                  name={item.name}
+                  iconPath={item.iconPath}
+                  source={item.source}
+                  seasonIconPath={item.seasonIconPath}
+                  owned={owns(item)}
+                  showOwnership={showOwnership}
+                  href={itemHrefs?.[item.itemHash]}
+                  rarity={item.rarity}
+                  itemType={item.itemType}
+                />
+                <div className="min-w-0">
+                  <p className="text-sm text-bone">{item.name}</p>
+                  <p className="ui-label text-[11px]!">{item.itemType}</p>
+                </div>
+                <RedeemCode code={item.code} redeemed={showOwnership && owns(item)} />
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }

@@ -17,6 +17,7 @@ import {
   MONUMENT_ORNAMENT_SETS,
   MONUMENT_SINGLE_ORNAMENTS,
 } from "@/data/activities/monument-of-triumph";
+import { DEADLANDS_COSMETICS, DEADLANDS_SET_NAME } from "@/data/activities/deadlands-bundle";
 import type { ActivityHubLootSection } from "@/types/activity-hub";
 import type { ActivityArmorRow, LootItem } from "@/types/activity-loot";
 import type { AllLootItem } from "@/types/all-loot";
@@ -129,6 +130,22 @@ export async function resolveMonumentOfTriumph() {
     ].sort((a, b) => a.name.localeCompare(b.name)),
   })).filter((section) => section.items.length > 0);
 
+  // Deadlands Bundle (redeem codes): ornament set and cosmetics with the Season: Lawless watermark.
+  const deadlandsPattern = new RegExp(`^${DEADLANDS_SET_NAME} `);
+  const deadlands = {
+    rows: buildPartialArmorRowsFromCatalogItems(
+      ornaments.filter((item) => deadlandsPattern.test(item.name) && /special offer/i.test(item.source ?? "")),
+      DEADLANDS_SET_NAME,
+    ),
+    previewFile: resolveArmorSetPreviewFile(DEADLANDS_SET_NAME),
+    cosmetics: DEADLANDS_COSMETICS.flatMap(({ name, code }) => {
+      const item = catalog.items.find(
+        (entry) => entry.name === name && /special offer|charity promotion/i.test(entry.source ?? ""),
+      );
+      return item ? [{ ...toLootItemFromCatalog(item), code }] : [];
+    }),
+  };
+
   const activityGroups = (pattern: RegExp) =>
     catalog.items.filter((item) => pattern.test(item.source ?? "")).map(collectAllLootItemHashes);
 
@@ -139,6 +156,7 @@ export async function resolveMonumentOfTriumph() {
     armorSets,
     weapons,
     cosmetics,
+    deadlands,
     activities: {
       srl: activityGroups(/sparrow racing league/i),
       pantheon: activityGroups(/^Source: Pantheon$/i),

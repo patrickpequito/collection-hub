@@ -62,6 +62,31 @@ const COMBINED_ORNAMENT_SET_NAMES: { names: string[]; displayName: string; previ
     displayName: "Destiny 2 x Star Wars",
     previewFile: "destiny-2-x-star-wars.webp",
   },
+  {
+    names: ["Cyborg Nemesis", "Obsidian Durasteel", "Marauder Progeny"],
+    displayName: "Destiny 2 x Star Wars: Sith",
+    previewFile: "destiny-2-x-star-wars-sith.webp",
+  },
+  {
+    names: ["Singular Mercenary", "Devoted Warrior", "Noble Partisan"],
+    displayName: "Bounty Hunters",
+    previewFile: "bounty-hunters.webp",
+  },
+  {
+    names: ["Ripper", "Boogeyman", "Tattie-Bogle"],
+    displayName: "Horror Archetypes",
+    previewFile: "horror-archetypes.webp",
+  },
+  {
+    names: ["Mindsculptor", "Flamecaller", "Death's Majesty"],
+    displayName: "Magic The Gathering",
+    previewFile: "magic-the-gathering.webp",
+  },
+  {
+    names: ["Synthetic Nihility", "Brutal Warweave", "Pattern Breaker"],
+    displayName: "Destiny 2 x Marathon",
+    previewFile: "destiny-2-x-marathon.webp",
+  },
 ];
 
 function findCombinedOrnamentSet(setName: string) {
@@ -293,11 +318,14 @@ function collectEververseItems(
   catalogItems: AllLootItem[],
   isInScope: (item: AllLootItem) => boolean,
   excludedNames: Set<string>,
+  /** Ornament sets sold outside Eververse (special-offer bundles) shown with it anyway. */
+  extraSetNames: Set<string> = new Set(),
 ): AllLootItem[] {
   const seen = new Set<string>();
   return catalogItems.filter((item) => {
     if (!isInScope(item) || excludedNames.has(item.name)) return false;
-    if (!isEververseCosmetic(item)) return false;
+    const extra = item.type === "Ornament" && extraSetNames.has(ornamentSetName(item.name));
+    if (!extra && !isEververseCosmetic(item)) return false;
     if (seen.has(item.itemHash)) return false;
     seen.add(item.itemHash);
     return true;
@@ -333,6 +361,7 @@ export function resolveSeasonEververse(
       return !(setName && skippedSets.has(setName));
     },
     excludedNames,
+    new Set(hub.extraEververseSetNames ?? []),
   );
   return buildEververseLoot(
     items,

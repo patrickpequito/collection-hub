@@ -82,6 +82,8 @@ export type SeasonHub = {
   excludedEververseNames?: readonly string[];
   /** Only these Eververse armor ornament sets (a watermark shared with another page). */
   eververseSetNames?: readonly string[];
+  /** Ornament sets sold as special-offer bundles, shown in Eververse anyway. */
+  extraEververseSetNames?: readonly string[];
   /** Eververse armor ornament sets shown on another page that shares the watermark. */
   excludedEververseSetNames?: readonly string[];
   /**

@@ -45,7 +45,6 @@ export function ExpansionTrailerSection({
                 entry={season}
                 progress={seasonProgress.get(season.slug)}
                 compact
-                showLatest={false}
               />
             ))}
           </div>

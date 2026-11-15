@@ -244,6 +244,9 @@ export const EPISODE_HERESY_HUB: SeasonHub = {
     ["Verglas Stalker", "Cracked Iceberg", "Cryosphere"],
     ["Uncanny Conjurer", "Cryptic Magus", "Eerie Thaumaturge"],
     ["Covert Ranger", "Shock Enforcer", "Royal Protector"],
+    ["Cyborg Nemesis", "Obsidian Durasteel", "Marauder Progeny"],
   ],
+  // Star Wars Sith set: a Renegades pre-order bonus carrying the Heresy watermark.
+  extraEververseSetNames: ["Cyborg Nemesis", "Obsidian Durasteel", "Marauder Progeny"],
   available: true,
 };
