@@ -382,8 +382,12 @@ export function ExpansionCampaignQuests({
           quest.category === "campaign" &&
           missionRows.length > 0 &&
           missionRows.every((row) => row.normal === true);
+        // A quest still in the inventory shows its step, even if a completion item is owned.
+        const stillHeld = Boolean(quest.heldStepWins && active[quest.questHash ?? key]);
         const complete =
-          signedIn && (missionsCleared || isCampaignQuestComplete(quest, instances, completed, ownedItemHashes));
+          signedIn &&
+          !stillHeld &&
+          (missionsCleared || isCampaignQuestComplete(quest, instances, completed, ownedItemHashes));
         const held = signedIn && !complete ? (active[quest.questHash ?? key] ?? null) : null;
         const current = held ? steps.findIndex((step) => step.hash === held.stepHash) : -1;
         const states: StepState[] = steps.map((step, index) => {
@@ -445,27 +449,12 @@ export function ExpansionCampaignQuests({
 
   if (!missions.length && !missionTables.length && !quests.length) return null;
 
-  // Mission tables count every difficulty mark; the classic table counts Normal clears.
-  const tableCells = tableMarks.flat(2);
-  const missionsDone = missionTables.length
-    ? tableCells.filter((mark) => mark === true).length
-    : missionRows.filter((row) => row.normal === true).length;
-  const missionsTotal = missionTables.length ? tableCells.length : missions.length;
-  const questsDone = views.filter((view) => view.complete).length;
-  const note = signedIn
-    ? missionsTotal
-      ? `Campaign ${missionsDone} / ${missionsTotal} · Quests ${questsDone} / ${quests.length}`
-      : `Quests ${questsDone} / ${quests.length}`
-    : missionsTotal
-      ? `Campaign ${missionsTotal} · Quests ${quests.length}`
-      : `Quests ${quests.length}`;
-
   const sectionLabel = (view: QuestView) =>
     sections.find((section) => section.category === (view.quest.category ?? "expansion"))?.label ?? "";
 
   return (
     <section className="min-w-0">
-      <SectionHeading title={missionsTotal ? "Campaign & Quests" : "Quests"} note={note} />
+      <SectionHeading title={missions.length || missionTables.length ? "Campaign & Quests" : "Quests"} />
 
       {missionTables.length ? (
         <>
@@ -485,7 +474,7 @@ export function ExpansionCampaignQuests({
           <div className="ui-panel px-4 py-3.5 sm:px-[18px]">
             <div className="flex items-baseline justify-between gap-3">
               <h3 className="font-display text-base font-semibold uppercase tracking-[0.08em] text-bone">Campaign missions</h3>
-              <Count done={missionsDone} total={missions.length} signedIn={signedIn} />
+              <Count done={missionRows.filter((row) => row.normal === true).length} total={missions.length} signedIn={signedIn} />
             </div>
             <div
               className="mt-1 grid items-center"
@@ -523,7 +512,7 @@ export function ExpansionCampaignQuests({
 
       {entries.length ? (
         <div
-          className={`ui-panel grid lg:grid-cols-[calc((100%-10px)/3-1px)_1fr] ${missionsTotal || destination ? "mt-3" : ""}`}
+          className={`ui-panel grid lg:grid-cols-[calc((100%-10px)/3-1px)_1fr] ${missions.length || missionTables.length || destination ? "mt-3" : ""}`}
         >
           <div className="pb-2 lg:border-r lg:border-white/10">
             {sections.map((section) => (

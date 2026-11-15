@@ -25,7 +25,7 @@ export function Notch({
 }
 
 /** A run of notches (region chests, feathers…) with an accessible summary. */
-export function NotchRow({ marks, label }: { marks: (boolean | null)[]; label?: string }) {
+export function NotchRow({ marks, label, small = false }: { marks: (boolean | null)[]; label?: string; small?: boolean }) {
   const signedOut = marks.every((mark) => mark === null);
   const done = marks.filter((mark) => mark === true).length;
   return (
@@ -35,7 +35,7 @@ export function NotchRow({ marks, label }: { marks: (boolean | null)[]; label?: 
       className="flex flex-wrap gap-[3px]"
     >
       {marks.map((mark, index) => (
-        <Notch key={index} complete={mark} />
+        <Notch key={index} complete={mark} small={small} />
       ))}
     </span>
   );

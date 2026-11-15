@@ -20,7 +20,1251 @@
     "bosses": []
   },
   "campaign": {
-    "legendaryRecordHash": "",
-    "missions": []
+    "missionTables": [
+      {
+        "title": "Story missions",
+        "columns": [
+          "Brave",
+          "Legendary"
+        ],
+        "missions": [
+          {
+            "name": "Imperium",
+            "cells": [
+              {
+                "activityHashes": [
+                  "1143762636",
+                  "3446618031",
+                  "4161783794",
+                  "4236109078",
+                  "850804897"
+                ]
+              },
+              {
+                "activityHashes": [
+                  "1978846003"
+                ],
+                "record": {
+                  "r": "3049052271",
+                  "o": "4111581452"
+                }
+              }
+            ]
+          },
+          {
+            "name": "Fearsome Retainer",
+            "cells": [
+              {
+                "activityHashes": [
+                  "3630941325"
+                ]
+              },
+              {
+                "activityHashes": [
+                  "3028806935"
+                ],
+                "record": {
+                  "r": "3049052271",
+                  "o": "4111581453"
+                }
+              }
+            ]
+          },
+          {
+            "name": "Out In The Cold",
+            "cells": [
+              {
+                "activityHashes": [
+                  "3374209440"
+                ]
+              },
+              {
+                "activityHashes": [
+                  "2380724356"
+                ],
+                "record": {
+                  "r": "3049052271",
+                  "o": "4111581454"
+                }
+              }
+            ]
+          },
+          {
+            "name": "The Long Con",
+            "cells": [
+              {
+                "activityHashes": [
+                  "2774350910"
+                ]
+              },
+              {
+                "activityHashes": [
+                  "2915561434"
+                ],
+                "record": {
+                  "r": "3049052271",
+                  "o": "4111581448"
+                }
+              }
+            ]
+          },
+          {
+            "name": "Glory Beyond",
+            "cells": [
+              {
+                "activityHashes": [
+                  "813235305"
+                ]
+              },
+              {
+                "activityHashes": [
+                  "3371967659"
+                ],
+                "record": {
+                  "r": "3049052271",
+                  "o": "4111581449"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Exotic mission",
+        "columns": [
+          "Brave",
+          "Legendary"
+        ],
+        "missions": [
+          {
+            "name": "Fire and Ice",
+            "cells": [
+              {
+                "activityHashes": [
+                  "4012069357"
+                ]
+              },
+              {
+                "activityHashes": [
+                  "588518263"
+                ],
+                "record": {
+                  "r": "3049052271",
+                  "o": "4111581455"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "missions": [],
+    "quests": [
+      {
+        "name": "Renegades",
+        "questHash": "278291869",
+        "completionStepHash": "3657956817",
+        "questStepHashes": [
+          "278291869",
+          "930450966",
+          "2473913130",
+          "1014986954",
+          "3594036365",
+          "1502101075",
+          "2189942657",
+          "2020738060",
+          "1649652541",
+          "1977154942",
+          "79128439",
+          "3251897874",
+          "2511455360",
+          "147770170",
+          "3059646118",
+          "2895157787",
+          "835470872",
+          "2409461856",
+          "569525355",
+          "2413560493",
+          "899827891",
+          "379231335",
+          "1191757389",
+          "2939522140",
+          "4165581488",
+          "4042952778",
+          "3772247894",
+          "4020213435",
+          "3759875973",
+          "2934098530",
+          "1870409966",
+          "11802488",
+          "2749992263",
+          "1571625797",
+          "1645825346",
+          "294959246",
+          "449054855",
+          "3545115873",
+          "4124705617",
+          "1798121616",
+          "1220351492",
+          "3606357111",
+          "872142865",
+          "478539714",
+          "3657956817"
+        ],
+        "stepObjectiveHashes": [
+          "1960254998",
+          "3762789319",
+          "2411508051",
+          "4161912051",
+          "2448832134",
+          "4128296648",
+          "1595713138",
+          "89595473",
+          "662233654",
+          "939615839",
+          "963876676",
+          "558372011",
+          "1729332141",
+          "366188451",
+          "2822983447",
+          "1281753952",
+          "1160756469",
+          "4016728077",
+          "799820592",
+          "4195652646",
+          "1765396939",
+          "692419636",
+          "3480264889",
+          "298388193",
+          "109199325",
+          "4057582272",
+          "557052679",
+          "769457280",
+          "3472069902",
+          "1461026888",
+          "2645562383",
+          "3290691029",
+          "3837736212",
+          "855553998",
+          "3048288680",
+          "3248216623",
+          "3361350484",
+          "1666977618",
+          "1451508805",
+          "3205324221",
+          "3395267705",
+          "1053316676",
+          "411397634",
+          "3563116443",
+          "1831825090"
+        ],
+        "iconPath": "/common/destiny2_content/icons/d9363090998d7119108ecd6b2be08bbc.png",
+        "completionObjectiveHash": "1831825090",
+        "category": "campaign",
+        "steps": [
+          {
+            "hash": "278291869",
+            "description": "Listen to the recording.",
+            "objectives": [
+              {
+                "hash": "1960254998",
+                "label": "Recording heard",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "930450966",
+            "description": "Speak to Spider in the Cantina.",
+            "objectives": [
+              {
+                "hash": "3762789319",
+                "label": "Spider visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2473913130",
+            "description": "Speak with Riliks in the Cantina.",
+            "objectives": [
+              {
+                "hash": "2411508051",
+                "label": "Riliks visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1014986954",
+            "description": "Search for Vixis, the Piker Splicer, somewhere outside the Cantina.",
+            "objectives": [
+              {
+                "hash": "4161912051",
+                "label": "Vixis, Piker Splicer found",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3594036365",
+            "description": "Visit the Piker Mechanic in the Cantina.",
+            "objectives": [
+              {
+                "hash": "2448832134",
+                "label": "Piker Mechanic visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1502101075",
+            "description": "Aid the Syndicates by completing Jobs on Mars and Venus to recover the stolen keycard caches.",
+            "objectives": [
+              {
+                "hash": "4128296648",
+                "label": "Venus Cache recovered",
+                "total": 1
+              },
+              {
+                "hash": "4128296649",
+                "label": "Mars Cache recovered",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2189942657",
+            "description": "Speak with Vixis.",
+            "objectives": [
+              {
+                "hash": "1595713138",
+                "label": "Vixis visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2020738060",
+            "description": "Return to Spider in the Cantina.",
+            "objectives": [
+              {
+                "hash": "89595473",
+                "label": "Spider visited",
+                "total": 1
+              },
+              {
+                "hash": "89595472",
+                "label": "Renegade Ability upgraded",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1649652541",
+            "description": "Speak with Drifter in the Cantina.",
+            "objectives": [
+              {
+                "hash": "662233654",
+                "label": "Drifter visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1977154942",
+            "description": "Complete mission \"Fearsome Retainer.\"",
+            "objectives": [
+              {
+                "hash": "939615839",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "79128439",
+            "description": "Find Drifter before he leaves orbit.",
+            "objectives": [
+              {
+                "hash": "963876676",
+                "label": "Jump ship reached",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3251897874",
+            "description": "Speak with the crew in the Tharsis Outpost.",
+            "objectives": [
+              {
+                "hash": "558372011",
+                "label": "Cantina reached",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2511455360",
+            "description": "Listen to the recording.",
+            "objectives": [
+              {
+                "hash": "1729332141",
+                "label": "Recording heard",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "147770170",
+            "description": "Search for survivors of the attack on Tharsis.",
+            "objectives": [
+              {
+                "hash": "366188451",
+                "label": "Survivors found",
+                "total": 3
+              }
+            ]
+          },
+          {
+            "hash": "3059646118",
+            "description": "Bring the Ghost to Zavala's office in the Tower.",
+            "objectives": [
+              {
+                "hash": "2822983447",
+                "label": "Ghost placed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2895157787",
+            "description": "Speak with Zavala.",
+            "objectives": [
+              {
+                "hash": "1281753952",
+                "label": "Zavala visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "835470872",
+            "description": "Speak with Eris and Lodi via your Ghost on the Derelict.",
+            "objectives": [
+              {
+                "hash": "1160756469",
+                "label": "Message heard",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2409461856",
+            "description": "Speak with Drifter through your Ghost at Tharsis Outpost.",
+            "objectives": [
+              {
+                "hash": "4016728077",
+                "label": "",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "569525355",
+            "description": "Speak with Blue in the Cantina.",
+            "objectives": [
+              {
+                "hash": "799820592",
+                "label": "Blue visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2413560493",
+            "description": "Speak to Aunor in the Cantina.",
+            "objectives": [
+              {
+                "hash": "4195652646",
+                "label": "Aunor visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "899827891",
+            "description": "Ante up with Zephyrus in the Cantina.",
+            "objectives": [
+              {
+                "hash": "1765396939",
+                "label": "Zephyrus visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "379231335",
+            "description": "Place banners for the Vex Card Game throughout the Tharsis Bazaar.",
+            "objectives": [
+              {
+                "hash": "692419636",
+                "label": "First banner placed",
+                "total": 3
+              }
+            ]
+          },
+          {
+            "hash": "1191757389",
+            "description": "Speak to Zephyrus in the Cantina.",
+            "objectives": [
+              {
+                "hash": "3480264889",
+                "label": "Zephyrus visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2939522140",
+            "description": "Visit the Reformation Reformancer in the Cantina.",
+            "objectives": [
+              {
+                "hash": "298388193",
+                "label": "Reformation Reformancer visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4165581488",
+            "description": "Plant the trackers in the Imperium cargo on Europa.",
+            "objectives": [
+              {
+                "hash": "109199325",
+                "label": "Trackers planted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4042952778",
+            "description": "Speak with Zephyrus in the Cantina.",
+            "objectives": [
+              {
+                "hash": "4057582272",
+                "label": "Zephyrus visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3772247894",
+            "description": "Speak with Aunor.",
+            "objectives": [
+              {
+                "hash": "557052679",
+                "label": "Aunor visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4020213435",
+            "description": "Complete mission \"Out in the Cold.\"",
+            "objectives": [
+              {
+                "hash": "769457280",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3759875973",
+            "description": "Speak to Aunor in the Cantina.",
+            "objectives": [
+              {
+                "hash": "3472069902",
+                "label": "Aunor visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2934098530",
+            "description": "Speak with Rao in the Cantina.",
+            "objectives": [
+              {
+                "hash": "1461026888",
+                "label": "Rao visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1870409966",
+            "description": "Acquire the Cabal smuggling callsign from the Pikers on Venus.",
+            "objectives": [
+              {
+                "hash": "2645562383",
+                "label": "Smuggler callsign acquired",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "11802488",
+            "description": "Speak with Aunor in the Cantina.",
+            "objectives": [
+              {
+                "hash": "3290691029",
+                "label": "Aunor visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2749992263",
+            "description": "Visit the Praxic Temple with Aunor.",
+            "objectives": [
+              {
+                "hash": "3837736212",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1571625797",
+            "description": "Speak with the Aunor in the Cantina.",
+            "objectives": [
+              {
+                "hash": "855553998",
+                "label": "Aunor visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1645825346",
+            "description": "Speak with Rao in the Cantina.",
+            "objectives": [
+              {
+                "hash": "3048288680",
+                "label": "Rao visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "294959246",
+            "description": "Visit Armorer Aghol in the Tharsis Cantina.",
+            "objectives": [
+              {
+                "hash": "3248216623",
+                "label": "Imperium Armorer visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "449054855",
+            "description": "Recover the uniforms from the Reformation fashion thieves on Mars.",
+            "objectives": [
+              {
+                "hash": "3361350484",
+                "label": "Stolen uniforms recovered",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3545115873",
+            "description": "Sell the extra Imperium uniforms into the black market.",
+            "objectives": [
+              {
+                "hash": "1666977618",
+                "label": "First bundle sold",
+                "total": 1
+              },
+              {
+                "hash": "1666977619",
+                "label": "Second bundle sold",
+                "total": 1
+              },
+              {
+                "hash": "1666977616",
+                "label": "Third bundle sold",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4124705617",
+            "description": "Speak with Rao in the Cantina.",
+            "objectives": [
+              {
+                "hash": "1451508805",
+                "label": "Rao visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1798121616",
+            "description": "Speak with Aunor.",
+            "objectives": [
+              {
+                "hash": "3205324221",
+                "label": "Aunor visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1220351492",
+            "description": "Complete mission \"The Long Con.\"",
+            "objectives": [
+              {
+                "hash": "3395267705",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3606357111",
+            "description": "Speak to Blue on the Derelict.",
+            "objectives": [
+              {
+                "hash": "1053316676",
+                "label": "Blue visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "872142865",
+            "description": "Listen to Blue's plan.",
+            "objectives": [
+              {
+                "hash": "411397634",
+                "label": "",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "478539714",
+            "description": "Complete mission \"Glory Beyond.\"",
+            "objectives": [
+              {
+                "hash": "3563116443",
+                "label": "Mission completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3657956817",
+            "description": "Retrieve Aunor's note from the bar.",
+            "objectives": [
+              {
+                "hash": "1831825090",
+                "label": "Aunor visited",
+                "total": 1
+              },
+              {
+                "hash": "706282957",
+                "label": "",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "fallbackRecordHashes": [
+          "587536046"
+        ]
+      },
+      {
+        "name": "The Territory War Begins",
+        "questHash": "2478741670",
+        "completionStepHash": "3262459648",
+        "questStepHashes": [
+          "2478741670",
+          "2461964083",
+          "2445186368",
+          "2562629701",
+          "2562629696",
+          "2545852114",
+          "2512296841",
+          "2394706448",
+          "549712779",
+          "600045636",
+          "2596332034",
+          "751338493",
+          "650525684",
+          "2462802630",
+          "2765241121",
+          "2664428344",
+          "3262459648"
+        ],
+        "stepObjectiveHashes": [
+          "3756961047",
+          "217617704",
+          "586544493",
+          "2514980558",
+          "1784172141",
+          "3743384171",
+          "3185824234",
+          "3451885117",
+          "3478314320",
+          "2674244281",
+          "408923099",
+          "4190165231",
+          "3873187625",
+          "2802644279",
+          "1223303570",
+          "1160901013",
+          "2094933804"
+        ],
+        "iconPath": "/common/destiny2_content/icons/b71a633c4b430787f0d9a817757c0b3f.png",
+        "completionObjectiveHash": "2094933804",
+        "category": "expansion",
+        "steps": [
+          {
+            "hash": "2478741670",
+            "description": "Gather the remaining components from around Tharsis.",
+            "objectives": [
+              {
+                "hash": "3756961047",
+                "label": "Components recovered",
+                "total": 2
+              }
+            ]
+          },
+          {
+            "hash": "2461964083",
+            "description": "Transmit the Prophecy from the repaired broadcaster in the Tharsis Bazaar.",
+            "objectives": [
+              {
+                "hash": "217617704",
+                "label": "Prophecy transmitted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2445186368",
+            "description": "Listen to the recording.",
+            "objectives": [
+              {
+                "hash": "586544493",
+                "label": "Recording heard",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2562629701",
+            "description": "Meet with Blue at Tharsis Outpost's Ghost commune.",
+            "objectives": [
+              {
+                "hash": "2514980558",
+                "label": "Blue visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2562629696",
+            "description": "Speak to Spider in the Cantina.",
+            "objectives": [
+              {
+                "hash": "1784172141",
+                "label": "Spider visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2545852114",
+            "description": "Enter the Lawless Frontier and take on the Imperium presence on Europa.",
+            "objectives": [
+              {
+                "hash": "3743384171",
+                "label": "Europa Job completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2512296841",
+            "description": "Speak with Lodi through your Ghost in the Tharsis Cantina.",
+            "objectives": [
+              {
+                "hash": "3185824234",
+                "label": "Message heard",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2394706448",
+            "description": "The Syndicates are recruiting allies for the brewing territory war. Visit their quartermasters to hear their pitches and see what they have to offer.",
+            "objectives": [
+              {
+                "hash": "3451885117",
+                "label": "Pikers consulted",
+                "total": 1
+              },
+              {
+                "hash": "3451885116",
+                "label": "Tharsis Reformation consulted",
+                "total": 1
+              },
+              {
+                "hash": "3451885119",
+                "label": "Totality Division consulted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "549712779",
+            "description": "Ally yourself to one of the Syndicates at their banner.",
+            "objectives": [
+              {
+                "hash": "3478314320",
+                "label": "The Pikers",
+                "total": 1
+              },
+              {
+                "hash": "3478314321",
+                "label": "Tharsis Reformation",
+                "total": 1
+              },
+              {
+                "hash": "3478314322",
+                "label": "Totality Division",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "600045636",
+            "description": "Your new Syndicate's leader wishes to have a word with you.",
+            "objectives": [
+              {
+                "hash": "2674244281",
+                "label": "Syndicate leader consulted",
+                "total": 1
+              },
+              {
+                "hash": "2674244280",
+                "label": "Syndicate leader consulted",
+                "total": 1
+              },
+              {
+                "hash": "2674244283",
+                "label": "Syndicate leader consulted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2596332034",
+            "description": "Work your way up your Syndicate's ranks by completing a Priority Contract for your Syndicate. You may optionally complete an Invasion on the Lawless Frontier to disrupt rival Syndicates. Wager additional Deathmarks to increase rewards from successful Invasions.",
+            "objectives": [
+              {
+                "hash": "408923099",
+                "label": "Priority Contract completed",
+                "total": 1
+              },
+              {
+                "hash": "408923097",
+                "label": "Additional Deathmarks wagered",
+                "total": 1
+              },
+              {
+                "hash": "408923098",
+                "label": "Invasion completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "751338493",
+            "description": "Return to your Syndicate's den in the Cantina and deposit Dark Matter Ingots in their War Chest to increase your Reputation with them.",
+            "objectives": [
+              {
+                "hash": "4190165231",
+                "label": "Dark Matter Ingot",
+                "total": 10
+              },
+              {
+                "hash": "2667806710",
+                "label": "Dark Matter Ingots deposited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "650525684",
+            "description": "Speak with your Syndicate leader to debrief on your activities on the Lawless Frontier.",
+            "objectives": [
+              {
+                "hash": "3873187625",
+                "label": "Syndicate leader consulted",
+                "total": 1
+              },
+              {
+                "hash": "3873187624",
+                "label": "Syndicate leader consulted",
+                "total": 1
+              },
+              {
+                "hash": "3873187627",
+                "label": "Syndicate leader consulted",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2462802630",
+            "description": "Continue completing Syndicate Contracts and doing Jobs on the Lawless Frontier. At the next daily reset, your Priority Contract will reset, and you can decide to stick with your current Syndicate or ally with a new one.",
+            "objectives": [
+              {
+                "hash": "2802644279",
+                "label": "Jobs completed",
+                "total": 2
+              },
+              {
+                "hash": "2802644278",
+                "label": "Syndicate Contracts completed",
+                "total": 2
+              },
+              {
+                "hash": "2802644277",
+                "label": "Dark Matter Ingots deposited",
+                "total": 10
+              },
+              {
+                "hash": "2802644276",
+                "label": "Priority Contract reset",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2765241121",
+            "description": "A new day has dawned on the Lawless Frontier. Because you completed yesterday's Priority Contract, competing Syndicates will now offer you additional incentives for allying with them instead.",
+            "objectives": [
+              {
+                "hash": "1223303570",
+                "label": "Allied with a new Syndicate",
+                "total": 1
+              },
+              {
+                "hash": "1223303571",
+                "label": "Activity completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2664428344",
+            "description": "Strengthen your ties and unlock greater rewards by reaching Rank 3 with any of the Syndicates.",
+            "objectives": [
+              {
+                "hash": "1160901013",
+                "label": "Pikers Rank 3",
+                "total": 2
+              },
+              {
+                "hash": "1160901012",
+                "label": "Tharsis Reformation Rank 3",
+                "total": 2
+              },
+              {
+                "hash": "1160901015",
+                "label": "Totality Division Rank 3",
+                "total": 2
+              }
+            ]
+          },
+          {
+            "hash": "3262459648",
+            "description": "At Rank 3, Syndicates offer you special access to a new Renegade Ability to use in the Lawless Frontier. Earn enough Credits and purchase it from the Syndicate's Quartermaster.",
+            "objectives": [
+              {
+                "hash": "2094933804",
+                "label": "Piker Mortar purchased",
+                "total": 1
+              },
+              {
+                "hash": "2094933807",
+                "label": "Vex Stun Field purchased",
+                "total": 1
+              },
+              {
+                "hash": "2094933806",
+                "label": "Imperium Behemoth purchased",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "fallbackRecordHashes": [
+          "1964116222",
+          "208891670",
+          "1234501850"
+        ],
+        "fallbackRecordMatch": "any"
+      },
+      {
+        "name": "Praxic's Path",
+        "questHash": "1538575442",
+        "completionStepHash": "4254208608",
+        "questStepHashes": [
+          "1538575442",
+          "1638793398",
+          "928786913",
+          "3508059163",
+          "4033055185",
+          "2387906161",
+          "4254208608"
+        ],
+        "stepObjectiveHashes": [
+          "3445974763",
+          "2906229479",
+          "1407258194",
+          "995539296",
+          "3407999682",
+          "4271597410",
+          "2261206541"
+        ],
+        "iconPath": "/common/destiny2_content/icons/9ecc0ca06209c93ece56b91f3b9deb47.png",
+        "completionObjectiveHash": "2261206541",
+        "category": "exotic",
+        "reward": "Praxic Blade",
+        "steps": [
+          {
+            "hash": "1538575442",
+            "description": "Speak with Aunor in the Tharsis Cantina.",
+            "objectives": [
+              {
+                "hash": "3445974763",
+                "label": "Aunor visited",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "1638793398",
+            "description": "Sharpen your skills with your Praxic Blade by defeating targets with light attacks, by throwing your Blade, and by reflecting projectiles back at combatants.",
+            "objectives": [
+              {
+                "hash": "2906229479",
+                "label": "Light attacks completed",
+                "total": 35
+              },
+              {
+                "hash": "2906229478",
+                "label": "Blade throws completed",
+                "total": 25
+              },
+              {
+                "hash": "2906229477",
+                "label": "Reflections completed",
+                "total": 15
+              }
+            ]
+          },
+          {
+            "hash": "928786913",
+            "description": "Return to Tharsis and meditate on the Praxic path.",
+            "objectives": [
+              {
+                "hash": "1407258194",
+                "label": "Meditation completed",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "3508059163",
+            "description": "Purchase a Praxic Blade mod in the Tharsis Bazaar.",
+            "objectives": [
+              {
+                "hash": "995539296",
+                "label": "Mod purchased",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "4033055185",
+            "description": "Equip your new mod to your Praxic Blade.",
+            "objectives": [
+              {
+                "hash": "3407999682",
+                "label": "Mod equipped",
+                "total": 1
+              }
+            ]
+          },
+          {
+            "hash": "2387906161",
+            "description": "As part of your training, revisit the Exotic mission \"Fire and Ice\" with guidance from Aunor, and defeat combatants with your Praxic Blade.",
+            "objectives": [
+              {
+                "hash": "4271597410",
+                "label": "Mission completed",
+                "total": 1
+              },
+              {
+                "hash": "4271597411",
+                "label": "Targets defeated",
+                "total": 35
+              }
+            ]
+          },
+          {
+            "hash": "4254208608",
+            "description": "Speak with Aunor in the Tharsis Cantina.",
+            "objectives": [
+              {
+                "hash": "2261206541",
+                "label": "Aunor visited",
+                "total": 1
+              }
+            ]
+          }
+        ],
+        "completionItemHashes": [
+          "749248213",
+          "749248212",
+          "749248215",
+          "1596190499",
+          "1596190498",
+          "1596190497",
+          "2100631068",
+          "3320668100",
+          "3846969568",
+          "3846969569",
+          "3846969570",
+          "3268768926",
+          "3268768927",
+          "3268768924",
+          "1808259049",
+          "1808259048",
+          "1808259051",
+          "1808259050"
+        ],
+        "heldStepWins": true
+      }
+    ]
   }
 }

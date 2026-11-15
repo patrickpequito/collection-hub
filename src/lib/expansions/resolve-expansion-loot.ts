@@ -9,6 +9,7 @@ import {
   toLootItemFromCatalog,
 } from "@/lib/activities/loot-item";
 import type { ExpansionHub } from "@/data/expansions/types";
+import { RAD_LOOT_ACTIVITY_PAGES } from "@/data/rad-loot/activity-pages";
 import { collectAllLootItemHashes } from "@/lib/all-loot/item-hashes";
 import { loadAllLootCatalog } from "@/lib/all-loot/search";
 import {
@@ -153,6 +154,8 @@ export type ExpansionCampaignQuest = {
   completionItemHash?: string;
   /** Any owned hash counts as complete (exotic weapon variants). */
   completionItemHashes?: string[];
+  /** A held quest step wins over completionItemHashes (items unlocked mid-quest). */
+  heldStepWins?: boolean;
   /** Root quest item hash for profile quest completion. */
   questHash?: string;
   /** Final quest step hash — used when completed quests leave the active list. */
@@ -257,8 +260,13 @@ type ExpansionCollectionFile = {
   };
 };
 
+/** One Cosmetics box (Ships, Sparrows, Ghost Shells…). */
+export type ExpansionCosmeticSection = { title: string; items: LootItem[] };
+
 export type ExpansionLoot = {
   collectionMeta: ExpansionCollectionMeta;
+  /** Cosmetics earned by playing (not raid/dungeon, Eververse, events or purchases), by type. */
+  cosmeticSections: ExpansionCosmeticSection[];
   collectionItems: ExpansionCollectionItem[];
   exoticItems: LootItem[];
   /** Eververse cosmetics with the expansion watermark (own counter). */
@@ -288,6 +296,54 @@ export type ExpansionLoot = {
   lootItemHashes: string[];
   collectionHashes: string[];
 };
+
+/** Cosmetic item types, in box order, with their box titles. */
+const COSMETIC_TYPES: [string, string][] = [
+  ["Ship", "Ships"],
+  ["Sparrow", "Sparrows"],
+  ["Vehicle", "Vehicles"],
+  ["Ghost Shell", "Ghost Shells"],
+  ["Ghost Projection", "Ghost Projections"],
+  ["Shader", "Shaders"],
+  ["Emblem", "Emblems"],
+  ["Emote", "Emotes"],
+  ["Finisher", "Finishers"],
+  ["Transmat Effect", "Transmat Effects"],
+];
+
+/**
+ * Not earned by playing the expansion's own content: Eververse / Bright Engrams, codes and
+ * editions, events (own pages later) and raids / dungeons (their pages list them).
+ */
+const NOT_EARNED_IN_GAME =
+  /eververse|bright engram|special offer|deluxe|pre-order|annual pass|limited edition|collector|refer-a-friend|silver|solstice|festival of the lost|dawning|crimson days|guardian games|arms week|heavy metal|\bevent\b|raid|dungeon|lair/i;
+
+function resolveExpansionCosmetics(items: AllLootItem[], hub: ExpansionHub): ExpansionCosmeticSection[] {
+  const labels = new Set(hub.seasonLabels);
+  const extraNames = new Set(hub.cosmeticExtraNames ?? []);
+  const radTitles = hub.relatedRadSlugs
+    .map((slug) => RAD_LOOT_ACTIVITY_PAGES[slug]?.title)
+    .filter((title): title is string => Boolean(title));
+  const seen = new Set<string>();
+  const picked = items.filter((item) => {
+    if (!item.seasonLabel || !labels.has(item.seasonLabel)) return false;
+    const source = item.source ?? "";
+    const extra = extraNames.has(item.name);
+    // No source line: usually store or legacy reward items; in-game ones are listed by name.
+    if (!extra && (!source || NOT_EARNED_IN_GAME.test(source))) return false;
+    if (radTitles.some((title) => source.includes(title))) return false;
+    if (seen.has(item.itemHash)) return false;
+    seen.add(item.itemHash);
+    return true;
+  });
+  return COSMETIC_TYPES.map(([type, title]) => ({
+    title,
+    items: picked
+      .filter((item) => item.type === type)
+      .map((item) => toLootItemFromCatalog(item))
+      .sort((a, b) => a.name.localeCompare(b.name)),
+  })).filter((section) => section.items.length > 0);
+}
 
 function normalizeIconHash(hash: string): string {
   return hash.replace(/\.png$/i, "");
@@ -818,6 +874,7 @@ export async function resolveExpansionLoot(
       completionRecordHash: collectionFile.completionRecordHash ?? "",
     },
     collectionItems,
+    cosmeticSections: resolveExpansionCosmetics(items, hub),
     exoticItems,
     destinationArmorRows,
     destinationWeapons,

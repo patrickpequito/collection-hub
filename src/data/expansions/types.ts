@@ -65,6 +65,13 @@ export type ExpansionHub = {
   available: boolean;
   /** Official expansion launch / reveal trailer (YouTube id). */
   trailerYoutubeId?: string;
+  /**
+   * Renegades: no patrol destination. Armor sets and weapons get their own sections and
+   * the Lawless Frontier, Clans and Collectibles sections follow Campaign & Quests.
+   */
+  lawlessFrontier?: boolean;
+  /** Cosmetics earned in game whose catalog row has no source line (e.g. vendor purchases). */
+  cosmeticExtraNames?: readonly string[];
   /** Hub-specific membership exclusions (name patterns). */
   excludedNamePatterns?: readonly RegExp[];
   excludedSeasonLabels?: readonly string[];

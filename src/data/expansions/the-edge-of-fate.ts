@@ -19,6 +19,8 @@ export const EDGE_OF_FATE_HUB: ExpansionHub = {
   destinationActivitySlug: "kepler",
   destinationWeaponSourcePattern: /kepler/i,
   relatedRadSlugs: ["the-desert-perpetual"],
+  // No source line in the catalog, but earned in game (owner confirmed).
+  cosmeticExtraNames: ["Great Pulse"],
   trailerYoutubeId: "5LFBTFpWYVI",
   // Playlist loot of this era carries the Season: Reclamation (S27) watermark: it lives on the season page.
   deepLootActivities: [],

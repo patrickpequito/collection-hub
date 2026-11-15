@@ -8,6 +8,7 @@ import { EververseSection } from "@/components/eververse-section";
 import { ExpansionActivityShortcuts } from "@/components/expansions/expansion-activity-shortcuts";
 import { ExpansionCampaignQuests } from "@/components/expansions/expansion-campaign-quests";
 import { ExpansionCollectionPanel } from "@/components/expansions/expansion-collection-panel";
+import { ExpansionCosmeticsPanel } from "@/components/expansions/expansion-cosmetics-panel";
 import { ExpansionDeepLootSection } from "@/components/expansions/expansion-deep-loot-section";
 import { ExpansionDestinationBanner } from "@/components/expansions/expansion-destination-banner";
 import { ExpansionDestinationPanel } from "@/components/expansions/expansion-destination-panel";
@@ -15,6 +16,13 @@ import { ExpansionLootPanel } from "@/components/expansions/expansion-loot-panel
 import { ExpansionProgressStrip } from "@/components/expansions/expansion-progress-strip";
 import { ExpansionTrailerSection } from "@/components/expansions/expansion-trailer-section";
 import { ExpansionTriumphsPanel } from "@/components/expansions/expansion-triumphs-panel";
+import {
+  RenegadesClans,
+  RenegadesCollectibles,
+  RenegadesLawlessFrontier,
+  RenegadesLootPanel,
+  RenegadesPraxicBlade,
+} from "@/components/expansions/renegades-frontier";
 import { SectionJumpNav } from "@/components/detail-page-parts";
 import { SectionPageLayout } from "@/components/section-page-layout";
 import {
@@ -164,18 +172,41 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
   const hasMissions = loot.campaignMissions.length > 0 || loot.campaignMissionTables.length > 0;
   const campaignLabel = hasMissions ? "Campaign & Quests" : "Quests";
   const hasActivities = hub.relatedRadSlugs.length > 0;
-  const sectionLinks = [
+  const frontier = Boolean(hub.lawlessFrontier);
+  const sectionLinks = frontier
+    ? [
+        { id: "overview", label: "Overview", show: Boolean(hub.trailerYoutubeId) || yearSeasons.length > 0 },
+        { id: "armor", label: "Armor sets", show: loot.destinationArmorRows.length > 0 },
+        { id: "exotics", label: "Exotics", show: loot.exoticItems.length > 0 },
+        { id: "weapons", label: "Weapons", show: loot.destinationWeapons.length > 0 },
+        { id: "cosmetics", label: "Cosmetics", show: loot.cosmeticSections.length > 0 },
+        { id: "praxic-blade", label: "Praxic Blade", show: true },
+        { id: "campaign", label: campaignLabel, show: hasMissions || loot.campaignQuests.length > 0 },
+        { id: "lawless-frontier", label: "Lawless Frontier", show: true },
+        { id: "clans", label: "Clans", show: true },
+        { id: "collectibles", label: "Collectibles", show: true },
+        { id: "raids-dungeons", label: "Raids & dungeons", show: hasActivities },
+        { id: "triumphs", label: "Triumphs", show: hasTriumphs },
+      ].filter((link) => link.show)
+    : [
     { id: "overview", label: "Overview", show: Boolean(hub.trailerYoutubeId) || yearSeasons.length > 0 },
     // The Edge of Fate has no destination collection badge.
     { id: "collection", label: "Collection", show: loot.collectionItems.length > 0 },
     { id: "exotics", label: "Exotics", show: loot.exoticItems.length > 0 },
     { id: "destination", label: "Destination", show: true },
+    { id: "cosmetics", label: "Cosmetics", show: loot.cosmeticSections.length > 0 },
     { id: "campaign", label: campaignLabel, show: hasMissions || loot.campaignQuests.length > 0 },
     { id: "eververse", label: "Eververse", show: Boolean(loot.eververse) },
     { id: "raids-dungeons", label: "Raids & dungeons", show: hasActivities },
     { id: "deep-loot", label: "Deep loot", show: hub.deepLootActivities.length > 0 },
     { id: "triumphs", label: "Triumphs", show: hasTriumphs },
   ].filter((link) => link.show);
+  const lootPanelProps = {
+    activitySlug: hub.destinationActivitySlug,
+    activityTitle: hub.destinationActivityTitle,
+    previewFiles: hub.destinationArmorPreviewFiles ? [...hub.destinationArmorPreviewFiles] : undefined,
+    itemHrefs,
+  };
 
   return (
     <SectionPageLayout
@@ -228,6 +259,47 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
             </div>
           ) : null}
 
+          {frontier ? (
+            <>
+              <div id="armor" className="scroll-mt-20">
+                <RenegadesLootPanel heading="Armor sets" armorRows={loot.destinationArmorRows} weapons={[]} {...lootPanelProps} />
+              </div>
+              <div id="exotics" className="scroll-mt-20">
+                <ExpansionLootPanel title="Exotic weapons & armor" items={loot.exoticItems} ownedBorder="green" itemHrefs={itemHrefs} />
+              </div>
+              <div id="weapons" className="scroll-mt-20">
+                <RenegadesLootPanel heading="Weapons" armorRows={[]} weapons={loot.destinationWeapons} {...lootPanelProps} />
+              </div>
+              {loot.cosmeticSections.length ? (
+                <div id="cosmetics" className="scroll-mt-20">
+                  <ExpansionCosmeticsPanel sections={loot.cosmeticSections} itemHrefs={itemHrefs} />
+                </div>
+              ) : null}
+              <div id="praxic-blade" className="scroll-mt-20">
+                <RenegadesPraxicBlade />
+              </div>
+              <div id="campaign" className="scroll-mt-20">
+                <ExpansionCampaignQuests
+                  expansionTitle={hub.title}
+                  missions={loot.campaignMissions}
+                  missionTables={loot.campaignMissionTables}
+                  legendaryRecordHash={loot.campaignLegendaryRecordHash}
+                  quests={loot.campaignQuests}
+                  destination={null}
+                />
+              </div>
+              <div id="lawless-frontier" className="scroll-mt-20">
+                <RenegadesLawlessFrontier />
+              </div>
+              <div id="clans" className="scroll-mt-20">
+                <RenegadesClans />
+              </div>
+              <div id="collectibles" className="scroll-mt-20">
+                <RenegadesCollectibles />
+              </div>
+            </>
+          ) : (
+          <>
           <div id="exotics" className="scroll-mt-20">
             <ExpansionLootPanel
               title="Exotic weapons & armor"
@@ -254,6 +326,12 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
             />
           </div>
 
+          {loot.cosmeticSections.length ? (
+            <div id="cosmetics" className="scroll-mt-20">
+              <ExpansionCosmeticsPanel sections={loot.cosmeticSections} itemHrefs={itemHrefs} />
+            </div>
+          ) : null}
+
           <div id="campaign" className="scroll-mt-20">
             <ExpansionCampaignQuests
               expansionTitle={hub.title}
@@ -264,6 +342,9 @@ export default async function ExpansionHubPage({ params }: ExpansionPageProps) {
               destination={destinationBanner}
             />
           </div>
+
+          </>
+          )}
 
           {loot.eververse ? (
             <div id="eververse" className="scroll-mt-20">

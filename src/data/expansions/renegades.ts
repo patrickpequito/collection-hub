@@ -1,7 +1,4 @@
-import {
-  DEFAULT_DEEP_LOOT_ACTIVITIES,
-  type ExpansionHub,
-} from "@/data/expansions/types";
+import type { ExpansionHub } from "@/data/expansions/types";
 
 export const RENEGADES_HUB: ExpansionHub = {
   slug: "renegades",
@@ -12,12 +9,18 @@ export const RENEGADES_HUB: ExpansionHub = {
   seasonIconHashes: ["95f7754d52d6016fdc445fb62aa7a31e"],
   seasonNumber: 28,
   destinationArmorSetNames: ["Shrewd Survivor", "Thriving Survivor"],
+  destinationArmorPreviewFiles: ["shrewd-survivor.webp", "thriving-survivor.webp"],
   destinationTitle: "Destination // Renegades",
   destinationActivityTitle: "Renegades",
   destinationActivitySlug: "renegades",
   destinationWeaponSourcePattern: /source:\s*renegades/i,
   relatedRadSlugs: ["equilibrium"],
-  deepLootActivities: DEFAULT_DEEP_LOOT_ACTIVITIES,
+  trailerYoutubeId: "PqicEwg2qEc",
+  lawlessFrontier: true,
+  // Bought from Spider for Credits.
+  cosmeticExtraNames: ["Modified NLS Courier"],
+  // Playlist loot of this era carries the S28 watermark: it lives on the season page.
+  deepLootActivities: [],
   deepLootExcludedSourcePattern:
     /source:\s*renegades|equilibrium|eververse|bright engram/i,
   raidsDungeonsBlurb:
