@@ -1,32 +1,32 @@
 {
-  "generatedAt": "2026-11-10T22:18:36.843Z",
-  "weekIndex": 22,
-  "weekStart": "2026-11-10T17:00:00.000Z",
-  "weekEnd": "2026-11-17T17:00:00.000Z",
+  "generatedAt": "2026-11-17T23:48:40.888Z",
+  "weekIndex": 23,
+  "weekStart": "2026-11-17T17:00:00.000Z",
+  "weekEnd": "2026-11-24T17:00:00.000Z",
   "featuredRaids": [
-    "salvations-edge",
-    "vow-of-the-disciple"
+    "kings-fall",
+    "last-wish"
   ],
   "featuredDungeons": [
-    "ghosts-of-the-deep",
-    "prophecy"
+    "warlords-ruin",
+    "grasp-of-avarice"
   ],
   "featuredNightmareHunts": [
     {
-      "name": "Insanity",
-      "boss": "Nightmare of the Fanatic",
-      "image": "/img/destiny_content/pgcr/nightmare_hunt_insanity.jpg"
+      "name": "Isolation",
+      "boss": "Nightmare of Taniks, the Scarred",
+      "image": "/img/destiny_content/pgcr/nightmare_hunt_isolation.jpg"
     },
     {
-      "name": "Despair",
-      "boss": "Nightmare of Crota, Son of Oryx",
-      "image": "/img/destiny_content/pgcr/nightmare_hunt_despair.jpg"
+      "name": "Rage",
+      "boss": "Nightmare of Dominus Ghaul",
+      "image": "/img/destiny_content/pgcr/nightmare_hunt_rage.jpg"
     },
     {
-      "name": "Fear",
-      "boss": "Nightmare of Phogoth",
-      "image": "/img/destiny_content/pgcr/nightmare_hunt_fear.jpg"
+      "name": "Servitude",
+      "boss": "Nightmare of Zydron, Gate Lord",
+      "image": "/img/destiny_content/pgcr/nightmare_hunt_servitude.jpg"
     }
   ],
-  "rotationWeeks": 23
+  "rotationWeeks": 24
 }
