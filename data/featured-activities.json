@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-17T23:48:40.888Z",
+  "generatedAt": "2026-11-19T17:23:53.965Z",
   "weekIndex": 23,
   "weekStart": "2026-11-17T17:00:00.000Z",
   "weekEnd": "2026-11-24T17:00:00.000Z",
   "featuredRaids": [
-    "kings-fall",
-    "last-wish"
+    "salvations-edge",
+    "vault-of-glass"
   ],
   "featuredDungeons": [
     "warlords-ruin",
