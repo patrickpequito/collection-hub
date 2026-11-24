@@ -1,32 +1,32 @@
 {
-  "generatedAt": "2026-11-19T22:09:59.437Z",
-  "weekIndex": 23,
-  "weekStart": "2026-11-17T17:00:00.000Z",
-  "weekEnd": "2026-11-24T17:00:00.000Z",
+  "generatedAt": "2026-11-24T20:11:39.828Z",
+  "weekIndex": 24,
+  "weekStart": "2026-11-24T17:00:00.000Z",
+  "weekEnd": "2026-12-01T17:00:00.000Z",
   "featuredRaids": [
-    "kings-fall",
-    "last-wish"
+    "garden-of-salvation",
+    "root-of-nightmares"
   ],
   "featuredDungeons": [
-    "warlords-ruin",
-    "grasp-of-avarice"
+    "vespers-host",
+    "duality"
   ],
   "featuredNightmareHunts": [
     {
-      "name": "Isolation",
-      "boss": "Nightmare of Taniks, the Scarred",
-      "image": "/img/destiny_content/pgcr/nightmare_hunt_isolation.jpg"
+      "name": "Insanity",
+      "boss": "Nightmare of the Fanatic",
+      "image": "/img/destiny_content/pgcr/nightmare_hunt_insanity.jpg"
     },
     {
-      "name": "Rage",
-      "boss": "Nightmare of Dominus Ghaul",
-      "image": "/img/destiny_content/pgcr/nightmare_hunt_rage.jpg"
+      "name": "Anguish",
+      "boss": "Nightmare of Omnigul",
+      "image": "/img/destiny_content/pgcr/nightmare_hunt_anguish.jpg"
     },
     {
-      "name": "Servitude",
-      "boss": "Nightmare of Zydron, Gate Lord",
-      "image": "/img/destiny_content/pgcr/nightmare_hunt_servitude.jpg"
+      "name": "Pride",
+      "boss": "Nightmare of Skolas, Kell of Kells",
+      "image": "/img/destiny_content/pgcr/nightmare_hunt_pride.jpg"
     }
   ],
-  "rotationWeeks": 24
+  "rotationWeeks": 25
 }
